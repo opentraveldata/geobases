@@ -1,0 +1,188 @@
+fraba^Dijon Ville
+frabf^Périgueux
+frabg^Besançon Viotte
+frace^Dole Ville
+fracg^Dax
+frack^Cherbourg
+fracl^Angers St Laud
+fracr^Laval
+frade^Metz Ville
+fradi^Dunkerque
+fradj^Lille Flandres
+fradm^Tourcoing
+fradp^Roubaix
+fraea^Calais Ville
+fraeb^Boulogne Ville
+fraee^Pau
+fraef^Hendaye
+fraeg^Strasbourg
+fraej^Colmar
+fraek^Mulhouse Ville
+fraes^Avignon Centre
+fraet^Le Mans
+fraez^Le Havre
+frafj^Albi ville
+frafk^Orléans
+frafw^Tours
+fragf^Agen
+fragq^Limoges Bénédictins
+fragr^Modane
+fraie^Aix en Provence TGV
+frang^Angoulême
+frasg^Auxerre Saint Gervais
+fravg^Avignon TGV
+frbes^Brest
+frbiq^Biarritz
+frboj^Bordeaux St-Jean
+frbor^Belfort
+frbou^Bourges
+frbqt^Forbach
+frbve^Brive La Gaillarde
+frbzr^Béziers
+frccf^Carcassonne
+frcfe^Clermont Ferrand
+frcfr^Caen
+frchr^Châteauroux
+frcmf^Chambéry Challes Les Eaux
+frcql^Longueau
+frcsf^Creil
+frdht^Versailles Chantiers
+frdju^Massy TGV
+frdqc^Vernon
+freah^Champagne Ardenne TGV
+freaj^Meuse TGV
+fream^Lorraine TGV
+fregc^Bergerac
+freip^Surgères
+frenc^Nancy Ville
+frepl^Epinal
+fresl^Vendôme Villiers sur Loir
+frevx^Evreux Normandie
+frfac^Facture-Biganos
+frfni^Nîmes
+frgfi^Orthez
+frgfr^Granville
+frggp^Guingamp
+frgnb^Grenoble
+frgnx^Montargis
+frhgu^Macon Ville
+frhhd^St Etienne Châteaucreux
+frhza^Arles
+frihw^Avignon Sud
+frisi^Laroche Migennes
+frjca^Cannes
+frjdq^Lyon St Exupéry TGV
+frjee^La Baule Escoublac
+frlab^Les Aubrais Orléans
+frlde^Lourdes
+frlle^Lille Europe
+frlne^Lunéville
+frlpd^Lyon Part Dieu
+frlpe^Lyon Perrache
+frlrh^La Rochelle Ville
+frlrt^Lorient
+frlwy^Longwy
+frmaz^Miramas
+frmcu^Montluçon Ville
+frmlt^Macon Loche TGV
+frmlv^Marne la Vallée Chessy
+frmlw^Aéroport CDG  2 TGV
+frmpl^Montpellier St Roch
+frmsc^Marseille St Charles
+frmxn^Morlaix
+frncy^Annecy
+frnic^Nice Ville
+frnit^Niort
+frnte^Nantes
+frnvs^Nevers
+frpaz^Paris Austerlitz
+frpbe^Paris Bercy
+frpgf^Perpignan
+frpis^Poitiers
+frply^Paris Gare de Lyon
+frpmo^Paris Montparnasse
+frpno^Paris Nord
+frpsl^Paris St Lazare
+frpst^Paris Est
+frqam^Amiens
+frqbm^Bourg St Maurice
+frqmu^Moutiers Salins Brides-les-Bains
+frqnj^Arcachon
+frqrv^Arras
+frqtj^Chartres
+frqxb^Aix en Provence
+frqyr^Troyes
+frrco^Rochefort
+frrdz^Rodez
+frrhe^Reims
+frrns^Rennes
+frryn^Royan
+frsbk^St Brieuc
+frsne^Saverne
+frsnr^St Nazaire
+frsth^Calais Frethun
+frtgo^Futuroscope
+frthp^TGV Haute Picardie
+frtln^Toulon
+frtrd^Trouville Deauville
+fruip^Quimper
+frurd^Rouen Rive Droite
+frvaf^Valence Ville 
+frvdr^Val De Reuil
+frvhy^Vichy
+frvla^Valence TGV Rhône Alpes Sud
+frvne^Vannes
+frxab^Abbeville
+frxai^Aix les Bains le Revard
+frxat^Antibes
+frxav^Albertville
+frxbd^Bar le Duc
+frxbf^Bellegarde
+frxbh^Béthune
+frxbk^Bourg en Bresse
+frxbq^Blois
+frxbv^Beaune
+frxby^Bayonne
+frxcc^Le Creusot TGV
+frxcd^Chalon sur Saône
+frxcp^Compiègne
+frxcr^Chalons en Champagne
+frxcx^Châtellerault
+frxcy^Château Thierry
+frxcz^Charleville Mézières
+frxdn^Douai
+frxdr^Dreux
+frxeb^Evian les Bains
+frxep^Epernay
+frxgf^St Gervais les Bains - Le Fayet
+frxjz^St Jean de Luz Ciboure
+frxle^Lens
+frxll^Lons le Saunier
+frxlr^Libourne
+frxlx^Lisieux
+frxmf^Montbéliard
+frxmj^Mont de Marsan
+frxmk^Montélimar
+frxmm^Monaco Monte Carlo
+frxmr^Marmande
+frxmt^Menton
+frxmu^Moulins Sur Allier
+frxmw^Montauban Ville Bourbon
+frxna^Narbonne
+frxrn^Redon
+frxro^La Roche sur Yon
+frxrs^Les Arcs Draguignan
+frxsh^St Pierre des Corps
+frxsj^St Quentin
+frxsk^St Raphaël Valescure
+frxst^Saintes
+frxsy^Sète
+frxtb^Tarbes
+frxtd^Saint-Dié-des-Vosges
+frxth^Thionville
+frxuy^Auray
+frxvo^Vesoul
+frxvs^Valenciennes
+frxvz^Vierzon Ville
+frxyt^Toulouse Matabiau
+frzao^Cahors
