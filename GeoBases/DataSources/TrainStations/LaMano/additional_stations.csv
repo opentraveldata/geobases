@@ -1,0 +1,44 @@
+#
+# Added manually
+#
+# Some entries are commented because they were not 
+# in the GareEnMouvements base, but there were matches
+# in the RFF file, so adding them again would create
+# duplicates
+#
+# France
+#
+# England
+enlon^London Saint-Pancras^51.529993^-0.125002
+#
+# Switzerland
+#swbal^Bâle^47.5479^7.5880
+swgen^Genève-Cornavin^46.210048^6.14279
+swzur^Zurich HBF^47.377778^8.540278
+swber^Bern^46.95^7.416667
+#
+# Belgium
+bebru^Bruxelles-Midi^50.835278^4.335833
+belux^Luxembourg^49.599831^6.134436
+#
+# Deutschland
+destu^Stuttgart HBF^48.784181^9.181627
+deber^Berlin HBF^52.525278^13.369445
+demun^Munchen HBF^48.140833^11.555
+deham^Hamburg HBF^53.552778^10.006389
+dehaa^Hamburg Altona^53.55^9.93333
+defra^Frankfurt Am Main HBF^50.0625^8.3545
+#
+# Netherlands
+neamd^Amsterdam Central^52.379005^4.900289
+#
+# Italy
+#itven^Vintimille^43.792669^7.610058
+#
+# Russia
+rubel^Moskva Belorusskaia^55.776389^37.58027
+#
+# Spain
+#spiru^Irun^43.3392^-1.8003
+#spbou^Portbou^42.424702^3.157838
+spmad^Madrid Chamartín^40.4725^-3.681667
