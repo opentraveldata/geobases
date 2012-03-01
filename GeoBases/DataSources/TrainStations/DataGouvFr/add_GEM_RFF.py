@@ -22,12 +22,12 @@ def match(name, lat, lng, geoBase):
     
 
     # LEVENSHTEIN PROJECTION :)
-    lmatch, lL  = geoBase.fuzzyGetCached(name, 'name', verbose=False)
+    lL, lmatch  = geoBase.fuzzyGetCached(name, 'name', verbose=False)
     lmatch_name = geoBase.get(lmatch, 'name')
     lmatch_lat  = geoBase.get(lmatch, 'lat')
     lmatch_lng  = geoBase.get(lmatch, 'lng')
     
-    lD = haversine(lat, lng, lmatch_lat, lmatch_lng)
+    lD = haversine((lat, lng), (lmatch_lat, lmatch_lng))
 
 
     if lD < 1.0 and lL == 1.0:

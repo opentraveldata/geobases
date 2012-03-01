@@ -44,6 +44,8 @@ Examples for stations::
 from __future__ import with_statement
 
 import heapq
+import numpy as np
+from datetime import datetime
 from itertools import groupby
 
 try:
@@ -80,7 +82,7 @@ class GeoBase(object):
         Import successful from ...
         Available info for things: ...
         >>> geo_m = GeoBase(data='mix')
-        >>> 
+        >>>
         >>> GeoBase(data='odd')
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix']
@@ -95,6 +97,17 @@ class GeoBase(object):
         # An other cache if the algorithms are failing on a single
         # example, we first look in this cache
         self._bias_cache_fuzzy = {}
+
+        # For aggregation function
+        self._date_formats = [
+            'year',
+            'month',
+            'day',
+            'month_of_year',
+            'day_of_week',
+            'day_of_month'
+        ]
+        self._default_date_format = "%Y%m%d"
 
         if data == 'airports':
             if source is None:
@@ -256,6 +269,39 @@ class GeoBase(object):
             print "Available info for things: %s" % self._headers
 
 
+    def changeDateFormat(self, new_date_format):
+        '''
+        Change default date format for aggregation function.
+        '''
+        self._default_date_format = new_date_format
+
+
+    def _convertDate(self, date, field):
+        '''
+        Method to convert dates, used for aggregation algorithms.
+
+        >>> geo_a._convertDate("20101026", "month")
+        '201010'
+        >>> geo_a._convertDate("20101026", "day_of_week")
+        'Tuesday'
+        >>> geo_a.changeDateFormat("%Y/%m/%d")
+        >>> geo_a._convertDate("2010/10/26", "day_of_week")
+        'Tuesday'
+        >>> geo_a.changeDateFormat("%Y%m%d")
+        '''
+
+        dt = datetime.strptime(date, self._default_date_format)
+
+        if   field == 'year'         : return dt.strftime("%Y")
+        elif field == 'month'        : return dt.strftime("%Y%m")
+        elif field == 'day'          : return dt.strftime("%Y%m%d")
+        elif field == 'day_of_week'  : return dt.strftime("%A")
+        elif field == 'day_of_month' : return dt.strftime("%d")
+        elif field == 'month_of_year': return dt.strftime("%B")
+        else:
+            raise ValueError("Bad date format, not in %s" % self._date_formats)
+
+
     def get(self, key, field=None):
         '''
         Simple get on the database.
@@ -288,7 +334,7 @@ class GeoBase(object):
         except KeyError:
 
             if key not in self._things:
-                raise KeyError("Thing not found: %s" % key)
+                raise KeyError("Thing not found: %s" % str(key))
 
             raise KeyError("Field %s not in %s" % (field, self._headers))
 
@@ -296,34 +342,47 @@ class GeoBase(object):
             return res
 
 
-    def safeGet(self, key, field=None, verbose=True):
+    def _extGet(self, key, field=None):
         '''
-        Same as get, but exception *shall not pass*!!
+        Same as get, but with useful addition for aggregation.
 
         :param key:     the key of the thing (like 'SFO')
         :param field:   the field (like 'name' or 'lat')
         :param verbose: display information of potential catched exceptions
         :returns:       the needed information
 
-        >>> geo_a.safeGet('CDG', 'city_code')
+        >>> geo_a._extGet('CDG', 'city_code')
         'PAR'
-        >>> geo_t.safeGet('frnic', 'name')
+        >>> geo_t._extGet('frnic', 'name')
         'Nice-Ville'
+        >>> geo_t._extGet('frnic', '*')
+        '*'
+        >>> geo_t._extGet('frnic', None)
+        'frnic'
 
         This get function raise exception when input is not correct.
 
-        >>> geo_t.safeGet('frnic', 'not_a_field')
-        "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
-        >>> geo_t.safeGet('frmoron', 'name')
-        'Thing not found: frmoron'
+        >>> geo_t._extGet('frnic', 'not_a_field')
+        Traceback (most recent call last):
+        ValueError: Bad field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type'] or ['year', 'month', 'day', 'month_of_year', 'day_of_week', 'day_of_month']
+        >>> geo_t._extGet('frmoron', 'name')
+        Traceback (most recent call last):
+        KeyError: 'Thing not found: frmoron'
         '''
-        try:
+
+        if field is None:
+            return key
+
+        if field == '*':
+            return '*'
+
+        if field in self._headers:
             return self.get(key, field)
 
-        except KeyError as details:
-            if verbose:
-                print details
-            return
+        if field in self._date_formats:
+            return self._convertDate(key, field)
+
+        raise ValueError("Bad field %s not in %s or %s" % (field, self._headers, self._date_formats))
 
 
     def multiGet(self, T_key, T_field):
@@ -341,57 +400,128 @@ class GeoBase(object):
         ('PAR', 'France')
         >>> geo_t.multiGet(('frnic', 'frxat', 'frpmo'), ('*', None, 'name'))
         ('*', 'frxat', 'Paris-Montparnasse')
+        >>> geo_a.multiGet(('ORY', ), ('city_code', ))
+        ('PAR',)
+        >>> geo_a.multiGet('ORY', None)
+        'ORY'
         '''
 
         # Ok we manage moronic user input :), but really
         # the spirit is to give tuples
         if not isinstance(T_field, tuple):
-            T_field = (T_field, )
-
-        if not isinstance(T_key, tuple):
-            T_key = (T_key, )
-
-        if len(T_key) != len(T_field):
-            raise IndexError("%s and %s have different size" % (T_key, T_field))
-
-        res = []
+            return self._extGet(T_key, T_field)
 
         # Loop in the tuple
-        for k in xrange(len(T_field)):
+        return tuple(self._extGet(k, f) for k, f in zip(T_key, T_field))
 
-            if T_field[k] is None:
-                res.append(T_key[k])
 
-            elif T_field[k] == '*':
-                res.append('*')
+
+    def aggregation(self, dict_data, T_field, op='+', safe_mode=False, quiet=False):
+        '''
+        The aggregation function.
+
+        >>> test = {'NCE':15, 'ORY':20, 'AFW':50, 'CDG':27, 'DFW':5}
+        >>> geo_a.aggregation(test, 'country_code')
+        {'FR': 62, 'US': 55}
+
+        >>> test = { ('ORY', 'CDG', '20061101'): 4,
+        ...          ('ORY', 'NCE', '20061108'): 5,
+        ...          ('AAA', 'NCE', '20061201'): 5 }
+        >>> geo_a.aggregation(test,
+        ...                   ('*', 'city_code', 'year'),
+        ...                   op=('+', 'mean', 'keep'))
+        {('*', 'NCE', '2006'): (10, 5.0, [5, 5]), ('*', 'PAR', '2006'): (4, 4.0, [4])}
+
+        >>> geo_a.aggregation(test,
+        ...                   ('country_code', 'country_code', 'day_of_week'),
+        ...                   int.__add__)
+        {('FR', 'FR', 'Wednesday'): 9, ('PF', 'FR', 'Friday'): 5}
+        >>> geo_a.aggregation(test,
+        ...                   ('*', '*', 'day_of_week'),
+        ...                   'mean')
+        {('*', '*', 'Friday'): 5.0, ('*', '*', 'Wednesday'): 4.5}
+
+        >>> test = {'NCE':15, 'ORY':20, 'AFW':50, 'CDG':27, 'DFW':5, 'UNKNOWN_AIRPORT': 150}
+        >>> geo_a.aggregation(test,
+        ...                   'country_code')
+        Traceback (most recent call last):
+        KeyError: 'Thing not found: UNKNOWN_AIRPORT'
+        >>> geo_a.aggregation(test,
+        ...                     'country_code',
+        ...                     safe_mode=True)
+        /!\ Some keys were not found /!\: ['UNKNOWN_AIRPORT']
+        {'FR': 62, 'US': 55}
+        >>> geo_a.aggregation(test,
+        ...                   'country_code',
+        ...                   safe_mode=True,
+        ...                   quiet=True)
+        {'FR': 62, 'US': 55}
+
+        :param dict_data: is an input dictionary of airports, \
+            values should be data implementing __add__ method, like int \
+            and keys are tuple as ('NCE', '2006')
+        :param T_field: tuple of characteristics used \
+            to create groups ('country' will group airports by country)
+        :param op: specify the type of operation \
+            to calculate the value of aggregated data (sum, mean, ...)
+        '''
+
+        # aggregaData is a dictionary containing groups of airports sharing the
+        # same characteristics (given by T_field)
+        aggreg_data = {}
+        exception_keys = []
+
+        for key in dict_data:
+
+            # First, we convert the key which is a tuple
+            try:
+                agg_key = self.multiGet(key , T_field)
+
+            except KeyError as e:
+                if not safe_mode:
+                    raise
+                else:
+                    exception_keys.append(key)
 
             else:
-                res.append(self.get(T_key[k], T_field[k]))
+                if agg_key not in aggreg_data:
+                    aggreg_data[agg_key] = []
 
-        if len(res) == 1:
-            return res[0]
+                aggreg_data[agg_key].append(dict_data[key])
 
-        return tuple(res)
+        # For each group of airports, we can the result
+        for agg_key, group in aggreg_data.iteritems():
+            aggreg_data[agg_key] = _reduceGroup(group, op)
+
+        if exception_keys and not quiet:
+            print "/!\ Some keys were not found /!\: %s" % exception_keys
+
+        return aggreg_data
 
 
+    def getLocation(self, key):
+        '''
+        Returns proper geocode.
 
-    def getPositions(self):
+        >>> geo_a.getLocation('AGN')
+        (57.50..., -134.585...)
+        '''
+        return float(self.get(key, 'lat')), float(self.get(key, 'lng'))
+
+
+    def iterLocations(self):
         '''
         Returns all positions.
 
         :returns: a list of all (key, lat, lng) in the database
 
-        >>> geo_a.getPositions()
-        [('AGN', '57.50...', '-134.585...'), ('AGM', '65.6...
+        >>> list(geo_a.iterLocations())
+        [('AGN', (57.50..., -134.585...)), ('AGM', (65.6...
         '''
-
-        return [
-            (thing, self.get(thing, 'lat'), self.get(thing, 'lng'))
-            for thing in self._things
-        ]
+        return ( (key, self.getLocation(key)) for key in self._things )
 
 
-    def getByField(self, field):
+    def iterField(self, field):
         '''
         Get list of all field data for all entries.
         For example, if you want to know all names of all things.
@@ -400,33 +530,11 @@ class GeoBase(object):
         :returns:     a list of all fields, like ['Orly', 'Blagnac', ...] \
             for field 'name'
 
-        >>> geo_t.getByField('name')
+        >>> list(geo_t.iterField('name'))
         ['Ballersdorf', ...
         '''
 
-        return [
-            self.get(thing, field)
-            for thing in self._things
-        ]
-
-
-    def getByThing(self, key):
-        '''
-        Get list of all data for one key.
-
-        :param key: the thing we want the information of
-        :returns:   a list of the data
-
-        >>> geo_a.getByThing('ORY')
-        ['ORY', 'Paris-Orly', 'PAR', 'FR', 'France', '48.725...', '2.359...']
-        '''
-
-        #print self._things[key]
-        # Warning: problem to fetch with new headers
-        return [
-            self.get(key, field)
-            for field in self._headers
-        ]
+        return ( self.get(key, field) for key in self._things )
 
 
     def __iter__(self):
@@ -500,10 +608,7 @@ class GeoBase(object):
 
         for thing in self._things:
 
-            dist = haversine(self.get(thing, 'lat'),
-                             self.get(thing, 'lng'),
-                             lat,
-                             lng)
+            dist = haversine(self.getLocation(thing), (lat, lng))
 
             if dist <= radius:
                 near.append((dist, thing))
@@ -568,10 +673,7 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = self._things.iterkeys()
 
-        iterable = ( (haversine(self.get(thing, 'lat'),
-                                self.get(thing, 'lng'),
-                                lat,
-                                lng), thing) for thing in from_keys )
+        iterable = ( (haversine(self.getLocation(key), (lat, lng)), key) for key in from_keys )
 
         return heapq.nsmallest(N, iterable)
 
@@ -603,11 +705,11 @@ class GeoBase(object):
         :returns:           a couple with the best match and the distance found
 
         >>> geo_t.fuzzyGet('Marseille Charles', 'name')
-        ('frmsc', 0.8...)
+        (0.8..., 'frmsc')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name')
-        ('CDG', 0.78...)
+        (0.78..., 'CDG')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
-        [('CDG', 0.78...), ('HUX', 0.60...), ('LBG', 0.57...)]
+        [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
         '''
 
         if from_keys is None:
@@ -616,12 +718,13 @@ class GeoBase(object):
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
-        iterable = ( (key, mod_leven(fuzzy_value, self.get(key, field))) for key in from_keys )
+        iterable = ( (mod_leven(fuzzy_value, self.get(key, field)), key)
+                     for key in from_keys )
 
         if approximate is None:
-            return max(iterable, key=lambda t: t[1])
+            return max(iterable)
 
-        return heapq.nlargest(approximate, iterable, key=lambda t: t[1])
+        return heapq.nlargest(approximate, iterable)
 
 
 
@@ -639,14 +742,14 @@ class GeoBase(object):
             n best matches
 
         >>> geo_a.fuzzyGet('Brussels', 'name', approximate=None)
-        ('BQT', 0.61...)
+        (0.61..., 'BQT')
         >>> geo_a.get('BQT', 'name')  # Brussels just matched on Brest!!
         'Brest'
         >>> geo_a.multiGet(('BRU', 'BRU', 'BRU'), ('lat', 'lng', 'name')) # We wanted BRU for 'Bruxelles'
         ('50.90...', '4.48...', 'Bruxelles National')
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
         >>> geo_a.fuzzyGetAroundLatLng('50.9013890', '4.4844440', 20, 'Brussels', 'name')
-        ('BRU', 0.46...)
+        (0.46..., 'BRU')
         '''
 
         nearest = ( key for dist, key in self.findNearPoint(lat, lng, radius) )
@@ -690,20 +793,20 @@ class GeoBase(object):
         :returns:           the best match
 
         >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')
-        ('frmsc', 0.8...)
+        (0.8..., 'frmsc')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
-        ('CDG', 0.78...)
+        (0.78..., 'CDG')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=2, show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
-        [('CDG', 0.78...), ('HUX', 0.60...)]
+        [(0.78..., 'CDG'), (0.60..., 'HUX')]
 
         Some biasing:
 
         >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 'Biased result')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, show_bad=(0, 1)) # Cache there
-        ('CDG', 0.78...)
+        (0.78..., 'CDG')
         >>> geo_a.clearCache()
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None)
         Using bias: ('paris+de+gaulle', 'name', None)
@@ -775,13 +878,13 @@ class GeoBase(object):
 
         for m in matches:
 
-            if m[1] >= show_bad[0] and m[1] < show_bad[1]:
+            if m[0] >= show_bad[0] and m[0] < show_bad[1]:
 
                 print "[%.2f] %25s -> %25s (%5s)" % \
-                    (m[1],
+                    (m[0],
                      '+'.join(clean(fuzzy_value)),
-                     '+'.join(clean(self.get(m[0], field))),
-                     m[0])
+                     '+'.join(clean(self.get(m[1], field))),
+                     m[1])
 
 
 
@@ -799,12 +902,7 @@ class GeoBase(object):
         683.526...
         '''
 
-        return haversine(
-            self.get(key0, 'lat'),
-            self.get(key0, 'lng'),
-            self.get(key1, 'lat'),
-            self.get(key1, 'lng')
-        )
+        return haversine(self.getLocation(key0), self.getLocation(key1))
 
 
 
@@ -911,7 +1009,7 @@ class GeoBase(object):
         '''
         return sorted([
             (len(list(g)), k)
-            for k, g in groupby(sorted(self.getByField(field)))
+            for k, g in groupby(sorted(self.iterField(field)))
         ])
 
 
@@ -924,10 +1022,49 @@ class GeoBase(object):
         :returns:           None
         '''
 
-        json.dump(dict( (key, self.get(key)) for key in self ), 
-                  open(output_name, 'w'), 
+        json.dump(dict( (key, self.get(key)) for key in self ),
+                  open(output_name, 'w'),
                   indent=indent)
 
+
+
+def _reduceGroup(group, op):
+    '''
+    This method is protected and shouldnt be used.
+    It computates a group of airports, after aggregation, to have
+    the aggregate value for the group.
+
+    >>> _reduceGroup([1, 2, 6], '+')
+    9
+    >>> _reduceGroup([1.0, 2, 6], '+')
+    9.0
+    >>> _reduceGroup([1, 2, 6], 'var')
+    7.0
+    >>> _reduceGroup([1, 2, 6], ('var', 'mean'))
+    (7.0, 3.0)
+
+    :param group: a dictionary of values
+    :param op: a function indicating which operation the method will use int.__add__, int.__mul__ should work if values are int
+    '''
+
+    if not group:
+        raise ValueError("Empty group")
+
+    if isinstance(op, tuple):
+        return tuple(_reduceGroup(group, o) for o in op)
+
+    # Warning: will work for floats,
+    # But for other classes sum(), /, ** have to be defined
+    if op == 'mean': return np.mean(group)
+    if op == 'var' : return np.var(group, ddof=1)
+    if op == 'sd'  : return np.sd(group, ddof=1)
+
+    if op == 'keep': return group
+
+    if op == '+': op = group[0].__class__.__add__
+    if op == '*': op = group[0].__class__.__mul__
+
+    return reduce(op, group)
 
 
 def _test():

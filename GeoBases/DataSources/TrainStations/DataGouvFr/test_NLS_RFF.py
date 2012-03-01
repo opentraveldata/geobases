@@ -6,14 +6,14 @@ from SysUtils import localToFile, addTopLevel
 addTopLevel(__file__, 4)
 
 from GeoBases.GeoBaseModule import GeoBase
-from GeoBases.GeoUtils import haversine
+#from GeoBases.GeoUtils import haversine
 from GeoBases.LevenshteinUtils import mod_leven
 
 
 def match(name, geoBase):
 
     # LEVENSHTEIN PROJECTION :)
-    match, L  = geoBase.fuzzyGetCached(name, 'name', verbose=False)
+    L, match   = geoBase.fuzzyGetCached(name, 'name', verbose=False)
     match_name = geoBase.get(match, 'name')
 
     return (L, match, match_name)
