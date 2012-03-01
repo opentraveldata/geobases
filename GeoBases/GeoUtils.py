@@ -19,7 +19,7 @@ Functions frequently used by other modules:
 
 Simple examples::
 
-    >>> haversine(48.84, 2.367, 43.70, 7.26) # Paris -> Nice
+    >>> haversine_precise(48.84, 2.367, 43.70, 7.26) # Paris -> Nice
     683.85...
     >>> prog_point(48.84, 2.367, 35.5522, 139.7796, 0.001, accuracy=0.0001)
     (48.91..., 2.43...)
@@ -73,8 +73,23 @@ def unradian(a):
     return float(a) * 180 / pi
 
 
+def haversine(L0, L1):
+    '''
+    As a matter of fact, it is easier for other
+    libraries to just use two parameters. Long story.
 
-def haversine(lat0, lng0, lat1, lng1):
+    :param L0: the LatLng tuple of the first point
+    :param L1: the LatLng tuple of the second point
+    :returns:    the distance in kilometers
+
+    >>> haversine((48.84, 2.367), (43.70, 7.26)) # Paris -> Nice
+    683.85...
+    '''
+    return haversine_precise(L0[0], L0[1], L1[0], L1[1])
+
+
+
+def haversine_precise(lat0, lng0, lat1, lng1):
     '''
     A function to compute the shortest path distance
     between two points on a sphere, using Haversine formula.
@@ -85,9 +100,9 @@ def haversine(lat0, lng0, lat1, lng1):
     :param lng1: the longitude of the second point
     :returns:    the distance in kilometers
 
-    >>> haversine(48.84, 2.367, 43.70, 7.26) # Paris -> Nice
+    >>> haversine_precise(48.84, 2.367, 43.70, 7.26) # Paris -> Nice
     683.85...
-    >>> haversine(48.84, 2.367, 35.5522, 139.7796) # Paris -> Tokyo
+    >>> haversine_precise(48.84, 2.367, 35.5522, 139.7796) # Paris -> Tokyo
     9730.22...
     '''
 
