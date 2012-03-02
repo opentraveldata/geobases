@@ -76,8 +76,10 @@ def unradian(a):
 def haversine(L0, L1):
     '''
     As a matter of fact, it is easier for other
-    libraries to just use two parameters. Long story.
-
+    libraries to just use two parameters. 
+    Exposing this function is more compliant with
+    geohash signatures and getLocations() geobase function.
+    
     :param L0: the LatLng tuple of the first point
     :param L1: the LatLng tuple of the second point
     :returns:    the distance in kilometers
