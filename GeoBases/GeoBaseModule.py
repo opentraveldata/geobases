@@ -9,7 +9,7 @@ airports or train stations, and then provides tools to browse it.
 
 It relies on two other modules:
 
-    - Geoutils: to compute haversine distances between points
+    - GeoUtils: to compute haversine distances between points
     - LevenshteinUtils: to calculate distances between strings. Indeed, we need
       a good tool to do it, in order to recognize things like station names
       in schedule files where we do not have the station id
@@ -270,6 +270,8 @@ class GeoBase(object):
 
         >>> geo_a.get('CDG', 'city_code')
         'PAR'
+        >>> geo_a.get('BRU', ('lat', 'lng', 'name')) # We wanted BRU for 'Bruxelles'
+        ('50.90...', '4.48...', 'Bruxelles National')
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
         >>>
