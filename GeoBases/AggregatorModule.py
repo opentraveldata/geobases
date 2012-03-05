@@ -53,6 +53,8 @@ class Aggregator(object):
     
     >>> Aggregator(geo_a, ('*', 'city_code', 'year'), date_format="%Y/%m/%d").add_from_dict(test).aggregate(final=False).add_from_dict(test).aggregate()
     {('*', 'NCE', '2006'): 20, ('*', 'PAR', '2006'): 8}
+    >>> Aggregator(geo_a, ('country_code', 'city_code')).add(('ORY', 'CDG'), 4).aggregate(final=False).add(('ORY', 'SFO'), 3).aggregate()
+    {('FR', 'SFO'): 3, ('FR', 'PAR'): 4}
     
     Way to handle errors::
     
