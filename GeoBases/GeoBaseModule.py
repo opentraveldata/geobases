@@ -44,12 +44,6 @@ Examples for stations::
 from __future__ import with_statement
 
 import heapq
-from itertools import groupby
-
-try:
-    import simplejson as json
-except ImportError:
-    import json
 
 from SysUtils         import localToFile
 from GeoUtils         import haversine
@@ -773,54 +767,6 @@ class GeoBase(object):
 
         del self._things[key]
 
-
-    def occurrences(self, field):
-        '''
-        Counts occurrences for a field.
-
-        :param field: the concerned field, like 'city_code'
-        :returns:     a list of occurrences
-
-        >>> geo_a2 = GeoBase(data='airports_csv', verbose=False) # Other source
-        >>> geo_a2.get('CDG', 'region_code')
-        'EUROP'
-        >>> geo_a2.occurrences('region_code')
-        [(1, 'ID'),
-         (5, 'ATLAN'),
-         (19, 'NONE'),
-         (24, 'IOCEA'),
-         (146, 'EEURO'),
-         (160, 'CAMER'),
-         (181, 'CARIB'),
-         (182, 'PACIF'),
-         (289, 'MEAST'),
-         (354, 'EURAS'),
-         (471, 'SEASI'),
-         (777, 'ASIA'),
-         (1036, 'SAMER'),
-         (1171, 'AFRIC'),
-         (1290, 'AUSTL'),
-         (1971, 'EUROP'),
-         (3172, 'NAMER')]
-        '''
-        return sorted([
-            (len(list(g)), k)
-            for k, g in groupby(sorted(self.iterField(field)))
-        ])
-
-
-    def dumpJson(self, output_name, indent=4):
-        '''
-        Dumps a json representation of the structure.
-
-        :param output_name: name of the output file
-        :param indent:      if None, the json will not be indented
-        :returns:           None
-        '''
-
-        json.dump(dict( (key, self.get(key)) for key in self ),
-                  open(output_name, 'w'),
-                  indent=indent)
    
 
 def _test():
