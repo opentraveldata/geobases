@@ -1,21 +1,43 @@
 
+========
 GeoBases
---------------------------------------------------------------------------------
+========
+
+All doc has been moved here for this package:
+    http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases
+
+To generate packages (this will produce rpm and tar.gz files):
+    rm dist/*
+    python setup.py bdist --formats=rpm
+
+This package may be installed using:
+    pip install --upgrade --user dist/GeoBase.whatever.tar.gz
+
+If you install a package in user space, you may want to check
+that your ~/.local/bin is in your $PATH, and that Python knows 
+where you site-package is (check your $PYTHONPATH).
+This line should be added to your ~/.zshrc anyway:
+    export PATH=$PATH:$HOME/.local/bin
+
+
+===========
+Source code
+===========
+
 
 The master repository for that data processing project is located
 on the Ori private Gitorious platform:
-http://gitorious.orinet.nce.amadeus.net/geobases
+    http://gitorious.orinet.nce.amadeus.net/geobases
+
 The default branch is 'trunk'.
 
-
 Hence, in order to clone it, do something like:
-mkdir -p ~/dev/srh
-cd ~/dev/srh
-git clone git@gitorious.orinet.nce.amadeus.net:geobases/geobases.git
-cd geobases
-git checkout trunk
-
+    mkdir -p ~/dev/srh
+    cd ~/dev/srh
+    git clone git@gitorious.orinet.nce.amadeus.net:geobases/geobases.git
+    cd geobases
+    git checkout trunk
 
 The project is managed on the ORI Redmine platform:
-http://redmine.orinet.nce.amadeus.net/projects/geobases
+    http://redmine.orinet.nce.amadeus.net/projects/geobases
 
