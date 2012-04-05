@@ -45,9 +45,10 @@ from __future__ import with_statement
 
 import heapq
 
-from SysUtils         import localToFile
-from GeoUtils         import haversine
-from LevenshteinUtils import mod_leven, clean
+from .SysUtils         import localToFile
+from .GeoUtils         import haversine
+from .LevenshteinUtils import mod_leven, clean
+from .GeoGridModule    import GeoGrid
 
 
 class GeoBase(object):
@@ -57,7 +58,7 @@ class GeoBase(object):
     the instance to get information.
     '''
 
-    def __init__(self, data, source=None, verbose=True):
+    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, verbose=True):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -74,29 +75,57 @@ class GeoBase(object):
         Import successful from ...
         Available info for things: ...
         >>> geo_m = GeoBase(data='mix')
+        Source was None, skipping loading...
         >>>
-        >>> GeoBase(data='odd')
+        >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
-        ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix']
+        ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix', 'feed']
+        >>>
+        >>> GeoBase(data='feed',
+        ...         source=localToFile(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
+        ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
+        ...         key_col=0,
+        ...         delimiter='^',
+        ...         verbose=False).get('ORY')
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
         self._things = {}
+        self._ggrid  = None
 
         # A cache for the fuzzy searches
         self._cache_fuzzy = {}
         # An other cache if the algorithms are failing on a single
         # example, we first look in this cache
         self._bias_cache_fuzzy = {}
-        
-      
-        if data == 'airports':
-            if source is None:
-                source = localToFile(__file__, "DataSources/Airports/airports_geobase.csv")
 
+        # Parameters for data loading
+        self._source    = source
+        self._delimiter = delimiter
+        self._key_col   = key_col
+        self._headers   = headers
+        self._verbose   = verbose
+
+        self._bases = [
+            'airports',
+            'airports_csv',
+            'ori_por',
+            'countries',
+            'stations',
+            'stations_nls',
+            'mix',
+            'feed'
+        ]
+
+        self._data = data
+
+        if data == 'airports':
+            self._source    = localToFile(__file__, "DataSources/Airports/airports_geobase.csv")
+            self._key_col   = 0
             self._delimiter = '^'
-            self._headers = [
+            self._headers   = [
                 'code',
                 'name',
                 'city_code',
@@ -106,18 +135,11 @@ class GeoBase(object):
                 'lng'
             ]
 
-            self._loadFile(source, verbose=verbose)
-
-            for thing in self._things:
-                self.set(thing, 'type', 'airport')
-
-
         elif data == 'airports_csv':
-            if source is None:
-                source = localToFile(__file__, "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv")
-
+            self._source    = localToFile(__file__, "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv")
+            self._key_col   = 0
             self._delimiter = '^'
-            self._headers = [
+            self._headers   = [
                 'code',
                 'ref_name',
                 'ref_name_2',
@@ -136,35 +158,58 @@ class GeoBase(object):
                 'location_type'     # C city, A airport, H heliport, O train station, R rail
             ]
 
-            self._loadFile(source, verbose=verbose)
-
-            # In fact here we have more than airports (cities, stations...)
-            #for thing in self._things:
-            #    self.set(thing, 'type', 'airport')
-
+        elif data == 'ori_por':
+            self._source    = localToFile(__file__, "DataSources/Airports/OriPor/ori_por_public.csv")
+            self._key_col   = 0
+            self._delimiter = '^'
+            self._headers   = [
+                'code',
+                'icao_code',
+                'is_geonames',
+                'geonameid',
+                'name',
+                'asciiname',
+                'alternatenames',
+                'lat',
+                'lng',
+                'fclass',
+                'fcode',
+                'country_code',
+                'cc2',
+                'admin1',
+                'admin2',
+                'admin3',
+                'admin4',
+                'population',
+                'elevation',
+                'gtopo30',
+                'timezone',
+                'gmt_offset',
+                'dst_offset',
+                'raw_offset',
+                'moddate',
+                'is_airport',
+                'is_commercial',
+                'city_code',
+                'state_code',
+                'region_code',
+                'location_type'
+            ]
 
         elif data == 'countries':
-            if source is None:
-                source = localToFile(__file__, "DataSources/Countries/list_countries.csv")
-
+            self._source    = localToFile(__file__, "DataSources/Countries/list_countries.csv")
+            self._key_col   = 1
             self._delimiter = '^'
-            self._headers = [
+            self._headers   = [
                 'name',
                 'code'
             ]
 
-            self._loadFile(source, key_col=1, verbose=verbose)
-
-            for thing in self._things:
-                self.set(thing, 'type', 'country')
-
-
         elif data == 'stations':
-            if source is None:
-                source = localToFile(__file__, "DataSources/TrainStations/stations_geobase.csv")
-
+            self._source    = localToFile(__file__, "DataSources/TrainStations/stations_geobase.csv")
+            self._key_col   = 0
             self._delimiter = '^'
-            self._headers = [
+            self._headers   = [
                 'code',
                 'lines',
                 'name',
@@ -173,35 +218,23 @@ class GeoBase(object):
                 'lng'
             ]
 
-            self._loadFile(source, verbose=verbose)
-
-            for thing in self._things:
-                self.set(thing, 'type', 'station')
-
-
         elif data == 'stations_nls':
-            if source is None:
-                source = localToFile(__file__, "DataSources/TrainStations/NLS/NLS CODES RefDataSNCF.csv")
-
+            self._source    = localToFile(__file__, "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv")
+            self._key_col   = 2
             self._delimiter = ','
-            self._headers = [
+            self._headers   = [
                 'uic_code',
                 'name',
                 'code',
                 'physical'
             ]
 
-            self._loadFile(source, key_col=2, verbose=verbose)
-
-            for thing in self._things:
-                self.set(thing, 'type', 'station')
-
+        elif data == 'feed':
+            # User input defining everything
+            pass
 
         elif data == 'mix':
-            if source is None:
-                source = None
-
-            self._delimiter = '^' # useless, no load for mix type
+            # No loading, filling after by user input
             self._headers = [
                 'code',
                 'name',
@@ -210,49 +243,104 @@ class GeoBase(object):
             ]
 
         else:
-            raise ValueError('Wrong data type. Not in %s' % ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix'])
+            raise ValueError('Wrong data type. Not in %s' % self._bases)
+
+        # Loading data
+        self._loadFile()
+        self.createGrid()
+
+        # Some additional content loaded
+        # This might be moved outside GeoBase one day,
+        # since its not really data agnostic
+        if data == 'airports':
+            for thing in self._things:
+                self.set(thing, 'type', 'airport')
+
+        elif data == 'countries':
+            for thing in self._things:
+                self.set(thing, 'type', 'country')
+
+        elif data in set(['stations', 'stations_nls']):
+            for thing in self._things:
+                self.set(thing, 'type', 'station')
+
+        elif data in set(['airports_csv', 'ori_por']):
+
+            refs_airport = set(['A', 'CA'])
+
+            for thing in self._things:
+                if self.get(thing, 'location_type') in refs_airport:
+                    self.set(thing, 'type', 'airport')
+                else:
+                    self.set(thing, 'type', 'por')
 
 
 
-    def _loadFile(self, source, key_col=0, verbose=True):
+    def _loadFile(self):
         '''Load the file and feed the self._things.
 
-        :param source: the path to the source file
         :param verbose: display informations or not during runtime
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
         '''
 
-        with open(source) as f:
+        # Someone told me that this increases speed :)
+        key     = self._key_col
+        lim     = self._delimiter
+        headers = self._headers
+
+
+        if self._source is None:
+            if self._verbose:
+                print 'Source was None, skipping loading...'
+            return
+
+        with open(self._source) as f:
 
             for row in f:
                 # Skip comments and empty lines
                 if not row or row.startswith('#'):
                     continue
 
-                row = row.strip().split(self._delimiter)
+                row = row.strip().split(lim)
 
                 # No duplicates ever
-                if row[key_col] in self._things:
-                    print "/!\ %s already in base: %s" % (row[key_col], str(self._things[row[key_col]]))
+                if row[key] in self._things:
+                    print "/!\ %s already in base: %s" % (row[key], str(self._things[row[key]]))
 
                 #self._headers represents the meaning of each column.
-                self._things[row[key_col]] = dict(
-                    (self._headers[i], row[i])
-                    for i in xrange(len(self._headers))
-                    if self._headers[i] is not None
-                )
+                self._things[row[key]] = dict((h, v) for h, v in zip(headers, row) if h is not None)
 
             # We remove None headers, which are not-loaded-columns
-            self._headers = [h for h in self._headers if h is not None]
+            self._headers = [h for h in headers if h is not None]
 
-        if verbose:
-            print "Import successful from %s" % source
+        if self._verbose:
+            print "Import successful from %s" % self._source
             print "Available info for things: %s" % self._headers
 
 
 
-    def get(self, key, field=None):
+    def createGrid(self):
+        '''
+        Create the grid for geographical indexation after loading the data.
+        '''
+
+        if 'lat' not in self._headers or \
+           'lng' not in self._headers:
+
+            if self._verbose:
+                print 'Not geocode support, skipping grid...'
+            return
+
+        self._ggrid = GeoGrid(radius=50, verbose=False)
+
+        for key, lat_lng in self.iterLocations():
+
+            self._ggrid.add(key, lat_lng)
+
+
+
+    def get(self, key, field=None, default=None):
         '''
         Simple get on the database.
         This get function raise exception when input is not correct.
@@ -264,12 +352,12 @@ class GeoBase(object):
 
         >>> geo_a.get('CDG', 'city_code')
         'PAR'
-        >>> geo_a.get('BRU', ('lat', 'lng', 'name')) # We wanted BRU for 'Bruxelles'
-        ('50.90...', '4.48...', 'Bruxelles National')
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
+        >>> geo_t.get('frahah', 'name', default='default')
+        'default'
         >>>
-        >>> geo_t.get('frnic', 'not_a_field')
+        >>> geo_t.get('frnic', 'not_a_field', default='default')
         Traceback (most recent call last):
         KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
         >>> geo_t.get('frmoron', 'name')
@@ -277,9 +365,6 @@ class GeoBase(object):
         KeyError: 'Thing not found: frmoron'
         '''
 
-        if isinstance(field, tuple):
-            return tuple(self.get(key, f) for f in field)
-        
         try:
             if field is None:
                 res = self._things[key]
@@ -288,10 +373,13 @@ class GeoBase(object):
 
         except KeyError:
 
-            if key not in self._things:
-                raise KeyError("Thing not found: %s" % str(key))
+            if key in self._things:
+                raise KeyError("Field %s not in %s" % (field, self._headers))
 
-            raise KeyError("Field %s not in %s" % (field, self._headers))
+            if default is not None:
+                return default
+
+            raise KeyError("Thing not found: %s" % str(key))
 
         else:
             return res
@@ -406,7 +494,7 @@ class GeoBase(object):
             dist = haversine(self.getLocation(thing), (lat, lng))
 
             if dist <= radius:
-                
+
                 yield (dist, thing)
 
 
@@ -431,6 +519,7 @@ class GeoBase(object):
         return self.findNearPoint(self.get(key, 'lat'),
                                   self.get(key, 'lng'),
                                   radius)
+
 
 
     def findClosestFromPoint(self, lat, lng, N=1, from_keys=None):
@@ -468,6 +557,55 @@ class GeoBase(object):
         iterable = ( (haversine(self.getLocation(key), (lat, lng)), key) for key in from_keys )
 
         return heapq.nsmallest(N, iterable)
+
+
+
+    def gridFindNearPoint(self, lat, lng, radius=50, double_check=True):
+        '''
+        Same as before but using the grid system GeoGrid().
+
+        >>> # Paris, airports <= 50km
+        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.gridFindNearPoint(48.84, 2.367, 50))]
+        ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+        >>>
+        >>> # Nice, stations <= 5km
+        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.gridFindNearPoint(43.70, 7.26, 5))]
+        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        '''
+        return self._ggrid.findNearPoint((lat, lng), radius, double_check)
+
+
+
+    def gridFindNearKey(self, key, radius=50, double_check=True):
+        '''
+        Same as before but using the grid system GeoGrid().
+
+        >>> sorted(geo_a.gridFindNearKey('ORY', 50)) # Orly, airports <= 50km
+        [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
+        >>> sorted(geo_t.gridFindNearKey('frnic', 5)) # Nice station, stations <= 5km
+        [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+        '''
+        return self._ggrid.findNearKey(key, radius, double_check)
+
+
+
+    def gridFindClosestFromPoint(self, lat, lng, N=1, double_check=True):
+        '''
+        Same as before but using the grid system GeoGrid().
+
+        >>> geo_a.gridFindClosestFromPoint(43.70, 7.26) # Nice
+        [(5.82..., 'NCE')]
+        >>> geo_a.gridFindClosestFromPoint(43.70, 7.26, N=3) # Nice
+        [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
+        >>> geo_t.gridFindClosestFromPoint(43.70, 7.26, N=1) # Nice
+        [(0.56..., 'frnic')]
+        >>>
+        >>> #from datetime import datetime
+        >>> #before = datetime.now()
+        >>> #for _ in range(100): s = geo_a.findClosestFromPoint(43.70, 7.26, N=3)
+        >>> #print datetime.now() - before
+        '''
+        return self._ggrid.findClosestFromPoint((lat, lng), N, double_check)
 
 
 
@@ -537,8 +675,8 @@ class GeoBase(object):
         (0.61..., 'BQT')
         >>> geo_a.get('BQT', 'name')  # Brussels just matched on Brest!!
         'Brest'
-        >>> geo_a.get('BRU', ('lat', 'lng', 'name')) # We wanted BRU for 'Bruxelles'
-        ('50.90...', '4.48...', 'Bruxelles National')
+        >>> geo_a.get('BRU', 'name') # We wanted BRU for 'Bruxelles'
+        'Bruxelles National'
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
         >>> geo_a.fuzzyGetAroundLatLng('50.9013890', '4.4844440', 20, 'Brussels', 'name')
         (0.46..., 'BRU')
@@ -767,14 +905,14 @@ class GeoBase(object):
 
         del self._things[key]
 
-   
+
 
 def _test():
     '''
     When called directly, launching doctests.
     '''
     import doctest
-    
+
     extraglobs = {
         'geo_a': GeoBase(data='airports', verbose=False),
         'geo_t': GeoBase(data='stations', verbose=False),
@@ -792,6 +930,5 @@ def _test():
 
 if __name__ == '__main__':
     _test()
-
 
 
