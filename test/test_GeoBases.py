@@ -25,7 +25,6 @@ if UPDIR not in sys.path:
 
 import GeoBases.GeoBaseModule    as GeoM
 import GeoBases.GeoGridModule    as GeoG
-import GeoBases.AggregatorModule as GeoA
 import GeoBases.GeoUtils         as GeoU
 import GeoBases.LevenshteinUtils as GeoL
 import GeoBases.SysUtils         as GeoSys
@@ -55,7 +54,6 @@ def test_suite():
 
     tests.addTests(doctest.DocTestSuite(GeoM, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoG, optionflags=opt, extraglobs=globsGeo))
-    tests.addTests(doctest.DocTestSuite(GeoA, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoU, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoL, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoSys, optionflags=opt))

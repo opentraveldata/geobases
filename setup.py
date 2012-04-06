@@ -11,14 +11,13 @@ setup(
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
     #license = open('COPYING').read(),
-    description = 'Some Geographical functions.',
+    description = 'Some geographical functions.',
     long_description = open('README').read(),
     #
     # Manage standalone scripts
     entry_points = {
         'console_scripts' : [
-            'GeoBase = GeoBaseMain:main',
-            'Aggregator = AggregatorMain:main'
+            'GeoBase = GeoBaseMain:main'
         ]
     },
     #packages=find_packages(),
@@ -26,8 +25,7 @@ setup(
         'GeoBases'
     ],
     py_modules = [
-        'GeoBaseMain',
-        'AggregatorMain'
+        'GeoBaseMain'
     ],
     install_requires = [
         'python_geohash', 
