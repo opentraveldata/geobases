@@ -19,7 +19,12 @@ where you site-package is (check your $PYTHONPATH).
 This line should be added to your ~/.zshrc anyway:
     export PATH=$PATH:$HOME/.local/bin
 
-
+Some precaution: if you are running debian/ubuntu, installation might
+fail due to lack of compilation tool after fresh installation. If you have
+an error like *Error: Python.h could not be found*, you can fix it with:
+	sudo apt-get install python-dev
+	
+	
 ===========
 Source code
 ===========

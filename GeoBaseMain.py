@@ -108,7 +108,7 @@ def scan_coords(input, geob):
 
 
 
-if __name__ == '__main__':
+def main():
 
     # Filter colored signals on terminals.
     # Necessary for Windows CMD
@@ -289,4 +289,8 @@ if __name__ == '__main__':
         for (h, k) in res:
             print '%s^%.5f' % (k, h)
 
+
+if __name__ == '__main__':
+    
+    main()
 
