@@ -22,7 +22,7 @@ def display_on_two_cols(a_list):
         print '\t%-15s\t%-15s' % p
 
 
-if __name__ == '__main__':
+def main():
 
     #
     # COMMAND LINE MANAGEMENT
@@ -160,4 +160,9 @@ if __name__ == '__main__':
 
     a.aggregate(output='csv', out=args['output'])
 
+
+if __name__ == '__main__':
+    
+    main()
+    
 

@@ -16,10 +16,11 @@ setup(
     #data_files = [
     #    ('GeoBases', ['README', 'COPYING', 'setup.py'])
     #],
-    #entry_points=("""
-    #              [console_scripts]
-    #              dates = dates.dates:main
-    #              """)
+    entry_points=("""
+                  [console_scripts]
+                  GeoBase = GeoBaseMain:main
+                  Aggregator = AggregatorMain:main
+                  """),
     #packages=find_packages(),
     packages = [
         'GeoBases'
@@ -44,9 +45,9 @@ setup(
             'DataSources/*/*/*csv'
         ]
     },
-    scripts = [
-        'Aggregator',
-        'GeoBase'
-    ]
+    #scripts = [
+    #    'Aggregator',
+    #    'GeoBase'
+    #]
 
 )
