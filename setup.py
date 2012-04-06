@@ -28,6 +28,7 @@ setup(
         'GeoBaseMain'
     ],
     install_requires = [
+        'argparse',
         'python_geohash', 
         'python_Levenshtein', 
         'Flask', 
