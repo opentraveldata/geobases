@@ -9,6 +9,7 @@ This module is an aggregator.
 
 from GeoBases.GeoBaseModule import GeoBase
 
+import os
 import os.path as op
 import argparse
 
@@ -19,22 +20,33 @@ import colorama
 import sys
 
 
+def getTermSize():
+
+    size  = os.popen('stty size', 'r').read()
+
+    if not size:
+        return (80, 160)
+
+    return tuple(int(d) for d in size.split())
+
+
+
 class RotatingColors(object):
 
     def __init__(self):
 
         self._availables = [
              ('white', None),
-             ('cyan', 'on_grey')     
+             ('cyan', 'on_grey')
         ]
-        
+
         self._current = 0
 
 
     def next(self):
 
         self._current += 1
-        
+
         if self._current == len(self._availables):
             self._current = 0
 
@@ -48,12 +60,12 @@ class RotatingColors(object):
 
     def getEmph(self):
 
-        return ('grey', 'on_green')     
+        return ('grey', 'on_green')
 
 
     def getHeader(self):
 
-        return ('grey', 'on_yellow')     
+        return ('grey', 'on_yellow')
 
 
 def display(geob, list_of_things, omit, show):
@@ -61,49 +73,74 @@ def display(geob, list_of_things, omit, show):
     if show is None:
         show = geob._headers
 
+    # Different behaviour given
+    # number of results
+    # We adapt the width between 25 and 40 
+    #given number of columns and term width
+    n = len(list_of_things)
+
+    lim = min(40, max(25, int(getTermSize()[1] / float(n+1))))
+
+    if n == 1:
+        # We do not truncate names if only one result
+        truncate = None
+    else:
+        truncate = lim
+
+    # Highlighting some rows
     important = set(['code', 'name'])
 
     c = RotatingColors()
     col = c.getHeader()
 
-    sys.stdout.write('\n' + colored('%-25s' % 'ref', *col))
-    
-    for (h, k) in list_of_things:                    
-        sys.stdout.write(colored('%-25s' % h, *col))
-    
+    sys.stdout.write('\n' + fixed_width('ref', col, lim, truncate))
+
+    for (h, k) in list_of_things:
+        sys.stdout.write(fixed_width(h, col, lim, truncate))
+
     for f in show:
         if f not in omit:
-            
+
             if f in important:
                 col = c.getEmph()
             else:
                 col = c.get()
 
-            sys.stdout.write('\n' + colored('%-25s' % f, *col))
-            
-            for (h, k) in list_of_things:                    
-                sys.stdout.write(colored('%-25s' % geob.get(k, f), *col))
-            
+            sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
+
+            for (h, k) in list_of_things:
+                sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+
             c.next()
-    
+
     sys.stdout.write('\n')
 
 
-def scan_coords(input, geob):
-    
-    try:
-        coords = tuple(float(l) for l in input.split(',', 1))
 
-    except ValueError:        
-    
-        if input in g:
-            return g.getLocation(input)
+def fixed_width(s, col, lim=25, truncate=None):
+
+    if truncate is None:
+        truncate = 1000
+
+    return colored((('%-' + str(lim) + 's') % s)[0:truncate], *col)
+
+
+
+def scan_coords(u_input, geob):
+
+    try:
+        coords = tuple(float(l) for l in u_input.split(',', 1))
+
+    except ValueError:
+
+        if u_input in geob:
+            return geob.getLocation(u_input)
         else:
             return None
-    
+
     else:
         return coords
-            
+
 
 
 
@@ -128,8 +165,8 @@ def main():
     )'''
 
     parser.add_argument('keys',
-                        #type=argparse.FileType('r'), 
-                        default='-', 
+                        #type=argparse.FileType('r'),
+                        default='-',
                         nargs='+')
 
     parser.add_argument('-b', '--base',
@@ -173,9 +210,9 @@ def main():
     )
 
     parser.add_argument('-w', '--without_grid',
-        help = '''When performing a geographical search, a geographical index is used. 
-                        This may lead to inaccurate results in some (rare) cases. Adding this 
-                        option will disable the index, and browse the full data set to 
+        help = '''When performing a geographical search, a geographical index is used.
+                        This may lead to inaccurate results in some (rare) cases. Adding this
+                        option will disable the index, and browse the full data set to
                         look for the results.''',
         action='store_true'
     )
@@ -244,9 +281,9 @@ def main():
 
         if coords is None:
             print 'Key %s was not in GeoBase, for data "%s" and source %s' % \
-                (key, g._data, g._source)            
-            exit()
-        
+                (key, g._data, g._source)
+            exit(1)
+
         if args['without_grid']:
             res = sorted(g.findNearPoint(*coords, radius=limit))
         else:
@@ -259,9 +296,9 @@ def main():
 
         if coords is None:
             print 'Key %s was not in GeoBase, for data "%s" and source %s' % \
-                (key, g._data, g._source)            
-            exit()
-            
+                (key, g._data, g._source)
+            exit(1)
+
         if args['without_grid']:
             res = g.findClosestFromPoint(*coords, N=int(limit))
         else:
@@ -278,12 +315,12 @@ def main():
         if k not in g:
             print 'Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (k, g._data, g._source)
-            exit()
-        
+            exit(1)
+
     if not args['quiet']:
-        
+
         display(g, res, set(args['omit']), args['show'])
-        
+
         print '\nDone in %s' % (datetime.now() - before)
     else:
         for (h, k) in res:
@@ -291,6 +328,6 @@ def main():
 
 
 if __name__ == '__main__':
-    
+
     main()
 
