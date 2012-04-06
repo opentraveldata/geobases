@@ -6,12 +6,16 @@ GeoBases
 All doc has been moved here for this package:
     http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases
 
+To run the tests:
+    find ./ -name '*pyc' -exec rm {} \;
+    python test/test_GeoBases.py -v
+
 To generate packages (this will produce rpm and tar.gz files):
     rm dist/*
     python setup.py bdist --formats=rpm
 
 This package may be installed using:
-    pip install --upgrade --user dist/GeoBase.whatever.tar.gz
+    pip install --upgrade --user dist/GeoBases.whatever.tar.gz
 
 If you install a package in user space, you may want to check
 that your ~/.local/bin is in your $PATH, and that Python knows 
@@ -39,7 +43,7 @@ The default branch is 'trunk'.
 Hence, in order to clone it, do something like:
     mkdir -p ~/dev/srh
     cd ~/dev/srh
-    git clone git@gitorious.orinet.nce.amadeus.net:geobases/geobases.git
+    git clone git@gitorious.orinet.nce.amadeus.net:dataanalysis/geobases.git
     cd geobases
     git checkout trunk
 
