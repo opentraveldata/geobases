@@ -10,12 +10,13 @@ To run the tests:
     find ./ -name '*pyc' -exec rm {} \;
     python test/test_GeoBases.py -v
 
-To generate packages (this will produce rpm and tar.gz files):
-    rm dist/*
-    python setup.py bdist --formats=rpm
+To install the package:
+    git clone git@gitorious.orinet.nce.amadeus.net:dataanalysis/geobases.git
+    cd geobases
+    python setup.py install --user
 
-This package may be installed using:
-    pip install --upgrade --user dist/GeoBases.whatever.tar.gz
+You may try to remove the package with pip:
+    pip uninstall GeoBases
 
 If you install a package in user space, you may want to check
 that your ~/.local/bin is in your $PATH, and that Python knows 
