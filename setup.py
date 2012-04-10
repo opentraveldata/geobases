@@ -49,13 +49,13 @@ setup(
             "DataSources/TrainStations/stations_geobase.csv",
             "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv"
         ]
-    }
-
-    #data_files = [
-    #    ('GeoBases', ['README', 'COPYING', 'setup.py'])
-    #],
+    },
     #scripts = [
     #    'GeoBases/DataSources/CheckOriPorUpdates.sh'
-    #]
-
+    #],
+    data_files = [
+        ('test', [
+            'test/test_GeoBases.py'
+        ])
+    ]
 )
