@@ -51,8 +51,6 @@ setup(
         ]
     }
 
-
-
     #data_files = [
     #    ('GeoBases', ['README', 'COPYING', 'setup.py'])
     #],

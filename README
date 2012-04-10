@@ -18,6 +18,13 @@ To install the package:
 You may try to remove the package with pip:
     pip uninstall GeoBases
 
+To create source distribution (pip-installable):
+    python setup.py sdist --format=zip
+
+To create rpm packages
+    rm -rf build dist *.egg-info
+    python setup.py bdist_rpm
+
 If you install a package in user space, you may want to check
 that your ~/.local/bin is in your $PATH, and that Python knows 
 where you site-package is (check your $PYTHONPATH).
@@ -51,3 +58,14 @@ Hence, in order to clone it, do something like:
 The project is managed on the ORI Redmine platform:
     http://redmine.orinet.nce.amadeus.net/projects/geobases
 
+
+=================
+Note on packaging
+=================
+
+The manifest.in file is used to determine
+which files will be included in a source distribution.
+package_data directive in setup.py file is about which 
+file will be exported in site-package after installation.
+So you really need both if you want to produce installable
+packages like rpms or zip which can be installed afterwards.
