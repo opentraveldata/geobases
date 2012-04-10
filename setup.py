@@ -42,10 +42,17 @@ setup(
     package_data = {
         'GeoBases': [
             'DataSources/*sh', 
-            'DataSources/*/*csv', 
-            'DataSources/*/*/*csv'
+            "DataSources/Airports/airports_geobase.csv",
+            "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv",
+            "DataSources/Airports/OriPor/ori_por_public.csv",
+            "DataSources/Countries/list_countries.csv",
+            "DataSources/TrainStations/stations_geobase.csv",
+            "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv"
         ]
     }
+
+
+
     #data_files = [
     #    ('GeoBases', ['README', 'COPYING', 'setup.py'])
     #],
