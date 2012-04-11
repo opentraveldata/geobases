@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-This module is an aggregator.
+This module is a launcher for GeoBases webservices.
 '''
 
 from GeoBases.Webservice.Daemon import Daemon
@@ -14,7 +14,7 @@ from tornado.ioloop import IOLoop
 import sys
 
 
-class MyDaemon(Daemon):
+class WebSrvDaemon(Daemon):
 
     def run(self):
 
@@ -27,10 +27,10 @@ class MyDaemon(Daemon):
 
 def main():
 
-    daemon = MyDaemon('/tmp/daemon-geob.pid')
+    daemon = WebSrvDaemon('/tmp/daemon-geob.pid')
 
     if len(sys.argv) != 2:
-        print "Usage: %s {start|stop|restart|status}" % sys.argv[0]
+        print "Usage: %s {start|stop|restart|status|debugrun}" % sys.argv[0]
         sys.exit(2)
 
     if 'start' == sys.argv[1]:
@@ -44,6 +44,9 @@ def main():
 
     elif 'status' == sys.argv[1]:
         daemon.status()
+
+    elif 'debugrun' == sys.argv[1]:
+        daemon.debug()
 
     else:
         print "Unknown command \"%s\"" % sys.argv[1]
