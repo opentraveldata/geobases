@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup 
+
 #from distutils.core import setup 
+from setuptools import setup, find_packages 
 
 setup(
     name = 'GeoBases',
@@ -17,15 +18,18 @@ setup(
     # Manage standalone scripts
     entry_points = {
         'console_scripts' : [
-            'GeoBase = GeoBaseMain:main'
+            'GeoBase = GeoBaseMain:main',
+            'WebSrvGeoBases = WebSrvGeoBasesMain:main'
         ]
     },
     #packages=find_packages(),
     packages = [
-        'GeoBases'
+        'GeoBases',
+        'GeoBases.Webservice'
     ],
     py_modules = [
-        'GeoBaseMain'
+        'GeoBaseMain',
+        'WebSrvGeoBasesMain'
     ],
     install_requires = [
         'argparse',
