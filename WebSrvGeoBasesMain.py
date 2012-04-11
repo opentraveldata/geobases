@@ -30,7 +30,7 @@ def main():
     daemon = WebSrvDaemon('/tmp/daemon-geob.pid')
 
     if len(sys.argv) != 2:
-        print "Usage: %s {start|stop|restart|status|debugrun}" % sys.argv[0]
+        print "Usage: %s {start|stop|restart|status|foreground}" % sys.argv[0]
         sys.exit(2)
 
     if 'start' == sys.argv[1]:
@@ -45,7 +45,7 @@ def main():
     elif 'status' == sys.argv[1]:
         daemon.status()
 
-    elif 'debugrun' == sys.argv[1]:
+    elif 'foreground' == sys.argv[1]:
         daemon.debug()
 
     else:
