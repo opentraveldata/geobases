@@ -5,23 +5,16 @@
 Webservice
 '''
 
-from SysUtils import addTopLevel
-addTopLevel(__file__, 1)
+from .JsonEncodeUtils import my_jsonify
+from .JsonPUtils import support_jsonp
+
+from ..GeoBaseModule import GeoBase
 
 from flask import Flask, request, url_for, jsonify
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3ysdfsdR~XHH!jmN]LWX/,?RT'
 
-
-from GeoBaseModule import GeoBase
-from JsonEncodeUtils import my_jsonify
-from JsonPUtils import support_jsonp
-
-#try:
-#    from collections import OrderedDict
-#except ImportError:
-#    from ordereddict import OrderedDict
 
 VERBOSE = False
 
@@ -158,10 +151,10 @@ def _test():
     doctest.testmod()
 
 
+
 if __name__ == '__main__':
 
     _test()
 
-    app.run(host='0.0.0.0', debug=True, port=14003)
-
+    #app.run(host='0.0.0.0', debug=True, port=14003)
 
