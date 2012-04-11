@@ -68,7 +68,7 @@ class RotatingColors(object):
         return ('grey', 'on_yellow')
 
 
-def display(geob, list_of_things, omit, show):
+def display(geob, list_of_things, omit, show, important):
 
     if show is None:
         show = geob._headers
@@ -86,9 +86,6 @@ def display(geob, list_of_things, omit, show):
         truncate = None
     else:
         truncate = lim
-
-    # Highlighting some rows
-    important = set(['code', 'name'])
 
     c = RotatingColors()
     col = c.getHeader()
@@ -129,7 +126,7 @@ def fixed_width(s, col, lim=25, truncate=None):
 def scan_coords(u_input, geob):
 
     try:
-        coords = tuple(float(l) for l in u_input.split(',', 1))
+        coords = tuple(float(l) for l in u_input.split(','))
 
     except ValueError:
 
@@ -139,7 +136,12 @@ def scan_coords(u_input, geob):
             return None
 
     else:
-        return coords
+        if len(coords) == 2:
+            print '/!\ Geocode recognized: (%.3f, %.3f)' % coords
+            return coords
+        else:
+            print '/!\ Bad geocode format: %s' % u_input
+            return None
 
 
 
@@ -158,16 +160,10 @@ def main():
 
     parser.epilog = 'Example: python %s ORY' % parser.prog
 
-    '''parser.add_argument('keys',
-        help = 'Keys',
-        nargs = '+',
-        default='-'
-    )'''
-
     parser.add_argument('keys',
-                        #type=argparse.FileType('r'),
-                        default='-',
-                        nargs='+')
+        help='Main argument (key, name, geocode depending on search mode)',
+        nargs='+'
+    )
 
     parser.add_argument('-b', '--base',
         help = '''Choose a different base, default is ori_por. Also available are
@@ -256,7 +252,7 @@ def main():
     g = GeoBase(data=args['base'], verbose=False)
 
     if args['fuzzy'] or args['near'] or args['closest']:
-        key = args['keys'][0]
+        key = ' '.join(args['keys'])
     else:
         key = args['keys']
 
@@ -317,9 +313,13 @@ def main():
                 (k, g._data, g._source)
             exit(1)
 
+
+    # Highlighting some rows
+    important = set(['code', args['field']])
+
     if not args['quiet']:
 
-        display(g, res, set(args['omit']), args['show'])
+        display(g, res, set(args['omit']), args['show'], important)
 
         print '\nDone in %s' % (datetime.now() - before)
     else:
