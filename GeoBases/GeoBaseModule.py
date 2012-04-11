@@ -39,6 +39,22 @@ Examples for stations::
     >>> geo_t.haversine('frnic', 'frpaz')
     683.526...
 
+From any point of reference:
+
+    >>> geo = GeoBase(data='ori_por')
+    Import successful from ...
+    Available info for things: ...
+    No usable geocode for DEY [NULL,NULL], skipping point...
+    No usable geocode for LQS [NULL,NULL], skipping point...
+    No usable geocode for TJJ [NULL,NULL], skipping point...
+    No usable geocode for KYY [NULL,NULL], skipping point...
+    No usable geocode for QHX [NULL,NULL], skipping point...
+    No usable geocode for TGP [NULL,NULL], skipping point...
+    No usable geocode for ZQZ [NULL,NULL], skipping point...
+    No usable geocode for WXJ [NULL,NULL], skipping point...
+    No usable geocode for WEC [NULL,NULL], skipping point...
+    No usable geocode for BPO [NULL,NULL], skipping point...
+    No usable geocode for THJ [NULL,NULL], skipping point...
 '''
 
 from __future__ import with_statement
@@ -76,7 +92,6 @@ class GeoBase(object):
         Available info for things: ...
         >>> geo_m = GeoBase(data='mix')
         Source was None, skipping loading...
-        >>>
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix', 'feed']
@@ -336,7 +351,12 @@ class GeoBase(object):
 
         for key, lat_lng in self.iterLocations():
 
-            self._ggrid.add(key, lat_lng)
+            if lat_lng is None:
+                if self._verbose:
+                    print 'No usable geocode for %s [%s,%s], skipping point...' % \
+                            (key, self.get(key, 'lat'), self.get(key, 'lng'))
+            else:
+                self._ggrid.add(key, lat_lng)
 
 
 
@@ -393,7 +413,14 @@ class GeoBase(object):
         >>> geo_a.getLocation('AGN')
         (57.50..., -134.585...)
         '''
-        return float(self.get(key, 'lat')), float(self.get(key, 'lng'))
+        try:
+            loc = float(self.get(key, 'lat')), float(self.get(key, 'lng'))
+
+        except ValueError:
+            return None
+        else:
+            return loc
+
 
 
     def iterLocations(self):

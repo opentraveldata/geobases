@@ -34,15 +34,6 @@ from math import pi, cos, sin, acos, asin, tan, atan2, log, sqrt
 # kms, mean radius
 EARTH_RADIUS = 6371.0
 
-# kms, when coordinates on a point
-# raises an exception in formulas
-# it is often more simple to consider
-# that the point is far away
-HYPER_SPACE  = 99999999999999
-
-
-
-
 
 
 def radian(a):
@@ -108,21 +99,17 @@ def haversine_precise(lat0, lng0, lat1, lng1):
     9730.22...
     '''
 
-    try:
-        lat0 = radian(lat0)
-        lat1 = radian(lat1)
-        lng0 = radian(lng0)
-        lng1 = radian(lng1)
+    lat0 = radian(lat0)
+    lat1 = radian(lat1)
+    lng0 = radian(lng0)
+    lng1 = radian(lng1)
 
-        # Haversine
-        return 2 * EARTH_RADIUS * asin(sqrt(
-            sin(0.5 * (lat0 - lat1)) ** 2 +
-            sin(0.5 * (lng0 - lng1)) ** 2 *
-            cos(lat0) * cos(lat1)
-        ))
-
-    except ValueError:
-        return HYPER_SPACE
+    # Haversine
+    return 2 * EARTH_RADIUS * asin(sqrt(
+        sin(0.5 * (lat0 - lat1)) ** 2 +
+        sin(0.5 * (lng0 - lng1)) ** 2 *
+        cos(lat0) * cos(lat1)
+    ))
 
 
 
@@ -143,21 +130,16 @@ def haversine_simple(lat0, lng0, lat1, lng1):
     9730.22...
     '''
 
-    try:
-        lat0 = radian(lat0)
-        lat1 = radian(lat1)
-        lng0 = radian(lng0)
-        lng1 = radian(lng1)
+    lat0 = radian(lat0)
+    lat1 = radian(lat1)
+    lng0 = radian(lng0)
+    lng1 = radian(lng1)
 
-        return EARTH_RADIUS * acos(
-            sin(lat0) * sin(lat1) +
-            cos(lat0) * cos(lat1) *
-            cos(lng1 - lng0)
-        )
-
-    except ValueError:
-        return HYPER_SPACE
-
+    return EARTH_RADIUS * acos(
+        sin(lat0) * sin(lat1) +
+        cos(lat0) * cos(lat1) *
+        cos(lng1 - lng0)
+    )
 
 
 
