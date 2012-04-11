@@ -140,6 +140,13 @@ class Daemon(object):
         self.start()
 
 
+    def debug(self):
+        """
+        Not daemon version.
+        """
+        self.run()
+
+
     def status(self):
         """
         Display status information on process

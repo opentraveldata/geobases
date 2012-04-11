@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-This module is an aggregator.
+This module is a launcher for GeoBase.
 '''
 
 
