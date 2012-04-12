@@ -123,7 +123,7 @@ def fixed_width(s, col, lim=25, truncate=None):
 
 
 
-def scan_coords(u_input, geob):
+def scan_coords(u_input, geob, verbose):
 
     try:
         coords = tuple(float(l) for l in u_input.split(','))
@@ -137,11 +137,23 @@ def scan_coords(u_input, geob):
 
     else:
         if len(coords) == 2:
-            print '/!\ Geocode recognized: (%.3f, %.3f)' % coords
+            if verbose:
+                print '\nGeocode recognized: (%.3f, %.3f)' % coords
             return coords
         else:
-            print '/!\ Bad geocode format: %s' % u_input
+            if verbose:
+                print '\n/!\ Bad geocode format: %s' % u_input
             return None
+
+
+
+def display_on_two_cols(a_list):
+    '''
+    Some formatting for help.
+    '''
+
+    for p in zip(a_list[::2], a_list[1::2]):
+        print '\t%-15s\t%-15s' % p
 
 
 
@@ -158,7 +170,7 @@ def main():
     #
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
-    parser.epilog = 'Example: python %s ORY' % parser.prog
+    parser.epilog = 'Example: python %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
         help='Main argument (key, name, geocode depending on search mode)',
@@ -173,12 +185,12 @@ def main():
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
-                        match from the field given by --field option.''',
+                        match from the property given by --property option.''',
         action='store_true'
     )
 
-    parser.add_argument('-F', '--field',
-        help = '''When performing a fuzzy search, specify the field to be chosen.
+    parser.add_argument('-p', '--property',
+        help = '''When performing a fuzzy search, specify the property to be chosen.
                         Default is "name".''',
         default='name'
     )
@@ -269,11 +281,18 @@ def main():
 
     if args['fuzzy']:
 
-        res = g.fuzzyGet(key, args['field'], approximate=int(limit))
+        if args['property'] not in g._headers:
+
+            print '\n/!\ Wrong property "%s".' % args['property']
+            print 'For data type %s, you may select:' % args['base']
+            display_on_two_cols(list(g._headers))
+            exit(1)
+
+        res = g.fuzzyGet(key, args['property'], approximate=int(limit))
 
     elif args['near']:
 
-        coords = scan_coords(key, g)
+        coords = scan_coords(key, g, not(args['quiet']))
 
         if coords is None:
             print 'Key %s was not in GeoBase, for data "%s" and source %s' % \
@@ -288,7 +307,7 @@ def main():
 
     elif args['closest']:
 
-        coords = scan_coords(key, g)
+        coords = scan_coords(key, g, not(args['quiet']))
 
         if coords is None:
             print 'Key %s was not in GeoBase, for data "%s" and source %s' % \
@@ -315,7 +334,7 @@ def main():
 
 
     # Highlighting some rows
-    important = set(['code', args['field']])
+    important = set(['code', args['property']])
 
     if not args['quiet']:
 
