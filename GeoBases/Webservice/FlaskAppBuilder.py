@@ -5,8 +5,8 @@
 Webservice
 '''
 
-from .JsonEncodeUtils import my_jsonify
-from .JsonPUtils import support_jsonp
+from JsonEncodeUtils import my_jsonify
+from JsonPUtils import support_jsonp
 
 from ..GeoBaseModule import GeoBase
 

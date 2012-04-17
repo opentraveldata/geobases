@@ -31,7 +31,15 @@ setup(
         'GeoBaseMain',
         'WebSrvGeoBasesMain'
     ],
+    dependency_links = [
+        'http://172.16.198.71/basket'
+    ],
     install_requires = [
+        # Private
+        'FlaskUtils',
+        'Daemon',
+        'SysUtils',
+        #Public
         'argparse',
         'python_geohash', 
         'python_Levenshtein', 
