@@ -61,7 +61,8 @@ from __future__ import with_statement
 
 import heapq
 
-from .SysUtils         import localToFile
+from SysUtils         import localToFile
+
 from .GeoUtils         import haversine
 from .LevenshteinUtils import mod_leven, clean
 from .GeoGridModule    import GeoGrid
