@@ -5,7 +5,7 @@
 This module is a launcher for GeoBases webservices.
 '''
 
-from GeoBases.Webservice.DaemonModule import Daemon
+from DaemonModule import Daemon
 
 from tornado.wsgi import WSGIContainer
 from tornado.httpserver import HTTPServer
