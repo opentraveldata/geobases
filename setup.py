@@ -37,7 +37,7 @@ setup(
     install_requires = [
         # Private
         'FlaskUtils',
-        'Daemonize',
+        'Daemonify',
         'SysUtils',
         #Public
         'argparse',
