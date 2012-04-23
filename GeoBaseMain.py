@@ -264,17 +264,15 @@ def main():
     #
     # FETCHING
     #
+    if args['update']:
+        # Updating file
+        GeoBase.update()
+
     if not args['quiet']:
         print 'Loading GeoBase...'
 
     g = GeoBase(data=args['base'], verbose=False)
 
-    if args['update']:
-        # Updating file
-        g._update()
-        # Reloading flat file
-        print 'Reloading GeoBase...'
-        g = GeoBase(data=args['base'], verbose=False)
 
     if args['fuzzy'] or args['near'] or args['closest']:
         key = ' '.join(args['keys'])
