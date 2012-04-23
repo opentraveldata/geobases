@@ -244,6 +244,12 @@ def main():
         default = None
     )
 
+    parser.add_argument('-u', '--update',
+        help = '''If this option is set, before anything is done, 
+                        the script will try to update the oripor source file.''',
+        action='store_true'
+    )
+
     args = vars(parser.parse_args())
 
 
@@ -262,6 +268,13 @@ def main():
         print 'Loading GeoBase...'
 
     g = GeoBase(data=args['base'], verbose=False)
+
+    if args['update']:
+        # Updating file
+        g._update()
+        # Reloading flat file
+        print 'Reloading GeoBase...'
+        g = GeoBase(data=args['base'], verbose=False)
 
     if args['fuzzy'] or args['near'] or args['closest']:
         key = ' '.join(args['keys'])
