@@ -4,14 +4,10 @@
 REF_URL='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/entry/refdata/ORI/ori_por_public.csv'
 TMP_CSV='tmp_01.csv'
 
-if test -z "$1"; then
-    # Moving to the script directory
-    # We could move to the installation directory if we knew it
-    cd `dirname $0`
-    LOC_CSV='Airports/OriPor/ori_por_public.csv'
-else
-    LOC_CSV=$1
-fi
+# Moving to the script directory
+# We could move to the installation directory if we knew it
+cd `dirname $0`
+LOC_CSV='Airports/OriPor/ori_por_public.csv'
 
 echo "Considering local oripor file $LOC_CSV."
 
