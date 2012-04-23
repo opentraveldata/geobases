@@ -53,8 +53,6 @@ From any point of reference:
     No usable geocode for ZQZ [NULL,NULL], skipping point...
     No usable geocode for WXJ [NULL,NULL], skipping point...
     No usable geocode for WEC [NULL,NULL], skipping point...
-    No usable geocode for BPO [NULL,NULL], skipping point...
-    No usable geocode for THJ [NULL,NULL], skipping point...
 '''
 
 from __future__ import with_statement
@@ -932,6 +930,15 @@ class GeoBase(object):
         '''
 
         del self._things[key]
+
+
+    def _update(self):
+        '''
+        Launch update script on oripor data file.
+        '''
+        import os
+        os.system('bash ' + localToFile(__file__, 'DataSources/CheckOriPorUpdates.sh'))
+
 
 
 
