@@ -58,6 +58,7 @@ From any point of reference:
 from __future__ import with_statement
 
 import heapq
+import os
 
 from SysUtils         import localToFile
 
@@ -72,6 +73,15 @@ class GeoBase(object):
     a file is loaded in memory, and the user may use
     the instance to get information.
     '''
+
+    @staticmethod
+    def update():
+        '''
+        Launch update script on oripor data file.
+        '''
+        os.system('bash ' + localToFile(__file__, 'DataSources/CheckOriPorUpdates.sh'))
+
+
 
     def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, verbose=True):
         '''Initialization
@@ -931,13 +941,6 @@ class GeoBase(object):
 
         del self._things[key]
 
-
-    def _update(self):
-        '''
-        Launch update script on oripor data file.
-        '''
-        import os
-        os.system('bash ' + localToFile(__file__, 'DataSources/CheckOriPorUpdates.sh'))
 
 
 
