@@ -230,6 +230,11 @@ def main():
         action='store_true'
     )
 
+    parser.add_argument('-v', '--verbose',
+        help = '''Provides additional information from GeoBase loading.''',
+        action='store_true'
+    )
+
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
                         May help to get cleaner output.''',
@@ -271,7 +276,7 @@ def main():
     if not args['quiet']:
         print 'Loading GeoBase...'
 
-    g = GeoBase(data=args['base'], verbose=False)
+    g = GeoBase(data=args['base'], verbose=args['verbose'])
 
 
     if args['fuzzy'] or args['near'] or args['closest']:
@@ -303,6 +308,10 @@ def main():
 
     elif args['near']:
 
+        if not g.hasGeoSupport():
+            print '\n/!\ No geocoding support for data type %s.' % args['base']
+            exit(1)
+
         coords = scan_coords(key, g, not(args['quiet']))
 
         if coords is None:
@@ -317,6 +326,10 @@ def main():
 
 
     elif args['closest']:
+
+        if not g.hasGeoSupport():
+            print '\n/!\ No geocoding support for data type %s.' % args['base']
+            exit(1)
 
         coords = scan_coords(key, g, not(args['quiet']))
 
