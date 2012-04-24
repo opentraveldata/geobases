@@ -59,7 +59,8 @@ setup(
             "DataSources/Airports/OriPor/ori_por_public.csv",
             "DataSources/Countries/list_countries.csv",
             "DataSources/TrainStations/stations_geobase.csv",
-            "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv"
+            "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv",
+            "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv"
         ]
     },
     #scripts = [
