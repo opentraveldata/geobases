@@ -74,6 +74,18 @@ class GeoBase(object):
     the instance to get information.
     '''
 
+    _bases = [
+        'airports',
+        'airports_csv',
+        'ori_por',
+        'countries',
+        'stations',
+        'stations_nls',
+        'stations_uic',
+        'mix',
+        'feed'
+    ]
+
     @staticmethod
     def update():
         '''
@@ -126,24 +138,13 @@ class GeoBase(object):
         self._bias_cache_fuzzy = {}
 
         # Parameters for data loading
+        self._data      = data
         self._source    = source
         self._delimiter = delimiter
         self._key_col   = key_col
         self._headers   = headers
         self._verbose   = verbose
 
-        self._bases = [
-            'airports',
-            'airports_csv',
-            'ori_por',
-            'countries',
-            'stations',
-            'stations_nls',
-            'mix',
-            'feed'
-        ]
-
-        self._data = data
 
         if data == 'airports':
             self._source    = localToFile(__file__, "DataSources/Airports/airports_geobase.csv")
@@ -253,6 +254,17 @@ class GeoBase(object):
                 'physical'
             ]
 
+        elif data == 'stations_uic':
+            self._source    = localToFile(__file__, "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv")
+            self._key_col   = 0
+            self._delimiter = ','
+            self._headers   = [
+                'code',
+                'name',
+                'lat',
+                'lng'
+            ]
+
         elif data == 'feed':
             # User input defining everything
             pass
@@ -267,7 +279,7 @@ class GeoBase(object):
             ]
 
         else:
-            raise ValueError('Wrong data type. Not in %s' % self._bases)
+            raise ValueError('Wrong data type. Not in %s' % GeoBase._bases)
 
         # Loading data
         self._loadFile()
@@ -284,7 +296,7 @@ class GeoBase(object):
             for thing in self._things:
                 self.set(thing, 'type', 'country')
 
-        elif data in set(['stations', 'stations_nls']):
+        elif data in set(['stations', 'stations_nls, stations_uic']):
             for thing in self._things:
                 self.set(thing, 'type', 'station')
 
@@ -330,7 +342,8 @@ class GeoBase(object):
 
                 # No duplicates ever
                 if row[key] in self._things:
-                    print "/!\ %s already in base: %s" % (row[key], str(self._things[row[key]]))
+                    if self._verbose:
+                        print "/!\ %s already in base: %s" % (row[key], str(self._things[row[key]]))
 
                 #self._headers represents the meaning of each column.
                 self._things[row[key]] = dict((h, v) for h, v in zip(headers, row) if h is not None)
@@ -344,14 +357,23 @@ class GeoBase(object):
 
 
 
+    def hasGeoSupport(self):
+        '''
+        Check if base has geocoding support.
+        '''
+        if 'lat' in self._headers and 'lng' in self._headers:
+            return True
+
+        return False
+
+
+
     def createGrid(self):
         '''
         Create the grid for geographical indexation after loading the data.
         '''
 
-        if 'lat' not in self._headers or \
-           'lng' not in self._headers:
-
+        if not self.hasGeoSupport():
             if self._verbose:
                 print 'Not geocode support, skipping grid...'
             return
@@ -365,7 +387,7 @@ class GeoBase(object):
                     print 'No usable geocode for %s [%s,%s], skipping point...' % \
                             (key, self.get(key, 'lat'), self.get(key, 'lng'))
             else:
-                self._ggrid.add(key, lat_lng)
+                self._ggrid.add(key, lat_lng, self._verbose)
 
 
 
