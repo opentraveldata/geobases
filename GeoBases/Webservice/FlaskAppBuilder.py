@@ -23,16 +23,10 @@ BASES = {
     'airports_csv' : GeoBase(data='airports_csv',   verbose=VERBOSE),
     'stations'     : GeoBase(data='stations',       verbose=VERBOSE),
     'stations_nls' : GeoBase(data='stations_nls',   verbose=VERBOSE),
+    'stations_uic' : GeoBase(data='stations_uic',   verbose=VERBOSE),
     'ori_por'      : GeoBase(data='ori_por',        verbose=VERBOSE),
     'countries'    : GeoBase(data='countries',      verbose=VERBOSE)
 }
-
-BASES_WITH_GEOCODES = (
-    'airports', 
-    'airports_csv', 
-    'stations',
-    'ori_por'
-)
 
 
 @app.route('/help', methods=['GET'])
@@ -41,7 +35,6 @@ def help():
 
     return jsonify({ 
         'bases'                 : BASES.keys(), 
-        'bases_with_geocodes'   : BASES_WITH_GEOCODES,
         'methods'               : [
             '/help', 
             '/<base>/<key>',
@@ -88,7 +81,7 @@ def fuzzyGet(base):
 @support_jsonp
 def findNearPoint(base):
 
-    if base not in BASES_WITH_GEOCODES:
+    if not BASES[base].hasGeoSupport():
         return jsonify({'error' : 'Base does not support geocodes'})
 
     radius = request.args.get('radius', 50)
@@ -103,7 +96,7 @@ def findNearPoint(base):
 @support_jsonp
 def findClosestFromPoint(base):
 
-    if base not in BASES_WITH_GEOCODES:
+    if not BASES[base].hasGeoSupport():
         return jsonify({'error' : 'Base does not support geocodes'})
 
     N = request.args.get('N', 10)
@@ -117,7 +110,7 @@ def findClosestFromPoint(base):
 @support_jsonp
 def gridFindNearPoint(base):
 
-    if base not in BASES_WITH_GEOCODES:
+    if not BASES[base].hasGeoSupport():
         return jsonify({'error' : 'Base does not support geocodes'})
 
     radius = request.args.get('radius', 50)
@@ -132,7 +125,7 @@ def gridFindNearPoint(base):
 @support_jsonp
 def gridFindClosestFromPoint(base):
 
-    if base not in BASES_WITH_GEOCODES:
+    if not BASES[base].hasGeoSupport():
         return jsonify({'error' : 'Base does not support geocodes'})
 
     N = request.args.get('N', 10)

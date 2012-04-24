@@ -88,12 +88,13 @@ class GeoGrid(object):
 
 
 
-    def add(self, key, lat_lng):
+    def add(self, key, lat_lng, verbose=True):
 
         try:
             case_id = self._computeCaseId(lat_lng)
         except:
-            print 'Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key)
+            if verbose:
+                print 'Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key)
             return
 
         self._keys[key] = {
