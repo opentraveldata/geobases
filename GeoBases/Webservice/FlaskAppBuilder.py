@@ -28,6 +28,9 @@ BASES = {
     'countries'    : GeoBase(data='countries',      verbose=VERBOSE)
 }
 
+BASES_GEO_SUPPORT = set(k for k, g in BASES.items() if g.hasGeoSupport())
+
+
 
 @app.route('/help', methods=['GET'])
 @support_jsonp
@@ -81,7 +84,7 @@ def fuzzyGet(base):
 @support_jsonp
 def findNearPoint(base):
 
-    if not BASES[base].hasGeoSupport():
+    if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})
 
     radius = request.args.get('radius', 50)
@@ -96,7 +99,7 @@ def findNearPoint(base):
 @support_jsonp
 def findClosestFromPoint(base):
 
-    if not BASES[base].hasGeoSupport():
+    if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})
 
     N = request.args.get('N', 10)
@@ -110,7 +113,7 @@ def findClosestFromPoint(base):
 @support_jsonp
 def gridFindNearPoint(base):
 
-    if not BASES[base].hasGeoSupport():
+    if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})
 
     radius = request.args.get('radius', 50)
@@ -125,7 +128,7 @@ def gridFindNearPoint(base):
 @support_jsonp
 def gridFindClosestFromPoint(base):
 
-    if not BASES[base].hasGeoSupport():
+    if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})
 
     N = request.args.get('N', 10)
