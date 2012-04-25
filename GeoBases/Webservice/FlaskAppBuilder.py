@@ -18,15 +18,10 @@ app.secret_key = 'A0Zr98j/3ysdfsdR~XHH!jmN]LWX/,?RT'
 
 VERBOSE = False
 
-BASES = {
-    'airports'     : GeoBase(data='airports',       verbose=VERBOSE),
-    'airports_csv' : GeoBase(data='airports_csv',   verbose=VERBOSE),
-    'stations'     : GeoBase(data='stations',       verbose=VERBOSE),
-    'stations_nls' : GeoBase(data='stations_nls',   verbose=VERBOSE),
-    'stations_uic' : GeoBase(data='stations_uic',   verbose=VERBOSE),
-    'ori_por'      : GeoBase(data='ori_por',        verbose=VERBOSE),
-    'countries'    : GeoBase(data='countries',      verbose=VERBOSE)
-}
+BASES = dict( 
+    (base, GeoBase(data=base, verbose=VERBOSE)) 
+    for base in GeoBase.BASES
+) 
 
 BASES_GEO_SUPPORT = set(k for k, g in BASES.items() if g.hasGeoSupport())
 

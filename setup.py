@@ -41,6 +41,7 @@ setup(
         'SysUtils',
         #Public
         'argparse',
+        'pyyaml',
         'python_geohash', 
         'python_Levenshtein', 
         'Flask', 
@@ -53,6 +54,7 @@ setup(
     },
     package_data = {
         'GeoBases': [
+            'Sources.yaml',
             'DataSources/*sh', 
             "DataSources/Airports/airports_geobase.csv",
             "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv",
