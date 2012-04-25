@@ -201,7 +201,7 @@ class GeoBase(object):
                     continue
 
                 # Stripping \t would cause bugs in tsv files
-                row = row.strip(' ').split(lim)
+                row = row.strip(' \n\r').split(lim)
 
                 # No duplicates ever
                 if row[key] in self._things:
