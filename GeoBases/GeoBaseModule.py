@@ -172,31 +172,6 @@ class GeoBase(object):
         self._loadFile()
         self.createGrid()
 
-        # Some additional content loaded
-        # This might be moved outside GeoBase one day,
-        # since its not really data agnostic
-        if data == 'airports':
-            for thing in self._things:
-                self.set(thing, 'type', 'airport')
-
-        elif data == 'countries':
-            for thing in self._things:
-                self.set(thing, 'type', 'country')
-
-        elif data in set(['stations', 'stations_nls, stations_uic']):
-            for thing in self._things:
-                self.set(thing, 'type', 'station')
-
-        elif data in set(['airports_csv', 'ori_por']):
-
-            refs_airport = set(['A', 'CA'])
-
-            for thing in self._things:
-                if self.get(thing, 'location_type') in refs_airport:
-                    self.set(thing, 'type', 'airport')
-                else:
-                    self.set(thing, 'type', 'por')
-
 
 
     def _loadFile(self):
@@ -225,7 +200,8 @@ class GeoBase(object):
                 if not row or row.startswith('#'):
                     continue
 
-                row = row.strip().split(lim)
+                # Stripping \t would cause bugs in tsv files
+                row = row.strip(' ').split(lim)
 
                 # No duplicates ever
                 if row[key] in self._things:
