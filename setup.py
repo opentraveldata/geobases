@@ -62,14 +62,14 @@ setup(
             "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv",
             "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv",
             "DataSources/TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv",
-            "Languages/iso-languagecodes.txt",
-            "TimeZones/timeZones.txt",
-            "Cities/cities15000.txt",
-            "Cities/cities5000.txt",
-            "Cities/cities1000.txt",
-            "Por/Geonames/allCountriesHead.txt",
-            "Por/Ori/ori_por_public.csv",
-            "Por/Ori/CheckOriPorUpdates.sh"
+            "DataSources/Languages/iso-languagecodes.txt",
+            "DataSources/TimeZones/timeZones.txt",
+            "DataSources/Cities/cities15000.txt",
+            "DataSources/Cities/cities5000.txt",
+            "DataSources/Cities/cities1000.txt",
+            "DataSources/Por/Geonames/allCountriesHead.txt",
+            "DataSources/Por/Ori/ori_por_public.csv",
+            "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
     #scripts = [
