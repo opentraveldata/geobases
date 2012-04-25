@@ -1,0 +1,120 @@
+#
+# Sources description
+#
+
+airports:
+    source    : DataSources/Airports/airports_geobase.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - name
+        - city_code
+        - country_code
+        - country_name
+        - lat
+        - lng
+
+airports_csv:
+    source    : DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - ref_name
+        - ref_name_2
+        - name
+        - city_code
+        - is_an_airport
+        - state_code
+        - country_code
+        - region_code       # REL_REGION_CODE in Amadeus RFD: AFRICCARIBEUROPPACIFSAMER...
+        - pricing_zone      # REL_CONTINENT_CODE in Amadeus RFD: ITC1 ITC2 ITC3
+        - time_zone_group   # REL_TIME_ZONE_GRP
+        - lng
+        - lat
+        -                   # numeric code? -> converted to None => not loaded
+        - is_commercial
+        - location_type     # C city A airport H heliport O train station R rail
+
+ori_por:
+    source    : DataSources/Airports/OriPor/ori_por_public.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - icao_code
+        - is_geonames
+        - geonameid
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - gtopo30
+        - timezone
+        - gmt_offset
+        - dst_offset
+        - raw_offset
+        - moddate
+        - is_airport
+        - is_commercial
+        - city_code
+        - state_code
+        - region_code
+        - location_type
+
+
+countries:
+    source    : DataSources/Countries/list_countries.csv
+    key_col   : 1
+    delimiter : ^
+    headers   :
+        - name
+        - code
+
+
+stations:
+    source    : DataSources/TrainStations/stations_geobase.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - lines
+        - name
+        - info
+        - lat
+        - lng
+
+
+stations_nls:
+    source    : DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
+    key_col   : 2
+    delimiter : ','
+    headers   :
+        - uic_code
+        - name
+        - code
+        - physical
+
+
+stations_uic:
+    source    : DataSources/TrainStations/UIC/sncfExtract_v1.0.csv
+    key_col   : 0
+    delimiter : ','
+    headers   :
+        - code
+        - name
+        - lat
+        - lng
+

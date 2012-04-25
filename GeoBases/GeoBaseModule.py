@@ -59,6 +59,7 @@ from __future__ import with_statement
 
 import heapq
 import os
+import yaml
 
 from SysUtils         import localToFile
 
@@ -74,17 +75,8 @@ class GeoBase(object):
     the instance to get information.
     '''
 
-    _bases = [
-        'airports',
-        'airports_csv',
-        'ori_por',
-        'countries',
-        'stations',
-        'stations_nls',
-        'stations_uic',
-        'mix',
-        'feed'
-    ]
+    BASES = yaml.load(open(localToFile(__file__, 'Sources.yaml')))
+
 
     @staticmethod
     def update():
@@ -146,124 +138,11 @@ class GeoBase(object):
         self._verbose   = verbose
 
 
-        if data == 'airports':
-            self._source    = localToFile(__file__, "DataSources/Airports/airports_geobase.csv")
-            self._key_col   = 0
-            self._delimiter = '^'
-            self._headers   = [
-                'code',
-                'name',
-                'city_code',
-                'country_code',
-                'country_name',
-                'lat',
-                'lng'
-            ]
-
-        elif data == 'airports_csv':
-            self._source    = localToFile(__file__, "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv")
-            self._key_col   = 0
-            self._delimiter = '^'
-            self._headers   = [
-                'code',
-                'ref_name',
-                'ref_name_2',
-                'name',
-                'city_code',
-                'is_an_airport',
-                'state_code',
-                'country_code',
-                'region_code',      # REL_REGION_CODE in Amadeus RFD: AFRIC,CARIB,EUROP,PACIF,SAMER,...
-                'pricing_zone',     # REL_CONTINENT_CODE in Amadeus RFD: ITC1, ITC2, ITC3
-                'time_zone_group',  # REL_TIME_ZONE_GRP
-                'lng',
-                'lat',
-                None,               # numeric code?
-                'is_commercial',
-                'location_type'     # C city, A airport, H heliport, O train station, R rail
-            ]
-
-        elif data == 'ori_por':
-            self._source    = localToFile(__file__, "DataSources/Airports/OriPor/ori_por_public.csv")
-            self._key_col   = 0
-            self._delimiter = '^'
-            self._headers   = [
-                'code',
-                'icao_code',
-                'is_geonames',
-                'geonameid',
-                'name',
-                'asciiname',
-                'alternatenames',
-                'lat',
-                'lng',
-                'fclass',
-                'fcode',
-                'country_code',
-                'cc2',
-                'admin1',
-                'admin2',
-                'admin3',
-                'admin4',
-                'population',
-                'elevation',
-                'gtopo30',
-                'timezone',
-                'gmt_offset',
-                'dst_offset',
-                'raw_offset',
-                'moddate',
-                'is_airport',
-                'is_commercial',
-                'city_code',
-                'state_code',
-                'region_code',
-                'location_type'
-            ]
-
-        elif data == 'countries':
-            self._source    = localToFile(__file__, "DataSources/Countries/list_countries.csv")
-            self._key_col   = 1
-            self._delimiter = '^'
-            self._headers   = [
-                'name',
-                'code'
-            ]
-
-        elif data == 'stations':
-            self._source    = localToFile(__file__, "DataSources/TrainStations/stations_geobase.csv")
-            self._key_col   = 0
-            self._delimiter = '^'
-            self._headers   = [
-                'code',
-                'lines',
-                'name',
-                'info',
-                'lat',
-                'lng'
-            ]
-
-        elif data == 'stations_nls':
-            self._source    = localToFile(__file__, "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv")
-            self._key_col   = 2
-            self._delimiter = ','
-            self._headers   = [
-                'uic_code',
-                'name',
-                'code',
-                'physical'
-            ]
-
-        elif data == 'stations_uic':
-            self._source    = localToFile(__file__, "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv")
-            self._key_col   = 0
-            self._delimiter = ','
-            self._headers   = [
-                'code',
-                'name',
-                'lat',
-                'lng'
-            ]
+        if data in GeoBase.BASES:
+            self._source    = localToFile(__file__, GeoBase.BASES[data]['source'])
+            self._key_col   = GeoBase.BASES[data]['key_col']
+            self._delimiter = GeoBase.BASES[data]['delimiter']
+            self._headers   = GeoBase.BASES[data]['headers']
 
         elif data == 'feed':
             # User input defining everything
@@ -279,7 +158,7 @@ class GeoBase(object):
             ]
 
         else:
-            raise ValueError('Wrong data type. Not in %s' % GeoBase._bases)
+            raise ValueError('Wrong data type. Not in %s' % GeoBase.BASES.keys())
 
         # Loading data
         self._loadFile()

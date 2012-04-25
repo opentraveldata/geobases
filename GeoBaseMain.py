@@ -179,7 +179,8 @@ def main():
 
     parser.add_argument('-b', '--base',
         help = '''Choose a different base, default is ori_por. Also available are
-                        stations, stations_nls, airports, airports_csv, countries.''',
+                        stations, airports, countries... Give unadmissible base 
+                        and available values will be displayed.''',
         default = 'ori_por'
     )
 
@@ -191,7 +192,8 @@ def main():
 
     parser.add_argument('-p', '--property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "name".''',
+                        Default is "name". Give unadmissible property and available
+                        values will be displayed.''',
         default='name'
     )
 
@@ -269,6 +271,11 @@ def main():
     #
     # FETCHING
     #
+    if args['base'] not in GeoBase.BASES:
+        print '/!\ Wrong base "%s". You may select:' % args['base']
+        display_on_two_cols(list(GeoBase.BASES.keys()))
+        exit(1)
+
     if args['update']:
         # Updating file
         GeoBase.update()
