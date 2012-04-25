@@ -26,8 +26,5 @@ if __name__ == '__main__':
     add_reduction_RFF(localToFile(__file__, "DataGouvFr/RFF/RFF_gares.ids.gm.man.csv"), 
                       localToFile(__file__, "DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv"))
 
-    print '\nDone.\nCopying "RFF_gares.ids.gm.man.red.csv" in upper directory as "stations_geobase.csv"'
+    print '\nDone.\nFinal file "RFF_gares.ids.gm.man.red.csv"'
     
-    add_reduction_RFF(localToFile(__file__, "DataGouvFr/RFF/RFF_gares.ids.gm.man.csv"), 
-                      localToFile(__file__, "stations_geobase.csv"))
-

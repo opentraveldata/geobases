@@ -75,7 +75,9 @@ class GeoBase(object):
     the instance to get information.
     '''
 
-    BASES = yaml.load(open(localToFile(__file__, 'Sources.yaml')))
+    PATH_CONF = localToFile(__file__, 'DataSources/Sources.yaml')
+
+    BASES = yaml.load(open(PATH_CONF))
 
 
     @staticmethod
@@ -83,7 +85,7 @@ class GeoBase(object):
         '''
         Launch update script on oripor data file.
         '''
-        os.system('bash ' + localToFile(__file__, 'DataSources/CheckOriPorUpdates.sh'))
+        os.system('bash ' + localToFile(__file__, 'DataSources/Por/Ori/CheckOriPorUpdates.sh'))
 
 
 
@@ -139,10 +141,16 @@ class GeoBase(object):
 
 
         if data in GeoBase.BASES:
-            self._source    = localToFile(__file__, GeoBase.BASES[data]['source'])
-            self._key_col   = GeoBase.BASES[data]['key_col']
-            self._delimiter = GeoBase.BASES[data]['delimiter']
-            self._headers   = GeoBase.BASES[data]['headers']
+            conf = GeoBase.BASES[data]
+
+            if conf['local'] is True:
+                self._source = localToFile(GeoBase.PATH_CONF, conf['source'])
+            else:
+                self._source = conf['source']
+
+            self._key_col   = conf['key_col']
+            self._delimiter = conf['delimiter']
+            self._headers   = conf['headers']
 
         elif data == 'feed':
             # User input defining everything

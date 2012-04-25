@@ -54,15 +54,22 @@ setup(
     },
     package_data = {
         'GeoBases': [
-            'Sources.yaml',
-            'DataSources/*sh', 
-            "DataSources/Airports/airports_geobase.csv",
+            'DataSources/Sources.yaml',
+            "DataSources/Airports/Geonames/airports_geonames_only_clean.csv",
             "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv",
-            "DataSources/Airports/OriPor/ori_por_public.csv",
-            "DataSources/Countries/list_countries.csv",
-            "DataSources/TrainStations/stations_geobase.csv",
+            "DataSources/Countries/countryInfo.txt",
+            "DataSources/Continents/continentCodes.txt",
             "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv",
-            "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv"
+            "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv",
+            "DataSources/TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv",
+            "Languages/iso-languagecodes.txt",
+            "TimeZones/timeZones.txt",
+            "Cities/cities15000.txt",
+            "Cities/cities5000.txt",
+            "Cities/cities1000.txt",
+            "Por/Geonames/allCountriesHead.txt",
+            "Por/Ori/ori_por_public.csv",
+            "Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
     #scripts = [

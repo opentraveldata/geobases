@@ -1,0 +1,290 @@
+#
+# Sources description
+#
+
+airports:
+    local     : true
+    source    : Airports/Geonames/airports_geonames_only_clean.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - name
+        - city_code
+        - country_code
+        - country_name
+        - lat
+        - lng
+
+
+airports_csv:
+    local     : true
+    source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - ref_name
+        - ref_name_2
+        - name
+        - city_code
+        - is_an_airport
+        - state_code
+        - country_code
+        - region_code       # REL_REGION_CODE in Amadeus RFD: AFRICCARIBEUROPPACIFSAMER...
+        - pricing_zone      # REL_CONTINENT_CODE in Amadeus RFD: ITC1 ITC2 ITC3
+        - time_zone_group   # REL_TIME_ZONE_GRP
+        - lng
+        - lat
+        -                   # numeric code? -> converted to None => not loaded
+        - is_commercial
+        - location_type     # C city A airport H heliport O train station R rail
+
+
+countries:
+    local     : true
+    source    : Countries/countryInfo.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - iso_alpha3
+        - iso_numeric
+        - fips_code
+        - name
+        - capital
+        - area_in_sq_km
+        - population
+        - continent
+        - tld
+        - currency_code
+        - continent_name
+        - phone
+        - postal_code_format
+        - postal_code_regex
+        - languages
+        - geoname_id
+        - neighbors
+
+
+continents:
+    local     : true
+    source    : Continents/continentCodes.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - name
+        - geoname_id
+
+
+stations:
+    local     : true
+    source    : TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - lines
+        - name
+        - info
+        - lat
+        - lng
+
+
+stations_nls:
+    local     : true
+    source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
+    key_col   : 2
+    delimiter : ','
+    headers   :
+        - uic_code
+        - name
+        - code
+        - physical
+
+
+stations_uic:
+    local     : true
+    source    : TrainStations/UIC/sncfExtract_v1.0.csv
+    key_col   : 0
+    delimiter : ','
+    headers   :
+        - code
+        - name
+        - lat
+        - lng
+
+
+languages:
+    local     : true
+    source    : Languages/iso-languagecodes.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - code_iso_2
+        - code_iso_1
+        - name
+
+
+timezones:
+    local     : true
+    source    : TimeZones/timeZones.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - gmt_offset
+        - dst_offset
+        - raw_offset
+
+
+cities:
+    local     : true
+    source    : Cities/cities15000.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - dem
+        - timezone
+        - modification
+
+
+cities5000:
+    local     : true
+    source    : Cities/cities5000.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - dem
+        - timezone
+        - modification
+
+
+cities1000:
+    local     : true
+    source    : Cities/cities1000.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - dem
+        - timezone
+        - modification
+
+
+geonames:
+    local     : true
+    #local     : false
+    source    : Por/Geonames/allCountriesHead.txt
+    #source    : path_to_allCountrues.txt
+    key_col   : 0
+    delimiter : "\t"
+    headers   :
+        - code
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - dem
+        - timezone
+        - modification
+
+
+ori_por:
+    local     : true
+    source    : Por/Ori/ori_por_public.csv
+    key_col   : 0
+    delimiter : ^
+    headers   :
+        - code
+        - icao_code
+        - is_geonames
+        - geonameid
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - gtopo30
+        - timezone
+        - gmt_offset
+        - dst_offset
+        - raw_offset
+        - moddate
+        - is_airport
+        - is_commercial
+        - city_code
+        - state_code
+        - region_code
+        - location_type
+
