@@ -41,7 +41,7 @@ Examples for stations::
 
 From any point of reference:
 
-    >>> geo = GeoBase(data='ori_por')
+    >>> geo = GeoBase(data='ori_por_multi')
     Import successful from ...
     Available info for things: ...
 '''
@@ -105,7 +105,7 @@ class GeoBase(object):
         >>> GeoBase(data='feed',
         ...         source=localToFile(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
-        ...         key_col=0,
+        ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'code': 'ORY', 'name': 'PARIS/FR:ORLY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
@@ -178,11 +178,21 @@ class GeoBase(object):
         lim     = self._delimiter
         headers = self._headers
 
-
         if self._source is None:
             if self._verbose:
                 print 'Source was None, skipping loading...'
             return
+
+        # It is possible to have a key_col which is a list
+        # In this case we build the key as the concatenation between 
+        # the different fields
+        if type(key) == str:
+            keyer = lambda row: row[headers.index(key)]
+        elif type(key) == list:
+            keyer = lambda row: lim.join(row[headers.index(k)] for k in key)
+        else:
+            raise ValueError("The configuration (key=%s, headers=%s) is inconsistant." % (key, headers))
+
 
         with open(self._source) as f:
 
@@ -195,12 +205,12 @@ class GeoBase(object):
                 row = row.strip(' \n\r').split(lim)
 
                 # No duplicates ever
-                if row[key] in self._things:
+                if keyer(row) in self._things:
                     if self._verbose:
-                        print "/!\ %s already in base: %s" % (row[key], str(self._things[row[key]]))
+                        print "/!\ %s already in base: %s" % (keyer(row), str(self._things[keyer(row)]))
 
                 #self._headers represents the meaning of each column.
-                self._things[row[key]] = dict((h, v) for h, v in zip(headers, row) if h is not None)
+                self._things[keyer(row)] = dict((h, v) for h, v in zip(headers, row) if h is not None)
 
             # We remove None headers, which are not-loaded-columns
             self._headers = [h for h in headers if h is not None]
