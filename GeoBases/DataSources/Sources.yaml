@@ -5,7 +5,7 @@
 airports:
     local     : true
     source    : Airports/Geonames/airports_geonames_only_clean.csv
-    key_col   : 0
+    key_col   : code
     delimiter : ^
     headers   :
         - code
@@ -20,7 +20,7 @@ airports:
 airports_csv:
     local     : true
     source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
-    key_col   : 0
+    key_col   : code
     delimiter : ^
     headers   :
         - code
@@ -44,7 +44,7 @@ airports_csv:
 countries:
     local     : true
     source    : Countries/countryInfo.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -70,7 +70,7 @@ countries:
 continents:
     local     : true
     source    : Continents/continentCodes.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -81,7 +81,7 @@ continents:
 stations:
     local     : true
     source    : TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv
-    key_col   : 0
+    key_col   : code
     delimiter : ^
     headers   :
         - code
@@ -95,7 +95,7 @@ stations:
 stations_nls:
     local     : true
     source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
-    key_col   : 2
+    key_col   : code
     delimiter : ','
     headers   :
         - uic_code
@@ -107,7 +107,7 @@ stations_nls:
 stations_uic:
     local     : true
     source    : TrainStations/UIC/sncfExtract_v1.0.csv
-    key_col   : 0
+    key_col   : code
     delimiter : ','
     headers   :
         - code
@@ -119,7 +119,7 @@ stations_uic:
 languages:
     local     : true
     source    : Languages/iso-languagecodes.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -131,7 +131,7 @@ languages:
 timezones:
     local     : true
     source    : TimeZones/timeZones.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -143,7 +143,7 @@ timezones:
 cities:
     local     : true
     source    : Cities/cities15000.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -170,7 +170,7 @@ cities:
 cities5000:
     local     : true
     source    : Cities/cities5000.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -197,7 +197,7 @@ cities5000:
 cities1000:
     local     : true
     source    : Cities/cities1000.txt
-    key_col   : 0
+    key_col   : code
     delimiter : "\t"
     headers   :
         - code
@@ -221,39 +221,39 @@ cities1000:
         - modification
 
 
-geonames_test:
-    local     : true
-    #local     : false
-    source    : Por/Geonames/allCountriesHead.txt
-    #source    : path_to_allCountries.txt
-    key_col   : 0
-    delimiter : "\t"
-    headers   :
-        - code
-        - name
-        - asciiname
-        - alternatenames
-        - lat
-        - lng
-        - fclass
-        - fcode
-        - country_code
-        - cc2
-        - admin1
-        - admin2
-        - admin3
-        - admin4
-        - population
-        - elevation
-        - dem
-        - timezone
-        - modification
+#geonames_test:
+#    local     : true
+#    #local     : false
+#    source    : Por/Geonames/allCountriesHead.txt
+#    #source    : path_to_allCountries.txt
+#    key_col   : code
+#    delimiter : "\t"
+#    headers   :
+#        - code
+#        - name
+#        - asciiname
+#        - alternatenames
+#        - lat
+#        - lng
+#        - fclass
+#        - fcode
+#        - country_code
+#        - cc2
+#        - admin1
+#        - admin2
+#        - admin3
+#        - admin4
+#        - population
+#        - elevation
+#        - dem
+#        - timezone
+#        - modification
 
 
 ori_por:
     local     : true
     source    : Por/Ori/ori_por_public.csv
-    key_col   : 0
+    key_col   : code
     delimiter : ^
     headers   :
         - code
@@ -287,4 +287,45 @@ ori_por:
         - state_code
         - region_code
         - location_type
+        - wiki_link
+
+
+ori_por_multi:
+    local     : true
+    source    : Por/Ori/ori_por_public.csv
+    key_col   : [code, location_type]
+    delimiter : ^
+    headers   :
+        - code
+        - icao_code
+        - is_geonames
+        - geonameid
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - admin1
+        - admin2
+        - admin3
+        - admin4
+        - population
+        - elevation
+        - gtopo30
+        - timezone
+        - gmt_offset
+        - dst_offset
+        - raw_offset
+        - moddate
+        - is_airport
+        - is_commercial
+        - city_code
+        - state_code
+        - region_code
+        - location_type
+        - wiki_link
 
