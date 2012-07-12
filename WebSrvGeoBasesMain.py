@@ -27,7 +27,7 @@ class WebSrvDaemon(Daemon):
 
 def main():
 
-    daemon = WebSrvDaemon('/tmp/daemon-geob.pid')
+    daemon = WebSrvDaemon('./daemon-geob.pid')
 
     if len(sys.argv) != 2:
         print "Usage: %s {start|stop|restart|status|foreground}" % sys.argv[0]
