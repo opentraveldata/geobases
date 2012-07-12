@@ -12,6 +12,7 @@ from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 import sys
+import os.path as op
 
 
 class WebSrvDaemon(Daemon):
@@ -27,7 +28,9 @@ class WebSrvDaemon(Daemon):
 
 def main():
 
-    daemon = WebSrvDaemon('./daemon-geob.pid')
+    pid_path = op.realpath(op.join(op.dirname(__file__), 'daemon-geob.pid'))
+
+    daemon = WebSrvDaemon(pid_path)
 
     if len(sys.argv) != 2:
         print "Usage: %s {start|stop|restart|status|foreground}" % sys.argv[0]
