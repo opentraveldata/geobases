@@ -113,6 +113,33 @@ def display(geob, list_of_things, omit, show, important):
     sys.stdout.write('\n')
 
 
+def display_quiet(geob, list_of_things, omit, show):
+
+    # act_show is the headers-compatible fields
+    # that will be displayed
+    if show is None:
+        act_show = geob._headers[:]
+    else:
+        act_show = show[:]
+
+        if 'ref' in act_show:
+            act_show.remove('ref')
+
+    for (h, k) in list_of_things:
+
+        l = []
+
+        if show is None or 'ref' in show:
+            if 'ref' not in omit:
+                l.append('%.5f' % h)
+
+        for f in act_show:
+            if f not in omit:
+
+                l.append(geob.get(k, f))
+
+        sys.stdout.write('^'.join(l) + '\n')
+
 
 def fixed_width(s, col, lim=25, truncate=None):
 
@@ -239,14 +266,18 @@ def main():
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
-                        May help to get cleaner output.''',
+                        May help to get cleaner output. "ref" is an
+                        available keyword with the
+                        other geobase headers.''',
         nargs = '+',
         default = []
     )
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
-                        May help to get cleaner output.''',
+                        May help to get cleaner output. "ref" is an
+                        available keyword with the
+                        other geobase headers.''',
         nargs = '+',
         default = None
     )
@@ -372,9 +403,9 @@ def main():
         display(g, res, set(args['omit']), args['show'], important)
 
         print '\nDone in %s' % (datetime.now() - before)
+
     else:
-        for (h, k) in res:
-            print '%s^%.5f' % (k, h)
+        display_quiet(g, res, set(args['omit']), args['show'])
 
 
 if __name__ == '__main__':
