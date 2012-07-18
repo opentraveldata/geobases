@@ -71,7 +71,7 @@ class RotatingColors(object):
 def display(geob, list_of_things, omit, show, important):
 
     if show is None:
-        show = geob._headers
+        show = geob._headers[:]
 
     # Different behaviour given
     # number of results
@@ -115,28 +115,20 @@ def display(geob, list_of_things, omit, show, important):
 
 def display_quiet(geob, list_of_things, omit, show):
 
-    # act_show is the headers-compatible fields
-    # that will be displayed
     if show is None:
-        act_show = geob._headers[:]
-    else:
-        act_show = show[:]
-
-        if 'ref' in act_show:
-            act_show.remove('ref')
+        show = ['__ref__'] + geob._headers[:]
 
     for (h, k) in list_of_things:
 
         l = []
 
-        if show is None or 'ref' in show:
-            if 'ref' not in omit:
-                l.append('%.5f' % h)
-
-        for f in act_show:
+        for f in show:
             if f not in omit:
 
-                l.append(geob.get(k, f))
+                if f == '__ref__':
+                    l.append('%.5f' % h)
+                else:
+                    l.append(geob.get(k, f))
 
         sys.stdout.write('^'.join(l) + '\n')
 
@@ -266,7 +258,7 @@ def main():
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
-                        May help to get cleaner output. "ref" is an
+                        May help to get cleaner output. "__ref__" is an
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
@@ -275,7 +267,7 @@ def main():
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
-                        May help to get cleaner output. "ref" is an
+                        May help to get cleaner output. "__ref__" is an
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
