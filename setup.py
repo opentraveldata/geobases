@@ -32,7 +32,7 @@ setup(
         'WebSrvGeoBasesMain'
     ],
     dependency_links = [
-        'http://172.16.198.71/basket'
+        'http://orinet/pythonpackages'
     ],
     install_requires = [
         # Private
