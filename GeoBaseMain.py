@@ -102,13 +102,15 @@ def display(geob, list_of_things, omit, show, important):
                 sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
                 for h, k in list_of_things:
-                    sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
+                    if k in geob:
+                        sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
 
             else:
                 sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
                 for _, k in list_of_things:
-                    sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+                    if k in geob:
+                        sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
             c.next()
 
@@ -120,7 +122,10 @@ def display_quiet(geob, list_of_things, omit, show):
     if not show:
         show = ['__ref__'] + geob._headers[:]
 
-    for (h, k) in list_of_things:
+    for h, k in list_of_things:
+
+        if k not in geob:
+            continue
 
         l = []
 
@@ -151,7 +156,8 @@ def scan_coords(u_input, geob, verbose):
     except ValueError:
         # Scan coordinates failed, perhaps input was key
         if u_input not in geob:
-            error('key', u_input, geob._data, geob._source)
+            warn('key', u_input, geob._data, geob._source)
+            exit(1)
 
         return geob.getLocation(u_input)
 
@@ -177,13 +183,16 @@ def display_on_two_cols(a_list, descriptor=sys.stdout):
 
 
 
-def error(name, *args):
+def warn(name, *args):
 
     if name == 'key':
-        print >> sys.stderr, '\n/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
+        print >> sys.stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
-    elif name == 'geocode_support':
+
+def error(name, *args):
+
+    if name == 'geocode_support':
         print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'base':
@@ -389,7 +398,7 @@ def main():
     #
     for (h, k) in res:
         if k not in g:
-            error('key', k, g._data, g._source)
+            warn('key', k, g._data, g._source)
 
     for field in args['show'] + args['omit']: 
 
