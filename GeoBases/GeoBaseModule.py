@@ -174,7 +174,7 @@ class GeoBase(object):
         '''
 
         # Someone told me that this increases speed :)
-        key     = self._key_col
+        key_col = self._key_col
         lim     = self._delimiter
         headers = self._headers
 
@@ -186,12 +186,13 @@ class GeoBase(object):
         # It is possible to have a key_col which is a list
         # In this case we build the key as the concatenation between 
         # the different fields
-        if type(key) == str:
-            keyer = lambda row: row[headers.index(key)]
-        elif type(key) == list:
-            keyer = lambda row: lim.join(row[headers.index(k)] for k in key)
+        if isinstance(key_col, str):
+            keyer = lambda row: row[headers.index(key_col)]
+
+        elif isinstance(key_col, list):
+            keyer = lambda row: lim.join(row[headers.index(k)] for k in key_col)
         else:
-            raise ValueError("The configuration (key=%s, headers=%s) is inconsistant." % (key, headers))
+            raise ValueError("Inconsistent: key_col=%s, headers=%s" % (key_col, headers))
 
 
         with open(self._source) as f:
@@ -203,14 +204,19 @@ class GeoBase(object):
 
                 # Stripping \t would cause bugs in tsv files
                 row = row.strip(' \n\r').split(lim)
+                key = keyer(row)
 
                 # No duplicates ever
-                if keyer(row) in self._things:
+                if key in self._things:
                     if self._verbose:
-                        print "/!\ %s already in base: %s" % (keyer(row), str(self._things[keyer(row)]))
+                        print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
                 #self._headers represents the meaning of each column.
-                self._things[keyer(row)] = dict((h, v) for h, v in zip(headers, row) if h is not None)
+                self._things[key] = {}
+
+                for h, v in zip(headers, row):
+                    if h is not None:
+                        self._things[key][h] = v
 
             # We remove None headers, which are not-loaded-columns
             self._headers = [h for h in headers if h is not None]
