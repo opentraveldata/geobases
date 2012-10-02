@@ -259,7 +259,8 @@ ori_por:
         - code
         - icao_code
         - is_geonames
-        - geonameid
+        - geoname_id
+        - valid_id
         - name
         - asciiname
         - alternatenames
@@ -267,6 +268,10 @@ ori_por:
         - lng
         - fclass
         - fcode
+        - page_rank
+        - date_from
+        - date_until
+        - comment
         - country_code
         - cc2
         - admin1
@@ -299,7 +304,8 @@ ori_por_multi:
         - code
         - icao_code
         - is_geonames
-        - geonameid
+        - geoname_id
+        - valid_id
         - name
         - asciiname
         - alternatenames
@@ -307,6 +313,10 @@ ori_por_multi:
         - lng
         - fclass
         - fcode
+        - page_rank
+        - date_from
+        - date_until
+        - comment
         - country_code
         - cc2
         - admin1
@@ -328,4 +338,3 @@ ori_por_multi:
         - region_code
         - location_type
         - wiki_link
-
