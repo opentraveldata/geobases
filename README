@@ -19,7 +19,10 @@ You may try to remove the package with pip:
     pip uninstall GeoBases
 
 To create source distribution (pip-installable):
-    python setup.py sdist --format=zip
+    python setup.py sdist
+
+To deploy source package on python packages repository:
+    scp dist/GeoBases-0.3.0.tar.gz ori-data@nceorilnx04:/remote/oridata/www/pythonpackages/
 
 To create rpm packages
     rm -rf build dist *.egg-info
