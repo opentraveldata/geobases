@@ -1,88 +1,80 @@
 
-RELEASE_REPO_URL="http://oridist.orinet.nce.amadeus.net/python/"
+require 'yaml'
+require 'pathname'
+
+ROOT_PATH = File.expand_path File.dirname(__FILE__)
+
+RELEASE_FILE_PATH = File.join ROOT_PATH, 'release.yaml'
+
+# Read YAML configuration
+File.open(RELEASE_FILE_PATH) { |f| YAML.load f }.each do |param, val|
+  Object.const_set "RELEASE_#{param.upcase}", val
+end
+
 
 namespace :build do
 
   desc "Creating virtual environment"
   task :venv do
-    $stderr.puts "*"
-    $stderr.puts "* Creating virtual environment..."
-    $stderr.puts "*"
     %x[ virtualenv --clear --no-site-packages . ]
-    unless $?.success?
-      raise "Virtualenv creation failed"
-    end
+    raise "Virtualenv creation failed" unless $?.success?
   end
 
   desc "Entering virtual environment"
   task :activate do
-    $stderr.puts "*"
-    $stderr.puts "* Activating..."
-    $stderr.puts "*"
     # backticks required here, because source or . 
     # are shell builtins and therefore not accessible with
     # which
     %x[ `. bin/activate` ]
   end
 
-  desc "Exiting virtual environment"
-  task :deactivate do
-    %x[ deactivate ]
-  end
+  #desc "Exiting virtual environment"
+  #task :deactivate do
+  #  %x[ deactivate ]
+  #end
 
   desc "Install Python module in a virtual environment"
   task :install => [:venv, :activate] do
-    $stderr.puts "*"
-    $stderr.puts "* Installation..."
-    $stderr.puts "*"
     # Here we use stderr to display the output
     # on Jenkins, stdout is not
     %x[ ./bin/python setup.py install >&2 ]
-    unless $?.success?
-      raise "Installation failed"
-    end
+    raise "Installation failed" unless $?.success?
   end
 
   desc "Run test suite"
   task :test => [:install, :activate] do
-    $stderr.puts "*"
-    $stderr.puts "* Running tests..."
-    $stderr.puts "*"
-    %x[ ./bin/python test/test_GeoBases.py -v ]
-    unless $?.success?
-      raise "Tests failed"
-    end
+    %x[ ./bin/python #{RELEASE_TEST_FILE} -v ]
+    raise "Tests failed" unless $?.success?
   end
 
   desc "Clean building directories"
   task :clean do
-    $stderr.puts "*"
-    $stderr.puts "* Cleaning..."
-    $stderr.puts "*"
     %x[ rm -rf build dist *.egg-info ]
   end
 
   desc "Build the package"
   task :package => [:clean, :test, :activate] do
-    $stderr.puts "*"
-    $stderr.puts "* Packaging..."
-    $stderr.puts "*"
     %x[ ./bin/python setup.py sdist ]
-    unless $?.success?
-      raise "Packaging failed"
-    end
+    raise "Packaging failed" unless $?.success?
   end
 
   desc "Publish the package"
   task :publish => :package do
     package_name=%x[ basename dist/*tar.gz ].strip
     package_url = "#{RELEASE_REPO_URL}/#{package_name}"
-    $stderr.puts "*"
-    $stderr.puts "* Package #{package_name} published to #{RELEASE_REPO_URL}"
-    $stderr.puts "*"
     %x[ nd -p dist/#{package_name} #{package_url} ]
+    raise "Publishing failed" unless $?.success?
+    puts "Package #{package_name} published to #{RELEASE_REPO_URL}"
   end
 
+  desc "Create .deb"
+  task :debian => [:clean, :test] do
+    fpm_bin = %x[ env PATH=$PATH:$(gem env gemdir)/bin which fpm ].strip
+    unless $?.success? && File.executable?(fpm_bin)
+      raise "Failed to locate the FPM binary"
+    end
+    %x[ #{fpm_bin} -t deb -s python . ]
+  end
 end
 
 task :default => 'build:publish'
