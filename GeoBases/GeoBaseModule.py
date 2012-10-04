@@ -22,7 +22,7 @@ Examples for airports::
     [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
     >>> geo_a.get('CDG', 'city_code')
     'PAR'
-    >>> geo_a.haversine('CDG', 'NCE')
+    >>> geo_a.haversine('CG', 'NCE')
     694.5162...
 
 
