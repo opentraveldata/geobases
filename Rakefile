@@ -28,21 +28,22 @@ namespace :build do
     %x[ `. bin/activate` ]
   end
 
-  #desc "Exiting virtual environment"
-  #task :deactivate do
-  #  %x[ deactivate ]
-  #end
-
-  desc "Install Python module in a virtual environment"
-  task :install => [:venv, :activate] do
-    # Here we use stderr to display the output
-    # on Jenkins, stdout is not
-    %x[ ./bin/python setup.py install >&2 ]
-    raise "Installation failed" unless $?.success?
+  desc "Exiting virtual environment"
+  task :deactivate do
+    %x[ deactivate ]
   end
 
+  desc "Install dependencies in a virtual environment"
+  task :deps => [:venv, :activate] do
+    # Here we use stderr to display the output
+    # on Jenkins, stdout is not
+    %x[ ./bin/python setup.py develop >&2 ]
+    raise "Dependencies failed" unless $?.success?
+  end
+
+
   desc "Run test suite"
-  task :test => [:install, :activate] do
+  task :test => [:deps, :activate] do
     %x[ ./bin/python #{RELEASE_TEST_FILE} -v ]
     raise "Tests failed" unless $?.success?
   end
@@ -73,8 +74,15 @@ namespace :build do
     unless $?.success? && File.executable?(fpm_bin)
       raise "Failed to locate the FPM binary"
     end
-    %x[ #{fpm_bin} -t deb -s python . ]
+    %x[ #{fpm_bin} -t deb -s python setup.py ]
   end
+
+  desc "Install Python module in a virtual environment"
+  task :install => [:venv, :activate] do
+    %x[ ./bin/python setup.py install >&2 ]
+    raise "Installation failed" unless $?.success?
+  end
+
 end
 
 task :default => 'build:publish'
