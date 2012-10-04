@@ -6,7 +6,7 @@ namespace :build do
   desc "Creating virtual environment"
   task :venv do
     puts "Creating virtual environment..."
-    %x[ virtualenv . ]
+    %x[ virtualenv --clear --no-site-packages . ]
   end
 
   desc "Entering virtual environment"
@@ -31,8 +31,14 @@ namespace :build do
     %x[ ./bin/python test/test_GeoBases.py -v ]
   end
 
+  desc "Clean building directories"
+  task :clean do
+    puts "Cleaning..."
+    %x[ rm -rf build dist *.egg-info ]
+  end
+
   desc "Build the package"
-  task :package => [:test, :activate] do
+  task :package => [:clean, :test, :activate] do
     puts "Packaging..."
     %x[ ./bin/python setup.py sdist ]
   end
