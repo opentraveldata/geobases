@@ -3,22 +3,36 @@ RELEASE_REPO_URL="http://oridist.orinet.nce.amadeus.net/python/"
 
 namespace :build do
 
-  desc "Install Python module in a virtual environment"
-  task :install do
-    puts "Installation..."
+  desc "Creating virtual environment"
+  task :venv do
+    puts "Creating virtual environment..."
     %x[ virtualenv . ]
+  end
+
+  desc "Entering virtual environment"
+  task :activate do
     %x[ . bin/activate ]
-    %x[ ./bin/python setup.py install ]
+  end
+
+  desc "Exiting virtual environment"
+  task :deactivate do
+    %x[ deactivate ]
+  end
+
+  desc "Install Python module in a virtual environment"
+  task :install => [:venv, :activate] do
+    puts "Installation..."
+    puts %x[ ./bin/python setup.py install ]
   end
 
   desc "Run test suite"
-  task :test => :install do
+  task :test => [:install, :activate] do
     puts "Running tests..."
     %x[ ./bin/python test/test_GeoBases.py -v ]
   end
 
   desc "Build the package"
-  task :package => [:install, :test] do
+  task :package => [:test, :activate] do
     puts "Packaging..."
     %x[ ./bin/python setup.py sdist ]
   end
@@ -33,4 +47,4 @@ namespace :build do
 
 end
 
-task :default => 'build:package'
+task :default => 'build:publish'
