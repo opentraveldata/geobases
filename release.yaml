@@ -1,0 +1,5 @@
+#
+# For Jenkins, main test file and where to put package created
+# 
+test_file : 'test/test_GeoBases.py'
+repo_url  : 'http://oridist.orinet.nce.amadeus.net/python/'
