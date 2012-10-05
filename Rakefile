@@ -16,7 +16,7 @@ namespace :build do
 
   desc "Creating virtual environment"
   task :venv do
-    %x[ virtualenv --clear --no-site-packages . ]
+    %x[ virtualenv --clear --no-site-packages . >&2 ]
     raise "Virtualenv creation failed" unless $?.success?
   end
 
@@ -55,7 +55,7 @@ namespace :build do
 
   desc "Build the package"
   task :package => [:clean, :test, :activate] do
-    %x[ ./bin/python setup.py sdist ]
+    %x[ ./bin/python setup.py sdist >&2 ]
     raise "Packaging failed" unless $?.success?
   end
 
