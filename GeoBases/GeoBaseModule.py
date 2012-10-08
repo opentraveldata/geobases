@@ -336,7 +336,7 @@ class GeoBase(object):
         return ( (key, self.getLocation(key)) for key in self._things )
 
 
-    def getKeyWhere(self, field, value):
+    def getKeysWhere(self, field, value):
         '''
         Get iterator of all keys with particular
         field.
@@ -346,7 +346,7 @@ class GeoBase(object):
         :param value: the wanted value for the field
         :returns:     an iterator of matching keys
 
-        >>> list(geo_a.getKeyWhere('city_code', 'PAR'))
+        >>> list(geo_a.getKeysWhere('city_code', 'PAR'))
         ['ORY', 'TNF', 'CDG', 'BVA']
         '''
 

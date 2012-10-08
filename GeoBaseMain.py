@@ -247,11 +247,19 @@ def main():
         action='store_true'
     )
 
+    parser.add_argument('-e', '--exact',
+        help = '''Rather than looking up a key, this mode will search all keys
+                        whose specific property given by --property match the 
+                        main argument. By default, the "code" property is used 
+                        for the search.''',
+        action='store_true'
+    )
+
     parser.add_argument('-p', '--property',
-        help = '''When performing a fuzzy search, specify the property to be chosen.
+        help = '''When performing a fuzzy or exact search, specify the property to be chosen.
                         Default is "name". Give unadmissible property and available
                         values will be displayed.''',
-        default='name'
+        default = 'name'
     )
 
     parser.add_argument('-l', '--limit',
@@ -347,7 +355,7 @@ def main():
     g = GeoBase(data=args['base'], verbose=args['verbose'])
 
 
-    if args['fuzzy'] or args['near'] or args['closest']:
+    if args['exact'] or args['fuzzy'] or args['near'] or args['closest']:
         key = ' '.join(args['keys'])
     else:
         key = args['keys']
@@ -363,7 +371,14 @@ def main():
             print 'Looking for matches from %s...' % ', '.join(key)
 
 
-    if args['fuzzy']:
+    if args['exact']:
+
+        if args['property'] not in g._headers:
+            error('property', args['property'], args['base'], list(g._headers))
+
+        res = [(i, k) for i, k in enumerate(g.getKeysWhere(args['property'], key)) if i < limit]
+
+    elif args['fuzzy']:
 
         if args['property'] not in g._headers:
             error('property', args['property'], args['base'], list(g._headers))
@@ -390,6 +405,7 @@ def main():
                 res = g.gridFindClosestFromPoint(*coords, N=int(limit))
 
     else:
+        # Here key is a list passed by the user
         res = [(i, k) for i, k in enumerate(key)]
 
 
