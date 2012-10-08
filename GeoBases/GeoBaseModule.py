@@ -336,19 +336,25 @@ class GeoBase(object):
         return ( (key, self.getLocation(key)) for key in self._things )
 
 
-    def iterField(self, field):
+    def getKeyWhere(self, field, value):
         '''
-        Get list of all field data for all entries.
-        For example, if you want to know all names of all things.
+        Get iterator of all keys with particular
+        field.
+        For example, if you want to know all airports in Paris.
 
-        :param field: the wanted field
-        :returns:     a list of all fields, like ['Orly', 'Blagnac', ...] \
-            for field 'name'
+        :param field: the field to test
+        :param value: the wanted value for the field
+        :returns:     an iterator of matching keys
 
-        >>> list(geo_t.iterField('name'))
-        ['Ballersdorf', ...
+        >>> list(geo_a.getKeyWhere('city_code', 'PAR'))
+        ['ORY', 'TNF', 'CDG', 'BVA']
         '''
-        return ( self.get(key, field) for key in self._things )
+
+        for key in self._things:
+
+            if self.get(key, field) == value:
+
+                yield key
 
 
     def __iter__(self):
