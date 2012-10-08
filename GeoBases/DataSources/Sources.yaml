@@ -175,6 +175,7 @@ ori_por:
     headers   :
         - code
         - icao_code
+        - faa_code
         - is_geonames
         - geoname_id
         - valid_id
@@ -191,10 +192,15 @@ ori_por:
         - comment
         - country_code
         - cc2
-        - admin1
-        - admin2
-        - admin3
-        - admin4
+        - country_name
+        - adm1_code
+        - adm1_name_utf
+        - adm1_name_ascii
+        - adm2_code
+        - adm2_name_utf
+        - adm2_name_ascii
+        - adm3_code
+        - adm4_code
         - population
         - elevation
         - gtopo30
@@ -210,6 +216,7 @@ ori_por:
         - region_code
         - location_type
         - wiki_link
+        - alt_name_section
 
 
 ori_por_multi:
@@ -220,6 +227,7 @@ ori_por_multi:
     headers   :
         - code
         - icao_code
+        - faa_code
         - is_geonames
         - geoname_id
         - valid_id
@@ -236,10 +244,15 @@ ori_por_multi:
         - comment
         - country_code
         - cc2
-        - admin1
-        - admin2
-        - admin3
-        - admin4
+        - country_name
+        - adm1_code
+        - adm1_name_utf
+        - adm1_name_ascii
+        - adm2_code
+        - adm2_name_utf
+        - adm2_name_ascii
+        - adm3_code
+        - adm4_code
         - population
         - elevation
         - gtopo30
@@ -255,3 +268,5 @@ ori_por_multi:
         - region_code
         - location_type
         - wiki_link
+        - alt_name_section
+
