@@ -266,8 +266,8 @@ def main():
         help = '''Specify a limit when performing fuzzy searches, or geographical
                         searches. May be a radius in km or a number of results
                         given the context of the search (see --near, --closest and
-                       --fuzzy). Default is 3.''',
-        default = 3
+                        --fuzzy). Default is 3, except in quiet mode where it is disabled.''',
+        default = None
     )
 
     parser.add_argument('-n', '--near',
@@ -335,7 +335,16 @@ def main():
     #
     # ARGUMENTS
     #
-    limit = float(args['limit'])
+    if args['limit'] is None:
+        # Limit was not set by user
+        if args['quiet']:
+            limit = float('inf')
+        else:
+            limit = 3
+
+    else:
+        limit = float(args['limit'])
+
 
 
 
