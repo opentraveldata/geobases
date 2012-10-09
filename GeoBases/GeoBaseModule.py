@@ -401,7 +401,7 @@ class GeoBase(object):
 
 
 
-    def findNearPoint(self, lat, lng, radius=50, from_keys=None):
+    def findNearPoint(self, lat, lng, radius=50, from_keys=None, grid=True, double_check=True):
         '''
         Returns a list of nearby things from a point (given
         latidude and longitude), and a radius for the search.
@@ -414,32 +414,55 @@ class GeoBase(object):
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
-        :returns:       a list of keys of things (like ['ORY', 'CDG'])
+        :param grid:    boolean, use grid or not
+        :param double_check: when using grid, perform an additional check on results distance
+        :returns:       an iterable of keys of things (like ['ORY', 'CDG'])
 
         >>> # Paris, airports <= 50km
         >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint(48.84, 2.367, 50))]
         ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
-        >>> 
+        >>>
         >>> # Nice, stations <= 5km
         >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+
+        No grid mode.
+
+        >>> # Paris, airports <= 50km
+        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint(48.84, 2.367, 50, False))]
+        ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+        >>> 
+        >>> # Nice, stations <= 5km
+        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5, False))]
+        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
         >>> 
         >>> # Paris, airports <= 50km with from_keys input list
-        >>> sorted(geo_a.findNearPoint(48.84, 2.367, 50, from_keys=['ORY', 'CDG', 'BVE']))
+        >>> sorted(geo_a.findNearPoint(48.84, 2.367, 50, from_keys=['ORY', 'CDG', 'BVE'], False))
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
         '''
 
         if from_keys is None:
             from_keys = iter(self)
 
-        for thing in from_keys:
+        if grid:
+            # Using grid, from_keys if just a post-filter
+            from_keys = set(from_keys)
 
-            dist = haversine(self.getLocation(thing), (lat, lng))
+            for dist, thing in  self._ggrid.findNearPoint((lat, lng), radius, double_check):
 
-            if dist <= radius:
+                if thing in from_keys:
 
-                yield (dist, thing)
+                    yield (dist, thing)
 
+        else:
+
+            for thing in from_keys:
+
+                dist = haversine(self.getLocation(thing), (lat, lng))
+
+                if dist <= radius:
+
+                    yield (dist, thing)
 
 
 
@@ -514,21 +537,6 @@ class GeoBase(object):
 
         return heapq.nsmallest(N, iterable)
 
-
-
-    def gridFindNearPoint(self, lat, lng, radius=50, double_check=True):
-        '''
-        Same as before but using the grid system GeoGrid().
-
-        >>> # Paris, airports <= 50km
-        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.gridFindNearPoint(48.84, 2.367, 50))]
-        ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
-        >>>
-        >>> # Nice, stations <= 5km
-        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.gridFindNearPoint(43.70, 7.26, 5))]
-        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
-        '''
-        return self._ggrid.findNearPoint((lat, lng), radius, double_check)
 
 
     def gridFindNearKey(self, key, radius=50, double_check=True):
