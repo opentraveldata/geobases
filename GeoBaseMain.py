@@ -443,11 +443,17 @@ def main():
 
         res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
 
+        if verbose:
+            print 'Applying property %s = "%s"' % (args['exact_property'], args['exact'])
+
 
     if args['near'] is not None:
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['radius'], grid=with_grid, from_keys=ex_keys(res)))
+
+        if verbose:
+            print 'Applying near %s kms' % args['radius']
 
 
     if args['closest'] is not None:
@@ -455,10 +461,16 @@ def main():
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
 
+        if verbose:
+            print 'Applying closest %s' % args['closest_limit']
+
 
     if args['fuzzy'] is not None:
 
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], from_keys=ex_keys(res), min_match=args['fuzzy_limit']))
+
+        if verbose:
+            print 'Applying property %s ~ "%s"' % (args['fuzzy_property'], args['fuzzy'])
 
 
     # Keeping only limit first results
