@@ -44,6 +44,7 @@ def test_suite():
 
 
     globsGeo = {
+        'geo_o'     : GeoM.GeoBase(data='ori_por',  verbose=False),
         'geo_a'     : GeoM.GeoBase(data='airports', verbose=False),
         'geo_t'     : GeoM.GeoBase(data='stations', verbose=False),
         'geo_m'     : GeoM.GeoBase(data='mix',      verbose=False)

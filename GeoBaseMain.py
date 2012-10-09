@@ -346,6 +346,8 @@ def main():
         limit = float(args['limit'])
 
 
+    with_grid = not args['without_grid']
+
 
 
     #
@@ -392,7 +394,7 @@ def main():
         if args['property'] not in g._headers:
             error('property', args['property'], args['base'], list(g._headers))
 
-        res = g.fuzzyGet(key, args['property'], approximate=int(limit))
+        res = list(g.fuzzyGet(key, args['property'], approximate=int(limit)))
 
     elif args['near'] or args['closest']:
 
@@ -402,16 +404,10 @@ def main():
         coords = scan_coords(key, g, not(args['quiet']))
 
         if args['near']:
-            if args['without_grid']:
-                res = sorted(g.findNearPoint(*coords, radius=limit))
-            else:
-                res = sorted(g.gridFindNearPoint(*coords, radius=limit))
+            res = sorted(g.findNearPoint(*coords, radius=limit, grid=with_grid))
 
         elif args['closest']:
-            if args['without_grid']:
-                res = g.findClosestFromPoint(*coords, N=int(limit))
-            else:
-                res = g.gridFindClosestFromPoint(*coords, N=int(limit))
+            res = list(g.findClosestFromPoint(*coords, N=int(limit), grid=with_grid))
 
     else:
         # Here key is a list passed by the user
