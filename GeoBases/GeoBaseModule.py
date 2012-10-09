@@ -571,7 +571,10 @@ class GeoBase(object):
         [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
         >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
         [(0.56..., 'frnic')]
-        >>>
+        >>> # Corner case, from_keys empty is not used
+        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, grid=True, from_keys=()))
+        [(0.56..., 'frnic'), (2.52..., 'fr4342')]
+        >>> 
         >>> #from datetime import datetime
         >>> #before = datetime.now()
         >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
@@ -595,14 +598,10 @@ class GeoBase(object):
             from_keys = iter(self)
 
         if grid:
-            # Using grid, from_keys if just a post-filter
-            from_keys = set(from_keys)
 
-            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check):
+            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
 
-                if thing in from_keys:
-
-                    yield (dist, thing)
+                yield (dist, thing)
 
         else:
 

@@ -44,6 +44,9 @@ from geohash import encode, neighbors
 from .GeoUtils import haversine
 
 
+# Max recursion when iterating on frontiers
+RECURSIVE_FRONTIER_LIMIT = 5000
+
 
 class GeoGrid(object):
     '''
@@ -119,7 +122,11 @@ class GeoGrid(object):
         frontier = set([case_id])
         interior = frontier
 
-        for _ in gen:
+        for i in gen:
+
+            if i > RECURSIVE_FRONTIER_LIMIT:
+                print '/!\ Recursion exceeded in recursiveFrontier'
+                raise StopIteration
 
             yield frontier
 
@@ -199,7 +206,10 @@ class GeoGrid(object):
 
 
 
-    def findClosestFromPoint(self, lat_lng, N=1, double_check=False):
+    def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
+
+        if from_keys is not None:
+            from_keys = set(from_keys)
 
         # Some precaution for the number of wanted keys
         N = min(N, len(self._keys))
@@ -212,6 +222,11 @@ class GeoGrid(object):
         for frontier in self._recursiveFrontier(case_id, stop=False):
 
             found = found | set(self._allKeysInCases(frontier))
+
+            if from_keys:
+                # If from_keys is empty we avoid
+                # this step, otherwise infinite loop
+                found = found & from_keys
 
             # Heuristic
             # We have to compare the distance of the farthest found
