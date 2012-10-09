@@ -31,7 +31,7 @@ Examples for stations::
     >>> geo_t = GeoBase(data='stations', verbose=False)
     >>>
     >>> # Nice, stations <= 5km
-    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5))]
+    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
     ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
     >>>
     >>> geo_t.get('frpaz', 'name')
@@ -422,7 +422,7 @@ class GeoBase(object):
                 yield haversine(lat_lng_ref, lat_lng), key
 
 
-    def findNearPoint(self, lat, lng, radius=50, from_keys=None, grid=True, double_check=True):
+    def findNearPoint(self, lat_lng, radius=50, from_keys=None, grid=True, double_check=True):
         '''
         Returns a list of nearby things from a point (given
         latidude and longitude), and a radius for the search.
@@ -430,8 +430,7 @@ class GeoBase(object):
         at the surface of a sphere, here returns kilometers,
         so the radius should be in kms.
 
-        :param lat:     the latitude of the point
-        :param lng:     the longitude of the point
+        :param lat_lng: the lat_lng of the point
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
@@ -440,25 +439,25 @@ class GeoBase(object):
         :returns:       an iterable of keys of things (like ['ORY', 'CDG'])
 
         >>> # Paris, airports <= 50km
-        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint(48.84, 2.367, 50))]
+        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
         ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
         >>>
         >>> # Nice, stations <= 5km
-        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5))]
+        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
 
         No grid mode.
 
         >>> # Paris, airports <= 50km
-        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint(48.84, 2.367, 50, grid=False))]
+        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50, grid=False))]
         ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
         >>> 
         >>> # Nice, stations <= 5km
-        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5, grid=False))]
+        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5, grid=False))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
         >>> 
         >>> # Paris, airports <= 50km with from_keys input list
-        >>> sorted(geo_a.findNearPoint(48.84, 2.367, 50, from_keys=['ORY', 'CDG', 'BVE'], grid=False))
+        >>> sorted(geo_a.findNearPoint((48.84, 2.367), 50, from_keys=['ORY', 'CDG', 'BVE'], grid=False))
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
         '''
 
@@ -469,7 +468,7 @@ class GeoBase(object):
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
 
-            for dist, thing in self._ggrid.findNearPoint((lat, lng), radius, double_check):
+            for dist, thing in self._ggrid.findNearPoint(lat_lng, radius, double_check):
 
                 if thing in from_keys:
 
@@ -477,7 +476,7 @@ class GeoBase(object):
 
         else:
 
-            for dist, thing in self._build_distances((lat, lng), from_keys):
+            for dist, thing in self._build_distances(lat_lng, from_keys):
 
                 if dist <= radius:
 
@@ -537,14 +536,13 @@ class GeoBase(object):
 
         else:
 
-            for dist, thing in self.findNearPoint(self.get(key, 'lat'), 
-                                                  self.get(key, 'lng'), 
-                                                  radius, from_keys, grid, double_check):
+            for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
+
                 yield (dist, thing)
 
 
 
-    def findClosestFromPoint(self, lat, lng, N=1, from_keys=None, grid=True, double_check=True):
+    def findClosestFromPoint(self, lat_lng, N=1, from_keys=None, grid=True, double_check=True):
         '''
         Concept close to findNearPoint, but here we do not
         look for the things radius-close to a point,
@@ -555,9 +553,8 @@ class GeoBase(object):
         the LocalHelper, to find efficiently N closest point
         in a graph, from a point (using heaps).
 
-        :param lat: the latitude of the point
-        :param lng: the longitude of the point
-        :param N:   the N closest results wanted
+        :param lat_lng:   the lat_lng of the point
+        :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
             and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
@@ -565,29 +562,29 @@ class GeoBase(object):
         :param double_check: when using grid, perform an additional check on results distance
         :returns:   one key (like 'SFO'), or a list if approximate is not None
 
-        >>> list(geo_a.findClosestFromPoint(43.70, 7.26)) # Nice
+        >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
         [(5.82..., 'NCE')]
-        >>> list(geo_a.findClosestFromPoint(43.70, 7.26, N=3)) # Nice
+        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
         [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-        >>> list(geo_t.findClosestFromPoint(43.70, 7.26, N=1)) # Nice
+        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
         [(0.56..., 'frnic')]
         >>>
         >>> #from datetime import datetime
         >>> #before = datetime.now()
-        >>> #for _ in range(100): s = geo_a.findClosestFromPoint(43.70, 7.26, N=3)
+        >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
         >>> #print datetime.now() - before
 
         No grid.
 
-        >>> list(geo_o.findClosestFromPoint(43.70, 7.26, grid=False)) # Nice
+        >>> list(geo_o.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
         [(4.80..., 'III')]
-        >>> list(geo_a.findClosestFromPoint(43.70, 7.26, grid=False)) # Nice
+        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
         [(5.82..., 'NCE')]
-        >>> list(geo_a.findClosestFromPoint(43.70, 7.26, N=3, grid=False)) # Nice
+        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3, grid=False)) # Nice
         [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-        >>> list(geo_t.findClosestFromPoint(43.70, 7.26, N=1, grid=False)) # Nice
+        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1, grid=False)) # Nice
         [(0.56..., 'frnic')]
-        >>> list(geo_t.findClosestFromPoint(43.70, 7.26, N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
+        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
         [(482.84..., 'frbve'), (683.89..., 'frpaz')]
         '''
 
@@ -598,7 +595,7 @@ class GeoBase(object):
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
 
-            for dist, thing in self._ggrid.findClosestFromPoint((lat, lng), N, double_check):
+            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check):
 
                 if thing in from_keys:
 
@@ -606,7 +603,7 @@ class GeoBase(object):
 
         else:
 
-            iterable = self._build_distances((lat, lng), from_keys)
+            iterable = self._build_distances(lat_lng, from_keys)
 
             for dist, thing in heapq.nsmallest(N, iterable):
 
@@ -681,13 +678,12 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundLatLng(self, lat, lng, radius, fuzzy_value, field='name', approximate=None, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field='name', approximate=None, from_keys=None, grid=True, double_check=True):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
 
-        :param lat:     the latitude of the point
-        :param lng:     the longitude of the point
+        :param lat_lng: the lat_lng of the point
         :param radius:  the radius of the search (kilometers)
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
@@ -704,18 +700,18 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyGetAroundLatLng(50.9013890, 4.4844440, 20, 'Brussels', 'name')
+        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 20, 'Brussels', 'name')
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyGetAroundLatLng(50.9013890, 4.4844440, 2000, 'Brussels', 'name', approximate=1, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         '''
 
         if from_keys is None:
             from_keys = iter(self)
 
-        nearest = ( key for dist, key in self.findNearPoint(lat, lng, radius, from_keys, grid, double_check) )
+        nearest = ( key for dist, key in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check) )
 
         return self.fuzzyGet(fuzzy_value, field, approximate, from_keys=nearest)
 
