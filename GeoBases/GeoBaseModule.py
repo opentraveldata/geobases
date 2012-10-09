@@ -333,10 +333,10 @@ class GeoBase(object):
         >>> list(geo_a.iterLocations())
         [('AGN', (57.50..., -134.585...)), ('AGM', (65...
         '''
-        return ( (key, self.getLocation(key)) for key in self._things )
+        return ( (key, self.getLocation(key)) for key in self )
 
 
-    def getKeysWhere(self, field, value):
+    def getKeysWhere(self, field, value, from_keys=None):
         '''
         Get iterator of all keys with particular
         field.
@@ -350,7 +350,10 @@ class GeoBase(object):
         ['ORY', 'TNF', 'CDG', 'BVA']
         '''
 
-        for key in self._things:
+        if from_keys is None:
+            from_keys = iter(self)
+
+        for key in from_keys:
 
             if self.get(key, field) == value:
 
