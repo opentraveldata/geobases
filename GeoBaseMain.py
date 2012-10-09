@@ -404,10 +404,10 @@ def main():
         coords = scan_coords(key, g, not(args['quiet']))
 
         if args['near']:
-            res = sorted(g.findNearPoint(*coords, radius=limit, grid=with_grid))
+            res = sorted(g.findNearPoint(coords, radius=limit, grid=with_grid))
 
         elif args['closest']:
-            res = list(g.findClosestFromPoint(*coords, N=int(limit), grid=with_grid))
+            res = list(g.findClosestFromPoint(coords, N=int(limit), grid=with_grid))
 
     else:
         # Here key is a list passed by the user
