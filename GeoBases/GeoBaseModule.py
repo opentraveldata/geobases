@@ -613,9 +613,25 @@ class GeoBase(object):
                 yield (dist, thing)
 
 
+    def _build_ratios(self, fuzzy_value, field, keys, min_match=0):
+        '''
+        Compute the iterable of (dist, keys) of a reference
+        fuzzy_value and a list of keys.
+
+        >>> list(geo_a._build_ratios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.80))
+        [(0.9..., 'MRS')]
+        '''
+
+        for key in keys:
+
+            r = mod_leven(fuzzy_value, self.get(key, field))
+
+            if r >= min_match:
+
+                yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field='name', approximate=None, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field='name', approximate=None, min_match=0.75, from_keys=None):
         '''
         We get to the cool stuff.
 
@@ -633,26 +649,26 @@ class GeoBase(object):
 
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
-        :param approximate: if None, returns the best, if an int, returns a list of \
-            n best matches
+        :param approximate: max number of results, None means all results
+        :param min_match:   filter out matches under this threshold
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform fuzzyGet. This is useful when we have geocodes \
             and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
         :returns:           a couple with the best match and the distance found
 
-        >>> geo_t.fuzzyGet('Marseille Charles', 'name')
+        >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name')
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3, min_match=0.55)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3, min_match=0.75)
+        [(0.78..., 'CDG')]
 
-        Some corner cases. Here the first case raises en error, but in the second case,
-        since we return lists, an empty list is returned.
+        Some corner cases.
 
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=None, from_keys=[])
-        Traceback (most recent call last):
-        ValueError: Iterable was empty when performing max()
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=None)[0]
+        (0.78..., 'CDG')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
         []
         '''
@@ -664,24 +680,16 @@ class GeoBase(object):
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
-        iterable = ( (mod_leven(fuzzy_value, self.get(key, field)), key)
-                     for key in from_keys )
+        iterable = self._build_ratios(fuzzy_value, field, from_keys, min_match)
 
         if approximate is None:
-            try:
-                res = max(iterable)
-            except ValueError:
-                # This exception is raised when
-                # the iterable is empty
-                raise ValueError('Iterable was empty when performing max()')
-            else:
-                return res
-
-        return heapq.nlargest(approximate, iterable)
+            return sorted(iterable, reverse=True)
+        else:
+            return heapq.nlargest(approximate, iterable)
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field='name', approximate=None, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field='name', approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -695,7 +703,7 @@ class GeoBase(object):
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
 
-        >>> geo_a.fuzzyGet('Brussels', 'name', approximate=None)
+        >>> geo_a.fuzzyGet('Brussels', 'name', min_match=0.60)[0]
         (0.61..., 'BQT')
         >>> geo_a.get('BQT', 'name')  # Brussels just matched on Brest!!
         'Brest'
@@ -703,11 +711,11 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 20, 'Brussels', 'name')
+        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         '''
 
@@ -716,7 +724,7 @@ class GeoBase(object):
 
         nearest = ( key for dist, key in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check) )
 
-        return self.fuzzyGet(fuzzy_value, field, approximate, from_keys=nearest)
+        return self.fuzzyGet(fuzzy_value, field, approximate, min_match, from_keys=nearest)
 
 
     def _fuzzyGetBiased(self, entry, verbose=True):
@@ -738,11 +746,12 @@ class GeoBase(object):
 
 
     def fuzzyGetCached(self,
-                        fuzzy_value,
-                        field='name',
-                        approximate=None,
-                        verbose=True,
-                        show_bad=(1, 1)):
+                       fuzzy_value,
+                       field='name',
+                       approximate=None,
+                       min_match=0.75,
+                       verbose=True,
+                       show_bad=(1, 1)):
         '''
         Same as fuzzyGet but with a caching and bias system.
 
@@ -754,29 +763,29 @@ class GeoBase(object):
         :param show_bad:    the range of similarity
         :returns:           the best match
 
-        >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')
+        >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=2, show_bad=(0, 1))
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', min_match=0.60, approximate=2, show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 'Biased result')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, show_bad=(0, 1)) # Cache there
+        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, 'Biased result')
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None)
-        Using bias: ('paris+de+gaulle', 'name', None)
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, min_match=0.75)
+        Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         'Biased result'
         '''
 
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, approximate)
+        entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
         if entry not in self._cache_fuzzy:
 
@@ -786,13 +795,13 @@ class GeoBase(object):
 
             # Debug purpose
             if verbose:
-                self._debugFuzzy(match, fuzzy_value, field, approximate, show_bad)
+                self._debugFuzzy(match, fuzzy_value, field, approximate, min_match, show_bad)
 
         return self._cache_fuzzy[entry]
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, approximate, biased_result):
+    def biasFuzzyCache(self, fuzzy_value, field, approximate, min_match, biased_result):
         '''
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
@@ -800,7 +809,7 @@ class GeoBase(object):
         '''
 
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, approximate)
+        entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
         self._bias_cache_fuzzy[entry] = biased_result
 
@@ -812,33 +821,23 @@ class GeoBase(object):
         self._bias_cache_fuzzy = {}
 
 
-    def _buildCacheKey(self, fuzzy_value, field, approximate):
+    def _buildCacheKey(self, fuzzy_value, field, approximate, min_match):
         '''
         Key for the cache of fuzzyGet, based on parameters.
 
-        >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None)
-        ('paris+de+gaulle', 'name', None)
-        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', approximate=3)
-        ('antibes', 'name', 3)
+        >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None, min_match=0)
+        ('paris+de+gaulle', 'name', None, 0)
+        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', approximate=3, min_match=0)
+        ('antibes', 'name', 3, 0)
         '''
-        return '+'.join(clean(fuzzy_value)), field, approximate
+        return '+'.join(clean(fuzzy_value)), field, approximate, min_match
 
 
-    def _debugFuzzy(self,
-                    match,
-                    fuzzy_value,
-                    field,
-                    approximate=None,
-                    show_bad=(1, 1)):
+    def _debugFuzzy(self, match, fuzzy_value, field, approximate=None, min_match=0, show_bad=(1, 1)):
         '''
         Some debugging.
         '''
-        if approximate is None:
-            matches = [ match ]
-        else:
-            matches = match
-
-        for m in matches:
+        for m in match:
 
             if m[0] >= show_bad[0] and m[0] < show_bad[1]:
 
