@@ -36,11 +36,9 @@ def help():
         'methods'               : [
             '/help', 
             '/<base>/<key>',
-            '/<base>/fuzzyGet?value=&N=',
+            '/<base>/fuzzyGet?value=&N=&L=',
             '/<base>/findNearPoint?lat=&lng=&radius=',
-            '/<base>/findClosestFromPoint?lat=&lng=&N=',
-            '/<base>/gridFindNearPoint?lat=&lng=&radius=',
-            '/<base>/gridFindClosestFromPoint?lat=&lng=&N='
+            '/<base>/findClosestFromPoint?lat=&lng=&N='
         ]
     })
 
@@ -70,9 +68,13 @@ def fuzzyGet(base):
     N = request.args.get('N', 10)
     N = 10 if not N else int(N)
 
-    return my_jsonify({ 'root': BASES[base].fuzzyGet(request.args.get('value').encode('utf8'),
-                                                     request.args.get('field', 'name'),
-                                                     N)})
+    L = request.args.get('L', 0.80)
+    L = 0.80 if not L else float(L)
+
+    return my_jsonify({ 'root': list(BASES[base].fuzzyGet(request.args.get('value').encode('utf8'),
+                                                          request.args.get('field', 'name'),
+                                                          approximate=N,
+                                                          min_match=L))})
 
 
 @app.route('/<base>/findNearPoint', methods=['GET'])
@@ -85,8 +87,7 @@ def findNearPoint(base):
     radius = request.args.get('radius', 50)
     radius = 50 if not radius else float(radius)
 
-    return my_jsonify({ 'root' : sorted(BASES[base].findNearPoint(float(request.args.get('lat')),
-                                                                  float(request.args.get('lng')),
+    return my_jsonify({ 'root' : sorted(BASES[base].findNearPoint((float(request.args.get('lat')), float(request.args.get('lng'))),
                                                                   radius))})
 
 
@@ -100,38 +101,9 @@ def findClosestFromPoint(base):
     N = request.args.get('N', 10)
     N = 10 if not N else int(N)
 
-    return my_jsonify({ 'root' : BASES[base].findClosestFromPoint(float(request.args.get('lat')),
-                                                                  float(request.args.get('lng')),
-                                                                  N)})
+    return my_jsonify({ 'root' : list(BASES[base].findClosestFromPoint((float(request.args.get('lat')), float(request.args.get('lng'))),
+                                                                       N))})
 
-@app.route('/<base>/gridFindNearPoint', methods=['GET'])
-@support_jsonp
-def gridFindNearPoint(base):
-
-    if base not in BASES_GEO_SUPPORT:
-        return jsonify({'error' : 'Base does not support geocodes'})
-
-    radius = request.args.get('radius', 50)
-    radius = 50 if not radius else float(radius)
-
-    return my_jsonify({ 'root' : sorted(BASES[base].gridFindNearPoint(float(request.args.get('lat')),
-                                                                      float(request.args.get('lng')),
-                                                                      radius))})
-
-
-@app.route('/<base>/gridFindClosestFromPoint', methods=['GET'])
-@support_jsonp
-def gridFindClosestFromPoint(base):
-
-    if base not in BASES_GEO_SUPPORT:
-        return jsonify({'error' : 'Base does not support geocodes'})
-
-    N = request.args.get('N', 10)
-    N = 10 if not N else int(N)
-
-    return my_jsonify({ 'root' : BASES[base].gridFindClosestFromPoint(float(request.args.get('lat')),
-                                                                      float(request.args.get('lng')),
-                                                                      N)})
 
 
 def _test():
