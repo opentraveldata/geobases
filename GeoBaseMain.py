@@ -230,7 +230,7 @@ def main():
 
     parser.add_argument('keys',
         help='Main argument (key, name, geocode depending on search mode)',
-        nargs='+'
+        nargs='*'
     )
 
     parser.add_argument('-b', '--base',
@@ -242,51 +242,76 @@ def main():
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
-                        match from the property given by --property option. By default,
-                        the "name" property is used for the search.''',
-        action='store_true'
+                        match from the property given by --fuzzy-property option for
+                        the argument. Limit can be specified with --fuzzy-limit option.
+                        By default, the "name" property is used for the search.''',
+        default = None
     )
 
-    parser.add_argument('-e', '--exact',
-        help = '''Rather than looking up a key, this mode will search all keys
-                        whose specific property given by --property match the 
-                        main argument. By default, the "code" property is used 
-                        for the search.''',
-        action='store_true'
+    parser.add_argument('-L', '--fuzzy-limit',
+        help = '''Specify a limit for fuzzy searches, default is 0.80.''',
+        default = 0.85,
+        type=float
     )
 
-    parser.add_argument('-p', '--property',
-        help = '''When performing a fuzzy or exact search, specify the property to be chosen.
+    parser.add_argument('-F', '--fuzzy-property',
+        help = '''When performing a fuzzy search, specify the property to be chosen.
                         Default is "name". Give unadmissible property and available
                         values will be displayed.''',
         default = 'name'
     )
 
-    parser.add_argument('-l', '--limit',
-        help = '''Specify a limit when performing fuzzy searches, or geographical
-                        searches. May be a radius in km or a number of results
-                        given the context of the search (see --near, --closest and
-                        --fuzzy). Default is 3, except in quiet mode where it is disabled.''',
+    parser.add_argument('-e', '--exact',
+        help = '''Rather than looking up a key, this mode will search all keys
+                        whose specific property given by --exact-property match the 
+                        argument. By default, the "code" property is used 
+                        for the search.''',
         default = None
+    )
+
+    parser.add_argument('-E', '--exact-property',
+        help = '''When performing an exact search, specify the property to be chosen.
+                        Default is "code". Give unadmissible property and available
+                        values will be displayed.''',
+        default = 'code'
+    )
+
+    parser.add_argument('-l', '--limit',
+        help = '''Specify a limit for the number of results.
+                        Default is 4, except in quiet mode where it is disabled.''',
+        default = None
+    )
+
+    parser.add_argument('-r', '--radius',
+        help = '''Specify a radius in km when performing geographical
+                        searches. Default is 50 kms.''',
+        default = 50.,
+        type=float
     )
 
     parser.add_argument('-n', '--near',
         help = '''Rather than looking up a key, this mode will search the entries
-                        in a radius from a geocode or a key. Radius is given by --limit option,
-                        and geocode is passed as main argument. If you wish to give a geocode as
-                        input, just pass it as main argument with "lat, lng" format.''',
-        action='store_true'
+                        in a radius from a geocode or a key. Radius is given by --radius option,
+                        and geocode is passed as argument. If you wish to give a geocode as
+                        input, just pass it as argument with "lat, lng" format.''',
+        default = None
     )
 
     parser.add_argument('-c', '--closest',
         help = '''Rather than looking up a key, this mode will search the closest entries
-                        from a geocode or a key. Number of results is limited by --limit option,
-                        and geocode is passed as main argument. If you wish to give a geocode as
-                        input, just pass it as main argument with "lat, lng" format.''',
-        action='store_true'
+                        from a geocode or a key. Number of results is limited by --closest-limit option,
+                        and geocode is passed as argument. If you wish to give a geocode as
+                        input, just pass it as argument with "lat, lng" format.''',
+        default = None
     )
 
-    parser.add_argument('-w', '--without_grid',
+    parser.add_argument('-C', '--closest-limit',
+        help = '''Specify a limit for closest searches, default is 10.''',
+        default = 10,
+        type=int
+    )
+
+    parser.add_argument('-w', '--without-grid',
         help = '''When performing a geographical search, a geographical index is used.
                         This may lead to inaccurate results in some (rare) cases. Adding this
                         option will disable the index, and browse the full data set to
@@ -335,23 +360,25 @@ def main():
     #
     # ARGUMENTS
     #
+    with_grid = not args['without_grid']
+    verbose   = not args['quiet']
+
     if args['limit'] is None:
         # Limit was not set by user
         if args['quiet']:
-            limit = float('inf')
+            limit = None
         else:
-            limit = 3
+            limit = 4
 
     else:
-        limit = float(args['limit'])
+        limit = int(args['limit'])
 
 
-    with_grid = not args['without_grid']
 
 
 
     #
-    # FETCHING
+    # CREATION
     #
     if args['base'] not in GeoBase.BASES:
         error('base', args['base'], list(GeoBase.BASES.keys()))
@@ -360,58 +387,85 @@ def main():
     if args['update']:
         GeoBase.update()
 
-    if not args['quiet']:
+    if verbose:
         print 'Loading GeoBase...'
 
     g = GeoBase(data=args['base'], verbose=args['verbose'])
 
 
-    if args['exact'] or args['fuzzy'] or args['near'] or args['closest']:
-        key = ' '.join(args['keys'])
-    else:
-        key = args['keys']
 
+    #
+    # FAILING
+    #
 
-    if not args['quiet']:
-
-        before = datetime.now()
-
-        if isinstance(key, str):
-            print 'Looking for matches from "%s"...' % key
-        else:
-            print 'Looking for matches from %s...' % ', '.join(key)
-
-
-    if args['exact']:
-
-        if args['property'] not in g._headers:
-            error('property', args['property'], args['base'], list(g._headers))
-
-        res = [(i, k) for i, k in enumerate(g.getKeysWhere(args['property'], key)) if i < limit]
-
-    elif args['fuzzy']:
-
-        if args['property'] not in g._headers:
-            error('property', args['property'], args['base'], list(g._headers))
-
-        res = list(g.fuzzyGet(key, args['property'], approximate=int(limit)))
-
-    elif args['near'] or args['closest']:
+    # Failing on lack of geocode support if necessary
+    if args['near'] is not None or args['closest'] is not None:
 
         if not g.hasGeoSupport():
             error('geocode_support', args['base'])
 
-        coords = scan_coords(key, g, not(args['quiet']))
+    # Failing on wrong headers
+    if args['exact'] is not None:
 
-        if args['near']:
-            res = sorted(g.findNearPoint(coords, radius=limit, grid=with_grid))
+        if args['exact_property'] not in g._headers:
+            error('property', args['exact_property'], args['base'], list(g._headers))
 
-        elif args['closest']:
-            res = list(g.findClosestFromPoint(coords, N=int(limit), grid=with_grid))
+    if args['fuzzy'] is not None:
 
+        if args['fuzzy_property'] not in g._headers:
+            error('property', args['fuzzy_property'], args['base'], list(g._headers))
+
+
+    #
+    # MAIN
+    #
+
+    if verbose:
+        before = datetime.now()
+
+        if args['keys']:
+            print 'Looking for matches from %s...' % ', '.join(args['keys'])
+        else:
+            print 'Looking for all matches...'
+
+    # We start from either all keys available or keys listed by user
+    if args['keys']:
+        res = enumerate(args['keys'])
     else:
-        # Here key is a list passed by the user
-        res = [(i, k) for i, k in enumerate(key)]
+        res = enumerate(iter(g))
+
+    # Keeping only keys in intermediate search
+    ex_keys = lambda res : None if res is None else (e[1] for e in res)
+
+    # We are going to chain conditions
+    # res will hold intermediate results
+    if args['exact'] is not None:
+
+        res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
+
+
+    if args['near'] is not None:
+
+        coords = scan_coords(args['near'], g, verbose)
+        res = sorted(g.findNearPoint(coords, radius=args['radius'], grid=with_grid, from_keys=ex_keys(res)))
+
+
+    if args['closest'] is not None:
+
+        coords = scan_coords(args['closest'], g, verbose)
+        res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
+
+
+    if args['fuzzy'] is not None:
+
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], from_keys=ex_keys(res), min_match=args['fuzzy_limit']))
+
+
+    # Keeping only limit first results
+    res = list(res)
+
+    if limit is not None:
+        res = res[:limit]
 
 
     #
@@ -428,9 +482,9 @@ def main():
             error('field', field, args['base'], ['__ref__'] + list(g._headers))
 
     # Highlighting some rows
-    important = set(['code', args['property']])
+    important = set(['code', args['fuzzy_property'], args['exact_property']])
 
-    if not args['quiet']:
+    if verbose:
 
         display(g, res, set(args['omit']), args['show'], important)
 
