@@ -401,7 +401,7 @@ class GeoBase(object):
 
 
 
-    def findNearPoint(self, lat, lng, radius=50):
+    def findNearPoint(self, lat, lng, radius=50, from_keys=None):
         '''
         Returns a list of nearby things from a point (given
         latidude and longitude), and a radius for the search.
@@ -412,18 +412,27 @@ class GeoBase(object):
         :param lat:     the latitude of the point
         :param lng:     the longitude of the point
         :param radius:  the radius of the search (kilometers)
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
         :returns:       a list of keys of things (like ['ORY', 'CDG'])
 
         >>> # Paris, airports <= 50km
         >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint(48.84, 2.367, 50))]
         ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
-        >>>
+        >>> 
         >>> # Nice, stations <= 5km
         >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(43.70, 7.26, 5))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        >>> 
+        >>> # Paris, airports <= 50km with from_keys input list
+        >>> sorted(geo_a.findNearPoint(48.84, 2.367, 50, from_keys=['ORY', 'CDG', 'BVE']))
+        [(12.76..., 'ORY'), (23.40..., 'CDG')]
         '''
 
-        for thing in self._things:
+        if from_keys is None:
+            from_keys = iter(self)
+
+        for thing in from_keys:
 
             dist = haversine(self.getLocation(thing), (lat, lng))
 
@@ -433,7 +442,8 @@ class GeoBase(object):
 
 
 
-    def findNearKey(self, key, radius=50):
+
+    def findNearKey(self, key, radius=50, from_keys=None):
         '''
         Same as findNearPoint, except the point is given
         not by a lat/lng, but with its key, like ORY or SFO.
@@ -442,17 +452,29 @@ class GeoBase(object):
 
         :param key:     the key of the point
         :param radius:  the radius of the search (kilometers)
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
         :returns:       a list of keys of things (like ['ORY', 'CDG'])
 
-        >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
+        >>> # Orly, airports <= 50km
+        >>> sorted(geo_a.findNearKey('ORY', 50))
         [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-        >>> sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations <= 5km
+        >>> 
+        >>> # Nice station, stations <= 5km
+        >>> sorted(geo_t.findNearKey('frnic', 5))
         [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+        >>> 
+        >>> sorted(geo_a.findNearKey('ORY', 50, from_keys=['ORY', 'CDG', 'SFO']))
+        [(0.0, 'ORY'), (34.8..., 'CDG')]
         '''
+
+        if from_keys is None:
+            from_keys = iter(self)
 
         return self.findNearPoint(self.get(key, 'lat'),
                                   self.get(key, 'lng'),
-                                  radius)
+                                  radius,
+                                  from_keys)
 
 
 
@@ -486,7 +508,7 @@ class GeoBase(object):
         '''
 
         if from_keys is None:
-            from_keys = self._things.iterkeys()
+            from_keys = iter(self)
 
         iterable = ( (haversine(self.getLocation(key), (lat, lng)), key) for key in from_keys )
 
@@ -509,7 +531,6 @@ class GeoBase(object):
         return self._ggrid.findNearPoint((lat, lng), radius, double_check)
 
 
-
     def gridFindNearKey(self, key, radius=50, double_check=True):
         '''
         Same as before but using the grid system GeoGrid().
@@ -520,8 +541,6 @@ class GeoBase(object):
         [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
         '''
         return self._ggrid.findNearKey(key, radius, double_check)
-
-
 
     def gridFindClosestFromPoint(self, lat, lng, N=1, double_check=True):
         '''
@@ -574,11 +593,21 @@ class GeoBase(object):
         (0.78..., 'CDG')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
+
+        Some corner cases. Here the first case raises en error, but in the second case,
+        since we return lists, an empty list is returned.
+
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=None, from_keys=[])
+        Traceback (most recent call last):
+        ValueError: Iterable was empty when performing max()
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
+        []
         '''
 
         if from_keys is None:
-            # iter(self) would have worked since __iter__ is defined
-            from_keys = self._things.iterkeys()
+            # iter(self), since __iter__ is defined is equivalent to
+            # self._things.iterkeys()
+            from_keys = iter(self)
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
@@ -586,13 +615,20 @@ class GeoBase(object):
                      for key in from_keys )
 
         if approximate is None:
-            return max(iterable)
+            try:
+                res = max(iterable)
+            except ValueError:
+                # This exception is raised when
+                # the iterable is empty
+                raise ValueError('Iterable was empty when performing max()')
+            else:
+                return res
 
         return heapq.nlargest(approximate, iterable)
 
 
 
-    def fuzzyGetAroundLatLng(self, lat, lng, radius, fuzzy_value, field='name', approximate=None):
+    def fuzzyGetAroundLatLng(self, lat, lng, radius, fuzzy_value, field='name', approximate=None, from_keys=None):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -604,6 +640,8 @@ class GeoBase(object):
         :param field:       the field we look into, like 'name'
         :param approximate: if None, returns the best, if an int, returns a list of \
             n best matches
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
 
         >>> geo_a.fuzzyGet('Brussels', 'name', approximate=None)
         (0.61..., 'BQT')
@@ -611,12 +649,20 @@ class GeoBase(object):
         'Brest'
         >>> geo_a.get('BRU', 'name') # We wanted BRU for 'Bruxelles'
         'Bruxelles National'
+        >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
         >>> geo_a.fuzzyGetAroundLatLng('50.9013890', '4.4844440', 20, 'Brussels', 'name')
         (0.46..., 'BRU')
+        >>> 
+        >>> # Now a request limited to some input keys
+        >>> geo_a.fuzzyGetAroundLatLng('50.9013890', '4.4844440', 2000, 'Brussels', 'name', approximate=1, from_keys=['CDG', 'ORY'])
+        [(0.33..., 'ORY')]
         '''
 
-        nearest = ( key for dist, key in self.findNearPoint(lat, lng, radius) )
+        if from_keys is None:
+            from_keys = iter(self)
+
+        nearest = ( key for dist, key in self.findNearPoint(lat, lng, radius, from_keys) )
 
         return self.fuzzyGet(fuzzy_value, field, approximate, from_keys=nearest)
 
