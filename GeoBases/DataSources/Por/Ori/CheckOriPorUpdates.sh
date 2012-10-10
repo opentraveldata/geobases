@@ -9,9 +9,6 @@ TMP_CSV='tmp_01.csv'
 cd `dirname $0`
 LOC_CSV='ori_por_public.csv'
 
-echo -e "\nConsidering local oripor file $PWD/$LOC_CSV\n"
-
-
 # By default, we will ask the user permission to replace
 # the old file, unless -f option is triggered
 FORCE=0
@@ -29,13 +26,17 @@ while getopts ":f" opt; do
     esac
 done
 
+echo -e "\n* Comparing local ori_por file and remote:\n"
+echo -e "1. $PWD/$LOC_CSV"
+echo -e "2. $REF_URL"
+
 # Downloading
-wget $REF_URL -O $TMP_CSV # -o /dev/null
+wget $REF_URL -O $TMP_CSV -o /dev/null
 
 # Commenting header
 sed -i '1s/^/#/g' $TMP_CSV
 
-echo "Unified diff:"
+echo -e "\n* Unified diff:"
 diff -u $LOC_CSV $TMP_CSV
 DIFF=`diff -u $LOC_CSV $TMP_CSV`
 echo
