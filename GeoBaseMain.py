@@ -351,7 +351,7 @@ def main():
     )
 
     parser.add_argument('-u', '--update',
-        help = '''If this option is set, before anything is done, 
+        help = '''If this option is set, instead of anything, 
                         the script will try to update the ori_por source file.''',
         action='store_true'
     )
@@ -390,6 +390,7 @@ def main():
     # Updating file
     if args['update']:
         GeoBase.update()
+        exit()
 
     if verbose:
         print 'Loading GeoBase...'
@@ -471,7 +472,7 @@ def main():
 
     if args['fuzzy'] is not None:
 
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], from_keys=ex_keys(res), min_match=args['fuzzy_limit']))
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
 
         if verbose:
             print 'Applying property %s ~ "%s"' % (args['fuzzy_property'], args['fuzzy'])
