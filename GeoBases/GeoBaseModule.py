@@ -572,8 +572,8 @@ class GeoBase(object):
         >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
         [(0.56..., 'frnic')]
         >>> # Corner case, from_keys empty is not used
-        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, grid=True, from_keys=()))
-        [(0.56..., 'frnic'), (2.52..., 'fr4342')]
+        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=()))
+        []
         >>> 
         >>> #from datetime import datetime
         >>> #before = datetime.now()
