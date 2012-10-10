@@ -36,8 +36,8 @@ wget $REF_URL -O $TMP_CSV # -o /dev/null
 sed -i '1s/^/#/g' $TMP_CSV
 
 echo "Unified diff:"
+diff -u $LOC_CSV $TMP_CSV
 DIFF=`diff -u $LOC_CSV $TMP_CSV`
-echo $DIFF
 echo
 
 if [ "$DIFF" = "" ]; then
