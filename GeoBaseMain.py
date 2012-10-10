@@ -248,17 +248,18 @@ def main():
         default = None
     )
 
-    parser.add_argument('-L', '--fuzzy-limit',
-        help = '''Specify a limit for fuzzy searches, default is 0.80.''',
-        default = 0.85,
-        type=float
-    )
-
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
                         Default is "name". Give unadmissible property and available
                         values will be displayed.''',
         default = 'name'
+    )
+
+    parser.add_argument('-L', '--fuzzy-limit',
+        help = '''Specify a min limit for fuzzy searches, default is 0.80.
+                        This is the Levenshtein ratio of the two strings.''',
+        default = 0.85,
+        type=float
     )
 
     parser.add_argument('-e', '--exact',
@@ -276,25 +277,19 @@ def main():
         default = 'code'
     )
 
-    parser.add_argument('-l', '--limit',
-        help = '''Specify a limit for the number of results.
-                        Default is 4, except in quiet mode where it is disabled.''',
-        default = None
-    )
-
-    parser.add_argument('-r', '--radius',
-        help = '''Specify a radius in km when performing geographical
-                        searches. Default is 50 kms.''',
-        default = 50.,
-        type=float
-    )
-
     parser.add_argument('-n', '--near',
         help = '''Rather than looking up a key, this mode will search the entries
-                        in a radius from a geocode or a key. Radius is given by --radius option,
+                        in a radius from a geocode or a key. Radius is given by --near-limit option,
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
         default = None
+    )
+
+    parser.add_argument('-N', '--near-limit',
+        help = '''Specify a radius in km when performing geographical
+                        searches with --near. Default is 50 kms.''',
+        default = 50.,
+        type=float
     )
 
     parser.add_argument('-c', '--closest',
@@ -306,7 +301,8 @@ def main():
     )
 
     parser.add_argument('-C', '--closest-limit',
-        help = '''Specify a limit for closest searches, default is 10.''',
+        help = '''Specify a limit for closest searche with --closest, 
+                        default is 10.''',
         default = 10,
         type=int
     )
@@ -320,7 +316,8 @@ def main():
     )
 
     parser.add_argument('-q', '--quiet',
-        help = '''Does not provide the verbose output.''',
+        help = '''Does not provide the verbose output.
+                        May still be combined with --omit and --show.''',
         action='store_true'
     )
 
@@ -347,6 +344,12 @@ def main():
         default = []
     )
 
+    parser.add_argument('-l', '--limit',
+        help = '''Specify a limit for the number of results.
+                        Default is 4, except in quiet mode where it is disabled.''',
+        default = None
+    )
+
     parser.add_argument('-u', '--update',
         help = '''If this option is set, before anything is done, 
                         the script will try to update the ori_por source file.''',
@@ -362,6 +365,7 @@ def main():
     #
     with_grid = not args['without_grid']
     verbose   = not args['quiet']
+    warnings  = args['verbose']
 
     if args['limit'] is None:
         # Limit was not set by user
@@ -390,7 +394,7 @@ def main():
     if verbose:
         print 'Loading GeoBase...'
 
-    g = GeoBase(data=args['base'], verbose=args['verbose'])
+    g = GeoBase(data=args['base'], verbose=warnings)
 
 
 
@@ -450,10 +454,10 @@ def main():
     if args['near'] is not None:
 
         coords = scan_coords(args['near'], g, verbose)
-        res = sorted(g.findNearPoint(coords, radius=args['radius'], grid=with_grid, from_keys=ex_keys(res)))
+        res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
 
         if verbose:
-            print 'Applying near %s kms' % args['radius']
+            print 'Applying near %s kms' % args['near_limit']
 
 
     if args['closest'] is not None:
