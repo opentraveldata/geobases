@@ -76,7 +76,7 @@ def display(geob, list_of_things, omit, show, important):
     # Different behaviour given
     # number of results
     # We adapt the width between 25 and 40 
-    #given number of columns and term width
+    # given number of columns and term width
     n = len(list_of_things)
 
     lim = min(40, max(25, int(getTermSize()[1] / float(n+1))))
@@ -145,7 +145,15 @@ def fixed_width(s, col, lim=25, truncate=None):
     if truncate is None:
         truncate = 1000
 
-    return colored((('%-' + str(lim) + 's') % s)[0:truncate], *col)
+    printer = '%%-%ss' % lim # is somehting like '%-3s'
+
+    # To truncate on the appropriate number of characters
+    # We decode before truncating
+    # Then we encode again for sys.stdout.write
+    s = s.decode('utf8')[0:truncate]
+    s = (printer % s).encode('utf8')
+
+    return colored(s, *col)
 
 
 def scan_coords(u_input, geob, verbose):
