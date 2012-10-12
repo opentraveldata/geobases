@@ -173,7 +173,7 @@ ori_por:
     key_col   : code
     delimiter : ^
     headers   :
-        - code
+        - code          # is iata_code in ori_por headers
         - icao_code
         - faa_code
         - is_geonames
@@ -181,9 +181,8 @@ ori_por:
         - valid_id
         - name
         - asciiname
-        - alternatenames
-        - lat
-        - lng
+        - lat           # is latitude in ori_por headers
+        - lng           # is longitude in ori_por headers
         - fclass
         - fcode
         - page_rank
@@ -212,11 +211,14 @@ ori_por:
         - is_airport
         - is_commercial
         - city_code
+        - city_name_utf
+        - city_name_ascii
         - state_code
         - region_code
         - location_type
         - wiki_link
         - alt_name_section
+
 
 
 ori_por_multi:
@@ -225,7 +227,7 @@ ori_por_multi:
     key_col   : [code, location_type]
     delimiter : ^
     headers   :
-        - code
+        - code          # is iata_code in ori_por headers
         - icao_code
         - faa_code
         - is_geonames
@@ -233,9 +235,8 @@ ori_por_multi:
         - valid_id
         - name
         - asciiname
-        - alternatenames
-        - lat
-        - lng
+        - lat           # is latitude in ori_por headers
+        - lng           # is longitude in ori_por headers
         - fclass
         - fcode
         - page_rank
@@ -264,6 +265,8 @@ ori_por_multi:
         - is_airport
         - is_commercial
         - city_code
+        - city_name_utf
+        - city_name_ascii
         - state_code
         - region_code
         - location_type
