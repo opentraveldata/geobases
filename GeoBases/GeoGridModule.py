@@ -186,6 +186,10 @@ class GeoGrid(object):
 
     def findNearPoint(self, lat_lng, radius=20, double_check=False):
 
+        if lat_lng is None:
+            # Case where the lat_lng was missing from base
+            return iter([])
+
         candidate = self._findNearCase(self._computeCaseId(lat_lng), radius)
 
         if double_check:
