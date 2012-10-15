@@ -201,6 +201,11 @@ class GeoGrid(object):
 
     def findNearKey(self, key, radius=20, double_check=False):
 
+        if key not in self._keys:
+            # Case where the key probably did not have a proper geocode 
+            # and as such was never indexed
+            return iter([])
+
         candidate = self._findNearCase(self._keys[key]['case'], radius)
 
         if double_check:
