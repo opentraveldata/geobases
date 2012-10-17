@@ -18,10 +18,6 @@ import colorama
 
 from GeoBases.GeoBaseModule import GeoBase
 
-try:
-    from GeoBases.OpenTrepWrapperModule import main_trep
-except ImportError:
-    main_trep = lambda *args, **kwargs: []
 
 
 
@@ -111,15 +107,13 @@ def display(geob, list_of_things, omit, show, important):
                 sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
                 for h, k in list_of_things:
-                    if k in geob:
-                        sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
+                    sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
 
             else:
                 sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
                 for _, k in list_of_things:
-                    if k in geob:
-                        sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+                    sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
             c.next()
 
@@ -417,6 +411,20 @@ def main():
 
 
 
+    #
+    # OPENTREP IMPORT
+    #
+    if args['trep'] is not None:
+        # We only try to load it if we need it,
+        # to avoid displaying error messages for nothing
+        try:
+            from GeoBases.OpenTrepWrapperModule import main_trep
+
+        except ImportError as e:
+            print >> sys.stderr, '\n', str(e), '\n'
+
+            main_trep = lambda *args, **kwargs: []
+
 
 
     #
@@ -440,7 +448,6 @@ def main():
     #
     # FAILING
     #
-
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
 
@@ -458,11 +465,18 @@ def main():
         if args['fuzzy_property'] not in g._headers:
             error('property', args['fuzzy_property'], args['base'], list(g._headers))
 
+    # Failing on unkown fields
+    for field in args['show'] + args['omit']: 
+
+        if field not in ['__ref__'] + list(g._headers):
+
+            error('field', field, args['base'], ['__ref__'] + list(g._headers))
+
+
 
     #
     # MAIN
     #
-
     if verbose:
         before = datetime.now()
 
@@ -534,26 +548,24 @@ def main():
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
 
 
+
+    #
+    # DISPLAY
+    #
+
     # Keeping only limit first results
     res = list(res)
 
     if limit is not None:
         res = res[:limit]
 
-
-    #
-    # DISPLAY
-    #
-
     for (h, k) in res:
         if k not in g:
             warn('key', k, g._data, g._source)
 
-    for field in args['show'] + args['omit']: 
+    # Removing unknown keys
+    res = [(h, k) for h, k in res if k in g]
 
-        if field not in ['__ref__'] + list(g._headers):
-
-            error('field', field, args['base'], ['__ref__'] + list(g._headers))
 
     # Highlighting some rows
     important = set(['code', args['fuzzy_property'], args['exact_property']])
@@ -566,6 +578,7 @@ def main():
 
     else:
         display_quiet(g, res, set(args['omit']), args['show'])
+
 
 
 if __name__ == '__main__':
