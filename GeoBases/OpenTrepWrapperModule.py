@@ -32,42 +32,41 @@ except ImportError:
 #    - 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
 #  - pyopentrep -f S fr
 #    - 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
-def compactResultParser (resultString):
-    # Defaults
-    unrecognized = ''
-    codes, locations, alter_locations = [], [], []
-
-    # Initialise the string of matches with the raw result
-    str_matches = resultString
+def compactResultParser(resultString):
 
     # Parsing begins
     # 1. First, strip out the unrecognised keywords
-    if ';' in str_matches:
-        str_matches, unrecognized = str_matches.split(';', 1)
+    if ';' in resultString:
+        str_matches, unrecognized = resultString.split(';', 1)
+    else:
+        str_matches, unrecognized = resultString, ''
 
-    str_value = unrecognized
 
     # 2. Then, for each matching location, the alternate matches have to be
     #    stored aside.
     if not str_matches:
-        return []
+        return [], ''
 
-    alter_locations = str_matches.split(',')
-    locations = [x[:3] for x in alter_locations]
+    codes = []
 
-    for alter_location_list in alter_locations:
-        alter_location_list = alter_location_list.split('-')
+    for alter_location in str_matches.split(','):
 
-        for extra_location_list in alter_location_list:
-            extra_location_list = extra_location_list.split(':')
+        for extra_location in alter_location.split('-'):
 
-            codes = [(float(0), x[:3].upper()) for x in alter_locations]
-            if codes:
-                form_value = [codes]
-            if str_value:
-                form_value.append (str_value)
+            extra_loc, score = extra_location.split('/', 1)
 
-    return form_value
+            for code in extra_loc.split(':'):
+
+                codes.append((float(score), code.upper()))
+
+                # We break because we only want to first
+                break
+
+            # We break because we only want to first
+            break
+
+    return codes, unrecognized
+
 
 ##
 # JSON interpreter. The JSON structure contains a list with the main matches,
@@ -182,7 +181,7 @@ def search (openTrepLibrary, searchString, outputFormat, verbose):
 
     result = openTrepLibrary.search(opentrepOutputFormat, searchString)
     if verbose:
-        print result
+        print 'Raw result: %s' % result
 
     # When the compact format is selected, the result string has to be
     # parsed accordingly.
@@ -234,7 +233,8 @@ def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=N
         raise Exception('The OpenTrepLibrary cannot be initialised')
 
     # Print out the file-path details
-    if verbose:
+    if verbose and False:
+        # Actually we do not want to display this :D
         getPaths(openTrepLibrary)
 
     if command == 'index':
@@ -263,7 +263,15 @@ def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=N
 
 if __name__ == '__main__':
 
-    print main_trep(searchString=sys.argv[1], outputFormat=sys.argv[2])
 
-    print compactResultParser('nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou')
-    print compactResultParser('aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100')
+    test_1 = 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
+    print test_1
+    print compactResultParser(test_1)
+
+    test_2 = 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
+    print test_2
+    print compactResultParser(test_2)
+
+    print
+    print main_trep(searchString=sys.argv[1])
+
