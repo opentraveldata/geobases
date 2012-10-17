@@ -41,7 +41,7 @@ class RotatingColors(object):
     def __init__(self):
 
         self._availables = [
-             ('cyan',   None,     []),
+             ('blue',   None,     []),
              ('white', 'on_grey', []),
         ]
 
@@ -494,44 +494,44 @@ def main():
     # res will hold intermediate results
     if args['trep'] is not None:
 
-        res = main_trep(searchString=' '.join(args['trep']), outputFormat=args['trep_format'], from_keys=ex_keys(res), verbose=False)
-
         if verbose:
             print 'Applying opentrep on "%s" [output %s]' % (' '.join(args['trep']), args['trep_format'])
+
+        res = main_trep(searchString=' '.join(args['trep']), outputFormat=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
 
 
     if args['exact'] is not None:
 
-        res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
-
         if verbose:
             print 'Applying property %s = "%s"' % (args['exact_property'], args['exact'])
+
+        res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
 
 
     if args['near'] is not None:
 
-        coords = scan_coords(args['near'], g, verbose)
-        res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
-
         if verbose:
             print 'Applying near %s kms' % args['near_limit']
+
+        coords = scan_coords(args['near'], g, verbose)
+        res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
 
 
     if args['closest'] is not None:
 
-        coords = scan_coords(args['closest'], g, verbose)
-        res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
-
         if verbose:
             print 'Applying closest %s' % args['closest_limit']
+
+        coords = scan_coords(args['closest'], g, verbose)
+        res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
 
 
     if args['fuzzy'] is not None:
 
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
-
         if verbose:
             print 'Applying property %s ~ "%s"' % (args['fuzzy_property'], args['fuzzy'])
+
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
 
 
     # Keeping only limit first results
