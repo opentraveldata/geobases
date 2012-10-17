@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import simplejson as json
+import sys
 
 try:
-    import sys
     sys.path.append ('/usr/lib64')
 
     # Initialise the OpenTrep C++ library
