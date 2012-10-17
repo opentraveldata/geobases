@@ -177,42 +177,33 @@ def search (openTrepLibrary, searchString, outputFormat, verbose):
     # works
     opentrepOutputFormat = outputFormat
 
-    if (opentrepOutputFormat == 'I'):
+    if opentrepOutputFormat == 'I':
         opentrepOutputFormat = 'J'
 
-    result = openTrepLibrary.search (opentrepOutputFormat, searchString)
-    print result
+    result = openTrepLibrary.search(opentrepOutputFormat, searchString)
+    if verbose:
+        print result
 
     # When the compact format is selected, the result string has to be
     # parsed accordingly.
-    if (outputFormat == 'S'):
-        parsedStruct = compactResultParser (result)
-        if verbose:
-            print 'Compact format => recognised place (city/airport) codes:'
-        return parsedStruct
+    if outputFormat == 'S':
+        return compactResultParser(result)
 
     # When the full details have been requested, the result string is
     # potentially big and complex, and is not aimed to be
     # parsed. So, the result string is just displayed/dumped as is.
-    elif (outputFormat == 'F'):
-        if verbose:
-            print 'Raw result from the OpenTrep library:'
+    if outputFormat == 'F':
         return result
 
     # When the raw JSON format has been requested, no handling is necessary.
-    elif (outputFormat == 'J'):
-        if verbose:
-            print 'Raw (JSON) result from the OpenTrep library:'
+    if outputFormat == 'J':
         return result
 
     # The interpreted JSON format is an example of how to extract relevant
     # information from the corresponding Python structure. That code can be
     # copied/pasted by clients to the OpenTREP library.
-    elif (outputFormat == 'I'):
-        interpretedString = interpretFromJSON (result)
-        if verbose:
-            print 'JSON format => recognised place (city/airport) codes:'
-        return interpretedString
+    if outputFormat == 'I':
+        return interpretFromJSON(result)
 
 
 
@@ -255,7 +246,13 @@ def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=N
     # Free the OpenTREP library resource
     openTrepLibrary.finalize()
 
-    #print r[0]
+    if outputFormat != 'S':
+        # Only this outputFormat is handled by upper layers
+        # So for others we display it and return an empty
+        # list to avoid failures
+        print r
+        return []
+
     if from_keys is None:
         return r[0]
     else:
