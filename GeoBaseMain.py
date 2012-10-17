@@ -41,8 +41,8 @@ class RotatingColors(object):
     def __init__(self):
 
         self._availables = [
-             ('white', None),
-             ('cyan', 'on_grey')
+             ('cyan',   None,     []),
+             ('white', 'on_grey', []),
         ]
 
         self._current = 0
@@ -65,12 +65,12 @@ class RotatingColors(object):
 
     def getEmph(self):
 
-        return ('grey', 'on_green')
+        return ('white', 'on_blue', [])
 
 
     def getHeader(self):
 
-        return ('grey', 'on_yellow')
+        return ('red', None, [])
 
 
 def display(geob, list_of_things, omit, show, important):
