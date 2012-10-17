@@ -403,13 +403,13 @@ class GeoBase(object):
         return self._things.keys()
 
 
-    def _build_distances(self, lat_lng_ref, keys):
+    def _buildDistances(self, lat_lng_ref, keys):
         '''
         Compute the iterable of (dist, keys) of a reference
         lat_lng and a list of keys. Keys which have not valid
         geocodes will not appear in the results.
 
-        >>> list(geo_a._build_distances((0,0), ['ORY', 'CDG']))
+        >>> list(geo_a._buildDistances((0,0), ['ORY', 'CDG']))
         [(5422.74..., 'ORY'), (5455.45..., 'CDG')]
         '''
 
@@ -479,7 +479,7 @@ class GeoBase(object):
 
         else:
 
-            for dist, thing in self._build_distances(lat_lng, from_keys):
+            for dist, thing in self._buildDistances(lat_lng, from_keys):
 
                 if dist <= radius:
 
@@ -605,19 +605,19 @@ class GeoBase(object):
 
         else:
 
-            iterable = self._build_distances(lat_lng, from_keys)
+            iterable = self._buildDistances(lat_lng, from_keys)
 
             for dist, thing in heapq.nsmallest(N, iterable):
 
                 yield (dist, thing)
 
 
-    def _build_ratios(self, fuzzy_value, field, keys, min_match=0):
+    def _buildRatios(self, fuzzy_value, field, keys, min_match=0):
         '''
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._build_ratios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.80))
+        >>> list(geo_a._buildRatios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.80))
         [(0.9..., 'MRS')]
         '''
 
@@ -679,7 +679,7 @@ class GeoBase(object):
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
-        iterable = self._build_ratios(fuzzy_value, field, from_keys, min_match)
+        iterable = self._buildRatios(fuzzy_value, field, from_keys, min_match)
 
         if approximate is None:
             return sorted(iterable, reverse=True)
