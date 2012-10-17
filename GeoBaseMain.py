@@ -5,15 +5,7 @@
 This module is a launcher for GeoBase.
 '''
 
-
-
-from GeoBases.GeoBaseModule import GeoBase
-
-try:
-    from GeoBases.OpenTrepWrapperModule import main_trep
-except ImportError:
-    main_trep = lambda *args, **kwargs: []
-
+import sys
 
 import os
 import os.path as op
@@ -23,7 +15,14 @@ from datetime import datetime
 from termcolor import colored
 import colorama
 
-import sys
+
+from GeoBases.GeoBaseModule import GeoBase
+
+try:
+    from GeoBases.OpenTrepWrapperModule import main_trep
+except ImportError:
+    main_trep = lambda *args, **kwargs: []
+
 
 
 def getTermSize():

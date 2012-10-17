@@ -11,8 +11,9 @@ try:
     import libpyopentrep
 
 except ImportError:
-    print 'libpyopentrep could not be loaded.'
-    print 'Check opentrep installation and paths.'
+    print >> sys.stderr, '* "import libpyopentrep" raised ImportError.'
+    print >> sys.stderr
+
     raise
 
 
@@ -180,6 +181,7 @@ def search (openTrepLibrary, searchString, outputFormat, verbose):
         opentrepOutputFormat = 'J'
 
     result = openTrepLibrary.search (opentrepOutputFormat, searchString)
+    print result
 
     # When the compact format is selected, the result string has to be
     # parsed accordingly.
@@ -187,7 +189,6 @@ def search (openTrepLibrary, searchString, outputFormat, verbose):
         parsedStruct = compactResultParser (result)
         if verbose:
             print 'Compact format => recognised place (city/airport) codes:'
-        print result
         return parsedStruct
 
     # When the full details have been requested, the result string is
