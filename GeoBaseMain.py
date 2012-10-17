@@ -7,7 +7,7 @@ This module is a launcher for GeoBase.
 
 
 
-from GeoBases.GeoBaseModule import GeoBase
+from GeoBases.GeoBaseModule import GeoBase, main_trep
 
 import os
 import os.path as op
@@ -318,10 +318,22 @@ def main():
     )
 
     parser.add_argument('-C', '--closest-limit',
-        help = '''Specify a limit for closest searche with --closest, 
+        help = '''Specify a limit for closest search with --closest,
                         default is 10.''',
         default = 10,
         type=int
+    )
+
+    parser.add_argument('-t', '--trep',
+        help = '''Rather than looking up a key, this mode will use opentrep.''',
+        default = None,
+        nargs='+'
+    )
+
+    parser.add_argument('-T', '--trep-format',
+        help = '''Specify a format for trep searches with --trep,
+                        default is S.''',
+        default = 'S',
     )
 
     parser.add_argument('-w', '--without-grid',
@@ -461,6 +473,14 @@ def main():
 
     # We are going to chain conditions
     # res will hold intermediate results
+    if args['trep'] is not None:
+
+        res = main_trep(searchString=' '.join(args['trep']), outputFormat=args['trep_format'], from_keys=ex_keys(res), verbose=False)
+
+        if verbose:
+            print 'Applying opentrep on "%s" [output %s]' % (' '.join(args['trep']), args['trep_format'])
+
+
     if args['exact'] is not None:
 
         res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
