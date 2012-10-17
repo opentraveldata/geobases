@@ -180,7 +180,7 @@ def search (openTrepLibrary, searchString, outputFormat, verbose):
 
     result = openTrepLibrary.search(opentrepOutputFormat, searchString)
     if verbose:
-        print 'Raw result: %s' % result
+        print ' -> Raw result: %s' % result
 
     # When the compact format is selected, the result string has to be
     # parsed accordingly.
