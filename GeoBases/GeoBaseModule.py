@@ -58,10 +58,6 @@ from .GeoUtils         import haversine
 from .LevenshteinUtils import mod_leven, clean
 from .GeoGridModule    import GeoGrid
 
-try:
-    from .OpenTrepWrapperModule import main_trep
-except ImportError:
-    main_trep = lambda *args, **kwargs: []
 
 
 class GeoBase(object):
