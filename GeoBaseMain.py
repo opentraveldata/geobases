@@ -167,7 +167,12 @@ def scan_coords(u_input, geob, verbose):
             warn('key', u_input, geob._data, geob._source)
             exit(1)
 
-        return geob.getLocation(u_input)
+        coords = geob.getLocation(u_input)
+
+        if coords is None:
+            error('geocode_unknown', u_input)
+
+        return coords
 
     else:
         if len(coords) != 2:
@@ -175,6 +180,7 @@ def scan_coords(u_input, geob, verbose):
 
         if verbose:
             print 'Geocode recognized: (%.3f, %.3f)' % coords
+
         return coords
 
 
@@ -219,6 +225,9 @@ def error(name, *args):
 
     elif name == 'geocode_format':
         print >> sys.stderr, '\n/!\ Bad geocode format: %s' % args[0]
+
+    elif name == 'geocode_unknown':
+        print >> sys.stderr, '\n/!\ Geocode was unknown for %s' % args[0]
 
     exit(1)
 
