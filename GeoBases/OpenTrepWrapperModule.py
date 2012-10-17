@@ -11,10 +11,9 @@ try:
     import libpyopentrep
 
 except ImportError:
-    print >> sys.stderr, '* "import libpyopentrep" raised ImportError.'
-    print >> sys.stderr
+    # libpyopentrep could not be found
+    raise ImportError("*libpyopentrep* raised ImportError.")
 
-    raise
 
 
 
@@ -260,18 +259,22 @@ def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=N
         return [(k, e) for k, e in r[0] if e in from_keys]
 
 
-
-if __name__ == '__main__':
-
+def _test():
 
     test_1 = 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
     print test_1
     print compactResultParser(test_1)
+    print
 
     test_2 = 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
     print test_2
     print compactResultParser(test_2)
-
     print
+
+
+if __name__ == '__main__':
+
+    _test()
+
     print main_trep(searchString=sys.argv[1])
 
