@@ -7,7 +7,13 @@ This module is a launcher for GeoBase.
 
 
 
-from GeoBases.GeoBaseModule import GeoBase, main_trep
+from GeoBases.GeoBaseModule import GeoBase
+
+try:
+    from GeoBases.OpenTrepWrapperModule import main_trep
+except ImportError:
+    main_trep = lambda *args, **kwargs: []
+
 
 import os
 import os.path as op
@@ -22,7 +28,7 @@ import sys
 
 def getTermSize():
 
-    size  = os.popen('stty size', 'r').read()
+    size = os.popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
         return (80, 160)
@@ -457,13 +463,23 @@ def main():
     if verbose:
         before = datetime.now()
 
-        if args['keys']:
+        if not sys.stdin.isatty():
+            print 'Looking for matches from stdin...'
+        elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
         else:
-            print 'Looking for all matches...'
+            print 'Looking for matches from *all* data...'
 
     # We start from either all keys available or keys listed by user
-    if args['keys']:
+    # or from stdin if there is input
+    if not sys.stdin.isatty():
+        res = []
+        for row in sys.stdin:
+            res.extend(row.strip().split())
+
+        res = enumerate(res)
+
+    elif args['keys']:
         res = enumerate(args['keys'])
     else:
         res = enumerate(iter(g))
