@@ -75,6 +75,10 @@ class RotatingColors(object):
 
 def display(geob, list_of_things, omit, show, important):
 
+    if not list_of_things:
+        sys.stdout.write('\nNo elements to display.\n')
+        return
+
     if not show:
         show = ['__ref__'] + geob._headers[:]
 
@@ -540,6 +544,7 @@ def main():
     #
     # DISPLAY
     #
+
     for (h, k) in res:
         if k not in g:
             warn('key', k, g._data, g._source)
