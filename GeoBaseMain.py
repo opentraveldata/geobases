@@ -418,7 +418,7 @@ def main():
         # We only try to load it if we need it,
         # to avoid displaying error messages for nothing
         try:
-            from GeoBases.OpenTrepWrapperModule import main_trep
+            from OpenTrepWrapper import main_trep
 
         except ImportError as e:
             print >> sys.stderr, '\n', str(e), '\n'
