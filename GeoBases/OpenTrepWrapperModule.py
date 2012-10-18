@@ -16,43 +16,44 @@ except ImportError:
 
 
 
-
-##
-# Compact result parser. The result string contains the main matches,
-# separated by commas (','), along with their associated weights, given
-# as percentage numbers. For every main match:
-#  - Columns (':') separate potential extra matches (i.e., matches with the same
-#    matching percentage).
-#  - Dashes ('-') separate potential alternate matches (i.e., matches with lower
-#    matching percentages).
-#
-# Samples of result string to be parsed:
-#  - pyopentrep -f S nice sna francisco vancouver niznayou
-#    - 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
-#  - pyopentrep -f S fr
-#    - 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
 def compactResultParser(resultString):
+    '''
+    Compact result parser. The result string contains the main matches,
+    separated by commas (','), along with their associated weights, given
+    as percentage numbers. For every main match:
 
-    # Parsing begins
-    # 1. First, strip out the unrecognised keywords
+     - Columns (':') separate potential extra matches (i.e., matches with the same
+       matching percentage).
+     - Dashes ('-') separate potential alternate matches (i.e., matches with lower
+       matching percentages).
+
+    Samples of result string to be parsed:
+
+     % pyopentrep -f S nice sna francisco vancouver niznayou
+     'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
+     % pyopentrep -f S fr
+     'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
+
+    '''
+
+    # Strip out the unrecognised keywords
     if ';' in resultString:
         str_matches, unrecognized = resultString.split(';', 1)
     else:
         str_matches, unrecognized = resultString, ''
 
 
-    # 2. Then, for each matching location, the alternate matches have to be
-    #    stored aside.
     if not str_matches:
         return [], ''
 
+
     codes = []
 
-    for alter_location in str_matches.split(','):
+    for alter_loc in str_matches.split(','):
 
-        for extra_location in alter_location.split('-'):
+        for extra_loc in alter_loc.split('-'):
 
-            extra_loc, score = extra_location.split('/', 1)
+            extra_loc, score = extra_loc.split('/', 1)
 
             for code in extra_loc.split(':'):
 
@@ -67,112 +68,120 @@ def compactResultParser(resultString):
     return codes, unrecognized
 
 
-##
-# JSON interpreter. The JSON structure contains a list with the main matches,
-# along with their associated fields (weights, coordinates, etc).
-# For every main match:
-#  - There is a potential list of extra matches (i.e., matches with the same
-#    matching percentage).
-#  - There is a potential list of alternate matches (i.e., matches with lower
-#    matching percentages).
-#
-# Samples of result string to be parsed:
-#  - pyopentrep -f J nice sna francisco
-#    - {'locations':[
-#         {'names':[
-#            {'name': 'nice'}, {'name': 'nice/fr:cote d azur'}],
-#          'city_code': 'nce'},
-#         {'names':[
-#            {'name': 'san francisco'}, {'name': 'san francisco/ca/us:intl'}],
-#          'city_code': 'sfo',
-#          'alternates':[
-#               {'names':[
-#                   {'name': 'san francisco emb'},
-#                   {'name': 'san francisco/ca/us:embarkader'}],
-#                   'city_code': 'sfo'},
-#               {'names':[
-#                   {'name': 'san francisco jcc'},
-#                   {'name': 'san francisco/ca/us:china hpt'}],
-#                   'city_code': 'sfo'}
-#         ]}
-#      ]}
-#  - pyopentrep -f J fr
-#    - {'locations':[
-#         {'names':[
-#            {'name': 'aurillac'}, {'name': 'aurillac/fr'}],
-#          'extras':[
-#            {'names':[
-#               {'name': 'avoriaz'}, {'name': 'avoriaz/fr'}],
-#             'city_code': 'avf'},
-#            {'names':[
-#               {'name': 'barcelonnette'}, {'name': 'barcelonnette/fr'}],
-#             'city_code': 'bae'}
-#         ]}
-#      ]}
-def interpretFromJSON (jsonFormattedResult):
-    parsedStruct = json.loads (jsonFormattedResult)
 
-    interpretedString = ''
+def interpretFromJSON (json_str):
+    '''
+    JSON interpreter. The JSON structure contains a list with the main matches,
+    along with their associated fields (weights, coordinates, etc).
+    For every main match:
 
-    for location in parsedStruct['locations']:
+     - There is a potential list of extra matches (i.e., matches with the same
+       matching percentage).
+     - There is a potential list of alternate matches (i.e., matches with lower
+       matching percentages).
 
-        interpretedString += location['iata_code'] + '-' 
-        interpretedString += location['icao_code'] + '-' 
-        interpretedString += location['geonames_id'] + ' ' 
-        interpretedString += '(' + location['page_rank'] + '%) / '
-        interpretedString += location['city_code'] + ": "
-        interpretedString += location['lat'] + ' ' 
-        interpretedString += location['lon'] + '; '
+    Samples of result string to be parsed:
 
-    #
-    return interpretedString
+     - pyopentrep -f J nice sna francisco
+       - {'locations':[
+            {'names':[
+               {'name': 'nice'}, {'name': 'nice/fr:cote d azur'}],
+             'city_code': 'nce'},
+            {'names':[
+               {'name': 'san francisco'}, {'name': 'san francisco/ca/us:intl'}],
+             'city_code': 'sfo',
+             'alternates':[
+                  {'names':[
+                      {'name': 'san francisco emb'},
+                      {'name': 'san francisco/ca/us:embarkader'}],
+                      'city_code': 'sfo'},
+                  {'names':[
+                      {'name': 'san francisco jcc'},
+                      {'name': 'san francisco/ca/us:china hpt'}],
+                      'city_code': 'sfo'}
+            ]}
+         ]}
+
+     - pyopentrep -f J fr
+       - {'locations':[
+            {'names':[
+               {'name': 'aurillac'}, {'name': 'aurillac/fr'}],
+                'extras':[
+                {'names':[
+                  {'name': 'avoriaz'}, {'name': 'avoriaz/fr'}],
+                'city_code': 'avf'},
+               {'names':[
+                  {'name': 'barcelonnette'}, {'name': 'barcelonnette/fr'}],
+                'city_code': 'bae'}
+            ]}
+         ]}
+    '''
+
+    return '; '.join(
+        '-'.join([
+            loc['iata_code'],
+            loc['icao_code'],
+            loc['geonames_id'],
+            '%.2f%%' % float(loc['page_rank']),
+            loc['city_code'],
+            '%.2f' % float(loc['lat']),
+            '%.2f' % float(loc['lon'])
+        ])
+        for loc in json.loads(json_str)['locations']
+    )
 
 
-##
-# File-path details
-#
-def getPaths (openTrepLibrary):
+
+def getPaths(openTrepLibrary):
+    '''
+    File-paths details
+    '''
+
     # Calls the underlying OpenTrep library service
-    filePathListString = openTrepLibrary.getPaths()
-    filePathList = filePathListString.split(';')
+    filePathList = openTrepLibrary.getPaths().split(';')
 
     # Report the results
-    print "ORI-maintained list of POR (points of reference): '" + filePathList[0] + "'"
-    print "Xapian-based travel database/index: '" + filePathList[1] + "'"
+    print "ORI-maintained list of POR (points of reference): '%s'" % filePathList[0]
+    print "Xapian-based travel database/index: '%s'" % filePathList[1]
 
 
-##
-# Indexation
-#
-def index (openTrepLibrary, xapianDBPath):
-    # DEBUG
-    print "Perform the indexation of the (Xapian-based) travel database."
-    print "That operation may take several minutes on some slow machines."
-    print "It takes less than 20 seconds on fast ones..."
+def index(openTrepLibrary, xapianDBPath, verbose=False):
+    '''
+    Indexation
+    '''
+
+    if verbose:
+        # DEBUG
+        print "Perform the indexation of the (Xapian-based) travel database."
+        print "That operation may take several minutes on some slow machines."
+        print "It takes less than 20 seconds on fast ones..."
 
     # Calls the underlying OpenTrep library service
     result = openTrepLibrary.index()
 
-    # Report the results
-    print "Done. Indexed " + result + " POR (points of reference)"
+    if verbose:
+        # Report the results
+        print "Done. Indexed " + result + " POR (points of reference)"
 
 
-##
-# Search
-#
-def search (openTrepLibrary, searchString, outputFormat, verbose):
-    # If no search string was supplied as arguments of the command-line,
-    # ask the user for some
 
-    ##
-    # Call the OpenTrep C++ library.
-    #
-    # The 'I' (Interpretation from JSON) output format is just an example
-    # of how to use the output generated by the OpenTrep library. Hence,
-    # that latter does not support that "output format". So, the raw JSON
-    # format is required, and the JSON string will then be parsed and
-    # interpreted by the interpretFromJSON() method, just to show how it
-    # works
+def search(openTrepLibrary, searchString, outputFormat, verbose):
+    '''Search.
+
+    If no search string was supplied as arguments of the command-line,
+    ask the user for some
+
+
+    Call the OpenTrep C++ library.
+
+    The 'I' (Interpretation from JSON) output format is just an example
+    of how to use the output generated by the OpenTrep library. Hence,
+    that latter does not support that "output format". So, the raw JSON
+    format is required, and the JSON string will then be parsed and
+    interpreted by the interpretFromJSON() method, just to show how it
+    works
+    '''
+
     opentrepOutputFormat = outputFormat
 
     if opentrepOutputFormat == 'I':
