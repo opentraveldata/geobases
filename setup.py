@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'GeoBases',
-    version = '3.0.1',
+    version = '3.1.0',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
@@ -39,6 +39,7 @@ setup(
         'FlaskUtils',
         'Daemonify',
         'SysUtils',
+        'OpenTrepWrapper',
         #Public
         'argparse',
         'pyyaml',
