@@ -69,7 +69,7 @@ def compactResultParser(resultString):
 
 
 
-def interpretFromJSON (json_str):
+def interpretFromJSON(json_str):
     '''
     JSON interpreter. The JSON structure contains a list with the main matches,
     along with their associated fields (weights, coordinates, etc).
@@ -145,13 +145,13 @@ def getPaths(openTrepLibrary):
     print "Xapian-based travel database/index: '%s'" % filePathList[1]
 
 
-def index(openTrepLibrary, xapianDBPath, verbose=False):
+
+def index(openTrepLibrary, verbose=False):
     '''
     Indexation
     '''
 
     if verbose:
-        # DEBUG
         print "Perform the indexation of the (Xapian-based) travel database."
         print "That operation may take several minutes on some slow machines."
         print "It takes less than 20 seconds on fast ones..."
@@ -161,16 +161,17 @@ def index(openTrepLibrary, xapianDBPath, verbose=False):
 
     if verbose:
         # Report the results
-        print "Done. Indexed " + result + " POR (points of reference)"
+        print "Done. Indexed %s POR (points of reference)" % result
+
+    return result
 
 
 
-def search(openTrepLibrary, searchString, outputFormat, verbose):
+def search(openTrepLibrary, searchString, outputFormat, verbose=False):
     '''Search.
 
     If no search string was supplied as arguments of the command-line,
     ask the user for some
-
 
     Call the OpenTrep C++ library.
 
@@ -214,58 +215,55 @@ def search(openTrepLibrary, searchString, outputFormat, verbose):
 
 
 
-def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=None, verbose=True, from_keys=None):
-
-    # Command, either 'search' or 'index'
-    if command is None:
-        command = 'search'
-
-    # Format of the output
-    if outputFormat is None:
-        outputFormat = 'S'
-
-    # Options
-    if xapianDBPath is None:
-        xapianDBPath = "/tmp/opentrep/traveldb"
-
-    # Default search string
-    if searchString is None:
-        searchString = 'sna francicso rio de janero lso angles reykyavki'
-
+def action_trep(searchString='',
+                outputFormat='S',
+                indexation=False,
+                xapianDBPath='/tmp/opentrep/traveldb',
+                logFilePath='pyopentrep.log',
+                verbose=True):
 
     openTrepLibrary = libpyopentrep.OpenTrepSearcher()
 
-    initOK = openTrepLibrary.init(xapianDBPath, 'pyopentrep.log')
+    initOK = openTrepLibrary.init(xapianDBPath, logFilePath)
 
     if not initOK:
         raise Exception('The OpenTrepLibrary cannot be initialised')
 
-    # Print out the file-path details
-    if verbose:
-        # Actually we do not want to display this :D
-        getPaths(openTrepLibrary, verbose)
-
-    if command == 'index':
-        index(openTrepLibrary, xapianDBPath)
-        r = None, None
+    if indexation:
+        r = index(openTrepLibrary, verbose)
     else:
         r = search(openTrepLibrary, searchString, outputFormat, verbose)
 
     # Free the OpenTREP library resource
     openTrepLibrary.finalize()
 
-    if outputFormat != 'S':
-        # Only this outputFormat is handled by upper layers
-        # So for others we display it and return an empty
-        # list to avoid failures
-        print r
-        return []
+    return r
 
-    if from_keys is None:
-        return r[0]
-    else:
-        from_keys = set(from_keys)
-        return [(k, e) for k, e in r[0] if e in from_keys]
+
+
+def main_trep(searchString='',
+              outputFormat='S',
+              xapianDBPath='/tmp/opentrep/traveldb',
+              logFilePath='pyopentrep.log',
+              from_keys=None,
+              verbose=True):
+
+    r = action_trep(searchString, outputFormat, False, xapianDBPath, logFilePath, verbose)
+
+    if outputFormat == 'S':
+        # Only this outputFormat is handled by upper layers
+        if from_keys is None:
+            return r[0]
+        else:
+            from_keys = set(from_keys)
+            return [(k, e) for k, e in r[0] if e in from_keys]
+
+    # For all other formats
+    # we display it and return an empty
+    # list to avoid failures
+    print ' -> Formatted result: %s' % r
+    return []
+
 
 
 def _test():
