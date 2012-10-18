@@ -1,6 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+'''
+This module is an OpenTrep binding.
+
+    >>> otp = OpenTrepLib(DEFAULT_DB, DEFAULT_LOG)
+    >>> otp.search('sna francsico los angeles', DEFAULT_FMT)
+    ([(3.93..., 'SFO'), (46.28..., 'LAX')], '')
+
+'''
+
+
 from __future__ import with_statement
 
 import simplejson as json
@@ -20,12 +30,16 @@ except ImportError:
 # Default settings
 DEFAULT_DB  = '/tmp/opentrep/traveldb'
 DEFAULT_FMT = 'S'
-DEFAULT_LOG = 'pyopentrep.log'
+DEFAULT_LOG = '/dev/null'
 
 
 class OpenTrepLib(object):
     '''
     This class wraps the methods of the C++ OpenTrepSearcher class.
+
+    >>> otp = OpenTrepLib(DEFAULT_DB, DEFAULT_LOG)
+    >>> otp.search('sna francsico los angeles', DEFAULT_FMT)
+    ([(3.93..., 'SFO'), (46.28..., 'LAX')], '')
     '''
 
     def __init__(self, xapianDBPath, logFilePath):
@@ -86,7 +100,6 @@ class OpenTrepLib(object):
             # Report the results
             print "Done. Indexed %s POR (points of reference)" % result
 
-        return result
 
 
     def search(self, searchString, outputFormat, verbose=False):
@@ -112,29 +125,35 @@ class OpenTrepLib(object):
 
         result = self._trep_lib.search(opentrepOutputFormat, searchString)
 
-        if verbose:
-            print ' -> Raw result: %s' % result
-
         # When the compact format is selected, the result string has to be
         # parsed accordingly.
         if outputFormat == 'S':
-            return compactResultParser(result)
+            fmt_result = compactResultParser(result)
 
         # When the full details have been requested, the result string is
         # potentially big and complex, and is not aimed to be
         # parsed. So, the result string is just displayed/dumped as is.
-        if outputFormat == 'F':
-            return result
+        elif outputFormat == 'F':
+            fmt_result = result
 
         # When the raw JSON format has been requested, no handling is necessary.
-        if outputFormat == 'J':
-            return result
+        elif outputFormat == 'J':
+            fmt_result = result
 
         # The interpreted JSON format is an example of how to extract relevant
         # information from the corresponding Python structure. That code can be
         # copied/pasted by clients to the OpenTREP library.
-        if outputFormat == 'I':
-            return jsonResultParser(result)
+        elif outputFormat == 'I':
+            fmt_result = jsonResultParser(result)
+
+        else:
+            raise ValueError('outputFormat invalid.')
+
+        if verbose:
+            print ' -> Raw result: %s' % result
+            print ' -> Fmt result: %s' % str(fmt_result)
+
+        return fmt_result
 
 
 
@@ -156,6 +175,17 @@ def compactResultParser(resultString):
      % pyopentrep -f S fr
      'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
 
+    >>> test_1 = 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
+    >>> compactResultParser(test_1)
+    ([(100.0, 'NCE'), (100.0, 'SFO'), (100.0, 'YVR')], 'niznayou')
+
+    >>> test_2 = 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
+    >>> compactResultParser(test_2)
+    ([(100.0, 'AUR')], '')
+
+    >>> test_3 = ';eeee'
+    >>> compactResultParser(test_3)
+    ([], 'eeee')
     '''
 
     # Strip out the unrecognised keywords
@@ -164,9 +194,8 @@ def compactResultParser(resultString):
     else:
         str_matches, unrecognized = resultString, ''
 
-
     if not str_matches:
-        return [], ''
+        return [], unrecognized
 
 
     codes = []
@@ -191,7 +220,7 @@ def compactResultParser(resultString):
 
 
 
-def jsonResultParser(json_str):
+def jsonResultParser(resultString):
     '''
     JSON interpreter. The JSON structure contains a list with the main matches,
     along with their associated fields (weights, coordinates, etc).
@@ -237,6 +266,27 @@ def jsonResultParser(json_str):
                 'city_code': 'bae'}
             ]}
          ]}
+
+    >>> res = """{ "locations":[{
+    ...                 "iata_code": "ORY",
+    ...                 "icao_code": "LFPO",
+    ...                 "city_code": "PAR",
+    ...                 "geonames_id": "2988500",
+    ...                 "lon": "2.359444",
+    ...                 "lat": "48.725278",
+    ...                 "page_rank": "23.53"
+    ...             }, {
+    ...                 "iata_code": "CDG",
+    ...                 "icao_code": "LFPG",
+    ...                 "city_code": "PAR",
+    ...                 "geonames_id": "6269554",
+    ...                 "lon": "2.55",
+    ...                 "lat": "49.012779",
+    ...                 "page_rank": "64.70"
+    ...             }]
+    ... }"""
+    >>> jsonResultParser(res)
+    'ORY-LFPO-2988500-23.53%-PAR-48.73-2.36; CDG-LFPG-6269554-64.70%-PAR-49.01-2.55'
     '''
 
     return '; '.join(
@@ -249,9 +299,16 @@ def jsonResultParser(json_str):
             '%.2f' % float(loc['lat']),
             '%.2f' % float(loc['lon'])
         ])
-        for loc in json.loads(json_str)['locations']
+        for loc in json.loads(resultString)['locations']
     )
 
+
+
+def index_trep(xapianDBPath=DEFAULT_DB, logFilePath=DEFAULT_LOG, verbose=True):
+
+    with OpenTrepLib(xapianDBPath, logFilePath) as otp:
+
+        otp.index(verbose)
 
 
 
@@ -274,31 +331,80 @@ def main_trep(searchString,
                 from_keys = set(from_keys)
                 return [(k, e) for k, e in r[0] if e in from_keys]
 
-        # For all other formats
-        # we display it and return an empty
+        # For all other formats we return an empty
         # list to avoid failures
-        print ' -> Formatted result: %s' % r
         return []
-
 
 
 
 def _test():
 
-    test_1 = 'nce/100,sfo/100-emb/98-jcc/97,yvr/100-cxh/83-xea/83-ydt/83;niznayou'
-    print test_1
-    print compactResultParser(test_1)
-    print
+    import doctest
 
-    test_2 = 'aur:avf:bae:bou:chr:cmf:cqf:csf:cvf:dij/100'
-    print test_2
-    print compactResultParser(test_2)
-    print
+    opt = doctest.ELLIPSIS
+
+    doctest.testmod(optionflags=opt)
 
 
 if __name__ == '__main__':
 
     _test()
 
-    print main_trep(searchString=sys.argv[1])
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Python OpenTrep binding.')
+
+    parser.epilog = 'Example: python %s rio de janero lso angles reykyavki' % \
+            parser.prog
+
+    parser.add_argument('keys',
+        help='Main argument, free text.',
+        nargs='*'
+    )
+
+    parser.add_argument('-f', '--format',
+        help = '''Choose a different format.
+                        Must be either F, S, J, I.
+                        Default is "%s"''' % DEFAULT_FMT,
+        default = DEFAULT_FMT
+    )
+
+    parser.add_argument('-x', '--xapiandb',
+        help = '''Specify the xapian db location.
+                        Default is "%s"''' % DEFAULT_DB,
+        default = DEFAULT_DB
+    )
+
+    parser.add_argument('-l', '--log',
+        help = '''Specify a log file. 
+                        Default is "%s"''' % DEFAULT_LOG,
+        default = DEFAULT_LOG
+    )
+
+    parser.add_argument('-q', '--quiet',
+        help = '''Turn off verbose output.''',
+        action='store_true'
+    )
+
+    parser.add_argument('-i', '--index',
+        help = '''Index the base then exit.''',
+        action='store_true'
+    )
+
+    args = vars(parser.parse_args())
+
+    if args['index']:
+
+        index_trep(xapianDBPath=args['xapiandb'],
+                   logFilePath=args['log'],
+                   verbose=not(args['quiet']))
+
+        exit()
+
+    main_trep(searchString=' '.join(args['keys']),
+                    outputFormat=args['format'],
+                    xapianDBPath=args['xapiandb'],
+                    logFilePath=args['log'],
+                    from_keys=None,
+                    verbose=not(args['quiet']))
 
