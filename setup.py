@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'GeoBases',
-    version = '3.1.0',
+    version = '3.1.1',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
