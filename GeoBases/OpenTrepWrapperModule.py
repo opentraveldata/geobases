@@ -241,9 +241,9 @@ def main_trep(searchString=None, command=None, outputFormat=None, xapianDBPath=N
         raise Exception('The OpenTrepLibrary cannot be initialised')
 
     # Print out the file-path details
-    if verbose and False:
+    if verbose:
         # Actually we do not want to display this :D
-        getPaths(openTrepLibrary)
+        getPaths(openTrepLibrary, verbose)
 
     if command == 'index':
         index(openTrepLibrary, xapianDBPath)
