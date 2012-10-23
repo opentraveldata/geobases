@@ -10,7 +10,7 @@ from JsonPUtils import support_jsonp
 
 from ..GeoBaseModule import GeoBase
 
-from flask import Flask, request, url_for, jsonify
+from flask import Flask, request, jsonify#, url_for
 
 app = Flask(__name__)
 app.secret_key = '2334583067*&^&*(^4523094ys]LWX/,?RT'
@@ -29,7 +29,8 @@ BASES_GEO_SUPPORT = set(k for k, g in BASES.items() if g.hasGeoSupport())
 
 @app.route('/help', methods=['GET'])
 @support_jsonp
-def help():
+def help_():
+    '''Display help.'''
 
     return jsonify({ 
         'bases'                 : BASES.keys(), 
@@ -47,13 +48,14 @@ def help():
 @app.route('/<base>/<key>', methods=['GET'])
 @support_jsonp
 def get(base, key):
+    '''get webservice.'''
 
     if base not in BASES:
         return my_jsonify({'error' : 'Base not found'})
 
     try:
         res = BASES[base].get(key)
-    except:
+    except KeyError:
         return my_jsonify({'error' : 'Key not found'})
     else:
         return my_jsonify(res)
@@ -62,6 +64,7 @@ def get(base, key):
 @app.route('/<base>/fuzzyGet', methods=['GET'])
 @support_jsonp
 def fuzzyGet(base):
+    '''fuzzyGet webservice.'''
 
     if base not in BASES:
         return my_jsonify({'error' : 'Base not found'})
@@ -81,6 +84,7 @@ def fuzzyGet(base):
 @app.route('/<base>/trepGet', methods=['GET'])
 @support_jsonp
 def trepGet(base):
+    '''trepGet webservice.'''
 
     if base not in BASES:
         return my_jsonify({'error' : 'Base not found'})
@@ -94,6 +98,7 @@ def trepGet(base):
 @app.route('/<base>/findNearPoint', methods=['GET'])
 @support_jsonp
 def findNearPoint(base):
+    '''findNearPoint webservice.'''
 
     if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})
@@ -108,6 +113,7 @@ def findNearPoint(base):
 @app.route('/<base>/findClosestFromPoint', methods=['GET'])
 @support_jsonp
 def findClosestFromPoint(base):
+    '''findClosestFromPoint webservice.'''
 
     if base not in BASES_GEO_SUPPORT:
         return jsonify({'error' : 'Base does not support geocodes'})

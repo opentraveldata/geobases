@@ -16,6 +16,11 @@ import os.path as op
 
 
 class WebSrvDaemon(Daemon):
+    '''
+    This class inherits the Daemon property
+    and therefore support the start/stop/restart
+    methods of daemons.
+    '''
 
     def run(self):
 
@@ -27,6 +32,7 @@ class WebSrvDaemon(Daemon):
 
 
 def main():
+    '''Main launcher.'''
 
     pid_path = op.realpath(op.join(op.dirname(__file__), 'daemon-geob.pid'))
 
