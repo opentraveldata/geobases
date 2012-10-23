@@ -80,6 +80,9 @@ The Rakefile and release.yaml are just script for Jenkins.
 Release notes
 =============
 
-+ 3.0 : opentrep integration in CLI
++ 3.3 : opentrep integration in webservices
++ 3.2 : opentrep integration in GeoBaseModule
++ 3.1 : code cleanup with pylint
++ 3.0 : opentrep integration in Linux CLI
 + 2.0 : CLI completely refactored, filtering system
 + 1.0 : API changes: unification of grid and not grid methods
