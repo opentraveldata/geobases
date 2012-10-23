@@ -247,7 +247,10 @@ def error(name, *args):
     First argument is the error type.
     '''
 
-    if name == 'geocode_support':
+    if name == 'trep_support':
+        print >> sys.stderr, '\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.'
+
+    elif name == 'geocode_support':
         print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'base':
@@ -453,22 +456,6 @@ def main():
 
 
     #
-    # OPENTREP IMPORT
-    #
-    if args['trep'] is not None:
-        # We only try to load it if we need it,
-        # to avoid displaying error messages for nothing
-        try:
-            from OpenTrepWrapper import main_trep
-
-        except ImportError as e:
-            print >> sys.stderr, '\n', str(e), '\n'
-
-            main_trep = lambda *args, **kwargs: []
-
-
-
-    #
     # CREATION
     #
     if args['base'] not in GeoBase.BASES:
@@ -489,6 +476,12 @@ def main():
     #
     # FAILING
     #
+    # Failing on lack of opentrep support if necessary
+    if args['trep'] is not None:
+
+        if not g.hasTrepSupport():
+            error('trep_support')
+
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
 
@@ -552,7 +545,7 @@ def main():
         if verbose:
             print 'Applying opentrep on "%s" [output %s]' % (' '.join(args['trep']), args['trep_format'])
 
-        res = main_trep(searchString=' '.join(args['trep']), outputFormat=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
+        res = g.trepGet(' '.join(args['trep']), trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
 
 
     if args['exact'] is not None:
