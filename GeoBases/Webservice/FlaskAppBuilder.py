@@ -13,7 +13,7 @@ from ..GeoBaseModule import GeoBase
 from flask import Flask, request, url_for, jsonify
 
 app = Flask(__name__)
-app.secret_key = 'A0Zr98j/3ysdfsdR~XHH!jmN]LWX/,?RT'
+app.secret_key = '2334583067*&^&*(^4523094ys]LWX/,?RT'
 
 
 VERBOSE = False
@@ -36,6 +36,7 @@ def help():
         'methods'               : [
             '/help', 
             '/<base>/<key>',
+            '/<base>/trepGet?value=',
             '/<base>/fuzzyGet?value=&N=&L=',
             '/<base>/findNearPoint?lat=&lng=&radius=',
             '/<base>/findClosestFromPoint?lat=&lng=&N='
@@ -75,6 +76,19 @@ def fuzzyGet(base):
                                                           request.args.get('field', 'name'),
                                                           approximate=N,
                                                           min_match=L))})
+
+
+@app.route('/<base>/trepGet', methods=['GET'])
+@support_jsonp
+def trepGet(base):
+
+    if base not in BASES:
+        return my_jsonify({'error' : 'Base not found'})
+
+    if not BASES[base].hasTrepSupport():
+        return my_jsonify({'error' : 'No opentrep support'})
+
+    return my_jsonify({ 'root': list(BASES[base].trepGet(request.args.get('value').encode('utf8'))) })
 
 
 @app.route('/<base>/findNearPoint', methods=['GET'])
