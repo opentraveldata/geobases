@@ -1,13 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+'''
+Main installation file for GeoBases.
+'''
 
-#from distutils.core import setup 
-from setuptools import setup, find_packages 
+
+#from distutils.core import setup
+from setuptools import setup
 
 setup(
     name = 'GeoBases',
-    version = '3.1.1',
+    version = '3.1.2',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
