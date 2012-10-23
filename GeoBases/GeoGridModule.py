@@ -86,16 +86,24 @@ class GeoGrid(object):
 
 
     def _computeCaseId(self, lat_lng):
+        '''
+        Computing the id the case for a (lat, lng).
+        '''
 
         return encode(*lat_lng, precision=self._precision)
 
 
 
     def add(self, key, lat_lng, verbose=True):
+        '''
+        Add a point to the grid.
+        '''
 
         try:
             case_id = self._computeCaseId(lat_lng)
-        except:
+        except (TypeError, Exception):
+            # TypeError for wrong type (NoneType, str)
+            # Exception for invalid coordinates
             if verbose:
                 print 'Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key)
             return
@@ -113,6 +121,10 @@ class GeoGrid(object):
 
 
     def _recursiveFrontier(self, case_id, N=1, stop=True):
+        '''
+        Yield the successive frontiers from a case.
+        A frontier is a set of case ids.
+        '''
 
         if stop is True:
             gen = xrange(N)
@@ -134,15 +146,24 @@ class GeoGrid(object):
             interior = interior | frontier
 
 
-
-    def _nextFrontier(self, frontier, interior):
-
-        return  set([k for id in frontier for k in neighbors(id) if k not in interior])
+    @staticmethod
+    def _nextFrontier(frontier, interior):
+        '''
+        Compute next frontier from a frontier and a 
+        matching interior.
+        Interior is the set of case ids in the frontier.
+        '''
+        return set([k for cid in frontier for k in neighbors(cid) if k not in interior])
 
 
 
     def _check_distance(self, candidate, ref_lat_lng, radius):
+        '''
+        Filter from a iterator of candidates, the ones 
+        who are within a radius if a ref_lat_lng.
 
+        Yields the good ones.
+        '''
         for can in candidate:
 
             dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
@@ -152,7 +173,9 @@ class GeoGrid(object):
 
 
     def _allKeysInCases(self, cases):
-
+        '''
+        Yields all keys in a iterable of case ids.
+        '''
         for case_id in cases:
 
             if case_id in self._grid:
@@ -162,6 +185,10 @@ class GeoGrid(object):
 
 
     def _findInAdjacentCases(self, case_id, N=1):
+        '''
+        Find keys in adjacent cases from a case_id.
+        Yields found keys.
+        '''
 
         for frontier in self._recursiveFrontier(case_id, N):
 
@@ -170,7 +197,11 @@ class GeoGrid(object):
 
 
     def _findNearCase(self, case_id, radius=20):
-
+        '''
+        Same as _findInAdjacentCases, but the limitation
+        is given with a radius and not with a recursive limit
+        in adjacency computation.
+        '''
         # Do your homework :D
         # A more accurate formula would be with
         # self._avg_radius = min(r1, r2) where r1 are r2 are
@@ -185,7 +216,10 @@ class GeoGrid(object):
 
 
     def findNearPoint(self, lat_lng, radius=20, double_check=False):
-
+        '''
+        Find keys near a (lat, lng).
+        Returns an iterator of (dist, key).
+        '''
         if lat_lng is None:
             # Case where the lat_lng was missing from base
             return iter([])
@@ -200,7 +234,10 @@ class GeoGrid(object):
 
 
     def findNearKey(self, key, radius=20, double_check=False):
-
+        '''
+        Find keys near an input key.
+        Returns an iterator of (dist, key).
+        '''
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode 
             # and as such was never indexed
@@ -216,7 +253,10 @@ class GeoGrid(object):
 
 
     def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
-
+        '''
+        Find closest keys from a (lat, lng).
+        Returns a iterator of (dist, key).
+        '''
         if from_keys is not None:
             # We convert to set before testing to nullity
             # because of empty iterators
