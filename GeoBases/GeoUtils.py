@@ -275,37 +275,6 @@ def mercator(lat, lng):
     return lat, y
 
 
-class WroooongCoordinatesException(Exception):
-    '''
-    This class is not used.
-
-    It is more simple to apply the rule:
-    wrong coordinates, or coordinates that make formulas
-    fail, such as a point on the other side of the earth
-    when performing a map projection, have a distance which
-    is very very high.
-    This way, all filters applied when
-    searching for close points will just ignore those points.
-
-    >>> raise WroooongCoordinatesException('Wow')
-    Traceback (most recent call last):
-    WroooongCoordinatesException: 'Wow'
-    >>>
-    >>> a = WroooongCoordinatesException('42.1, 115')
-    >>> a
-    WroooongCoordinatesException()
-    >>> str(a)
-    "'42.1, 115'"
-    '''
-
-    def __init__(self, value):
-        '''Init.'''
-        self.parameter = value
-
-    def __str__(self):
-        '''String representation.'''
-        return repr(self.parameter)
-
 
 
 def _test():
