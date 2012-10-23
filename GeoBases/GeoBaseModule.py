@@ -198,7 +198,7 @@ class GeoBase(object):
             return
 
         # It is possible to have a key_col which is a list
-        # In this case we build the key as the concatenation between 
+        # In this case we build the key as the concatenation between
         # the different fields
         if isinstance(key_col, str):
             keyer = lambda row: row[headers.index(key_col)]
@@ -244,6 +244,9 @@ class GeoBase(object):
     def hasGeoSupport(self):
         '''
         Check if base has geocoding support.
+
+        >>> geo_t.hasGeoSupport()
+        True
         '''
         if 'lat' in self._headers and 'lng' in self._headers:
             return True
@@ -966,12 +969,22 @@ class GeoBase(object):
 
 
     @staticmethod
-    def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=True):
+    def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=False):
         '''
         OpenTrep integration.
 
-        If not hasTrepSupport(), main_trep is not defined 
+        If not hasTrepSupport(), main_trep is not defined
         and trepGet will raise an exception if called.
+
+        >>> if geo_t.hasTrepSupport():
+        ...     print geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
+        [(31.5192, 'SFO'), (46.284, 'LAX')]
+
+        >>> if geo_t.hasTrepSupport():
+        ...     print geo_t.trepGet('sna francisco', verbose=True) # doctest: +SKIP
+         -> Raw result: SFO/31.5192
+         -> Fmt result: ([(31.5192, 'SFO')], '')
+        [(31.5192, 'SFO')]
         '''
         r = main_trep(searchString=fuzzy_value,
                       outputFormat=trep_format,
