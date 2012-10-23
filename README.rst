@@ -86,3 +86,4 @@ Release notes
 + 3.0 : opentrep integration in Linux CLI
 + 2.0 : CLI completely refactored, filtering system
 + 1.0 : API changes: unification of grid and not grid methods
+
