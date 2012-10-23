@@ -8,7 +8,6 @@ This module is a launcher for GeoBase.
 import sys
 
 import os
-import os.path as op
 import argparse
 
 from datetime import datetime
@@ -22,6 +21,9 @@ from GeoBases.GeoBaseModule import GeoBase
 
 
 def getTermSize():
+    '''
+    This gives terminal size information using external
+    command stty.'''
 
     size = os.popen('stty size 2>/dev/null', 'r').read()
 
@@ -33,6 +35,10 @@ def getTermSize():
 
 
 class RotatingColors(object):
+    '''
+    This class is used for generating alternate colors
+    for the Linux output.
+    '''
 
     def __init__(self):
 
@@ -45,6 +51,7 @@ class RotatingColors(object):
 
 
     def next(self):
+        '''We increase the current color.'''
 
         self._current += 1
 
@@ -55,21 +62,30 @@ class RotatingColors(object):
 
 
     def get(self):
+        '''Get current color.'''
 
         return self._availables[self._current]
 
 
-    def getEmph(self):
+    @staticmethod
+    def getEmph():
+        '''Get special emphasized color.'''
 
         return ('white', 'on_blue', [])
 
 
-    def getHeader(self):
+    @staticmethod
+    def getHeader():
+        '''Get special header color.'''
 
         return ('red', None, [])
 
 
 def display(geob, list_of_things, omit, show, important):
+    '''
+    Main display function in Linux terminal, with
+    nice color and everything.
+    '''
 
     if not list_of_things:
         sys.stdout.write('\nNo elements to display.\n')
@@ -121,6 +137,11 @@ def display(geob, list_of_things, omit, show, important):
 
 
 def display_quiet(geob, list_of_things, omit, show):
+    '''
+    This function displays the results in programming
+    mode, with --quiet option. This is useful when you
+    want to use use the result in a pipe for example.
+    '''
 
     if not show:
         show = ['__ref__'] + geob._headers[:]
@@ -144,6 +165,11 @@ def display_quiet(geob, list_of_things, omit, show):
 
 
 def fixed_width(s, col, lim=25, truncate=None):
+    '''
+    This function is useful to display a string in the
+    terminal with a fixed width. It is especially 
+    tricky with unicode strings containing accents.
+    '''
 
     if truncate is None:
         truncate = 1000
@@ -160,6 +186,11 @@ def fixed_width(s, col, lim=25, truncate=None):
 
 
 def scan_coords(u_input, geob, verbose):
+    '''
+    This function tries to interpret the main
+    argument as either coordinates (lat, lng) or
+    a key like ORY.
+    '''
 
     try:
         coords = tuple(float(l) for l in u_input.strip('()').split(','))
@@ -201,6 +232,9 @@ def display_on_two_cols(a_list, descriptor=sys.stdout):
 
 
 def warn(name, *args):
+    '''
+    Display a warning on stderr.
+    '''
 
     if name == 'key':
         print >> sys.stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
@@ -208,6 +242,10 @@ def warn(name, *args):
 
 
 def error(name, *args):
+    '''
+    Display an error on stderr, then exit.
+    First argument is the error type.
+    '''
 
     if name == 'geocode_support':
         print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
@@ -236,6 +274,9 @@ def error(name, *args):
 
 
 def main():
+    '''
+    Arguments handling.
+    '''
 
     # Filter colored signals on terminals.
     # Necessary for Windows CMD
