@@ -59,6 +59,19 @@ from .LevenshteinUtils import mod_leven, clean
 from .GeoGridModule    import GeoGrid
 
 
+try:
+    # This wrapper will raise an ImportError
+    # if libopentrep cannot be found
+    from OpenTrepWrapper import main_trep
+
+except ImportError as err:
+    # Could not import
+    HAS_TREP_SUPPORT = False
+else:
+    # No problem here
+    HAS_TREP_SUPPORT = True
+
+
 
 class GeoBase(object):
     '''
@@ -944,7 +957,37 @@ class GeoBase(object):
         del self._things[key]
 
 
+    @staticmethod
+    def hasTrepSupport():
+        '''
+        Check if module has OpenTrep support.
+        '''
+        return HAS_TREP_SUPPORT
 
+
+    @staticmethod
+    def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=True):
+        '''
+        OpenTrep integration.
+
+        If not hasTrepSupport(), main_trep is not defined 
+        and trepGet will raise an exception if called.
+        '''
+        r = main_trep(searchString=fuzzy_value,
+                      outputFormat=trep_format,
+                      verbose=verbose)
+
+        if trep_format == 'S':
+            # Only this outputFormat is handled by upper layers
+            if from_keys is None:
+                return r[0]
+            else:
+                from_keys = set(from_keys)
+                return [(k, e) for k, e in r[0] if e in from_keys]
+
+        # For all other formats we return an empty
+        # list to avoid failures
+        return []
 
 
 def _test():
