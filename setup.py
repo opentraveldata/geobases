@@ -43,7 +43,7 @@ setup(
         'FlaskUtils',
         'Daemonify',
         'SysUtils',
-        'OpenTrepWrapper',
+        'OpenTrepWrapper>=0.4',
         #Public
         'argparse',
         'pyyaml',
