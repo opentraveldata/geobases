@@ -795,7 +795,7 @@ class GeoBase(object):
 
             # Debug purpose
             if verbose:
-                self._debugFuzzy(match, fuzzy_value, field, approximate, min_match, show_bad)
+                self._debugFuzzy(match, fuzzy_value, field, show_bad)
 
         return self._cache_fuzzy[entry]
 
@@ -815,13 +815,20 @@ class GeoBase(object):
 
 
     def clearCache(self):
+        '''
+        Clear cache for fuzzy searches.
+        '''
         self._cache_fuzzy = {}
 
     def clearBiasCache(self):
+        '''
+        Clear biasing cache for fuzzy searches.
+        '''
         self._bias_cache_fuzzy = {}
 
 
-    def _buildCacheKey(self, fuzzy_value, field, approximate, min_match):
+    @staticmethod
+    def _buildCacheKey(fuzzy_value, field, approximate, min_match):
         '''
         Key for the cache of fuzzyGet, based on parameters.
 
@@ -833,7 +840,7 @@ class GeoBase(object):
         return '+'.join(clean(fuzzy_value)), field, approximate, min_match
 
 
-    def _debugFuzzy(self, match, fuzzy_value, field, approximate=None, min_match=0, show_bad=(1, 1)):
+    def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
         '''
         Some debugging.
         '''
