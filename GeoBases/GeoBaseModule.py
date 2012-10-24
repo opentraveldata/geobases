@@ -292,15 +292,24 @@ class GeoBase(object):
         'PAR'
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
-        >>> geo_t.get('frahah', 'name', default='default')
-        'default'
-        >>>
-        >>> geo_t.get('frnic', 'not_a_field', default='default')
-        Traceback (most recent call last):
-        KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
+        >>> geo_t.get('frnic')
+        {'info': 'Desserte Voyageur-Infrastructure', 'code': 'frnic', ...
+
+        Cases of unknown key.
+
+        >>> geo_t.get('frmoron', 'name', default='There')
+        'There'
         >>> geo_t.get('frmoron', 'name')
         Traceback (most recent call last):
         KeyError: 'Thing not found: frmoron'
+        >>> geo_t.get('frmoron', default='There')
+        'There'
+
+        Cases of unknown field, this is a bug and always fail.
+
+        >>> geo_t.get('frnic', 'not_a_field', default='There')
+        Traceback (most recent call last):
+        KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
         '''
 
         try:
