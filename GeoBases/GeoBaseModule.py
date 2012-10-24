@@ -312,24 +312,24 @@ class GeoBase(object):
         KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
         '''
 
-        try:
-            if field is None:
-                res = self._things[key]
-            else:
-                res = self._things[key][field]
-
-        except KeyError:
-
-            if key in self._things:
-                raise KeyError("Field %s not in %s" % (field, self._headers))
-
+        if key not in self._things:
+            # Unless default is set, we raise an Exception
             if default is not None:
                 return default
 
             raise KeyError("Thing not found: %s" % str(key))
 
+        # Key is in geobase here
+        if field is None:
+            return self._things[key]
+
+        try:
+            res = self._things[key][field]
+        except KeyError:
+            raise KeyError("Field %s not in %s" % (field, self._headers))
         else:
             return res
+
 
 
 
