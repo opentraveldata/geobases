@@ -390,7 +390,7 @@ class GeoBase(object):
         '''
         Returns iterator of all keys in the database.
 
-        :returns: the list of all keys
+        :returns: the iterator of all keys
 
         >>> list(a for a in geo_a)
         ['AGN', 'AGM', 'AGJ', 'AGH', ...
@@ -415,6 +415,28 @@ class GeoBase(object):
 
         return False
 
+
+    def __nonzero__(self):
+        '''
+        Testing GeoBase emptiness.
+
+        :returns: a boolean
+
+        >>> if not geo_o: print 'empty'
+        >>> if geo_o:     print 'not empty'
+        not empty
+
+        This geo_m is actually empty.
+
+        >>> if not geo_m: print 'empty'
+        empty
+        >>> if geo_m:     print 'not empty'
+        '''
+
+        if self._things:
+            return True
+
+        return False
 
 
     def keys(self):
