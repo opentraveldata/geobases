@@ -19,7 +19,7 @@ Functions frequently used by other modules:
 
 Simple examples::
 
-    >>> haversine_precise(48.84, 2.367, 43.70, 7.26) # Paris -> Nice
+    >>> haversine((48.84, 2.367), (43.70, 7.26)) # Paris -> Nice
     683.85...
     >>> prog_point(48.84, 2.367, 35.5522, 139.7796, 0.001, accuracy=0.0001)
     (48.91..., 2.43...)

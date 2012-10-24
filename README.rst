@@ -80,6 +80,8 @@ The Rakefile and release.yaml are just script for Jenkins.
 Release notes
 =============
 
++ 3.5 : haversine method is now distance method
++ 3.4 : get method rewrite
 + 3.3 : opentrep integration in webservices
 + 3.2 : opentrep integration in GeoBaseModule
 + 3.1 : code cleanup with pylint
