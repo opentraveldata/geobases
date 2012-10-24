@@ -50,6 +50,7 @@ def radian(a):
     return float(a) / 180 * pi
 
 
+
 def unradian(a):
     '''Radian to degree conversion.
 
@@ -64,20 +65,28 @@ def unradian(a):
     return float(a) * 180 / pi
 
 
+
 def haversine(L0, L1):
     '''
     As a matter of fact, it is easier for other
-    libraries to just use two parameters. 
+    libraries to just use two parameters.
     Exposing this function is more compliant with
     geohash signatures and getLocations() geobase function.
-    
+
     :param L0: the LatLng tuple of the first point
     :param L1: the LatLng tuple of the second point
     :returns:    the distance in kilometers
 
     >>> haversine((48.84, 2.367), (43.70, 7.26)) # Paris -> Nice
     683.85...
+
+    Case of unknown location.
+
+    >>> haversine(None, (43.70, 7.26)) # returns None
     '''
+    if L0 is None or L1 is None:
+        return None
+
     return haversine_precise(L0[0], L0[1], L1[0], L1[1])
 
 
@@ -256,6 +265,7 @@ def prog_point(lat0, lng0,
     return latm, lngm
 
 
+
 def mercator(lat, lng):
     '''
     Returns Mercator projection
@@ -273,7 +283,6 @@ def mercator(lat, lng):
     y = log(tan(0.25 * pi + 0.5 * lng))
 
     return lat, y
-
 
 
 
