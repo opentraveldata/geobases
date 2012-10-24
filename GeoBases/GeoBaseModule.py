@@ -22,7 +22,7 @@ Examples for airports::
     [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
     >>> geo_a.get('CDG', 'city_code')
     'PAR'
-    >>> geo_a.haversine('CDG', 'NCE')
+    >>> geo_a.distance('CDG', 'NCE')
     694.5162...
 
 
@@ -36,7 +36,7 @@ Examples for stations::
     >>>
     >>> geo_t.get('frpaz', 'name')
     'Paris-Austerlitz'
-    >>> geo_t.haversine('frnic', 'frpaz')
+    >>> geo_t.distance('frnic', 'frpaz')
     683.526...
 
 From any point of reference:
@@ -880,7 +880,7 @@ class GeoBase(object):
                      m[1])
 
 
-    def haversine(self, key0, key1):
+    def distance(self, key0, key1):
         '''
         Compute distance between two elements.
         This is just a wrapper between the original haversine
@@ -890,7 +890,7 @@ class GeoBase(object):
         :param key1: the second key
         :returns:    the distance (km)
 
-        >>> geo_t.haversine('frnic', 'frpaz')
+        >>> geo_t.distance('frnic', 'frpaz')
         683.526...
         '''
 
