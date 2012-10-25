@@ -43,7 +43,7 @@ From any point of reference:
 
     >>> geo = GeoBase(data='ori_por_multi')
     Import successful from ...
-    Available info for things: ...
+    Available fields for things: ...
 '''
 
 from __future__ import with_statement
@@ -82,7 +82,10 @@ class GeoBase(object):
 
     PATH_CONF = localToFile(__file__, 'DataSources/Sources.yaml')
 
-    BASES = yaml.load(open(PATH_CONF))
+    with open(PATH_CONF) as fl:
+        BASES = yaml.load(fl)
+
+    FIELDS_FOR_GEO = set(['lat', 'lng'])
 
 
     @staticmethod
@@ -106,10 +109,10 @@ class GeoBase(object):
 
         >>> geo_a = GeoBase(data='airports')
         Import successful from ...
-        Available info for things: ...
+        Available fields for things: ...
         >>> geo_t = GeoBase(data='stations')
         Import successful from ...
-        Available info for things: ...
+        Available fields for things: ...
         >>> geo_f = GeoBase(data='feed')
         Source was None, skipping loading...
         >>> geo_c = GeoBase(data='odd')
@@ -143,6 +146,10 @@ class GeoBase(object):
         self._key_col   = key_col
         self._headers   = [] if headers is None else headers
         self._verbose   = verbose
+
+        # This will be similar as _headers, but can be modified after loading
+        # _headers is just for data loading
+        self.fields = []
 
 
         if data in GeoBase.BASES:
@@ -225,12 +232,12 @@ class GeoBase(object):
 
                 self._things[key]['__id__'] = key
 
-            # We remove None headers, which are not-loaded-columns
-            self._headers = ['__id__'] + [h for h in headers if h is not None]
+        # We remove None headers, which are not-loaded-columns
+        self.fields = ['__id__'] + [h for h in headers if h is not None]
 
         if self._verbose:
             print "Import successful from %s" % self._source
-            print "Available info for things: %s" % self._headers
+            print "Available fields for things: %s" % self.fields
 
 
 
@@ -240,8 +247,11 @@ class GeoBase(object):
 
         >>> geo_t.hasGeoSupport()
         True
+        >>> geo_f.hasGeoSupport()
+        False
         '''
-        if 'lat' in self._headers and 'lng' in self._headers:
+        if GeoBase.FIELDS_FOR_GEO & set(self.fields):
+            # Set intersection is not empty
             return True
 
         return False
@@ -319,7 +329,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s not in %s" % (field, self._headers))
+            raise KeyError("Field %s not in %s" % (field, self.fields))
         else:
             return res
 
@@ -926,6 +936,12 @@ class GeoBase(object):
         >>> geo_t.get('frnic', 'name')
         'Nice Gare SNCF'
         >>> geo_t.set('frnic', 'name', 'Nice-Ville') # Not to mess with other tests :)
+
+        We may even add new fields.
+
+        >>> geo_t.set('frnic', 'new_field', 'some_value')
+        >>> geo_t.get('frnic', 'new_field')
+        'some_value'
         '''
 
         # If the key is not in the database,
@@ -937,8 +953,8 @@ class GeoBase(object):
 
         # If the field was not referenced in the headers
         # we add it to the headers
-        if field not in self._headers:
-            self._headers.append(field)
+        if field not in self.fields:
+            self.fields.append(field)
 
 
     def setWithDict(self, key, dictionary):

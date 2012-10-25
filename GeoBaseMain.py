@@ -92,7 +92,7 @@ def display(geob, list_of_things, omit, show, important):
         return
 
     if not show:
-        show = ['__ref__'] + geob._headers[:]
+        show = ['__ref__'] + geob.fields[:]
 
     # Different behaviour given
     # number of results
@@ -144,7 +144,7 @@ def display_quiet(geob, list_of_things, omit, show):
     '''
 
     if not show:
-        show = ['__ref__'] + geob._headers[:]
+        show = ['__ref__'] + geob.fields[:]
 
     for h, k in list_of_things:
 
@@ -491,19 +491,19 @@ def main():
     # Failing on wrong headers
     if args['exact'] is not None:
 
-        if args['exact_property'] not in g._headers:
-            error('property', args['exact_property'], args['base'], list(g._headers))
+        if args['exact_property'] not in g.fields:
+            error('property', args['exact_property'], args['base'], g.fields)
 
     if args['fuzzy'] is not None:
 
-        if args['fuzzy_property'] not in g._headers:
-            error('property', args['fuzzy_property'], args['base'], list(g._headers))
+        if args['fuzzy_property'] not in g.fields:
+            error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unkown fields
     for field in args['show'] + args['omit']: 
 
-        if field not in ['__ref__'] + list(g._headers):
-            error('field', field, args['base'], ['__ref__'] + list(g._headers))
+        if field not in ['__ref__'] + g.fields:
+            error('field', field, args['base'], ['__ref__'] + g.fields)
 
 
 
