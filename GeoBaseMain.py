@@ -329,16 +329,16 @@ def main():
     parser.add_argument('-e', '--exact',
         help = '''Rather than looking up a key, this mode will search all keys
                         whose specific property given by --exact-property match the 
-                        argument. By default, the "code" property is used 
+                        argument. By default, the "__id__" property is used 
                         for the search.''',
         default = None
     )
 
     parser.add_argument('-E', '--exact-property',
         help = '''When performing an exact search, specify the property to be chosen.
-                        Default is "code". Give unadmissible property and available
+                        Default is "__id__". Give unadmissible property and available
                         values will be displayed.''',
-        default = 'code'
+        default = '__id__'
     )
 
     parser.add_argument('-n', '--near',
@@ -503,7 +503,6 @@ def main():
     for field in args['show'] + args['omit']: 
 
         if field not in ['__ref__'] + list(g._headers):
-
             error('field', field, args['base'], ['__ref__'] + list(g._headers))
 
 
@@ -593,7 +592,7 @@ def main():
     if limit is not None:
         res = res[:limit]
 
-    for (h, k) in res:
+    for h, k in res:
         if k not in g:
             warn('key', k, g._data, g._source)
 
@@ -602,7 +601,7 @@ def main():
 
 
     # Highlighting some rows
-    important = set(['code', args['fuzzy_property'], args['exact_property']])
+    important = set(['__id__', args['fuzzy_property'], args['exact_property']])
 
     if verbose:
 

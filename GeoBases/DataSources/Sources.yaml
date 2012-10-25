@@ -170,10 +170,10 @@ cities:
 ori_por:
     local     : true
     source    : Por/Ori/ori_por_public.csv
-    key_col   : code
+    key_col   : iata_code
     delimiter : ^
     headers   :
-        - code          # is iata_code in ori_por headers
+        - iata_code
         - icao_code
         - faa_code
         - is_geonames
@@ -181,7 +181,7 @@ ori_por:
         - valid_id
         - name
         - asciiname
-        - lat           # is latitude in ori_por headers
+        - lat           # is latitude  in ori_por headers
         - lng           # is longitude in ori_por headers
         - fclass
         - fcode
@@ -224,10 +224,10 @@ ori_por:
 ori_por_multi:
     local     : true
     source    : Por/Ori/ori_por_public.csv
-    key_col   : [code, location_type]
+    key_col   : [iata_code, location_type]
     delimiter : ^
     headers   :
-        - code          # is iata_code in ori_por headers
+        - iata_code
         - icao_code
         - faa_code
         - is_geonames
