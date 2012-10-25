@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name = 'GeoBases',
-    version = '3.5.2',
+    version = '3.6.0',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',

@@ -80,6 +80,7 @@ The Rakefile and release.yaml are just script for Jenkins.
 Release notes
 =============
 
++ 3.6 : creation of __id__ for keys, new fields attribute
 + 3.5 : haversine method is now distance method
 + 3.4 : get method rewrite
 + 3.3 : opentrep integration in webservices
