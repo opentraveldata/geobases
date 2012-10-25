@@ -81,7 +81,28 @@ class RotatingColors(object):
         return ('red', None, [])
 
 
-def display(geob, list_of_things, omit, show, important):
+def fmt_ref(ref, ref_type, no_symb=False):
+    '''
+    Display the __ref__ depending on its type.
+    '''
+    if ref_type == 'distance':
+        if no_symb:
+            return '%.3f' % ref
+        return '%.2f km' % ref
+
+    if ref_type == 'percentage':
+        if no_symb:
+            return '%.3f' % ref
+        return '%.1f %%' % (100 * ref)
+
+    if ref_type == 'index':
+        return '%s' % int(ref)
+
+    raise ValueError('ref_type %s was not allowed' % ref_type)
+
+
+
+def display(geob, list_of_things, omit, show, important, ref_type):
     '''
     Main display function in Linux terminal, with
     nice color and everything.
@@ -122,7 +143,7 @@ def display(geob, list_of_things, omit, show, important):
                 sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
                 for h, _ in list_of_things:
-                    sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
+                    sys.stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
 
             else:
                 sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
@@ -135,7 +156,7 @@ def display(geob, list_of_things, omit, show, important):
     sys.stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show):
+def display_quiet(geob, list_of_things, omit, show, ref_type):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -156,7 +177,7 @@ def display_quiet(geob, list_of_things, omit, show):
             if f not in omit:
 
                 if f == '__ref__':
-                    l.append('%.3f' % h)
+                    l.append(fmt_ref(h, ref_type, no_symb=True))
                 else:
                     l.append(geob.get(k, f))
 
@@ -350,7 +371,7 @@ def main():
 
     parser.add_argument('-N', '--near-limit',
         help = '''Specify a radius in km when performing geographical
-                        searches with --near. Default is 50 kms.''',
+                        searches with --near. Default is 50 km.''',
         default = 50.,
         type=float
     )
@@ -536,6 +557,9 @@ def main():
     # Keeping only keys in intermediate search
     ex_keys = lambda res : None if res is None else (e[1] for e in res)
 
+    # Keeping track of last filter applied
+    last = None
+
     # We are going to chain conditions
     # res will hold intermediate results
     if args['trep'] is not None:
@@ -544,6 +568,7 @@ def main():
             print 'Applying opentrep on "%s" [output %s]' % (' '.join(args['trep']), args['trep_format'])
 
         res = g.trepGet(' '.join(args['trep']), trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
+        last = 'trep'
 
 
     if args['exact'] is not None:
@@ -552,15 +577,17 @@ def main():
             print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
 
         res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
+        last = 'exact'
 
 
     if args['near'] is not None:
 
         if verbose:
-            print 'Applying near %s km(s)' % args['near_limit']
+            print 'Applying near %s km' % args['near_limit']
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
+        last = 'near'
 
 
     if args['closest'] is not None:
@@ -570,6 +597,7 @@ def main():
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
+        last = 'closest'
 
 
     if args['fuzzy'] is not None:
@@ -578,6 +606,7 @@ def main():
             print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
 
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        last = 'fuzzy'
 
 
 
@@ -608,14 +637,23 @@ def main():
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
 
+
+    # __ref__ may be different thing depending on the last filter
+    if last in ['near', 'closest']:
+        ref_type = 'distance'
+    elif last in ['trep', 'fuzzy']:
+        ref_type = 'percentage'
+    else:
+        ref_type = 'index'
+
     # Display
     if verbose:
-        display(g, res, set(args['omit']), args['show'], important)
+        display(g, res, set(args['omit']), args['show'], important, ref_type)
 
         print '\nDone in %s' % (datetime.now() - before)
 
     else:
-        display_quiet(g, res, set(args['omit']), args['show'])
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type)
 
 
 
