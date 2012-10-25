@@ -195,7 +195,7 @@ class GeoBase(object):
             keyer = lambda row: row[headers.index(key_col)]
 
         elif isinstance(key_col, list):
-            keyer = lambda row: lim.join(row[headers.index(k)] for k in key_col)
+            keyer = lambda row: ''.join(row[headers.index(k)] for k in key_col)
         else:
             raise ValueError("Inconsistent: key_col=%s, headers=%s" % (key_col, headers))
 
