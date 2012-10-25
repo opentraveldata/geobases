@@ -80,6 +80,8 @@ The Rakefile and release.yaml are just script for Jenkins.
 Release notes
 =============
 
++ 3.8 : reverse option for getKeysWhere, accessed through --reverse
++ 3.7 : improve Linux CLI, accept n arguments for every option
 + 3.6 : creation of __id__ for keys, new fields attribute
 + 3.5 : haversine method is now distance method
 + 3.4 : get method rewrite

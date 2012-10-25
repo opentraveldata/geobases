@@ -415,6 +415,12 @@ def main():
         action='store_true'
     )
 
+    parser.add_argument('-r', '--reverse',
+        help = '''When possible, reverse the logic of the filter. Currently
+                        only --exact support that.''',
+        action='store_true'
+    )
+
     parser.add_argument('-q', '--quiet',
         help = '''Does not provide the verbose output.
                         May still be combined with --omit and --show.''',
@@ -578,9 +584,12 @@ def main():
     if args['exact'] is not None:
         args['exact'] = ' '.join(args['exact'])
         if verbose:
-            print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
+            if args['reverse']:
+                print 'Applying property %s != "%s"' % (args['exact_property'], args['exact'])
+            else:
+                print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
 
-        res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res))))
+        res = list(enumerate(g.getKeysWhere(args['exact_property'], args['exact'], from_keys=ex_keys(res), reverse=args['reverse'])))
         last = 'exact'
 
 

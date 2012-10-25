@@ -365,7 +365,7 @@ class GeoBase(object):
         return ( (key, self.getLocation(key)) for key in self )
 
 
-    def getKeysWhere(self, field, value, from_keys=None):
+    def getKeysWhere(self, field, value, from_keys=None, reverse=False):
         '''
         Get iterator of all keys with particular
         field.
@@ -373,10 +373,13 @@ class GeoBase(object):
 
         :param field: the field to test
         :param value: the wanted value for the field
+        :param reverse: we look keys where the field is *not* the particular value
         :returns:     an iterator of matching keys
 
         >>> list(geo_a.getKeysWhere('city_code', 'PAR'))
         ['ORY', 'TNF', 'CDG', 'BVA']
+        >>> list(geo_o.getKeysWhere('comment', '', reverse=True))
+        []
         '''
 
         if from_keys is None:
@@ -384,8 +387,12 @@ class GeoBase(object):
 
         for key in from_keys:
 
-            if self.get(key, field) == value:
+            is_match = self.get(key, field) == value
 
+            if not reverse and is_match:
+                yield key
+
+            if reverse and not is_match:
                 yield key
 
 
