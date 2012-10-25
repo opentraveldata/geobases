@@ -98,7 +98,7 @@ class GeoBase(object):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
-            and 'mix' currently available. 'mix' will not load anything, \
+            and 'feed' currently available. 'feed' will not load anything, \
             it is a way to get an empty object, which wille be fed later
         :param verbose: display informations or not during runtime
 
@@ -110,12 +110,12 @@ class GeoBase(object):
         >>> geo_t = GeoBase(data='stations')
         Import successful from ...
         Available info for things: ...
-        >>> geo_m = GeoBase(data='mix')
+        >>> geo_f = GeoBase(data='feed')
         Source was None, skipping loading...
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
-        ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'mix', 'feed']
-        >>>
+        ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'feed']
+        >>> 
         >>> GeoBase(data='feed',
         ...         source=localToFile(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
@@ -141,7 +141,7 @@ class GeoBase(object):
         self._source    = source
         self._delimiter = delimiter
         self._key_col   = key_col
-        self._headers   = headers
+        self._headers   = [] if headers is None else headers
         self._verbose   = verbose
 
 
@@ -160,15 +160,6 @@ class GeoBase(object):
         elif data == 'feed':
             # User input defining everything
             pass
-
-        elif data == 'mix':
-            # No loading, filling after by user input
-            self._headers = [
-                'code',
-                'name',
-                'lat',
-                'lng'
-            ]
 
         else:
             raise ValueError('Wrong data type. Not in %s' % GeoBase.BASES.keys())
@@ -428,11 +419,11 @@ class GeoBase(object):
         >>> if geo_o:     print 'not empty'
         not empty
 
-        This geo_m is actually empty.
+        This geo_f is actually empty.
 
-        >>> if not geo_m: print 'empty'
+        >>> if not geo_f: print 'empty'
         empty
-        >>> if geo_m:     print 'not empty'
+        >>> if geo_f:     print 'not empty'
         '''
 
         if self._things:
@@ -958,10 +949,10 @@ class GeoBase(object):
         :param key:         the key we want to change a value of
         :param dictionary:  the dict containing the new data
 
-        >>> geo_m.keys()
+        >>> geo_f.keys()
         []
-        >>> geo_m.setWithDict('frnic', {'code' : 'frnic', 'name': 'Nice'})
-        >>> geo_m.keys()
+        >>> geo_f.setWithDict('frnic', {'code' : 'frnic', 'name': 'Nice'})
+        >>> geo_f.keys()
         ['frnic']
         '''
 
@@ -1046,7 +1037,7 @@ def _test():
         'geo_o': GeoBase(data='ori_por',  verbose=False),
         'geo_a': GeoBase(data='airports', verbose=False),
         'geo_t': GeoBase(data='stations', verbose=False),
-        'geo_m': GeoBase(data='mix',      verbose=False)
+        'geo_f': GeoBase(data='feed',     verbose=False)
     }
 
     opt =  (doctest.ELLIPSIS |
