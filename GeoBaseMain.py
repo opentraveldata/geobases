@@ -122,7 +122,7 @@ def display(geob, list_of_things, omit, show, important):
 
                 sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
-                for h, k in list_of_things:
+                for h, _ in list_of_things:
                     sys.stdout.write(fixed_width('%.3f' % h, c.getHeader(), lim, truncate))
 
             else:
@@ -601,7 +601,7 @@ def main():
 
 
     # Highlighting some rows
-    important = set(['__id__', args['fuzzy_property'], args['exact_property']])
+    important = set([args['fuzzy_property'], args['exact_property']])
 
     if verbose:
 
