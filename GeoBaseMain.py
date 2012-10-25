@@ -329,7 +329,8 @@ def main():
                         match from the property given by --fuzzy-property option for
                         the argument. Limit can be specified with --fuzzy-limit option.
                         By default, the "name" property is used for the search.''',
-        default = None
+        default = None,
+        nargs='+'
     )
 
     parser.add_argument('-F', '--fuzzy-property',
@@ -351,7 +352,8 @@ def main():
                         whose specific property given by --exact-property match the 
                         argument. By default, the "__id__" property is used 
                         for the search.''',
-        default = None
+        default = None,
+        nargs='+'
     )
 
     parser.add_argument('-E', '--exact-property',
@@ -366,7 +368,8 @@ def main():
                         in a radius from a geocode or a key. Radius is given by --near-limit option,
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
-        default = None
+        default = None,
+        nargs='+'
     )
 
     parser.add_argument('-N', '--near-limit',
@@ -381,7 +384,8 @@ def main():
                         from a geocode or a key. Number of results is limited by --closest-limit option,
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
-        default = None
+        default = None,
+        nargs='+'
     )
 
     parser.add_argument('-C', '--closest-limit',
@@ -563,16 +567,16 @@ def main():
     # We are going to chain conditions
     # res will hold intermediate results
     if args['trep'] is not None:
-
+        args['trep'] = ' '.join(args['trep'])
         if verbose:
-            print 'Applying opentrep on "%s" [output %s]' % (' '.join(args['trep']), args['trep_format'])
+            print 'Applying opentrep on "%s" [output %s]' % (args['trep'], args['trep_format'])
 
-        res = g.trepGet(' '.join(args['trep']), trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
+        res = g.trepGet(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
 
 
     if args['exact'] is not None:
-
+        args['exact'] = ' '.join(args['exact'])
         if verbose:
             print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
 
@@ -581,9 +585,9 @@ def main():
 
 
     if args['near'] is not None:
-
+        args['near'] = ' '.join(args['near'])
         if verbose:
-            print 'Applying near %s km' % args['near_limit']
+            print 'Applying near %s km from "%s"' % (args['near_limit'], args['near'])
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -591,9 +595,9 @@ def main():
 
 
     if args['closest'] is not None:
-
+        args['closest'] = ' '.join(args['closest'])
         if verbose:
-            print 'Applying closest %s' % args['closest_limit']
+            print 'Applying closest %s from "%s"' % (args['closest_limit'], args['closest'])
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -601,7 +605,7 @@ def main():
 
 
     if args['fuzzy'] is not None:
-
+        args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
             print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
 
