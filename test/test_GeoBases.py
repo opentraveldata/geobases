@@ -47,7 +47,7 @@ def test_suite():
         'geo_o'     : GeoM.GeoBase(data='ori_por',  verbose=False),
         'geo_a'     : GeoM.GeoBase(data='airports', verbose=False),
         'geo_t'     : GeoM.GeoBase(data='stations', verbose=False),
-        'geo_m'     : GeoM.GeoBase(data='mix',      verbose=False)
+        'geo_f'     : GeoM.GeoBase(data='feed',     verbose=False)
     }
 
 
