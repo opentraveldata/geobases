@@ -232,8 +232,10 @@ class GeoBase(object):
                     if h is not None:
                         self._things[key][h] = v
 
+                self._things[key]['__id__'] = key
+
             # We remove None headers, which are not-loaded-columns
-            self._headers = [h for h in headers if h is not None]
+            self._headers = ['__id__'] + [h for h in headers if h is not None]
 
         if self._verbose:
             print "Import successful from %s" % self._source
