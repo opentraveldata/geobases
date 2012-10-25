@@ -119,7 +119,6 @@ def display(geob, list_of_things, omit, show, important):
                 col = c.get()
 
             if f == '__ref__':
-
                 sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
                 for h, _ in list_of_things:
@@ -601,10 +600,16 @@ def main():
 
 
     # Highlighting some rows
-    important = set([args['fuzzy_property'], args['exact_property']])
+    important = set(['__id__'])
 
+    if args['exact'] is not None:
+        important.add(args['exact_property'])
+
+    if args['fuzzy'] is not None:
+        important.add(args['fuzzy_property'])
+
+    # Display
     if verbose:
-
         display(g, res, set(args['omit']), args['show'], important)
 
         print '\nDone in %s' % (datetime.now() - before)
