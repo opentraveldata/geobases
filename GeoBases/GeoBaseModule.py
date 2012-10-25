@@ -122,7 +122,7 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
+        {'__id__': 'ORY', 'code': 'ORY', 'name': 'PARIS/FR:ORLY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
