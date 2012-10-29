@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.9 : added __ln__ special field for line number in the source file
 + 3.8 : reverse option for getKeysWhere, accessed through --reverse
 + 3.7 : improve Linux CLI, accept n arguments for every option
 + 3.6 : creation of __id__ for keys, new fields attribute

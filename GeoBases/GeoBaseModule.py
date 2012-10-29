@@ -125,7 +125,7 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'__id__': 'ORY', 'code': 'ORY', 'name': 'PARIS/FR:ORLY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__ln__': '6014', '__id__': 'ORY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
@@ -209,7 +209,7 @@ class GeoBase(object):
 
         with open(self._source) as f:
 
-            for row in f:
+            for line_nb, row in enumerate(f, start=1):
                 # Skip comments and empty lines
                 if not row or row.startswith('#'):
                     continue
@@ -223,17 +223,18 @@ class GeoBase(object):
                     if self._verbose:
                         print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
-                #self._headers represents the meaning of each column.
-                self._things[key] = {}
+                self._things[key] = {
+                    '__id__' : key,
+                    '__ln__' : str(line_nb)
+                }
 
+                #self._headers represents the meaning of each column.
                 for h, v in zip(headers, row):
                     if h is not None:
                         self._things[key][h] = v
 
-                self._things[key]['__id__'] = key
-
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__id__'] + [h for h in headers if h is not None]
+        self.fields = ['__id__', '__ln__'] + [h for h in headers if h is not None]
 
         if self._verbose:
             print "Import successful from %s" % self._source
