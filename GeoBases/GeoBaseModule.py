@@ -117,7 +117,7 @@ class GeoBase(object):
         Source was None, skipping loading...
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
-        ValueError: Wrong data type. Not in ['airports', 'airports_csv', 'countries', 'stations', 'stations_nls', 'feed']
+        ValueError: Wrong data type. Not in ['airports', 'continents', 'stations', 'timezones', 'ori_por_non_iata', 'countries', 'stations_uic', 'languages', 'stations_nls', 'airports_csv', 'ori_por', 'cities', 'ori_por_multi']
         >>> 
         >>> GeoBase(data='feed',
         ...         source=localToFile(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
@@ -313,7 +313,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
+        KeyError: "Field not_a_field [for key frnic] not in ['__id__', '__ln__', 'code', 'lines', 'name', 'info', 'lat', 'lng']"
         '''
 
         if key not in self._things:
@@ -330,7 +330,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s not in %s" % (field, self.fields))
+            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self.fields))
         else:
             return res
 
@@ -1065,9 +1065,9 @@ def _test():
     }
 
     opt =  (doctest.ELLIPSIS |
-            doctest.NORMALIZE_WHITESPACE |
-            doctest.REPORT_ONLY_FIRST_FAILURE |
-            doctest.IGNORE_EXCEPTION_DETAIL)
+            doctest.NORMALIZE_WHITESPACE)
+            #doctest.REPORT_ONLY_FIRST_FAILURE)
+            #doctest.IGNORE_EXCEPTION_DETAIL)
 
     doctest.testmod(extraglobs=extraglobs, optionflags=opt)
 
