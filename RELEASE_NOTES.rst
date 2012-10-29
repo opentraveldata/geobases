@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.11 : added __gb__ special field to collect non documented data
 + 3.10 : added ori_por_non_iata support
 + 3.9  : added __ln__ special field for line number in the source file
 + 3.8  : reverse option for getKeysWhere, accessed through --reverse
