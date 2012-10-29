@@ -74,6 +74,7 @@ setup(
             "DataSources/Cities/cities1000.txt",
             "DataSources/Por/Geonames/allCountriesHead.txt",
             "DataSources/Por/Ori/ori_por_public.csv",
+            "DataSources/Por/Ori/ori_por_non_iata.csv",
             "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
