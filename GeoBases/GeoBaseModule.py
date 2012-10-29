@@ -51,6 +51,7 @@ from __future__ import with_statement
 import heapq
 import os
 import yaml
+from itertools import izip_longest
 
 from SysUtils         import localToFile
 
@@ -125,7 +126,8 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__ln__': '6014', '__id__': 'ORY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gb__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__ln__': '6014', '__id__': 'ORY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
+
         '''
 
         # Main structure in which everything will be loaded
@@ -225,16 +227,30 @@ class GeoBase(object):
 
                 self._things[key] = {
                     '__id__' : key,
-                    '__ln__' : str(line_nb)
+                    '__ln__' : str(line_nb),
+                    '__gb__' : []
                 }
 
-                #self._headers represents the meaning of each column.
-                for h, v in zip(headers, row):
-                    if h is not None:
+                # headers represents the meaning of each column.
+                # Using izip_longest here will replace missing fields
+                # with empty strings ''
+                for h, v in izip_longest(headers, row, fillvalue=''):
+                    # if h is None, it means the conf file explicitely
+                    # specified not to load the column
+                    if h is None:
+                        continue
+                    # if h is an empty string, it means there was more
+                    # data than the headers said, we store it in the __gb__ special field
+                    if not h:
+                        self._things[key]['__gb__'].append(v)
+                    else:
                         self._things[key][h] = v
 
+                # Flattening the __gb__ list, only strings are supported
+                self._things[key]['__gb__'] = lim.join(self._things[key]['__gb__'])
+
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__id__', '__ln__'] + [h for h in headers if h is not None]
+        self.fields = ['__id__', '__ln__'] + [h for h in headers if h is not None] + ['__gb__']
 
         if self._verbose:
             print "Import successful from %s" % self._source
@@ -313,7 +329,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__ln__', '__id__', 'lat', 'lng']"
+        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gb__', '__ln__', '__id__', 'lat', 'lng']"
         '''
 
         if key not in self._things:
@@ -336,7 +352,6 @@ class GeoBase(object):
 
 
 
-
     def getLocation(self, key):
         '''
         Returns proper geocode.
@@ -348,6 +363,9 @@ class GeoBase(object):
             loc = float(self.get(key, 'lat')), float(self.get(key, 'lng'))
 
         except ValueError:
+            # Decode geocode, if error, returns None
+            # Note that TypeError would mean that the input
+            # type was not even a string, probably NoneType
             return None
         else:
             return loc
