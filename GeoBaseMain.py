@@ -5,7 +5,7 @@
 This module is a launcher for GeoBase.
 '''
 
-import sys
+from sys import stdin, stdout, stderr
 
 import os
 import argparse
@@ -109,7 +109,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     '''
 
     if not list_of_things:
-        sys.stdout.write('\nNo elements to display.\n')
+        stdout.write('\nNo elements to display.\n')
         return
 
     if not show:
@@ -146,20 +146,20 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.get()
 
         if f == '__ref__':
-            sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
+            stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
             for h, _ in list_of_things:
-                sys.stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
+                stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
 
         else:
-            sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
+            stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
             for _, k in list_of_things:
-                sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+                stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
         c.next()
 
-    sys.stdout.write('\n')
+    stdout.write('\n')
 
 
 def display_quiet(geob, list_of_things, omit, show, ref_type):
@@ -180,7 +180,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
             show_wo_omit.append(f)
 
     # Displaying headers
-    sys.stdout.write('#' + '^'.join(show_wo_omit) + '\n')
+    stdout.write('#' + '^'.join(show_wo_omit) + '\n')
 
     for h, k in list_of_things:
 
@@ -193,7 +193,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
             else:
                 l.append(geob.get(k, f))
 
-        sys.stdout.write('^'.join(l) + '\n')
+        stdout.write('^'.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -210,7 +210,7 @@ def fixed_width(s, col, lim=25, truncate=None):
 
     # To truncate on the appropriate number of characters
     # We decode before truncating
-    # Then we encode again for sys.stdout.write
+    # Then we encode again for stdout.write
     s = s.decode('utf8')[0:truncate]
     s = (printer % s).encode('utf8')
 
@@ -250,7 +250,7 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def display_on_two_cols(a_list, descriptor=sys.stdout):
+def display_on_two_cols(a_list, descriptor=stdout):
     '''
     Some formatting for help.
     '''
@@ -269,7 +269,7 @@ def warn(name, *args):
     '''
 
     if name == 'key':
-        print >> sys.stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
+        print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
 
@@ -280,30 +280,30 @@ def error(name, *args):
     '''
 
     if name == 'trep_support':
-        print >> sys.stderr, '\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.'
+        print >> stderr, '\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.'
 
     elif name == 'geocode_support':
-        print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
+        print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'base':
-        print >> sys.stderr, '\n/!\ Wrong base "%s". You may select:' % args[0]
-        display_on_two_cols(args[1], sys.stderr)
+        print >> stderr, '\n/!\ Wrong base "%s". You may select:' % args[0]
+        display_on_two_cols(args[1], stderr)
 
     elif name == 'property':
-        print >> sys.stderr, '\n/!\ Wrong property "%s".' % args[0]
-        print >> sys.stderr, 'For data type %s, you may select:' % args[1]
-        display_on_two_cols(args[2], sys.stderr)
+        print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
+        print >> stderr, 'For data type %s, you may select:' % args[1]
+        display_on_two_cols(args[2], stderr)
 
     elif name == 'field':
-        print >> sys.stderr, '\n/!\ Wrong field "%s".' % args[0]
-        print >> sys.stderr, 'For data type %s, you may select:' % args[1]
-        display_on_two_cols(args[2], sys.stderr)
+        print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
+        print >> stderr, 'For data type %s, you may select:' % args[1]
+        display_on_two_cols(args[2], stderr)
 
     elif name == 'geocode_format':
-        print >> sys.stderr, '\n/!\ Bad geocode format: %s' % args[0]
+        print >> stderr, '\n/!\ Bad geocode format: %s' % args[0]
 
     elif name == 'geocode_unknown':
-        print >> sys.stderr, '\n/!\ Geocode was unknown for %s' % args[0]
+        print >> stderr, '\n/!\ Geocode was unknown for %s' % args[0]
 
     exit(1)
 
@@ -555,7 +555,7 @@ def main():
     if verbose:
         before = datetime.now()
 
-        if not sys.stdin.isatty():
+        if not stdin.isatty():
             print 'Looking for matches from stdin...'
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
@@ -564,9 +564,9 @@ def main():
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not sys.stdin.isatty():
+    if not stdin.isatty():
         res = []
-        for row in sys.stdin:
+        for row in stdin:
             res.extend(row.strip().split())
 
         res = enumerate(res)
