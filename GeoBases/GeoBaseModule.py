@@ -199,25 +199,34 @@ class GeoBase(object):
         # It is possible to have a key_col which is a list
         # In this case we build the key as the concatenation between
         # the different fields
-        if isinstance(key_col, str):
-            keyer = lambda row: row[headers.index(key_col)]
+        try:
+            if isinstance(key_col, str):
+                pos = (headers.index(key_col), )
 
-        elif isinstance(key_col, list):
-            keyer = lambda row: ''.join(row[headers.index(k)] for k in key_col)
+            elif isinstance(key_col, list):
+                pos = tuple(headers.index(k) for k in key_col)
+
+            else:
+                raise ValueError()
+
+        except ValueError:
+            raise ValueError("Inconsistent: key_col = %s with headers = %s" % (key_col, headers))
+
         else:
-            raise ValueError("Inconsistent: key_col=%s, headers=%s" % (key_col, headers))
+            keyer = lambda row, pos: ''.join(row[p] for p in pos)
 
 
         with open(self._source) as f:
 
             for line_nb, row in enumerate(f, start=1):
                 # Skip comments and empty lines
+                # Comments must *start* with #, otherwise they will not be stripped
                 if not row or row.startswith('#'):
                     continue
 
                 # Stripping \t would cause bugs in tsv files
                 row = row.strip(' \n\r').split(lim)
-                key = keyer(row)
+                key = keyer(row, pos)
 
                 # No duplicates ever
                 if key in self._things:
@@ -225,9 +234,9 @@ class GeoBase(object):
                         print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
                 self._things[key] = {
-                    '__key__' : key,
-                    '__lno__' : str(line_nb),
-                    '__gar__' : []
+                    '__key__' : key,            # special field for key
+                    '__lno__' : str(line_nb),   # special field for line number
+                    '__gar__' : []              # special field for garbage
                 }
 
                 # headers represents the meaning of each column.

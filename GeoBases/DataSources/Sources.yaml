@@ -220,7 +220,6 @@ ori_por:
         - alt_name_section
 
 
-
 ori_por_multi:
     local     : true
     source    : Por/Ori/ori_por_public.csv
@@ -234,7 +233,7 @@ ori_por_non_iata:
     source    : Por/Ori/ori_por_non_iata.csv
     key_col   : iata_code
     delimiter : ^
-    headers   : &minim_ori_por_headers
+    headers   : &short_ori_por_headers
         - iata_code
         - icao_code
         - faa_code
