@@ -256,10 +256,10 @@ def display_on_two_cols(a_list, descriptor=stdout):
     '''
 
     for p in zip(a_list[::2], a_list[1::2]):
-        print >> descriptor, '\t%-15s\t%-15s' % p
+        print >> descriptor, '\t%-20s\t%-20s' % p
 
     if len(a_list) % 2 != 0:
-        print >> descriptor, '\t%-15s' % a_list[-1]
+        print >> descriptor, '\t%-20s' % a_list[-1]
 
 
 
@@ -501,7 +501,7 @@ def main():
     # CREATION
     #
     if args['base'] not in GeoBase.BASES:
-        error('base', args['base'], list(GeoBase.BASES.keys()))
+        error('base', args['base'], sorted(GeoBase.BASES.keys()))
 
     # Updating file
     if args['update']:
