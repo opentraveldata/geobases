@@ -297,7 +297,7 @@ class GeoBase(object):
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
         >>> geo_t.get('frnic')
-        {'info': 'Desserte Voyageur-Infrastructure', 'code': 'frnic', ...
+        {'info': 'Desserte Voyageur-Infrastructure', 'code': 'frnic', ...}
 
         Cases of unknown key.
 
@@ -313,7 +313,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['__id__', '__ln__', 'code', 'lines', 'name', 'info', 'lat', 'lng']"
+        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__ln__', '__id__', 'lat', 'lng']"
         '''
 
         if key not in self._things:
@@ -330,7 +330,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self.fields))
+            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
         else:
             return res
 
