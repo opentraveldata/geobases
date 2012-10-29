@@ -115,6 +115,13 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     if not show:
         show = ['__ref__'] + geob.fields[:]
 
+    # Building final shown headers
+    show_wo_omit = []
+
+    for f in show:
+        if f not in omit:
+            show_wo_omit.append(f)
+
     # Different behaviour given
     # number of results
     # We adapt the width between 25 and 40 
@@ -131,27 +138,26 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
     c = RotatingColors()
 
-    for f in show:
-        if f not in omit:
+    for f in show_wo_omit:
 
-            if f in important:
-                col = c.getEmph()
-            else:
-                col = c.get()
+        if f in important:
+            col = c.getEmph()
+        else:
+            col = c.get()
 
-            if f == '__ref__':
-                sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
+        if f == '__ref__':
+            sys.stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
 
-                for h, _ in list_of_things:
-                    sys.stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
+            for h, _ in list_of_things:
+                sys.stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
 
-            else:
-                sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
+        else:
+            sys.stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
-                for _, k in list_of_things:
-                    sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+            for _, k in list_of_things:
+                sys.stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
-            c.next()
+        c.next()
 
     sys.stdout.write('\n')
 
@@ -166,20 +172,26 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     if not show:
         show = ['__ref__'] + geob.fields[:]
 
-    for h, k in list_of_things:
+    # Building final shown headers
+    show_wo_omit = []
 
-        if k not in geob:
-            continue
+    for f in show:
+        if f not in omit:
+            show_wo_omit.append(f)
+
+    # Displaying headers
+    sys.stdout.write('#' + '^'.join(show_wo_omit) + '\n')
+
+    for h, k in list_of_things:
 
         l = []
 
-        for f in show:
-            if f not in omit:
+        for f in show_wo_omit:
 
-                if f == '__ref__':
-                    l.append(fmt_ref(h, ref_type, no_symb=True))
-                else:
-                    l.append(geob.get(k, f))
+            if f == '__ref__':
+                l.append(fmt_ref(h, ref_type, no_symb=True))
+            else:
+                l.append(geob.get(k, f))
 
         sys.stdout.write('^'.join(l) + '\n')
 
