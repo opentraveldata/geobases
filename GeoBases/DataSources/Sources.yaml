@@ -285,4 +285,14 @@ ori_por_non_iata:
         - faa_code
         - is_geonames
         - geoname_id
-
+        - valid_id
+        - name
+        - asciiname
+        - lat           # is latitude in ori_por headers
+        - lng           # is longitude in ori_por headers
+        - fclass
+        - fcode
+        - page_rank
+        - date_from
+        - date_until
+        - comment
