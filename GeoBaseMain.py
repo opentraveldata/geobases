@@ -350,7 +350,7 @@ def main():
     parser.add_argument('-e', '--exact',
         help = '''Rather than looking up a key, this mode will search all keys
                         whose specific property given by --exact-property match the 
-                        argument. By default, the "__id__" property is used 
+                        argument. By default, the "__key__" property is used 
                         for the search.''',
         default = None,
         nargs='+'
@@ -358,9 +358,9 @@ def main():
 
     parser.add_argument('-E', '--exact-property',
         help = '''When performing an exact search, specify the property to be chosen.
-                        Default is "__id__". Give unadmissible property and available
+                        Default is "__key__". Give unadmissible property and available
                         values will be displayed.''',
-        default = '__id__'
+        default = '__key__'
     )
 
     parser.add_argument('-n', '--near',
@@ -642,7 +642,7 @@ def main():
 
 
     # Highlighting some rows
-    important = set(['__id__'])
+    important = set(['__key__'])
 
     if args['exact'] is not None:
         important.add(args['exact_property'])

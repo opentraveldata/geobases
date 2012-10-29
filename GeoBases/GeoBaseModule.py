@@ -126,7 +126,7 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gb__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__ln__': '6014', '__id__': 'ORY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__lno__': '6014', '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', 'ref_name': 'PARIS ORLY'}
 
         '''
 
@@ -226,9 +226,9 @@ class GeoBase(object):
                         print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
                 self._things[key] = {
-                    '__id__' : key,
-                    '__ln__' : str(line_nb),
-                    '__gb__' : []
+                    '__key__' : key,
+                    '__lno__' : str(line_nb),
+                    '__gar__' : []
                 }
 
                 # headers represents the meaning of each column.
@@ -240,17 +240,17 @@ class GeoBase(object):
                     if h is None:
                         continue
                     # if h is an empty string, it means there was more
-                    # data than the headers said, we store it in the __gb__ special field
+                    # data than the headers said, we store it in the __gar__ special field
                     if not h:
-                        self._things[key]['__gb__'].append(v)
+                        self._things[key]['__gar__'].append(v)
                     else:
                         self._things[key][h] = v
 
-                # Flattening the __gb__ list, only strings are supported
-                self._things[key]['__gb__'] = lim.join(self._things[key]['__gb__'])
+                # Flattening the __gar__ list, only strings are supported
+                self._things[key]['__gar__'] = lim.join(self._things[key]['__gar__'])
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__id__', '__ln__'] + [h for h in headers if h is not None] + ['__gb__']
+        self.fields = ['__key__', '__lno__'] + [h for h in headers if h is not None] + ['__gar__']
 
         if self._verbose:
             print "Import successful from %s" % self._source
@@ -329,7 +329,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gb__', '__ln__', '__id__', 'lat', 'lng']"
+        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gar__', '__lno__', '__key__', 'lat', 'lng']"
         '''
 
         if key not in self._things:
