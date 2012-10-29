@@ -273,3 +273,16 @@ ori_por_multi:
         - wiki_link
         - alt_name_section
 
+
+ori_por_non_iata:
+    local     : true
+    source    : Por/Ori/ori_por_non_iata.csv
+    key_col   : iata_code
+    delimiter : ^
+    headers   : # We could add other fields, but some lines do not have them (not even separators)
+        - iata_code
+        - icao_code
+        - faa_code
+        - is_geonames
+        - geoname_id
+
