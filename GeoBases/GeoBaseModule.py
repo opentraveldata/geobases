@@ -225,18 +225,23 @@ class GeoBase(object):
                     continue
 
                 # Stripping \t would cause bugs in tsv files
-                row = row.strip(' \n\r').split(lim)
+                # If the tsv ends with \t\t, stripping would cause
+                # to loose the track of column numbers
+                row = row.rstrip(' \n\r').split(lim)
                 key = keyer(row, pos)
 
                 # No duplicates ever
                 if key in self._things:
+                    self._things[key]['__dup__'] += 1
+
                     if self._verbose:
                         print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
                 self._things[key] = {
                     '__key__' : key,            # special field for key
                     '__lno__' : str(line_nb),   # special field for line number
-                    '__gar__' : []              # special field for garbage
+                    '__gar__' : [],             # special field for garbage
+                    '__dup__' : 0               # special field for duplicates
                 }
 
                 # headers represents the meaning of each column.
@@ -254,11 +259,11 @@ class GeoBase(object):
                     else:
                         self._things[key][h] = v
 
-                # Flattening the __gar__ list, only strings are supported
+                # Flattening the __gar__ list, iterables are not really supported
                 self._things[key]['__gar__'] = lim.join(self._things[key]['__gar__'])
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__lno__'] + [h for h in headers if h is not None] + ['__gar__']
+        self.fields = ['__key__', '__dup__', '__lno__'] + [h for h in headers if h is not None] + ['__gar__']
 
         if self._verbose:
             print "Import successful from %s" % self._source
