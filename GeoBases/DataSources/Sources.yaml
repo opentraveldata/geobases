@@ -134,6 +134,7 @@ timezones:
     key_col   : code
     delimiter : "\t"
     headers   :
+        - country_code
         - code
         - gmt_offset
         - dst_offset
