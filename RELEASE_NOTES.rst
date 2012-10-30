@@ -3,6 +3,8 @@
 Release notes
 =============
 
++ 3.13 : added __dup__ special field to count duplicates
++ 3.12 : new data source for currencies (wikipedia based)
 + 3.11 : added __gar__ special field to collect non documented data
 + 3.10 : added ori_por_non_iata support
 + 3.9  : added __lno__ special field for line number in the source file
