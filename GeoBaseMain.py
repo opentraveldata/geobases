@@ -193,7 +193,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
             else:
                 l.append(geob.get(k, f))
 
-        stdout.write('^'.join(l) + '\n')
+        stdout.write('^'.join(str(e) for e in l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
