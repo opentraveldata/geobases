@@ -230,18 +230,21 @@ class GeoBase(object):
                 row = row.rstrip(' \n\r').split(lim)
                 key = keyer(row, pos)
 
-                # No duplicates ever
-                if key in self._things:
-                    self._things[key]['__dup__'] += 1
+                # No duplicates ever, we will erase all data after if it is
+                if key not in self._things:
+                    dup = 0
+                else:
+                    dup = 1 + self._things[key]['__dup__']
 
                     if self._verbose:
                         print "/!\ %s already in base: %s" % (key, str(self._things[key]))
 
+                # Erase everything, except duplicates counter
                 self._things[key] = {
                     '__key__' : key,            # special field for key
                     '__lno__' : str(line_nb),   # special field for line number
                     '__gar__' : [],             # special field for garbage
-                    '__dup__' : 0               # special field for duplicates
+                    '__dup__' : dup             # special field for duplicates
                 }
 
                 # headers represents the meaning of each column.
@@ -262,8 +265,16 @@ class GeoBase(object):
                 # Flattening the __gar__ list, iterables are not really supported
                 self._things[key]['__gar__'] = lim.join(self._things[key]['__gar__'])
 
+
+        for key in self._things:
+            # Here the string conversion is purely to help the command line
+            # exact search who only understands strings
+            self._things[key]['__dup__'] = str(self._things[key]['__dup__'])
+
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__dup__', '__lno__'] + [h for h in headers if h is not None] + ['__gar__']
+        self.fields = ['__key__', '__dup__', '__lno__']     + \
+                      [h for h in headers if h is not None] + \
+                      ['__gar__']
 
         if self._verbose:
             print "Import successful from %s" % self._source
