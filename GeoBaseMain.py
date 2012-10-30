@@ -202,7 +202,6 @@ def fixed_width(s, col, lim=25, truncate=None):
     terminal with a fixed width. It is especially 
     tricky with unicode strings containing accents.
     '''
-
     if truncate is None:
         truncate = 1000
 
@@ -211,7 +210,7 @@ def fixed_width(s, col, lim=25, truncate=None):
     # To truncate on the appropriate number of characters
     # We decode before truncating
     # Then we encode again for stdout.write
-    s = s.decode('utf8')[0:truncate]
+    s = str(s).decode('utf8')[0:truncate]
     s = (printer % s).encode('utf8')
 
     return colored(s, *col)
