@@ -1,4 +1,4 @@
-ISO 639-3	ISO 639-2	ISO 639-1	Language Name
+#ISO 639-3	ISO 639-2	ISO 639-1	Language Name
 afa	afa		Afro-Asiatic languages
 alg	alg		Algonquian languages
 apa	apa		Apache languages
