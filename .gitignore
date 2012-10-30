@@ -10,5 +10,6 @@ dist
 # Ignoring virtualenv
 bin/
 lib/
+lib64
 include/
 *.log
