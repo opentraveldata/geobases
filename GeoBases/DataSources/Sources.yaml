@@ -5,10 +5,10 @@
 airports:
     local     : true
     source    : Airports/Geonames/airports_geonames_only_clean.csv
-    key_col   : code
+    key_col   : iata_code
     delimiter : ^
     headers   :
-        - code
+        - iata_code
         - name
         - city_code
         - country_code
@@ -20,10 +20,10 @@ airports:
 airports_csv:
     local     : true
     source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
-    key_col   : code
+    key_col   : iata_code
     delimiter : ^
     headers   :
-        - code
+        - iata_code
         - ref_name
         - ref_name_2
         - name
@@ -95,22 +95,22 @@ stations:
 stations_nls:
     local     : true
     source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
-    key_col   : code
+    key_col   : nls_code
     delimiter : ','
     headers   :
         - uic_code
         - name
-        - code
+        - nls_code
         - physical
 
 
 stations_uic:
     local     : true
     source    : TrainStations/UIC/sncfExtract_v1.0.csv
-    key_col   : code
+    key_col   : uic_code
     delimiter : ','
     headers   :
-        - code
+        - uic_code
         - name
         - lat
         - lng
