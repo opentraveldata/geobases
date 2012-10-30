@@ -237,7 +237,8 @@ class GeoBase(object):
                     dup = 1 + self._things[key]['__dup__']
 
                     if self._verbose:
-                        print "/!\ %s already in base: %s" % (key, str(self._things[key]))
+                        print "/!\ %s already in base from l. %s [parsing l. %s; duplicate %s]" % \
+                                (key,  self._things[key]['__lno__'], line_nb, dup)
 
                 # Erase everything, except duplicates counter
                 self._things[key] = {
