@@ -252,3 +252,16 @@ ori_por_non_iata:
         - date_until
         - comment
 
+
+currencies:
+    local     : true
+    source    : Currencies/wiki_source_ISO_4217.csv
+    key_col   : code
+    delimiter : ;
+    headers   :
+        - code
+        - numeric_code
+        - digits_number
+        - currency
+        - countries
+
