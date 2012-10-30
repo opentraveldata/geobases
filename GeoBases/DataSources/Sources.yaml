@@ -58,7 +58,7 @@ countries:
         - continent
         - tld
         - currency_code
-        - continent_name
+        - currency_name
         - phone
         - postal_code_format
         - postal_code_regex
