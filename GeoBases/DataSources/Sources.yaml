@@ -279,3 +279,13 @@ airlines:
         - ticketing_name
         - iata_code
 
+
+regions:
+    local     : true
+    source    : Regions/regions.csv
+    key_col   : code
+    delimiter : ;
+    headers   :
+        - code
+        - name
+

@@ -77,6 +77,7 @@ setup(
             "DataSources/Por/Ori/ori_por_non_iata.csv",
             "DataSources/Currencies/wiki_source_ISO_4217.csv", # Currencies
             "DataSources/Airlines/CRB_AIRLINE.csv",
+            "DataSources/Regions/regions.csv",
             "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
