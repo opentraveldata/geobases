@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.17 : added new base for locales
 + 3.16 : added new base for regions
 + 3.15 : added new base for airlines from CRB_Airline
 + 3.14 : handle multiple conditions in getKeysWhere, and/or cases
