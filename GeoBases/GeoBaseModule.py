@@ -405,7 +405,7 @@ class GeoBase(object):
 
 
 
-    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_cast_str=False, tests='and'):
+    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, tests='and'):
         '''
         Get iterator of all keys with particular
         field.
@@ -413,7 +413,7 @@ class GeoBase(object):
 
         :param conditions: a list of (field, value) conditions
         :param reverse:    we look keys where the field is *not* the particular value
-        :param force_cast_str: for the str() method before every test
+        :param force_str:  for the str() method before every test
         :param tests:      either 'or' or 'and', how to handle several conditions
         :returns:          an iterator of matching keys
 
@@ -425,7 +425,7 @@ class GeoBase(object):
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', 1)])))
         507
-        >>> len(list(geo_o.getKeysWhere([('__dup__', '1')], force_cast_str=True)))
+        >>> len(list(geo_o.getKeysWhere([('__dup__', '1')], force_str=True)))
         507
 
         Testing tests conditions.
@@ -453,17 +453,17 @@ class GeoBase(object):
             from_keys = iter(self)
 
         # We set the lambda function now to avoid testing
-        # force_cast_str and reverse at each key later
-        if not force_cast_str and not reverse:
+        # force_str and reverse at each key later
+        if not force_str and not reverse:
             pass_test = lambda a, b: a == b
-        elif not force_cast_str and reverse:
+        elif not force_str and reverse:
             pass_test = lambda a, b: a != b
-        elif force_cast_str and not reverse:
+        elif force_str and not reverse:
             pass_test = lambda a, b: str(a) == str(b)
         else:
             pass_test = lambda a, b: str(a) != str(b)
 
-
+        # Handle and/or cases when multiple conditions
         if tests == 'and':
             pass_all = all
         elif tests == 'or':
