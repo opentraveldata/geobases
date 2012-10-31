@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name = 'GeoBases',
-    version = '3.16.1',
+    version = '3.17.1',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
@@ -78,6 +78,7 @@ setup(
             "DataSources/Currencies/wiki_source_ISO_4217.csv", # Currencies
             "DataSources/Airlines/CRB_AIRLINE.csv",
             "DataSources/Regions/regions.csv",
+            "DataSources/Locales/locales.csv",
             "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
