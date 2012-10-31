@@ -22,16 +22,16 @@ BRL;986;2;Brazilian real;Brazil
 BSD;044;2;Bahamian dollar;Bahamas
 BTN;064;2;Bhutanese ngultrum;Bhutan
 BWP;072;2;Botswana pula;Botswana
-BYR;974;0;Belarusian ruble<!-- This is the ISO spelling ... -->;Belarus
+BYR;974;0;Belarusian ruble;Belarus
 BZD;084;2;Belize dollar;Belize
 CAD;124;2;Canadian dollar;Canada
 CDF;976;2;Congolese franc;Democratic Republic of Congo
-CHE;947;2;WIR Bank|WIR Euro (complementary currency);Switzerland
+CHE;947;2;WIR Euro (complementary currency);Switzerland
 CHF;756;2;Swiss franc;Switzerland,Liechtenstein
-CHW;948;2;WIR Bank|WIR Franc (complementary currency);Switzerland
+CHW;948;2;WIR Franc (complementary currency);Switzerland
 CLF;990;0;Unidad de Fomento (funds code);Chile
 CLP;152;0;Chilean peso;Chile
-CNY;156;2;Renminbi|Chinese yuan;China
+CNY;156;2;Chinese yuan;China
 COP;170;2;Colombian peso;Colombia
 COU;970;2;Unidad de Valor Real;Colombia
 CRC;188;2;Costa Rican colon;Costa Rica
@@ -49,8 +49,8 @@ ETB;230;2;Ethiopian birr;Ethiopia
 EUR;978;2;Euro;Andorra,Austria,Belgium,Cyprus,Estonia,Finland,France,Germany,Greece,Ireland,Italy,Kosovo,Luxembourg,Malta,Monaco,Montenegro,Netherlands,Portugal,San Marino,Slovakia,Slovenia,Spain,Vatican City
 FJD;242;2;Fiji dollar;Fiji
 FKP;238;2;Falkland Islands pound;Falkland Islands
-GBP;826;2;Pound sterling;United Kingdom,Crown dependencies|British Crown dependencies (the Isle of Man and the Channel Islands), certain British Overseas Territories (South Georgia and the South Sandwich Islands,British Antarctic Territory and British Indian Ocean Territory)
-GEL;981;2;Georgian lari;Georgia (country)|Georgia
+GBP;826;2;Pound sterling;United Kingdom,British Crown dependencies (the Isle of Man and the Channel Islands), certain British Overseas Territories (South Georgia and the South Sandwich Islands,British Antarctic Territory and British Indian Ocean Territory)
+GEL;981;2;Georgian lari;Georgia
 GHS;936;2;Ghanaian cedi;Ghana
 GIP;292;2;Gibraltar pound;Gibraltar
 GMD;270;2;Gambian dalasi;Gambia
@@ -63,7 +63,7 @@ HRK;191;2;Croatian kuna;Croatia
 HTG;332;2;Haitian gourde;Haiti
 HUF;348;2;Hungarian forint;Hungary
 IDR;360;2;Indonesian rupiah;Indonesia
-ILS;376;2;Israeli new shekel;Israel,Palestinian territories''<ref>According to Article 4 of the 1994 Paris Protocol [http://www.mfa.gov.il/MFA/Peace+Process/Guide+to+the+Peace+Process/Gaza-Jericho+Agreement+Annex+IV+-+Economic+Protoco.htm]. The Protocol allows the Palestinian Authority to adopt additional currencies. In West Bank the Jordanian dinar is widely accepted and in Gaza Strip the Egyptian pound is often used.</ref>
+ILS;376;2;Israeli new shekel;Israel,Palestinian territories
 INR;356;2;Indian rupee;India
 IQD;368;3;Iraqi dinar;Iraq
 IRR;364;0;Iranian rial;Iran
@@ -90,12 +90,12 @@ LVL;428;2;Latvian lats;Latvia
 LYD;434;3;Libyan dinar;Libya
 MAD;504;2;Moroccan dirham;Morocco
 MDL;498;2;Moldovan leu;Moldova (except Transnistria)
-MGA;969;0.7<ref name="divby5">The Malagasy ariary and the Mauritanian ouguiya are divided into five subunits (the iraimbilanja and khoum respectively) rather than by a power of ten. 5 is 10 to the power of 0.69897...</ref>;Malagasy ariary;Madagascar
+MGA;969;0.7;Malagasy ariary;Madagascar
 MKD;807;0;Macedonian denar;Macedonia
 MMK;104;0;Myanma kyat;Myanmar
-MNT;496;2;Mongolian tögrög|Mongolian tugrik;Mongolia
+MNT;496;2;Mongolian tugrik;Mongolia
 MOP;446;2;Macanese pataca;Macao
-MRO;478;0.7<ref name="divby5"/>;Mauritanian ouguiya;Mauritania
+MRO;478;0.7;Mauritanian ouguiya;Mauritania
 MUR;480;2;Mauritian rupee;Mauritius
 MVR;462;2;Maldivian rufiyaa;Maldives
 MWK;454;2;Malawian kwacha;Malawi
@@ -118,7 +118,7 @@ PKR;586;2;Pakistani rupee;Pakistan
 PLN;985;2;Polish złoty;Poland
 PYG;600;0;Paraguayan guaraní;Paraguay
 QAR;634;2;Qatari riyal;Qatar
-RON;946;2;Romanian Leu|Romanian new leu;Romania
+RON;946;2;Romanian new leu;Romania
 RSD;941;2;Serbian dinar;Serbia
 RUB;643;2;Russian rouble;Russia,Abkhazia,South Ossetia
 RWF;646;0;Rwandan franc;Rwanda
@@ -149,15 +149,15 @@ UAH;980;2;Ukrainian hryvnia;Ukraine
 UGX;800;2;Ugandan shilling;Uganda
 USD;840;2;United States dollar;American Samoa,Barbados (as well as Barbados Dollar), Bermuda (as well as Bermudian Dollar), British Indian Ocean Territory,British Virgin Islands,Caribbean Netherlands, Ecuador,El Salvador,Guam,Haiti,Marshall Islands,Federated States of Micronesia,Northern Mariana Islands,Palau,Panama,Puerto Rico,Timor-Leste,Turks and Caicos Islands,United States,U.S. Virgin Islands, Zimbabwe
 USN;997;2;United States dollar (next day) (funds code);United States
-USS;998;2;United States dollar (same day) (funds code) (one source{{Who|date=September 2009 claims it is no longer used, but it is still on the ISO 4217-MA list);United States
+USS;998;2;United States dollar (same day) (funds code) (no longer used, but still on the ISO 4217-MA list);United States
 UYI;940;0;Uruguay Peso en Unidades Indexadas (URUIURUI) (funds code);Uruguay
 UYU;858;2;Uruguayan peso;Uruguay
 UZS;860;2;Uzbekistan som;Uzbekistan
-VEF;937;2;Venezuelan bolívar|Venezuelan bolívar fuerte;Venezuela
+VEF;937;2;Venezuelan bolívar fuerte;Venezuela
 VND;704;0;Vietnamese dong;Vietnam
 VUV;548;0;Vanuatu vatu;Vanuatu
 WST;882;2;Samoan tala;Samoa
-XAF;950;0;Central African CFA franc|CFA franc BEAC;Cameroon,Central African Republic,Republic of the Congo,Chad,Equatorial Guinea,Gabon
+XAF;950;0;CFA franc BEAC;Cameroon,Central African Republic,Republic of the Congo,Chad,Equatorial Guinea,Gabon
 XAG;961;.;Silver (one troy ounce);
 XAU;959;.;Gold (one troy ounce);
 XBA;955;.;European Composite Unit (EURCO) (bond market unit);
@@ -167,7 +167,7 @@ XBD;958;.;European Unit of Account 17 (E.U.A.-17) (bond market unit);
 XCD;951;2;East Caribbean dollar;Anguilla,Antigua and Barbuda,Dominica,Grenada,Montserrat,Saint Kitts and Nevis,Saint Lucia,Saint Vincent and the Grenadines
 XDR;960;.;Special drawing rights;International Monetary Fund
 XFU;Nil;.;UIC franc (special settlement currency);International Union of Railways
-XOF;952;0;West African CFA franc|CFA franc BCEAO;Benin,Burkina Faso,Côte d'Ivoire,Guinea-Bissau,Mali,Niger,Senegal,Togo
+XOF;952;0;CFA franc BCEAO;Benin,Burkina Faso,Côte d'Ivoire,Guinea-Bissau,Mali,Niger,Senegal,Togo
 XPD;964;.;Palladium (one troy ounce);
 XPF;953;0;CFP franc;French Polynesia,New Caledonia,Wallis and Futuna
 XPT;962;.;Platinum (one troy ounce);
