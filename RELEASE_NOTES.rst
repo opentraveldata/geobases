@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.15 : added new base for airlines from CRB_Airline
 + 3.14 : handle multiple conditions in getKeysWhere, and/or cases
 + 3.13 : added __dup__ special field to count duplicates
 + 3.12 : new data source for currencies (wikipedia based)
