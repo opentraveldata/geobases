@@ -126,7 +126,7 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': 0, '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': '6014', 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': 0, '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
@@ -242,10 +242,10 @@ class GeoBase(object):
 
                 # Erase everything, except duplicates counter
                 self._things[key] = {
-                    '__key__' : key,            # special field for key
-                    '__lno__' : str(line_nb),   # special field for line number
-                    '__gar__' : [],             # special field for garbage
-                    '__dup__' : dup             # special field for duplicates
+                    '__key__' : key,      # special field for key
+                    '__lno__' : line_nb,  # special field for line number
+                    '__gar__' : [],       # special field for garbage
+                    '__dup__' : dup       # special field for duplicates
                 }
 
                 # headers represents the meaning of each column.
