@@ -29,19 +29,47 @@ import GeoBases.GeoUtils         as GeoU
 import GeoBases.LevenshteinUtils as GeoL
 
 
+
+class GeoBaseTest(unittest.TestCase):
+    '''
+    This class tests the GeoBase class.
+    '''
+    def setUp(self):
+
+        self.g = GeoM.GeoBase(data='ori_por', verbose=False)
+
+
+    def tearDown(self):
+        pass
+
+
+    def test_get(self):
+        '''Testing get method.
+        '''
+        self.assertEquals(self.g.get('CDG', 'city_code'), 'PAR')
+
+
+    def test_distance(self):
+        '''Test distance method.
+        '''
+        self.assertAlmostEquals(self.g.distance('ORY', 'CDG'), 34.8747, places=3)
+
+
+
 def test_suite():
     '''
     Create a test suite of all doctests.
     '''
-
     tests = unittest.TestSuite()
+
+    # Adding unittests
+    tests.addTests(unittest.makeSuite(GeoBaseTest))
 
     # Standard options for DocTests
     opt =  (doctest.ELLIPSIS |
             doctest.NORMALIZE_WHITESPACE)
             #doctest.REPORT_ONLY_FIRST_FAILURE)
             #doctest.IGNORE_EXCEPTION_DETAIL)
-
 
     globsGeo = {
         'geo_o'     : GeoM.GeoBase(data='ori_por',  verbose=False),
@@ -50,11 +78,13 @@ def test_suite():
         'geo_f'     : GeoM.GeoBase(data='feed',     verbose=False)
     }
 
-
+    # Adding doctests
     tests.addTests(doctest.DocTestSuite(GeoM, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoG, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoU, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoL, optionflags=opt))
+
+    tests.addTests(doctest.DocFileSuite('../README.rst', optionflags=opt))
 
 
     return unittest.TestSuite(tests)
