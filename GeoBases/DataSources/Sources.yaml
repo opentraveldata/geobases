@@ -289,3 +289,18 @@ regions:
         - code
         - name
 
+
+locales:
+    local     : true
+    source    : Locales/locales.csv
+    key_col   : locale
+    delimiter : ;
+    headers   :
+        - locale
+        - title
+        - language
+        - territory
+        - revision
+        - date
+        - codeset
+
