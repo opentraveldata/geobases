@@ -6,7 +6,7 @@ build
 dist
 *.egg-info/
 *.pid
-*.swp
+*.sw[po]
 # Ignoring virtualenv
 bin/
 lib/
