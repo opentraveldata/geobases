@@ -405,27 +405,48 @@ class GeoBase(object):
 
 
 
-    def getKeysWhere(self, field, value, from_keys=None, reverse=False, force_cast_str=False):
+    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_cast_str=False, tests='and'):
         '''
         Get iterator of all keys with particular
         field.
         For example, if you want to know all airports in Paris.
 
-        :param field: the field to test
-        :param value: the wanted value for the field
-        :param reverse: we look keys where the field is *not* the particular value
-        :returns:     an iterator of matching keys
+        :param conditions: a list of (field, value) conditions
+        :param reverse:    we look keys where the field is *not* the particular value
+        :param force_cast_str: for the str() method before every test
+        :param tests:      either 'or' or 'and', how to handle several conditions
+        :returns:          an iterator of matching keys
 
-        >>> list(geo_a.getKeysWhere('city_code', 'PAR'))
+        >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
         ['ORY', 'TNF', 'CDG', 'BVA']
-        >>> list(geo_o.getKeysWhere('comment', '', reverse=True))
+        >>> list(geo_o.getKeysWhere([('comment', '')], reverse=True))
         []
-        >>> list(geo_o.getKeysWhere('__dup__', '1'))
+        >>> list(geo_o.getKeysWhere([('__dup__', '1')]))
         []
-        >>> len(list(geo_o.getKeysWhere('__dup__', 1)))
+        >>> len(list(geo_o.getKeysWhere([('__dup__', 1)])))
         507
-        >>> len(list(geo_o.getKeysWhere('__dup__', '1', force_cast_str=True)))
+        >>> len(list(geo_o.getKeysWhere([('__dup__', '1')], force_cast_str=True)))
         507
+
+        Testing tests conditions.
+
+        >>> c_1 = [('city_code'    , 'PAR')]
+        >>> c_2 = [('location_type', 'H'  )]
+        >>> len(list(geo_o.getKeysWhere(c_1)))
+        17
+        >>> len(list(geo_o.getKeysWhere(c_2)))
+        59
+        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, tests='and')))
+        2
+        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, tests='or')))
+        74
+
+        This works too \o/.
+
+        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], tests='and')))
+        0
+        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], tests='or')))
+        18
         '''
 
         if from_keys is None:
@@ -443,9 +464,17 @@ class GeoBase(object):
             pass_test = lambda a, b: str(a) != str(b)
 
 
+        if tests == 'and':
+            pass_all = all
+        elif tests == 'or':
+            pass_all = any
+        else:
+            raise ValueError('"tests" argument must be in %s' % str(['and', 'or']))
+
+
         for key in from_keys:
 
-            if pass_test(self.get(key, field), value):
+            if pass_all(pass_test(self.get(key, f), v) for f, v in conditions):
                 yield key
 
 
