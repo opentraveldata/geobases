@@ -1,0 +1,775 @@
+aa_DJ;Afar language locale for Djibouti (CaduLaaqo Dialects).;aa;DJ;0.20;2003-07-05;ISO-8859-1
+aa_DJ.iso88591;Afar language locale for Djibouti (CaduLaaqo Dialects).;aa;DJ;0.20;2003-07-05;ISO-8859-1
+aa_DJ.utf8;Afar language locale for Djibouti (CaduLaaqo Dialects).;aa;DJ;0.20;2003-07-05;UTF-8
+aa_ER;Afar language locale for Eritrea (CaduLaaqo Dialects).;aa;ER;0.20;2003-07-05;UTF-8
+aa_ER@saaho;Afar language locale for Eritrea (Saaho Dialect).;aa;ER;0.20;2003-07-05;UTF-8
+aa_ER.utf8;Afar language locale for Eritrea (CaduLaaqo Dialects).;aa;ER;0.20;2003-07-05;UTF-8
+aa_ER.utf8@saah;Afar language locale for Eritrea (Saaho Dialect).;aa;ER;0.20;2003-07-05;UTF-8
+aa_ET;Afar language locale for Ethiopia (CaduCarra Dialects).;aa;ET;0.20;2003-07-05;UTF-8
+aa_ET.utf8;Afar language locale for Ethiopia (CaduCarra Dialects).;aa;ET;0.20;2003-07-05;UTF-8
+af_ZA;Afrikaans locale for South Africa;Afrikaans;South Africa;1.2.1;2005-10-13;ISO-8859-1
+af_ZA.iso88591;Afrikaans locale for South Africa;Afrikaans;South Africa;1.2.1;2005-10-13;ISO-8859-1
+af_ZA.utf8;Afrikaans locale for South Africa;Afrikaans;South Africa;1.2.1;2005-10-13;UTF-8
+am_ET;Amharic language locale for Ethiopia.;am;ET;0.20;2003-07-05;UTF-8
+am_ET.utf8;Amharic language locale for Ethiopia.;am;ET;0.20;2003-07-05;UTF-8
+an_ES;Aragonese locale for Spain;Aragonese;Spain;1.1;2003-08-25;ISO-8859-15
+an_ES.iso885915;Aragonese locale for Spain;Aragonese;Spain;1.1;2003-08-25;ISO-8859-15
+an_ES.utf8;Aragonese locale for Spain;Aragonese;Spain;1.1;2003-08-25;UTF-8
+ar_AE;Arabic language locale for United Arab Emirates;Arabic;United Arab Emirates;1.0;2000-07-20;ISO-8859-6
+ar_AE.iso88596;Arabic language locale for United Arab Emirates;Arabic;United Arab Emirates;1.0;2000-07-20;ISO-8859-6
+ar_AE.utf8;Arabic language locale for United Arab Emirates;Arabic;United Arab Emirates;1.0;2000-07-20;UTF-8
+ar_BH;Arabic language locale for Bahrain;Arabic;Bahrain;1.0;2000-07-20;ISO-8859-6
+ar_BH.iso88596;Arabic language locale for Bahrain;Arabic;Bahrain;1.0;2000-07-20;ISO-8859-6
+ar_BH.utf8;Arabic language locale for Bahrain;Arabic;Bahrain;1.0;2000-07-20;UTF-8
+ar_DZ;Arabic language locale for Algeria;Arabic;Algeria;1.0;2000-07-20;ISO-8859-6
+ar_DZ.iso88596;Arabic language locale for Algeria;Arabic;Algeria;1.0;2000-07-20;ISO-8859-6
+ar_DZ.utf8;Arabic language locale for Algeria;Arabic;Algeria;1.0;2000-07-20;UTF-8
+ar_EG;Arabic language locale for Egypt;Arabic;Egypt;1.0;2000-07-20;ISO-8859-6
+ar_EG.iso88596;Arabic language locale for Egypt;Arabic;Egypt;1.0;2000-07-20;ISO-8859-6
+ar_EG.utf8;Arabic language locale for Egypt;Arabic;Egypt;1.0;2000-07-20;UTF-8
+ar_IN;Arabic language locale for India;Arabic;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+ar_IN.utf8;Arabic language locale for India;Arabic;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+ar_IQ;Arabic language locale for Iraq;Arabic;Iraq;1.0;2000-07-20;ISO-8859-6
+ar_IQ.iso88596;Arabic language locale for Iraq;Arabic;Iraq;1.0;2000-07-20;ISO-8859-6
+ar_IQ.utf8;Arabic language locale for Iraq;Arabic;Iraq;1.0;2000-07-20;UTF-8
+ar_JO;Arabic language locale for Jordan;Arabic;Jordan;1.0;2000-07-20;ISO-8859-6
+ar_JO.iso88596;Arabic language locale for Jordan;Arabic;Jordan;1.0;2000-07-20;ISO-8859-6
+ar_JO.utf8;Arabic language locale for Jordan;Arabic;Jordan;1.0;2000-07-20;UTF-8
+ar_KW;Arabic language locale for Kuwait;Arabic;Kuwait;1.0;2000-07-20;ISO-8859-6
+ar_KW.iso88596;Arabic language locale for Kuwait;Arabic;Kuwait;1.0;2000-07-20;ISO-8859-6
+ar_KW.utf8;Arabic language locale for Kuwait;Arabic;Kuwait;1.0;2000-07-20;UTF-8
+ar_LB;Arabic language locale for Lebanon;Arabic;Lebanon;1.0;2000-07-20;ISO-8859-6
+ar_LB.iso88596;Arabic language locale for Lebanon;Arabic;Lebanon;1.0;2000-07-20;ISO-8859-6
+ar_LB.utf8;Arabic language locale for Lebanon;Arabic;Lebanon;1.0;2000-07-20;UTF-8
+ar_LY;Arabic language locale for Libyan Arab Jamahiriya;Arabic;Libyan Arab Jamahiriya;1.0;2000-07-20;ISO-8859-6
+ar_LY.iso88596;Arabic language locale for Libyan Arab Jamahiriya;Arabic;Libyan Arab Jamahiriya;1.0;2000-07-20;ISO-8859-6
+ar_LY.utf8;Arabic language locale for Libyan Arab Jamahiriya;Arabic;Libyan Arab Jamahiriya;1.0;2000-07-20;UTF-8
+ar_MA;Arabic language locale for Morocco;Arabic;Morocco;1.0;2000-07-20;ISO-8859-6
+ar_MA.iso88596;Arabic language locale for Morocco;Arabic;Morocco;1.0;2000-07-20;ISO-8859-6
+ar_MA.utf8;Arabic language locale for Morocco;Arabic;Morocco;1.0;2000-07-20;UTF-8
+ar_OM;Arabic language locale for Oman;Arabic;Oman;1.0;2000-07-20;ISO-8859-6
+ar_OM.iso88596;Arabic language locale for Oman;Arabic;Oman;1.0;2000-07-20;ISO-8859-6
+ar_OM.utf8;Arabic language locale for Oman;Arabic;Oman;1.0;2000-07-20;UTF-8
+ar_QA;Arabic language locale for Qatar;Arabic;Qatar;1.0;2000-07-20;ISO-8859-6
+ar_QA.iso88596;Arabic language locale for Qatar;Arabic;Qatar;1.0;2000-07-20;ISO-8859-6
+ar_QA.utf8;Arabic language locale for Qatar;Arabic;Qatar;1.0;2000-07-20;UTF-8
+ar_SA;Arabic locale for Saudi Arabia;Arabic;Saudi Arabia;1.0;2000-06-29;ISO-8859-6
+ar_SA.iso88596;Arabic locale for Saudi Arabia;Arabic;Saudi Arabia;1.0;2000-06-29;ISO-8859-6
+ar_SA.utf8;Arabic locale for Saudi Arabia;Arabic;Saudi Arabia;1.0;2000-06-29;UTF-8
+ar_SD;Arabic language locale for Sudan;Arabic;Sudan;1.0;2000-07-20;ISO-8859-6
+ar_SD.iso88596;Arabic language locale for Sudan;Arabic;Sudan;1.0;2000-07-20;ISO-8859-6
+ar_SD.utf8;Arabic language locale for Sudan;Arabic;Sudan;1.0;2000-07-20;UTF-8
+ar_SY;Arabic language locale for Syrian Arab Republic;Arabic;Syrian Arab Republic;1.0;2000-07-20;ISO-8859-6
+ar_SY.iso88596;Arabic language locale for Syrian Arab Republic;Arabic;Syrian Arab Republic;1.0;2000-07-20;ISO-8859-6
+ar_SY.utf8;Arabic language locale for Syrian Arab Republic;Arabic;Syrian Arab Republic;1.0;2000-07-20;UTF-8
+ar_TN;Arabic language locale for Tunisia;Arabic;Tunisia;1.0;2000-07-20;ISO-8859-6
+ar_TN.iso88596;Arabic language locale for Tunisia;Arabic;Tunisia;1.0;2000-07-20;ISO-8859-6
+ar_TN.utf8;Arabic language locale for Tunisia;Arabic;Tunisia;1.0;2000-07-20;UTF-8
+ar_YE;Arabic language locale for Yemen;Arabic;Yemen;1.0;2000-07-20;ISO-8859-6
+ar_YE.iso88596;Arabic language locale for Yemen;Arabic;Yemen;1.0;2000-07-20;ISO-8859-6
+ar_YE.utf8;Arabic language locale for Yemen;Arabic;Yemen;1.0;2000-07-20;UTF-8
+as_IN;Assamese language locale for India;Assamese;India;1.0;2006-05-25;UTF-8
+as_IN.utf8;Assamese language locale for India;Assamese;India;1.0;2006-05-25;UTF-8
+ast_ES;Asturian locale for Spain;Asturian;Spain;1.0;2005-08-26;ISO-8859-15
+ast_ES.iso88591;Asturian locale for Spain;Asturian;Spain;1.0;2005-08-26;ISO-8859-15
+ast_ES.utf8;Asturian locale for Spain;Asturian;Spain;1.0;2005-08-26;UTF-8
+az_AZ;Azeri language locale for Azerbaijan (latin);Azeri;Azerbaijan;0.4;2001-01-26;UTF-8
+az_AZ.utf8;Azeri language locale for Azerbaijan (latin);Azeri;Azerbaijan;0.4;2001-01-26;UTF-8
+be_BY;Belarusian locale for Belarus;Belarusian;Belarus;1.0;2000-06-29;CP1251
+be_BY.cp1251;Belarusian locale for Belarus;Belarusian;Belarus;1.0;2000-06-29;CP1251
+be_BY@latin;Belarusian Latin-Script locale for Belarus;Belarusian;Belarus;1.0;2005-09-15;UTF-8
+be_BY.utf8;Belarusian locale for Belarus;Belarusian;Belarus;1.0;2000-06-29;UTF-8
+be_BY.utf8@lati;Belarusian Latin-Script locale for Belarus;Belarusian;Belarus;1.0;2005-09-15;UTF-8
+bem_ZM;Bemba locale for Zambia;Bemba;Zambia;1.0;2011-04-18;UTF-8
+bem_ZM.utf8;Bemba locale for Zambia;Bemba;Zambia;1.0;2011-04-18;UTF-8
+ber_DZ;Amazigh language locale for Algeria (latin);Amazigh;Algeria;0.1;2002-04-16;UTF-8
+ber_DZ.utf8;Amazigh language locale for Algeria (latin);Amazigh;Algeria;0.1;2002-04-16;UTF-8
+ber_MA;Amazigh language locale for Morocco (tifinagh);Amazigh;Morocco;0.1;2002-06-26;UTF-8
+ber_MA.utf8;Amazigh language locale for Morocco (tifinagh);Amazigh;Morocco;0.1;2002-06-26;UTF-8
+bg_BG;Bulgarian locale for Bulgaria;Bulgarian;Bulgaria;2.0.1;2002-09-10;CP1251
+bg_BG.cp1251;Bulgarian locale for Bulgaria;Bulgarian;Bulgaria;2.0.1;2002-09-10;CP1251
+bg_BG.utf8;Bulgarian locale for Bulgaria;Bulgarian;Bulgaria;2.0.1;2002-09-10;UTF-8
+bho_IN;Bhojpuri language locale for India;Bhojpuri;India;0.1;2011-12-20;UTF-8
+bho_IN.utf8;Bhojpuri language locale for India;Bhojpuri;India;0.1;2011-12-20;UTF-8
+bn_BD;BengaliBangla language locale for Bangladesh;BengaliBangla;Bangladesh;0.5;2007-01-10;UTF-8
+bn_BD.utf8;BengaliBangla language locale for Bangladesh;BengaliBangla;Bangladesh;0.5;2007-01-10;UTF-8
+bn_IN;Bengali language locale for India;Bengali;India;1.0;2006-05-29;UTF-8
+bn_IN.utf8;Bengali language locale for India;Bengali;India;1.0;2006-05-29;UTF-8
+bo_CN;Tibetan language locale for P.R. of China;Tibetan;P.R. of China;0.1;2007-11-06;UTF-8
+bo_CN.utf8;Tibetan language locale for P.R. of China;Tibetan;P.R. of China;0.1;2007-11-06;UTF-8
+bo_IN;Tibetan language locale for India;Tibetan;India;0.1;2007-11-06;UTF-8
+bo_IN.utf8;Tibetan language locale for India;Tibetan;India;0.1;2007-11-06;UTF-8
+bokmal;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+bokmål;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+br_FR;Breton language locale for France;Breton;France;0.54;2001-01-28;ISO-8859-1
+br_FR@euro;Breton locale for France with Euro;Breton;France;1.0;2002-02-28;ISO-8859-15
+br_FR.iso88591;Breton language locale for France;Breton;France;0.54;2001-01-28;ISO-8859-1
+br_FR.iso885915;Breton locale for France with Euro;Breton;France;1.0;2002-02-28;ISO-8859-15
+br_FR.utf8;Breton language locale for France;Breton;France;0.54;2001-01-28;UTF-8
+brx_IN;Bodo language locale for India;Bodo;India;1.0;2011-10-17;UTF-8
+brx_IN.utf8;Bodo language locale for India;Bodo;India;1.0;2011-10-17;UTF-8
+bs_BA;Bosnian language locale for Bosnia and Herzegowina;Bosnian;Bosnia and Herzegowina;0.4;2004-01-09;ISO-8859-2
+bs_BA.iso88592;Bosnian language locale for Bosnia and Herzegowina;Bosnian;Bosnia and Herzegowina;0.4;2004-01-09;ISO-8859-2
+bs_BA.utf8;Bosnian language locale for Bosnia and Herzegowina;Bosnian;Bosnia and Herzegowina;0.4;2004-01-09;UTF-8
+byn_ER;Blin language locale for Eritrea;byn;ER;0.21;2003-11-01;UTF-8
+byn_ER.utf8;Blin language locale for Eritrea;byn;ER;0.21;2003-11-01;UTF-8
+ca_AD;Catalan locale for Andorra ;Catalan;Andorra;1.0;2006-01-16;ISO-8859-15
+ca_AD.iso885915;Catalan locale for Andorra ;Catalan;Andorra;1.0;2006-01-16;ISO-8859-15
+ca_AD.utf8;Catalan locale for Andorra ;Catalan;Andorra;1.0;2006-01-16;UTF-8
+ca_ES;Catalan locale for Spain;Catalan;Spain;1.0;2000-06-29;ISO-8859-1
+ca_ES@euro;Catalan locale for Catalonia with Euro;Catalan;Spain;1.0;2000-08-20;ISO-8859-15
+ca_ES.iso88591;Catalan locale for Spain;Catalan;Spain;1.0;2000-06-29;ISO-8859-1
+ca_ES.iso885915;Catalan locale for Catalonia with Euro;Catalan;Spain;1.0;2000-08-20;ISO-8859-15
+ca_ES.utf8;Catalan locale for Spain;Catalan;Spain;1.0;2000-06-29;UTF-8
+ca_FR;Catalan locale for France ;Catalan;France;1.0;2006-01-16;ISO-8859-15
+ca_FR.iso885915;Catalan locale for France ;Catalan;France;1.0;2006-01-16;ISO-8859-15
+ca_FR.utf8;Catalan locale for France ;Catalan;France;1.0;2006-01-16;UTF-8
+ca_IT;Catalan locale for Italy (L'Alguer) ;Catalan;Italy (L'Alguer);1.0;2006-01-16;ISO-8859-15
+ca_IT.iso885915;Catalan locale for Italy (L'Alguer) ;Catalan;Italy (L'Alguer);1.0;2006-01-16;ISO-8859-15
+ca_IT.utf8;Catalan locale for Italy (L'Alguer) ;Catalan;Italy (L'Alguer);1.0;2006-01-16;UTF-8
+catalan;Catalan locale for Spain;Catalan;Spain;1.0;2000-06-29;ISO-8859-1
+crh_UA;Crimean Tatar (Crimean Turkish) language locale for Ukraine;Crimean Tatar;Ukraine;0.4;2009-08-16;UTF-8
+crh_UA.utf8;Crimean Tatar (Crimean Turkish) language locale for Ukraine;Crimean Tatar;Ukraine;0.4;2009-08-16;UTF-8
+croatian;Croatian locale for Croatia;Croatian;Croatia;1.0;2000-06-29;ISO-8859-2
+csb_PL;Kashubian locale for Poland;Kashubian;Poland;1.0;2006-07-25;UTF-8
+csb_PL.utf8;Kashubian locale for Poland;Kashubian;Poland;1.0;2006-07-25;UTF-8
+cs_CZ;Czech locale for the Czech Republic;Czech;Czech Republic;1.0;2000-06-28;ISO-8859-2
+cs_CZ.iso88592;Czech locale for the Czech Republic;Czech;Czech Republic;1.0;2000-06-28;ISO-8859-2
+cs_CZ.utf8;Czech locale for the Czech Republic;Czech;Czech Republic;1.0;2000-06-28;UTF-8
+cv_RU;Chuvash locale for Russia;Chuvash;Russia;1.0;2000-06-29;UTF-8
+cv_RU.utf8;Chuvash locale for Russia;Chuvash;Russia;1.0;2000-06-29;UTF-8
+cy_GB;Welsh language locale for Great Britain;Welsh;Great Britain;0.9;2004-09-27;ISO-8859-14
+cy_GB.iso885914;Welsh language locale for Great Britain;Welsh;Great Britain;0.9;2004-09-27;ISO-8859-14
+cy_GB.utf8;Welsh language locale for Great Britain;Welsh;Great Britain;0.9;2004-09-27;UTF-8
+czech;Czech locale for the Czech Republic;Czech;Czech Republic;1.0;2000-06-28;ISO-8859-2
+da_DK;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;ISO-8859-1
+da_DK.iso88591;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;ISO-8859-1
+da_DK.iso885915;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;ISO-8859-15
+da_DK.utf8;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;UTF-8
+danish;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;ISO-8859-1
+dansk;Danish locale for Denmark;Danish;Denmark;1.0;2000-06-29;ISO-8859-1
+de_AT;German locale for Austria;German;Austria;1.0;2000-06-28;ISO-8859-1
+de_AT@euro;German locale for Austria with Euro;German;Austria;1.0;2000-08-20;ISO-8859-15
+de_AT.iso88591;German locale for Austria;German;Austria;1.0;2000-06-28;ISO-8859-1
+de_AT.iso885915;German locale for Austria with Euro;German;Austria;1.0;2000-08-20;ISO-8859-15
+de_AT.utf8;German locale for Austria;German;Austria;1.0;2000-06-28;UTF-8
+de_BE;German locale for Belgium;German;Belgium;1.0;2000-06-29;ISO-8859-1
+de_BE@euro;German locale for Belgium with Euro;German;Belgium;1.0;2000-08-21;ISO-8859-15
+de_BE.iso88591;German locale for Belgium;German;Belgium;1.0;2000-06-29;ISO-8859-1
+de_BE.iso885915;German locale for Belgium with Euro;German;Belgium;1.0;2000-08-21;ISO-8859-15
+de_BE.utf8;German locale for Belgium;German;Belgium;1.0;2000-06-29;UTF-8
+de_CH;German locale for Switzerland;German;Switzerland;1.0;2007-09-23;ISO-8859-1
+de_CH.iso88591;German locale for Switzerland;German;Switzerland;1.0;2007-09-23;ISO-8859-1
+de_CH.utf8;German locale for Switzerland;German;Switzerland;1.0;2007-09-23;UTF-8
+de_DE;German locale for Germany;German;Germany;1.0;2000-06-24;ISO-8859-1
+de_DE@euro;German locale for Germany with Euro;German;Germany;1.0;2000-06-24;ISO-8859-15
+de_DE.iso88591;German locale for Germany;German;Germany;1.0;2000-06-24;ISO-8859-1
+de_DE.iso885915;German locale for Germany with Euro;German;Germany;1.0;2000-06-24;ISO-8859-15
+de_DE.utf8;German locale for Germany;German;Germany;1.0;2000-06-24;UTF-8
+de_LU;German locale for Luxemburg;German;Luxemburg;1.0;2000-06-29;ISO-8859-1
+de_LU@euro;German locale for Luxemburg with Euro;German;Luxemburg;1.0;2000-08-20;ISO-8859-15
+de_LU.iso88591;German locale for Luxemburg;German;Luxemburg;1.0;2000-06-29;ISO-8859-1
+de_LU.iso885915;German locale for Luxemburg with Euro;German;Luxemburg;1.0;2000-08-20;ISO-8859-15
+de_LU.utf8;German locale for Luxemburg;German;Luxemburg;1.0;2000-06-29;UTF-8
+deutsch;German locale for Germany;German;Germany;1.0;2000-06-24;ISO-8859-1
+doi_IN;Dogri language locale for India;Dogri;India;1.0;2012-02-16;UTF-8
+doi_IN.utf8;Dogri language locale for India;Dogri;India;1.0;2012-02-16;UTF-8
+dutch;Dutch locale for the Netherlands;Dutch;Netherlands;1.0;2000-06-29;ISO-8859-1
+dv_MV;Dhivehi Language Locale for Maldives;Divehi;Maldives;0.1;2006-05-13;UTF-8
+dv_MV.utf8;Dhivehi Language Locale for Maldives;Divehi;Maldives;0.1;2006-05-13;UTF-8
+dz_BT;Dzongkha language locale for Bhutan;Dzongkha;Bhutan;0.3;2004-09-03;UTF-8
+dz_BT.utf8;Dzongkha language locale for Bhutan;Dzongkha;Bhutan;0.3;2004-09-03;UTF-8
+eesti;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;ISO-8859-1
+el_CY;Greek locale for Cyprus;Greek;Cyprus;1.0;2004-10-20;ISO-8859-7
+el_CY.iso88597;Greek locale for Cyprus;Greek;Cyprus;1.0;2004-10-20;ISO-8859-7
+el_CY.utf8;Greek locale for Cyprus;Greek;Cyprus;1.0;2004-10-20;UTF-8
+el_GR;Greek locale for Greece;Greek;Greece;1.0;2000-06-29;ISO-8859-7
+el_GR.iso88597;Greek locale for Greece;Greek;Greece;1.0;2000-06-29;ISO-8859-7
+el_GR.utf8;Greek locale for Greece;Greek;Greece;1.0;2000-06-29;UTF-8
+en_AG;English language locale for Antigua and Barbuda;English;Antigua and Barbuda;1.0;2008-09-16;UTF-8
+en_AG.utf8;English language locale for Antigua and Barbuda;English;Antigua and Barbuda;1.0;2008-09-16;UTF-8
+en_AU;English locale for Australia;English;Australia;1.0;2000-06-29;ISO-8859-1
+en_AU.iso88591;English locale for Australia;English;Australia;1.0;2000-06-29;ISO-8859-1
+en_AU.utf8;English locale for Australia;English;Australia;1.0;2000-06-29;UTF-8
+en_BW;English locale for Botswana;English;Botswana;1.0;2000-06-29;ISO-8859-1
+en_BW.iso88591;English locale for Botswana;English;Botswana;1.0;2000-06-29;ISO-8859-1
+en_BW.utf8;English locale for Botswana;English;Botswana;1.0;2000-06-29;UTF-8
+en_CA;English locale for Canada;English;Canada;1.0;2000-06-29;ISO-8859-1
+en_CA.iso88591;English locale for Canada;English;Canada;1.0;2000-06-29;ISO-8859-1
+en_CA.utf8;English locale for Canada;English;Canada;1.0;2000-06-29;UTF-8
+en_DK;English locale for Denmark;English;Denmark;1.0;2000-06-29;ISO-8859-1
+en_DK.iso88591;English locale for Denmark;English;Denmark;1.0;2000-06-29;ISO-8859-1
+en_DK.utf8;English locale for Denmark;English;Denmark;1.0;2000-06-29;UTF-8
+en_GB;English locale for Britain;English;Great Britain;1.0;2000-06-28;ISO-8859-1
+en_GB.iso88591;English locale for Britain;English;Great Britain;1.0;2000-06-28;ISO-8859-1
+en_GB.iso885915;English locale for Britain;English;Great Britain;1.0;2000-06-28;ISO-8859-15
+en_GB.utf8;English locale for Britain;English;Great Britain;1.0;2000-06-28;UTF-8
+en_HK;English locale for Hong Kong;English;Hong Kong;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_HK.iso88591;English locale for Hong Kong;English;Hong Kong;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_HK.utf8;English locale for Hong Kong;English;Hong Kong;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+en_IE;English locale for Ireland;English;Ireland;1.0;2000-06-29;ISO-8859-1
+en_IE@euro;English locale for Ireland with Euro;English;Ireland;1.0;2000-08-20;ISO-8859-15
+en_IE.iso88591;English locale for Ireland;English;Ireland;1.0;2000-06-29;ISO-8859-1
+en_IE.iso885915;English locale for Ireland with Euro;English;Ireland;1.0;2000-08-20;ISO-8859-15
+en_IE.utf8;English locale for Ireland;English;Ireland;1.0;2000-06-29;UTF-8
+en_IN;English language locale for India;English;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+en_IN.utf8;English language locale for India;English;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+en_NG;English locale for Nigeria;English;Nigeria;0.2;2006-02-01;UTF-8
+en_NG.utf8;English locale for Nigeria;English;Nigeria;0.2;2006-02-01;UTF-8
+en_NZ;English locale for New Zealand;English;New Zealand;1.0;2000-06-29;ISO-8859-1
+en_NZ.iso88591;English locale for New Zealand;English;New Zealand;1.0;2000-06-29;ISO-8859-1
+en_NZ.utf8;English locale for New Zealand;English;New Zealand;1.0;2000-06-29;UTF-8
+en_PH;English language locale for Philippines;English;Philippines;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_PH.iso88591;English language locale for Philippines;English;Philippines;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_PH.utf8;English language locale for Philippines;English;Philippines;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+en_SG;English language locale for Singapore;English;Singapore;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_SG.iso88591;English language locale for Singapore;English;Singapore;1.0;2000,October,27 (XML source:2000,July,20);ISO-8859-1
+en_SG.utf8;English language locale for Singapore;English;Singapore;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+en_US;English locale for the USA;English;USA;1.0;2000-06-24;ISO-8859-1
+en_US.iso88591;English locale for the USA;English;USA;1.0;2000-06-24;ISO-8859-1
+en_US.iso885915;English locale for the USA;English;USA;1.0;2000-06-24;ISO-8859-15
+en_US.utf8;English locale for the USA;English;USA;1.0;2000-06-24;UTF-8
+en_ZA;English locale for South Africa;English;South Africa;1.3;2007-04-19;ISO-8859-1
+en_ZA.iso88591;English locale for South Africa;English;South Africa;1.3;2007-04-19;ISO-8859-1
+en_ZA.utf8;English locale for South Africa;English;South Africa;1.3;2007-04-19;UTF-8
+en_ZM;English locale for Zambia;English;Zambia;1.0;2011-04-18;UTF-8
+en_ZM.utf8;English locale for Zambia;English;Zambia;1.0;2011-04-18;UTF-8
+en_ZW;English locale for Zimbabwe;English;Zimbabwe;1.0;2000-06-29;ISO-8859-1
+en_ZW.iso88591;English locale for Zimbabwe;English;Zimbabwe;1.0;2000-06-29;ISO-8859-1
+en_ZW.utf8;English locale for Zimbabwe;English;Zimbabwe;1.0;2000-06-29;UTF-8
+es_AR;Spanish locale for Argentina;Spanish;Argentina;1.0;2000-06-29;ISO-8859-1
+es_AR.iso88591;Spanish locale for Argentina;Spanish;Argentina;1.0;2000-06-29;ISO-8859-1
+es_AR.utf8;Spanish locale for Argentina;Spanish;Argentina;1.0;2000-06-29;UTF-8
+es_BO;Spanish locale for Bolivia;Spanish;Bolivia;1.0;2000-06-29;ISO-8859-1
+es_BO.iso88591;Spanish locale for Bolivia;Spanish;Bolivia;1.0;2000-06-29;ISO-8859-1
+es_BO.utf8;Spanish locale for Bolivia;Spanish;Bolivia;1.0;2000-06-29;UTF-8
+es_CL;Spanish locale for Chile;Spanish;Chile;1.0;2000-06-29;ISO-8859-1
+es_CL.iso88591;Spanish locale for Chile;Spanish;Chile;1.0;2000-06-29;ISO-8859-1
+es_CL.utf8;Spanish locale for Chile;Spanish;Chile;1.0;2000-06-29;UTF-8
+es_CO;Spanish locale for Colombia;Spanish;Colombia;1.0;2000-06-29;ISO-8859-1
+es_CO.iso88591;Spanish locale for Colombia;Spanish;Colombia;1.0;2000-06-29;ISO-8859-1
+es_CO.utf8;Spanish locale for Colombia;Spanish;Colombia;1.0;2000-06-29;UTF-8
+es_CR;Spanish locale for Costa Rica;Spanish;Costa Rica;1.1;2009-12-23;ISO-8859-1
+es_CR.iso88591;Spanish locale for Costa Rica;Spanish;Costa Rica;1.1;2009-12-23;ISO-8859-1
+es_CR.utf8;Spanish locale for Costa Rica;Spanish;Costa Rica;1.1;2009-12-23;UTF-8
+es_CU;Spanish locale for Cuba;Spanish;Cuba;0.1;2011-10-19;UTF-8
+es_CU.utf8;Spanish locale for Cuba;Spanish;Cuba;0.1;2011-10-19;UTF-8
+es_DO;Spanish locale for Dominican Republic;Spanish;Dominican Republic;1.0;2000-06-29;ISO-8859-1
+es_DO.iso88591;Spanish locale for Dominican Republic;Spanish;Dominican Republic;1.0;2000-06-29;ISO-8859-1
+es_DO.utf8;Spanish locale for Dominican Republic;Spanish;Dominican Republic;1.0;2000-06-29;UTF-8
+es_EC;Spanish locale for Ecuador;Spanish;Ecuador;1.0;2000-06-29;ISO-8859-1
+es_EC.iso88591;Spanish locale for Ecuador;Spanish;Ecuador;1.0;2000-06-29;ISO-8859-1
+es_EC.utf8;Spanish locale for Ecuador;Spanish;Ecuador;1.0;2000-06-29;UTF-8
+es_ES;Spanish locale for Spain;Spanish;Spain;1.0;2000-06-29;ISO-8859-1
+es_ES@euro;Spanish locale for Spain with Euro;Spanish;Spain;2000-06-29;ISO-8859-15
+es_ES.iso88591;Spanish locale for Spain;Spanish;Spain;1.0;2000-06-29;ISO-8859-1
+es_ES.iso885915;Spanish locale for Spain with Euro;Spanish;Spain;2000-06-29;ISO-8859-15
+es_ES.utf8;Spanish locale for Spain;Spanish;Spain;1.0;2000-06-29;UTF-8
+es_GT;Spanish locale for Guatemala;Spanish;Guatemala;1.0;2000-06-29;ISO-8859-1
+es_GT.iso88591;Spanish locale for Guatemala;Spanish;Guatemala;1.0;2000-06-29;ISO-8859-1
+es_GT.utf8;Spanish locale for Guatemala;Spanish;Guatemala;1.0;2000-06-29;UTF-8
+es_HN;Spanish locale for Honduras;Spanish;Honduras;1.0;2000-06-29;ISO-8859-1
+es_HN.iso88591;Spanish locale for Honduras;Spanish;Honduras;1.0;2000-06-29;ISO-8859-1
+es_HN.utf8;Spanish locale for Honduras;Spanish;Honduras;1.0;2000-06-29;UTF-8
+es_MX;Spanish locale for Mexico;Spanish;Mexico;1.0;2000-06-29;ISO-8859-1
+es_MX.iso88591;Spanish locale for Mexico;Spanish;Mexico;1.0;2000-06-29;ISO-8859-1
+es_MX.utf8;Spanish locale for Mexico;Spanish;Mexico;1.0;2000-06-29;UTF-8
+es_NI;Spanish locale for Nicaragua;Spanish;Nicaragua;1.0;2000-08-21;ISO-8859-1
+es_NI.iso88591;Spanish locale for Nicaragua;Spanish;Nicaragua;1.0;2000-08-21;ISO-8859-1
+es_NI.utf8;Spanish locale for Nicaragua;Spanish;Nicaragua;1.0;2000-08-21;UTF-8
+es_PA;Spanish locale for Panama;Spanish;Panama;1.0;2000-06-29;ISO-8859-1
+es_PA.iso88591;Spanish locale for Panama;Spanish;Panama;1.0;2000-06-29;ISO-8859-1
+es_PA.utf8;Spanish locale for Panama;Spanish;Panama;1.0;2000-06-29;UTF-8
+es_PE;Spanish locale for Peru;Spanish;Peru;1.0;2000-06-29;ISO-8859-1
+es_PE.iso88591;Spanish locale for Peru;Spanish;Peru;1.0;2000-06-29;ISO-8859-1
+es_PE.utf8;Spanish locale for Peru;Spanish;Peru;1.0;2000-06-29;UTF-8
+es_PR;Spanish locale for Puerto Rico;Spanish;Puerto Rico;1.0;2000-08-21;ISO-8859-1
+es_PR.iso88591;Spanish locale for Puerto Rico;Spanish;Puerto Rico;1.0;2000-08-21;ISO-8859-1
+es_PR.utf8;Spanish locale for Puerto Rico;Spanish;Puerto Rico;1.0;2000-08-21;UTF-8
+es_PY;Spanish locale for Paraguay;Spanish;Paraguay;1.0;2000-06-29;ISO-8859-1
+es_PY.iso88591;Spanish locale for Paraguay;Spanish;Paraguay;1.0;2000-06-29;ISO-8859-1
+es_PY.utf8;Spanish locale for Paraguay;Spanish;Paraguay;1.0;2000-06-29;UTF-8
+es_SV;Spanish locale for El Salvador;Spanish;El Salvador;1.0;2000-06-29;ISO-8859-1
+es_SV.iso88591;Spanish locale for El Salvador;Spanish;El Salvador;1.0;2000-06-29;ISO-8859-1
+es_SV.utf8;Spanish locale for El Salvador;Spanish;El Salvador;1.0;2000-06-29;UTF-8
+estonian;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;ISO-8859-1
+es_US;Spanish locale for the USA;Spanish;USA;1.0;2000-06-29;ISO-8859-1
+es_US.iso88591;Spanish locale for the USA;Spanish;USA;1.0;2000-06-29;ISO-8859-1
+es_US.utf8;Spanish locale for the USA;Spanish;USA;1.0;2000-06-29;UTF-8
+es_UY;Spanish locale for Uruguay;Spanish;Uruguay;1.0;2000-06-29;ISO-8859-1
+es_UY.iso88591;Spanish locale for Uruguay;Spanish;Uruguay;1.0;2000-06-29;ISO-8859-1
+es_UY.utf8;Spanish locale for Uruguay;Spanish;Uruguay;1.0;2000-06-29;UTF-8
+es_VE;Spanish locale for Venezuela;Spanish;Venezuela;1.0;2000-06-29;ISO-8859-1
+es_VE.iso88591;Spanish locale for Venezuela;Spanish;Venezuela;1.0;2000-06-29;ISO-8859-1
+es_VE.utf8;Spanish locale for Venezuela;Spanish;Venezuela;1.0;2000-06-29;UTF-8
+et_EE;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;ISO-8859-1
+et_EE.iso88591;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;ISO-8859-1
+et_EE.iso885915;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;ISO-8859-15
+et_EE.utf8;Estonian locale for Estonia;Estonian;Estonia;1.0;2000-06-29;UTF-8
+eu_ES;Basque locale for Spain;Basque;Spain;1.0;2000-06-29;ISO-8859-1
+eu_ES@euro;Basque language locale for Spain with Euro;Basque;Spain;1.0;2000-08-21;ISO-8859-15
+eu_ES.iso88591;Basque locale for Spain;Basque;Spain;1.0;2000-06-29;ISO-8859-1
+eu_ES.iso885915;Basque language locale for Spain with Euro;Basque;Spain;1.0;2000-08-21;ISO-8859-15
+eu_ES.utf8;Basque locale for Spain;Basque;Spain;1.0;2000-06-29;UTF-8
+fa_IR;Persian locale for Iran;Persian;Iran;3.0;2005-04-06;UTF-8
+fa_IR.utf8;Persian locale for Iran;Persian;Iran;3.0;2005-04-06;UTF-8
+ff_SN;Fulah locale for Senegal;ff;Senegal;1.0;2011-03-28;UTF-8
+ff_SN.utf8;Fulah locale for Senegal;ff;Senegal;1.0;2011-03-28;UTF-8
+fi_FI;Finnish locale for Finland;Finnish;Finland;1.0;2000-06-29;ISO-8859-1
+fi_FI@euro;Finnish locale for Finland with Euro;Finnish;Finland;1.0;2000-08-20;ISO-8859-15
+fi_FI.iso88591;Finnish locale for Finland;Finnish;Finland;1.0;2000-06-29;ISO-8859-1
+fi_FI.iso885915;Finnish locale for Finland with Euro;Finnish;Finland;1.0;2000-08-20;ISO-8859-15
+fi_FI.utf8;Finnish locale for Finland;Finnish;Finland;1.0;2000-06-29;UTF-8
+fil_PH;Filipino language locale for Philippines;Filipino;Philippines;0.5;2005-02-02;UTF-8
+fil_PH.utf8;Filipino language locale for Philippines;Filipino;Philippines;0.5;2005-02-02;UTF-8
+finnish;Finnish locale for Finland;Finnish;Finland;1.0;2000-06-29;ISO-8859-1
+fo_FO;Faroese locale for Faroe Islands;Faroese;Faroe Islands;1.0;2000-06-29;ISO-8859-1
+fo_FO.iso88591;Faroese locale for Faroe Islands;Faroese;Faroe Islands;1.0;2000-06-29;ISO-8859-1
+fo_FO.utf8;Faroese locale for Faroe Islands;Faroese;Faroe Islands;1.0;2000-06-29;UTF-8
+français;French locale for France;French;France;1.0;2008-03-15;ISO-8859-1
+fr_BE;French locale for Belgium;French;Belgium;1.0;2000-06-29;ISO-8859-1
+fr_BE@euro;French locale for Belgium with Euro;French;Belgium;1.0;2000-08-20;ISO-8859-15
+fr_BE.iso88591;French locale for Belgium;French;Belgium;1.0;2000-06-29;ISO-8859-1
+fr_BE.iso885915;French locale for Belgium with Euro;French;Belgium;1.0;2000-08-20;ISO-8859-15
+fr_BE.utf8;French locale for Belgium;French;Belgium;1.0;2000-06-29;UTF-8
+fr_CA;French locale for Canada;French;Canada;1.0;2000-06-29;ISO-8859-1
+fr_CA.iso88591;French locale for Canada;French;Canada;1.0;2000-06-29;ISO-8859-1
+fr_CA.utf8;French locale for Canada;French;Canada;1.0;2000-06-29;UTF-8
+fr_CH;French locale for Switzerland;French;Switzerland;1.0;2000-06-29;ISO-8859-1
+fr_CH.iso88591;French locale for Switzerland;French;Switzerland;1.0;2000-06-29;ISO-8859-1
+fr_CH.utf8;French locale for Switzerland;French;Switzerland;1.0;2000-06-29;UTF-8
+french;French locale for France;French;France;1.0;2008-03-15;ISO-8859-1
+fr_FR;French locale for France;French;France;1.0;2008-03-15;ISO-8859-1
+fr_FR@euro;French locale for France with Euro;French;France;1.0;2000-08-20;ISO-8859-15
+fr_FR.iso88591;French locale for France;French;France;1.0;2008-03-15;ISO-8859-1
+fr_FR.iso885915;French locale for France with Euro;French;France;1.0;2000-08-20;ISO-8859-15
+fr_FR.utf8;French locale for France;French;France;1.0;2008-03-15;UTF-8
+fr_LU;French locale for Luxemburg;French;Luxemburg;1.0;2000-06-29;ISO-8859-1
+fr_LU@euro;French locale for Luxemburg with Euro;French;Luxemburg;1.0;2000-08-20;ISO-8859-15
+fr_LU.iso88591;French locale for Luxemburg;French;Luxemburg;1.0;2000-06-29;ISO-8859-1
+fr_LU.iso885915;French locale for Luxemburg with Euro;French;Luxemburg;1.0;2000-08-20;ISO-8859-15
+fr_LU.utf8;French locale for Luxemburg;French;Luxemburg;1.0;2000-06-29;UTF-8
+fur_IT;Furlan locale for Italy;Furlan;Italy;0.3;2004-04-26;UTF-8
+fur_IT.utf8;Furlan locale for Italy;Furlan;Italy;0.3;2004-04-26;UTF-8
+fy_DE;Sater Frisian and North Frisian Locale for Germany;fy;DE;0.1;2003-11-30;UTF-8
+fy_DE.utf8;Sater Frisian and North Frisian Locale for Germany;fy;DE;0.1;2003-11-30;UTF-8
+fy_NL;Frisian locale for the Netherlands;Frisian;Netherlands;1.0;2006-08-13;UTF-8
+fy_NL.utf8;Frisian locale for the Netherlands;Frisian;Netherlands;1.0;2006-08-13;UTF-8
+ga_IE;Irish locale for Ireland;Irish;Ireland;1.0;2000-06-29;ISO-8859-1
+ga_IE@euro;Irish locale for Ireland with Euro;Irish;Ireland;1.0;2000-08-21;ISO-8859-15
+ga_IE.iso88591;Irish locale for Ireland;Irish;Ireland;1.0;2000-06-29;ISO-8859-1
+ga_IE.iso885915;Irish locale for Ireland with Euro;Irish;Ireland;1.0;2000-08-21;ISO-8859-15
+ga_IE.utf8;Irish locale for Ireland;Irish;Ireland;1.0;2000-06-29;UTF-8
+galego;Galician locale for Spain;Galician;Spain;1.0;2000-06-29;ISO-8859-1
+galician;Galician locale for Spain;Galician;Spain;1.0;2000-06-29;ISO-8859-1
+gd_GB;Scots Gaelic language locale for Great Britain;Scots Gaelic;Great Britain;1.1;2000-06-12;ISO-8859-15
+gd_GB.iso885915;Scots Gaelic language locale for Great Britain;Scots Gaelic;Great Britain;1.1;2000-06-12;ISO-8859-15
+gd_GB.utf8;Scots Gaelic language locale for Great Britain;Scots Gaelic;Great Britain;1.1;2000-06-12;UTF-8
+german;German locale for Germany;German;Germany;1.0;2000-06-24;ISO-8859-1
+gez_ER;Ge'ez language locale for Eritrea.;gez;ER;0.20;2003-07-05;UTF-8
+gez_ER@abegede;Ge'ez language locale for Eritrea With Abegede Collation.;gez;ER;0.20;2003-07-05;UTF-8
+gez_ER.utf8;Ge'ez language locale for Eritrea.;gez;ER;0.20;2003-07-05;UTF-8
+gez_ER.utf8@abe;Ge'ez language locale for Eritrea With Abegede Collation.;gez;ER;0.20;2003-07-05;UTF-8
+gez_ET;Ge'ez language locale for Ethiopia;gez;ET;0.20;2003-07-05;UTF-8
+gez_ET@abegede;Ge'ez language locale for Ethiopia With Abegede Collation;gez;ET;0.20;2003-07-05;UTF-8
+gez_ET.utf8;Ge'ez language locale for Ethiopia;gez;ET;0.20;2003-07-05;UTF-8
+gez_ET.utf8@abe;Ge'ez language locale for Ethiopia With Abegede Collation;gez;ET;0.20;2003-07-05;UTF-8
+gl_ES;Galician locale for Spain;Galician;Spain;1.0;2000-06-29;ISO-8859-1
+gl_ES@euro;Galician locale for Spain with Euro;Galician;Spain;1.0;2000-08-21;ISO-8859-15
+gl_ES.iso88591;Galician locale for Spain;Galician;Spain;1.0;2000-06-29;ISO-8859-1
+gl_ES.iso885915;Galician locale for Spain with Euro;Galician;Spain;1.0;2000-08-21;ISO-8859-15
+gl_ES.utf8;Galician locale for Spain;Galician;Spain;1.0;2000-06-29;UTF-8
+greek;Greek locale for Greece;Greek;Greece;1.0;2000-06-29;ISO-8859-7
+gu_IN;Gujarati Language Locale For India;Gujarati;India;0.2;2004-14-09;UTF-8
+gu_IN.utf8;Gujarati Language Locale For India;Gujarati;India;0.2;2004-14-09;UTF-8
+gv_GB;Manx Gaelic locale for Britain;Manx Gaelic;Britain;1.0;2000-06-29;ISO-8859-1
+gv_GB.iso88591;Manx Gaelic locale for Britain;Manx Gaelic;Britain;1.0;2000-06-29;ISO-8859-1
+gv_GB.utf8;Manx Gaelic locale for Britain;Manx Gaelic;Britain;1.0;2000-06-29;UTF-8
+ha_NG;Hausa locale for Nigeria;Hausa;Nigeria;0.2;2006-02-01;UTF-8
+ha_NG.utf8;Hausa locale for Nigeria;Hausa;Nigeria;0.2;2006-02-01;UTF-8
+hebrew;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;ISO-8859-8
+he_IL;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;ISO-8859-8
+he_IL.iso88598;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;ISO-8859-8
+he_IL.utf8;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;UTF-8
+hi_IN;Hindi language locale for India;Hindi;India;1.0;2000-07-21;UTF-8
+hi_IN.utf8;Hindi language locale for India;Hindi;India;1.0;2000-07-21;UTF-8
+hne_IN;Chhattisgarhi language locale for India;Chhattisgarhi;India;1.0;2008-12-03;UTF-8
+hne_IN.utf8;Chhattisgarhi language locale for India;Chhattisgarhi;India;1.0;2008-12-03;UTF-8
+hr_HR;Croatian locale for Croatia;Croatian;Croatia;1.0;2000-06-29;ISO-8859-2
+hr_HR.iso88592;Croatian locale for Croatia;Croatian;Croatia;1.0;2000-06-29;ISO-8859-2
+hr_HR.utf8;Croatian locale for Croatia;Croatian;Croatia;1.0;2000-06-29;UTF-8
+hrvatski;Croatian locale for Croatia;Croatian;Croatia;1.0;2000-06-29;ISO-8859-2
+hsb_DE;Upper Sorbian locale for Germany;Upper Sorbian;Germany;0.1;2004-09-09;ISO-8859-2
+hsb_DE.iso88592;Upper Sorbian locale for Germany;Upper Sorbian;Germany;0.1;2004-09-09;ISO-8859-2
+hsb_DE.utf8;Upper Sorbian locale for Germany;Upper Sorbian;Germany;0.1;2004-09-09;UTF-8
+ht_HT;Kreyol locale for Haiti;U006Breyol;Haiti;1.0;2008-08-17;UTF-8
+ht_HT.utf8;Kreyol locale for Haiti;U006Breyol;Haiti;1.0;2008-08-17;UTF-8
+hu_HU;Hungarian locale for Hungary;Hungarian;Hungary;4.7;2001-01-29;ISO-8859-2
+hu_HU.iso88592;Hungarian locale for Hungary;Hungarian;Hungary;4.7;2001-01-29;ISO-8859-2
+hu_HU.utf8;Hungarian locale for Hungary;Hungarian;Hungary;4.7;2001-01-29;UTF-8
+hungarian;Hungarian locale for Hungary;Hungarian;Hungary;4.7;2001-01-29;ISO-8859-2
+hy_AM;Armenian language locale for Armenia;Armenian;Armenia;0.4;2001-01-26;UTF-8
+hy_AM.armscii8;Armenian language locale for Armenia;Armenian;Armenia;0.4;2001-01-26;ARMSCII-8
+hy_AM.utf8;Armenian language locale for Armenia;Armenian;Armenia;0.4;2001-01-26;UTF-8
+icelandic;Icelandic locale for Iceland;Icelandic;Iceland;1.0;2000-06-29;ISO-8859-1
+id_ID;Indonesian locale for Indonesia;Indonesian;Indonesia;1.0;2000-06-29;ISO-8859-1
+id_ID.iso88591;Indonesian locale for Indonesia;Indonesian;Indonesia;1.0;2000-06-29;ISO-8859-1
+id_ID.utf8;Indonesian locale for Indonesia;Indonesian;Indonesia;1.0;2000-06-29;UTF-8
+ig_NG;Igbo locale for Nigeria;Igbo;Nigeria;0.2;2005-12-14;UTF-8
+ig_NG.utf8;Igbo locale for Nigeria;Igbo;Nigeria;0.2;2005-12-14;UTF-8
+ik_CA;Inupiaq locale for Canada;Inupiaq;Canada;0.2;2004-08-01;UTF-8
+ik_CA.utf8;Inupiaq locale for Canada;Inupiaq;Canada;0.2;2004-08-01;UTF-8
+is_IS;Icelandic locale for Iceland;Icelandic;Iceland;1.0;2000-06-29;ISO-8859-1
+is_IS.iso88591;Icelandic locale for Iceland;Icelandic;Iceland;1.0;2000-06-29;ISO-8859-1
+is_IS.utf8;Icelandic locale for Iceland;Icelandic;Iceland;1.0;2000-06-29;UTF-8
+italian;Italian locale for Italy;Italian;Italy;1.0;2000-06-29;ISO-8859-1
+it_CH;Italian locale for Switzerland;Italian;Switzerland;1.0;2000-06-29;ISO-8859-1
+it_CH.iso88591;Italian locale for Switzerland;Italian;Switzerland;1.0;2000-06-29;ISO-8859-1
+it_CH.utf8;Italian locale for Switzerland;Italian;Switzerland;1.0;2000-06-29;UTF-8
+it_IT;Italian locale for Italy;Italian;Italy;1.0;2000-06-29;ISO-8859-1
+it_IT@euro;Italian locale for Italy with Euro;Italian;Italy;1.0;2000-08-20;ISO-8859-15
+it_IT.iso88591;Italian locale for Italy;Italian;Italy;1.0;2000-06-29;ISO-8859-1
+it_IT.iso885915;Italian locale for Italy with Euro;Italian;Italy;1.0;2000-08-20;ISO-8859-15
+it_IT.utf8;Italian locale for Italy;Italian;Italy;1.0;2000-06-29;UTF-8
+iu_CA;Inuktitut language locale for Nunavut, Canada;Inuktitut;CA;0.1;2001-05-04;UTF-8
+iu_CA.utf8;Inuktitut language locale for Nunavut, Canada;Inuktitut;CA;0.1;2001-05-04;UTF-8
+iw_IL;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;ISO-8859-8
+iw_IL.iso88598;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;ISO-8859-8
+iw_IL.utf8;Hebrew locale for Israel;Hebrew;Israel;1.0;2000-06-29;UTF-8
+ja_JP;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;EUC-JP
+ja_JP.eucjp;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;EUC-JP
+ja_JP.ujis;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;EUC-JP
+ja_JP.utf8;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;UTF-8
+japanese;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;EUC-JP
+japanese.euc;Japanese language locale for Japan;Japanese;Japan;1.0;2000-07-20;EUC-JP
+ka_GE;Georgian language locale for Georgia;Georgian;Georgia;0.6;2001-01-26;GEORGIAN-PS
+ka_GE.georgianp;Georgian language locale for Georgia;Georgian;Georgia;0.6;2001-01-26;GEORGIAN-PS
+ka_GE.utf8;Georgian language locale for Georgia;Georgian;Georgia;0.6;2001-01-26;UTF-8
+kk_KZ;Kazakh locale for Kazakhstan;Kazakh;Kazakhstan;1.0;2003-06-06;PT154
+kk_KZ.pt154;Kazakh locale for Kazakhstan;Kazakh;Kazakhstan;1.0;2003-06-06;PT154
+kk_KZ.utf8;Kazakh locale for Kazakhstan;Kazakh;Kazakhstan;1.0;2003-06-06;UTF-8
+kl_GL;Greenlandic locale for Greenland;Greenlandic;Greenland;1.0;2000-06-29;ISO-8859-1
+kl_GL.iso88591;Greenlandic locale for Greenland;Greenlandic;Greenland;1.0;2000-06-29;ISO-8859-1
+kl_GL.utf8;Greenlandic locale for Greenland;Greenlandic;Greenland;1.0;2000-06-29;UTF-8
+km_KH;Khmer locale for Cambodia;Khmer;Cambodia;1.0;2005-3-15;UTF-8
+km_KH.utf8;Khmer locale for Cambodia;Khmer;Cambodia;1.0;2005-3-15;UTF-8
+kn_IN;Kannada language locale for India;Kannada;India;0.1;2002-11-28;UTF-8
+kn_IN.utf8;Kannada language locale for India;Kannada;India;0.1;2002-11-28;UTF-8
+kok_IN;Konkani language locale for India;Konkani;India;1.0;2009,December,08;UTF-8
+kok_IN.utf8;Konkani language locale for India;Konkani;India;1.0;2009,December,08;UTF-8
+ko_KR;Korean locale for Republic of Korea;Korean;Republic of Korea;1.1;2000-11-09;EUC-KR
+ko_KR.euckr;Korean locale for Republic of Korea;Korean;Republic of Korea;1.1;2000-11-09;EUC-KR
+ko_KR.utf8;Korean locale for Republic of Korea;Korean;Republic of Korea;1.1;2000-11-09;UTF-8
+korean;Korean locale for Republic of Korea;Korean;Republic of Korea;1.1;2000-11-09;EUC-KR
+korean.euc;Korean locale for Republic of Korea;Korean;Republic of Korea;1.1;2000-11-09;EUC-KR
+ks_IN;Kashmiri language locale for India;Kashmiri;India;1.0;2009,April,06;UTF-8
+ks_IN@devanagar;Kashmiri(devanagari) language locale for India;Kashmiri;India;0.1;2008-08-26;UTF-8
+ks_IN.utf8;Kashmiri language locale for India;Kashmiri;India;1.0;2009,April,06;UTF-8
+ks_IN.utf8@deva;Kashmiri(devanagari) language locale for India;Kashmiri;India;0.1;2008-08-26;UTF-8
+ku_TR;Kurdish (latin) locale for Turkey;Kurdish;Turkey;0.1;2003-07-27;ISO-8859-9
+ku_TR.iso88599;Kurdish (latin) locale for Turkey;Kurdish;Turkey;0.1;2003-07-27;ISO-8859-9
+ku_TR.utf8;Kurdish (latin) locale for Turkey;Kurdish;Turkey;0.1;2003-07-27;UTF-8
+kw_GB;Cornish locale for Britain;Cornish;Britain;1.0;2000-06-29;ISO-8859-1
+kw_GB.iso88591;Cornish locale for Britain;Cornish;Britain;1.0;2000-06-29;ISO-8859-1
+kw_GB.utf8;Cornish locale for Britain;Cornish;Britain;1.0;2000-06-29;UTF-8
+ky_KG;Kyrgyz Language Locale for Kyrgyzstan;Kyrgyz;Kyrgyzstan;0.2;2004-10-14;UTF-8
+ky_KG.utf8;Kyrgyz Language Locale for Kyrgyzstan;Kyrgyz;Kyrgyzstan;0.2;2004-10-14;UTF-8
+lb_LU;Luxembourgish locale for Luxembourg;Luxembourgish;Luxembourg;0.2;2011-01-28;UTF-8
+lb_LU.utf8;Luxembourgish locale for Luxembourg;Luxembourgish;Luxembourg;0.2;2011-01-28;UTF-8
+lg_UG;Luganda locale for Uganda;Luganda;Uganda;1.0;2001-11-04;ISO-8859-10
+lg_UG.iso885910;Luganda locale for Uganda;Luganda;Uganda;1.0;2001-11-04;ISO-8859-10
+lg_UG.utf8;Luganda locale for Uganda;Luganda;Uganda;1.0;2001-11-04;UTF-8
+li_BE;Limburgish Language Locale for Belgium;li;BE;0.1;2003-11-30;UTF-8
+li_BE.utf8;Limburgish Language Locale for Belgium;li;BE;0.1;2003-11-30;UTF-8
+lij_IT;Ligurian locale for Italy;Ligurian;Italy;1.0;2010-10-22;UTF-8
+lij_IT.utf8;Ligurian locale for Italy;Ligurian;Italy;1.0;2010-10-22;UTF-8
+li_NL;Limburgish Language Locale for the Netherlands;li;NL;0.1;2003-11-30;UTF-8
+li_NL.utf8;Limburgish Language Locale for the Netherlands;li;NL;0.1;2003-11-30;UTF-8
+lithuanian;Lithuanian locale for Lithuania;Lithuanian;Lithuania;1.0;2000-06-29;ISO-8859-13
+lo_LA;Lao locale for Laos;Lao;Laos;1.0;2003-4-1;UTF-8
+lo_LA.utf8;Lao locale for Laos;Lao;Laos;1.0;2003-4-1;UTF-8
+lt_LT;Lithuanian locale for Lithuania;Lithuanian;Lithuania;1.0;2000-06-29;ISO-8859-13
+lt_LT.iso885913;Lithuanian locale for Lithuania;Lithuanian;Lithuania;1.0;2000-06-29;ISO-8859-13
+lt_LT.utf8;Lithuanian locale for Lithuania;Lithuanian;Lithuania;1.0;2000-06-29;UTF-8
+lv_LV;Latvian locale for Latvia;Latvian;Latvia;1.0;2000-06-29;ISO-8859-13
+lv_LV.iso885913;Latvian locale for Latvia;Latvian;Latvia;1.0;2000-06-29;ISO-8859-13
+lv_LV.utf8;Latvian locale for Latvia;Latvian;Latvia;1.0;2000-06-29;UTF-8
+mai_IN;Maithili language locale for India;Maithili;India;1.0;2006-11-01;UTF-8
+mai_IN.utf8;Maithili language locale for India;Maithili;India;1.0;2006-11-01;UTF-8
+mg_MG;Malagasy locale for Madagascar;Malagasy;Madagascar;1.1;2005-02-02;ISO-8859-15
+mg_MG.iso885915;Malagasy locale for Madagascar;Malagasy;Madagascar;1.1;2005-02-02;ISO-8859-15
+mg_MG.utf8;Malagasy locale for Madagascar;Malagasy;Madagascar;1.1;2005-02-02;UTF-8
+mhr_RU;Mari locale for Russia;Meadow Mari;Russia;0.2;2011-04-18;UTF-8
+mhr_RU.utf8;Mari locale for Russia;Meadow Mari;Russia;0.2;2011-04-18;UTF-8
+mi_NZ;Maori language locale for New Zealand;Maori;New Zealand;0.3;2001-01-28;ISO-8859-13
+mi_NZ.iso885913;Maori language locale for New Zealand;Maori;New Zealand;0.3;2001-01-28;ISO-8859-13
+mi_NZ.utf8;Maori language locale for New Zealand;Maori;New Zealand;0.3;2001-01-28;UTF-8
+mk_MK;Macedonian locale for Macedonia;Macedonian;Macedonia;2.2;2006-09-12;ISO-8859-5
+mk_MK.iso88595;Macedonian locale for Macedonia;Macedonian;Macedonia;2.2;2006-09-12;ISO-8859-5
+mk_MK.utf8;Macedonian locale for Macedonia;Macedonian;Macedonia;2.2;2006-09-12;UTF-8
+ml_IN;Malayalam language locale for India;Malayalam;India;0.1;2003-February-01;UTF-8
+ml_IN.utf8;Malayalam language locale for India;Malayalam;India;0.1;2003-February-01;UTF-8
+mni_IN;Manipuri language locale for India;Manipuri;India;1.0;2012-01-17;UTF-8
+mni_IN.utf8;Manipuri language locale for India;Manipuri;India;1.0;2012-01-17;UTF-8
+mn_MN;Mongolian locale for Mongolia;Mongolian;Mongolia;1.0;2005-05-21;UTF-8
+mn_MN.utf8;Mongolian locale for Mongolia;Mongolian;Mongolia;1.0;2005-05-21;UTF-8
+mr_IN;Marathi language locale for India;Marathi;India;1.0;2000-07-21;UTF-8
+mr_IN.utf8;Marathi language locale for India;Marathi;India;1.0;2000-07-21;UTF-8
+ms_MY;Malay language locale for Malaysia;Malay;Malaysia;0.92b;2001, December, 10;ISO-8859-1
+ms_MY.iso88591;Malay language locale for Malaysia;Malay;Malaysia;0.92b;2001, December, 10;ISO-8859-1
+ms_MY.utf8;Malay language locale for Malaysia;Malay;Malaysia;0.92b;2001, December, 10;UTF-8
+mt_MT;Maltese language locale for Malta;Maltese;malta;1.0;2000-07-20;ISO-8859-3
+mt_MT.iso88593;Maltese language locale for Malta;Maltese;malta;1.0;2000-07-20;ISO-8859-3
+mt_MT.utf8;Maltese language locale for Malta;Maltese;malta;1.0;2000-07-20;UTF-8
+my_MM;Burmese language locale for Myanmar;Burmese;Myanmar;1.3;2009-10-02;UTF-8
+my_MM.utf8;Burmese language locale for Myanmar;Burmese;Myanmar;1.3;2009-10-02;UTF-8
+nan_TW@latin;Minnan language locale for Taiwan;Minnan;Taiwan;0.1;2008-06-16;UTF-8
+nan_TW.utf8@lat;Minnan language locale for Taiwan;Minnan;Taiwan;0.1;2008-06-16;UTF-8
+nb_NO;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+nb_NO.iso88591;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+nb_NO.utf8;Norwegian (Bokmal) locale for Norway;Norwegian, BokmÃ¥l;Norway;1.0;2000-06-29;UTF-8
+nds_DE;Low(lands) Saxon Language Locale for Germany;nds;DE;0.1;2003-11-30;UTF-8
+nds_DE.utf8;Low(lands) Saxon Language Locale for Germany;nds;DE;0.1;2003-11-30;UTF-8
+nds_NL;Low(lands) Saxon Language Locale for the Netherlands;nds;NL;0.1;2003-11-30;UTF-8
+nds_NL.utf8;Low(lands) Saxon Language Locale for the Netherlands;nds;NL;0.1;2003-11-30;UTF-8
+ne_NP;Nepali language locale for Nepal;Nepali;Nepal;1.1;2003-05-12;UTF-8
+ne_NP.utf8;Nepali language locale for Nepal;Nepali;Nepal;1.1;2003-05-12;UTF-8
+nl_AW;Dutch language locale for Aruba;Dutch;Aruba;1.0;2008-09-16;UTF-8
+nl_AW.utf8;Dutch language locale for Aruba;Dutch;Aruba;1.0;2008-09-16;UTF-8
+nl_BE;Dutch locale for Belgium;Dutch;Belgium;1.0;2000-06-29;ISO-8859-1
+nl_BE@euro;Dutch locale for Belgium with Euro;Dutch;Belgium;1.0;2000-08-21;ISO-8859-15
+nl_BE.iso88591;Dutch locale for Belgium;Dutch;Belgium;1.0;2000-06-29;ISO-8859-1
+nl_BE.iso885915;Dutch locale for Belgium with Euro;Dutch;Belgium;1.0;2000-08-21;ISO-8859-15
+nl_BE.utf8;Dutch locale for Belgium;Dutch;Belgium;1.0;2000-06-29;UTF-8
+nl_NL;Dutch locale for the Netherlands;Dutch;Netherlands;1.0;2000-06-29;ISO-8859-1
+nl_NL@euro;Dutch locale for the Netherlands with Euro;Dutch;Netherlands;1.0;2000-08-20;ISO-8859-15
+nl_NL.iso88591;Dutch locale for the Netherlands;Dutch;Netherlands;1.0;2000-06-29;ISO-8859-1
+nl_NL.iso885915;Dutch locale for the Netherlands with Euro;Dutch;Netherlands;1.0;2000-08-20;ISO-8859-15
+nl_NL.utf8;Dutch locale for the Netherlands;Dutch;Netherlands;1.0;2000-06-29;UTF-8
+nn_NO;Nynorsk language locale for Norway;Norwegian, Nynorsk;Norway;1.0;2000-08-31;ISO-8859-1
+nn_NO.iso88591;Nynorsk language locale for Norway;Norwegian, Nynorsk;Norway;1.0;2000-08-31;ISO-8859-1
+nn_NO.utf8;Nynorsk language locale for Norway;Norwegian, Nynorsk;Norway;1.0;2000-08-31;UTF-8
+no_NO;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+no_NO.iso88591;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+no_NO.utf8;Norwegian (Bokmal) locale for Norway;Norwegian, BokmÃ¥l;Norway;1.0;2000-06-29;UTF-8
+norwegian;Norwegian (Bokmal) locale for Norway;Norwegian, Bokmål;Norway;1.0;2000-06-29;ISO-8859-1
+nr_ZA;Southern Ndebele locale for South Africa;Southern Ndebele;South Africa;0.3;2005-10-13;UTF-8
+nr_ZA.utf8;Southern Ndebele locale for South Africa;Southern Ndebele;South Africa;0.3;2005-10-13;UTF-8
+nso_ZA;Northern Sotho locale for South Africa;Northern Sotho;South Africa;0.3;2005-10-13;UTF-8
+nso_ZA.utf8;Northern Sotho locale for South Africa;Northern Sotho;South Africa;0.3;2005-10-13;UTF-8
+nynorsk;Nynorsk language locale for Norway;Norwegian, Nynorsk;Norway;1.0;2000-08-31;ISO-8859-1
+oc_FR;Occitan Language Locale for France;Occitan;France;0.2;2000-11-15;ISO-8859-1
+oc_FR.iso88591;Occitan Language Locale for France;Occitan;France;0.2;2000-11-15;ISO-8859-1
+oc_FR.utf8;Occitan Language Locale for France;Occitan;France;0.2;2000-11-15;UTF-8
+om_ET;Oromo language locale for Ethiopia.;om;ET;0.20;2003-07-05;UTF-8
+om_ET.utf8;Oromo language locale for Ethiopia.;om;ET;0.20;2003-07-05;UTF-8
+om_KE;Oromo language locale for Kenya.;om;KE;0.20;2003-07-05;ISO-8859-1
+om_KE.iso88591;Oromo language locale for Kenya.;om;KE;0.20;2003-07-05;ISO-8859-1
+om_KE.utf8;Oromo language locale for Kenya.;om;KE;0.20;2003-07-05;UTF-8
+or_IN;Oriya language locale for India;Oriya;India;1.0;2006-05-25;UTF-8
+or_IN.utf8;Oriya language locale for India;Oriya;India;1.0;2006-05-25;UTF-8
+os_RU;Ossetian locale for Russia;Ossetian;Russia;1.0;2000-06-29;UTF-8
+os_RU.utf8;Ossetian locale for Russia;Ossetian;Russia;1.0;2000-06-29;UTF-8
+pa_IN;Punjabi language locale for Indian Punjabi(Gurmukhi);Punjabi;India;0.2;2004-09-30;UTF-8
+pa_IN.utf8;Punjabi language locale for Indian Punjabi(Gurmukhi);Punjabi;India;0.2;2004-09-30;UTF-8
+pap_AN;Papiamento Language for the (Netherland) Antilles;pap;AN;0.2;2000-11-15;UTF-8
+pap_AN.utf8;Papiamento Language for the (Netherland) Antilles;pap;AN;0.2;2000-11-15;UTF-8
+pa_PK;Punjabi (Shahmukhi) Language Locale for Pakistan;Punjabi (Shahmukhi);Pakistan;0.3;2000-07-11;UTF-8
+pa_PK.utf8;Punjabi (Shahmukhi) Language Locale for Pakistan;Punjabi (Shahmukhi);Pakistan;0.3;2000-07-11;UTF-8
+pl_PL;Polish locale for Poland;Polish;Poland;1.0;2000-06-29;ISO-8859-2
+pl_PL.iso88592;Polish locale for Poland;Polish;Poland;1.0;2000-06-29;ISO-8859-2
+pl_PL.utf8;Polish locale for Poland;Polish;Poland;1.0;2000-06-29;UTF-8
+polish;Polish locale for Poland;Polish;Poland;1.0;2000-06-29;ISO-8859-2
+portuguese;Portuguese locale for Portugal;Portuguese;Portugal;1.0;2000-06-29;ISO-8859-1
+ps_AF;Pashto locale for Afghanistan;Pashto;Afghanistan;0.2;2009-01-16;UTF-8
+ps_AF.utf8;Pashto locale for Afghanistan;Pashto;Afghanistan;0.2;2009-01-16;UTF-8
+pt_BR;Portuguese locale for Brasil;Portuguese;Brasil;1.0;2000-06-29;ISO-8859-1
+pt_BR.iso88591;Portuguese locale for Brasil;Portuguese;Brasil;1.0;2000-06-29;ISO-8859-1
+pt_BR.utf8;Portuguese locale for Brasil;Portuguese;Brasil;1.0;2000-06-29;UTF-8
+pt_PT;Portuguese locale for Portugal;Portuguese;Portugal;1.0;2000-06-29;ISO-8859-1
+pt_PT@euro;Portuguese locale for Portugal with Euro;Portuguese;Portugal;1.0;2000-08-20;ISO-8859-15
+pt_PT.iso88591;Portuguese locale for Portugal;Portuguese;Portugal;1.0;2000-06-29;ISO-8859-1
+pt_PT.iso885915;Portuguese locale for Portugal with Euro;Portuguese;Portugal;1.0;2000-08-20;ISO-8859-15
+pt_PT.utf8;Portuguese locale for Portugal;Portuguese;Portugal;1.0;2000-06-29;UTF-8
+romanian;Romanian locale for Romania;Romanian;Romania;1.0;2000-06-29;ISO-8859-2
+ro_RO;Romanian locale for Romania;Romanian;Romania;1.0;2000-06-29;ISO-8859-2
+ro_RO.iso88592;Romanian locale for Romania;Romanian;Romania;1.0;2000-06-29;ISO-8859-2
+ro_RO.utf8;Romanian locale for Romania;Romanian;Romania;1.0;2000-06-29;UTF-8
+ru_RU;Russian locale for Russia;Russian;Russia;1.0;2000-06-29;ISO-8859-5
+ru_RU.iso88595;Russian locale for Russia;Russian;Russia;1.0;2000-06-29;ISO-8859-5
+ru_RU.koi8r;Russian locale for Russia;Russian;Russia;1.0;2000-06-29;KOI8-R
+ru_RU.utf8;Russian locale for Russia;Russian;Russia;1.0;2000-06-29;UTF-8
+russian;Russian locale for Russia;Russian;Russia;1.0;2000-06-29;ISO-8859-5
+ru_UA;Russian locale for Ukraine;Russian;Ukraine;1.0;2000-06-29;KOI8-U
+ru_UA.koi8u;Russian locale for Ukraine;Russian;Ukraine;1.0;2000-06-29;KOI8-U
+ru_UA.utf8;Russian locale for Ukraine;Russian;Ukraine;1.0;2000-06-29;UTF-8
+rw_RW;Kinyarwanda language locale for Rwanda;Kinyarwanda;Rwanda;1.0;2004-02-24;UTF-8
+rw_RW.utf8;Kinyarwanda language locale for Rwanda;Kinyarwanda;Rwanda;1.0;2004-02-24;UTF-8
+sa_IN;Sanskrit language locale for India;Sanskrit;India;1.0;2005-09-25;UTF-8
+sa_IN.utf8;Sanskrit language locale for India;Sanskrit;India;1.0;2005-09-25;UTF-8
+sat_IN;Santali language locale for India;Santali;India;1.0;2012-01-17;UTF-8
+sat_IN.utf8;Santali language locale for India;Santali;India;1.0;2012-01-17;UTF-8
+sc_IT;Sardinian locale for Italy;Sardinian;Italy;0.1;2004-05-26;UTF-8
+sc_IT.utf8;Sardinian locale for Italy;Sardinian;Italy;0.1;2004-05-26;UTF-8
+sd_IN;Sindhi language locale for India;Sindhi;India;1.0;2008,September,09;UTF-8
+sd_IN@devanagar;Sindhi language locale for India;Sindhi;India;1.0;2008-08-26;UTF-8
+sd_IN.utf8;Sindhi language locale for India;Sindhi;India;1.0;2008,September,09;UTF-8
+sd_IN.utf8@deva;Sindhi language locale for India;Sindhi;India;1.0;2008-08-26;UTF-8
+se_NO;Northern Saami language locale for Norway;Northern Saami;Norway;0.1;2001-11-09;UTF-8
+se_NO.utf8;Northern Saami language locale for Norway;Northern Saami;Norway;0.1;2001-11-09;UTF-8
+shs_CA;Secwepemctsin locale for Canada;Secwepemctsin;Canada;1.0;2008-01-15;UTF-8
+shs_CA.utf8;Secwepemctsin locale for Canada;Secwepemctsin;Canada;1.0;2008-01-15;UTF-8
+sid_ET;Sidama language locale for Ethiopia.;sid;ET;0.20;2003-07-05;UTF-8
+sid_ET.utf8;Sidama language locale for Ethiopia.;sid;ET;0.20;2003-07-05;UTF-8
+si_LK;Sinhala language locale for Sri Lanka;Sinhala;Sri Lanka;0.9;2004.10.01;UTF-8
+si_LK.utf8;Sinhala language locale for Sri Lanka;Sinhala;Sri Lanka;0.9;2004.10.01;UTF-8
+sk_SK;Slovak locale for Slovak;Slovak;Slovak;1.0;2000-06-29;ISO-8859-2
+sk_SK.iso88592;Slovak locale for Slovak;Slovak;Slovak;1.0;2000-06-29;ISO-8859-2
+sk_SK.utf8;Slovak locale for Slovak;Slovak;Slovak;1.0;2000-06-29;UTF-8
+slovak;Slovak locale for Slovak;Slovak;Slovak;1.0;2000-06-29;ISO-8859-2
+slovene;Slovenian locale for Slovenia;Slovenian;Slovenia;1.0;2000-06-29;ISO-8859-2
+slovenian;Slovenian locale for Slovenia;Slovenian;Slovenia;1.0;2000-06-29;ISO-8859-2
+sl_SI;Slovenian locale for Slovenia;Slovenian;Slovenia;1.0;2000-06-29;ISO-8859-2
+sl_SI.iso88592;Slovenian locale for Slovenia;Slovenian;Slovenia;1.0;2000-06-29;ISO-8859-2
+sl_SI.utf8;Slovenian locale for Slovenia;Slovenian;Slovenia;1.0;2000-06-29;UTF-8
+so_DJ;Somali language locale for Djibouti.;so;DJ;0.20;2003-07-05;ISO-8859-1
+so_DJ.iso88591;Somali language locale for Djibouti.;so;DJ;0.20;2003-07-05;ISO-8859-1
+so_DJ.utf8;Somali language locale for Djibouti.;so;DJ;0.20;2003-07-05;UTF-8
+so_ET;Somali language locale for Ethiopia;so;ET;0.20;2003-07-05;UTF-8
+so_ET.utf8;Somali language locale for Ethiopia;so;ET;0.20;2003-07-05;UTF-8
+so_KE;Somali language locale for Kenya;so;KE;0.20;2003-07-05;ISO-8859-1
+so_KE.iso88591;Somali language locale for Kenya;so;KE;0.20;2003-07-05;ISO-8859-1
+so_KE.utf8;Somali language locale for Kenya;so;KE;0.20;2003-07-05;UTF-8
+so_SO;Somali language locale for Somalia;so;SO;0.20;2003-07-05;ISO-8859-1
+so_SO.iso88591;Somali language locale for Somalia;so;SO;0.20;2003-07-05;ISO-8859-1
+so_SO.utf8;Somali language locale for Somalia;so;SO;0.20;2003-07-05;UTF-8
+spanish;Spanish locale for Spain;Spanish;Spain;1.0;2000-06-29;ISO-8859-1
+sq_AL;Albanian language locale for Albania;Albanian;Albania;1.1;2004-07-01;ISO-8859-1
+sq_AL.iso88591;Albanian language locale for Albania;Albanian;Albania;1.1;2004-07-01;ISO-8859-1
+sq_AL.utf8;Albanian language locale for Albania;Albanian;Albania;1.1;2004-07-01;UTF-8
+sq_MK;Albanian language locale for Macedonia;Albanian;Macedonia;0.01;2010-04-06;UTF-8
+sq_MK.utf8;Albanian language locale for Macedonia;Albanian;Macedonia;0.01;2010-04-06;UTF-8
+sr_ME;Serbian locale for Montenegro;Serbian;Montenegro;1.2;2006-10-11;UTF-8
+sr_ME.utf8;Serbian locale for Montenegro;Serbian;Montenegro;1.2;2006-10-11;UTF-8
+sr_RS;Serbian locale for Serbia;Serbian;Serbia;1.3;2006-10-09;UTF-8
+sr_RS@latin;Serbian Latin locale for Serbia;Serbian;Serbia;1.3;2006-10-09;UTF-8
+sr_RS.utf8;Serbian locale for Serbia;Serbian;Serbia;1.3;2006-10-09;UTF-8
+sr_RS.utf8@lati;Serbian Latin locale for Serbia;Serbian;Serbia;1.3;2006-10-09;UTF-8
+ss_ZA;Swati locale for South Africa;Swati;South Africa;0.3;2005-10-13;UTF-8
+ss_ZA.utf8;Swati locale for South Africa;Swati;South Africa;0.3;2005-10-13;UTF-8
+st_ZA;Sotho locale for South Africa;Sotho;South Africa;0.3;2005-10-13;ISO-8859-1
+st_ZA.iso88591;Sotho locale for South Africa;Sotho;South Africa;0.3;2005-10-13;ISO-8859-1
+st_ZA.utf8;Sotho locale for South Africa;Sotho;South Africa;0.3;2005-10-13;UTF-8
+sv_FI;Swedish locale for Finland;Swedish;Finland;1.0;2000-06-29;ISO-8859-1
+sv_FI@euro;Swedish locale for Finland with Euro;Swedish;Finland;1.0;2000-08-21;ISO-8859-15
+sv_FI.iso88591;Swedish locale for Finland;Swedish;Finland;1.0;2000-06-29;ISO-8859-1
+sv_FI.iso885915;Swedish locale for Finland with Euro;Swedish;Finland;1.0;2000-08-21;ISO-8859-15
+sv_FI.utf8;Swedish locale for Finland;Swedish;Finland;1.0;2000-06-29;UTF-8
+sv_SE;Swedish locale for Sweden;Swedish;Sweden;1.0;2000-06-29;ISO-8859-1
+sv_SE.iso88591;Swedish locale for Sweden;Swedish;Sweden;1.0;2000-06-29;ISO-8859-1
+sv_SE.iso885915;Swedish locale for Sweden;Swedish;Sweden;1.0;2000-06-29;ISO-8859-15
+sv_SE.utf8;Swedish locale for Sweden;Swedish;Sweden;1.0;2000-06-29;UTF-8
+swedish;Swedish locale for Sweden;Swedish;Sweden;1.0;2000-06-29;ISO-8859-1
+sw_KE;Swahili locale for Kenya;sw;Kenya;1.0;2011-03-07;UTF-8
+sw_KE.utf8;Swahili locale for Kenya;sw;Kenya;1.0;2011-03-07;UTF-8
+sw_TZ;Swahili locale for Tanzania;sw;Tanzania;1.0;2011-03-07;UTF-8
+sw_TZ.utf8;Swahili locale for Tanzania;sw;Tanzania;1.0;2011-03-07;UTF-8
+ta_IN;Tamil language locale for India;Tamil;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+ta_IN.utf8;Tamil language locale for India;Tamil;India;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+ta_LK;Tamil language locale for Sri Lanka;Tamil;Sri Lanka;1.0;2011,August,11;UTF-8
+ta_LK.utf8;Tamil language locale for Sri Lanka;Tamil;Sri Lanka;1.0;2011,August,11;UTF-8
+te_IN;Telugu language locale for India;Telugu;India;0.95;2004-10-05;UTF-8
+te_IN.utf8;Telugu language locale for India;Telugu;India;0.95;2004-10-05;UTF-8
+tg_TJ;Tajik language locale for Tajikistan;Tajik;Tajikistan;0.4;2004-01-09;KOI8-T
+tg_TJ.koi8t;Tajik language locale for Tajikistan;Tajik;Tajikistan;0.4;2004-01-09;KOI8-T
+tg_TJ.utf8;Tajik language locale for Tajikistan;Tajik;Tajikistan;0.4;2004-01-09;UTF-8
+thai;Thai locale for Thailand;Thai;Thailand;1.0;2000-06-29;TIS-620
+th_TH;Thai locale for Thailand;Thai;Thailand;1.0;2000-06-29;TIS-620
+th_TH.tis620;Thai locale for Thailand;Thai;Thailand;1.0;2000-06-29;TIS-620
+th_TH.utf8;Thai locale for Thailand;Thai;Thailand;1.0;2000-06-29;UTF-8
+ti_ER;Tigrigna language locale for Eritrea.;ti;ER;0.20;2003-07-05;UTF-8
+ti_ER.utf8;Tigrigna language locale for Eritrea.;ti;ER;0.20;2003-07-05;UTF-8
+ti_ET;Tigrigna language locale for Ethiopia.;ti;ET;0.20;2003-07-05;UTF-8
+ti_ET.utf8;Tigrigna language locale for Ethiopia.;ti;ET;0.20;2003-07-05;UTF-8
+tig_ER;Tigre language locale for Eritrea;tig;ER;0.20;2003-07-05;UTF-8
+tig_ER.utf8;Tigre language locale for Eritrea;tig;ER;0.20;2003-07-05;UTF-8
+tk_TM;Turkmen locale for Turkmenistan;Turkmen;Turkmenistan;0.5;2011-04-09;UTF-8
+tk_TM.utf8;Turkmen locale for Turkmenistan;Turkmen;Turkmenistan;0.5;2011-04-09;UTF-8
+tl_PH;Tagalog language locale for Philippines;Tagalog;Philippines;0.2;2001-01-28;ISO-8859-1
+tl_PH.iso88591;Tagalog language locale for Philippines;Tagalog;Philippines;0.2;2001-01-28;ISO-8859-1
+tl_PH.utf8;Tagalog language locale for Philippines;Tagalog;Philippines;0.2;2001-01-28;UTF-8
+tn_ZA;Tswana locale for South Africa;Tswana;South Africa;0.4;2005-10-13;UTF-8
+tn_ZA.utf8;Tswana locale for South Africa;Tswana;South Africa;0.4;2005-10-13;UTF-8
+tr_CY;Turkish language locale for Cyprus;Turkish;Cyprus;1.0;2004-10-23;ISO-8859-9
+tr_CY.iso88599;Turkish language locale for Cyprus;Turkish;Cyprus;1.0;2004-10-23;ISO-8859-9
+tr_CY.utf8;Turkish language locale for Cyprus;Turkish;Cyprus;1.0;2004-10-23;UTF-8
+tr_TR;Turkish locale for Turkey;Turkish;Turkey;1.0;2000-06-29;ISO-8859-9
+tr_TR.iso88599;Turkish locale for Turkey;Turkish;Turkey;1.0;2000-06-29;ISO-8859-9
+tr_TR.utf8;Turkish locale for Turkey;Turkish;Turkey;1.0;2000-06-29;UTF-8
+ts_ZA;Tsonga locale for South Africa;Tsonga;South Africa;0.3;2005-10-12;UTF-8
+ts_ZA.utf8;Tsonga locale for South Africa;Tsonga;South Africa;0.3;2005-10-12;UTF-8
+tt_RU;Tatar language locale for Russia;Tatar;Russia;0.4;2001-01-28;UTF-8
+tt_RU@iqtelif;Tatar language locale using IQTElif alphabet, for Tatarstan, Russian Federation;Tatar;Tatarstan, Russian Federation;0.1;2006-10-12;UTF-8
+tt_RU.utf8;Tatar language locale for Russia;Tatar;Russia;0.4;2001-01-28;UTF-8
+tt_RU.utf8@iqte;Tatar language locale using IQTElif alphabet, for Tatarstan, Russian Federation;Tatar;Tatarstan, Russian Federation;0.1;2006-10-12;UTF-8
+turkish;Turkish locale for Turkey;Turkish;Turkey;1.0;2000-06-29;ISO-8859-9
+ug_CN;Uyghur locale for China;Uyghur;China;0.1;2005-11-08;UTF-8
+ug_CN.utf8;Uyghur locale for China;Uyghur;China;0.1;2005-11-08;UTF-8
+uk_UA;Ukrainian Language Locale for Ukraine;uk;UA;2.1.12;2006-05-20;KOI8-U
+uk_UA.koi8u;Ukrainian Language Locale for Ukraine;uk;UA;2.1.12;2006-05-20;KOI8-U
+uk_UA.utf8;Ukrainian Language Locale for Ukraine;uk;UA;2.1.12;2006-05-20;UTF-8
+unm_US;Unami Delaware locale for the USA;Unami Delaware;USA;1.0;2011-10-27;UTF-8
+unm_US.utf8;Unami Delaware locale for the USA;Unami Delaware;USA;1.0;2011-10-27;UTF-8
+ur_IN;Urdu language locale for India;Urdu;India;1.0;2009,June,09;UTF-8
+ur_IN.utf8;Urdu language locale for India;Urdu;India;1.0;2009,June,09;UTF-8
+ur_PK;Urdu Language Locale for Pakistan;Urdu;Pakistan;0.3;2000-07-11;UTF-8
+ur_PK.utf8;Urdu Language Locale for Pakistan;Urdu;Pakistan;0.3;2000-07-11;UTF-8
+uz_UZ;Uzbek (latin) locale for Uzbekistan;Uzbek;Uzbekistan;0.5;2003-06-27;ISO-8859-1
+uz_UZ@cyrillic;Uzbek (cyrillic) locale for Uzbekistan;Uzbek;Uzbekistan;0.1;2003-05-30;UTF-8
+uz_UZ.iso88591;Uzbek (latin) locale for Uzbekistan;Uzbek;Uzbekistan;0.5;2003-06-27;ISO-8859-1
+uz_UZ.utf8@cyri;Uzbek (cyrillic) locale for Uzbekistan;Uzbek;Uzbekistan;0.1;2003-05-30;UTF-8
+ve_ZA;Venda locale for South Africa;Venda;South Africa;0.3;2005-10-13;UTF-8
+ve_ZA.utf8;Venda locale for South Africa;Venda;South Africa;0.3;2005-10-13;UTF-8
+vi_VN;Vietnamese language locale for Vietnam;Vietnamese;Vietnam;1.1;2004-01-09;UTF-8
+vi_VN.tcvn;Vietnamese language locale for Vietnam;Vietnamese;Vietnam;1.1;2004-01-09;TCVN5712-1
+vi_VN.utf8;Vietnamese language locale for Vietnam;Vietnamese;Vietnam;1.1;2004-01-09;UTF-8
+wa_BE;Walloon Language Locale for Belgium;Walloon;Belgium;0.9;2003-08-25;ISO-8859-1
+wa_BE@euro;Walloon locale for Belgium with Euro;Walloon;Belgium;1.0;2002-02-23;ISO-8859-15
+wa_BE.iso88591;Walloon Language Locale for Belgium;Walloon;Belgium;0.9;2003-08-25;ISO-8859-1
+wa_BE.iso885915;Walloon locale for Belgium with Euro;Walloon;Belgium;1.0;2002-02-23;ISO-8859-15
+wa_BE.utf8;Walloon Language Locale for Belgium;Walloon;Belgium;0.9;2003-08-25;UTF-8
+wae_CH;Walser locale for Switzerland;Walser;Switzerland;0.1;2010-10-25;UTF-8
+wae_CH.utf8;Walser locale for Switzerland;Walser;Switzerland;0.1;2010-10-25;UTF-8
+wal_ET;Walaita language locale for Ethiopia.;wal;ET;0.10;2004-04-25;UTF-8
+wal_ET.utf8;Walaita language locale for Ethiopia.;wal;ET;0.10;2004-04-25;UTF-8
+wo_SN;Wolof locale for Senegal;Wolof;Senegal;1.0;2004-09-08;UTF-8
+wo_SN.utf8;Wolof locale for Senegal;Wolof;Senegal;1.0;2004-09-08;UTF-8
+xh_ZA;Xhosa locale for South Africa;Xhosa;South Africa;0.3;2005-10-13;ISO-8859-1
+xh_ZA.iso88591;Xhosa locale for South Africa;Xhosa;South Africa;0.3;2005-10-13;ISO-8859-1
+xh_ZA.utf8;Xhosa locale for South Africa;Xhosa;South Africa;0.3;2005-10-13;UTF-8
+yi_US;Yiddish Language locale for the USA;Yiddish;USA;0.4;2003-08-16;CP1255
+yi_US.cp1255;Yiddish Language locale for the USA;Yiddish;USA;0.4;2003-08-16;CP1255
+yi_US.utf8;Yiddish Language locale for the USA;Yiddish;USA;0.4;2003-08-16;UTF-8
+yo_NG;Yoruba locale for Nigeria;Yoruba;Nigeria;0.2;2005-11-20;UTF-8
+yo_NG.utf8;Yoruba locale for Nigeria;Yoruba;Nigeria;0.2;2005-11-20;UTF-8
+yue_HK;Yue Chinese (Cantonese) language locale for Hong Kong;Yue Chinese;Hong Kong;1.0;2010-11-07;UTF-8
+yue_HK.utf8;Yue Chinese (Cantonese) language locale for Hong Kong;Yue Chinese;Hong Kong;1.0;2010-11-07;UTF-8
+zh_CN;Chinese locale for Peoples Republic of China;Chinese;P.R. of China;0.1;2000-07-25;GB2312
+zh_CN.gb18030;Chinese locale for Peoples Republic of China;Chinese;P.R. of China;0.1;2000-07-25;GB18030
+zh_CN.gb2312;Chinese locale for Peoples Republic of China;Chinese;P.R. of China;0.1;2000-07-25;GB2312
+zh_CN.gbk;Chinese locale for Peoples Republic of China;Chinese;P.R. of China;0.1;2000-07-25;GBK
+zh_CN.utf8;Chinese locale for Peoples Republic of China;Chinese;P.R. of China;0.1;2000-07-25;UTF-8
+zh_HK;Chinese language locale for Hong Kong;Chinese;Hong Kong;1.0;2000-07-20;BIG5-HKSCS
+zh_HK.big5hkscs;Chinese language locale for Hong Kong;Chinese;Hong Kong;1.0;2000-07-20;BIG5-HKSCS
+zh_HK.utf8;Chinese language locale for Hong Kong;Chinese;Hong Kong;1.0;2000-07-20;UTF-8
+zh_SG;Chinese language locale for Singapore;Chinese;Singapore;1.0;2000,October,27 (XML source:2000,July,20);GB2312
+zh_SG.gb2312;Chinese language locale for Singapore;Chinese;Singapore;1.0;2000,October,27 (XML source:2000,July,20);GB2312
+zh_SG.gbk;Chinese language locale for Singapore;Chinese;Singapore;1.0;2000,October,27 (XML source:2000,July,20);GBK
+zh_SG.utf8;Chinese language locale for Singapore;Chinese;Singapore;1.0;2000,October,27 (XML source:2000,July,20);UTF-8
+zh_TW;Chinese locale for Taiwan;Chinese;Taiwan;0.2;2000-08-02;BIG5
+zh_TW.big5;Chinese locale for Taiwan;Chinese;Taiwan;0.2;2000-08-02;BIG5
+zh_TW.euctw;Chinese locale for Taiwan;Chinese;Taiwan;0.2;2000-08-02;EUC-TW
+zh_TW.utf8;Chinese locale for Taiwan;Chinese;Taiwan;0.2;2000-08-02;UTF-8
+zu_ZA;Zulu locale for South Africa;Zulu;South Africa;0.3;2005-10-13;ISO-8859-1
+zu_ZA.iso88591;Zulu locale for South Africa;Zulu;South Africa;0.3;2005-10-13;ISO-8859-1
+zu_ZA.utf8;Zulu locale for South Africa;Zulu;South Africa;0.3;2005-10-13;UTF-8
