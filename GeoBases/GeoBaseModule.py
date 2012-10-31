@@ -405,7 +405,7 @@ class GeoBase(object):
 
 
 
-    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, tests='and'):
+    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
         '''
         Get iterator of all keys with particular
         field.
@@ -414,7 +414,7 @@ class GeoBase(object):
         :param conditions: a list of (field, value) conditions
         :param reverse:    we look keys where the field is *not* the particular value
         :param force_str:  for the str() method before every test
-        :param tests:      either 'or' or 'and', how to handle several conditions
+        :param mode:       either 'or' or 'and', how to handle several conditions
         :returns:          an iterator of matching keys
 
         >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
@@ -428,7 +428,7 @@ class GeoBase(object):
         >>> len(list(geo_o.getKeysWhere([('__dup__', '1')], force_str=True)))
         507
 
-        Testing tests conditions.
+        Testing several conditions.
 
         >>> c_1 = [('city_code'    , 'PAR')]
         >>> c_2 = [('location_type', 'H'  )]
@@ -436,16 +436,16 @@ class GeoBase(object):
         17
         >>> len(list(geo_o.getKeysWhere(c_2)))
         59
-        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, tests='and')))
+        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
-        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, tests='or')))
+        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
         74
 
         This works too \o/.
 
-        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], tests='and')))
+        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
         0
-        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], tests='or')))
+        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
         18
         '''
 
@@ -455,26 +455,26 @@ class GeoBase(object):
         # We set the lambda function now to avoid testing
         # force_str and reverse at each key later
         if not force_str and not reverse:
-            pass_test = lambda a, b: a == b
+            pass_one = lambda a, b: a == b
         elif not force_str and reverse:
-            pass_test = lambda a, b: a != b
+            pass_one = lambda a, b: a != b
         elif force_str and not reverse:
-            pass_test = lambda a, b: str(a) == str(b)
+            pass_one = lambda a, b: str(a) == str(b)
         else:
-            pass_test = lambda a, b: str(a) != str(b)
+            pass_one = lambda a, b: str(a) != str(b)
 
         # Handle and/or cases when multiple conditions
-        if tests == 'and':
+        if mode == 'and':
             pass_all = all
-        elif tests == 'or':
+        elif mode == 'or':
             pass_all = any
         else:
-            raise ValueError('"tests" argument must be in %s' % str(['and', 'or']))
+            raise ValueError('"mode" argument must be in %s' % str(['and', 'or']))
 
 
         for key in from_keys:
 
-            if pass_all(pass_test(self.get(key, f), v) for f, v in conditions):
+            if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
                 yield key
 
 
