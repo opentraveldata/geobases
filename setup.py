@@ -75,6 +75,7 @@ setup(
             "DataSources/Por/Geonames/allCountriesHead.txt",
             "DataSources/Por/Ori/ori_por_public.csv",
             "DataSources/Por/Ori/ori_por_non_iata.csv",
+            "DataSources/Currencies/wiki_source_ISO_4217.csv",
             "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
