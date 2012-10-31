@@ -265,3 +265,17 @@ currencies:
         - currency
         - countries
 
+
+airlines:
+    local     : true
+    source    : Airlines/CRB_AIRLINE.csv
+    key_col   : iata_code
+    delimiter : ^
+    headers   :
+        - oaci_code
+        - old_code
+        - num_code
+        - name
+        - ticketing_name
+        - iata_code
+
