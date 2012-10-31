@@ -3,6 +3,9 @@
 GeoBases
 ========
 
+Project
+=======
+
 All doc has been moved here for this package:
     http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases
 
@@ -24,10 +27,6 @@ To create source distribution (pip-installable)::
 To deploy source package on python packages repository::
     scp dist/GeoBases-0.3.0.tar.gz ori-data@nceorilnx04:/remote/oridata/www/pythonpackages/
 
-To create rpm packages::
-    rm -rf build dist *.egg-info
-    python setup.py bdist_rpm
-
 If you install a package in user space, you may want to check
 that your ~/.local/bin is in your $PATH, and that Python knows
 where you site-package is (check your $PYTHONPATH).
@@ -37,32 +36,25 @@ This line should be added to your ~/.zshrc anyway::
 Some precaution: if you are running debian/ubuntu, installation might
 fail due to lack of compilation tool after fresh installation. If you have
 an error like *Error: Python.h could not be found*, you can fix it with::
-    sudo apt-get install python-dev
+    sudo apt-get install python-dev g++
 
 
-===========
-Source code
-===========
+Quickstart
+==========
+
+After installation::
+
+    >>> from GeoBases.GeoBaseModule import GeoBase
+    >>> g = GeoBase(data='ori_por', verbose=False)
+
+Then, to get information::
+
+    >>> g.get('CDG', 'city_code')
+    'PAR'
+    >>> g.distance('ORY', 'CDG')
+    34.87...
 
 
-The master repository for that data processing project is located
-on the Ori private Gitorious platform:
-    http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases
-
-The default branch is 'trunk'.
-
-Hence, in order to clone it, do something like:
-    mkdir -p ~/dev/srh
-    cd ~/dev/srh
-    git clone git@gitorious.orinet.nce.amadeus.net:dataanalysis/geobases.git
-    cd geobases
-    git checkout trunk
-
-The project is managed on the ORI Redmine platform:
-    http://redmine.orinet.nce.amadeus.net/projects/geobases
-
-
-=================
 Note on packaging
 =================
 
