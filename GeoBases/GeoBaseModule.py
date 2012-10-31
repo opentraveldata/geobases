@@ -126,7 +126,7 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': '0', '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': '6014', 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': 0, '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': '6014', 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
@@ -267,11 +267,6 @@ class GeoBase(object):
                 self._things[key]['__gar__'] = lim.join(self._things[key]['__gar__'])
 
 
-        for key in self._things:
-            # Here the string conversion is purely to help the command line
-            # exact search who only understands strings
-            self._things[key]['__dup__'] = str(self._things[key]['__dup__'])
-
         # We remove None headers, which are not-loaded-columns
         self.fields = ['__key__', '__dup__', '__lno__']     + \
                       [h for h in headers if h is not None] + \
@@ -404,12 +399,13 @@ class GeoBase(object):
         :returns: a list of all (key, lat, lng) in the database
 
         >>> list(geo_a.iterLocations())
-        [('AGN', (57.50..., -134.585...)), ('AGM', (65...
+        [('AGN', (57.50..., -134.585...)), ('AGM', (65...))]
         '''
         return ( (key, self.getLocation(key)) for key in self )
 
 
-    def getKeysWhere(self, field, value, from_keys=None, reverse=False):
+
+    def getKeysWhere(self, field, value, from_keys=None, reverse=False, force_cast_str=False):
         '''
         Get iterator of all keys with particular
         field.
@@ -424,20 +420,34 @@ class GeoBase(object):
         ['ORY', 'TNF', 'CDG', 'BVA']
         >>> list(geo_o.getKeysWhere('comment', '', reverse=True))
         []
+        >>> list(geo_o.getKeysWhere('__dup__', '1'))
+        []
+        >>> len(list(geo_o.getKeysWhere('__dup__', 1)))
+        507
+        >>> len(list(geo_o.getKeysWhere('__dup__', '1', force_cast_str=True)))
+        507
         '''
 
         if from_keys is None:
             from_keys = iter(self)
 
+        # We set the lambda function now to avoid testing
+        # force_cast_str and reverse at each key later
+        if not force_cast_str and not reverse:
+            pass_test = lambda a, b: a == b
+        elif not force_cast_str and reverse:
+            pass_test = lambda a, b: a != b
+        elif force_cast_str and not reverse:
+            pass_test = lambda a, b: str(a) == str(b)
+        else:
+            pass_test = lambda a, b: str(a) != str(b)
+
+
         for key in from_keys:
 
-            is_match = self.get(key, field) == value
-
-            if not reverse and is_match:
+            if pass_test(self.get(key, field), value):
                 yield key
 
-            if reverse and not is_match:
-                yield key
 
 
     def __iter__(self):
