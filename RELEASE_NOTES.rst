@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.18 : outsource all train stations generation script in separate project
 + 3.17 : added new base for locales
 + 3.16 : added new base for regions
 + 3.15 : added new base for airlines from CRB_Airline
