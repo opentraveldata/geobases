@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name = 'GeoBases',
-    version = '3.18.2',
+    version = '3.19.2',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
@@ -22,34 +22,28 @@ setup(
     # Manage standalone scripts
     entry_points = {
         'console_scripts' : [
-            'GeoBase = GeoBaseMain:main',
-            'WebSrvGeoBases = WebSrvGeoBasesMain:main'
+            'GeoBase = GeoBaseMain:main'
         ]
     },
     #packages=find_packages(),
     packages = [
-        'GeoBases',
-        'GeoBases.Webservice'
+        'GeoBases'
     ],
     py_modules = [
-        'GeoBaseMain',
-        'WebSrvGeoBasesMain'
+        'GeoBaseMain'
     ],
     dependency_links = [
         'http://orinet/pythonpackages'
     ],
     install_requires = [
         # Private
-        'FlaskUtils',
-        'Daemonify',
         'OpenTrepWrapper>=0.5',
-        #Public
-        'argparse',
+        # Public - core
         'pyyaml',
         'python_geohash', 
         'python_Levenshtein', 
-        'Flask', 
-        'tornado',
+        # Public - CLI
+        'argparse',
         'termcolor',
         'colorama'
     ],
