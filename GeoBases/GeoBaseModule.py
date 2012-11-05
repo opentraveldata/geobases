@@ -48,12 +48,12 @@ From any point of reference:
 
 from __future__ import with_statement
 
-import heapq
 import os
-import yaml
+import os.path as op
+import heapq
 from itertools import izip_longest
-
-from SysUtils         import localToFile
+# Not in standard library
+import yaml
 
 from .GeoUtils         import haversine
 from .LevenshteinUtils import mod_leven, clean
@@ -72,6 +72,9 @@ else:
     # No problem here
     HAS_TREP_SUPPORT = True
 
+# Local paths handling
+local_path = lambda file_p, rel_p : op.join(op.realpath(op.dirname(file_p)), rel_p)
+
 
 
 class GeoBase(object):
@@ -81,7 +84,7 @@ class GeoBase(object):
     the instance to get information.
     '''
 
-    PATH_CONF = localToFile(__file__, 'DataSources/Sources.yaml')
+    PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
 
     with open(PATH_CONF) as fl:
         BASES = yaml.load(fl)
@@ -94,7 +97,7 @@ class GeoBase(object):
         '''
         Launch update script on oripor data file.
         '''
-        os.system('bash ' + localToFile(__file__, 'DataSources/Por/Ori/CheckOriPorUpdates.sh'))
+        os.system('bash ' + local_path(__file__, 'DataSources/Por/Ori/CheckOriPorUpdates.sh'))
 
 
 
@@ -121,7 +124,7 @@ class GeoBase(object):
         ValueError: Wrong data type. Not in ['currencies', 'continents', 'timezones', 'ori_por_non_iata', 'location_types', 'stations_uic', 'stations_nls', 'airports_csv', 'ori_por', 'cities', 'locales', 'ori_por_multi', 'languages', 'airports', 'stations', 'countries', 'airlines', 'regions']
         >>> 
         >>> GeoBase(data='feed',
-        ...         source=localToFile(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
+        ...         source=local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
         ...         key_col='code',
         ...         delimiter='^',
@@ -157,7 +160,7 @@ class GeoBase(object):
             conf = GeoBase.BASES[data]
 
             if conf['local'] is True:
-                self._source = localToFile(GeoBase.PATH_CONF, conf['source'])
+                self._source = local_path(GeoBase.PATH_CONF, conf['source'])
             else:
                 self._source = conf['source']
 
