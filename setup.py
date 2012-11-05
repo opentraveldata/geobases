@@ -93,11 +93,11 @@ setup(
             "DataSources/Regions/regions.csv",
             "DataSources/Locales/locales.csv",
             "DataSources/LocationTypes/location_types.csv",
-            "DataSources/Por/Ori/CheckOriPorUpdates.sh"
+            "DataSources/CheckDataUpdates.sh"
         ]
     },
     #scripts = [
-    #    'GeoBases/DataSources/CheckOriPorUpdates.sh'
+    #    'GeoBases/DataSources/CheckDataUpdates.sh'
     #],
     data_files = [
         ('test', [
