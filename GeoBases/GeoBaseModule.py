@@ -98,7 +98,7 @@ class GeoBase(object):
         '''
         Launch update script on oripor data file.
         '''
-        os.system('bash ' + local_path(__file__, 'DataSources/Por/Ori/CheckOriPorUpdates.sh'))
+        os.system('bash ' + local_path(__file__, 'DataSources/CheckDataUpdates.sh'))
 
 
 

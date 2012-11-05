@@ -47,7 +47,7 @@ do_a_file() {
     if [ "$DIFF" = "" ]; then
         echo "Nothing to do."
         rm -f $TMP_CSV
-        exit 0
+        return 0
     fi
 
     if [ "$FORCE" = "0" ]; then
@@ -69,12 +69,12 @@ do_a_file() {
 
 # Files
 REF_URL='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
-LOC_CSV='ori_por_public.csv'
+LOC_CSV='Por/Ori/ori_por_public.csv'
 
 do_a_file "$REF_URL" "$LOC_CSV"
 
 REF_URL='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
-LOC_CSV='ori_por_non_iata.csv'
+LOC_CSV='Por/Ori/ori_por_non_iata.csv'
 
 do_a_file "$REF_URL" "$LOC_CSV"
 
