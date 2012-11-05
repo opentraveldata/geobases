@@ -63,6 +63,7 @@ from .GeoGridModule    import GeoGrid
 try:
     # This wrapper will raise an ImportError
     # if libopentrep cannot be found
+    # or if OpenTrepWrapper was not installed
     from OpenTrepWrapper import main_trep
 
 except ImportError as err:
