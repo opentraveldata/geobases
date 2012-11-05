@@ -80,7 +80,7 @@ continents:
 
 stations:
     local     : true
-    source    : TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv
+    source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     key_col   : code
     delimiter : ^
     headers   :
