@@ -33,7 +33,7 @@ setup(
         'GeoBaseMain'
     ],
     dependency_links = [
-        'http://orinet/pythonpackages'
+        'http://oridist.orinet/python/'
     ],
     install_requires = [
         # Private
