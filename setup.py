@@ -5,9 +5,34 @@
 Main installation file for GeoBases.
 '''
 
-
-#from distutils.core import setup
 from setuptools import setup
+from os import getenv
+from sys import stderr
+
+INSTALL_REQUIRES = [
+    # Public - core
+    'pyyaml',
+    'python_geohash',
+    'python_Levenshtein',
+    # Public - CLI
+    'argparse',
+    'termcolor',
+    'colorama'
+]
+
+# Managing OpenTrep dependency
+OPENTREP_LIB = 'OpenTrepWrapper>=0.5'
+
+WITH_OPENTREP = getenv('WITH_OPENTREP', None)
+
+if WITH_OPENTREP:
+    # Forcing OpenTrepWrapper support
+    INSTALL_REQUIRES.append(OPENTREP_LIB)
+
+    print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % OPENTREP_LIB
+else:
+    print >> stderr, '/!\ Installing without "%s"' % OPENTREP_LIB
+
 
 setup(
     name = 'GeoBases',
@@ -35,18 +60,11 @@ setup(
     dependency_links = [
         'http://oridist.orinet/python/'
     ],
-    install_requires = [
+    install_requires = INSTALL_REQUIRES,
+    extras_require = {
         # Private
-        'OpenTrepWrapper>=0.5',
-        # Public - core
-        'pyyaml',
-        'python_geohash', 
-        'python_Levenshtein', 
-        # Public - CLI
-        'argparse',
-        'termcolor',
-        'colorama'
-    ],
+        'OpenTrep': [OPENTREP_LIB],
+    },
     package_dir = {
         'GeoBases': 'GeoBases'
     },
