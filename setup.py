@@ -72,7 +72,8 @@ setup(
     },
     package_data = {
         'GeoBases': [
-            'DataSources/Sources.yaml',
+            "DataSources/Sources.yaml",
+            "DataSources/CheckDataUpdates.sh",
             "DataSources/Airports/Geonames/airports_geonames_only_clean.csv",
             "DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv",
             "DataSources/Countries/countryInfo.txt",
@@ -93,7 +94,6 @@ setup(
             "DataSources/Regions/regions.csv",
             "DataSources/Locales/locales.csv",
             "DataSources/LocationTypes/location_types.csv",
-            "DataSources/CheckDataUpdates.sh"
         ]
     },
     #scripts = [
