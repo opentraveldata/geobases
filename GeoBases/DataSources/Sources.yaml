@@ -304,3 +304,13 @@ locales:
         - date
         - codeset
 
+
+location_types:
+    local     : true
+    source    : LocationTypes/location_types.csv
+    key_col   : code
+    delimiter : ^
+    headers   :
+        - code
+        - type
+
