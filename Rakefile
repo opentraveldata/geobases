@@ -11,6 +11,16 @@ File.open(RELEASE_FILE_PATH) { |f| YAML.load f }.each do |param, val|
   Object.const_set "RELEASE_#{param.upcase}", val
 end
 
+# Define environment variables
+if defined? RELEASE_ENVIRONMENT and not RELEASE_ENVIRONMENT.nil?
+    RELEASE_ENVIRONMENT.each do |h|
+        h.each do |key, val|
+            puts "#{key} set to #{val}"
+            ENV["#{key}"] = val
+        end
+    end
+end
+
 
 namespace :build do
 
@@ -35,8 +45,8 @@ namespace :build do
 
   desc "Install dependencies in a virtual environment"
   task :deps => [:venv, :activate] do
-    # Here we use stderr to display the output
-    # on Jenkins, stdout is not
+    # Here we use stderr to display the output on Jenkins
+    # stdout is captured
     %x[ ./bin/python setup.py develop >&2 ]
     raise "Dependencies failed" unless $?.success?
   end
