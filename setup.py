@@ -42,7 +42,6 @@ setup(
         # Private
         'FlaskUtils',
         'Daemonify',
-        'SysUtils',
         'OpenTrepWrapper>=0.5',
         #Public
         'argparse',
