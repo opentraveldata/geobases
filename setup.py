@@ -11,13 +11,13 @@ from setuptools import setup
 
 setup(
     name = 'GeoBases',
-    version = '3.19.2',
+    version = '3.19.3',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
-    #license = open('COPYING').read(),
     description = 'Some geographical functions.',
-    long_description = open('README').read(),
+    ## This line induces bugs because it lacks the file relative path
+    #long_description = open('README').read(),
     #
     # Manage standalone scripts
     entry_points = {
