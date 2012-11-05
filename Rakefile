@@ -44,7 +44,9 @@ namespace :build do
 
   desc "Run test suite"
   task :test => [:deps, :activate] do
-    %x[ ./bin/python #{RELEASE_TEST_FILE} -v ]
+    if not RELEASE_TEST_FILE.nil? and not RELEASE_TEST_FILE.empty?
+      %x[ ./bin/python #{RELEASE_TEST_FILE} -v ]
+    end
     raise "Tests failed" unless $?.success?
   end
 
