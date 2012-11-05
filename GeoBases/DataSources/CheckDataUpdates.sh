@@ -4,7 +4,7 @@
 # We could move to the installation directory if we knew it
 cd `dirname $0`
 
-TMP_CSV='tmp_01.csv'
+TMP_CSV='/tmp/fsdlkghiueevlr_01.csv'
 
 
 do_a_file() {
