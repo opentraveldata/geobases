@@ -1,1 +1,2 @@
 recursive-include GeoBases *rst *txt *csv *sh *yaml
+include *rst
