@@ -72,6 +72,7 @@ setup(
             "DataSources/Airlines/CRB_AIRLINE.csv",
             "DataSources/Regions/regions.csv",
             "DataSources/Locales/locales.csv",
+            "DataSources/LocationTypes/location_types.csv",
             "DataSources/Por/Ori/CheckOriPorUpdates.sh"
         ]
     },
