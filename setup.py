@@ -66,7 +66,7 @@ setup(
             "DataSources/Continents/continentCodes.txt",
             "DataSources/TrainStations/NLS/NLS_CODES_RefDataSNCF.csv",
             "DataSources/TrainStations/UIC/sncfExtract_v1.0.csv",
-            "DataSources/TrainStations/DataGouvFr/RFF/RFF_gares.ids.gm.man.red.csv",
+            "DataSources/TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv",
             "DataSources/Languages/iso-languagecodes.txt",
             "DataSources/TimeZones/timeZones.txt",
             "DataSources/Cities/cities15000.txt",
