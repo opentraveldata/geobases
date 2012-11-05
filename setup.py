@@ -20,18 +20,23 @@ INSTALL_REQUIRES = [
     'colorama'
 ]
 
-# Managing OpenTrep dependency
-OPENTREP_LIB = 'OpenTrepWrapper>=0.5'
+EXTRAS_REQUIRE = {
+    # Private
+    'OpenTrep': ['OpenTrepWrapper>=0.5']
+}
 
+# Managing OpenTrep dependency
 WITH_OPENTREP = getenv('WITH_OPENTREP', None)
 
 if WITH_OPENTREP:
     # Forcing OpenTrepWrapper support
-    INSTALL_REQUIRES.append(OPENTREP_LIB)
+    INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
 
-    print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % OPENTREP_LIB
+    print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % \
+            str(EXTRAS_REQUIRE['OpenTrep'])
 else:
-    print >> stderr, '/!\ Installing without "%s"' % OPENTREP_LIB
+    print >> stderr, '/!\ Installing without "%s"' % \
+            str(EXTRAS_REQUIRE['OpenTrep'])
 
 
 setup(
@@ -61,10 +66,7 @@ setup(
         'http://oridist.orinet/python/'
     ],
     install_requires = INSTALL_REQUIRES,
-    extras_require = {
-        # Private
-        'OpenTrep': [OPENTREP_LIB],
-    },
+    extras_require   = EXTRAS_REQUIRE,
     package_dir = {
         'GeoBases': 'GeoBases'
     },
