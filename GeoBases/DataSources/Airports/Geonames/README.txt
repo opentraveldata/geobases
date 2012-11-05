@@ -1,6 +1,4 @@
-This script extracts airports data from the Geonames tables.
-It uses airports.csv to match airport to their cities, and list_countries.csv to match
-airports to their country names.
 
-As there are less airports in Geonames than airports.csv, the final file is smaller than airports.csv.
-In the last version, cities have been removed (like Paris - All airports, PAR).
+Data here is the result of a gathering effort explained in the git
+repository DataGathering/airportsgeonames here:
+ http://gitorious.orinet.nce.amadeus.net/datagathering/airportsgeonames
