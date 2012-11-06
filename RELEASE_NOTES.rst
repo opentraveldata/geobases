@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.22 : added new base for geonames_head and geonames_full, lines tracking
 + 3.21 : added new base for ori_por_private (and multi version)
 + 3.20 : outsource all airports/geonames code in separate project
 + 3.19 : outsource all webservices code in separate project
