@@ -238,7 +238,7 @@ ori_por_private:
         - iata_code
         - icao_code
         - is_geonames
-        - geonameid
+        - geoname_id
         - name
         - asciiname
         - alternatenames
@@ -367,3 +367,37 @@ location_types:
         - code
         - type
 
+
+geonames_head:
+    local     : true
+    source    : Por/Geonames/allCountries.head.txt
+    key_col   : geoname_id
+    delimiter : "\t"
+    headers   : &geonames_headers
+        - geoname_id
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - adm1_code
+        - adm2_code
+        - adm3_code
+        - adm4_code
+        - population
+        - elevation
+        - dem
+        - timezone
+        - moddate
+
+
+geonames_full:
+    local     : false
+    source    : /remote/orihome/aprengere/public/allCountries.txt
+    key_col   : geoname_id
+    delimiter : "\t"
+    headers   : *geonames_headers
