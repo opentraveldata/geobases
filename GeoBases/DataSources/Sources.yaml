@@ -398,6 +398,7 @@ geonames_head:
 geonames_full:
     local     : false
     source    : /remote/orihome/aprengere/public/allCountries.txt
+    #source    : /home/aprengere/public/allCountries.txt
     key_col   : geoname_id
     delimiter : "\t"
     headers   : *geonames_headers
