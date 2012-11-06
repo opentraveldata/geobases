@@ -378,8 +378,8 @@ geonames_head:
         - name
         - asciiname
         - alternatenames
-        - lat
-        - lng
+        - latitude  # not lat on purpose, avoid gridding (too long on full geonames)
+        - longitude # not lng on purpose, avoid gridding (too long on full geonames)
         - fclass
         - fcode
         - country_code
