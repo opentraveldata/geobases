@@ -7,6 +7,7 @@ Main installation file for GeoBases.
 
 from setuptools import setup
 from os import getenv
+import os.path as op
 from sys import stderr
 
 INSTALL_REQUIRES = [
@@ -86,6 +87,11 @@ setup(
     data_files = [
         ('test', [
             'test/test_GeoBases.py'
+        ]),
+        # Will create dir if needed
+        (op.join(getenv('HOME'), '.zsh/completion/'), [
+            'completion/_GeoBase'
         ])
     ]
 )
+
