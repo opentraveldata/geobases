@@ -1,0 +1,24 @@
+#compdef GeoBase
+
+_arguments -s \
+ '(-h --help)'{-h,--help}'[show this help message and exit]' \
+ '(-b --base)'{-b,--base}'[Choose a different base, default is "ori_por"]:base:(airlines airports airports_csv cities continents countries currencies geonames_full geonames_head languages locales location_types ori_por ori_por_multi ori_por_private ori_por_private_multi ori_por_non_iata regions stations stations_nls stations_uic timezones)' \
+ '(-f --fuzzy)'{-f,--fuzzy}'[Fuzzy search on --fuzzy-property Default property is "name"]:fuzzy value:()' \
+ '(-F --fuzzy-property)'{-F,--fuzzy-property}'[Specify a property for fuzzy searches]:fuzzy property:(__key__ __dup__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment continent country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate is_airport is_commercial city_code city_name_utf city_name_ascii state_code region_code location_type wiki_link alt_name_section __gar__)' \
+ '(-L --fuzzy-limit)'{-L,--fuzzy-limit}'[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit:(0.5 0.8 0.9)' \
+ '(-e --exact)'{-e,--exact}'[Exact search on --exact-property. Default property is "__key__"]:exact value:()' \
+ '(-E --exact-property)'{-E,--exact-property}'[Specify a property for exact searches]:exact property:(__key__ __dup__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment continent country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate is_airport is_commercial city_code city_name_utf city_name_ascii state_code region_code location_type wiki_link alt_name_section __gar__)' \
+ '(-n --near)'{-n,--near}'[Radius search, give an argument with "lat, lng" or key]:near point:()' \
+ '(-N --near-limit)'{-N,--near-limit}'[Specify a radius in km for radius searches.]:near limit:(10 20 30 40 50)' \
+ '(-c --closest)'{-c,--closest}'[Closest entries search, give an argument with "lat, lng" or key]:from point:()' \
+ '(-C --closest-limit)'{-C,--closest-limit}'[Number of closest points searched with --closest.]:closest limit:(10 20 30 40 50)' \
+ '(-t --trep)'{-t,--trep}'[OpenTrep mode]:value:()' \
+ '(-T --trep-format)'{-t,--trep-format}'[Specify a format for trep searches, default is "S".]:trep format:(F S I J)' \
+ '(-w --without-grid)'{-w,--without-grid}'[Disabling grid for nearby searches]' \
+ '(-r --reverse)'{-r,--reverse}'[When possible, reverse the logic of the filter]' \
+ '(-q --quiet)'{-q,--quiet}'[Programmatic output]' \
+ '(-v --verbose)'{-v,--verbose}'[Provide additional informations from data loading]' \
+ '(-o --omit)'{-o,--omit}'[Omit some fields in output]:fields:(__key__ __dup__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment continent country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate is_airport is_commercial city_code city_name_utf city_name_ascii state_code region_code location_type wiki_link alt_name_section __gar__)' \
+ '(-s --show)'{-s,--show}'[Only display some fields in output]:fields:(__key__ __dup__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment continent country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate is_airport is_commercial city_code city_name_utf city_name_ascii state_code region_code location_type wiki_link alt_name_section __gar__)' \
+ '(-l --limit)'{-l,--limit}'[Specify a limit in the number of results]:limit:(1 2 5)' \
+ '(-u --update)'{-u,--update}'[Try to update some source files]'
