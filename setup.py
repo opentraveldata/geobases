@@ -40,9 +40,25 @@ else:
             str(EXTRAS_REQUIRE['OpenTrep'])
 
 
+try:
+    # monkey patch: Crack SandboxViolation verification from
+    # http://www.cubicweb.org/1422923
+    #import setuptools.command.easy_install # only if easy_install avaible
+    from setuptools.sandbox import DirectorySandbox as DS
+
+    def _ok(self, path):
+        """Return True if ``path`` can be written during installation."""
+        return True
+
+    DS._ok = _ok
+
+except ImportError:
+    raise
+
+
 setup(
     name = 'GeoBases',
-    version = '3.22.3',
+    version = '3.23.0',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
