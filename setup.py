@@ -22,7 +22,7 @@ INSTALL_REQUIRES = [
 
 EXTRAS_REQUIRE = {
     # Private
-    'OpenTrep': ['OpenTrepWrapper>=0.5']
+    'OpenTrep': ['OpenTrepWrapper>=0.6']
 }
 
 # Managing OpenTrep dependency
