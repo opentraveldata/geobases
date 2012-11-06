@@ -13,12 +13,10 @@ end
 
 # Define environment variables
 if defined? RELEASE_ENVIRONMENT and not RELEASE_ENVIRONMENT.nil?
-    RELEASE_ENVIRONMENT.each do |h|
-        h.each do |key, val|
-            puts "'#{key}' set to '#{val}'"
-            ENV["#{key}"] = val
-        end
-    end
+  RELEASE_ENVIRONMENT.each do |key, val|
+    puts "'#{key}' set to '#{val}'"
+    ENV[key] = val
+  end
 end
 
 
