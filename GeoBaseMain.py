@@ -9,8 +9,11 @@ from sys import stdin, stdout, stderr
 
 import os
 import argparse
-
 from datetime import datetime
+from math import ceil
+from itertools import izip_longest
+
+# Not in standard library
 from termcolor import colored
 import colorama
 
@@ -249,16 +252,24 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def display_on_two_cols(a_list, descriptor=stdout):
+def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
     '''
     Some formatting for help.
     '''
+    n = float(len(L))
+    h = int(ceil(n / 2)) # half+
 
-    for p in zip(a_list[::2], a_list[1::2]):
+    if layout == 'h':
+        pairs = izip_longest(L[::2], L[1::2], fillvalue='')
+
+    elif layout == 'v':
+        pairs = izip_longest(L[:h], L[h:], fillvalue='')
+
+    else:
+        raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
+
+    for p in pairs:
         print >> descriptor, '\t%-20s\t%-20s' % p
-
-    if len(a_list) % 2 != 0:
-        print >> descriptor, '\t%-20s' % a_list[-1]
 
 
 
@@ -286,17 +297,17 @@ def error(name, *args):
 
     elif name == 'base':
         print >> stderr, '\n/!\ Wrong base "%s". You may select:' % args[0]
-        display_on_two_cols(args[1], stderr)
+        fmt_on_two_cols(args[1], stderr)
 
     elif name == 'property':
         print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
         print >> stderr, 'For data type %s, you may select:' % args[1]
-        display_on_two_cols(args[2], stderr)
+        fmt_on_two_cols(args[2], stderr)
 
     elif name == 'field':
         print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
         print >> stderr, 'For data type %s, you may select:' % args[1]
-        display_on_two_cols(args[2], stderr)
+        fmt_on_two_cols(args[2], stderr)
 
     elif name == 'geocode_format':
         print >> stderr, '\n/!\ Bad geocode format: %s' % args[0]
