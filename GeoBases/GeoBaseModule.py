@@ -122,7 +122,7 @@ class GeoBase(object):
         Source was None, skipping loading...
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
-        ValueError: Wrong data type. Not in ['currencies', 'continents', 'timezones', 'ori_por_non_iata', 'location_types', 'stations_uic', 'stations_nls', 'airports_csv', 'ori_por', 'cities', 'locales', 'ori_por_multi', 'languages', 'airports', 'stations', 'countries', 'airlines', 'regions']
+        ValueError: Wrong data type. Not in ['currencies', 'continents', 'timezones', 'ori_por_non_iata', 'location_types', 'stations_uic', 'stations_nls', 'airports_csv', 'ori_por', 'cities', 'locales', 'ori_por_multi', 'ori_por_private', 'airports', 'stations', 'countries', 'ori_por_private_multi', 'languages', 'regions', 'airlines']
         >>> 
         >>> GeoBase(data='feed',
         ...         source=local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
