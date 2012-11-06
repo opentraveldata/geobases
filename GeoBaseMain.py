@@ -480,7 +480,7 @@ def main():
 
     parser.add_argument('-u', '--update',
         help = '''If this option is set, instead of anything, 
-                        the script will try to update the ori_por source file.''',
+                        the script will try to update some source files.''',
         action='store_true'
     )
 
