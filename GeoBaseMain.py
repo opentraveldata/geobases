@@ -340,7 +340,7 @@ def main():
     )
 
     parser.add_argument('-b', '--base',
-        help = '''Choose a different base, default is ori_por. Also available are
+        help = '''Choose a different base, default is "ori_por". Also available are
                         stations, airports, countries... Give unadmissible base 
                         and available values will be displayed.''',
         default = 'ori_por'
@@ -425,7 +425,7 @@ def main():
 
     parser.add_argument('-T', '--trep-format',
         help = '''Specify a format for trep searches with --trep,
-                        default is S.''',
+                        default is "S".''',
         default = 'S',
     )
 
