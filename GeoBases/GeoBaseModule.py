@@ -85,12 +85,18 @@ class GeoBase(object):
     the instance to get information.
     '''
 
+    # Path to global configuration
     PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
 
+    # Loading configuration
     with open(PATH_CONF) as fl:
         BASES = yaml.load(fl)
 
+    # Special fields for latitude and longitude recognition
     FIELDS_FOR_GEO = set(['lat', 'lng'])
+
+    # Loading indicator
+    NB_LINES_STEP = 100000
 
 
     @staticmethod
@@ -223,6 +229,10 @@ class GeoBase(object):
         with open(self._source) as f:
 
             for line_nb, row in enumerate(f, start=1):
+
+                if self._verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+                    print '%-10s lines loaded so far' % line_nb
+
                 # Skip comments and empty lines
                 # Comments must *start* with #, otherwise they will not be stripped
                 if not row or row.startswith('#'):
