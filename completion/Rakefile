@@ -59,10 +59,8 @@ namespace :build do
         cp asset_source, dist_target
       end
     end
+    task :realize => dist_target
   end
-
-  desc "Main"
-  task :realize => dist(ASSET_FILES['_GeoBase.erb'])
 end
 
 task :default => 'build:realize'
