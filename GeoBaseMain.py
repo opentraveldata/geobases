@@ -175,13 +175,11 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     '''
 
     if not show:
-        show = ['__ref__'] + geob.fields[:]
+        t_show = ['__ref__'] + geob.fields[:]
 
         # In this default case, we remove splitted valued if
         # corresponding raw values exist
-        for i, f in enumerate(show):
-            if '__raw@%s' % f in show:
-                del show[i]
+        show = [f for f in t_show if '__raw@%s' % f not in t_show]
 
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
