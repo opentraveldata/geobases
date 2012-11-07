@@ -3,7 +3,6 @@
 #
 
 airports:
-    local     : true
     source    : Airports/Geonames/airports_geonames_only_clean.csv
     key_col   : iata_code
     delimiter : ^
@@ -18,7 +17,6 @@ airports:
 
 
 airports_csv:
-    local     : true
     source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
     key_col   : iata_code
     delimiter : ^
@@ -42,7 +40,6 @@ airports_csv:
 
 
 countries:
-    local     : true
     source    : Countries/countryInfo.txt
     key_col   : code
     delimiter : "\t"
@@ -68,7 +65,6 @@ countries:
 
 
 continents:
-    local     : true
     source    : Continents/continentCodes.txt
     key_col   : code
     delimiter : "\t"
@@ -79,7 +75,6 @@ continents:
 
 
 stations:
-    local     : true
     source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     key_col   : code
     delimiter : ^
@@ -93,7 +88,6 @@ stations:
 
 
 stations_nls:
-    local     : true
     source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
     key_col   : nls_code
     delimiter : ','
@@ -105,7 +99,6 @@ stations_nls:
 
 
 stations_uic:
-    local     : true
     source    : TrainStations/UIC/sncfExtract_v1.0.csv
     key_col   : uic_code
     delimiter : ','
@@ -117,7 +110,6 @@ stations_uic:
 
 
 languages:
-    local     : true
     source    : Languages/iso-languagecodes.txt
     key_col   : code
     delimiter : "\t"
@@ -129,7 +121,6 @@ languages:
 
 
 timezones:
-    local     : true
     source    : TimeZones/timeZones.txt
     key_col   : code
     delimiter : "\t"
@@ -142,7 +133,6 @@ timezones:
 
 
 cities:
-    local     : true
     source    : Cities/cities15000.txt
     key_col   : code
     delimiter : "\t"
@@ -169,7 +159,6 @@ cities:
 
 
 ori_por:
-    local     : true
     source    : Por/Ori/ori_por_public.csv
     key_col   : iata_code
     delimiter : ^
@@ -222,7 +211,6 @@ ori_por:
 
 
 ori_por_multi:
-    local     : true
     source    : Por/Ori/ori_por_public.csv
     key_col   : [iata_code, location_type]
     delimiter : ^
@@ -230,7 +218,6 @@ ori_por_multi:
 
 
 ori_por_private:
-    local     : true
     source    : Por/Ori/ori_por.csv
     key_col   : iata_code
     delimiter : ^
@@ -275,7 +262,6 @@ ori_por_private:
 
 
 ori_por_private_multi:
-    local     : true
     source    : Por/Ori/ori_por.csv
     key_col   : [iata_code, location_type]
     delimiter : ^
@@ -283,7 +269,6 @@ ori_por_private_multi:
 
 
 ori_por_non_iata:
-    local     : true
     source    : Por/Ori/ori_por_non_iata.csv
     key_col   : iata_code
     delimiter : ^
@@ -307,7 +292,6 @@ ori_por_non_iata:
 
 
 currencies:
-    local     : true
     source    : Currencies/wiki_source_ISO_4217.csv
     key_col   : code
     delimiter : ;
@@ -320,7 +304,6 @@ currencies:
 
 
 airlines:
-    local     : true
     source    : Airlines/CRB_AIRLINE.csv
     key_col   : iata_code
     delimiter : ^
@@ -334,7 +317,6 @@ airlines:
 
 
 regions:
-    local     : true
     source    : Regions/regions.csv
     key_col   : code
     delimiter : ;
@@ -344,7 +326,6 @@ regions:
 
 
 locales:
-    local     : true
     source    : Locales/locales.csv
     key_col   : locale
     delimiter : ;
@@ -359,7 +340,6 @@ locales:
 
 
 location_types:
-    local     : true
     source    : LocationTypes/location_types.csv
     key_col   : code
     delimiter : ^
@@ -369,7 +349,6 @@ location_types:
 
 
 geonames_head:
-    local     : true
     source    : Por/Geonames/allCountries.head.txt
     key_col   : geoname_id
     delimiter : "\t"
@@ -397,6 +376,7 @@ geonames_head:
 
 geonames_full:
     local     : false
+    limit     : # put a number to load only the first lines
     source    : /remote/orihome/aprengere/public/allCountries.txt
     #source    : /home/aprengere/public/allCountries.txt
     key_col   : geoname_id
