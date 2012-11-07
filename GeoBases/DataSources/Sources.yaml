@@ -162,6 +162,11 @@ ori_por:
     source    : Por/Ori/ori_por_public.csv
     key_col   : iata_code
     delimiter : ^
+    # Here you may put '' to
+    # split every char 'AB' -> ['A', 'B']
+    sub_delimiters: &ori_por_subdel
+        location_type    :
+        alt_name_section : ['=', '|']
     headers   : &ori_por_headers
         - iata_code
         - icao_code
@@ -211,10 +216,11 @@ ori_por:
 
 
 ori_por_multi:
-    source    : Por/Ori/ori_por_public.csv
-    key_col   : [iata_code, location_type]
-    delimiter : ^
-    headers   : *ori_por_headers
+    source         : Por/Ori/ori_por_public.csv
+    key_col        : [iata_code, location_type]
+    delimiter      : ^
+    sub_delimiters : *ori_por_subdel
+    headers        : *ori_por_headers
 
 
 ori_por_private:
