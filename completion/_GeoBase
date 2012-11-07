@@ -26,4 +26,5 @@ _arguments \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
  "(-v --verbose)"{-v,--verbose}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
+ "(-V --version)"{-V,--version}"[Display version information]" \
  "*:keys:()"
