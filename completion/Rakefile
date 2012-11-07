@@ -1,0 +1,59 @@
+
+require 'erb'
+require 'yaml'
+require 'pathname'
+
+ROOT_PATH = File.expand_path File.dirname(__FILE__)
+
+CONFIG_FILE_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
+
+BUILD_PATH = File.join ROOT_PATH, '.'
+ASSETS_PATH = File.join ROOT_PATH, '.'
+
+# Read YAML configuration
+#File.open(CONFIG_FILE_PATH) { |f| YAML.load f }.each do |param, val|
+#  Object.const_set "CONF_#{param.upcase}", val
+#end
+CONFIG = YAML.load File.open(CONFIG_FILE_PATH)
+
+ASSET_FILES = {
+  '_GeoBase.erb' => '_GeoBase'
+}
+
+BASES  = CONFIG.keys.sort.join(' ')
+FIELDS = (['__key__', '__dup__', '__lno__'] + CONFIG['ori_por']['headers'] + ['alt_name_section@raw', '__gar__']).join(' ')
+
+namespace :build do
+
+  # Compute path to the distribution tree
+  def dist(*path)
+    File.join BUILD_PATH, *path
+  end
+
+  # Compute path to assets
+  def asset(*path)
+    File.join ASSETS_PATH, *path
+  end
+
+  desc "Realizing template"
+  task :realize do
+    # Distribute asset files
+    ASSET_FILES.each do |source, target|
+      dist_target = dist target
+      asset_source = asset source
+      #file dist_target => asset_source do
+        if asset_source =~ /\.erb$/
+          puts "Realize template #{asset_source} to #{dist_target}"
+          erb = ERB.new(File.read(asset_source))
+          erb.filename = File.basename asset_source
+          File.open(dist_target, 'w') { |f| f.write erb.result(binding) }
+        else
+          cp asset_source, dist_target
+        end
+      #end
+    end
+  end
+
+end
+
+task :default => 'build:realize'
