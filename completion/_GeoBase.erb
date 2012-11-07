@@ -1,30 +1,37 @@
 #compdef GeoBase
 
-BASES="(<%=BASES.join(' ')%>)"
-
-FIELDS="(<%=FIELDS.join(' ')%>)"
+B_BASES="(<%=BASES.join(' ')%>)"
+F_FIELDS="(<%=FIELDS.join(' ')%>)"
+N_RADIUS="(10 20 30 40 50)"
+C_CLOSEST="(10 20 30 40 50)"
+F_FUZZY="(0.5 0.6 0.7 0.8 0.9)"
+T_TREP="(F S I J)"
+L_LIMIT="(1 2 5)"
 
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \
- "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]:base:$BASES" \
+ "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]:base:$B_BASES" \
  "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:fuzzy value:()" \
- "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]:fuzzy property:$FIELDS" \
- "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit:(0.5 0.8 0.9)" \
+ "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]:fuzzy property:$F_FIELDS" \
+ "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
  "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:exact value:()" \
- "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:exact property:$FIELDS" \
+ "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:exact property:$F_FIELDS" \
  "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
  "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]:near point:()" \
- "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]:near limit:(10 20 30 40 50)" \
+ "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]:near limit (km):$N_RADIUS" \
  "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:from point:()" \
- "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit:(10 20 30 40 50)" \
+ "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit (nb):$C_CLOSEST" \
  "(-t --trep)"{-t,--trep}"[OpenTrep mode]:value:()" \
- "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:(F S I J)" \
+ "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
  "(-w --without-grid)"{-w,--without-grid}"[Disabling grid for nearby searches]" \
- "(-o --omit)"{-o,--omit}"[Omit some fields in output]:fields:$FIELDS" \
- "(-s --show)"{-s,--show}"[Only display some fields in output]:fields:$FIELDS" \
- "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit:(1 2 5)" \
+ "(-o --omit)"{-o,--omit}"[Omit some fields in output]:fields:$F_FIELDS" \
+ "(-s --show)"{-s,--show}"[Only display some fields in output]:fields:$F_FIELDS" \
+ "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
  "(-v --verbose)"{-v,--verbose}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
  "(-V --version)"{-V,--version}"[Display version information]" \
  "*:keys:()"
+
+# Magic modeline option lo use zsh coloration in vim
+# vim: ft=zsh
