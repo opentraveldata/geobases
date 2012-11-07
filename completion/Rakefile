@@ -20,8 +20,18 @@ ASSET_FILES = {
   '_GeoBase.erb' => '_GeoBase'
 }
 
-BASES  = CONFIG.keys.sort.join(' ')
-FIELDS = (['__key__', '__dup__', '__lno__'] + CONFIG['ori_por']['headers'] + ['alt_name_section@raw', '__gar__']).join(' ')
+BASES  = CONFIG.keys.sort
+
+FIELDS = ['__key__', '__dup__', '__lno__'] + CONFIG['ori_por']['headers']
+
+CONFIG['ori_por']['sub_delimiters'].each do |key, val|
+    if not val.nil?
+        FIELDS << key + '@raw'
+    end
+end
+
+FIELDS << '__gar__'
+
 
 namespace :build do
 
