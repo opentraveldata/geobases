@@ -108,7 +108,7 @@ class GeoBase(object):
 
 
 
-    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, verbose=True):
+    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, limit=None, verbose=True):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -157,6 +157,7 @@ class GeoBase(object):
         self._key_col   = key_col
         self._headers   = [] if headers is None else headers
         self._verbose   = verbose
+        self._limit     = limit
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -166,14 +167,21 @@ class GeoBase(object):
         if data in GeoBase.BASES:
             conf = GeoBase.BASES[data]
 
-            if conf['local'] is True:
-                self._source = local_path(GeoBase.PATH_CONF, conf['source'])
-            else:
-                self._source = conf['source']
+            try:
+                if conf.get('local', True) is True:
+                    self._source = local_path(GeoBase.PATH_CONF, conf['source'])
+                else:
+                    self._source = conf['source']
 
-            self._key_col   = conf['key_col']
-            self._delimiter = conf['delimiter']
-            self._headers   = conf['headers']
+                self._key_col   = conf['key_col']
+                self._delimiter = conf['delimiter']
+                self._headers   = conf['headers']
+                self._limit     = conf.get('limit', self._limit)
+
+            except KeyError as e:
+                print "Missing field %s for data '%s' in configuration file." % \
+                        (e, data)
+                exit()
 
         elif data == 'feed':
             # User input defining everything
@@ -232,6 +240,11 @@ class GeoBase(object):
 
                 if self._verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
                     print '%-10s lines loaded so far' % line_nb
+
+                if self._limit is not None and line_nb > self._limit:
+                    if self._verbose:
+                        print 'Beyond limit %s for lines loaded, stopping.' % self._limit
+                    break
 
                 # Skip comments and empty lines
                 # Comments must *start* with #, otherwise they will not be stripped
