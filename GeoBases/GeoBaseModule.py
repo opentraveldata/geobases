@@ -108,7 +108,7 @@ class GeoBase(object):
 
 
 
-    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, limit=None, verbose=True):
+    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, sub_delimiters=None, limit=None, verbose=True):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -154,6 +154,7 @@ class GeoBase(object):
         self._data      = data
         self._source    = source
         self._delimiter = delimiter
+        self._sub_dels  = {} if sub_delimiters is None else sub_delimiters
         self._key_col   = key_col
         self._headers   = [] if headers is None else headers
         self._verbose   = verbose
@@ -168,15 +169,18 @@ class GeoBase(object):
             conf = GeoBase.BASES[data]
 
             try:
-                if conf.get('local', True) is True:
-                    self._source = local_path(GeoBase.PATH_CONF, conf['source'])
-                else:
-                    self._source = conf['source']
-
+                local           = conf.get('local', True)
                 self._key_col   = conf['key_col']
                 self._delimiter = conf['delimiter']
                 self._headers   = conf['headers']
                 self._limit     = conf.get('limit', self._limit)
+                self._sub_dels  = conf.get('sub_delimiters', self._sub_dels)
+
+                if local is True:
+                    self._source = local_path(GeoBase.PATH_CONF, conf['source'])
+                else:
+                    self._source = conf['source']
+
 
             except KeyError as e:
                 print "Missing field %s for data '%s' in configuration file." % \
@@ -191,29 +195,29 @@ class GeoBase(object):
             raise ValueError('Wrong data type. Not in %s' % sorted(GeoBase.BASES.keys()))
 
         # Loading data
+        self._configSubDelimiters()
         self._loadFile()
         self.createGrid()
 
 
-
-    def _loadFile(self):
-        '''Load the file and feed the self._things.
-
-        :param verbose: display informations or not during runtime
-        :raises: IOError, if the source cannot be read
-        :raises: ValueError, if duplicates are found in the source
+    def _configSubDelimiters(self):
+        '''Some precomputation on sub-delimiters.
         '''
+        for h in self._headers:
+            # If not in conf, do not sub split
+            if h not in self._sub_dels:
+                self._sub_dels[h] = None
 
-        # Someone told me that this increases speed :)
-        key_col = self._key_col
-        lim     = self._delimiter
-        headers = self._headers
+            # Handling sub delimiter not list-embedded
+            if isinstance(self._sub_dels[h], str):
+                self._sub_dels[h] = [self._sub_dels[h]]
 
-        if self._source is None:
-            if self._verbose:
-                print 'Source was None, skipping loading...'
-            return
 
+
+    @staticmethod
+    def _configKeyer(key_col, headers):
+        '''Define thw function that build a line key.
+        '''
         # It is possible to have a key_col which is a list
         # In this case we build the key as the concatenation between
         # the different fields
@@ -228,22 +232,47 @@ class GeoBase(object):
                 raise ValueError()
 
         except ValueError:
-            raise ValueError("Inconsistent: key_col = %s with headers = %s" % (key_col, headers))
-
+            raise ValueError("Inconsistent: key_col = %s with headers = %s" % \
+                             (key_col, headers))
         else:
             keyer = lambda row, pos: ''.join(row[p] for p in pos)
 
+        return pos, keyer
+
+
+    def _loadFile(self):
+        '''Load the file and feed the self._things.
+
+        :param verbose: display informations or not during runtime
+        :raises: IOError, if the source cannot be read
+        :raises: ValueError, if duplicates are found in the source
+        '''
+
+        # Someone told me that this increases speed :)
+        key_col  = self._key_col
+        delim    = self._delimiter
+        headers  = self._headers
+        limit    = self._limit
+        verbose  = self._verbose
+        sub_dels = self._sub_dels
+
+        if self._source is None:
+            if verbose:
+                print 'Source was None, skipping loading...'
+            return
+
+        pos, keyer = self._configKeyer(key_col, headers)
 
         with open(self._source) as f:
 
             for line_nb, row in enumerate(f, start=1):
 
-                if self._verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+                if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
                     print '%-10s lines loaded so far' % line_nb
 
-                if self._limit is not None and line_nb > self._limit:
-                    if self._verbose:
-                        print 'Beyond limit %s for lines loaded, stopping.' % self._limit
+                if limit is not None and line_nb > limit:
+                    if verbose:
+                        print 'Beyond limit %s for lines loaded, stopping.' % limit
                     break
 
                 # Skip comments and empty lines
@@ -254,7 +283,7 @@ class GeoBase(object):
                 # Stripping \t would cause bugs in tsv files
                 # If the tsv ends with \t\t, stripping would cause
                 # to loose the track of column numbers
-                row = row.rstrip(' \n\r').split(lim)
+                row = row.rstrip(' \n\r').split(delim)
                 key = keyer(row, pos)
 
                 # No duplicates ever, we will erase all data after if it is
@@ -263,9 +292,9 @@ class GeoBase(object):
                 else:
                     dup = 1 + self._things[key]['__dup__']
 
-                    if self._verbose:
-                        print "/!\ %s already in base from l. %s [parsing l. %s; duplicate %s]" % \
-                                (key,  self._things[key]['__lno__'], line_nb, dup)
+                    if verbose:
+                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
+                                (line_nb, key, dup, self._things[key]['__lno__'])
 
                 # Erase everything, except duplicates counter
                 self._things[key] = {
@@ -284,22 +313,28 @@ class GeoBase(object):
                     if h is None:
                         continue
                     # if h is an empty string, it means there was more
-                    # data than the headers said, we store it in the __gar__ special field
+                    # data than the headers said, we store it in the 
+                    # __gar__ special field
                     if not h:
                         self._things[key]['__gar__'].append(v)
                     else:
-                        self._things[key][h] = v
+                        if sub_dels[h] is None:
+                            self._things[key][h] = v
+                        else:
+                            self._things[key]['__raw:%s' % h] = v
+                            self._things[key][h] = recursive_split(v, sub_dels[h])
 
-                # Flattening the __gar__ list, iterables are not really supported
-                self._things[key]['__gar__'] = lim.join(self._things[key]['__gar__'])
+                # Flattening the __gar__ list
+                self._things[key]['__gar__'] = delim.join(self._things[key]['__gar__'])
 
 
         # We remove None headers, which are not-loaded-columns
         self.fields = ['__key__', '__dup__', '__lno__']     + \
                       [h for h in headers if h is not None] + \
+                      ['__raw:%s' % h for h in sub_dels if sub_dels[h] is not None] + \
                       ['__gar__']
 
-        if self._verbose:
+        if verbose:
             print "Import successful from %s" % self._source
             print "Available fields for things: %s" % self.fields
 
@@ -1158,6 +1193,41 @@ class GeoBase(object):
         # For all other formats we return an empty
         # list to avoid failures
         return []
+
+
+
+def ext_split(value, split):
+    '''Extended split function handling None and '' splitter.
+    '''
+    if split is None:
+        return value
+    if split == '':
+        return list(value)
+
+    return value.split(split)
+
+
+def recursive_split(value, splits):
+    '''Recursive extended split.
+    '''
+    # Case where no sub delimiters
+    if not splits:
+        return value
+
+    if len(splits) == 1:
+        return ext_split(value, splits[0])
+
+    if len(splits) == 2:
+        return [ext_split(v, splits[1]) for v in value.split(splits[0])]
+
+    if len(splits) == 3:
+        return [
+            [ext_split(sv, splits[2]) for sv in ext_split(v, splits[1])]
+            for v in value.split(splits[0])
+        ]
+
+    raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
+
 
 
 def _test():
