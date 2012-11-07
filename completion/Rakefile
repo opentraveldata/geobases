@@ -45,25 +45,24 @@ namespace :build do
     File.join ASSETS_PATH, *path
   end
 
-  desc "Realizing template"
-  task :realize do
-    # Distribute asset files
-    ASSET_FILES.each do |source, target|
-      dist_target = dist target
-      asset_source = asset source
-      #file dist_target => asset_source do
-        if asset_source =~ /\.erb$/
-          puts "Realize template #{asset_source} to #{dist_target}"
-          erb = ERB.new(File.read(asset_source))
-          erb.filename = File.basename asset_source
-          File.open(dist_target, 'w') { |f| f.write erb.result(binding) }
-        else
-          cp asset_source, dist_target
-        end
-      #end
+  # Distribute asset files
+  ASSET_FILES.each do |source, target|
+    dist_target = dist target
+    asset_source = asset source
+    file dist_target => asset_source do
+      if asset_source =~ /\.erb$/
+        puts "Realize template #{asset_source} to #{dist_target}"
+        erb = ERB.new(File.read(asset_source))
+        erb.filename = File.basename asset_source
+        File.open(dist_target, 'w') { |f| f.write erb.result(binding) }
+      else
+        cp asset_source, dist_target
+      end
     end
   end
 
+  desc "Main"
+  task :realize => dist(ASSET_FILES['_GeoBase.erb'])
 end
 
 task :default => 'build:realize'
