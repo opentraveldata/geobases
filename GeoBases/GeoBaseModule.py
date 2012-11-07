@@ -321,7 +321,7 @@ class GeoBase(object):
                         if sub_dels[h] is None:
                             self._things[key][h] = v
                         else:
-                            self._things[key]['__raw@%s' % h] = v
+                            self._things[key]['%s@raw' % h] = v
                             self._things[key][h] = recursive_split(v, sub_dels[h])
 
                 # Flattening the __gar__ list
@@ -329,10 +329,17 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__dup__', '__lno__']     + \
-                      [h for h in headers if h is not None] + \
-                      ['__raw@%s' % h for h in sub_dels if sub_dels[h] is not None] + \
-                      ['__gar__']
+        self.fields = ['__key__', '__dup__', '__lno__']
+
+        for h in headers:
+            if sub_dels[h] is not None:
+                self.fields.append('%s@raw' % h)
+
+            if h is not None:
+                self.fields.append(h)
+
+        self.fields.append('__gar__')
+
 
         if verbose:
             print "Import successful from %s" % self._source
