@@ -66,30 +66,25 @@ class RotatingColors(object):
 
     def get(self):
         '''Get current color.'''
-
         return self._availables[self._current]
 
 
     @staticmethod
     def getEmph():
         '''Get special emphasized color.'''
-
         return ('white', 'on_blue', [])
 
 
     @staticmethod
     def getHeader():
         '''Get special header color.'''
-
         return ('red', None, [])
 
 
     @staticmethod
     def getSpecial():
         '''Get special property color.'''
-
         return ('magenta', None, [])
-
 
 
 def fmt_ref(ref, ref_type, no_symb=False):
@@ -185,7 +180,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
         # In this default case, we remove splitted valued if
         # corresponding raw values exist
         for i, f in enumerate(show):
-            if '__raw:%s' % f in show:
+            if '__raw@%s' % f in show:
                 del show[i]
 
     # Building final shown headers
