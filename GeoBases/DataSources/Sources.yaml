@@ -165,6 +165,7 @@ ori_por:
     # Here you may put '' to
     # split every char 'AB' -> ['A', 'B']
     sub_delimiters: &ori_por_subdel
+        #timezone         : ['/']
         location_type    :
         alt_name_section : ['=', '|']
     headers   : &ori_por_headers
