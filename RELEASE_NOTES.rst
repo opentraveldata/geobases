@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.24 : added --version for CLI; new option limit in conf to load partially the file
 + 3.23 : added autocomplete partial support for CLI
 + 3.22 : added new base for geonames_head and geonames_full, lines tracking
 + 3.21 : added new base for ori_por_private (and multi version)
