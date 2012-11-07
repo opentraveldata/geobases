@@ -46,8 +46,8 @@ class RotatingColors(object):
     def __init__(self):
 
         self._availables = [
-             ('cyan',   None,     []),
              ('white', 'on_grey', []),
+             ('cyan',   None,     []),
         ]
 
         self._current = 0
@@ -82,6 +82,14 @@ class RotatingColors(object):
         '''Get special header color.'''
 
         return ('red', None, [])
+
+
+    @staticmethod
+    def getSpecial():
+        '''Get special property color.'''
+
+        return ('magenta', None, [])
+
 
 
 def fmt_ref(ref, ref_type, no_symb=False):
@@ -145,8 +153,13 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if f in important:
             col = c.getEmph()
+        elif f.startswith('__'):
+            # For special fields like __dup__
+            col = c.getSpecial()
         else:
             col = c.get()
+
+        c.next()
 
         if f == '__ref__':
             stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
@@ -159,8 +172,6 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
             for _, k in list_of_things:
                 stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
-
-        c.next()
 
     stdout.write('\n')
 
