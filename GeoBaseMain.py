@@ -69,6 +69,13 @@ class RotatingColors(object):
         return self._availables[self._current]
 
 
+    def getRaw(self):
+        '''Get special raw color. Only change foreground color'''
+        current = list(self._availables[self._current])
+        current[0] = 'yellow'
+        return tuple(current)
+
+
     @staticmethod
     def getEmph():
         '''Get special emphasized color.'''
@@ -85,6 +92,7 @@ class RotatingColors(object):
     def getSpecial():
         '''Get special property color.'''
         return ('magenta', None, [])
+
 
 
 def fmt_ref(ref, ref_type, no_symb=False):
@@ -147,6 +155,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         elif f.startswith('__'):
             # For special fields like __dup__
             col = c.getSpecial()
+        elif f.endswith('@raw'):
+            # For @raw fields
+            col = c.getRaw()
         else:
             col = c.get()
 
@@ -175,11 +186,12 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     '''
 
     if not show:
+        # Temporary
         t_show = ['__ref__'] + geob.fields[:]
 
         # In this default case, we remove splitted valued if
         # corresponding raw values exist
-        show = [f for f in t_show if '__raw@%s' % f not in t_show]
+        show = [f for f in t_show if '%s@raw' % f not in t_show]
 
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
