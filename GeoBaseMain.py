@@ -127,11 +127,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         show = ['__ref__'] + geob.fields[:]
 
     # Building final shown headers
-    show_wo_omit = []
-
-    for f in show:
-        if f not in omit:
-            show_wo_omit.append(f)
+    show_wo_omit = [f for f in show if f not in omit]
 
     # Different behaviour given
     # number of results
@@ -186,12 +182,14 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     if not show:
         show = ['__ref__'] + geob.fields[:]
 
-    # Building final shown headers
-    show_wo_omit = []
+        # In this default case, we remove splitted valued if
+        # corresponding raw values exist
+        for i, f in enumerate(show):
+            if '__raw:%s' % f in show:
+                del show[i]
 
-    for f in show:
-        if f not in omit:
-            show_wo_omit.append(f)
+    # Building final shown headers
+    show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
     stdout.write('#' + '^'.join(show_wo_omit) + '\n')
