@@ -484,6 +484,11 @@ def main():
         action='store_true'
     )
 
+    parser.add_argument('-V', '--version',
+        help = '''Display version information.''',
+        action='store_true'
+    )
+
     args = vars(parser.parse_args())
 
 
@@ -510,6 +515,14 @@ def main():
     #
     # CREATION
     #
+    if args['version']:
+        import pkg_resources
+        r = pkg_resources.require("GeoBases")[0]
+        print 'Project  : %s' % r.project_name
+        print 'Version  : %s' % r.version
+        print 'Location : %s' % r.location
+        exit()
+
     if args['base'] not in GeoBase.BASES:
         error('base', args['base'], sorted(GeoBase.BASES.keys()))
 
