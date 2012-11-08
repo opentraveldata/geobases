@@ -25,7 +25,7 @@ To create source distribution (pip-installable)::
     python setup.py sdist
 
 To deploy source package on python packages repository::
-    scp dist/GeoBases-0.3.0.tar.gz ori-data@nceorilnx04:/remote/oridata/www/pythonpackages/
+    rake
 
 If you install a package in user space, you may want to check
 that your ~/.local/bin is in your $PATH, and that Python knows
