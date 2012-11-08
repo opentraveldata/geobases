@@ -138,7 +138,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     # given number of columns and term width
     n = len(list_of_things)
 
-    lim = min(40, max(25, int(getTermSize()[1] / float(n+1))))
+    lim = min(40, max(20, int(getTermSize()[1] / float(n+1))))
 
     if n == 1:
         # We do not truncate names if only one result
@@ -153,11 +153,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         if f in important:
             col = c.getEmph()
         elif f.startswith('__'):
-            # For special fields like __dup__
-            col = c.getSpecial()
+            col = c.getSpecial() # For special fields like __dup__
         elif f.endswith('@raw'):
-            # For @raw fields
-            col = c.getRaw()
+            col = c.getRaw()     # For @raw fields
         else:
             col = c.get()
 
@@ -519,7 +517,7 @@ def main():
         if args['quiet']:
             limit = None
         else:
-            limit = 4
+            limit = 5
 
     else:
         limit = int(args['limit'])
