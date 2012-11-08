@@ -6,28 +6,28 @@ cd `dirname $0`
 
 TMP_CSV='/tmp/fsdlkghiueevlr_01.csv'
 
+# By default, we will ask the user permission to replace
+# the old file, unless -f option is triggered
+FORCE=0
+
+while getopts ":f" opt; do
+    case $opt in
+        f)
+            echo "-f was triggered! Replacing old file anyway..." >&2
+            FORCE=1
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+    esac
+done
+
 
 do_a_file() {
 
     local REF_URL="$1"
     local LOC_CSV="$2"
-
-    # By default, we will ask the user permission to replace
-    # the old file, unless -f option is triggered
-    FORCE=0
-
-    while getopts ":f" opt; do
-        case $opt in
-            f)
-                echo "-f was triggered! Replacing old file anyway..." >&2
-                FORCE=1
-                ;;
-            \?)
-                echo "Invalid option: -$OPTARG" >&2
-                exit 1
-                ;;
-        esac
-    done
 
     echo -e "\n* Comparing local file and remote:\n"
     echo -e "1. $PWD/$LOC_CSV"
@@ -68,13 +68,15 @@ do_a_file() {
 }
 
 # Files
-REF_URL='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
-LOC_CSV='Por/Ori/ori_por_public.csv'
+REF_URL_1='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
+REF_URL_2='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
+REF_URL_3="http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv"
 
-do_a_file "$REF_URL" "$LOC_CSV"
+LOC_CSV_1='Por/Ori/ori_por_public.csv'
+LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
+LOC_CSV_3='Por/Ori/ori_por.csv'
 
-REF_URL='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
-LOC_CSV='Por/Ori/ori_por_non_iata.csv'
-
-do_a_file "$REF_URL" "$LOC_CSV"
+do_a_file "$REF_URL_1" "$LOC_CSV_1"
+do_a_file "$REF_URL_2" "$LOC_CSV_2"
+do_a_file "$REF_URL_3" "$LOC_CSV_3"
 
