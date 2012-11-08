@@ -404,7 +404,7 @@ office_ids_midt:
 
 
 office_ids:
-    source    : Office_IDs/OfficeIDs_and_names.tsv
+    source    : Office_IDs/OfficeIDs_and_names.csv
     key_col   : office_id
     delimiter : "\t"
     headers   :
