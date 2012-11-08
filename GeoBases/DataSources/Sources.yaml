@@ -162,11 +162,10 @@ ori_por:
     source    : Por/Ori/ori_por_public.csv
     key_col   : iata_code
     delimiter : ^
-    # Here you may put '' to
-    # split every char 'AB' -> ['A', 'B']
     sub_delimiters: &ori_por_subdel
-        #timezone         : ['/']
-        location_type    :
+        # Here you may put '' to
+        # split every char 'AB' -> ['A', 'B']
+        #location_type    : ''
         alt_name_section : ['=', '|']
     headers   : &ori_por_headers
         - iata_code
@@ -384,8 +383,31 @@ geonames_head:
 geonames_full:
     local     : false
     limit     : # put a number to load only the first lines
-    source    : /remote/orihome/aprengere/public/allCountries.txt
     #source    : /home/aprengere/public/allCountries.txt
+    source    : /remote/orihome/aprengere/public/allCountries.txt
     key_col   : geoname_id
     delimiter : "\t"
     headers   : *geonames_headers
+
+
+office_ids_midt:
+    source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
+    key_col   : office_id
+    delimiter : ^
+    headers   :
+        - office_id
+        - other_code
+        - country_code
+        - name
+        - address
+        - country_code_2
+
+
+office_ids:
+    source    : Office_IDs/OfficeIDs_and_names.tsv
+    key_col   : office_id
+    delimiter : "\t"
+    headers   :
+        - office_id
+        - name
+
