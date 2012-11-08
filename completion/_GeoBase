@@ -1,6 +1,6 @@
 #compdef GeoBase
 
-B_BASES="(airlines airports airports_csv cities continents countries currencies geonames_full geonames_head languages locales location_types ori_por ori_por_multi ori_por_non_iata ori_por_private ori_por_private_multi regions stations stations_nls stations_uic timezones)"
+B_BASES="(airlines airports airports_csv cities continents countries currencies geonames_full geonames_head languages locales location_types office_ids office_ids_midt ori_por ori_por_multi ori_por_non_iata ori_por_private ori_por_private_multi regions stations stations_nls stations_uic timezones)"
 F_FIELDS="(__key__ __dup__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate is_airport is_commercial city_code city_name_utf city_name_ascii state_code region_code location_type wiki_link alt_name_section alt_name_section@raw __gar__)"
 N_RADIUS="(10 20 30 40 50)"
 C_CLOSEST="(10 20 30 40 50)"
