@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.27 : adding two office_IDs data source
 + 3.26 : autocomplete file is generated with Rake and reading YAML conf
 + 3.25 : added sub delimiters options; some refactoring
 + 3.24 : added --version for CLI; new option limit in conf to load partially the file
