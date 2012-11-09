@@ -46,8 +46,8 @@ class RotatingColors(object):
     def __init__(self):
 
         self._availables = [
-             ('white', 'on_grey', []),
              ('cyan',   None,     []),
+             ('white', 'on_grey', []),
         ]
 
         self._current = 0
