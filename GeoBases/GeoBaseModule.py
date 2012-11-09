@@ -251,6 +251,7 @@ class GeoBase(object):
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
             '__dup__' : [],       # special field for duplicates
+            '__dad__' : '',       # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -337,6 +338,7 @@ class GeoBase(object):
                     # We update the data with this info
                     row_data['__key__'] = d_key
                     row_data['__dup__'] = self._things[key]['__dup__']
+                    row_data['__dad__'] = key
 
                     # We add the d_key as a new duplicate, and store the duplicate in the main _things
                     self._things[key]['__dup__'].append(d_key)
@@ -348,7 +350,7 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__dup__', '__lno__']
+        self.fields = ['__key__', '__dup__', '__dad__', '__lno__']
 
         for h in headers:
             if sub_dels[h] is not None:
