@@ -52,6 +52,8 @@ import os
 import os.path as op
 import heapq
 from itertools import izip_longest
+from collections import defaultdict
+
 # Not in standard library
 import yaml
 
@@ -142,6 +144,7 @@ class GeoBase(object):
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
         self._things = {}
+        self._duplic = defaultdict(list)
         self._ggrid  = None
 
         # A cache for the fuzzy searches
@@ -241,7 +244,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowValues(row, headers, sub_dels, key, line_nb, dup, delim):
+    def _buildRowValues(row, headers, sub_dels, key, line_nb, delim):
         '''Building all data associated to this row.
         '''
         # Erase everything, except duplicates counter
@@ -249,7 +252,6 @@ class GeoBase(object):
             '__key__' : key,      # special field for key
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
-            '__dup__' : dup       # special field for duplicates
         }
 
         # headers represents the meaning of each column.
@@ -324,18 +326,19 @@ class GeoBase(object):
                 row = row.rstrip(' \n\r').split(delim)
                 key = keyer(row, pos)
 
+                row_data = self._buildRowValues(row, headers, sub_dels, key, line_nb, delim)
+
                 # No duplicates ever, we will erase all data after if it is
                 if key not in self._things:
-                    dup = 0
+                    self._things[key] = row_data
+                    self._things[key]['__dup__'] = 0 # special field for duplicates
                 else:
-                    dup = 1 + self._things[key]['__dup__']
+                    self._duplic[key].append(row_data)
+                    self._things[key]['__dup__'] += 1
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                                (line_nb, key, dup, self._things[key]['__lno__'])
-
-                # Generate all data for this key
-                self._things[key] = self._buildRowValues(row, headers, sub_dels, key, line_nb, dup, delim)
+                                (line_nb, key, self._things[key]['__dup__'], self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
@@ -514,11 +517,11 @@ class GeoBase(object):
         >>> len(list(geo_o.getKeysWhere(c_1)))
         17
         >>> len(list(geo_o.getKeysWhere(c_2)))
-        59
+        57
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
-        74
+        72
 
         This works too \o/.
 
