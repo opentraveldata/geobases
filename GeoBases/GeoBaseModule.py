@@ -252,6 +252,7 @@ class GeoBase(object):
             '__key__' : key,      # special field for key
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
+            '__dup__' : 0         # special field for duplicates
         }
 
         # headers represents the meaning of each column.
@@ -331,10 +332,13 @@ class GeoBase(object):
                 # No duplicates ever, we will erase all data after if it is
                 if key not in self._things:
                     self._things[key] = row_data
-                    self._things[key]['__dup__'] = 0 # special field for duplicates
                 else:
-                    self._duplic[key].append(row_data)
                     self._things[key]['__dup__'] += 1
+
+                    # We append the duplicate, and compute the __dup__
+                    # so it looks like a duplicate id
+                    self._duplic[key].append(row_data)
+                    self._duplic[key][-1]['__dup__'] = len(self._duplic[key]) - 1
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
@@ -484,6 +488,74 @@ class GeoBase(object):
         [('AGN', (57.50..., -134.585...)), ('AGM', (65...))]
         '''
         return ( (key, self.getLocation(key)) for key in self )
+
+
+
+    def hasDuplicates(self, key):
+        '''Tell if a key had duplicates.
+
+        >>> geo_o.hasDuplicates('ORY')
+        0
+        >>> geo_o.hasDuplicates('THA')
+        1
+        '''
+        return self._things[key]['__dup__']
+
+
+
+    def getDuplicates(self, key, field=None, default=None):
+        '''
+        Simple get on the database.
+        This get function raise exception when input is not correct.
+
+        :param key:   the key of the thing (like 'SFO')
+        :param field: the field (like 'name' or 'lat')
+        :raises:      KeyError, if the key is not in the base
+        :returns:     the needed information
+
+        >>> geo_a.get('CDG', 'city_code')
+        'PAR'
+        >>> geo_t.get('frnic', 'name')
+        'Nice-Ville'
+        >>> geo_t.get('frnic')
+        {'info': 'Desserte Voyageur-Infrastructure', 'code': 'frnic', ...}
+
+        Cases of unknown key.
+
+        >>> geo_t.get('frmoron', 'name', default='There')
+        'There'
+        >>> geo_t.get('frmoron', 'name')
+        Traceback (most recent call last):
+        KeyError: 'Thing not found: frmoron'
+        >>> geo_t.get('frmoron', default='There')
+        'There'
+
+        Cases of unknown field, this is a bug and always fail.
+
+        >>> geo_t.get('frnic', 'not_a_field', default='There')
+        Traceback (most recent call last):
+        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
+        '''
+
+        if key not in self._things:
+            # Unless default is set, we raise an Exception
+            if default is not None:
+                return [default]
+
+            raise KeyError("Thing not found: %s" % str(key))
+
+        # Key is in geobase here
+        if field is None:
+            return [self._things[key]] + self._duplic[key]
+
+        try:
+            res = [self._things[key][field]]
+        except KeyError:
+            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+        else:
+            if key not in self._duplic:
+                return res
+            return res + [d[field] for d in self._duplic[key]]
 
 
 
