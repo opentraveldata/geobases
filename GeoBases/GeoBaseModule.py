@@ -240,6 +240,44 @@ class GeoBase(object):
         return pos, keyer
 
 
+    @staticmethod
+    def _buildRowValues(row, headers, sub_dels, key, line_nb, dup, delim):
+        '''Building all data associated to this row.
+        '''
+        # Erase everything, except duplicates counter
+        data = {
+            '__key__' : key,      # special field for key
+            '__lno__' : line_nb,  # special field for line number
+            '__gar__' : [],       # special field for garbage
+            '__dup__' : dup       # special field for duplicates
+        }
+
+        # headers represents the meaning of each column.
+        # Using izip_longest here will replace missing fields
+        # with empty strings ''
+        for h, v in izip_longest(headers, row, fillvalue=''):
+            # if h is None, it means the conf file explicitely
+            # specified not to load the column
+            if h is None:
+                continue
+            # if h is an empty string, it means there was more
+            # data than the headers said, we store it in the 
+            # __gar__ special field
+            if not h:
+                data['__gar__'].append(v)
+            else:
+                if sub_dels[h] is None:
+                    data[h] = v
+                else:
+                    data['%s@raw' % h] = v
+                    data[h] = recursive_split(v, sub_dels[h])
+
+        # Flattening the __gar__ list
+        data['__gar__'] = delim.join(data['__gar__'])
+
+        return data
+
+
     def _loadFile(self):
         '''Load the file and feed the self._things.
 
@@ -296,36 +334,8 @@ class GeoBase(object):
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
                                 (line_nb, key, dup, self._things[key]['__lno__'])
 
-                # Erase everything, except duplicates counter
-                self._things[key] = {
-                    '__key__' : key,      # special field for key
-                    '__lno__' : line_nb,  # special field for line number
-                    '__gar__' : [],       # special field for garbage
-                    '__dup__' : dup       # special field for duplicates
-                }
-
-                # headers represents the meaning of each column.
-                # Using izip_longest here will replace missing fields
-                # with empty strings ''
-                for h, v in izip_longest(headers, row, fillvalue=''):
-                    # if h is None, it means the conf file explicitely
-                    # specified not to load the column
-                    if h is None:
-                        continue
-                    # if h is an empty string, it means there was more
-                    # data than the headers said, we store it in the 
-                    # __gar__ special field
-                    if not h:
-                        self._things[key]['__gar__'].append(v)
-                    else:
-                        if sub_dels[h] is None:
-                            self._things[key][h] = v
-                        else:
-                            self._things[key]['%s@raw' % h] = v
-                            self._things[key][h] = recursive_split(v, sub_dels[h])
-
-                # Flattening the __gar__ list
-                self._things[key]['__gar__'] = delim.join(self._things[key]['__gar__'])
+                # Generate all data for this key
+                self._things[key] = self._buildRowValues(row, headers, sub_dels, key, line_nb, dup, delim)
 
 
         # We remove None headers, which are not-loaded-columns
