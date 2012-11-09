@@ -136,10 +136,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     # number of results
     # We adapt the width between 25 and 40 
     # given number of columns and term width
-    n = len(list_of_things) + sum(geob.hasDuplicates(k) for _, k in list_of_things)
+    n = len(list_of_things)
 
     lim = min(40, max(20, int(getTermSize()[1] / float(n+1))))
-    print n, lim
 
     if n == 1:
         # We do not truncate names if only one result
@@ -155,10 +154,10 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.getEmph()
         elif f == '__ref__':
             col = c.getHeader()
-        elif f.startswith('__'):
-            col = c.getSpecial() # For special fields like __dup__
         elif f.endswith('@raw'):
             col = c.getRaw()     # For @raw fields
+        elif f.startswith('__'):
+            col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
 
@@ -167,14 +166,11 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
         if f == '__ref__':
-            for h, k in list_of_things:
+            for h, _ in list_of_things:
                 stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
-                for d in xrange(geob.hasDuplicates(k)):
-                    stdout.write(fixed_width(('(#%s) ' % (1+d)) + fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
         else:
             for _, k in list_of_things:
-                for d in geob.getDuplicates(k, f):
-                    stdout.write(fixed_width(d, col, lim, truncate))
+                stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
     stdout.write('\n')
 
@@ -201,15 +197,20 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     stdout.write('#' + '^'.join(show_wo_omit) + '\n')
 
     for h, k in list_of_things:
-        for d in geob.getDuplicates(k):
-            l = []
-            for f in show_wo_omit:
-                if f == '__ref__':
-                    l.append(fmt_ref(h, ref_type, no_symb=True))
-                else:
-                    l.append(d[f])
+        l = []
+        for f in show_wo_omit:
+            if f == '__ref__':
+                l.append(fmt_ref(h, ref_type, no_symb=True))
+            else:
+                s = geob.get(k, f)
+                # Small workaround to display nicely lists in quiet mode
+                # Fields @raw are already handled with raw version, but
+                # __dup__ field has no raw version for dumping
+                if isinstance(s, list):
+                    s = '/'.join(s)
+                l.append(str(s))
 
-            stdout.write('^'.join(str(e) for e in l) + '\n')
+        stdout.write('^'.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -680,11 +681,6 @@ def main():
 
     if limit is not None:
         res = res[:limit]
-        # We correct with duplicates which may alter
-        # the real number of results
-        add_dups = sum(g.hasDuplicates(k) for _, k in res)
-        print limit, add_dups 
-        res = res[:(limit-add_dups)]
 
     for h, k in res:
         if k not in g:
