@@ -235,7 +235,7 @@ class GeoBase(object):
             raise ValueError("Inconsistent: key_col = %s with headers = %s" % \
                              (key_col, headers))
         else:
-            keyer = lambda row, pos: ''.join(row[p] for p in pos)
+            keyer = lambda row, pos: '+'.join(row[p] for p in pos)
 
         return pos, keyer
 
