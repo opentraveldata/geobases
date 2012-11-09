@@ -152,6 +152,8 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if f in important:
             col = c.getEmph()
+        elif f == '__ref__':
+            col = c.getHeader()
         elif f.startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
         elif f.endswith('@raw'):
@@ -161,15 +163,12 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         c.next()
 
-        if f == '__ref__':
-            stdout.write('\n' + fixed_width(f, c.getHeader(), lim, truncate))
+        stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
+        if f == '__ref__':
             for h, _ in list_of_things:
                 stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
-
         else:
-            stdout.write('\n' + fixed_width(f, col, lim, truncate))
-
             for _, k in list_of_things:
                 stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
 
