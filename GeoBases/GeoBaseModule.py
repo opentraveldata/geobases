@@ -1209,9 +1209,10 @@ def ext_split(value, split):
     if split is None:
         return value
     if split == '':
-        return list(value)
+        # Here we convert a string like 'CA' into ('C', 'A')
+        return tuple(value)
 
-    return value.split(split)
+    return tuple(value.split(split))
 
 
 def recursive_split(value, splits):
@@ -1225,13 +1226,13 @@ def recursive_split(value, splits):
         return ext_split(value, splits[0])
 
     if len(splits) == 2:
-        return [ext_split(v, splits[1]) for v in value.split(splits[0])]
+        return tuple(ext_split(v, splits[1]) for v in value.split(splits[0]))
 
     if len(splits) == 3:
-        return [
-            [ext_split(sv, splits[2]) for sv in ext_split(v, splits[1])]
+        return tuple(
+            tuple(ext_split(sv, splits[2]) for sv in ext_split(v, splits[1]))
             for v in value.split(splits[0])
-        ]
+        )
 
     raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
 
