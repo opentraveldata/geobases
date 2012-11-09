@@ -52,7 +52,6 @@ import os
 import os.path as op
 import heapq
 from itertools import izip_longest
-from collections import defaultdict
 
 # Not in standard library
 import yaml
@@ -138,13 +137,12 @@ class GeoBase(object):
         ...         key_col='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': 0, '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
         self._things = {}
-        self._duplic = defaultdict(list)
         self._ggrid  = None
 
         # A cache for the fuzzy searches
@@ -252,7 +250,7 @@ class GeoBase(object):
             '__key__' : key,      # special field for key
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
-            '__dup__' : 0         # special field for duplicates
+            '__dup__' : [],       # special field for duplicates
         }
 
         # headers represents the meaning of each column.
@@ -333,16 +331,20 @@ class GeoBase(object):
                 if key not in self._things:
                     self._things[key] = row_data
                 else:
-                    self._things[key]['__dup__'] += 1
+                    # We compute a new key for the duplicate
+                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
 
-                    # We append the duplicate, and compute the __dup__
-                    # so it looks like a duplicate id
-                    self._duplic[key].append(row_data)
-                    self._duplic[key][-1]['__dup__'] = len(self._duplic[key]) - 1
+                    # We update the data with this info
+                    row_data['__key__'] = d_key
+                    row_data['__dup__'] = self._things[key]['__dup__']
+
+                    # We add the d_key as a new duplicate, and store the duplicate in the main _things
+                    self._things[key]['__dup__'].append(d_key)
+                    self._things[d_key] = row_data
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                                (line_nb, key, self._things[key]['__dup__'], self._things[key]['__lno__'])
+                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
@@ -499,42 +501,22 @@ class GeoBase(object):
         >>> geo_o.hasDuplicates('THA')
         1
         '''
-        return self._things[key]['__dup__']
+        return len(self._things[key]['__dup__'])
 
 
 
     def getDuplicates(self, key, field=None, default=None):
         '''
-        Simple get on the database.
-        This get function raise exception when input is not correct.
+        Get duplicate information.
 
-        :param key:   the key of the thing (like 'SFO')
-        :param field: the field (like 'name' or 'lat')
-        :raises:      KeyError, if the key is not in the base
-        :returns:     the needed information
-
-        >>> geo_a.get('CDG', 'city_code')
-        'PAR'
-        >>> geo_t.get('frnic', 'name')
-        'Nice-Ville'
-        >>> geo_t.get('frnic')
-        {'info': 'Desserte Voyageur-Infrastructure', 'code': 'frnic', ...}
-
-        Cases of unknown key.
-
-        >>> geo_t.get('frmoron', 'name', default='There')
-        'There'
-        >>> geo_t.get('frmoron', 'name')
-        Traceback (most recent call last):
-        KeyError: 'Thing not found: frmoron'
-        >>> geo_t.get('frmoron', default='There')
-        'There'
-
-        Cases of unknown field, this is a bug and always fail.
-
-        >>> geo_t.get('frnic', 'not_a_field', default='There')
-        Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
+        >>> geo_o.getDuplicates('ORY', 'name')
+        ['Paris-Orly']
+        >>> geo_o.getDuplicates('THA', 'name')
+        ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
+        >>> geo_o.getDuplicates('THA', '__key__')
+        ['THA', 'THA@1']
+        >>> geo_o.get('THA', '__dup__')
+        ['THA@1']
         '''
 
         if key not in self._things:
@@ -546,16 +528,14 @@ class GeoBase(object):
 
         # Key is in geobase here
         if field is None:
-            return [self._things[key]] + self._duplic[key]
+            return [self._things[key]] + [self._things[d] for d in self._things[key]['__dup__']]
 
         try:
             res = [self._things[key][field]]
         except KeyError:
             raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
         else:
-            if key not in self._duplic:
-                return res
-            return res + [d[field] for d in self._duplic[key]]
+            return res + [self._things[d][field] for d in self._things[key]['__dup__']]
 
 
 
@@ -575,12 +555,12 @@ class GeoBase(object):
         ['ORY', 'TNF', 'CDG', 'BVA']
         >>> list(geo_o.getKeysWhere([('comment', '')], reverse=True))
         []
-        >>> list(geo_o.getKeysWhere([('__dup__', '1')]))
+        >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
-        >>> len(list(geo_o.getKeysWhere([('__dup__', 1)])))
-        507
-        >>> len(list(geo_o.getKeysWhere([('__dup__', '1')], force_str=True)))
-        507
+        >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
+        10903
+        >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
+        10903
 
         Testing several conditions.
 
@@ -589,11 +569,11 @@ class GeoBase(object):
         >>> len(list(geo_o.getKeysWhere(c_1)))
         17
         >>> len(list(geo_o.getKeysWhere(c_2)))
-        57
+        59
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
-        72
+        74
 
         This works too \o/.
 
