@@ -22,9 +22,9 @@ ASSET_FILES = {
 
 BASES  = CONFIG.keys.sort
 
-FIELDS = ['__key__', '__dup__', '__lno__'] + CONFIG['ori_por']['headers']
+FIELDS = ['__key__', '__dup__', '__dad__', '__lno__'] + CONFIG['ori_por']['headers']
 
-CONFIG['ori_por']['sub_delimiters'].each do |key, val|
+CONFIG['ori_por']['subdelimiters'].each do |key, val|
     if not val.nil?
         FIELDS << key + '@raw'
     end
