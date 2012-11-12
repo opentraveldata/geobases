@@ -109,7 +109,7 @@ class GeoBase(object):
 
 
 
-    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, sub_delimiters=None, limit=None, discard_duplicates=False, verbose=True):
+    def __init__(self, data, source=None, headers=None, indexes=None, delimiter=None, subdelimiters=None, limit=None, discard_dups=False, verbose=True):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -134,7 +134,7 @@ class GeoBase(object):
         >>> GeoBase(data='feed',
         ...         source=local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
-        ...         key_col='code',
+        ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
@@ -152,15 +152,15 @@ class GeoBase(object):
         self._bias_cache_fuzzy = {}
 
         # Parameters for data loading
-        self._data         = data
-        self._source       = source
-        self._delimiter    = delimiter
-        self._sub_dels     = {} if sub_delimiters is None else sub_delimiters
-        self._key_col      = key_col
-        self._headers      = [] if headers is None else headers
-        self._limit        = limit
-        self._verbose      = verbose
-        self._discard_dups = discard_duplicates
+        self._data          = data
+        self._source        = source
+        self._delimiter     = delimiter
+        self._subdelimiters = {} if subdelimiters is None else subdelimiters
+        self._indexes       = indexes
+        self._headers       = [] if headers is None else headers
+        self._limit         = limit
+        self._verbose       = verbose
+        self._discard_dups  = discard_dups
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -171,13 +171,13 @@ class GeoBase(object):
             conf = GeoBase.BASES[data]
 
             try:
-                local              = conf.get('local', True)
-                self._key_col      = conf['key_col']
-                self._delimiter    = conf['delimiter']
-                self._headers      = conf['headers']
-                self._limit        = conf.get('limit', self._limit)
-                self._sub_dels     = conf.get('sub_delimiters', self._sub_dels)
-                self._discard_dups = conf.get('discard_duplicates', self._discard_dups)
+                local               = conf.get('local', True)
+                self._indexes       = conf['indexes']
+                self._delimiter     = conf['delimiter']
+                self._headers       = conf['headers']
+                self._limit         = conf.get('limit', self._limit)
+                self._subdelimiters = conf.get('subdelimiters', self._subdelimiters)
+                self._discard_dups  = conf.get('discard_dups', self._discard_dups)
 
                 if local is True:
                     self._source = local_path(GeoBase.PATH_CONF, conf['source'])
@@ -204,39 +204,39 @@ class GeoBase(object):
 
 
     def _configSubDelimiters(self):
-        '''Some precomputation on sub-delimiters.
+        '''Some precomputation on subdelimiters.
         '''
         for h in self._headers:
             # If not in conf, do not sub split
-            if h not in self._sub_dels:
-                self._sub_dels[h] = None
+            if h not in self._subdelimiters:
+                self._subdelimiters[h] = None
 
             # Handling sub delimiter not list-embedded
-            if isinstance(self._sub_dels[h], str):
-                self._sub_dels[h] = [self._sub_dels[h]]
+            if isinstance(self._subdelimiters[h], str):
+                self._subdelimiters[h] = [self._subdelimiters[h]]
 
 
 
     @staticmethod
-    def _configKeyer(key_col, headers):
+    def _configKeyer(indexes, headers):
         '''Define thw function that build a line key.
         '''
-        # It is possible to have a key_col which is a list
+        # It is possible to have a indexes which is a list
         # In this case we build the key as the concatenation between
         # the different fields
         try:
-            if isinstance(key_col, str):
-                pos = (headers.index(key_col), )
+            if isinstance(indexes, str):
+                pos = (headers.index(indexes), )
 
-            elif isinstance(key_col, list):
-                pos = tuple(headers.index(k) for k in key_col)
+            elif isinstance(indexes, list):
+                pos = tuple(headers.index(k) for k in indexes)
 
             else:
                 raise ValueError()
 
         except ValueError:
-            raise ValueError("Inconsistent: key_col = %s with headers = %s" % \
-                             (key_col, headers))
+            raise ValueError("Inconsistent: indexes = %s with headers = %s" % \
+                             (indexes, headers))
         else:
             keyer = lambda row, pos: '+'.join(row[p] for p in pos)
 
@@ -244,7 +244,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowValues(row, headers, sub_dels, key, line_nb, delim):
+    def _buildRowValues(row, headers, subdelimiters, key, line_nb, delimiter):
         '''Building all data associated to this row.
         '''
         # Erase everything, except duplicates counter
@@ -270,14 +270,14 @@ class GeoBase(object):
             if not h:
                 data['__gar__'].append(v)
             else:
-                if sub_dels[h] is None:
+                if subdelimiters[h] is None:
                     data[h] = v
                 else:
                     data['%s@raw' % h] = v
-                    data[h] = recursive_split(v, sub_dels[h])
+                    data[h] = recursive_split(v, subdelimiters[h])
 
         # Flattening the __gar__ list
-        data['__gar__'] = delim.join(data['__gar__'])
+        data['__gar__'] = delimiter.join(data['__gar__'])
 
         return data
 
@@ -291,20 +291,20 @@ class GeoBase(object):
         '''
 
         # Someone told me that this increases speed :)
-        key_col      = self._key_col
-        delim        = self._delimiter
-        headers      = self._headers
-        limit        = self._limit
-        sub_dels     = self._sub_dels
-        discard_dups = self._discard_dups
-        verbose      = self._verbose
+        indexes       = self._indexes
+        delimiter     = self._delimiter
+        headers       = self._headers
+        limit         = self._limit
+        subdelimiters = self._subdelimiters
+        discard_dups  = self._discard_dups
+        verbose       = self._verbose
 
         if self._source is None:
             if verbose:
                 print 'Source was None, skipping loading...'
             return
 
-        pos, keyer = self._configKeyer(key_col, headers)
+        pos, keyer = self._configKeyer(indexes, headers)
 
         with open(self._source) as f:
 
@@ -326,10 +326,10 @@ class GeoBase(object):
                 # Stripping \t would cause bugs in tsv files
                 # If the tsv ends with \t\t, stripping would cause
                 # to loose the track of column numbers
-                row = row.rstrip(' \n\r').split(delim)
+                row = row.rstrip(' \n\r').split(delimiter)
                 key = keyer(row, pos)
 
-                row_data = self._buildRowValues(row, headers, sub_dels, key, line_nb, delim)
+                row_data = self._buildRowValues(row, headers, subdelimiters, key, line_nb, delimiter)
 
                 # No duplicates ever, we will erase all data after if it is
                 if key not in self._things:
@@ -358,7 +358,7 @@ class GeoBase(object):
         self.fields = ['__key__', '__dup__', '__dad__', '__lno__']
 
         for h in headers:
-            if sub_dels[h] is not None:
+            if subdelimiters[h] is not None:
                 self.fields.append('%s@raw' % h)
 
             if h is not None:
@@ -1289,7 +1289,7 @@ def ext_split(value, split):
 def recursive_split(value, splits):
     '''Recursive extended split.
     '''
-    # Case where no sub delimiters
+    # Case where no subdelimiters
     if not splits:
         return value
 
