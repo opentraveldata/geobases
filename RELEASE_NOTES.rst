@@ -3,6 +3,9 @@
 Release notes
 =============
 
+V3
+==
+
 + 3.30 : ``from GeoBases import GeoBase`` works as import mechanism
 + 3.29 : changed some property names in configuration file, add discard_dups boolean
 + 3.28 : new duplicate mechanism: keep them and add @nb at the end of key
@@ -34,6 +37,21 @@ Release notes
 + 3.2  : opentrep integration in GeoBaseModule
 + 3.1  : code cleanup with pylint
 + 3.0  : opentrep integration in Linux CLI
+
+
+V2
+==
+
 + 2.0  : CLI completely refactored, filtering system
+
+
+V1
+==
+
 + 1.0  : API changes: unification of grid and not grid methods
 
+
+V0
+==
+
++ 0.1  : first draft
