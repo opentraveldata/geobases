@@ -9,6 +9,7 @@ from sys import stdin, stdout, stderr
 
 import os
 import argparse
+import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import izip_longest
@@ -530,7 +531,6 @@ def main():
     # CREATION
     #
     if args['version']:
-        import pkg_resources
         r = pkg_resources.require("GeoBases")[0]
         print 'Project  : %s' % r.project_name
         print 'Version  : %s' % r.version
