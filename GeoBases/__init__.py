@@ -5,8 +5,8 @@
 This is the GeoBase module.
 '''
 
-# We only export the main class
-__all__ = ['GeoBaseModule']
-
 # Extracting from GeoBaseModule
 from GeoBaseModule import GeoBase
+
+# We only export the main class
+__all__ = ['GeoBase']

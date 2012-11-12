@@ -18,9 +18,8 @@ from itertools import izip_longest
 from termcolor import colored
 import colorama
 
-
+# Private
 from GeoBases import GeoBase
-
 
 
 
