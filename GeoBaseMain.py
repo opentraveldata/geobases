@@ -19,7 +19,7 @@ from termcolor import colored
 import colorama
 
 
-from GeoBases.GeoBaseModule import GeoBase
+from GeoBases import GeoBase
 
 
 
