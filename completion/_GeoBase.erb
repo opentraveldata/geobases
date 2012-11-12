@@ -24,8 +24,8 @@ _arguments \
  "(-t --trep)"{-t,--trep}"[OpenTrep mode]:value:()" \
  "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
  "(-w --without-grid)"{-w,--without-grid}"[Disabling grid for nearby searches]" \
- "(-o --omit)"{-o,--omit}"[Omit some fields in output]:fields:$F_FIELDS" \
- "(-s --show)"{-s,--show}"[Only display some fields in output]:fields:$F_FIELDS" \
+ "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
+ "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
  "(-v --verbose)"{-v,--verbose}"[Provide additional informations from data loading]" \
