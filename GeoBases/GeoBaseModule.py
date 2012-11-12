@@ -152,14 +152,14 @@ class GeoBase(object):
         self._bias_cache_fuzzy = {}
 
         # Parameters for data loading
-        self._data      = data
-        self._source    = source
-        self._delimiter = delimiter
-        self._sub_dels  = {} if sub_delimiters is None else sub_delimiters
-        self._key_col   = key_col
-        self._headers   = [] if headers is None else headers
-        self._limit     = limit
-        self._verbose   = verbose
+        self._data         = data
+        self._source       = source
+        self._delimiter    = delimiter
+        self._sub_dels     = {} if sub_delimiters is None else sub_delimiters
+        self._key_col      = key_col
+        self._headers      = [] if headers is None else headers
+        self._limit        = limit
+        self._verbose      = verbose
         self._discard_dups = discard_duplicates
 
         # This will be similar as _headers, but can be modified after loading
@@ -171,12 +171,12 @@ class GeoBase(object):
             conf = GeoBase.BASES[data]
 
             try:
-                local           = conf.get('local', True)
-                self._key_col   = conf['key_col']
-                self._delimiter = conf['delimiter']
-                self._headers   = conf['headers']
-                self._limit     = conf.get('limit', self._limit)
-                self._sub_dels  = conf.get('sub_delimiters', self._sub_dels)
+                local              = conf.get('local', True)
+                self._key_col      = conf['key_col']
+                self._delimiter    = conf['delimiter']
+                self._headers      = conf['headers']
+                self._limit        = conf.get('limit', self._limit)
+                self._sub_dels     = conf.get('sub_delimiters', self._sub_dels)
                 self._discard_dups = conf.get('discard_duplicates', self._discard_dups)
 
                 if local is True:
@@ -291,12 +291,13 @@ class GeoBase(object):
         '''
 
         # Someone told me that this increases speed :)
-        key_col  = self._key_col
-        delim    = self._delimiter
-        headers  = self._headers
-        limit    = self._limit
-        verbose  = self._verbose
-        sub_dels = self._sub_dels
+        key_col      = self._key_col
+        delim        = self._delimiter
+        headers      = self._headers
+        limit        = self._limit
+        sub_dels     = self._sub_dels
+        discard_dups = self._discard_dups
+        verbose      = self._verbose
 
         if self._source is None:
             if verbose:
@@ -335,7 +336,7 @@ class GeoBase(object):
                     self._things[key] = row_data
 
                 else:
-                    if self._discard_dups is False:
+                    if discard_dups is False:
                         # We compute a new key for the duplicate
                         d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
 
@@ -500,7 +501,7 @@ class GeoBase(object):
 
 
     def hasDuplicates(self, key):
-        '''Tell if a key had duplicates.
+        '''Tell if a key has duplicates.
 
         >>> geo_o.hasDuplicates('ORY')
         0
@@ -512,8 +513,7 @@ class GeoBase(object):
 
 
     def getDuplicates(self, key, field=None, default=None):
-        '''
-        Get duplicate information.
+        '''Get all duplicates data, parent key included.
 
         >>> geo_o.getDuplicates('ORY', 'name')
         ['Paris-Orly']
