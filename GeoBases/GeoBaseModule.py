@@ -78,6 +78,9 @@ else:
 local_path = lambda file_p, rel_p : op.join(op.realpath(op.dirname(file_p)), rel_p)
 
 
+# We only export the main class
+__all__ = ['GeoBase']
+
 
 class GeoBase(object):
     '''
