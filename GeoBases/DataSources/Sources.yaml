@@ -162,12 +162,15 @@ ori_por:
     source    : Por/Ori/ori_por_public.csv
     key_col   : iata_code
     delimiter : ^
-    sub_delimiters: &ori_por_subdel
+    discard_duplicates : false # This is the default behavior anyway
+
+    sub_delimiters     : &ori_por_subdel
         # Here you may put '' to
         # split every char 'AB' -> ['A', 'B']
         #location_type    : ''
         alt_name_section : ['=', '|']
-    headers   : &ori_por_headers
+
+    headers : &ori_por_headers
         - iata_code
         - icao_code
         - faa_code
