@@ -4,7 +4,7 @@
 
 airports:
     source    : Airports/Geonames/airports_geonames_only_clean.csv
-    key_col   : iata_code
+    indexes   : iata_code
     delimiter : ^
     headers   :
         - iata_code
@@ -18,7 +18,7 @@ airports:
 
 airports_csv:
     source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
-    key_col   : iata_code
+    indexes   : iata_code
     delimiter : ^
     headers   :
         - iata_code
@@ -41,7 +41,7 @@ airports_csv:
 
 countries:
     source    : Countries/countryInfo.txt
-    key_col   : code
+    indexes   : code
     delimiter : "\t"
     headers   :
         - code
@@ -66,7 +66,7 @@ countries:
 
 continents:
     source    : Continents/continentCodes.txt
-    key_col   : code
+    indexes   : code
     delimiter : "\t"
     headers   :
         - code
@@ -76,7 +76,7 @@ continents:
 
 stations:
     source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
-    key_col   : code
+    indexes   : code
     delimiter : ^
     headers   :
         - code
@@ -89,7 +89,7 @@ stations:
 
 stations_nls:
     source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
-    key_col   : nls_code
+    indexes   : nls_code
     delimiter : ','
     headers   :
         - uic_code
@@ -100,7 +100,7 @@ stations_nls:
 
 stations_uic:
     source    : TrainStations/UIC/sncfExtract_v1.0.csv
-    key_col   : uic_code
+    indexes   : uic_code
     delimiter : ','
     headers   :
         - uic_code
@@ -111,7 +111,7 @@ stations_uic:
 
 languages:
     source    : Languages/iso-languagecodes.txt
-    key_col   : code
+    indexes   : code
     delimiter : "\t"
     headers   :
         - code
@@ -122,7 +122,7 @@ languages:
 
 timezones:
     source    : TimeZones/timeZones.txt
-    key_col   : code
+    indexes   : code
     delimiter : "\t"
     headers   :
         - country_code
@@ -134,7 +134,7 @@ timezones:
 
 cities:
     source    : Cities/cities15000.txt
-    key_col   : code
+    indexes   : code
     delimiter : "\t"
     headers   :
         - code
@@ -159,17 +159,15 @@ cities:
 
 
 ori_por:
-    source    : Por/Ori/ori_por_public.csv
-    key_col   : iata_code
-    delimiter : ^
-    discard_duplicates : false # This is the default behavior anyway
-
-    sub_delimiters     : &ori_por_subdel
+    source        : Por/Ori/ori_por_public.csv
+    indexes       : iata_code
+    delimiter     : ^
+    discard_dups  : false # This is the default behavior anyway
+    subdelimiters : &ori_por_subdel
         # Here you may put '' to
         # split every char 'AB' -> ['A', 'B']
         #location_type    : ''
         alt_name_section : ['=', '|']
-
     headers : &ori_por_headers
         - iata_code
         - icao_code
@@ -219,16 +217,16 @@ ori_por:
 
 
 ori_por_multi:
-    source         : Por/Ori/ori_por_public.csv
-    key_col        : [iata_code, location_type]
-    delimiter      : ^
-    sub_delimiters : *ori_por_subdel
-    headers        : *ori_por_headers
+    source        : Por/Ori/ori_por_public.csv
+    indexes       : [iata_code, location_type]
+    delimiter     : ^
+    subdelimiters : *ori_por_subdel
+    headers       : *ori_por_headers
 
 
 ori_por_private:
     source    : Por/Ori/ori_por.csv
-    key_col   : iata_code
+    indexes   : iata_code
     delimiter : ^
     headers   : &ori_por_private_headers
         - iata_code
@@ -272,14 +270,14 @@ ori_por_private:
 
 ori_por_private_multi:
     source    : Por/Ori/ori_por.csv
-    key_col   : [iata_code, location_type]
+    indexes   : [iata_code, location_type]
     delimiter : ^
     headers   : *ori_por_private_headers
 
 
 ori_por_non_iata:
     source    : Por/Ori/ori_por_non_iata.csv
-    key_col   : iata_code
+    indexes   : iata_code
     delimiter : ^
     headers   : &short_ori_por_headers
         - iata_code
@@ -302,7 +300,7 @@ ori_por_non_iata:
 
 currencies:
     source    : Currencies/wiki_source_ISO_4217.csv
-    key_col   : code
+    indexes   : code
     delimiter : ;
     headers   :
         - code
@@ -314,7 +312,7 @@ currencies:
 
 airlines:
     source    : Airlines/CRB_AIRLINE.csv
-    key_col   : iata_code
+    indexes   : iata_code
     delimiter : ^
     headers   :
         - oaci_code
@@ -327,7 +325,7 @@ airlines:
 
 regions:
     source    : Regions/regions.csv
-    key_col   : code
+    indexes   : code
     delimiter : ;
     headers   :
         - code
@@ -336,7 +334,7 @@ regions:
 
 locales:
     source    : Locales/locales.csv
-    key_col   : locale
+    indexes   : locale
     delimiter : ;
     headers   :
         - locale
@@ -350,7 +348,7 @@ locales:
 
 location_types:
     source    : LocationTypes/location_types.csv
-    key_col   : code
+    indexes   : code
     delimiter : ^
     headers   :
         - code
@@ -359,7 +357,7 @@ location_types:
 
 geonames_head:
     source    : Por/Geonames/allCountries.head.txt
-    key_col   : geoname_id
+    indexes   : geoname_id
     delimiter : "\t"
     headers   : &geonames_headers
         - geoname_id
@@ -388,14 +386,14 @@ geonames_full:
     limit     : # put a number to load only the first lines
     #source    : /home/aprengere/public/allCountries.txt
     source    : /remote/orihome/aprengere/public/allCountries.txt
-    key_col   : geoname_id
+    indexes   : geoname_id
     delimiter : "\t"
     headers   : *geonames_headers
 
 
 office_ids_midt:
     source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
-    key_col   : office_id
+    indexes   : office_id
     delimiter : ^
     headers   :
         - office_id
@@ -408,7 +406,7 @@ office_ids_midt:
 
 office_ids:
     source    : Office_IDs/OfficeIDs_and_names.csv
-    key_col   : office_id
+    indexes   : office_id
     delimiter : "\t"
     headers   :
         - office_id
