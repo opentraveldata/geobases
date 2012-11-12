@@ -109,7 +109,7 @@ class GeoBase(object):
 
 
 
-    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, sub_delimiters=None, limit=None, verbose=True):
+    def __init__(self, data, source=None, headers=None, key_col=None, delimiter=None, sub_delimiters=None, limit=None, discard_duplicates=False, verbose=True):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -158,8 +158,9 @@ class GeoBase(object):
         self._sub_dels  = {} if sub_delimiters is None else sub_delimiters
         self._key_col   = key_col
         self._headers   = [] if headers is None else headers
-        self._verbose   = verbose
         self._limit     = limit
+        self._verbose   = verbose
+        self._discard_dups = discard_duplicates
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -176,6 +177,7 @@ class GeoBase(object):
                 self._headers   = conf['headers']
                 self._limit     = conf.get('limit', self._limit)
                 self._sub_dels  = conf.get('sub_delimiters', self._sub_dels)
+                self._discard_dups = conf.get('discard_duplicates', self._discard_dups)
 
                 if local is True:
                     self._source = local_path(GeoBase.PATH_CONF, conf['source'])
@@ -331,18 +333,20 @@ class GeoBase(object):
                 # No duplicates ever, we will erase all data after if it is
                 if key not in self._things:
                     self._things[key] = row_data
+
                 else:
-                    # We compute a new key for the duplicate
-                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
+                    if self._discard_dups is False:
+                        # We compute a new key for the duplicate
+                        d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
 
-                    # We update the data with this info
-                    row_data['__key__'] = d_key
-                    row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__dad__'] = key
+                        # We update the data with this info
+                        row_data['__key__'] = d_key
+                        row_data['__dup__'] = self._things[key]['__dup__']
+                        row_data['__dad__'] = key
 
-                    # We add the d_key as a new duplicate, and store the duplicate in the main _things
-                    self._things[key]['__dup__'].append(d_key)
-                    self._things[d_key] = row_data
+                        # We add the d_key as a new duplicate, and store the duplicate in the main _things
+                        self._things[key]['__dup__'].append(d_key)
+                        self._things[d_key] = row_data
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
