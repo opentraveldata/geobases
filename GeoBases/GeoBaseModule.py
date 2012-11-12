@@ -74,7 +74,7 @@ else:
     # No problem here
     HAS_TREP_SUPPORT = True
 
-# Local paths handling
+# Relative paths handling
 local_path = lambda file_p, rel_p : op.join(op.realpath(op.dirname(file_p)), rel_p)
 
 
@@ -153,14 +153,15 @@ class GeoBase(object):
 
         # Parameters for data loading
         self._data          = data
+        self._local         = True
         self._source        = source
+        self._headers       = [] if headers is None else headers
+        self._indexes       = indexes
         self._delimiter     = delimiter
         self._subdelimiters = {} if subdelimiters is None else subdelimiters
-        self._indexes       = indexes
-        self._headers       = [] if headers is None else headers
         self._limit         = limit
-        self._verbose       = verbose
         self._discard_dups  = discard_dups
+        self._verbose       = verbose
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -171,18 +172,19 @@ class GeoBase(object):
             conf = GeoBase.BASES[data]
 
             try:
-                local               = conf.get('local', True)
-                self._indexes       = conf['indexes']
-                self._delimiter     = conf['delimiter']
-                self._headers       = conf['headers']
-                self._limit         = conf.get('limit', self._limit)
-                self._subdelimiters = conf.get('subdelimiters', self._subdelimiters)
-                self._discard_dups  = conf.get('discard_dups', self._discard_dups)
+                self._local = conf.get('local', self._local)
 
-                if local is True:
+                if self._local is True:
                     self._source = local_path(GeoBase.PATH_CONF, conf['source'])
                 else:
                     self._source = conf['source']
+
+                self._headers       = conf['headers']
+                self._indexes       = conf['indexes']
+                self._delimiter     = conf['delimiter']
+                self._subdelimiters = conf.get('subdelimiters', self._subdelimiters)
+                self._limit         = conf.get('limit', self._limit)
+                self._discard_dups  = conf.get('discard_dups', self._discard_dups)
 
 
             except KeyError as e:
