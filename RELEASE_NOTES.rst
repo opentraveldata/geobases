@@ -3,6 +3,7 @@
 Release notes
 =============
 
++ 3.30 : ``from GeoBases import GeoBase`` works as import mechanism
 + 3.29 : changed some property names in configuration file, add discard_dups boolean
 + 3.28 : new duplicate mechanism: keep them and add @nb at the end of key
 + 3.27 : adding two office_IDs data source
