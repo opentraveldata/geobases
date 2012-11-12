@@ -161,8 +161,9 @@ cities:
 ori_por:
     source        : Por/Ori/ori_por_public.csv
     indexes       : iata_code
-    delimiter     : ^
+    limit         : # put a number to load only the first lines
     discard_dups  : false # This is the default behavior anyway
+    delimiter     : ^
     subdelimiters : &ori_por_subdel
         # Here you may put '' to
         # split every char 'AB' -> ['A', 'B']
@@ -383,7 +384,6 @@ geonames_head:
 
 geonames_full:
     local     : false
-    limit     : # put a number to load only the first lines
     #source    : /home/aprengere/public/allCountries.txt
     source    : /remote/orihome/aprengere/public/allCountries.txt
     indexes   : geoname_id
@@ -392,6 +392,7 @@ geonames_full:
 
 
 office_ids_midt:
+    local     : false
     source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
     indexes   : office_id
     delimiter : ^
