@@ -6,13 +6,14 @@ This module is a launcher for GeoBase.
 '''
 
 from sys import stdin, stdout, stderr
+from os import getenv, popen
 
-import os
 import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import izip_longest
+import textwrap
 
 # Not in standard library
 from termcolor import colored
@@ -23,9 +24,54 @@ from GeoBases import GeoBase
 
 
 # Global defaults
-DEFAULT_NB_COL = 5
-MIN_CHAR_COL   = 20
-MAX_CHAR_COL   = 40
+DEFAULT_NB_COL   = 5
+MIN_CHAR_COL     = 20
+MAX_CHAR_COL     = 40
+ENV_WARNINGS     = []
+BACKGROUND_COLOR = getenv('BACKGROUND_COLOR', None) # 'white'
+
+if BACKGROUND_COLOR not in ['black', 'white']:
+    ENV_WARNINGS.append(
+    """
+    --------------------------------------------------------------------
+    BACKGROUND_COLOR environment variable not properly set.
+    Accepted values are 'black' and 'white'. Using default 'black' here.
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:
+        export BACKGROUND_COLOR=black # or white
+    --------------------------------------------------------------------
+    """)
+
+    BACKGROUND_COLOR = 'black'
+
+
+def checkPath(command):
+    '''
+    This checks if a command is in the PATH.
+    '''
+    path = popen('which %s 2> /dev/null' % command, 'r').read()
+
+    if path:
+        return True
+    else:
+        return False
+
+
+if not checkPath('GeoBase'):
+    ENV_WARNINGS.append(
+    """
+    --------------------------------------------------------------------
+    GeoBase does not seem to be in the $PATH.
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:
+        export PATH=$PATH:$HOME/.local/bin
+
+    By the way, since you are reading this, you also should
+    add this for the completion to work with zsh:
+        # Add custom completion scripts
+        fpath=(~/.zsh/completion $fpath)
+        autoload -U compinit
+        compinit
+    --------------------------------------------------------------------
+    """)
 
 
 def getTermSize():
@@ -33,7 +79,7 @@ def getTermSize():
     This gives terminal size information using external
     command stty.
     '''
-    size = os.popen('stty size 2>/dev/null', 'r').read()
+    size = popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
         return (80, 160)
@@ -47,12 +93,25 @@ class RotatingColors(object):
     This class is used for generating alternate colors
     for the Linux output.
     '''
-    def __init__(self):
 
-        self._availables = [
-             ('cyan',   None,     []),
-             ('white', 'on_grey', []),
-        ]
+    truncator = (None, None, [])
+
+    def __init__(self, background):
+
+        if background == 'black':
+            self._availables = [
+                 ('cyan',   None,     []),
+                 ('white', 'on_grey', []),
+            ]
+
+        elif background == 'white':
+            self._availables = [
+                 ('grey', None,       []),
+                 ('cyan', 'on_white', []),
+            ]
+
+        else:
+            raise ValueError('Accepted background color: "black" or "white", not "%s".' % background)
 
         self._current = 0
 
@@ -148,7 +207,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     else:
         truncate = lim
 
-    c = RotatingColors()
+    c = RotatingColors(BACKGROUND_COLOR)
 
     for f in show_wo_omit:
 
@@ -230,7 +289,11 @@ def fixed_width(s, col, lim=25, truncate=None):
     # To truncate on the appropriate number of characters
     # We decode before truncating
     # Then we encode again for stdout.write
-    s = str(s).decode('utf8')[0:truncate]
+    s = str(s).decode('utf8')
+
+    if len(s) > truncate:
+        s = s[0:(truncate-1)] + colored('#', *RotatingColors.truncator)
+
     s = (printer % s).encode('utf8')
 
     return colored(s, *col)
@@ -716,6 +779,8 @@ def main():
 
         print '\nDone in %s' % (datetime.now() - before)
 
+        for warn_msg in ENV_WARNINGS:
+            print textwrap.dedent(warn_msg)
     else:
         display_quiet(g, res, set(args['omit']), args['show'], ref_type)
 
