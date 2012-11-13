@@ -22,12 +22,17 @@ import colorama
 from GeoBases import GeoBase
 
 
+# Global defaults
+DEFAULT_NB_COL = 5
+MIN_CHAR_COL   = 20
+MAX_CHAR_COL   = 40
+
 
 def getTermSize():
     '''
     This gives terminal size information using external
-    command stty.'''
-
+    command stty.
+    '''
     size = os.popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
@@ -42,7 +47,6 @@ class RotatingColors(object):
     This class is used for generating alternate colors
     for the Linux output.
     '''
-
     def __init__(self):
 
         self._availables = [
@@ -54,8 +58,8 @@ class RotatingColors(object):
 
 
     def next(self):
-        '''We increase the current color.'''
-
+        '''We increase the current color.
+        '''
         self._current += 1
 
         if self._current == len(self._availables):
@@ -121,7 +125,6 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     Main display function in Linux terminal, with
     nice color and everything.
     '''
-
     if not list_of_things:
         stdout.write('\nNo elements to display.\n')
         return
@@ -132,13 +135,12 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
 
-    # Different behaviour given
-    # number of results
-    # We adapt the width between 25 and 40 
+    # Different behaviour given number of results
+    # We adapt the width between MIN_CHAR_COL and MAX_CHAR_COL
     # given number of columns and term width
-    n = len(list_of_things)
-
-    lim = min(40, max(20, int(getTermSize()[1] / float(n+1))))
+    n   = len(list_of_things)
+    lim = int(getTermSize()[1] / float(n + 1))
+    lim = min(MAX_CHAR_COL, max(MIN_CHAR_COL, lim))
 
     if n == 1:
         # We do not truncate names if only one result
@@ -520,7 +522,7 @@ def main():
         if args['quiet']:
             limit = None
         else:
-            limit = 5
+            limit = DEFAULT_NB_COL
 
     else:
         limit = int(args['limit'])
