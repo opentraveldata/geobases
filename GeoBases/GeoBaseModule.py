@@ -112,7 +112,7 @@ class GeoBase(object):
 
 
 
-    def __init__(self, data, source=None, headers=None, indexes=None, delimiter=None, subdelimiters=None, limit=None, discard_dups=False, verbose=True):
+    def __init__(self, data, **kwargs):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
@@ -141,10 +141,15 @@ class GeoBase(object):
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        >>> GeoBase(data='airports_csv',
+        ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
+        ...         verbose=False).get('ORY')
+        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         '''
 
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
+        self._data   = data
         self._things = {}
         self._ggrid  = None
 
@@ -158,38 +163,27 @@ class GeoBase(object):
         # _headers is just for data loading
         self.fields = []
 
-        # Parameters for data loading
-        self._data          = data
-        self._local         = True
-        self._source        = source
-        self._headers       = [] if headers is None else headers
-        self._indexes       = indexes
-        self._delimiter     = delimiter
-        self._subdelimiters = {} if subdelimiters is None else subdelimiters
-        self._limit         = limit
-        self._discard_dups  = discard_dups
-        self._verbose       = verbose
-
-
+        # Defaults
+        props = {
+            'local'         : True,
+            'source'        : None,
+            'headers'       : [],
+            'indexes'       : None,
+            'delimiter'     : None,
+            'subdelimiters' : {},
+            'limit'         : None,
+            'discard_dups'  : False,
+            'verbose'       : True,
+        }
 
         if data in GeoBase.BASES:
             conf = GeoBase.BASES[data]
 
             try:
-                self._local = conf.get('local', self._local)
-
-                if self._local is True:
-                    self._source = local_path(GeoBase.PATH_CONF, conf['source'])
-                else:
-                    self._source = conf['source']
-
-                self._headers       = conf['headers']
-                self._indexes       = conf['indexes']
-                self._delimiter     = conf['delimiter']
-                self._subdelimiters = conf.get('subdelimiters', self._subdelimiters)
-                self._limit         = conf.get('limit', self._limit)
-                self._discard_dups  = conf.get('discard_dups', self._discard_dups)
-
+                # File configuration overrides defaults
+                for name in props:
+                    if name in conf:
+                        props[name] = conf[name]
 
             except KeyError as e:
                 print "Missing field %s for data '%s' in configuration file." % \
@@ -199,9 +193,31 @@ class GeoBase(object):
         elif data == 'feed':
             # User input defining everything
             pass
-
         else:
             raise ValueError('Wrong data type. Not in %s' % sorted(GeoBase.BASES.keys()))
+
+        # User input overrides default configuration
+        # or file configuration
+        for name in props:
+            if name in kwargs:
+                props[name] = kwargs[name]
+
+        if 'source' not in kwargs:
+            # "local" is only used for sources from configuration
+            # to have a relative path from the configuration file
+            if props['source'] is not None and props['local'] is True:
+                props['source'] = local_path(GeoBase.PATH_CONF, props['source'])
+
+        # Final parameters affectation
+        self._local         = props['local']
+        self._source        = props['source']
+        self._headers       = props['headers']
+        self._indexes       = props['indexes']
+        self._delimiter     = props['delimiter']
+        self._subdelimiters = props['subdelimiters']
+        self._limit         = props['limit']
+        self._discard_dups  = props['discard_dups']
+        self._verbose       = props['verbose']
 
         # Loading data
         self._configSubDelimiters()
