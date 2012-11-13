@@ -179,16 +179,12 @@ class GeoBase(object):
         if data in GeoBase.BASES:
             conf = GeoBase.BASES[data]
 
-            try:
-                # File configuration overrides defaults
-                for name in props:
-                    if name in conf:
-                        props[name] = conf[name]
-
-            except KeyError as e:
-                print "Missing field %s for data '%s' in configuration file." % \
-                        (e, data)
-                exit()
+            # File configuration overrides defaults
+            for name in conf:
+                if name in props:
+                    props[name] = conf[name]
+                else:
+                    raise ValueError('Option "%s" for data "%s" not understood in file.' % (name, data))
 
         elif data == 'feed':
             # User input defining everything
@@ -198,9 +194,11 @@ class GeoBase(object):
 
         # User input overrides default configuration
         # or file configuration
-        for name in props:
-            if name in kwargs:
+        for name in kwargs:
+            if name in props:
                 props[name] = kwargs[name]
+            else:
+                raise ValueError('Option "%s" not understood.' % name)
 
         if 'source' not in kwargs:
             # "local" is only used for sources from configuration
