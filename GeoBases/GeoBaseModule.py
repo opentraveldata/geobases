@@ -223,6 +223,15 @@ class GeoBase(object):
         self.createGrid()
 
 
+    def __str__(self):
+        '''Stringification.
+
+        >>> str(geo_t)
+        '<GeoBases.GeoBaseModule.GeoBase(stations) object at 0x...>'
+        '''
+        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self._data
+
+
     def _configSubDelimiters(self):
         '''Some precomputation on subdelimiters.
         '''
