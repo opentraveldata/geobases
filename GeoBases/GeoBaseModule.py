@@ -154,6 +154,10 @@ class GeoBase(object):
         # example, we first look in this cache
         self._bias_cache_fuzzy = {}
 
+        # This will be similar as _headers, but can be modified after loading
+        # _headers is just for data loading
+        self.fields = []
+
         # Parameters for data loading
         self._data          = data
         self._local         = True
@@ -166,9 +170,6 @@ class GeoBase(object):
         self._discard_dups  = discard_dups
         self._verbose       = verbose
 
-        # This will be similar as _headers, but can be modified after loading
-        # _headers is just for data loading
-        self.fields = []
 
 
         if data in GeoBase.BASES:
