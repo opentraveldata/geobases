@@ -169,7 +169,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if f == '__ref__':
             for h, _ in list_of_things:
-                stdout.write(fixed_width(fmt_ref(h, ref_type), c.getHeader(), lim, truncate))
+                stdout.write(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
             for _, k in list_of_things:
                 stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
@@ -225,7 +225,7 @@ def fixed_width(s, col, lim=25, truncate=None):
     if truncate is None:
         truncate = 1000
 
-    printer = '%%-%ss' % lim # is somehting like '%-3s'
+    printer = '%%-%ss' % lim # is something like '%-3s'
 
     # To truncate on the appropriate number of characters
     # We decode before truncating
