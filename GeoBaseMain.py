@@ -202,13 +202,14 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
             if f == '__ref__':
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
-                s = geob.get(k, f)
+                v = geob.get(k, f)
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
-                if isinstance(s, list):
-                    s = '/'.join(s)
-                l.append(str(s))
+                if f.startswith('__') and isinstance(v, (list, tuple, set)):
+                    l.append('/'.join(str(el) for el in v))
+                else:
+                    l.append(str(v))
 
         stdout.write('^'.join(l) + '\n')
 
