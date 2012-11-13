@@ -116,8 +116,8 @@ class GeoBase(object):
         '''Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
-            and 'feed' currently available. 'feed' will not load anything, \
-            it is a way to get an empty object, which wille be fed later
+            and 'feed' currently available. 'feed' will let you define your \
+            own parameters.
         :param verbose: display informations or not during runtime
 
         :raises: ValueError, if data parameters is not recognized
