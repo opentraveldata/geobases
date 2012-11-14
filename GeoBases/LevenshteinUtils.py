@@ -97,7 +97,7 @@ def str_lowercase(string):
     >>> print str_lowercase('Étaples') # Win!
     étaples
     '''
-    if isinstance(string, unicode):
+    if isinstance(string, str):
         return string.lower()
 
     if isinstance(string, str):
@@ -298,7 +298,7 @@ def is_sublist(subL, L):
     '''
     n, ns  = len(L), len(subL)
 
-    return any( (subL == L[i:i+ns]) for i in xrange(n-ns+1) )
+    return any( (subL == L[i:i+ns]) for i in range(n-ns+1) )
 
 
 
@@ -392,8 +392,8 @@ if __name__ == '__main__':
 
         str_1, str_2 = sys.argv[1], sys.argv[2]
 
-        print '1) %-30s ---> %-30s' % (str_1, '+'.join(clean(str_1)))
-        print '2) %-30s ---> %-30s' % (str_2, '+'.join(clean(str_2)))
-        print
-        print 'Similiarity: %.2f%%' % (100 * mod_leven(str_1, str_2))
+        print('1) %-30s ---> %-30s' % (str_1, '+'.join(clean(str_1))))
+        print('2) %-30s ---> %-30s' % (str_2, '+'.join(clean(str_2))))
+        print()
+        print('Similiarity: %.2f%%' % (100 * mod_leven(str_1, str_2)))
 
