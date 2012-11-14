@@ -98,9 +98,6 @@ class RotatingColors(object):
     This class is used for generating alternate colors
     for the Linux output.
     '''
-
-    truncator = (None, None, [])
-
     def __init__(self, background):
 
         if background == 'black':
@@ -292,16 +289,16 @@ def fixed_width(s, col, lim=25, truncate=None):
     printer = '%%-%ss' % lim # is something like '%-3s'
 
     # To truncate on the appropriate number of characters
-    # We decode before truncating
+    # We decode before truncating (so non-ascii characters
+    # will be counted only once when using len())
     # Then we encode again for stdout.write
-    s = str(s).decode('utf8')
+    ds = str(s).decode('utf8')                      # decode
+    es = (printer % ds[0:truncate]).encode('utf8')  # encode
 
-    if len(s) > truncate:
-        s = s[0:(truncate-1)] + colored('#', *RotatingColors.truncator)
+    if len(ds) > truncate:
+        es = es[:-2] + '… '
 
-    s = (printer % s).encode('utf8')
-
-    return colored(s, *col)
+    return colored(es, *col)
 
 
 def scan_coords(u_input, geob, verbose):
