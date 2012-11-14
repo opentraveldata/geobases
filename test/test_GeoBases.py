@@ -54,7 +54,7 @@ class GeoBaseTest(unittest.TestCase):
     def test_distance(self):
         '''Test distance method.
         '''
-        self.assertAlmostEquals(self.g.distance('ORY', 'CDG'), 34.8747, places=3)
+        self.assertAlmostEqual(self.g.distance('ORY', 'CDG'), 34.8747, places=3)
 
 
 

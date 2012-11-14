@@ -302,7 +302,7 @@ def is_sublist(subL, L):
 
 
 
-def mod_leven(str1, str2):
+def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inclusion_value=HEURISTIC_INCLUSION_VALUE):
     '''
     The main comparison function.
     In fact, the real work has already been done previously,
@@ -342,10 +342,7 @@ def mod_leven(str1, str2):
 
     Tweaking behavior.
 
-    >>> import sys; sys.path.append('.')
-    >>> import LevenshteinUtils as LU
-    >>> LU.HEURISTIC_INCLUSION = False
-    >>> LU.mod_leven('Aéroport CDG  2 TGV', 'aeroport-cdg') # Inclusion
+    >>> mod_leven('Aéroport CDG  2 TGV', 'aeroport-cdg', False) # No inclusion
     0.85...
     '''
     str1 = clean(str1)
@@ -363,9 +360,9 @@ def mod_leven(str1, str2):
         return r
 
     # Heuristic of strict inclusion
-    if HEURISTIC_INCLUSION:
+    if heuristic_inclusion:
         if is_sublist(str1, str2) or is_sublist(str2, str1):
-            return HEURISTIC_INCLUSION_VALUE
+            return heuristic_inclusion_value
 
     return r
 
