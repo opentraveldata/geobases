@@ -126,8 +126,6 @@ class RotatingColors(object):
         if self._current == len(self._availables):
             self._current = 0
 
-        return self
-
 
     def get(self):
         '''Get current color.'''
@@ -224,7 +222,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         else:
             col = c.get()
 
-        c.next()
+        next(c)
 
         stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
