@@ -692,15 +692,15 @@ class GeoBase(object):
 
         :returns: a boolean
 
-        >>> if not geo_o: print 'empty'
-        >>> if geo_o:     print 'not empty'
+        >>> if not geo_o: print('empty')
+        >>> if geo_o:     print('not empty')
         not empty
 
         This geo_f is actually empty.
 
-        >>> if not geo_f: print 'empty'
+        >>> if not geo_f: print('empty')
         empty
-        >>> if geo_f:     print 'not empty'
+        >>> if geo_f:     print('not empty')
         '''
 
         if self._things:
@@ -896,7 +896,7 @@ class GeoBase(object):
         >>> #from datetime import datetime
         >>> #before = datetime.now()
         >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
-        >>> #print datetime.now() - before
+        >>> #print(datetime.now() - before)
 
         No grid.
 
