@@ -58,7 +58,7 @@ except ImportError:
 
 setup(
     name = 'GeoBases',
-    version = '3.31.1',
+    version = '3.32.1',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
