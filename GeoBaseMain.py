@@ -597,6 +597,9 @@ def main():
     #
     # CREATION
     #
+    if verbose:
+        before = datetime.now()
+
     if args['version']:
         r = pkg_resources.require("GeoBases")[0]
         print 'Project  : %s' % r.project_name
@@ -657,8 +660,6 @@ def main():
     # MAIN
     #
     if verbose:
-        before = datetime.now()
-
         if not stdin.isatty():
             print 'Looking for matches from stdin...'
         elif args['keys']:
