@@ -63,7 +63,8 @@ ACCENTS = ( ('é', 'e'),
 # These are separators
 SEPARATORS = ('+', '-', ' ', '\t',
               ':', ',', ';', '.',
-              "'", '"')
+              "'", '"', '?', '!',
+              "#", '@', '|', '\n')
 
 # These are words replaced
 ALIASES = ( ('st', 'saint'),
@@ -82,6 +83,10 @@ TRANSPARENTS = ('le',
                 'droite',
                 'gauche')
 
+# Toggle inclusion heuristic
+HEURISTIC_INCLUSION       = True
+HEURISTIC_INCLUSION_VALUE = 0.99
+
 
 def str_lowercase(string):
     '''
@@ -92,7 +97,6 @@ def str_lowercase(string):
     >>> print str_lowercase('Étaples') # Win!
     étaples
     '''
-
     if isinstance(string, unicode):
         return string.lower()
 
@@ -100,8 +104,6 @@ def str_lowercase(string):
         return string.decode('utf8').lower().encode('utf8')
 
     raise ValueError('Input %s is not instance of <str> or <unicode>' % string)
-
-
 
 
 
@@ -144,7 +146,6 @@ def handle_parenthesis_info(string, parts=None):
     >>> handle_parenthesis_info('St-Etienne SNCF (Chateaucreux)')
     'St-Etienne SNCF Chateaucreux'
     '''
-
     if parts is None:
         parts = PARTS
 
@@ -230,7 +231,6 @@ def handle_numbers_spaces(strings):
 
 
 
-
 def clean(string):
     '''
     Global cleaning function which put
@@ -258,7 +258,6 @@ def clean(string):
     >>> clean('antibes sncf 2 (centre)')
     ['antibes', 'centre']
     '''
-
     # Basic cleaning
     # We remove blanks or tabulation, and number
     return handle_numbers_spaces(
@@ -303,8 +302,6 @@ def is_sublist(subL, L):
 
 
 
-
-
 def mod_leven(str1, str2):
     '''
     The main comparison function.
@@ -342,8 +339,16 @@ def mod_leven(str1, str2):
     0.9...
     >>> mod_leven('Bains les bains', 'Tulle')
     0.0
-    '''
+    >>> mod_leven('tulle', 'Tulle les flots')
+    0.99
 
+    Tweaking behavior.
+
+    >>> import LevenshteinUtils
+    >>> LevenshteinUtils.HEURISTIC_INCLUSION = False
+    >>> LevenshteinUtils.mod_leven('tulle', 'Tulle les flots')
+    0.625
+    '''
     str1 = clean(str1)
     str2 = clean(str2)
 
@@ -359,8 +364,9 @@ def mod_leven(str1, str2):
         return r
 
     # Heuristic of strict inclusion
-    if is_sublist(str1, str2) or is_sublist(str2, str1):
-        return 0.99
+    if HEURISTIC_INCLUSION:
+        if is_sublist(str1, str2) or is_sublist(str2, str1):
+            return HEURISTIC_INCLUSION_VALUE
 
     return r
 
@@ -381,3 +387,15 @@ def _test():
 
 if __name__ == '__main__':
     _test()
+
+    import sys
+
+    if len(sys.argv) >= 3:
+
+        str_1, str_2 = sys.argv[1], sys.argv[2]
+
+        print '1) %-30s ---> %-30s' % (str_1, '+'.join(clean(str_1)))
+        print '2) %-30s ---> %-30s' % (str_2, '+'.join(clean(str_2)))
+        print
+        print 'Similiarity: %.2f%%' % (100 * mod_leven(str_1, str_2))
+
