@@ -24,7 +24,7 @@ namespace :build do
 
   desc "Creating virtual environment"
   task :venv do
-    %x[ virtualenv --clear --no-site-packages --python=#{RELEASE_PYTHON} . >&2 ]
+    %x[ virtualenv --clear --no-site-packages -p #{RELEASE_PYTHON} #{RELEASE_VENV_PATH} >&2 ]
     raise "Virtualenv creation failed" unless $?.success?
   end
 
@@ -45,7 +45,7 @@ namespace :build do
   task :deps => [:venv, :activate] do
     # Here we use stderr to display the output on Jenkins
     # stdout is captured
-    %x[ ./bin/python setup.py develop >&2 ]
+    %x[ #{RELEASE_VENV_PYTHON} setup.py develop >&2 ]
     raise "Dependencies failed" unless $?.success?
   end
 
@@ -53,7 +53,7 @@ namespace :build do
   desc "Run test suite"
   task :test => [:deps, :activate] do
     if not RELEASE_TEST_FILE.nil? and not RELEASE_TEST_FILE.empty?
-      %x[ ./bin/python #{RELEASE_TEST_FILE} -v >&2 ]
+      %x[ #{RELEASE_VENV_PYTHON} #{RELEASE_TEST_FILE} -v >&2 ]
     end
     raise "Tests failed" unless $?.success?
   end
@@ -65,7 +65,7 @@ namespace :build do
 
   desc "Build the package"
   task :package => [:clean, :test, :activate] do
-    %x[ ./bin/python setup.py sdist >&2 ]
+    %x[ #{RELEASE_VENV_PYTHON} setup.py sdist >&2 ]
     raise "Packaging failed" unless $?.success?
   end
 
@@ -89,7 +89,7 @@ namespace :build do
 
   desc "Install Python module in a virtual environment"
   task :install => [:venv, :activate] do
-    %x[ ./bin/python setup.py install >&2 ]
+    %x[ #{RELEASE_VENV_PYTHON} setup.py install >&2 ]
     raise "Installation failed" unless $?.success?
   end
 
