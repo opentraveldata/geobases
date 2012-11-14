@@ -36,7 +36,7 @@ to provide geographical indexation features.
 '''
 
 
-from __future__ import with_statement
+
 
 import itertools
 from geohash import encode, neighbors
@@ -71,7 +71,7 @@ class GeoGrid(object):
         if radius is not None:
 
             # Tricky, min of values only positive here
-            precision = min(precision_to_errors.iteritems(),
+            precision = min(iter(precision_to_errors.items()),
                             key=lambda x: (x[1][4] < radius,  abs(radius - x[1][4])))[0]
 
         self._precision  = precision
@@ -82,7 +82,7 @@ class GeoGrid(object):
         self._grid = {}
 
         if verbose:
-            print 'Setting grid precision to %s, avg radius to %skm' % (precision, self._avg_radius)
+            print('Setting grid precision to %s, avg radius to %skm' % (precision, self._avg_radius))
 
 
     def _computeCaseId(self, lat_lng):
@@ -105,7 +105,7 @@ class GeoGrid(object):
             # TypeError for wrong type (NoneType, str)
             # Exception for invalid coordinates
             if verbose:
-                print 'Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key)
+                print('Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key))
             return
 
         self._keys[key] = {
@@ -127,7 +127,7 @@ class GeoGrid(object):
         '''
 
         if stop is True:
-            gen = xrange(N)
+            gen = range(N)
         else:
             gen = itertools.count()
 
@@ -137,7 +137,7 @@ class GeoGrid(object):
         for i in gen:
 
             if i > MAX_RECURSIVE_FRONTIER:
-                print '/!\ Recursion exceeded in recursiveFrontier'
+                print('/!\ Recursion exceeded in recursiveFrontier')
                 raise StopIteration
 
             yield frontier
