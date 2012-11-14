@@ -46,10 +46,9 @@ class GeoBaseTest(unittest.TestCase):
     def test_get(self):
         '''Testing get method.
         '''
-        self.assertEquals(self.g.get('CDG', 'city_code'), 'PAR')
-        self.assertEquals(self.g.get('CDG', 'alt_name_section'),
-                          (('es', 'Par\xc3\xads - Charles de Gaulle', 'p'),
-                           ('', 'Roissy Charles de Gaulle', '')))
+        self.assertEqual(self.g.get('CDG', 'city_code'), 'PAR')
+        self.assertEqual(self.g.get('BVE', 'alt_name_section'),
+                         (('', 'Brive-Souillac', ''),))
 
 
     def test_distance(self):
