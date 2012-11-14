@@ -33,11 +33,11 @@ if WITH_OPENTREP:
     # Forcing OpenTrepWrapper support
     INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
 
-    print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % \
-            str(EXTRAS_REQUIRE['OpenTrep'])
+    print('/!\ Adding "%s" to mandatory dependencies' % \
+            str(EXTRAS_REQUIRE['OpenTrep']), file=stderr)
 else:
-    print >> stderr, '/!\ Installing without "%s"' % \
-            str(EXTRAS_REQUIRE['OpenTrep'])
+    print('/!\ Installing without "%s"' % \
+            str(EXTRAS_REQUIRE['OpenTrep']), file=stderr)
 
 
 try:

@@ -260,7 +260,7 @@ def prog_point(lat0, lng0,
             lat1, lng1 = latm, lngm
 
     if verbose:
-        print "%.4f < %.4f < %.4f in %s steps" % (progmin, progression, progmax, i)
+        print(("%.4f < %.4f < %.4f in %s steps" % (progmin, progression, progmax, i)))
 
     return latm, lngm
 

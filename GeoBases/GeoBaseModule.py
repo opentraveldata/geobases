@@ -46,12 +46,12 @@ From any point of reference:
     Available fields for things: ...
 '''
 
-from __future__ import with_statement
+
 
 import os
 import os.path as op
 import heapq
-from itertools import izip_longest
+from itertools import zip_longest
 
 # Not in standard library
 import yaml
@@ -293,7 +293,7 @@ class GeoBase(object):
         # headers represents the meaning of each column.
         # Using izip_longest here will replace missing fields
         # with empty strings ''
-        for h, v in izip_longest(headers, row, fillvalue=''):
+        for h, v in zip_longest(headers, row, fillvalue=''):
             # if h is None, it means the conf file explicitely
             # specified not to load the column
             if h is None:
@@ -335,7 +335,7 @@ class GeoBase(object):
 
         if self._source is None:
             if verbose:
-                print 'Source was None, skipping loading...'
+                print('Source was None, skipping loading...')
             return
 
         pos, keyer = self._configKeyer(indexes, headers)
@@ -345,11 +345,11 @@ class GeoBase(object):
             for line_nb, row in enumerate(f, start=1):
 
                 if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
-                    print '%-10s lines loaded so far' % line_nb
+                    print('%-10s lines loaded so far' % line_nb)
 
                 if limit is not None and line_nb > limit:
                     if verbose:
-                        print 'Beyond limit %s for lines loaded, stopping.' % limit
+                        print('Beyond limit %s for lines loaded, stopping.' % limit)
                     break
 
                 # Skip comments and empty lines
@@ -384,8 +384,8 @@ class GeoBase(object):
                         self._things[d_key] = row_data
 
                     if verbose:
-                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
+                        print("/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
+                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__']))
 
 
         # We remove None headers, which are not-loaded-columns
@@ -402,8 +402,8 @@ class GeoBase(object):
 
 
         if verbose:
-            print "Import successful from %s" % self._source
-            print "Available fields for things: %s" % self.fields
+            print("Import successful from %s" % self._source)
+            print("Available fields for things: %s" % self.fields)
 
 
 
@@ -431,7 +431,7 @@ class GeoBase(object):
 
         if not self.hasGeoSupport():
             if self._verbose:
-                print 'Not geocode support, skipping grid...'
+                print('Not geocode support, skipping grid...')
             return
 
         self._ggrid = GeoGrid(radius=50, verbose=False)
@@ -441,8 +441,8 @@ class GeoBase(object):
 
             if lat_lng is None:
                 if self._verbose:
-                    print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
-                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD))
+                    print('No usable geocode for %s: ("%s","%s"), skipping point...' % \
+                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD)))
             else:
                 self._ggrid.add(key, lat_lng, self._verbose)
 
@@ -496,7 +496,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field %s [for key %s] not in %s" % (field, key, list(self._things[key].keys())))
         else:
             return res
 
@@ -574,7 +574,7 @@ class GeoBase(object):
         try:
             res = [self._things[key][field]]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field %s [for key %s] not in %s" % (field, key, list(self._things[key].keys())))
         else:
             return res + [self._things[d][field] for d in self._things[key]['__dup__']]
 
@@ -665,7 +665,7 @@ class GeoBase(object):
         >>> list(a for a in geo_a)
         ['AGN', 'AGM', 'AGJ', 'AGH', ...
         '''
-        return self._things.iterkeys()
+        return iter(self._things.keys())
 
 
     def __contains__(self, key):
@@ -686,7 +686,7 @@ class GeoBase(object):
         return False
 
 
-    def __nonzero__(self):
+    def __bool__(self):
         '''
         Testing GeoBase emptiness.
 
@@ -718,7 +718,7 @@ class GeoBase(object):
         >>> geo_a.keys()
         ['AGN', 'AGM', 'AGJ', 'AGH', ...
         '''
-        return self._things.keys()
+        return list(self._things.keys())
 
 
     def _buildDistances(self, lat_lng_ref, keys):
@@ -1054,7 +1054,7 @@ class GeoBase(object):
             # cache, we do not perform the fuzzy search
             # It avoids single failure on some rare examples
             if verbose:
-                print 'Using bias: %s' % str(entry)
+                print('Using bias: %s' % str(entry))
 
             return self._bias_cache_fuzzy[entry]
 
@@ -1165,11 +1165,11 @@ class GeoBase(object):
 
             if m[0] >= show_bad[0] and m[0] < show_bad[1]:
 
-                print "[%.2f] %25s -> %25s (%5s)" % \
+                print("[%.2f] %25s -> %25s (%5s)" % \
                     (m[0],
                      '+'.join(clean(fuzzy_value)),
                      '+'.join(clean(self.get(m[1], field))),
-                     m[1])
+                     m[1]))
 
 
     def distance(self, key0, key1):
@@ -1239,7 +1239,7 @@ class GeoBase(object):
         ['frnic']
         '''
 
-        for field, val in dictionary.iteritems():
+        for field, val in dictionary.items():
             self.set(key, field, val)
 
 
