@@ -339,15 +339,13 @@ def mod_leven(str1, str2):
     0.9...
     >>> mod_leven('Bains les bains', 'Tulle')
     0.0
-    >>> mod_leven('tulle', 'Tulle les flots')
-    0.99
 
     Tweaking behavior.
 
-    >>> import LevenshteinUtils
-    >>> LevenshteinUtils.HEURISTIC_INCLUSION = False
-    >>> LevenshteinUtils.mod_leven('tulle', 'Tulle les flots')
-    0.625
+    >>> import LevenshteinUtils as LU
+    >>> LU.HEURISTIC_INCLUSION = False
+    >>> LU.mod_leven('Aéroport CDG  2 TGV', 'aeroport-cdg') # Inclusion
+    0.85...
     '''
     str1 = clean(str1)
     str2 = clean(str2)
@@ -360,7 +358,7 @@ def mod_leven(str1, str2):
     r = LevenRatio('+'.join(str1), '+'.join(str2))
 
     # Perfect match, finished
-    if r == 1:
+    if r == 1.0:
         return r
 
     # Heuristic of strict inclusion
