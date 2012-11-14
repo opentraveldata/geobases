@@ -1092,13 +1092,13 @@ class GeoBase(object):
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, 'Biased result')
+        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, [(0.5, 'Biased result')])
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, min_match=0.75)
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
-        'Biased result'
+        [(0.5, 'Biased result')]
         '''
 
         # Cleaning is for keeping only useful data
