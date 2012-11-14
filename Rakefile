@@ -24,7 +24,7 @@ namespace :build do
 
   desc "Creating virtual environment"
   task :venv do
-    %x[ virtualenv --clear --no-site-packages . >&2 ]
+    %x[ virtualenv --clear --no-site-packages --python=#{RELEASE_PYTHON} . >&2 ]
     raise "Virtualenv creation failed" unless $?.success?
   end
 
