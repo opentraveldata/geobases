@@ -126,8 +126,6 @@ class RotatingColors(object):
         if self._current == len(self._availables):
             self._current = 0
 
-        return self
-
 
     def get(self):
         '''Get current color.'''
