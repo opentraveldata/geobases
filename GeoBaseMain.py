@@ -12,7 +12,7 @@ import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
-from itertools import izip_longest
+from itertools import zip_longest
 import textwrap
 
 # Not in standard library
@@ -118,7 +118,7 @@ class RotatingColors(object):
         self._current = 0
 
 
-    def next(self):
+    def __next__(self):
         '''We increase the current color.
         '''
         self._current += 1
@@ -224,7 +224,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         else:
             col = c.get()
 
-        c.next()
+        next(c)
 
         stdout.write('\n' + fixed_width(f, col, lim, truncate))
 
@@ -329,7 +329,7 @@ def scan_coords(u_input, geob, verbose):
             error('geocode_format', u_input)
 
         if verbose:
-            print 'Geocode recognized: (%.3f, %.3f)' % coords
+            print('Geocode recognized: (%.3f, %.3f)' % coords)
 
         return coords
 
@@ -342,16 +342,16 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
     h = int(ceil(n / 2)) # half+
 
     if layout == 'h':
-        pairs = izip_longest(L[::2], L[1::2], fillvalue='')
+        pairs = zip_longest(L[::2], L[1::2], fillvalue='')
 
     elif layout == 'v':
-        pairs = izip_longest(L[:h], L[h:], fillvalue='')
+        pairs = zip_longest(L[:h], L[h:], fillvalue='')
 
     else:
         raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
     for p in pairs:
-        print >> descriptor, '\t%-20s\t%-20s' % p
+        print('\t%-20s\t%-20s' % p, file=descriptor)
 
 
 
@@ -361,8 +361,8 @@ def warn(name, *args):
     '''
 
     if name == 'key':
-        print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
-                (args[0], args[1], args[2])
+        print('/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
+                (args[0], args[1], args[2]), file=stderr)
 
 
 def error(name, *args):
@@ -372,30 +372,30 @@ def error(name, *args):
     '''
 
     if name == 'trep_support':
-        print >> stderr, '\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.'
+        print('\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.', file=stderr)
 
     elif name == 'geocode_support':
-        print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
+        print('\n/!\ No geocoding support for data type %s.' % args[0], file=stderr)
 
     elif name == 'base':
-        print >> stderr, '\n/!\ Wrong base "%s". You may select:' % args[0]
+        print('\n/!\ Wrong base "%s". You may select:' % args[0], file=stderr)
         fmt_on_two_cols(args[1], stderr)
 
     elif name == 'property':
-        print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
-        print >> stderr, 'For data type %s, you may select:' % args[1]
+        print('\n/!\ Wrong property "%s".' % args[0], file=stderr)
+        print('For data type %s, you may select:' % args[1], file=stderr)
         fmt_on_two_cols(args[2], stderr)
 
     elif name == 'field':
-        print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
-        print >> stderr, 'For data type %s, you may select:' % args[1]
+        print('\n/!\ Wrong field "%s".' % args[0], file=stderr)
+        print('For data type %s, you may select:' % args[1], file=stderr)
         fmt_on_two_cols(args[2], stderr)
 
     elif name == 'geocode_format':
-        print >> stderr, '\n/!\ Bad geocode format: %s' % args[0]
+        print('\n/!\ Bad geocode format: %s' % args[0], file=stderr)
 
     elif name == 'geocode_unknown':
-        print >> stderr, '\n/!\ Geocode was unknown for %s' % args[0]
+        print('\n/!\ Geocode was unknown for %s' % args[0], file=stderr)
 
     exit(1)
 
@@ -602,9 +602,9 @@ def main():
 
     if args['version']:
         r = pkg_resources.require("GeoBases")[0]
-        print 'Project  : %s' % r.project_name
-        print 'Version  : %s' % r.version
-        print 'Location : %s' % r.location
+        print('Project  : %s' % r.project_name)
+        print('Version  : %s' % r.version)
+        print('Location : %s' % r.location)
         exit()
 
     if args['base'] not in GeoBase.BASES:
@@ -616,7 +616,7 @@ def main():
         exit()
 
     if verbose:
-        print 'Loading GeoBase...'
+        print('Loading GeoBase...')
 
     g = GeoBase(data=args['base'], verbose=warnings)
 
@@ -661,11 +661,11 @@ def main():
     #
     if verbose:
         if not stdin.isatty():
-            print 'Looking for matches from stdin...'
+            print('Looking for matches from stdin...')
         elif args['keys']:
-            print 'Looking for matches from %s...' % ', '.join(args['keys'])
+            print('Looking for matches from %s...' % ', '.join(args['keys']))
         else:
-            print 'Looking for matches from *all* data...'
+            print('Looking for matches from *all* data...')
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
@@ -692,7 +692,7 @@ def main():
     if args['trep'] is not None:
         args['trep'] = ' '.join(args['trep'])
         if verbose:
-            print 'Applying opentrep on "%s" [output %s]' % (args['trep'], args['trep_format'])
+            print('Applying opentrep on "%s" [output %s]' % (args['trep'], args['trep_format']))
 
         res = g.trepGet(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
@@ -702,9 +702,9 @@ def main():
         args['exact'] = ' '.join(args['exact'])
         if verbose:
             if args['reverse']:
-                print 'Applying property %s != "%s"' % (args['exact_property'], args['exact'])
+                print('Applying property %s != "%s"' % (args['exact_property'], args['exact']))
             else:
-                print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
+                print('Applying property %s == "%s"' % (args['exact_property'], args['exact']))
 
         res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])], from_keys=ex_keys(res), reverse=args['reverse'], force_str=True)))
         last = 'exact'
@@ -713,7 +713,7 @@ def main():
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
-            print 'Applying near %s km from "%s"' % (args['near_limit'], args['near'])
+            print('Applying near %s km from "%s"' % (args['near_limit'], args['near']))
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -723,7 +723,7 @@ def main():
     if args['closest'] is not None:
         args['closest'] = ' '.join(args['closest'])
         if verbose:
-            print 'Applying closest %s from "%s"' % (args['closest_limit'], args['closest'])
+            print('Applying closest %s from "%s"' % (args['closest_limit'], args['closest']))
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -733,7 +733,7 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
+            print('Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy']))
 
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
@@ -782,10 +782,10 @@ def main():
     if verbose:
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        print '\nDone in %s' % (datetime.now() - before)
+        print('\nDone in %s' % (datetime.now() - before))
 
         for warn_msg in ENV_WARNINGS:
-            print textwrap.dedent(warn_msg)
+            print(textwrap.dedent(warn_msg))
     else:
         display_quiet(g, res, set(args['omit']), args['show'], ref_type)
 
