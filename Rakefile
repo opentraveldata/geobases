@@ -3,17 +3,16 @@ require 'yaml'
 require 'pathname'
 
 ROOT_PATH = File.expand_path File.dirname(__FILE__)
-
-RELEASE_FILE_PATH = File.join ROOT_PATH, 'release.yaml'
+FILE_PATH = File.join ROOT_PATH, 'release.yaml'
 
 # Read YAML configuration
-File.open(RELEASE_FILE_PATH) { |f| YAML.load f }.each do |param, val|
-  Object.const_set "RELEASE_#{param.upcase}", val
+File.open(FILE_PATH) { |f| YAML.load f }.each do |param, val|
+  Object.const_set "#{param.upcase}", val
 end
 
 # Define environment variables
-if defined? RELEASE_ENVIRONMENT and not RELEASE_ENVIRONMENT.nil?
-  RELEASE_ENVIRONMENT.each do |key, val|
+if defined? ENVIRONMENT and not ENVIRONMENT.nil?
+  ENVIRONMENT.each do |key, val|
     puts "'#{key}' set to '#{val}'"
     ENV[key] = val
   end
@@ -24,7 +23,7 @@ namespace :build do
 
   desc "Creating virtual environment"
   task :venv do
-    %x[ virtualenv --clear --no-site-packages -p #{RELEASE_PYTHON} #{RELEASE_VENV_PATH} >&2 ]
+    %x[ virtualenv --clear --no-site-packages -p #{PYTHON} . >&2 ]
     raise "Virtualenv creation failed" unless $?.success?
   end
 
@@ -45,15 +44,15 @@ namespace :build do
   task :deps => [:venv, :activate] do
     # Here we use stderr to display the output on Jenkins
     # stdout is captured
-    %x[ #{RELEASE_VENV_PYTHON} setup.py develop >&2 ]
+    %x[ #{VENV_PYTHON} setup.py develop >&2 ]
     raise "Dependencies failed" unless $?.success?
   end
 
 
   desc "Run test suite"
   task :test => [:deps, :activate] do
-    if not RELEASE_TEST_FILE.nil? and not RELEASE_TEST_FILE.empty?
-      %x[ #{RELEASE_VENV_PYTHON} #{RELEASE_TEST_FILE} -v >&2 ]
+    if not TEST_FILE.nil? and not TEST_FILE.empty?
+      %x[ #{VENV_PYTHON} #{TEST_FILE} -v >&2 ]
     end
     raise "Tests failed" unless $?.success?
   end
@@ -65,17 +64,17 @@ namespace :build do
 
   desc "Build the package"
   task :package => [:clean, :test, :activate] do
-    %x[ #{RELEASE_VENV_PYTHON} setup.py sdist >&2 ]
+    %x[ #{VENV_PYTHON} setup.py sdist >&2 ]
     raise "Packaging failed" unless $?.success?
   end
 
   desc "Publish the package"
   task :publish => :package do
     package_name=%x[ basename dist/*tar.gz ].strip
-    package_url = "#{RELEASE_REPO_URL}/#{package_name}"
+    package_url = "#{REPO_URL}/#{package_name}"
     %x[ nd -p dist/#{package_name} #{package_url} ]
     raise "Publishing failed" unless $?.success?
-    puts "Package #{package_name} published to #{RELEASE_REPO_URL}"
+    puts "Package #{package_name} published to #{REPO_URL}"
   end
 
   desc "Create .deb"
@@ -89,7 +88,7 @@ namespace :build do
 
   desc "Install Python module in a virtual environment"
   task :install => [:venv, :activate] do
-    %x[ #{RELEASE_VENV_PYTHON} setup.py install >&2 ]
+    %x[ #{VENV_PYTHON} setup.py install >&2 ]
     raise "Installation failed" unless $?.success?
   end
 
