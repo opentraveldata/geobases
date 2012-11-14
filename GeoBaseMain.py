@@ -743,18 +743,20 @@ def main():
     # DISPLAY
     #
 
-    # Keeping only limit first results
+    # Saving to list
     res = list(res)
 
-    if limit is not None:
-        res = res[:limit]
-
+    # Removing unknown keys
     for h, k in res:
         if k not in g:
             warn('key', k, g._data, g._source)
 
-    # Removing unknown keys
     res = [(h, k) for h, k in res if k in g]
+
+
+    # Keeping only "limit" first results
+    if limit is not None:
+        res = res[:limit]
 
 
     # Highlighting some rows
