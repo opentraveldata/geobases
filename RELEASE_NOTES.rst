@@ -6,6 +6,7 @@ Release notes
 V3
 ==
 
++ 3.33 : Python 3 full support on separate branch
 + 3.32 : improve CLI with warnings on poor configuration, truncated symbol and white term mode
 + 3.31 : init options now overrides configuration file
 + 3.30 : ``from GeoBases import GeoBase`` works as import mechanism
