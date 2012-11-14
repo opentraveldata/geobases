@@ -29,7 +29,7 @@ EXTRAS_REQUIRE = {
 # Managing OpenTrep dependency
 WITH_OPENTREP = getenv('WITH_OPENTREP', None)
 
-if WITH_OPENTREP:
+if WITH_OPENTREP == '1':
     # Forcing OpenTrepWrapper support
     INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
 
