@@ -80,7 +80,11 @@ setup(
         'GeoBaseMain'
     ],
     dependency_links = [
-        'http://oridist.orinet/python/'
+        'http://oridist.orinet/python/',
+        #
+        # That one is a fork supporting Python 3
+        'https://github.com/wor/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz',
+        #'http://github.com/miohtama/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz'
     ],
     install_requires = INSTALL_REQUIRES,
     extras_require   = EXTRAS_REQUIRE,
