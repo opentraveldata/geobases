@@ -292,8 +292,8 @@ def fixed_width(s, col, lim=25, truncate=None):
     # We decode before truncating (so non-ascii characters
     # will be counted only once when using len())
     # Then we encode again for stdout.write
-    ds = str(s).decode('utf8')                      # decode
-    es = (printer % ds[0:truncate]).encode('utf8')  # encode
+    ds = str(s)
+    es = printer % ds[0:truncate]
 
     if len(ds) > truncate:
         es = es[:-2] + '… '
