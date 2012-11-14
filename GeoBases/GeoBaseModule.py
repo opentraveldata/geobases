@@ -102,6 +102,9 @@ class GeoBase(object):
     # Loading indicator
     NB_LINES_STEP = 100000
 
+    # Default field on which fuzzy search are performed
+    DEFAULT_FUZZY = 'name'
+
 
     @staticmethod
     def update():
@@ -942,7 +945,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field='name', approximate=None, min_match=0.75, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None):
         '''
         We get to the cool stuff.
 
@@ -1000,7 +1003,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field='name', approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -1058,7 +1061,7 @@ class GeoBase(object):
 
     def fuzzyGetCached(self,
                        fuzzy_value,
-                       field='name',
+                       field=DEFAULT_FUZZY,
                        approximate=None,
                        min_match=0.75,
                        verbose=True,
