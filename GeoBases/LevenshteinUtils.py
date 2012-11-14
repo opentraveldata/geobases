@@ -92,9 +92,9 @@ def str_lowercase(string):
     '''
     Lower case adapted for str type.
 
-    >>> print 'Étaples'.lower() # Fail!
+    >>> print('Étaples'.lower()) # Fail!
     Étaples
-    >>> print str_lowercase('Étaples') # Win!
+    >>> print(str_lowercase('Étaples')) # Win!
     étaples
     '''
     if isinstance(string, unicode):
@@ -342,6 +342,7 @@ def mod_leven(str1, str2):
 
     Tweaking behavior.
 
+    >>> import sys; sys.path.append('.')
     >>> import LevenshteinUtils as LU
     >>> LU.HEURISTIC_INCLUSION = False
     >>> LU.mod_leven('Aéroport CDG  2 TGV', 'aeroport-cdg') # Inclusion
