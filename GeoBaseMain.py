@@ -33,12 +33,14 @@ BACKGROUND_COLOR = getenv('BACKGROUND_COLOR', None) # 'white'
 if BACKGROUND_COLOR not in ['black', 'white']:
     ENV_WARNINGS.append(
     """
-    --------------------------------------------------------------------
-    BACKGROUND_COLOR environment variable not properly set.
-    Accepted values are 'black' and 'white'. Using default 'black' here.
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:
-        export BACKGROUND_COLOR=black # or white
-    --------------------------------------------------------------------
+    **********************************************************************
+    $BACKGROUND_COLOR environment variable not properly set.             *
+    Accepted values are 'black' and 'white'. Using default 'black' here. *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export BACKGROUND_COLOR=black # or white                         *
+                                                                         *
+    *************************************************************** README
     """)
 
     BACKGROUND_COLOR = 'black'
@@ -59,18 +61,21 @@ def checkPath(command):
 if not checkPath('GeoBase'):
     ENV_WARNINGS.append(
     """
-    --------------------------------------------------------------------
-    GeoBase does not seem to be in the $PATH.
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:
-        export PATH=$PATH:$HOME/.local/bin
-
-    By the way, since you are reading this, you also should
-    add this for the completion to work with zsh:
-        # Add custom completion scripts
-        fpath=(~/.zsh/completion $fpath)
-        autoload -U compinit
-        compinit
-    --------------------------------------------------------------------
+    **********************************************************************
+    GeoBase does not seem to be in the $PATH.                            *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export PATH=$PATH:$HOME/.local/bin                               *
+                                                                         *
+    By the way, since you are reading this, you also should              *
+    add this for the completion to work with zsh:                        *
+                                                                         *
+        # Add custom completion scripts                                  *
+        fpath=(~/.zsh/completion $fpath)                                 *
+        autoload -U compinit                                             *
+        compinit                                                         *
+                                                                         *
+    *************************************************************** README
     """)
 
 
