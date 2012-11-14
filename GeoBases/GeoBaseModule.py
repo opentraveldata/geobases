@@ -97,13 +97,15 @@ class GeoBase(object):
         BASES = yaml.load(fl)
 
     # Special fields for latitude and longitude recognition
-    FIELDS_FOR_GEO = set(['lat', 'lng'])
-
-    # Loading indicator
-    NB_LINES_STEP = 100000
+    LAT_FIELD  = 'lat'
+    LNG_FIELD  = 'lng'
+    GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
     # Default field on which fuzzy search are performed
     DEFAULT_FUZZY = 'name'
+
+    # Loading indicator
+    NB_LINES_STEP = 100000
 
 
     @staticmethod
@@ -414,7 +416,7 @@ class GeoBase(object):
         >>> geo_f.hasGeoSupport()
         False
         '''
-        if GeoBase.FIELDS_FOR_GEO & set(self.fields):
+        if set(GeoBase.GEO_FIELDS) & set(self.fields):
             # Set intersection is not empty
             return True
 
@@ -434,12 +436,13 @@ class GeoBase(object):
 
         self._ggrid = GeoGrid(radius=50, verbose=False)
 
-        for key, lat_lng in self.iterLocations():
+        for key in self:
+            lat_lng = self.getLocation(key)
 
             if lat_lng is None:
                 if self._verbose:
-                    print 'No usable geocode for %s [%s,%s], skipping point...' % \
-                            (key, self.get(key, 'lat'), self.get(key, 'lng'))
+                    print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
+                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD))
             else:
                 self._ggrid.add(key, lat_lng, self._verbose)
 
@@ -451,7 +454,7 @@ class GeoBase(object):
         This get function raise exception when input is not correct.
 
         :param key:   the key of the thing (like 'SFO')
-        :param field: the field (like 'name' or 'lat')
+        :param field: the field (like 'name' or 'iata_code')
         :raises:      KeyError, if the key is not in the base
         :returns:     the needed information
 
@@ -507,7 +510,7 @@ class GeoBase(object):
         (57.50..., -134.585...)
         '''
         try:
-            loc = float(self.get(key, 'lat')), float(self.get(key, 'lng'))
+            loc = tuple(float(self.get(key, f)) for f in GeoBase.GEO_FIELDS)
 
         except ValueError:
             # Decode geocode, if error, returns None
@@ -1191,7 +1194,7 @@ class GeoBase(object):
         Method to manually change a value in the base.
 
         :param key:   the key we want to change a value of
-        :param field: the concerned field, like 'lat'
+        :param field: the concerned field, like 'name'
         :param value: the new value
 
         >>> geo_t.get('frnic', 'name')
@@ -1245,7 +1248,7 @@ class GeoBase(object):
         Method to manually remove a value in the base.
 
         :param key:   the key we want to change a value of
-        :param field: the concerned field, like 'lat'
+        :param field: the concerned field, like 'name'
         :returns:     None
 
         >>> data = geo_t.get('frxrn') # Output all data in one dict
