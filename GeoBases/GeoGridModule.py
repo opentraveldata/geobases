@@ -16,9 +16,9 @@ to provide geographical indexation features.
     >>> neighbors('t0db')
     ['t0d8', 't0e0', 't06z', 't06x', 't07p', 't0dc', 't0d9', 't0e1']
     >>> list(a._recursiveFrontier('t0dbr', N=2))
-    [set(['t0dbr']), set(['t0e08', 't0e00', 't0dbn', 't0e02', 't0dbq', 't0dbp', 't0dbw', 't0dbx'])]
+    [{'t0dbr'}, {'t0e08', 't0e00', 't0dbn', 't0e02', 't0dbq', 't0dbp', 't0dbw', 't0dbx'}]
     >>> list(a._recursiveFrontier('t0dbr', N=1))
-    [set(['t0dbr'])]
+    [{'t0dbr'}]
     >>> sum(len(f) for f in a._recursiveFrontier('t0dbr', N=2))
     9
     >>> sum(len(f) for f in a._recursiveFrontier('t0dbr', N=3))

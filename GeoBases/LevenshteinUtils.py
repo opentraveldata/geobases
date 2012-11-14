@@ -91,17 +91,15 @@ HEURISTIC_INCLUSION_VALUE = 0.99
 def str_lowercase(string):
     '''
     Lower case adapted for str type.
+    With Python3, this function has become pretty useless.
 
-    >>> print('Étaples'.lower()) # Fail!
-    Étaples
+    >>> print('Étaples'.lower()) # Win!
+    étaples
     >>> print(str_lowercase('Étaples')) # Win!
     étaples
     '''
     if isinstance(string, str):
         return string.lower()
-
-    if isinstance(string, str):
-        return string.decode('utf8').lower().encode('utf8')
 
     raise ValueError('Input %s is not instance of <str> or <unicode>' % string)
 
