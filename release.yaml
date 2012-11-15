@@ -1,8 +1,9 @@
 #
 # For Jenkins, main test file and where to put package created
 #
-test_file   : 'test/test_GeoBases.py'
+python      : 'pypy'
+test_file   : #'test/test_GeoBases.py'
 repo_url    : 'http://oridist.orinet.nce.amadeus.net/python/'
 package_name: # Blank will not change the name of the created package
 environment :
-  WITH_OPENTREP : '1'
+  WITH_OPENTREP : '0'
