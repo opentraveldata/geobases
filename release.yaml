@@ -2,6 +2,9 @@
 # For Jenkins, main test file and where to put package created
 #
 python      : 'pypy'
+venv_python : 'python'
+skip_venv   : true
+add_options : '--user'
 test_file   : #'test/test_GeoBases.py'
 repo_url    : 'http://oridist.orinet.nce.amadeus.net/python/'
 package_name: # Blank will not change the name of the created package
