@@ -10,19 +10,52 @@ File.open(FILE_PATH) { |f| YAML.load f }.each do |param, val|
   Object.const_set "#{param.upcase}", val
 end
 
-# Define environment variables
-if defined? ENVIRONMENT and not ENVIRONMENT.nil?
-  ENVIRONMENT.each do |key, val|
-    puts "'#{key}' set to '#{val}'"
-    ENV[key] = val
-  end
+# Default values if not in configuration file
+if not defined? ENVIRONMENT
+    ENVIRONMENT = {}
+end
+
+if not defined? PYTHON
+    PYTHON = '/usr/bin/python'
+end
+
+if not defined? VENV_PYTHON
+    VENV_PYTHON = './bin/python'
+end
+
+if not defined? TEST_FILE
+    TEST_FILE = nil
+end
+
+if not defined? PACKAGE_NAME
+    PACKAGE_NAME = nil
+end
+
+if not defined? REPO_URL
+    REPO_URL = nil
 end
 
 
 namespace :build do
 
+  desc "Set environment variables"
+  task :global_vars do
+    # Define environment variables
+    if not ENVIRONMENT.nil?
+      ENVIRONMENT.each do |key, val|
+        puts "'#{key}' set to '#{val}'"
+        ENV[key] = val
+      end
+    end
+  end
+
+  desc "Clean virtualenv directories"
+  task :venv_clean do
+    %x[ rm -rf bin lib lib64 include ]
+  end
+
   desc "Creating virtual environment"
-  task :venv do
+  task :venv => [:global_vars, :venv_clean] do
     %x[ virtualenv --clear --no-site-packages -p #{PYTHON} . >&2 ]
     raise "Virtualenv creation failed" unless $?.success?
   end
@@ -48,7 +81,6 @@ namespace :build do
     raise "Dependencies failed" unless $?.success?
   end
 
-
   desc "Run test suite"
   task :test => [:deps, :activate] do
     if not TEST_FILE.nil? and not TEST_FILE.empty?
@@ -70,11 +102,16 @@ namespace :build do
 
   desc "Publish the package"
   task :publish => :package do
-    package_name=%x[ basename dist/*tar.gz ].strip
+    local_package=%x[ basename dist/*tar.gz ].strip
+    if PACKAGE_NAME.nil?
+        package_name=local_package
+    else
+        package_name=PACKAGE_NAME
+    end
     package_url = "#{REPO_URL}/#{package_name}"
-    %x[ nd -p dist/#{package_name} #{package_url} ]
+    %x[ nd -p dist/#{local_package} #{package_url} ]
     raise "Publishing failed" unless $?.success?
-    puts "Package #{package_name} published to #{REPO_URL}"
+    puts "Package #{local_package} published to #{REPO_URL} as #{package_name}"
   end
 
   desc "Create .deb"
