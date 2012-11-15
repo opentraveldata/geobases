@@ -13,8 +13,6 @@ from sys import stderr
 INSTALL_REQUIRES = [
     # Public - core
     'pyyaml',
-    'python_geohash',
-    'python_Levenshtein',
     # Public - CLI
     'argparse',
     'termcolor',
@@ -57,7 +55,7 @@ except ImportError:
 
 
 setup(
-    name = 'GeoBases',
+    name = 'GeoBasesPypy',
     version = '3.33.1',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',

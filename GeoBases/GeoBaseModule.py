@@ -57,8 +57,10 @@ from itertools import izip_longest
 import yaml
 
 from .GeoUtils         import haversine
-from .LevenshteinUtils import mod_leven, clean
-from .GeoGridModule    import GeoGrid
+
+# Stubs for LevenshteinUtils
+mod_leven = lambda a, b : 1.0
+clean     = lambda s : [s]
 
 
 try:
@@ -156,7 +158,6 @@ class GeoBase(object):
         # Dictionary of dictionary
         self._data   = data
         self._things = {}
-        self._ggrid  = None
 
         # A cache for the fuzzy searches
         self._cache_fuzzy = {}
@@ -225,7 +226,6 @@ class GeoBase(object):
         # Loading data
         self._configSubDelimiters()
         self._loadFile()
-        self.createGrid()
 
 
 
@@ -413,30 +413,6 @@ class GeoBase(object):
             return True
 
         return False
-
-
-
-    def createGrid(self):
-        '''
-        Create the grid for geographical indexation after loading the data.
-        '''
-
-        if not self.hasGeoSupport():
-            if self._verbose:
-                print 'Not geocode support, skipping grid...'
-            return
-
-        self._ggrid = GeoGrid(radius=50, verbose=False)
-
-        for key in self:
-            lat_lng = self.getLocation(key)
-
-            if lat_lng is None:
-                if self._verbose:
-                    print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
-                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD))
-            else:
-                self._ggrid.add(key, lat_lng, self._verbose)
 
 
 
@@ -785,23 +761,11 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid:
-            # Using grid, from_keys if just a post-filter
-            from_keys = set(from_keys)
+        for dist, thing in self._buildDistances(lat_lng, from_keys):
 
-            for dist, thing in self._ggrid.findNearPoint(lat_lng, radius, double_check):
+            if dist <= radius:
 
-                if thing in from_keys:
-
-                    yield (dist, thing)
-
-        else:
-
-            for dist, thing in self._buildDistances(lat_lng, from_keys):
-
-                if dist <= radius:
-
-                    yield (dist, thing)
+                yield (dist, thing)
 
 
 
@@ -845,21 +809,9 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid:
-            # Using grid, from_keys if just a post-filter
-            from_keys = set(from_keys)
+        for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
 
-            for dist, thing in self._ggrid.findNearKey(key, radius, double_check):
-
-                if thing in from_keys:
-
-                    yield (dist, thing)
-
-        else:
-
-            for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
-
-                yield (dist, thing)
+            yield (dist, thing)
 
 
 
@@ -915,19 +867,11 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid:
+        iterable = self._buildDistances(lat_lng, from_keys)
 
-            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
+        for dist, thing in heapq.nsmallest(N, iterable):
 
-                yield (dist, thing)
-
-        else:
-
-            iterable = self._buildDistances(lat_lng, from_keys)
-
-            for dist, thing in heapq.nsmallest(N, iterable):
-
-                yield (dist, thing)
+            yield (dist, thing)
 
 
     def _buildRatios(self, fuzzy_value, field, keys, min_match=0):
