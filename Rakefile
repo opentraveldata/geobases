@@ -23,6 +23,14 @@ if not defined? VENV_PYTHON
     VENV_PYTHON = './bin/python'
 end
 
+if not defined? SKIP_VENV
+    SKIP_VENV = false
+end
+
+if not defined? ADD_OPTIONS
+    ADD_OPTIONS = ''
+end
+
 if not defined? TEST_FILE
     TEST_FILE = nil
 end
@@ -56,8 +64,10 @@ namespace :build do
 
   desc "Creating virtual environment"
   task :venv => [:global_vars, :venv_clean] do
-    %x[ virtualenv --clear --no-site-packages -p #{PYTHON} . >&2 ]
-    raise "Virtualenv creation failed" unless $?.success?
+    if not SKIP_VENV
+      %x[ virtualenv --clear --no-site-packages -p #{PYTHON} . >&2 ]
+      raise "Virtualenv creation failed" unless $?.success?
+    end
   end
 
   desc "Entering virtual environment"
@@ -77,7 +87,7 @@ namespace :build do
   task :deps => [:venv, :activate] do
     # Here we use stderr to display the output on Jenkins
     # stdout is captured
-    %x[ #{VENV_PYTHON} setup.py develop >&2 ]
+    %x[ #{VENV_PYTHON} setup.py develop #{ADD_OPTIONS} >&2 ]
     raise "Dependencies failed" unless $?.success?
   end
 
@@ -125,7 +135,7 @@ namespace :build do
 
   desc "Install Python module in a virtual environment"
   task :install => [:venv, :activate] do
-    %x[ #{VENV_PYTHON} setup.py install >&2 ]
+    %x[ #{VENV_PYTHON} setup.py install #{ADD_OPTIONS} >&2 ]
     raise "Installation failed" unless $?.success?
   end
 
