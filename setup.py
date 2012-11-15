@@ -57,7 +57,7 @@ except ImportError:
 
 
 setup(
-    name = 'GeoBases',
+    name = 'GeoBases3K',
     version = '3.33.1',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
