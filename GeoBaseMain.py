@@ -31,8 +31,7 @@ ENV_WARNINGS     = []
 BACKGROUND_COLOR = getenv('BACKGROUND_COLOR', None) # 'white'
 
 if BACKGROUND_COLOR not in ['black', 'white']:
-    ENV_WARNINGS.append(
-    """
+    ENV_WARNINGS.append("""
     **********************************************************************
     $BACKGROUND_COLOR environment variable not properly set.             *
     Accepted values are 'black' and 'white'. Using default 'black' here. *
@@ -59,16 +58,24 @@ def checkPath(command):
 
 
 if not checkPath('GeoBase'):
-    ENV_WARNINGS.append(
-    """
+    ENV_WARNINGS.append("""
     **********************************************************************
-    GeoBase does not seem to be in the $PATH.                            *
+    "GeoBase" does not seem to be in your $PATH.                         *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
         export PATH=$PATH:$HOME/.local/bin                               *
                                                                          *
-    By the way, since you are reading this, you also should              *
-    add this for the completion to work with zsh:                        *
+    *************************************************************** README
+    """)
+
+
+if ENV_WARNINGS:
+    # Assume the user did not read the wiki :D
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    By the way, since you probably did not read the documentation :D,    *
+    you should also add this for the completion to work with zsh.        *
+    You're using zsh right o_O?                                          *
                                                                          *
         # Add custom completion scripts                                  *
         fpath=(~/.zsh/completion $fpath)                                 *
@@ -788,7 +795,7 @@ def main():
                 (end - before_init, after_init - before_init, end - after_init))
 
         for warn_msg in ENV_WARNINGS:
-            print(textwrap.dedent(warn_msg))
+            print(textwrap.dedent(warn_msg), end="")
     else:
         display_quiet(g, res, set(args['omit']), args['show'], ref_type)
 
