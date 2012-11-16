@@ -596,7 +596,7 @@ def main():
     # CREATION
     #
     if verbose:
-        before = datetime.now()
+        before_init = datetime.now()
 
     if args['version']:
         r = pkg_resources.require("GeoBases")[0]
@@ -617,6 +617,9 @@ def main():
         print 'Loading GeoBase...'
 
     g = GeoBase(data=args['base'], verbose=warnings)
+
+    if verbose:
+        after_init = datetime.now()
 
 
 
@@ -780,7 +783,9 @@ def main():
     if verbose:
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        print '\nDone in %s' % (datetime.now() - before)
+        end = datetime.now()
+        print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
+                (end - before_init, after_init - before_init, end - after_init)
 
         for warn_msg in ENV_WARNINGS:
             print textwrap.dedent(warn_msg)
