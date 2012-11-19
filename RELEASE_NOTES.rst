@@ -6,6 +6,7 @@ Release notes
 V3
 ==
 
++ 3.35 : Adding quoting feature to have csv from excel support (escaping delimiter when "")
 + 3.34 : Pypy partiall support on separate branch
 + 3.33 : Python 3 full support on separate branch
 + 3.32 : improve CLI with warnings on poor configuration, truncated symbol and white term mode
