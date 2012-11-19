@@ -57,11 +57,31 @@ import csv
 # Not in standard library
 import yaml
 
-from .GeoUtils         import haversine
+from .GeoUtils import haversine
 
+
+############################
+#
 # Stubs for LevenshteinUtils
-mod_leven = lambda a, b : 1.0
-clean     = lambda s : [s]
+handle_t = lambda s : s.replace('-', ' ').replace('\t', ' ')
+clean    = lambda s : handle_t(s).strip().lower().split()
+
+from difflib import SequenceMatcher
+
+def mod_leven(a, b):
+    '''Stub without CPython.
+
+    >>> mod_leven('antibes', 'antibS')
+    0.92...
+    '''
+    a, b = clean(a), clean(b)
+
+    if not a or not b:
+        return 0.
+
+    return SequenceMatcher(a='+'.join(a), b='+'.join(b)).ratio()
+#
+############################
 
 
 try:
@@ -882,8 +902,8 @@ class GeoBase(object):
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._buildRatios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.80))
-        [(0.9..., 'MRS')]
+        >>> list(geo_a._buildRatios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.50))
+        [(0.66..., 'MRS')]
         '''
 
         for key in keys:
@@ -895,7 +915,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.50, from_keys=None):
         '''
         We get to the cool stuff.
 
@@ -921,13 +941,11 @@ class GeoBase(object):
         :returns:           a couple with the best match and the distance found
 
         >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
-        (0.8..., 'frmsc')
+        (0.91..., 'frmsc')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3, min_match=0.55)
-        [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3, min_match=0.75)
-        [(0.78..., 'CDG')]
+        [(0.78..., 'CDG'), (0.64..., 'LBG'), (0.60..., 'HUX')]
 
         Some corner cases.
 
@@ -967,8 +985,8 @@ class GeoBase(object):
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
 
-        >>> geo_a.fuzzyGet('Brussels', 'name', min_match=0.60)[0]
-        (0.61..., 'BQT')
+        >>> geo_a.fuzzyGet('Brussels', 'name', min_match=0.50)[0]
+        (0.58..., 'EFC')
         >>> geo_a.get('BQT', 'name')  # Brussels just matched on Brest!!
         'Brest'
         >>> geo_a.get('BRU', 'name') # We wanted BRU for 'Bruxelles'
@@ -1028,14 +1046,14 @@ class GeoBase(object):
         :returns:           the best match
 
         >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0]
-        (0.8..., 'frmsc')
+        (0.76..., 'frmsc')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', min_match=0.60, approximate=2, show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
-        [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
-        [(0.78..., 'CDG'), (0.60..., 'HUX')]
+        [0.65]           paris+de+gaulle ->          paris+le+bourget (  LBG)
+        [(0.78..., 'CDG'), (0.64..., 'LBG')]
 
         Some biasing:
 
@@ -1099,7 +1117,7 @@ class GeoBase(object):
         >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None, min_match=0)
         ('paris+de+gaulle', 'name', None, 0)
         >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', approximate=3, min_match=0)
-        ('antibes', 'name', 3, 0)
+        ('antibes+sncf+2', 'name', 3, 0)
         '''
         return '+'.join(clean(fuzzy_value)), field, approximate, min_match
 
