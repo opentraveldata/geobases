@@ -52,6 +52,7 @@ import os
 import os.path as op
 import heapq
 from itertools import izip_longest
+import csv
 
 # Not in standard library
 import yaml
@@ -176,6 +177,7 @@ class GeoBase(object):
             'indexes'       : None,
             'delimiter'     : None,
             'subdelimiters' : {},
+            'quotechar'     : '"',
             'limit'         : None,
             'discard_dups'  : False,
             'verbose'       : True,
@@ -218,6 +220,7 @@ class GeoBase(object):
         self._indexes       = props['indexes']
         self._delimiter     = props['delimiter']
         self._subdelimiters = props['subdelimiters']
+        self._quotechar     = props['quotechar']
         self._limit         = props['limit']
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
@@ -316,12 +319,11 @@ class GeoBase(object):
         :raises: ValueError, if duplicates are found in the source
         '''
 
-        # Someone told me that this increases speed :)
-        indexes       = self._indexes
-        delimiter     = self._delimiter
+        # We cache all variables used in the main loop
         headers       = self._headers
-        limit         = self._limit
+        delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
+        limit         = self._limit
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
@@ -330,11 +332,17 @@ class GeoBase(object):
                 print 'Source was None, skipping loading...'
             return
 
-        pos, keyer = self._configKeyer(indexes, headers)
+        pos, keyer = self._configKeyer(self._indexes, headers)
+
+        # csv reader options
+        csv_opt = {
+            'delimiter' : self._delimiter,
+            'quotechar' : self._quotechar
+        }
 
         with open(self._source) as f:
 
-            for line_nb, row in enumerate(f, start=1):
+            for line_nb, row in enumerate(csv.reader(f, **csv_opt), start=1):
 
                 if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
                     print '%-10s lines loaded so far' % line_nb
@@ -346,15 +354,10 @@ class GeoBase(object):
 
                 # Skip comments and empty lines
                 # Comments must *start* with #, otherwise they will not be stripped
-                if not row or row.startswith('#'):
+                if not row or row[0].startswith('#'):
                     continue
 
-                # Stripping \t would cause bugs in tsv files
-                # If the tsv ends with \t\t, stripping would cause
-                # to loose the track of column numbers
-                row = row.rstrip(' \n\r').split(delimiter)
-                key = keyer(row, pos)
-
+                key      = keyer(row, pos)
                 row_data = self._buildRowValues(row, headers, subdelimiters, key, line_nb, delimiter)
 
                 # No duplicates ever, we will erase all data after if it is
