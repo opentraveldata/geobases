@@ -175,7 +175,7 @@ class GeoBase(object):
             'source'        : None,
             'headers'       : [],
             'indexes'       : None,
-            'delimiter'     : None,
+            'delimiter'     : '^',
             'subdelimiters' : {},
             'quotechar'     : '"',
             'limit'         : None,
