@@ -273,7 +273,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowValues(row, headers, subdelimiters, key, line_nb, delimiter):
+    def _buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb):
         '''Building all data associated to this row.
         '''
         # Erase everything, except duplicates counter
@@ -358,7 +358,7 @@ class GeoBase(object):
                     continue
 
                 key      = keyer(row, pos)
-                row_data = self._buildRowValues(row, headers, subdelimiters, key, line_nb, delimiter)
+                row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
 
                 # No duplicates ever, we will erase all data after if it is
                 if key not in self._things:
