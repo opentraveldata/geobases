@@ -1293,11 +1293,11 @@ class GeoBase(object):
         and trepGet will raise an exception if called.
 
         >>> if geo_t.hasTrepSupport():
-        ...     print geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
+        ...     print(geo_t.trepGet('sna francisco los agneles')) # doctest: +SKIP
         [(31.5192, 'SFO'), (46.284, 'LAX')]
 
         >>> if geo_t.hasTrepSupport():
-        ...     print geo_t.trepGet('sna francisco', verbose=True) # doctest: +SKIP
+        ...     print(geo_t.trepGet('sna francisco', verbose=True)) # doctest: +SKIP
          -> Raw result: SFO/31.5192
          -> Fmt result: ([(31.5192, 'SFO')], '')
         [(31.5192, 'SFO')]
