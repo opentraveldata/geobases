@@ -618,27 +618,34 @@ def main():
 
     if not stdin.isatty() and not args['interactive_query']:
 
-        first_l   = stdin.next()
-        source    = chain([first_l], stdin)
+        first_l = stdin.next()
+        source  = chain([first_l], stdin)
 
         delimiter = '^'
-        headers   = LETTERS[0:len(first_l.split(delimiter))]
-        indexes   = LETTERS[0]
 
-        if args['interactive'] is not None:
+        if args['interactive'] is None:
+            headers = LETTERS[0:len(first_l.split(delimiter))]
+            indexes = LETTERS[0]
+        else:
             dhi = args['interactive']
 
             if len(dhi) >= 1:
                 delimiter = dhi[0]
+
             if len(dhi) >= 2:
                 headers = dhi[1].split('/')
+            else:
+                # Reprocessing the headers with custom delimiter
+                headers = LETTERS[0:len(first_l.split(delimiter))]
+
             if len(dhi) >= 3:
                 indexes = dhi[2].split('/')
             else:
+                # Reprocessing the indexes with custom headers
                 indexes = headers[0]
 
         if verbose:
-            print 'Loading GeoBase from stdin with metadata %s; %s; %s...' % \
+            print 'Loading GeoBase from stdin with metadata "%s" ; %s ; %s...' % \
                     (delimiter, headers, indexes)
 
         g = GeoBase(data='feed',
