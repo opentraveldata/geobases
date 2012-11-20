@@ -227,8 +227,19 @@ class GeoBase(object):
 
         # Loading data
         self._configSubDelimiters()
-        self._loadFile()
-        self.createGrid()
+
+        if self._source is not None:
+            self._loadFile()
+        else:
+            if self._verbose:
+                print 'Source was None, skipping loading...'
+
+        # Grid
+        if self.hasGeoSupport():
+            self.createGrid()
+        else:
+            if self._verbose:
+                print 'Not geocode support, skipping grid...'
 
 
 
@@ -318,7 +329,6 @@ class GeoBase(object):
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
         '''
-
         # We cache all variables used in the main loop
         headers       = self._headers
         delimiter     = self._delimiter
@@ -326,11 +336,6 @@ class GeoBase(object):
         limit         = self._limit
         discard_dups  = self._discard_dups
         verbose       = self._verbose
-
-        if self._source is None:
-            if verbose:
-                print 'Source was None, skipping loading...'
-            return
 
         pos, keyer = self._configKeyer(self._indexes, headers)
 
@@ -423,12 +428,6 @@ class GeoBase(object):
         '''
         Create the grid for geographical indexation after loading the data.
         '''
-
-        if not self.hasGeoSupport():
-            if self._verbose:
-                print 'Not geocode support, skipping grid...'
-            return
-
         self._ggrid = GeoGrid(radius=50, verbose=False)
 
         for key in self:
