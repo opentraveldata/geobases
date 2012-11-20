@@ -229,7 +229,8 @@ class GeoBase(object):
         self._configSubDelimiters()
 
         if self._source is not None:
-            self._loadFile()
+            with open(self._source) as source_fl:
+                self._loadFile(source_fl)
         else:
             if self._verbose:
                 print 'Source was None, skipping loading...'
@@ -322,7 +323,7 @@ class GeoBase(object):
         return data
 
 
-    def _loadFile(self):
+    def _loadFile(self, source_fl):
         '''Load the file and feed the self._things.
 
         :param verbose: display informations or not during runtime
@@ -345,47 +346,45 @@ class GeoBase(object):
             'quotechar' : self._quotechar
         }
 
-        with open(self._source) as f:
+        for line_nb, row in enumerate(csv.reader(source_fl, **csv_opt), start=1):
 
-            for line_nb, row in enumerate(csv.reader(f, **csv_opt), start=1):
+            if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+                print '%-10s lines loaded so far' % line_nb
 
-                if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
-                    print '%-10s lines loaded so far' % line_nb
+            if limit is not None and line_nb > limit:
+                if verbose:
+                    print 'Beyond limit %s for lines loaded, stopping.' % limit
+                break
 
-                if limit is not None and line_nb > limit:
-                    if verbose:
-                        print 'Beyond limit %s for lines loaded, stopping.' % limit
-                    break
+            # Skip comments and empty lines
+            # Comments must *start* with #, otherwise they will not be stripped
+            if not row or row[0].startswith('#'):
+                continue
 
-                # Skip comments and empty lines
-                # Comments must *start* with #, otherwise they will not be stripped
-                if not row or row[0].startswith('#'):
-                    continue
+            key      = keyer(row, pos)
+            row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
 
-                key      = keyer(row, pos)
-                row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
+            # No duplicates ever, we will erase all data after if it is
+            if key not in self._things:
+                self._things[key] = row_data
 
-                # No duplicates ever, we will erase all data after if it is
-                if key not in self._things:
-                    self._things[key] = row_data
+            else:
+                if discard_dups is False:
+                    # We compute a new key for the duplicate
+                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
 
-                else:
-                    if discard_dups is False:
-                        # We compute a new key for the duplicate
-                        d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
+                    # We update the data with this info
+                    row_data['__key__'] = d_key
+                    row_data['__dup__'] = self._things[key]['__dup__']
+                    row_data['__dad__'] = key
 
-                        # We update the data with this info
-                        row_data['__key__'] = d_key
-                        row_data['__dup__'] = self._things[key]['__dup__']
-                        row_data['__dad__'] = key
+                    # We add the d_key as a new duplicate, and store the duplicate in the main _things
+                    self._things[key]['__dup__'].append(d_key)
+                    self._things[d_key] = row_data
 
-                        # We add the d_key as a new duplicate, and store the duplicate in the main _things
-                        self._things[key]['__dup__'].append(d_key)
-                        self._things[d_key] = row_data
-
-                    if verbose:
-                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
+                if verbose:
+                    print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
+                            (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
