@@ -558,11 +558,13 @@ def main():
 
     parser.add_argument('-i', '--interactive',
         help = '''Specify metadata for stdin input.
-                        3 values are required: sep, headers, indexes.
+                        3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
+                        Default headers will use alphabet, default indexes
+                        will take the first field. Default separator is "^".
                         Example: -i '^' key/name/data key''',
-        nargs = 3,
-        metavar = ('SEPARATOR', 'HEADERS', 'INDEXES'),
+        nargs = '+',
+        metavar = 'METADATA',
         default = None)
 
     parser.add_argument('-I', '--interactive-query',
@@ -616,16 +618,24 @@ def main():
 
     if not stdin.isatty() and not args['interactive_query']:
 
-        if args['interactive'] is None:
-            first_l   = stdin.next()
-            source    = chain([first_l], stdin)
-            delimiter = '^'
-            headers   = LETTERS[0:len(first_l.split(delimiter))]
-            indexes   = LETTERS[0]
-        else:
-            dhi    = args['interactive']
-            source = stdin
-            delimiter, headers, indexes = dhi[0], dhi[1].split('/'), dhi[2].split('/')
+        first_l   = stdin.next()
+        source    = chain([first_l], stdin)
+
+        delimiter = '^'
+        headers   = LETTERS[0:len(first_l.split(delimiter))]
+        indexes   = LETTERS[0]
+
+        if args['interactive'] is not None:
+            dhi = args['interactive']
+
+            if len(dhi) >= 1:
+                delimiter = dhi[0]
+            if len(dhi) >= 2:
+                headers = dhi[1].split('/')
+            if len(dhi) >= 3:
+                indexes = dhi[2].split('/')
+            else:
+                indexes = headers[0]
 
         if verbose:
             print 'Loading GeoBase from stdin with metadata %s; %s; %s...' % \
