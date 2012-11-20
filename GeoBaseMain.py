@@ -545,7 +545,7 @@ def main():
                         Multiple fields may be specified with "/" separator.
                         Default headers will use alphabet, default indexes
                         will take the first field. Default separator is smart :).
-                        Example: -i '^' key/name/data key''',
+                        Example: -i '^' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
         default = None)
