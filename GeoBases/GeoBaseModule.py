@@ -148,6 +148,7 @@ class GeoBase(object):
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
