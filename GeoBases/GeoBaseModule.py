@@ -140,8 +140,9 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
+        >>> fl = open(local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
         >>> GeoBase(data='feed',
-        ...         source=local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
+        ...         source=fl,
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
         ...         indexes='code',
         ...         delimiter='^',
@@ -229,8 +230,13 @@ class GeoBase(object):
         self._configSubDelimiters()
 
         if self._source is not None:
-            with open(self._source) as source_fl:
-                self._loadFile(source_fl)
+            if 'source' in kwargs:
+                # As a keyword argument, source should be a file-like
+                self._loadFile(self._source)
+            else:
+                # Here we read the source from the configuration file
+                with open(self._source) as source_fl:
+                    self._loadFile(source_fl)
         else:
             if self._verbose:
                 print 'Source was None, skipping loading...'
