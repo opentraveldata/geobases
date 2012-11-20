@@ -447,7 +447,7 @@ class GeoBase(object):
 
 
 
-    def get(self, key, field=None, default=None):
+    def get(self, key, field=None, **kwargs):
         '''
         Simple get on the database.
         This get function raise exception when input is not correct.
@@ -471,6 +471,7 @@ class GeoBase(object):
         >>> geo_t.get('frmoron', 'name')
         Traceback (most recent call last):
         KeyError: 'Thing not found: frmoron'
+        >>> geo_t.get('frmoron', 'name', default=None)
         >>> geo_t.get('frmoron', default='There')
         'There'
 
@@ -483,8 +484,8 @@ class GeoBase(object):
 
         if key not in self._things:
             # Unless default is set, we raise an Exception
-            if default is not None:
-                return default
+            if 'default' in kwargs:
+                return kwargs['default']
 
             raise KeyError("Thing not found: %s" % str(key))
 
