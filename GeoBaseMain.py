@@ -543,8 +543,10 @@ def main():
         help = '''Specify metadata for stdin data input.
                         3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
-                        Default headers will use alphabet, default indexes
-                        will take the first field. Default separator is smart :).
+                        Default headers will use alphabet. Use __head__ as header value to
+                        burn the first line to define the headers.
+                        Default indexes will take the first field.
+                        Default separator is smart :).
                         Example: -i '^' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
