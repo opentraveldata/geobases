@@ -222,9 +222,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.getEmph()
         elif f == '__ref__':
             col = c.getHeader()
-        elif f.endswith('@raw'):
+        elif str(f).endswith('@raw'):
             col = c.getRaw()     # For @raw fields
-        elif f.startswith('__'):
+        elif str(f).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
@@ -262,7 +262,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + '^'.join(show_wo_omit) + '\n')
+    stdout.write('#' + '^'.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -274,7 +274,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
-                if f.startswith('__') and isinstance(v, (list, tuple, set)):
+                if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
                     l.append('/'.join(str(el) for el in v))
                 else:
                     l.append(str(v))
