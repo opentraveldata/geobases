@@ -405,6 +405,9 @@ def error(name, *args):
     elif name == 'geocode_unknown':
         print('\n/!\ Geocode was unknown for %s' % args[0], file=stderr)
 
+    elif name == 'empty_stdin':
+        print('\n/!\ Stdin was empty', file=stderr)
+
     exit(1)
 
 
@@ -609,7 +612,7 @@ def main():
         print('Project  : %s' % r.project_name)
         print('Version  : %s' % r.version)
         print('Location : %s' % r.location)
-        exit()
+        exit(0)
 
     if args['base'] not in GeoBase.BASES:
         error('base', args['base'], sorted(GeoBase.BASES.keys()))
@@ -617,11 +620,15 @@ def main():
     # Updating file
     if args['update']:
         GeoBase.update()
-        exit()
+        exit(0)
 
     if not stdin.isatty() and not args['interactive_query']:
 
-        first_l = next(stdin)
+        try:
+            first_l = next(stdin)
+        except StopIteration:
+            error('empty_stdin')
+
         source  = chain([first_l], stdin)
 
         # Heuristic to find separator
