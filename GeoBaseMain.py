@@ -468,6 +468,11 @@ def main():
                         values will be displayed.''',
         default = '__key__')
 
+    parser.add_argument('-r', '--reverse',
+        help = '''When possible, reverse the logic of the filter. Currently
+                        only --exact support that.''',
+        action = 'store_true')
+
     parser.add_argument('-n', '--near',
         help = '''Rather than looking up a key, this mode will search the entries
                         in a radius from a geocode or a key. Radius is given by --near-limit option,
@@ -513,20 +518,6 @@ def main():
                         look for the results.''',
         action = 'store_true')
 
-    parser.add_argument('-r', '--reverse',
-        help = '''When possible, reverse the logic of the filter. Currently
-                        only --exact support that.''',
-        action = 'store_true')
-
-    parser.add_argument('-q', '--quiet',
-        help = '''Does not provide the verbose output.
-                        May still be combined with --omit and --show.''',
-        action = 'store_true')
-
-    parser.add_argument('-v', '--verbose',
-        help = '''Provides additional information from GeoBase loading.''',
-        action = 'store_true')
-
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
                         May help to get cleaner output. "__ref__" is an
@@ -548,17 +539,8 @@ def main():
                         Default is 4, except in quiet mode where it is disabled.''',
         default = None)
 
-    parser.add_argument('-u', '--update',
-        help = '''If this option is set, instead of anything,
-                        the script will try to update some source files.''',
-        action = 'store_true')
-
-    parser.add_argument('-V', '--version',
-        help = '''Display version information.''',
-        action = 'store_true')
-
     parser.add_argument('-i', '--interactive',
-        help = '''Specify metadata for stdin input.
+        help = '''Specify metadata for stdin data input.
                         3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
                         Default headers will use alphabet, default indexes
@@ -571,6 +553,24 @@ def main():
     parser.add_argument('-I', '--interactive-query',
         help = '''If passed, this option will consider stdin
                         input as key for query, not data for loading.''',
+        action = 'store_true')
+
+    parser.add_argument('-q', '--quiet',
+        help = '''Does not provide the verbose output.
+                        May still be combined with --omit and --show.''',
+        action = 'store_true')
+
+    parser.add_argument('-v', '--verbose',
+        help = '''Provides additional information from GeoBase loading.''',
+        action = 'store_true')
+
+    parser.add_argument('-u', '--update',
+        help = '''If this option is set, instead of anything,
+                        the script will try to update some source files.''',
+        action = 'store_true')
+
+    parser.add_argument('-V', '--version',
+        help = '''Display version information.''',
         action = 'store_true')
 
     args = vars(parser.parse_args())
