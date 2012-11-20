@@ -405,6 +405,9 @@ def error(name, *args):
     elif name == 'geocode_unknown':
         print >> stderr, '\n/!\ Geocode was unknown for %s' % args[0]
 
+    elif name == 'empty_stdin':
+        print >> stderr, '\n/!\ Stdin was empty'
+
     exit(1)
 
 
@@ -621,7 +624,11 @@ def main():
 
     if not stdin.isatty() and not args['interactive_query']:
 
-        first_l = stdin.next()
+        try:
+            first_l = stdin.next()
+        except StopIteration:
+            error('empty_stdin')
+
         source  = chain([first_l], stdin)
 
         # Heuristic to find separator
