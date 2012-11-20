@@ -478,7 +478,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
         '''
 
         if key not in self._things:
@@ -495,7 +495,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
             return res
 
@@ -573,7 +573,7 @@ class GeoBase(object):
         try:
             res = [self._things[key][field]]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
             return res + [self._things[d][field] for d in self._things[key]['__dup__']]
 
