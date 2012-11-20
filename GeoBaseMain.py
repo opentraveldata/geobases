@@ -623,7 +623,7 @@ def main():
         source  = chain([first_l], stdin)
 
         # Heuristic to find separator
-        separators = ((k, v) for k, v in Counter(first_l.strip()).iteritems() if not k.isalnum())
+        separators = ((k, v) for k, v in Counter(first_l.rstrip()).iteritems() if not k.isalnum())
         delimiter  = max(separators, key=lambda x: x[1])[0]
 
         if args['interactive'] is None:
@@ -636,7 +636,10 @@ def main():
                 delimiter = dhi[0]
 
             if len(dhi) >= 2:
-                headers = dhi[1].split('/')
+                if dhi[1] == '__head__':
+                    headers = source.next().rstrip().split(delimiter)
+                else:
+                    headers = dhi[1].split('/')
             else:
                 # Reprocessing the headers with custom delimiter
                 headers = LETTERS[0:len(first_l.split(delimiter))]
