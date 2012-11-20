@@ -7,6 +7,7 @@ C_CLOSEST="(10 20 30 40 50)"
 F_FUZZY="(0.5 0.6 0.7 0.8 0.9)"
 T_TREP="(F S I J)"
 L_LIMIT="(1 2 5)"
+I_INT="()"
 
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \
@@ -27,6 +28,8 @@ _arguments \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
+ "(-i --interactive)"{-i,--interactive}"[Specify metadata for stdin data input.]:separator headers indexes:$I_INT" \
+ "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]" \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
  "(-v --verbose)"{-v,--verbose}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
