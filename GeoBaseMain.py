@@ -12,7 +12,7 @@ import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
-from itertools import izip_longest
+from itertools import izip_longest, chain
 import textwrap
 
 # Not in standard library
@@ -24,6 +24,8 @@ from GeoBases import GeoBase
 
 
 # Global defaults
+LETTERS = tuple('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
 DEFAULT_NB_COL   = 5
 MIN_CHAR_COL     = 20
 MAX_CHAR_COL     = 40
@@ -573,8 +575,21 @@ def main():
 
     parser.add_argument('-V', '--version',
         help = '''Display version information.''',
-        action='store_true'
-    )
+        action = 'store_true')
+
+    parser.add_argument('-i', '--interactive',
+        help = '''Specify metadata for stdin input.
+                        3 values are required: sep, headers, indexes.
+                        Multiple fields may be specified with "/" separator.
+                        Example: -i '^' key/name/data key''',
+        nargs = 3,
+        metavar = ('SEPARATOR', 'HEADERS', 'INDEXES'),
+        default = None)
+
+    parser.add_argument('-I', '--interactive-query',
+        help = '''If passed, this option will consider stdin
+                        input as key for query, not data for loading.''',
+        action = 'store_true')
 
     args = vars(parser.parse_args())
 
@@ -620,10 +635,34 @@ def main():
         GeoBase.update()
         exit()
 
-    if verbose:
-        print 'Loading GeoBase...'
+    if not stdin.isatty() and not args['interactive_query']:
 
-    g = GeoBase(data=args['base'], verbose=warnings)
+        if args['interactive'] is None:
+            first_l   = stdin.next()
+            source    = chain([first_l], stdin)
+            delimiter = '^'
+            headers   = LETTERS[0:len(first_l.split(delimiter))]
+            indexes   = LETTERS[0]
+        else:
+            dhi    = args['interactive']
+            source = stdin
+            delimiter, headers, indexes = dhi[0], dhi[1].split('/'), dhi[2].split('/')
+
+        if verbose:
+            print 'Loading GeoBase from stdin with metadata %s; %s; %s...' % \
+                    (delimiter, headers, indexes)
+
+        g = GeoBase(data='feed',
+                    source=source,
+                    delimiter=delimiter,
+                    headers=headers,
+                    indexes=indexes,
+                    verbose=warnings)
+    else:
+        if verbose:
+            print 'Loading GeoBase "%s"...' % args['base']
+
+        g = GeoBase(data=args['base'], verbose=warnings)
 
     if verbose:
         after_init = datetime.now()
@@ -668,7 +707,7 @@ def main():
     # MAIN
     #
     if verbose:
-        if not stdin.isatty():
+        if not stdin.isatty() and args['interactive_query']:
             print 'Looking for matches from stdin...'
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
@@ -677,11 +716,10 @@ def main():
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not stdin.isatty():
+    if not stdin.isatty() and args['interactive_query']:
         res = []
         for row in stdin:
             res.extend(row.strip().split())
-
         res = enumerate(res)
 
     elif args['keys']:
