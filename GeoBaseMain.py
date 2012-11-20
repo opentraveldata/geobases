@@ -12,7 +12,8 @@ import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
-from itertools import zip_longest
+from itertools import zip_longest, chain
+from collections import Counter
 import textwrap
 
 # Not in standard library
@@ -24,6 +25,8 @@ from GeoBases import GeoBase
 
 
 # Global defaults
+LETTERS = tuple('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
 DEFAULT_NB_COL   = 5
 MIN_CHAR_COL     = 20
 MAX_CHAR_COL     = 40
@@ -222,9 +225,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.getEmph()
         elif f == '__ref__':
             col = c.getHeader()
-        elif f.endswith('@raw'):
+        elif str(f).endswith('@raw'):
             col = c.getRaw()     # For @raw fields
-        elif f.startswith('__'):
+        elif str(f).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
@@ -262,7 +265,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + '^'.join(show_wo_omit) + '\n')
+    stdout.write('#' + '^'.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -274,7 +277,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
-                if f.startswith('__') and isinstance(v, (list, tuple, set)):
+                if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
                     l.append('/'.join(str(el) for el in v))
                 else:
                     l.append(str(v))
@@ -285,7 +288,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
 def fixed_width(s, col, lim=25, truncate=None):
     '''
     This function is useful to display a string in the
-    terminal with a fixed width. It is especially 
+    terminal with a fixed width. It is especially
     tricky with unicode strings containing accents.
     '''
     if truncate is None:
@@ -422,16 +425,14 @@ def main():
     parser.epilog = 'Example: python %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
-        help='Main argument (key, name, geocode depending on search mode)',
-        nargs='*'
-    )
+        help = 'Main argument (key, name, geocode depending on search mode)',
+        nargs = '*')
 
     parser.add_argument('-b', '--base',
         help = '''Choose a different base, default is "ori_por". Also available are
-                        stations, airports, countries... Give unadmissible base 
+                        stations, airports, countries... Give unadmissible base
                         and available values will be displayed.''',
-        default = 'ori_por'
-    )
+        default = 'ori_por')
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
@@ -439,38 +440,38 @@ def main():
                         the argument. Limit can be specified with --fuzzy-limit option.
                         By default, the "name" property is used for the search.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
                         Default is "name". Give unadmissible property and available
                         values will be displayed.''',
-        default = 'name'
-    )
+        default = 'name')
 
     parser.add_argument('-L', '--fuzzy-limit',
         help = '''Specify a min limit for fuzzy searches, default is 0.80.
                         This is the Levenshtein ratio of the two strings.''',
         default = 0.85,
-        type=float
-    )
+        type = float)
 
     parser.add_argument('-e', '--exact',
         help = '''Rather than looking up a key, this mode will search all keys
-                        whose specific property given by --exact-property match the 
-                        argument. By default, the "__key__" property is used 
+                        whose specific property given by --exact-property match the
+                        argument. By default, the "__key__" property is used
                         for the search.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-E', '--exact-property',
         help = '''When performing an exact search, specify the property to be chosen.
                         Default is "__key__". Give unadmissible property and available
                         values will be displayed.''',
-        default = '__key__'
-    )
+        default = '__key__')
+
+    parser.add_argument('-r', '--reverse',
+        help = '''When possible, reverse the logic of the filter. Currently
+                        only --exact support that.''',
+        action = 'store_true')
 
     parser.add_argument('-n', '--near',
         help = '''Rather than looking up a key, this mode will search the entries
@@ -478,15 +479,13 @@ def main():
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-N', '--near-limit',
         help = '''Specify a radius in km when performing geographical
                         searches with --near. Default is 50 km.''',
         default = 50.,
-        type=float
-    )
+        type = float)
 
     parser.add_argument('-c', '--closest',
         help = '''Rather than looking up a key, this mode will search the closest entries
@@ -494,52 +493,30 @@ def main():
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-C', '--closest-limit',
         help = '''Specify a limit for closest search with --closest,
                         default is 10.''',
         default = 10,
-        type=int
-    )
+        type = int)
 
     parser.add_argument('-t', '--trep',
         help = '''Rather than looking up a key, this mode will use opentrep.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-T', '--trep-format',
         help = '''Specify a format for trep searches with --trep,
                         default is "S".''',
-        default = 'S',
-    )
+        default = 'S')
 
     parser.add_argument('-w', '--without-grid',
         help = '''When performing a geographical search, a geographical index is used.
                         This may lead to inaccurate results in some (rare) cases. Adding this
                         option will disable the index, and browse the full data set to
                         look for the results.''',
-        action='store_true'
-    )
-
-    parser.add_argument('-r', '--reverse',
-        help = '''When possible, reverse the logic of the filter. Currently
-                        only --exact support that.''',
-        action='store_true'
-    )
-
-    parser.add_argument('-q', '--quiet',
-        help = '''Does not provide the verbose output.
-                        May still be combined with --omit and --show.''',
-        action='store_true'
-    )
-
-    parser.add_argument('-v', '--verbose',
-        help = '''Provides additional information from GeoBase loading.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
@@ -547,8 +524,7 @@ def main():
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
-        default = []
-    )
+        default = [])
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
@@ -556,25 +532,48 @@ def main():
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
-        default = []
-    )
+        default = [])
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
                         Default is 4, except in quiet mode where it is disabled.''',
-        default = None
-    )
+        default = None)
+
+    parser.add_argument('-i', '--interactive',
+        help = '''Specify metadata for stdin data input.
+                        3 optional values: separator, headers, indexes.
+                        Multiple fields may be specified with "/" separator.
+                        Default headers will use alphabet. Use __head__ as header value to
+                        burn the first line to define the headers.
+                        Default indexes will take the first field.
+                        Default separator is smart :).
+                        Example: -i '^' key/name/key2 key/key2''',
+        nargs = '+',
+        metavar = 'METADATA',
+        default = None)
+
+    parser.add_argument('-I', '--interactive-query',
+        help = '''If passed, this option will consider stdin
+                        input as key for query, not data for loading.''',
+        action = 'store_true')
+
+    parser.add_argument('-q', '--quiet',
+        help = '''Does not provide the verbose output.
+                        May still be combined with --omit and --show.''',
+        action = 'store_true')
+
+    parser.add_argument('-v', '--verbose',
+        help = '''Provides additional information from GeoBase loading.''',
+        action = 'store_true')
 
     parser.add_argument('-u', '--update',
-        help = '''If this option is set, instead of anything, 
+        help = '''If this option is set, instead of anything,
                         the script will try to update some source files.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-V', '--version',
         help = '''Display version information.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     args = vars(parser.parse_args())
 
@@ -620,10 +619,54 @@ def main():
         GeoBase.update()
         exit()
 
-    if verbose:
-        print('Loading GeoBase...')
+    if not stdin.isatty() and not args['interactive_query']:
 
-    g = GeoBase(data=args['base'], verbose=warnings)
+        first_l = next(stdin)
+        source  = chain([first_l], stdin)
+
+        # Heuristic to find separator
+        separators = ((k, v) for k, v in Counter(first_l.rstrip()).items() if not k.isalnum())
+        delimiter  = max(separators, key=lambda x: x[1])[0]
+
+        if args['interactive'] is None:
+            headers = LETTERS[0:len(first_l.split(delimiter))]
+            indexes = LETTERS[0]
+        else:
+            dhi = args['interactive']
+
+            if len(dhi) >= 1:
+                delimiter = dhi[0]
+
+            if len(dhi) >= 2:
+                if dhi[1] == '__head__':
+                    headers = next(source).rstrip().split(delimiter)
+                else:
+                    headers = dhi[1].split('/')
+            else:
+                # Reprocessing the headers with custom delimiter
+                headers = LETTERS[0:len(first_l.split(delimiter))]
+
+            if len(dhi) >= 3:
+                indexes = dhi[2].split('/')
+            else:
+                # Reprocessing the indexes with custom headers
+                indexes = headers[0]
+
+        if verbose:
+            print('Loading GeoBase from stdin with metadata "%s" ; %s ; %s...' % \
+                    (delimiter, headers, indexes))
+
+        g = GeoBase(data='feed',
+                    source=source,
+                    delimiter=delimiter,
+                    headers=headers,
+                    indexes=indexes,
+                    verbose=warnings)
+    else:
+        if verbose:
+            print('Loading GeoBase "%s"...' % args['base'])
+
+        g = GeoBase(data=args['base'], verbose=warnings)
 
     if verbose:
         after_init = datetime.now()
@@ -657,7 +700,7 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unkown fields
-    for field in args['show'] + args['omit']: 
+    for field in args['show'] + args['omit']:
 
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
@@ -668,7 +711,7 @@ def main():
     # MAIN
     #
     if verbose:
-        if not stdin.isatty():
+        if not stdin.isatty() and args['interactive_query']:
             print('Looking for matches from stdin...')
         elif args['keys']:
             print('Looking for matches from %s...' % ', '.join(args['keys']))
@@ -677,11 +720,10 @@ def main():
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not stdin.isatty():
+    if not stdin.isatty() and args['interactive_query']:
         res = []
         for row in stdin:
             res.extend(row.strip().split())
-
         res = enumerate(res)
 
     elif args['keys']:
