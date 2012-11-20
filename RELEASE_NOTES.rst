@@ -6,6 +6,8 @@ Release notes
 V3
 ==
 
++ 3.37 : new interactive with data reading from stdin (kind of awesome)
++ 3.36 : source keyword argument is now a file-like
 + 3.35 : Adding quoting feature to have csv from excel support (escaping delimiter when "")
 + 3.34 : Pypy partiall support on separate branch
 + 3.33 : Python 3 full support on separate branch

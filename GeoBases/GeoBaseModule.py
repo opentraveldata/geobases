@@ -162,13 +162,15 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
+        >>> fl = open(local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
         >>> GeoBase(data='feed',
-        ...         source=local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'),
+        ...         source=fl,
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
         ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
@@ -248,7 +250,18 @@ class GeoBase(object):
 
         # Loading data
         self._configSubDelimiters()
-        self._loadFile()
+
+        if self._source is not None:
+            if 'source' in kwargs:
+                # As a keyword argument, source should be a file-like
+                self._loadFile(self._source)
+            else:
+                # Here we read the source from the configuration file
+                with open(self._source) as source_fl:
+                    self._loadFile(source_fl)
+        else:
+            if self._verbose:
+                print 'Source was None, skipping loading...'
 
 
 
@@ -331,14 +344,13 @@ class GeoBase(object):
         return data
 
 
-    def _loadFile(self):
+    def _loadFile(self, source_fl):
         '''Load the file and feed the self._things.
 
         :param verbose: display informations or not during runtime
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
         '''
-
         # We cache all variables used in the main loop
         headers       = self._headers
         delimiter     = self._delimiter
@@ -346,11 +358,6 @@ class GeoBase(object):
         limit         = self._limit
         discard_dups  = self._discard_dups
         verbose       = self._verbose
-
-        if self._source is None:
-            if verbose:
-                print 'Source was None, skipping loading...'
-            return
 
         pos, keyer = self._configKeyer(self._indexes, headers)
 
@@ -360,47 +367,45 @@ class GeoBase(object):
             'quotechar' : self._quotechar
         }
 
-        with open(self._source) as f:
+        for line_nb, row in enumerate(csv.reader(source_fl, **csv_opt), start=1):
 
-            for line_nb, row in enumerate(csv.reader(f, **csv_opt), start=1):
+            if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+                print '%-10s lines loaded so far' % line_nb
 
-                if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
-                    print '%-10s lines loaded so far' % line_nb
+            if limit is not None and line_nb > limit:
+                if verbose:
+                    print 'Beyond limit %s for lines loaded, stopping.' % limit
+                break
 
-                if limit is not None and line_nb > limit:
-                    if verbose:
-                        print 'Beyond limit %s for lines loaded, stopping.' % limit
-                    break
+            # Skip comments and empty lines
+            # Comments must *start* with #, otherwise they will not be stripped
+            if not row or row[0].startswith('#'):
+                continue
 
-                # Skip comments and empty lines
-                # Comments must *start* with #, otherwise they will not be stripped
-                if not row or row[0].startswith('#'):
-                    continue
+            key      = keyer(row, pos)
+            row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
 
-                key      = keyer(row, pos)
-                row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
+            # No duplicates ever, we will erase all data after if it is
+            if key not in self._things:
+                self._things[key] = row_data
 
-                # No duplicates ever, we will erase all data after if it is
-                if key not in self._things:
-                    self._things[key] = row_data
+            else:
+                if discard_dups is False:
+                    # We compute a new key for the duplicate
+                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
 
-                else:
-                    if discard_dups is False:
-                        # We compute a new key for the duplicate
-                        d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
+                    # We update the data with this info
+                    row_data['__key__'] = d_key
+                    row_data['__dup__'] = self._things[key]['__dup__']
+                    row_data['__dad__'] = key
 
-                        # We update the data with this info
-                        row_data['__key__'] = d_key
-                        row_data['__dup__'] = self._things[key]['__dup__']
-                        row_data['__dad__'] = key
+                    # We add the d_key as a new duplicate, and store the duplicate in the main _things
+                    self._things[key]['__dup__'].append(d_key)
+                    self._things[d_key] = row_data
 
-                        # We add the d_key as a new duplicate, and store the duplicate in the main _things
-                        self._things[key]['__dup__'].append(d_key)
-                        self._things[d_key] = row_data
-
-                    if verbose:
-                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
+                if verbose:
+                    print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
+                            (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
@@ -439,7 +444,7 @@ class GeoBase(object):
 
 
 
-    def get(self, key, field=None, default=None):
+    def get(self, key, field=None, **kwargs):
         '''
         Simple get on the database.
         This get function raise exception when input is not correct.
@@ -463,6 +468,7 @@ class GeoBase(object):
         >>> geo_t.get('frmoron', 'name')
         Traceback (most recent call last):
         KeyError: 'Thing not found: frmoron'
+        >>> geo_t.get('frmoron', 'name', default=None)
         >>> geo_t.get('frmoron', default='There')
         'There'
 
@@ -470,13 +476,13 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field not_a_field [for key frnic] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
         '''
 
         if key not in self._things:
             # Unless default is set, we raise an Exception
-            if default is not None:
-                return default
+            if 'default' in kwargs:
+                return kwargs['default']
 
             raise KeyError("Thing not found: %s" % str(key))
 
@@ -487,7 +493,7 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
             return res
 
@@ -565,7 +571,7 @@ class GeoBase(object):
         try:
             res = [self._things[key][field]]
         except KeyError:
-            raise KeyError("Field %s [for key %s] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
             return res + [self._things[d][field] for d in self._things[key]['__dup__']]
 
