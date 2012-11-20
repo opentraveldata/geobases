@@ -5,7 +5,7 @@ python      : 'pypy'
 venv_python : 'pypy'
 skip_venv   : true
 add_options : ''
-test_file   : #'test/test_GeoBases.py'
+test_file   : 'test/test_GeoBases.py'
 repo_url    : 'http://oridist.orinet.nce.amadeus.net/python/'
 package_name: # Blank will not change the name of the created package
 environment :
