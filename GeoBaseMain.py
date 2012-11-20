@@ -287,7 +287,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
 def fixed_width(s, col, lim=25, truncate=None):
     '''
     This function is useful to display a string in the
-    terminal with a fixed width. It is especially 
+    terminal with a fixed width. It is especially
     tricky with unicode strings containing accents.
     '''
     if truncate is None:
@@ -424,16 +424,14 @@ def main():
     parser.epilog = 'Example: python %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
-        help='Main argument (key, name, geocode depending on search mode)',
-        nargs='*'
-    )
+        help = 'Main argument (key, name, geocode depending on search mode)',
+        nargs = '*')
 
     parser.add_argument('-b', '--base',
         help = '''Choose a different base, default is "ori_por". Also available are
-                        stations, airports, countries... Give unadmissible base 
+                        stations, airports, countries... Give unadmissible base
                         and available values will be displayed.''',
-        default = 'ori_por'
-    )
+        default = 'ori_por')
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
@@ -441,38 +439,33 @@ def main():
                         the argument. Limit can be specified with --fuzzy-limit option.
                         By default, the "name" property is used for the search.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
                         Default is "name". Give unadmissible property and available
                         values will be displayed.''',
-        default = 'name'
-    )
+        default = 'name')
 
     parser.add_argument('-L', '--fuzzy-limit',
         help = '''Specify a min limit for fuzzy searches, default is 0.80.
                         This is the Levenshtein ratio of the two strings.''',
         default = 0.85,
-        type=float
-    )
+        type = float)
 
     parser.add_argument('-e', '--exact',
         help = '''Rather than looking up a key, this mode will search all keys
-                        whose specific property given by --exact-property match the 
-                        argument. By default, the "__key__" property is used 
+                        whose specific property given by --exact-property match the
+                        argument. By default, the "__key__" property is used
                         for the search.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-E', '--exact-property',
         help = '''When performing an exact search, specify the property to be chosen.
                         Default is "__key__". Give unadmissible property and available
                         values will be displayed.''',
-        default = '__key__'
-    )
+        default = '__key__')
 
     parser.add_argument('-n', '--near',
         help = '''Rather than looking up a key, this mode will search the entries
@@ -480,15 +473,13 @@ def main():
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-N', '--near-limit',
         help = '''Specify a radius in km when performing geographical
                         searches with --near. Default is 50 km.''',
         default = 50.,
-        type=float
-    )
+        type = float)
 
     parser.add_argument('-c', '--closest',
         help = '''Rather than looking up a key, this mode will search the closest entries
@@ -496,52 +487,44 @@ def main():
                         and geocode is passed as argument. If you wish to give a geocode as
                         input, just pass it as argument with "lat, lng" format.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-C', '--closest-limit',
         help = '''Specify a limit for closest search with --closest,
                         default is 10.''',
         default = 10,
-        type=int
-    )
+        type = int)
 
     parser.add_argument('-t', '--trep',
         help = '''Rather than looking up a key, this mode will use opentrep.''',
         default = None,
-        nargs='+'
-    )
+        nargs = '+')
 
     parser.add_argument('-T', '--trep-format',
         help = '''Specify a format for trep searches with --trep,
                         default is "S".''',
-        default = 'S',
-    )
+        default = 'S')
 
     parser.add_argument('-w', '--without-grid',
         help = '''When performing a geographical search, a geographical index is used.
                         This may lead to inaccurate results in some (rare) cases. Adding this
                         option will disable the index, and browse the full data set to
                         look for the results.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-r', '--reverse',
         help = '''When possible, reverse the logic of the filter. Currently
                         only --exact support that.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-q', '--quiet',
         help = '''Does not provide the verbose output.
                         May still be combined with --omit and --show.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
@@ -549,8 +532,7 @@ def main():
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
-        default = []
-    )
+        default = [])
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
@@ -558,20 +540,17 @@ def main():
                         available keyword with the
                         other geobase headers.''',
         nargs = '+',
-        default = []
-    )
+        default = [])
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
                         Default is 4, except in quiet mode where it is disabled.''',
-        default = None
-    )
+        default = None)
 
     parser.add_argument('-u', '--update',
-        help = '''If this option is set, instead of anything, 
+        help = '''If this option is set, instead of anything,
                         the script will try to update some source files.''',
-        action='store_true'
-    )
+        action = 'store_true')
 
     parser.add_argument('-V', '--version',
         help = '''Display version information.''',
@@ -696,7 +675,7 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unkown fields
-    for field in args['show'] + args['omit']: 
+    for field in args['show'] + args['omit']:
 
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
