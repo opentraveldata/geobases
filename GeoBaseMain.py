@@ -13,6 +13,7 @@ import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import izip_longest, chain
+from collections import Counter
 import textwrap
 
 # Not in standard library
@@ -561,7 +562,7 @@ def main():
                         3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
                         Default headers will use alphabet, default indexes
-                        will take the first field. Default separator is "^".
+                        will take the first field. Default separator is smart :).
                         Example: -i '^' key/name/data key''',
         nargs = '+',
         metavar = 'METADATA',
@@ -621,7 +622,9 @@ def main():
         first_l = stdin.next()
         source  = chain([first_l], stdin)
 
-        delimiter = '^'
+        # Heuristic to find separator
+        separators = ((k, v) for k, v in Counter(first_l.strip()).iteritems() if not k.isalnum())
+        delimiter  = max(separators, key=lambda x: x[1])[0]
 
         if args['interactive'] is None:
             headers = LETTERS[0:len(first_l.split(delimiter))]
