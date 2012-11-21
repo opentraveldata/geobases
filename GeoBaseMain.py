@@ -356,7 +356,9 @@ def find_separator(row):
     if counters:
         return max(counters.iteritems(), key=lambda x: x[1])[0]
     else:
-        return '^'
+        # In this case, we could not find any delimiter, we may
+        # as well return ' '
+        return ' '
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
