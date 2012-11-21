@@ -1324,7 +1324,7 @@ class GeoBase(object):
 
 
     def visualizeOnMap(self, output='example', label='__key__', verbose=True):
-        '''Create map.
+        '''Create map. Returns success code.
         '''
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
@@ -1332,13 +1332,13 @@ class GeoBase(object):
         if not self.hasGeoSupport():
             if verbose:
                 print '/!\ No geocode support, could not visualize...'
-            return
+            return False
 
         if label not in self.fields:
             if verbose:
                 print '/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields)
-            return
+            return False
 
         data = []
 
@@ -1395,6 +1395,7 @@ class GeoBase(object):
             print '%% firefox %s' % html_name
             print '\n* If you want to clean the temporary files:'
             print '%% rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
+        return True
 
 
 def ext_split(value, split):
