@@ -111,20 +111,21 @@ class RotatingColors(object):
 
         if background == 'black':
             self._availables = [
-                 ('cyan',   None,     []),
+                 ('cyan',  None,      []),
                  ('white', 'on_grey', []),
             ]
 
         elif background == 'white':
             self._availables = [
                  ('grey', None,       []),
-                 ('cyan', 'on_white', []),
+                 ('blue', 'on_white', []),
             ]
 
         else:
             raise ValueError('Accepted background color: "black" or "white", not "%s".' % background)
 
-        self._current = 0
+        self._background = background
+        self._current    = 0
 
 
     def __next__(self):
@@ -141,10 +142,20 @@ class RotatingColors(object):
         return self._availables[self._current]
 
 
-    def getRaw(self):
-        '''Get special raw color. Only change foreground color'''
-        current = list(self._availables[self._current])
-        current[0] = 'yellow'
+    def convertRaw(self, col):
+        '''Get special raw color. Only change foreground color.
+        '''
+        current    = list(col)
+        current[0] = 'yellow' if self._background == 'black' else 'green'
+        return tuple(current)
+
+
+    @staticmethod
+    def convertBold(col):
+        '''Get special field color. Only change bold type.
+        '''
+        current    = list(col)
+        current[2] = ['bold']
         return tuple(current)
 
 
@@ -224,16 +235,16 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.getEmph()
         elif f == '__ref__':
             col = c.getHeader()
-        elif str(f).endswith('@raw'):
-            col = c.getRaw()     # For @raw fields
         elif str(f).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
 
-        next(c)
+        if str(f).endswith('@raw'):
+            col = c.convertRaw(col)  # For @raw fields
 
-        stdout.write('\n' + fixed_width(f, col, lim, truncate))
+        # Fields on the left
+        stdout.write('\n' + fixed_width(f, c.convertBold(col), lim, truncate))
 
         if f == '__ref__':
             for h, _ in list_of_things:
@@ -241,6 +252,8 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         else:
             for _, k in list_of_things:
                 stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+
+        next(c)
 
     stdout.write('\n')
 
