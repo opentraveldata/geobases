@@ -403,6 +403,10 @@ def warn(name, *args):
         print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
+    if name == 'fields_not_found':
+        print >> stderr, '/!\ Could not find fields %s in headers %s.' % \
+                (args[0], args[1])
+
 
 def error(name, *args):
     '''
@@ -725,8 +729,16 @@ def main():
 
     # Map visualization
     if args['map']:
-        g.visualizeOnMap(output='map', label=args['map_label'], verbose=True)
-        exit(0)
+        status = g.visualizeOnMap(output='data', label=args['map_label'], verbose=verbose)
+
+        if status is True:
+            # Display was successful, we exit.
+            exit(0)
+        else:
+            # Display was a failure, we try to give explanation.
+            warn('fields_not_found', ' and '.join(GeoBase.GEO_FIELDS), g.fields)
+            if verbose:
+                print '\nGoing on anyway, to help you find out what went wrong...\n'
 
 
 
