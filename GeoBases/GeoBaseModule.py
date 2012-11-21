@@ -1386,11 +1386,13 @@ class GeoBase(object):
             copy(a, '.')
 
             if verbose:
-                print 'Copying %s here' % op.basename(a)
+                print 'Copied %s' % op.basename(a)
 
         if verbose:
             print '\n* Now you may use your browser to visualize:'
             print '%% firefox %s' % html_name
+            print '\n* If you want to clean the temporary files:'
+            print '%% rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
 
 
 def ext_split(value, split):
