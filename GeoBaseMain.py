@@ -591,6 +591,15 @@ def handle_args():
         help = '''Custom separator in quiet mode.''',
         default = '^')
 
+    parser.add_argument('-m', '--map',
+        help = '''If this option is set, instead of anything,
+                        the script will display the data on a mapand exit.''',
+        action = 'store_true')
+
+    parser.add_argument('-M', '--map-label',
+        help = '''Change the label on map points. Default is __key__.''',
+        default = '__key__')
+
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
@@ -713,6 +722,11 @@ def main():
 
     if verbose:
         after_init = datetime.now()
+
+    # Map visualization
+    if args['map']:
+        g.visualizeOnMap(output='map', label=args['map_label'], verbose=True)
+        exit(0)
 
 
 
