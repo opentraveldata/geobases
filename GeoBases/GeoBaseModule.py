@@ -1392,9 +1392,10 @@ class GeoBase(object):
 
         if verbose:
             print '\n* Now you may use your browser to visualize:'
-            print '%% firefox %s' % html_name
+            print 'firefox %s' % html_name
             print '\n* If you want to clean the temporary files:'
-            print '%% rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
+            print 'rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
+
         return True
 
 
