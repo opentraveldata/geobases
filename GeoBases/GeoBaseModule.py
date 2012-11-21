@@ -1321,12 +1321,11 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__', verbose=None):
+    def visualizeOnMap(self, output='example', label='__key__', verbose=True):
         '''Create map.
         '''
-        # Possibility to override global verbosity
-        if verbose is None:
-            verbose = self._verbose
+        # We take the maximum verbosity between the local and global
+        verbose = self._verbose or verbose
 
         if not self.hasGeoSupport():
             if verbose:
