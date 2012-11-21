@@ -381,7 +381,6 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
         print >> descriptor, '\t%-20s\t%-20s' % p
 
 
-
 def warn(name, *args):
     '''
     Display a warning on stderr.
@@ -430,18 +429,9 @@ def error(name, *args):
     exit(1)
 
 
-def main():
+def handle_args():
+    '''Command line parsing.
     '''
-    Arguments handling.
-    '''
-
-    # Filter colored signals on terminals.
-    # Necessary for Windows CMD
-    colorama.init()
-
-    #
-    # COMMAND LINE MANAGEMENT
-    #
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
     parser.epilog = 'Example: python %s ORY CDG' % parser.prog
@@ -597,8 +587,21 @@ def main():
         help = '''Display version information.''',
         action = 'store_true')
 
-    args = vars(parser.parse_args())
+    return vars(parser.parse_args())
 
+
+def main():
+    '''
+    Arguments handling.
+    '''
+
+    # Filter colored signals on terminals.
+    # Necessary for Windows CMD
+    colorama.init()
+
+    #
+    # COMMAND LINE MANAGEMENT
+    args = handle_args()
 
 
     #
