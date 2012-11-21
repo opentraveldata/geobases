@@ -424,11 +424,13 @@ class GeoBase(object):
         >>> geo_f.hasGeoSupport()
         False
         '''
-        if set(GeoBase.GEO_FIELDS) & set(self.fields):
-            # Set intersection is not empty
-            return True
+        fields = set(self.fields)
 
-        return False
+        for required in GeoBase.GEO_FIELDS:
+            if required not in fields:
+                return False
+
+        return True
 
 
 
