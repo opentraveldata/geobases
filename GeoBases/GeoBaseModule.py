@@ -53,6 +53,8 @@ import os.path as op
 import heapq
 from itertools import izip_longest
 import csv
+import json
+from shutil import copy
 
 # Not in standard library
 import yaml
@@ -436,11 +438,13 @@ class GeoBase(object):
         >>> geo_f.hasGeoSupport()
         False
         '''
-        if set(GeoBase.GEO_FIELDS) & set(self.fields):
-            # Set intersection is not empty
-            return True
+        fields = set(self.fields)
 
-        return False
+        for required in GeoBase.GEO_FIELDS:
+            if required not in fields:
+                return False
+
+        return True
 
 
 
@@ -1280,6 +1284,80 @@ class GeoBase(object):
         # list to avoid failures
         return []
 
+
+    def visualizeOnMap(self, output='example', label='__key__', verbose=True):
+        '''Create map. Returns success code.
+        '''
+        # We take the maximum verbosity between the local and global
+        verbose = self._verbose or verbose
+
+        if not self.hasGeoSupport():
+            if verbose:
+                print '/!\ No geocode support, could not visualize...'
+            return False
+
+        if label not in self.fields:
+            if verbose:
+                print '/!\ Label "%s" not in fields %s, could not visualize...' % \
+                        (label, self.fields)
+            return False
+
+        data = []
+
+        for key in self:
+
+            lat_lng = self.getLocation(key)
+
+            if lat_lng is not None:
+                data.append({
+                    'name'  : self.get(key, label),
+                    'lat'   : lat_lng[0],
+                    'lng'   : lat_lng[1]
+                })
+
+        # Output names
+        json_name = '%s.json' % output
+        html_name = '%s.html' % output
+
+        # Dump the json geocodes
+        with open(json_name, 'w') as out:
+            out.write(json.dumps(data))
+
+        if verbose:
+            print 'Dumped %s' % json_name
+
+        # Custom the template to connect to the json data
+        with open(local_path(__file__, 'MapAssets/template.html')) as temp:
+
+            with open(html_name, 'w') as out:
+
+                for row in temp:
+                    row = row.replace('{{file_name}}', output.capitalize())
+                    row = row.replace('{{json_file}}', json_name)
+
+                    out.write(row)
+
+        if verbose:
+            print 'Dumped %s' % html_name
+
+        # Dump assets
+        assets = [
+            local_path(__file__, 'MapAssets/blue_point.png'),
+            local_path(__file__, 'MapAssets/blue_marker.png')
+        ]
+
+        for a in assets:
+            copy(a, '.')
+
+            if verbose:
+                print 'Copied %s' % op.basename(a)
+
+        if verbose:
+            print '\n* Now you may use your browser to visualize:'
+            print '%% firefox %s' % html_name
+            print '\n* If you want to clean the temporary files:'
+            print '%% rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
+        return True
 
 
 def ext_split(value, split):

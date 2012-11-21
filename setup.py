@@ -56,7 +56,7 @@ except ImportError:
 
 setup(
     name = 'GeoBasesPypy',
-    version = '3.38.0',
+    version = '3.39.0',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
@@ -89,6 +89,7 @@ setup(
         'GeoBases': [
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
+            "MapAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.txt",
             "DataSources/*/*/*.csv",

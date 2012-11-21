@@ -403,6 +403,10 @@ def warn(name, *args):
         print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
+    if name == 'fields_not_found':
+        print >> stderr, '/!\ Could not find fields %s in headers %s.' % \
+                (args[0], args[1])
+
 
 def error(name, *args):
     '''
@@ -591,6 +595,15 @@ def handle_args():
         help = '''Custom separator in quiet mode.''',
         default = '^')
 
+    parser.add_argument('-m', '--map',
+        help = '''If this option is set, instead of anything,
+                        the script will display the data on a mapand exit.''',
+        action = 'store_true')
+
+    parser.add_argument('-M', '--map-label',
+        help = '''Change the label on map points. Default is __key__.''',
+        default = '__key__')
+
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
@@ -696,8 +709,8 @@ def main():
                 indexes = headers[0]
 
         if verbose:
-            print 'Loading GeoBase from stdin with metadata "%s" ; %s ; %s...' % \
-                    (delimiter, headers, indexes)
+            print 'Loading GeoBase from stdin with option: -i "%s" "%s" "%s"' % \
+                    (delimiter, '/'.join(headers), '/'.join(indexes))
 
         g = GeoBase(data='feed',
                     source=source,
@@ -713,6 +726,19 @@ def main():
 
     if verbose:
         after_init = datetime.now()
+
+    # Map visualization
+    if args['map']:
+        status = g.visualizeOnMap(output='data', label=args['map_label'], verbose=verbose)
+
+        if status is True:
+            # Display was successful, we exit.
+            exit(0)
+        else:
+            # Display was a failure, we try to give explanation.
+            warn('fields_not_found', ' and '.join(GeoBase.GEO_FIELDS), g.fields)
+            if verbose:
+                print '\nGoing on anyway, to help you find out what went wrong...\n'
 
 
 
