@@ -729,7 +729,7 @@ def main():
 
     # Map visualization
     if args['map']:
-        status = g.visualizeOnMap(output='data', label=args['map_label'], verbose=verbose)
+        status = g.visualizeOnMap(output=g._data, label=args['map_label'], verbose=verbose)
 
         if status is True:
             # Display was successful, we exit.
