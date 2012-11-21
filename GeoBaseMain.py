@@ -245,7 +245,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type):
+def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -264,7 +264,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + '^'.join(str(f) for f in show_wo_omit) + '\n')
+    stdout.write('#' + sep.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -281,7 +281,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
                 else:
                     l.append(str(v))
 
-        stdout.write('^'.join(l) + '\n')
+        stdout.write(sep.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -574,6 +574,10 @@ def handle_args():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
+    parser.add_argument('-Q', '--quiet-separator',
+        help = '''Custom separator in quiet mode.''',
+        default = '^')
+
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
@@ -865,7 +869,7 @@ def main():
         for warn_msg in ENV_WARNINGS:
             print textwrap.dedent(warn_msg),
     else:
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type)
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
 
 
 
