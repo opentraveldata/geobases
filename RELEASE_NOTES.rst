@@ -6,6 +6,7 @@ Release notes
 V3
 ==
 
++ 3.39 : new -d option to draw points on a map
 + 3.38 : new -Q option to customize --quiet mode
 + 3.37 : new interactive with data reading from stdin (kind of awesome)
 + 3.36 : source keyword argument is now a file-like
