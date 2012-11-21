@@ -54,6 +54,7 @@ import heapq
 from itertools import izip_longest
 import csv
 import json
+from shutil import copy
 
 # Not in standard library
 import yaml
@@ -1320,45 +1321,46 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__'):
+    def visualizeOnMap(self, output='example', label='__key__', verbose=None):
         '''Create map.
         '''
+        # Possibility to override global verbosity
+        if verbose is None:
+            verbose = self._verbose
+
         if not self.hasGeoSupport():
-            if self._verbose:
-                print 'No geocode support, could not visualize...'
+            if verbose:
+                print '/!\ No geocode support, could not visualize...'
             return
 
         if label not in self.fields:
-            if self._verbose:
-                print 'Label %s not in fields %s, could not visualize...' % \
+            if verbose:
+                print '/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields)
             return
 
-        res = []
+        data = []
 
         for key in self:
 
             lat_lng = self.getLocation(key)
 
             if lat_lng is not None:
-                res.append({
+                data.append({
                     'name'  : self.get(key, label),
                     'lat'   : lat_lng[0],
                     'lng'   : lat_lng[1]
                 })
 
-            else:
-                if self._verbose:
-                    print 'Did not dump %s, no usable geocode.' % key
-
+        # Output names
         json_name = '%s.json' % output
         html_name = '%s.html' % output
 
         # Dump the json geocodes
         with open(json_name, 'w') as out:
-            out.write(json.dumps(res))
+            out.write(json.dumps(data))
 
-        if self._verbose:
+        if verbose:
             print 'Dumped %s' % json_name
 
         # Custom the template to connect to the json data
@@ -1368,13 +1370,28 @@ class GeoBase(object):
 
                 for row in temp:
                     row = row.replace('{{file_name}}', output.capitalize())
-                    row = row.replace('{{json_file}}', op.basename(json_name))
+                    row = row.replace('{{json_file}}', json_name)
 
                     out.write(row)
 
-        if self._verbose:
+        if verbose:
             print 'Dumped %s' % html_name
 
+        # Dump assets
+        assets = [
+            local_path(__file__, 'MapAssets/blue_point.png'),
+            local_path(__file__, 'MapAssets/blue_marker.png')
+        ]
+
+        for a in assets:
+            copy(a, '.')
+
+            if verbose:
+                print 'Copying %s here' % op.basename(a)
+
+        if verbose:
+            print '\n* Now you may use your browser to visualize:'
+            print '%% firefox %s' % html_name
 
 
 def ext_split(value, split):
