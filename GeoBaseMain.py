@@ -245,7 +245,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type):
+def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -264,7 +264,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + '^'.join(str(f) for f in show_wo_omit) + '\n')
+    stdout.write('#' + sep.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -281,7 +281,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type):
                 else:
                     l.append(str(v))
 
-        stdout.write('^'.join(l) + '\n')
+        stdout.write(sep.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -356,7 +356,9 @@ def find_separator(row):
     if counters:
         return max(counters.iteritems(), key=lambda x: x[1])[0]
     else:
-        return '^'
+        # In this case, we could not find any delimiter, we may
+        # as well return ' '
+        return ' '
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -377,7 +379,6 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
 
     for p in pairs:
         print >> descriptor, '\t%-20s\t%-20s' % p
-
 
 
 def warn(name, *args):
@@ -428,18 +429,9 @@ def error(name, *args):
     exit(1)
 
 
-def main():
+def handle_args():
+    '''Command line parsing.
     '''
-    Arguments handling.
-    '''
-
-    # Filter colored signals on terminals.
-    # Necessary for Windows CMD
-    colorama.init()
-
-    #
-    # COMMAND LINE MANAGEMENT
-    #
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
     parser.epilog = 'Example: python %s ORY CDG' % parser.prog
@@ -567,7 +559,7 @@ def main():
                         burn the first line to define the headers.
                         Default indexes will take the first field.
                         Default separator is smart :).
-                        Example: -i '^' key/name/key2 key/key2''',
+                        Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
         default = None)
@@ -582,6 +574,10 @@ def main():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
+    parser.add_argument('-Q', '--quiet-separator',
+        help = '''Custom separator in quiet mode.''',
+        default = '^')
+
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
@@ -595,8 +591,21 @@ def main():
         help = '''Display version information.''',
         action = 'store_true')
 
-    args = vars(parser.parse_args())
+    return vars(parser.parse_args())
 
+
+def main():
+    '''
+    Arguments handling.
+    '''
+
+    # Filter colored signals on terminals.
+    # Necessary for Windows CMD
+    colorama.init()
+
+    #
+    # COMMAND LINE MANAGEMENT
+    args = handle_args()
 
 
     #
@@ -860,7 +869,7 @@ def main():
         for warn_msg in ENV_WARNINGS:
             print textwrap.dedent(warn_msg),
     else:
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type)
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
 
 
 
