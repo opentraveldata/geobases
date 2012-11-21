@@ -91,6 +91,7 @@ setup(
         'GeoBases': [
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
+            "MapAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.txt",
             "DataSources/*/*/*.csv",
