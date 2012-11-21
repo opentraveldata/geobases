@@ -696,8 +696,8 @@ def main():
                 indexes = headers[0]
 
         if verbose:
-            print 'Loading GeoBase from stdin with metadata "%s" ; %s ; %s...' % \
-                    (delimiter, headers, indexes)
+            print 'Loading GeoBase from stdin with option: -i "%s" "%s" "%s"' % \
+                    (delimiter, '/'.join(headers), '/'.join(indexes))
 
         g = GeoBase(data='feed',
                     source=source,
