@@ -569,7 +569,7 @@ def main():
                         burn the first line to define the headers.
                         Default indexes will take the first field.
                         Default separator is smart :).
-                        Example: -i '^' key/name/key2 key/key2''',
+                        Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
         default = None)
