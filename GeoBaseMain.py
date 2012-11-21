@@ -13,7 +13,6 @@ import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import zip_longest, chain
-from collections import Counter
 import textwrap
 
 # Not in standard library
@@ -342,6 +341,24 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
+def find_separator(row):
+    '''Heuristic to guess the top level separator.
+    '''
+    discarded  = set(['#', ' ', '"', "'"])
+    candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
+    counters   = dict((c, row.count(c)) for c in candidates)
+
+    ## This does not work here since csv.reader will
+    ## not accept separators with several characters, too bad
+    #for alternates in set([' ' * 4, ' ' * 8]):
+    #    counters[alternates] = row.count(alternates)
+
+    if counters:
+        return max(counters.items(), key=lambda x: x[1])[0]
+    else:
+        return '^'
+
+
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
     '''
     Some formatting for help.
@@ -629,11 +646,8 @@ def main():
         except StopIteration:
             error('empty_stdin')
 
-        source  = chain([first_l], stdin)
-
-        # Heuristic to find separator
-        separators = ((k, v) for k, v in Counter(first_l.rstrip()).items() if not k.isalnum())
-        delimiter  = max(separators, key=lambda x: x[1])[0]
+        source    = chain([first_l], stdin)
+        delimiter = find_separator(first_l)
 
         if args['interactive'] is None:
             headers = LETTERS[0:len(first_l.split(delimiter))]
