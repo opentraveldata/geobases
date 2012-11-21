@@ -21,11 +21,13 @@ function initialize(jsonData) {
     // Create the map
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-    var n = jsonData.length
+    var n = jsonData.length;
     var best_icon = 'blue_point.png';
-    if (n < 100) best_icon = 'blue_marker.png'
-    for (var i = 0 ; i < n ; i++) {
-        var marker= new google.maps.Marker({ 
+    if (n < 100) {
+        best_icon = 'blue_marker.png';
+    }
+    for (var i=0 ; i<n ; i++) {
+        var marker= new google.maps.Marker({
             position: new google.maps.LatLng(jsonData[i]['lat'],jsonData[i]['lng']),
             title: jsonData[i]['name'],
             icon: best_icon
@@ -37,10 +39,10 @@ function initialize(jsonData) {
 
 $(document).ready(function() {
     $("#map_canvas").css({
-        "height": $(window).height()*0.8
+        "height": $(window).height()*0.90
     });
     $("#map_canvas").css({
-        "width": $(window).width()*0.8
+        "width": $(window).width()*0.99
     }); 
     $.getJSON('{{json_file}}', function(json){initialize(json);});
 }); 
