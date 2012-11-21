@@ -53,6 +53,7 @@ import os.path as op
 import heapq
 from itertools import izip_longest
 import csv
+import json
 
 # Not in standard library
 import yaml
@@ -247,7 +248,7 @@ class GeoBase(object):
             self.createGrid()
         else:
             if self._verbose:
-                print 'Not geocode support, skipping grid...'
+                print 'No geocode support, skipping grid...'
 
 
 
@@ -1317,6 +1318,62 @@ class GeoBase(object):
         # For all other formats we return an empty
         # list to avoid failures
         return []
+
+
+    def visualizeOnMap(self, output='example', label='__key__'):
+        '''Create map.
+        '''
+        if not self.hasGeoSupport():
+            if self._verbose:
+                print 'No geocode support, could not visualize...'
+            return
+
+        if label not in self.fields:
+            if self._verbose:
+                print 'Label %s not in fields %s, could not visualize...' % \
+                        (label, self.fields)
+            return
+
+        res = []
+
+        for key in self:
+
+            lat_lng = self.getLocation(key)
+
+            if lat_lng is not None:
+                res.append({
+                    'name'  : self.get(key, label),
+                    'lat'   : lat_lng[0],
+                    'lng'   : lat_lng[1]
+                })
+
+            else:
+                if self._verbose:
+                    print 'Did not dump %s, no usable geocode.' % key
+
+        json_name = '%s.json' % output
+        html_name = '%s.html' % output
+
+        # Dump the json geocodes
+        with open(json_name, 'w') as out:
+            out.write(json.dumps(res))
+
+        if self._verbose:
+            print 'Dumped %s' % json_name
+
+        # Custom the template to connect to the json data
+        with open(local_path(__file__, 'MapAssets/template.html')) as temp:
+
+            with open(html_name, 'w') as out:
+
+                for row in temp:
+                    row = row.replace('{{file_name}}', output.capitalize())
+                    row = row.replace('{{json_file}}', op.basename(json_name))
+
+                    out.write(row)
+
+        if self._verbose:
+            print 'Dumped %s' % html_name
 
 
 
