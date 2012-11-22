@@ -354,10 +354,14 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def find_separator(row):
+def guess_separator(row):
     '''Heuristic to guess the top level separator.
     '''
-    discarded  = set(['#', ' ', '"', "'"])
+    discarded  = set([
+        '#', # this is for comments
+        ' ', # spaces are not usually separator, unless we find no other
+        '"', # this is for quoting
+    ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
 
@@ -372,6 +376,58 @@ def find_separator(row):
         # In this case, we could not find any delimiter, we may
         # as well return ' '
         return ' '
+
+
+def guess_headers(s_row):
+    '''Heuristic to guess the lat/lng fields.
+    '''
+    headers = list(LETTERS[0:len(s_row)])
+
+    # Name candidates for lat/lng
+    lat_candidates = set(['latitude',  'lat'])
+    lng_candidates = set(['longitude', 'lng', 'lon'])
+
+    lat_found, lng_found = False, False
+
+    for i, f in enumerate(s_row):
+        try:
+            val = float(f)
+        except ValueError:
+            # Here the line was not a number, we check the name
+            if f in lat_candidates and not lat_found:
+                headers[i] = 'lat'
+                lat_found  = True
+
+            if f in lng_candidates and not lng_found:
+                headers[i] = 'lng'
+                lng_found  = True
+
+        else:
+            if val == int(val):
+                # Round values are weird
+                continue
+
+            if -90 < val < 90 and not lat_found:
+                # latitude candidate
+                headers[i] = 'lat'
+                lat_found  = True
+
+            elif -180 < val < 180 and not lng_found:
+                # longitude candidate
+                headers[i] = 'lng'
+                lng_found  = True
+
+    return headers
+
+
+def guess_indexes(headers):
+    '''Heuristic to guess indexes.
+    '''
+    discarded = set(['lat', 'lng'])
+
+    for h in headers:
+        if h not in discarded:
+            return h
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -681,17 +737,19 @@ def main():
         except StopIteration:
             error('empty_stdin')
 
-        source    = chain([first_l], stdin)
-        delimiter = find_separator(first_l)
+        source = chain([first_l], stdin)
 
         if args['interactive'] is None:
-            headers = LETTERS[0:len(first_l.split(delimiter))]
-            indexes = LETTERS[0]
+            delimiter = guess_separator(first_l)
+            headers   = guess_headers(first_l.split(delimiter))
+            indexes   = guess_indexes(headers)
         else:
             dhi = args['interactive']
 
             if len(dhi) >= 1:
                 delimiter = dhi[0]
+            else:
+                delimiter = guess_separator(first_l)
 
             if len(dhi) >= 2:
                 if dhi[1] == '__head__':
@@ -700,16 +758,16 @@ def main():
                     headers = dhi[1].split('/')
             else:
                 # Reprocessing the headers with custom delimiter
-                headers = LETTERS[0:len(first_l.split(delimiter))]
+                headers = guess_headers(first_l.split(delimiter))
 
             if len(dhi) >= 3:
                 indexes = dhi[2].split('/')
             else:
                 # Reprocessing the indexes with custom headers
-                indexes = headers[0]
+                indexes = guess_indexes(headers)
 
         if verbose:
-            print 'Loading GeoBase from stdin with option: -i "%s" "%s" "%s"' % \
+            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
                     (delimiter, '/'.join(headers), '/'.join(indexes))
 
         g = GeoBase(data='feed',
