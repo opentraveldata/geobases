@@ -49,7 +49,7 @@ function initialize(jsonData) {
     var best_icon = n < 100 ? 'blue_marker.png' : 'blue_point.png';
 
     var markersArray = [];
-    var i, e, position, marker;
+    var i, e, latlng, marker;
     var infowindow = new google.maps.InfoWindow();
 
     // Load the data
@@ -57,11 +57,16 @@ function initialize(jsonData) {
 
         e = jsonData[i];
 
-        position = new google.maps.LatLng(e.lat, e.lng);
+        latlng = new google.maps.LatLng(e.lat, e.lng);
+
+        if (isNaN(latlng.lat()) || isNaN(latlng.lng())) {
+            //console.log(e.key + ' had no position: ' + e.lat + e.lng)
+            continue;
+        }
 
         marker = new google.maps.Marker({
             map         : map,
-            position    : position,
+            position    : latlng,
             //animation   : google.maps.Animation.DROP,
             title       : e.label,
             icon        : best_icon,
