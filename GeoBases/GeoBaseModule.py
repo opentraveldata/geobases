@@ -1323,7 +1323,7 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__', from_keys=None, verbose=True):
+    def visualizeOnMap(self, output='example', label=None, from_keys=None, verbose=True):
         '''Create map. Returns success code.
         '''
         # We take the maximum verbosity between the local and global
@@ -1334,6 +1334,13 @@ class GeoBase(object):
                 print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields)
             return False
+
+        # Trying to have the most useful information
+        if label is None:
+            if 'name' in self.fields:
+                label = 'name'
+            else:
+                label = '__key__'
 
         if label not in self.fields:
             if verbose:
@@ -1352,7 +1359,8 @@ class GeoBase(object):
 
             if lat_lng is not None:
                 data.append({
-                    'name'  : self.get(key, label),
+                    'key'   : key,
+                    'label' : self.get(key, label),
                     'lat'   : lat_lng[0],
                     'lng'   : lat_lng[1]
                 })
