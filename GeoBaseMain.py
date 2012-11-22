@@ -459,10 +459,6 @@ def warn(name, *args):
         print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
-    if name == 'fields_not_found':
-        print >> stderr, '/!\ Could not find fields %s in headers %s.' % \
-                (args[0], args[1])
-
 
 def error(name, *args):
     '''
@@ -697,12 +693,20 @@ def main():
     verbose   = not args['quiet']
     warnings  = args['verbose']
 
+    # Defining frontend
+    if args['quiet']:
+        frontend = 'quiet'
+    elif args['map']:
+        frontend = 'map'
+    else:
+        frontend = 'terminal'
+
     if args['limit'] is None:
         # Limit was not set by user
-        if args['quiet']:
-            limit = None
-        else:
+        if frontend == 'terminal':
             limit = DEFAULT_NB_COL
+        else:
+            limit = None
 
     else:
         limit = int(args['limit'])
@@ -784,19 +788,6 @@ def main():
 
     if verbose:
         after_init = datetime.now()
-
-    # Map visualization
-    if args['map']:
-        status = g.visualizeOnMap(output=g._data, label=args['map_label'], verbose=verbose)
-
-        if status is True:
-            # Display was successful, we exit.
-            exit(0)
-        else:
-            # Display was a failure, we try to give explanation.
-            warn('fields_not_found', ' and '.join(GeoBase.GEO_FIELDS), g.fields)
-            if verbose:
-                print '\nGoing on anyway, to help you find out what went wrong...\n'
 
 
 
@@ -956,7 +947,17 @@ def main():
         ref_type = 'index'
 
     # Display
-    if verbose:
+    if frontend == 'map':
+        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
+
+        if status is not True:
+            frontend = 'terminal'
+            res = res[:DEFAULT_NB_COL]
+            if verbose:
+                print '\nSwitching to terminal frontend, to help you find out what went wrong...'
+
+
+    if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
         end = datetime.now()
@@ -965,7 +966,9 @@ def main():
 
         for warn_msg in ENV_WARNINGS:
             print textwrap.dedent(warn_msg),
-    else:
+
+
+    if frontend == 'quiet':
         display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
 
 
