@@ -92,6 +92,7 @@ setup(
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
             "MapAssets/*",
+            "TablesAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.txt",
             "DataSources/*/*/*.csv",
