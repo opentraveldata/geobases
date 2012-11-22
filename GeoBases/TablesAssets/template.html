@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="{{file_name}}" content="{{file_name}}" />
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
+        <title>Table of "{{file_name}}"</title>
+    </head>
+
+    <body>
+        <div id="canvas" style="width:1000px; height:700px">
+            <table>
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+
+if (!String.fmt) {
+    String.prototype.fmt = function() {
+        var formatted = this;
+        var i;
+        for (i=0; i<arguments.length; i++) {
+            var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+            formatted = formatted.replace(regexp, arguments[i]);
+        }
+        return formatted;
+    };
+}
+
+function initialize(jsonData) {
+
+    var n = jsonData.length;
+
+    $('#canvas table thead').append(
+        '<tr>'+
+            '<td>{0}</td>'.fmt('<i>Key</i>') +
+            '<td>{0}</td>'.fmt('<i>Label</i>') +
+            '<td>{0}</td>'.fmt('<i>Lat</i>') +
+            '<td>{0}</td>'.fmt('<i>Lng</i>') +
+        '</tr>'
+    );
+
+    // Load the data
+    for (i=0 ; i<n ; i++) {
+
+        e = jsonData[i];
+
+        $('#canvas table tbody').append(
+            '<tr>'+
+                '<td>{0}</td>'.fmt(e.key) +
+                '<td>{0}</td>'.fmt(e.label) +
+                '<td>{0}</td>'.fmt(e.lat) +
+                '<td>{0}</td>'.fmt(e.lng) +
+            '</tr>'
+        );
+
+    }
+
+    $('#canvas table').dataTable({
+        /* Define where objects are displayed
+           f: filtering input
+           i: general information
+           t: table*/
+        /* Define number of results displayed */
+        "iDisplayLength": 20,
+        /* Define the dropdown for results pagination */
+        "aLengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    });
+
+}
+
+$(document).ready(function() {
+
+    $("#canvas").css({
+        "height": $(window).height()*0.90
+    });
+
+    $("#canvas").css({
+        "width": $(window).width()*0.99
+    });
+
+    $.getJSON(
+        '{{json_file}}',
+        function(data){
+            initialize(data);
+        }
+    );
+
+});
+
+        </script>
+    </body>
+</html>
+
