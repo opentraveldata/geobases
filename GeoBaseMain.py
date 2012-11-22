@@ -6,7 +6,7 @@ This module is a launcher for GeoBase.
 '''
 
 from sys import stdin, stdout, stderr
-from os import getenv, popen
+from os import getenv, popen, system
 
 import argparse
 import pkg_resources
@@ -950,11 +950,12 @@ def main():
     if frontend == 'map':
         status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
 
-        if status is not True:
+        if status is True:
+            system('firefox %s.html' % g._data)
+        else:
             frontend = 'terminal'
             res = res[:DEFAULT_NB_COL]
-            if verbose:
-                print '\nSwitching to terminal frontend, to help you find out what went wrong...'
+            print '\nSwitching to terminal frontend, to help you find out what went wrong...'
 
 
     if frontend == 'terminal':
@@ -964,13 +965,14 @@ def main():
         print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
 
-        for warn_msg in ENV_WARNINGS:
-            print textwrap.dedent(warn_msg),
-
 
     if frontend == 'quiet':
         display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
 
+
+    if verbose:
+        for warn_msg in ENV_WARNINGS:
+            print textwrap.dedent(warn_msg),
 
 
 if __name__ == '__main__':

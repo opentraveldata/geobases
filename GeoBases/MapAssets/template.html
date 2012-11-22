@@ -28,7 +28,8 @@ function initialize(jsonData) {
     var best_icon = n < 100 ? 'blue_marker.png' : 'blue_point.png';
 
     var markersArray = [];
-    var i, e, position, marker, helpString;
+    var i, e, position, marker;
+    var infowindow = new google.maps.InfoWindow();
 
     // Load the data
     for (i=0 ; i<n ; i++) {
@@ -47,7 +48,7 @@ function initialize(jsonData) {
             draggable   : false
         });
 
-        /*helpString = ' ' +
+        marker.help = ' ' +
         '<div class="infowindow">' +
             '<h3>' + e.name + '</h3>' +
             '<table cellpadding="1">' +
@@ -56,16 +57,11 @@ function initialize(jsonData) {
             '</table>' +
         '</div>';
 
-        marker.info = new google.maps.InfoWindow({
-            content: helpString
-        });
-
         google.maps.event.addListener(marker, 'click', function() {
-            //console.log(marker);
-            //marker.info.close(map, marker);
-            //marker.info.setContent(helpString);
-            marker.info.open(map, marker);
-        });*/
+            //infowindow.close(map, this);
+            infowindow.setContent(this.help);
+            infowindow.open(map, this);
+        });
 
         // Saving marker
         markersArray.push(marker);
