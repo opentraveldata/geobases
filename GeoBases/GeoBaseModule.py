@@ -110,6 +110,28 @@ class GeoBase(object):
     # Loading indicator
     NB_LINES_STEP = 100000
 
+    # Assets for map and tables
+    ASSETS = {
+        'map' : {
+            'template' : {
+                # source : v_target
+                local_path(__file__, 'MapAssets/template.html') : '%s_map.html',
+            },
+            'static' : {
+                # source : target
+                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
+                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
+            }
+        },
+        'table' : {
+            'template' : {
+                # source : v_target
+                local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
+            },
+            'static' : {}
+        }
+    }
+
 
     @staticmethod
     def update():
@@ -1324,19 +1346,21 @@ class GeoBase(object):
 
 
     def visualizeOnMap(self, output='example', label=None, from_keys=None, verbose=True):
-        '''Create map. Returns success code.
+        '''Creates map.
+
+        Returns success code, number of templates realized.
         '''
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
 
-        if not self.hasGeoSupport():
+        if self.hasGeoSupport():
+            geo_support = True
+        else:
+            geo_support = False
+
             if verbose:
                 print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields)
-
-            geo_support = False
-        else:
-            geo_support = True
 
         # Trying to have the most useful information
         if label is None:
@@ -1354,6 +1378,7 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        # Storing json data
         data = []
 
         for key in from_keys:
@@ -1380,51 +1405,48 @@ class GeoBase(object):
             print 'Dumped %s' % json_name
 
         # Custom the template to connect to the json data
-        templates = {
-            local_path(__file__, 'TablesAssets/template.html') : '%s_table.html' % output
-        }
-        if geo_support:
-            templates[local_path(__file__, 'MapAssets/template.html')] = '%s_map.html' % output
+        tmp_template = []
+        tmp_static   = []
 
-        for template, target in templates.iteritems():
+        for name, assets in GeoBase.ASSETS.iteritems():
 
-            with open(template) as temp:
+            # We do not render the map template  if not geocodes
+            if name == 'map' and not geo_support:
+                continue
 
-                with open(target, 'w') as out:
+            for template, v_target in assets['template'].iteritems():
+                target = v_target % output
 
-                    for row in temp:
-                        row = row.replace('{{file_name}}', output.capitalize())
-                        row = row.replace('{{json_file}}', json_name)
+                with open(template) as temp:
+                    with open(target, 'w') as out:
 
-                        out.write(row)
+                        for row in temp:
+                            row = row.replace('{{file_name}}', output.capitalize())
+                            row = row.replace('{{json_file}}', json_name)
+                            out.write(row)
 
-            if verbose:
-                print 'Dumped %s' % target
+                tmp_template.append(target)
+                if verbose:
+                    print 'Dumped %s' % target
 
-        # Dump assets
-        if geo_support:
-            assets = {
-                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
-                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
-            }
-        else:
-            assets = {}
+            for source, target in assets['static'].iteritems():
 
-        for asset, target in assets.iteritems():
-            copy(asset, target)
+                copy(source, target)
 
-            if verbose:
-                print 'Copied %s' % target
+                tmp_static.append(target)
+                if verbose:
+                    print 'Copied %s' % target
 
         if verbose:
             print '\n* Now you may use your browser to visualize:'
-            print 'firefox %s' % ' '.join(templates.values())
+            print 'firefox %s' % ' '.join(tmp_template)
 
             print '\n* If you want to clean the temporary files:'
-            print 'rm %s %s %s' % (json_name, ' '.join(assets.values()), ' '.join(templates.values()))
+            print 'rm %s %s' % (json_name, ' '.join(tmp_static + tmp_template))
 
         # This is the numbered of templates rendered
-        return 2 if geo_support else 1
+        return len(tmp_template)
+
 
 
 def ext_split(value, split):
