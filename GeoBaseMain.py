@@ -663,7 +663,7 @@ def handle_args():
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
-                        the script will display the data on a mapand exit.''',
+                        the script will display the data on a map and exit.''',
         action = 'store_true')
 
     parser.add_argument('-M', '--map-label',
