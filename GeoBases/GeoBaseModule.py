@@ -1333,7 +1333,10 @@ class GeoBase(object):
             if verbose:
                 print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields)
-            return False
+
+            geo_support = False
+        else:
+            geo_support = True
 
         # Trying to have the most useful information
         if label is None:
@@ -1346,7 +1349,7 @@ class GeoBase(object):
             if verbose:
                 print '/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields)
-            return False
+            return 0
 
         if from_keys is None:
             from_keys = iter(self)
@@ -1355,21 +1358,21 @@ class GeoBase(object):
 
         for key in from_keys:
 
-            lat_lng = self.getLocation(key)
+            lat_lng = self.getLocation(key) if geo_support else None
 
-            if lat_lng is not None:
-                data.append({
-                    'key'   : key,
-                    'label' : self.get(key, label),
-                    'lat'   : lat_lng[0],
-                    'lng'   : lat_lng[1]
-                })
+            if lat_lng is None:
+                lat_lng = '?', '?'
 
-        # Output names
-        json_name = '%s.json' % output
-        html_name = '%s.html' % output
+            data.append({
+                'key'   : key,
+                'label' : self.get(key, label),
+                'lat'   : lat_lng[0],
+                'lng'   : lat_lng[1]
+            })
 
         # Dump the json geocodes
+        json_name = '%s.json' % output
+
         with open(json_name, 'w') as out:
             out.write(json.dumps(data))
 
@@ -1377,38 +1380,51 @@ class GeoBase(object):
             print 'Dumped %s' % json_name
 
         # Custom the template to connect to the json data
-        with open(local_path(__file__, 'MapAssets/template.html')) as temp:
+        templates = {
+            local_path(__file__, 'TablesAssets/template.html') : '%s_table.html' % output
+        }
+        if geo_support:
+            templates[local_path(__file__, 'MapAssets/template.html')] = '%s_map.html' % output
 
-            with open(html_name, 'w') as out:
+        for template, target in templates.iteritems():
 
-                for row in temp:
-                    row = row.replace('{{file_name}}', output.capitalize())
-                    row = row.replace('{{json_file}}', json_name)
+            with open(template) as temp:
 
-                    out.write(row)
+                with open(target, 'w') as out:
 
-        if verbose:
-            print 'Dumped %s' % html_name
+                    for row in temp:
+                        row = row.replace('{{file_name}}', output.capitalize())
+                        row = row.replace('{{json_file}}', json_name)
 
-        # Dump assets
-        assets = [
-            local_path(__file__, 'MapAssets/blue_point.png'),
-            local_path(__file__, 'MapAssets/blue_marker.png')
-        ]
-
-        for a in assets:
-            copy(a, '.')
+                        out.write(row)
 
             if verbose:
-                print 'Copied %s' % op.basename(a)
+                print 'Dumped %s' % target
+
+        # Dump assets
+        if geo_support:
+            assets = {
+                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
+                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
+            }
+        else:
+            assets = {}
+
+        for asset, target in assets.iteritems():
+            copy(asset, target)
+
+            if verbose:
+                print 'Copied %s' % target
 
         if verbose:
             print '\n* Now you may use your browser to visualize:'
-            print 'firefox %s' % html_name
-            print '\n* If you want to clean the temporary files:'
-            print 'rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets))
+            print 'firefox %s' % ' '.join(templates.values())
 
-        return True
+            print '\n* If you want to clean the temporary files:'
+            print 'rm %s %s %s' % (json_name, ' '.join(assets.values()), ' '.join(templates.values()))
+
+        # This is the numbered of templates rendered
+        return 2 if geo_support else 1
 
 
 def ext_split(value, split):
