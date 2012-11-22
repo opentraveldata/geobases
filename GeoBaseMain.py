@@ -122,7 +122,8 @@ class RotatingColors(object):
             ]
 
         else:
-            raise ValueError('Accepted background color: "black" or "white", not "%s".' % background)
+            raise ValueError('Accepted background color: "black" or "white", not "%s".' % \
+                             background)
 
         self._background = background
         self._current    = 0
@@ -379,7 +380,7 @@ def guess_separator(row):
 
 
 def guess_headers(s_row):
-    '''Heuristic to guess the lat/lng fields.
+    '''Heuristic to guess the lat/lng fields from first row.
     '''
     headers = list(LETTERS[0:len(s_row)])
 
@@ -404,7 +405,7 @@ def guess_headers(s_row):
 
         else:
             if val == int(val):
-                # Round values are weird
+                # Round values are improbable as lat/lng
                 continue
 
             if -90 < val < 90 and not lat_found:
@@ -420,14 +421,26 @@ def guess_headers(s_row):
     return headers
 
 
-def guess_indexes(headers):
-    '''Heuristic to guess indexes.
+def guess_indexes(headers, s_row):
+    '''Heuristic to guess indexes from headers and first row.
     '''
     discarded = set(['lat', 'lng'])
 
-    for h in headers:
-        if h not in discarded:
-            return h
+    for h, v in zip(headers, s_row):
+
+        # Skip discarded and empty values
+        if h not in discarded and v:
+            # We test if the value is a float
+            try:
+                val = float(v)
+            except ValueError:
+                return h
+            else:
+                # Round values are possible as indexes
+                if val == int(val):
+                    return h
+
+    return headers[0]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -627,7 +640,7 @@ def handle_args():
                         Default headers will use alphabet, and try to sniff lat/lng.
                         Use __head__ as header value to
                         burn the first line to define the headers.
-                        Default indexes will take the first field.
+                        Default indexes will take the first plausible field.
                         Default separator is smart :).
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
@@ -748,7 +761,7 @@ def main():
         if args['interactive'] is None:
             delimiter = guess_separator(first_l)
             headers   = guess_headers(first_l.split(delimiter))
-            indexes   = guess_indexes(headers)
+            indexes   = guess_indexes(headers, first_l.split(delimiter))
         else:
             dhi = args['interactive']
 
@@ -770,7 +783,7 @@ def main():
                 indexes = dhi[2].split('/')
             else:
                 # Reprocessing the indexes with custom headers
-                indexes = guess_indexes(headers)
+                indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
