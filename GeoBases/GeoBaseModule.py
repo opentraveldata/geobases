@@ -1323,7 +1323,7 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__', verbose=True):
+    def visualizeOnMap(self, output='example', label='__key__', from_keys=None, verbose=True):
         '''Create map. Returns success code.
         '''
         # We take the maximum verbosity between the local and global
@@ -1331,7 +1331,8 @@ class GeoBase(object):
 
         if not self.hasGeoSupport():
             if verbose:
-                print '/!\ No geocode support, could not visualize...'
+                print '/!\ Could not find fields %s in headers %s.' % \
+                        (' and '.join(GeoBase.GEO_FIELDS), self.fields)
             return False
 
         if label not in self.fields:
@@ -1340,9 +1341,12 @@ class GeoBase(object):
                         (label, self.fields)
             return False
 
+        if from_keys is None:
+            from_keys = iter(self)
+
         data = []
 
-        for key in self:
+        for key in from_keys:
 
             lat_lng = self.getLocation(key)
 
