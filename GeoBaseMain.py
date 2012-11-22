@@ -967,7 +967,7 @@ def main():
 
         if status > 0:
             # At least one html rendered
-            system('firefox %s_*.html' % g._data)
+            system('firefox %s_*.html &' % g._data)
 
         if status < 2:
             frontend = 'terminal'
