@@ -624,7 +624,8 @@ def handle_args():
         help = '''Specify metadata for stdin data input.
                         3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
-                        Default headers will use alphabet. Use __head__ as header value to
+                        Default headers will use alphabet, and try to sniff lat/lng.
+                        Use __head__ as header value to
                         burn the first line to define the headers.
                         Default indexes will take the first field.
                         Default separator is smart :).
@@ -653,8 +654,9 @@ def handle_args():
         action = 'store_true')
 
     parser.add_argument('-M', '--map-label',
-        help = '''Change the label on map points. Default is __key__.''',
-        default = '__key__')
+        help = '''Change the label on map points. Default is "name" if available,
+                        otherwise __key__.''',
+        default = None)
 
     parser.add_argument('-v', '--verbose',
         help = '''Provides additional information from GeoBase loading.''',
