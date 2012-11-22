@@ -1421,7 +1421,7 @@ class GeoBase(object):
                     with open(target, 'w') as out:
 
                         for row in temp:
-                            row = row.replace('{{file_name}}', output.capitalize())
+                            row = row.replace('{{file_name}}', output)
                             row = row.replace('{{json_file}}', json_name)
                             out.write(row)
 
@@ -1439,7 +1439,7 @@ class GeoBase(object):
 
         if verbose:
             print '\n* Now you may use your browser to visualize:'
-            print 'firefox %s' % ' '.join(tmp_template)
+            print 'firefox %s &' % ' '.join(tmp_template)
 
             print '\n* If you want to clean the temporary files:'
             print 'rm %s %s' % (json_name, ' '.join(tmp_static + tmp_template))
