@@ -965,12 +965,15 @@ def main():
     if frontend == 'map':
         status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
 
-        if status is True:
-            system('firefox %s.html' % g._data)
-        else:
+        if status > 0:
+            # At least one html rendered
+            system('firefox %s_*.html' % g._data)
+
+        if status < 2:
             frontend = 'terminal'
             res = res[:DEFAULT_NB_COL]
-            print '\nSwitching to terminal frontend, to help you find out what went wrong...'
+
+            print '\n/!\ Map was not rendered. Switching to terminal frontend...'
 
 
     if frontend == 'terminal':
