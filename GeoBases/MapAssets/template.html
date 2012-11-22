@@ -42,7 +42,7 @@ function initialize(jsonData) {
             map         : map,
             position    : position,
             //animation   : google.maps.Animation.DROP,
-            title       : e.name,
+            title       : e.label,
             icon        : best_icon,
             clickable   : true,
             draggable   : false
@@ -50,8 +50,9 @@ function initialize(jsonData) {
 
         marker.help = ' ' +
         '<div class="infowindow">' +
-            '<h3>' + e.name + '</h3>' +
+            '<h3>' + e.label + '</h3>' +
             '<table cellpadding="1">' +
+                '<tr><td><b>Key</b></td><td>' + e.key + '</td></tr>' +
                 '<tr><td><b>Lat</b></td><td>' + e.lat + '</td></tr>' +
                 '<tr><td><b>Lng</b></td><td>' + e.lng + '</td></tr>' +
             '</table>' +
