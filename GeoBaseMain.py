@@ -605,11 +605,12 @@ def handle_args():
                         default is "S".''',
         default = 'S')
 
-    parser.add_argument('-w', '--without-grid',
+    parser.add_argument('-g', '--gridless',
         help = '''When performing a geographical search, a geographical index is used.
-                        This may lead to inaccurate results in some (rare) cases. Adding this
-                        option will disable the index, and browse the full data set to
-                        look for the results.''',
+                        This may lead to inaccurate results in some (rare) case when using
+                        --closest searches (--near searches are never impacted).
+                        Adding this option will disable the index, and browse the full
+                        data set to look for the results.''',
         action = 'store_true')
 
     parser.add_argument('-o', '--omit',
@@ -671,7 +672,7 @@ def handle_args():
                         otherwise __key__.''',
         default = None)
 
-    parser.add_argument('-v', '--verbose',
+    parser.add_argument('-w', '--warnings',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
 
@@ -680,7 +681,7 @@ def handle_args():
                         the script will try to update some source files.''',
         action = 'store_true')
 
-    parser.add_argument('-V', '--version',
+    parser.add_argument('-v', '--version',
         help = '''Display version information.''',
         action = 'store_true')
 
@@ -704,9 +705,9 @@ def main():
     #
     # ARGUMENTS
     #
-    with_grid = not args['without_grid']
+    with_grid = not args['gridless']
     verbose   = not args['quiet']
-    warnings  = args['verbose']
+    warnings  = args['warnings']
 
     # Defining frontend
     if args['quiet']:
