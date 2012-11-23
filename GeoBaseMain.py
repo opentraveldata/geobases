@@ -572,9 +572,10 @@ def handle_args():
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "name". Give unadmissible property and available
+                        Default is "name" if available, otherwise "__key__".
+                        Give unadmissible property and available
                         values will be displayed.''',
-        default = 'name')
+        default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
         help = '''Specify a min limit for fuzzy searches, default is 0.80.
@@ -703,7 +704,7 @@ def handle_args():
 
     parser.add_argument('-M', '--map-label',
         help = '''Change the label on map points. Default is "name" if available,
-                        otherwise __key__.''',
+                        otherwise "__key__".''',
         default = None)
 
     parser.add_argument('-w', '--warnings',
@@ -840,6 +841,14 @@ def main():
 
     if verbose:
         after_init = datetime.now()
+
+
+    # Tuning parameters
+    if args['fuzzy_property'] is None:
+        args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
+
+    if args['map_label'] is None:
+        args['map_label'] = 'name' if 'name' in g.fields else '__key__'
 
 
 

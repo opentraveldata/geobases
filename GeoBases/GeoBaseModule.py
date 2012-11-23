@@ -104,9 +104,6 @@ class GeoBase(object):
     LNG_FIELD  = 'lng'
     GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
-    # Default field on which fuzzy search are performed
-    DEFAULT_FUZZY = 'name'
-
     # Loading indicator
     NB_LINES_STEP = 100000
 
@@ -1000,7 +997,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None):
         '''
         We get to the cool stuff.
 
@@ -1041,7 +1038,6 @@ class GeoBase(object):
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
         []
         '''
-
         if from_keys is None:
             # iter(self), since __iter__ is defined is equivalent to
             # self._things.iterkeys()
@@ -1058,7 +1054,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -1087,7 +1083,6 @@ class GeoBase(object):
         >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         '''
-
         if from_keys is None:
             from_keys = iter(self)
 
@@ -1116,7 +1111,7 @@ class GeoBase(object):
 
     def fuzzyGetCached(self,
                        fuzzy_value,
-                       field=DEFAULT_FUZZY,
+                       field,
                        approximate=None,
                        min_match=0.75,
                        verbose=True,
@@ -1152,7 +1147,6 @@ class GeoBase(object):
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         [(0.5, 'Biased result')]
         '''
-
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
@@ -1362,7 +1356,7 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label=None, from_keys=None, verbose=True):
+    def visualizeOnMap(self, output='example', label='__key__', from_keys=None, verbose=True):
         '''Creates map.
 
         Returns success code, number of templates realized.
@@ -1378,13 +1372,6 @@ class GeoBase(object):
             if verbose:
                 print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields)
-
-        # Trying to have the most useful information
-        if label is None:
-            if 'name' in self.fields:
-                label = 'name'
-            else:
-                label = '__key__'
 
         if label not in self.fields:
             if verbose:
