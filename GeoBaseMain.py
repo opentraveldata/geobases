@@ -6,7 +6,7 @@ This module is a launcher for GeoBase.
 '''
 
 from sys import stdin, stdout, stderr
-from os import getenv, popen
+import os
 
 import argparse
 import pkg_resources
@@ -30,7 +30,7 @@ DEFAULT_NB_COL   = 5
 MIN_CHAR_COL     = 20
 MAX_CHAR_COL     = 40
 ENV_WARNINGS     = []
-BACKGROUND_COLOR = getenv('BACKGROUND_COLOR', None) # 'white'
+BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
 
 if BACKGROUND_COLOR not in ['black', 'white']:
     ENV_WARNINGS.append("""
@@ -51,7 +51,7 @@ def checkPath(command):
     '''
     This checks if a command is in the PATH.
     '''
-    path = popen('which %s 2> /dev/null' % command, 'r').read()
+    path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
     if path:
         return True
@@ -88,18 +88,50 @@ if ENV_WARNINGS:
     """)
 
 
-def getTermSize():
+def getObsoleteTermSize():
     '''
     This gives terminal size information using external
     command stty.
+    This function is not great since where stdin is used, it
+    raises an error.
     '''
-    size = popen('stty size 2>/dev/null', 'r').read()
+    size = os.popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
         return (80, 160)
 
     return tuple(int(d) for d in size.split())
 
+
+def getTermSize():
+    '''
+    This gives terminal size information.
+    '''
+    env = os.environ
+
+    def ioctl_GWINSZ(fd):
+        '''Read terminal size.'''
+        try:
+            import fcntl, termios, struct
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except IOError:
+            return
+        return cr
+
+    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            cr = ioctl_GWINSZ(fd)
+            os.close(fd)
+        except IOError:
+            pass
+
+    if not cr:
+        cr = env.get('LINES', 25), env.get('COLUMNS', 80)
+
+    return int(cr[0]), int(cr[1])
 
 
 class RotatingColors(object):
@@ -122,7 +154,8 @@ class RotatingColors(object):
             ]
 
         else:
-            raise ValueError('Accepted background color: "black" or "white", not "%s".' % background)
+            raise ValueError('Accepted background color: "black" or "white", not "%s".' % \
+                             background)
 
         self._background = background
         self._current    = 0
@@ -354,17 +387,23 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def find_separator(row):
+def guess_separator(row):
     '''Heuristic to guess the top level separator.
     '''
-    discarded  = set(['#', ' ', '"', "'"])
+    discarded  = set([
+        '#', # this is for comments
+        '_', # this is for spaces
+        ' ', # spaces are not usually separator, unless we find no other
+        '"', # this is for quoting
+    ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
 
-    ## This does not work here since csv.reader will
-    ## not accept separators with several characters, too bad
-    #for alternates in set([' ' * 4, ' ' * 8]):
-    #    counters[alternates] = row.count(alternates)
+    # Testing spaces from higher to lower, break on biggest match
+    for alternate in [' ' * i for i in xrange(16, 3, -1)]:
+        if row.count(alternate):
+            counters[alternate] = row.count(alternate)
+            break
 
     if counters:
         return max(counters.iteritems(), key=lambda x: x[1])[0]
@@ -372,6 +411,70 @@ def find_separator(row):
         # In this case, we could not find any delimiter, we may
         # as well return ' '
         return ' '
+
+
+def guess_headers(s_row):
+    '''Heuristic to guess the lat/lng fields from first row.
+    '''
+    headers = list(LETTERS[0:len(s_row)])
+
+    # Name candidates for lat/lng
+    lat_candidates = set(['latitude',  'lat'])
+    lng_candidates = set(['longitude', 'lng', 'lon'])
+
+    lat_found, lng_found = False, False
+
+    for i, f in enumerate(s_row):
+        try:
+            val = float(f)
+        except ValueError:
+            # Here the line was not a number, we check the name
+            if f.lower() in lat_candidates and not lat_found:
+                headers[i] = 'lat'
+                lat_found  = True
+
+            if f.lower() in lng_candidates and not lng_found:
+                headers[i] = 'lng'
+                lng_found  = True
+
+        else:
+            if val == int(val):
+                # Round values are improbable as lat/lng
+                continue
+
+            if -90 < val < 90 and not lat_found:
+                # latitude candidate
+                headers[i] = 'lat'
+                lat_found  = True
+
+            elif -180 < val < 180 and not lng_found:
+                # longitude candidate
+                headers[i] = 'lng'
+                lng_found  = True
+
+    return headers
+
+
+def guess_indexes(headers, s_row):
+    '''Heuristic to guess indexes from headers and first row.
+    '''
+    discarded = set(['lat', 'lng'])
+
+    for h, v in zip(headers, s_row):
+
+        # Skip discarded and empty values
+        if h not in discarded and v:
+            # We test if the value is a float
+            try:
+                val = float(v)
+            except ValueError:
+                return h
+            else:
+                # Round values are possible as indexes
+                if val == int(val):
+                    return h
+
+    return headers[0]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -402,10 +505,6 @@ def warn(name, *args):
     if name == 'key':
         print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
-
-    if name == 'fields_not_found':
-        print >> stderr, '/!\ Could not find fields %s in headers %s.' % \
-                (args[0], args[1])
 
 
 def error(name, *args):
@@ -473,9 +572,10 @@ def handle_args():
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "name". Give unadmissible property and available
+                        Default is "name" if available, otherwise "__key__".
+                        Give unadmissible property and available
                         values will be displayed.''',
-        default = 'name')
+        default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
         help = '''Specify a min limit for fuzzy searches, default is 0.80.
@@ -540,11 +640,12 @@ def handle_args():
                         default is "S".''',
         default = 'S')
 
-    parser.add_argument('-w', '--without-grid',
+    parser.add_argument('-g', '--gridless',
         help = '''When performing a geographical search, a geographical index is used.
-                        This may lead to inaccurate results in some (rare) cases. Adding this
-                        option will disable the index, and browse the full data set to
-                        look for the results.''',
+                        This may lead to inaccurate results in some (rare) case when using
+                        --closest searches (--near searches are never impacted).
+                        Adding this option will disable the index, and browse the full
+                        data set to look for the results.''',
         action = 'store_true')
 
     parser.add_argument('-o', '--omit',
@@ -572,9 +673,10 @@ def handle_args():
         help = '''Specify metadata for stdin data input.
                         3 optional values: separator, headers, indexes.
                         Multiple fields may be specified with "/" separator.
-                        Default headers will use alphabet. Use __head__ as header value to
+                        Default headers will use alphabet, and try to sniff lat/lng.
+                        Use __head__ as header value to
                         burn the first line to define the headers.
-                        Default indexes will take the first field.
+                        Default indexes will take the first plausible field.
                         Default separator is smart :).
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
@@ -597,14 +699,15 @@ def handle_args():
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
-                        the script will display the data on a mapand exit.''',
+                        the script will display the data on a map and exit.''',
         action = 'store_true')
 
     parser.add_argument('-M', '--map-label',
-        help = '''Change the label on map points. Default is __key__.''',
-        default = '__key__')
+        help = '''Change the label on map points. Default is "name" if available,
+                        otherwise "__key__".''',
+        default = None)
 
-    parser.add_argument('-v', '--verbose',
+    parser.add_argument('-w', '--warnings',
         help = '''Provides additional information from GeoBase loading.''',
         action = 'store_true')
 
@@ -613,7 +716,7 @@ def handle_args():
                         the script will try to update some source files.''',
         action = 'store_true')
 
-    parser.add_argument('-V', '--version',
+    parser.add_argument('-v', '--version',
         help = '''Display version information.''',
         action = 'store_true')
 
@@ -637,16 +740,24 @@ def main():
     #
     # ARGUMENTS
     #
-    with_grid = not args['without_grid']
+    with_grid = not args['gridless']
     verbose   = not args['quiet']
-    warnings  = args['verbose']
+    warnings  = args['warnings']
+
+    # Defining frontend
+    if args['map']:
+        frontend = 'map'
+    elif not args['quiet']:
+        frontend = 'terminal'
+    else:
+        frontend = 'quiet'
 
     if args['limit'] is None:
         # Limit was not set by user
-        if args['quiet']:
-            limit = None
-        else:
+        if frontend == 'terminal':
             limit = DEFAULT_NB_COL
+        else:
+            limit = None
 
     else:
         limit = int(args['limit'])
@@ -681,17 +792,21 @@ def main():
         except StopIteration:
             error('empty_stdin')
 
-        source    = chain([first_l], stdin)
-        delimiter = find_separator(first_l)
+        source  = chain([first_l], stdin)
+        # For sniffers, we rstrip
+        first_l = first_l.rstrip()
 
         if args['interactive'] is None:
-            headers = LETTERS[0:len(first_l.split(delimiter))]
-            indexes = LETTERS[0]
+            delimiter = guess_separator(first_l)
+            headers   = guess_headers(first_l.split(delimiter))
+            indexes   = guess_indexes(headers, first_l.split(delimiter))
         else:
             dhi = args['interactive']
 
             if len(dhi) >= 1:
                 delimiter = dhi[0]
+            else:
+                delimiter = guess_separator(first_l)
 
             if len(dhi) >= 2:
                 if dhi[1] == '__head__':
@@ -700,16 +815,16 @@ def main():
                     headers = dhi[1].split('/')
             else:
                 # Reprocessing the headers with custom delimiter
-                headers = LETTERS[0:len(first_l.split(delimiter))]
+                headers = guess_headers(first_l.split(delimiter))
 
             if len(dhi) >= 3:
                 indexes = dhi[2].split('/')
             else:
                 # Reprocessing the indexes with custom headers
-                indexes = headers[0]
+                indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
-            print 'Loading GeoBase from stdin with option: -i "%s" "%s" "%s"' % \
+            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
                     (delimiter, '/'.join(headers), '/'.join(indexes))
 
         g = GeoBase(data='feed',
@@ -727,18 +842,13 @@ def main():
     if verbose:
         after_init = datetime.now()
 
-    # Map visualization
-    if args['map']:
-        status = g.visualizeOnMap(output='data', label=args['map_label'], verbose=verbose)
 
-        if status is True:
-            # Display was successful, we exit.
-            exit(0)
-        else:
-            # Display was a failure, we try to give explanation.
-            warn('fields_not_found', ' and '.join(GeoBase.GEO_FIELDS), g.fields)
-            if verbose:
-                print '\nGoing on anyway, to help you find out what went wrong...\n'
+    # Tuning parameters
+    if args['fuzzy_property'] is None:
+        args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
+
+    if args['map_label'] is None:
+        args['map_label'] = 'name' if 'name' in g.fields else '__key__'
 
 
 
@@ -898,18 +1008,35 @@ def main():
         ref_type = 'index'
 
     # Display
-    if verbose:
+    if frontend == 'map':
+        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
+
+        if status > 0 and verbose:
+            # At least one html rendered
+            os.system('firefox %s_*.html &' % g._data)
+
+        if status < 2:
+            frontend = 'terminal'
+            res = res[:DEFAULT_NB_COL]
+
+            print '\n/!\ Map was not rendered. Switching to terminal frontend...'
+
+
+    if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
         end = datetime.now()
         print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
 
-        for warn_msg in ENV_WARNINGS:
-            print textwrap.dedent(warn_msg),
-    else:
+
+    if frontend == 'quiet':
         display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
 
+
+    if verbose:
+        for warn_msg in ENV_WARNINGS:
+            print textwrap.dedent(warn_msg),
 
 
 if __name__ == '__main__':
