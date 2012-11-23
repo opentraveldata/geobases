@@ -710,12 +710,12 @@ def main():
     warnings  = args['warnings']
 
     # Defining frontend
-    if args['quiet']:
-        frontend = 'quiet'
-    elif args['map']:
+    if args['map']:
         frontend = 'map'
-    else:
+    elif not args['quiet']:
         frontend = 'terminal'
+    else:
+        frontend = 'quiet'
 
     if args['limit'] is None:
         # Limit was not set by user
@@ -966,7 +966,7 @@ def main():
     if frontend == 'map':
         status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
 
-        if status > 0:
+        if status > 0 and verbose:
             # At least one html rendered
             system('firefox %s_*.html &' % g._data)
 
