@@ -14,7 +14,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript">
-
+<!--
 if (!String.fmt) {
     String.prototype.fmt = function() {
         var formatted = this;
@@ -26,6 +26,22 @@ if (!String.fmt) {
         return formatted;
     };
 }
+
+
+function overflow(text) {
+
+    if (typeof text === "number") {
+        return text;
+    }
+
+    if (text.length < 30) {
+        return text;
+    }
+
+    return ('' + text).slice(0, 25) + '...';
+
+}
+
 
 function initialize(jsonData) {
 
@@ -44,12 +60,26 @@ function initialize(jsonData) {
         mapOptions
     );
 
+    // Computing fields order
+    var fields = [];
+    var field;
+    for (field in jsonData[0]) {
+        if (jsonData[0].hasOwnProperty(field) && field !== '__lab__') {
+            fields.push(field);
+        }
+    }
+
+    fields.sort(function(a, b) {
+        return b.toLowerCase() < a.toLowerCase();
+    })
+
+    var f = fields.length;
     var n = jsonData.length;
 
     var best_icon = n < 100 ? 'blue_marker.png' : 'blue_point.png';
 
     var markersArray = [];
-    var i, e, latlng, marker;
+    var i, j, e, latlng, marker;
     var infowindow = new google.maps.InfoWindow();
 
     // Load the data
@@ -60,7 +90,7 @@ function initialize(jsonData) {
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
         if (isNaN(latlng.lat()) || isNaN(latlng.lng())) {
-            //console.log(e.key + ' had no position: ' + e.lat + e.lng)
+            //console.log(e.__lab__ + ' had no position: ' + e.lat + e.lng)
             continue;
         }
 
@@ -68,19 +98,23 @@ function initialize(jsonData) {
             map         : map,
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
-            title       : e.label,
+            title       : e.__lab__,
             icon        : best_icon,
             clickable   : true,
             draggable   : false
         });
 
         marker.help = ' ' +
-        '<div class="infowindow">' +
-            '<h3>{0}</h3>'.fmt(e.label) +
-            '<table cellpadding="1">' +
-                '<tr><td><i>Key</i></td><td>{0}</td></tr>'.fmt(e.key) +
-                '<tr><td><i>Lat</i></td><td>{0}</td></tr>'.fmt(e.lat) +
-                '<tr><td><i>Lng</i></td><td>{0}</td></tr>'.fmt(e.lng) +
+        '<div class="infowindow" style="max-width: 600px; max-height: 300px;">' +
+            '<h3>{0}</h3>'.fmt(e.__lab__) +
+            '<table cellpadding="1">';
+
+        for (j=0 ; j<f ; j++) {
+            field = fields[j];
+            marker.help += '<tr><td><i>{0}</i></td><td>{1}</td></tr>'.fmt(field, overflow(e[field]));
+        }
+
+        marker.help += ' ' +
             '</table>' +
         '</div>';
 
@@ -96,20 +130,20 @@ function initialize(jsonData) {
     }
 
     // Fit the bounds
-    var bounds = new google.maps.LatLngBounds();
-    var empty = true;
+    var bounds   = new google.maps.LatLngBounds();
+    var nbPoints = 0;
     var i, c;
 
     for (i=0, c=markersArray.length; i<c; i++) {
 
         if (markersArray[i].getMap() !== null) {
             bounds.extend(markersArray[i].getPosition());
-            empty = false;
+            nbPoints += 1;
         }
     }
 
-    if (! empty) {
-        // If bound is empty, we avoid a big
+    if (nbPoints >= 2) {
+        // If bound is nbPoints, we avoid a big
         // drift to the pacific ocean :)
         map.fitBounds(bounds);
     }
@@ -134,7 +168,7 @@ $(document).ready(function() {
     );
 
 });
-
+-->
         </script>
     </body>
 </html>
