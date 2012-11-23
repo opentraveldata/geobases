@@ -51,6 +51,10 @@ function overflow(text) {
 
 function initialize(jsonData) {
 
+    if (jsonData.length === 0){
+        alert('No data available.');
+        return;
+    }
 
     // Computing fields order
     var fields = [];
