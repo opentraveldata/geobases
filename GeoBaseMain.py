@@ -367,10 +367,11 @@ def guess_separator(row):
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
 
-    ## This does not work here since csv.reader will
-    ## not accept separators with several characters, too bad
-    #for alternates in set([' ' * 4, ' ' * 8]):
-    #    counters[alternates] = row.count(alternates)
+    # Testing spaces from higher to lower, break on biggest match
+    for alternate in [' ' * i for i in xrange(16, 3, -1)]:
+        if row.count(alternate):
+            counters[alternate] = row.count(alternate)
+            break
 
     if counters:
         return max(counters.iteritems(), key=lambda x: x[1])[0]
