@@ -6,7 +6,8 @@ This module is a launcher for GeoBase.
 '''
 
 from sys import stdin, stdout, stderr
-from os import getenv, popen, system
+import os
+from os import getenv, popen, system, environ
 
 import argparse
 import pkg_resources
@@ -88,10 +89,12 @@ if ENV_WARNINGS:
     """)
 
 
-def getTermSize():
+def getObsoleteTermSize():
     '''
     This gives terminal size information using external
     command stty.
+    This function is not great since where stdin is used, it
+    raises an error.
     '''
     size = popen('stty size 2>/dev/null', 'r').read()
 
@@ -100,6 +103,36 @@ def getTermSize():
 
     return tuple(int(d) for d in size.split())
 
+
+def getTermSize():
+    '''
+    This gives terminal size information.
+    '''
+    env = environ
+
+    def ioctl_GWINSZ(fd):
+        '''Read terminal size.'''
+        try:
+            import fcntl, termios, struct
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except ImportError:
+            return
+        return cr
+
+    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            cr = ioctl_GWINSZ(fd)
+            os.close(fd)
+        except IOError:
+            pass
+
+    if not cr:
+        cr = (env.get('LINES', 25), env.get('COLUMNS', 80))
+
+    return int(cr[0]), int(cr[1])
 
 
 class RotatingColors(object):
