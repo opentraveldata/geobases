@@ -579,19 +579,6 @@ class GeoBase(object):
 
 
 
-    def iterLocations(self):
-        '''
-        Returns all positions.
-
-        :returns: a list of all (key, lat, lng) in the database
-
-        >>> list(geo_a.iterLocations())
-        [('AGN', (57.50..., -134.585...)), ('AGM', (65...))]
-        '''
-        return ( (key, self.getLocation(key)) for key in self )
-
-
-
     def hasDuplicates(self, key):
         '''Tell if a key has duplicates.
 
