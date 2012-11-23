@@ -105,7 +105,7 @@ function initialize(jsonData) {
         });
 
         marker.help = ' ' +
-        '<div class="infowindow" style="width: 450px; max-height: 250px;">' +
+        '<div class="infowindow" style="min-width:400px; max-height:300px; overflow-y:auto;">' +
             '<h3>{0}</h3>'.fmt(e.__lab__) +
             '<table cellpadding="1">';
 
