@@ -1392,12 +1392,22 @@ class GeoBase(object):
             if lat_lng is None:
                 lat_lng = '?', '?'
 
-            data.append({
-                'key'   : key,
-                'label' : self.get(key, label),
-                'lat'   : lat_lng[0],
-                'lng'   : lat_lng[1]
-            })
+            elem = {
+                '__key__' : key,
+                '__lab__' : self.get(key, label),
+                'lat'     : lat_lng[0],
+                'lng'     : lat_lng[1]
+            }
+
+            for field in self.fields:
+                # Keeping only important fields
+                if not str(field).startswith('__') and \
+                   not str(field).endswith('@raw') and \
+                   field not in elem:
+
+                    elem[field] = str(self.get(key, field))
+
+            data.append(elem)
 
         # Dump the json geocodes
         json_name = '%s.json' % output
