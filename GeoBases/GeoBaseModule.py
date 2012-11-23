@@ -566,9 +566,14 @@ class GeoBase(object):
 
         except ValueError:
             # Decode geocode, if error, returns None
-            # Note that TypeError would mean that the input
-            # type was not even a string, probably NoneType
             return None
+
+        except KeyError:
+            # Probably means that there is not geocode support
+            # But could be that key is unkwown
+            return None
+        # Note that TypeError would mean that the input
+        # type was not even a string, probably NoneType
         else:
             return loc
 
@@ -1408,7 +1413,7 @@ class GeoBase(object):
 
         for key in from_keys:
 
-            lat_lng = self.getLocation(key) if geo_support else None
+            lat_lng = self.getLocation(key)
 
             if lat_lng is None:
                 lat_lng = '?', '?'
