@@ -360,6 +360,7 @@ def guess_separator(row):
     '''
     discarded  = set([
         '#', # this is for comments
+        '_', # this is for spaces
         ' ', # spaces are not usually separator, unless we find no other
         '"', # this is for quoting
     ])
@@ -757,7 +758,9 @@ def main():
         except StopIteration:
             error('empty_stdin')
 
-        source = chain([first_l], stdin)
+        source  = chain([first_l], stdin)
+        # For sniffers, we rstrip
+        first_l = first_l.rstrip()
 
         if args['interactive'] is None:
             delimiter = guess_separator(first_l)
