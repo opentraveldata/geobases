@@ -395,11 +395,11 @@ def guess_headers(s_row):
             val = float(f)
         except ValueError:
             # Here the line was not a number, we check the name
-            if f in lat_candidates and not lat_found:
+            if f.lower() in lat_candidates and not lat_found:
                 headers[i] = 'lat'
                 lat_found  = True
 
-            if f in lng_candidates and not lng_found:
+            if f.lower() in lng_candidates and not lng_found:
                 headers[i] = 'lng'
                 lng_found  = True
 
