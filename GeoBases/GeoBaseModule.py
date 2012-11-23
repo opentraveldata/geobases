@@ -354,6 +354,29 @@ class GeoBase(object):
         return data
 
 
+    def _configReader(self, **csv_opt):
+        '''Manually configure the reader, to bypass the limitations of csv.reader.
+
+        '''
+        delimiter = csv_opt['delimiter']
+        #quotechar = csv_opt['quotechar']
+
+        if len(delimiter) == 1:
+            return lambda source_fl : csv.reader(source_fl, **csv_opt)
+
+        if self._verbose:
+            print '/!\ Delimiter "%s" was not 1-character.' % delimiter
+            print '/!\ Fallback on custom reader, but quoting is disabled.'
+
+        def _reader(source_fl):
+            '''Custom reader supporting multiple characters split.
+            '''
+            for row in source_fl:
+                yield row.rstrip('\r\n').split(delimiter)
+
+        return _reader
+
+
     def _loadFile(self, source_fl):
         '''Load the file and feed the self._things.
 
@@ -377,7 +400,9 @@ class GeoBase(object):
             'quotechar' : self._quotechar
         }
 
-        for line_nb, row in enumerate(csv.reader(source_fl, **csv_opt), start=1):
+        _reader = self._configReader(**csv_opt)
+
+        for line_nb, row in enumerate(_reader(source_fl), start=1):
 
             if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
                 print '%-10s lines loaded so far' % line_nb
