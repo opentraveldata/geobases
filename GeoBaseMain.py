@@ -7,7 +7,6 @@ This module is a launcher for GeoBase.
 
 from sys import stdin, stdout, stderr
 import os
-from os import getenv, popen, system, environ
 
 import argparse
 import pkg_resources
@@ -31,7 +30,7 @@ DEFAULT_NB_COL   = 5
 MIN_CHAR_COL     = 20
 MAX_CHAR_COL     = 40
 ENV_WARNINGS     = []
-BACKGROUND_COLOR = getenv('BACKGROUND_COLOR', None) # 'white'
+BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
 
 if BACKGROUND_COLOR not in ['black', 'white']:
     ENV_WARNINGS.append("""
@@ -52,7 +51,7 @@ def checkPath(command):
     '''
     This checks if a command is in the PATH.
     '''
-    path = popen('which %s 2> /dev/null' % command, 'r').read()
+    path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
     if path:
         return True
@@ -96,7 +95,7 @@ def getObsoleteTermSize():
     This function is not great since where stdin is used, it
     raises an error.
     '''
-    size = popen('stty size 2>/dev/null', 'r').read()
+    size = os.popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
         return (80, 160)
@@ -108,14 +107,14 @@ def getTermSize():
     '''
     This gives terminal size information.
     '''
-    env = environ
+    env = os.environ
 
     def ioctl_GWINSZ(fd):
         '''Read terminal size.'''
         try:
             import fcntl, termios, struct
             cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
-        except ImportError:
+        except IOError:
             return
         return cr
 
@@ -130,7 +129,7 @@ def getTermSize():
             pass
 
     if not cr:
-        cr = (env.get('LINES', 25), env.get('COLUMNS', 80))
+        cr = env.get('LINES', 25), env.get('COLUMNS', 80)
 
     return int(cr[0]), int(cr[1])
 
@@ -1005,7 +1004,7 @@ def main():
 
         if status > 0 and verbose:
             # At least one html rendered
-            system('firefox %s_*.html &' % g._data)
+            os.system('firefox %s_*.html &' % g._data)
 
         if status < 2:
             frontend = 'terminal'
