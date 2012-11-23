@@ -58,7 +58,7 @@ except ImportError:
 
 setup(
     name = 'GeoBases3K',
-    version = '3.39.0',
+    version = '3.40.0',
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
@@ -96,6 +96,7 @@ setup(
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
             "MapAssets/*",
+            "TablesAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.txt",
             "DataSources/*/*/*.csv",
@@ -106,9 +107,10 @@ setup(
     #    'GeoBases/DataSources/CheckDataUpdates.sh'
     #],
     data_files = [
-        ('test', [
-            'test/test_GeoBases.py'
-        ]),
+        # Tests should not be exported
+        #('test', [
+        #    'test/test_GeoBases.py'
+        #]),
         # Will create dir if needed
         (op.join(getenv('HOME'), '.zsh/completion/'), [
             'completion/_GeoBase'

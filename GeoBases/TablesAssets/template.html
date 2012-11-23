@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="{{file_name}}" content="{{file_name}}" />
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
+        <title>Table of "{{file_name}}"</title>
+    </head>
+
+    <body>
+        <div id="canvas" style="width:1000px; height:700px">
+            <table>
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+<!--
+if (!String.fmt) {
+    String.prototype.fmt = function() {
+        var formatted = this;
+        var i;
+        for (i=0; i<arguments.length; i++) {
+            var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+            formatted = formatted.replace(regexp, arguments[i]);
+        }
+        return formatted;
+    };
+}
+
+
+function overflow(text) {
+
+    if (typeof text === "number") {
+        return text;
+    }
+
+    if (text.length < 30) {
+        return text;
+    }
+
+    return ('' + text).slice(0, 25) + '...';
+
+}
+
+
+function initialize(jsonData) {
+
+
+    // Computing fields order
+    var fields = [];
+    var field;
+    for (field in jsonData[0]) {
+        if (jsonData[0].hasOwnProperty(field) && field !== '__lab__') {
+            fields.push(field);
+        }
+    }
+
+    fields.sort(function(a, b) {
+        return b.toLowerCase() < a.toLowerCase();
+    })
+
+    var f = fields.length;
+    var n = jsonData.length;
+
+    var i, j, e;
+    var row = '<tr>';
+
+    for (j=0 ; j<f ; j++) {
+        row += '<td><i>{0}</i></td>'.fmt(fields[j]);
+    }
+
+    row += '</tr>';
+
+    $('#canvas table thead').append(row);
+
+    // Load the data
+    for (i=0 ; i<n ; i++) {
+
+        e = jsonData[i];
+
+        row = '<tr style="height:25px;">';
+
+        for (j=0 ; j<f ; j++) {
+            field = fields[j];
+            row += '<td>{0}</td>'.fmt(overflow(e[field]));
+        }
+
+        row += '</tr>';
+
+        $('#canvas table tbody').append(row);
+
+    }
+
+    $('#canvas table').dataTable({
+        /* Define where objects are displayed
+           f: filtering input
+           i: general information
+           t: table*/
+        /* Define number of results displayed */
+        "iDisplayLength": 20,
+        /* Define the dropdown for results pagination */
+        "aLengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    });
+
+}
+
+$(document).ready(function() {
+
+    $("#canvas").css({
+        "height": $(window).height()*0.90
+    });
+
+    $("#canvas").css({
+        "width": $(window).width()*0.99
+    });
+
+    $.getJSON(
+        '{{json_file}}',
+        function(data){
+            initialize(data);
+        }
+    );
+
+});
+-->
+        </script>
+    </body>
+</html>
+

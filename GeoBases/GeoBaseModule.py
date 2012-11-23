@@ -104,11 +104,30 @@ class GeoBase(object):
     LNG_FIELD  = 'lng'
     GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
-    # Default field on which fuzzy search are performed
-    DEFAULT_FUZZY = 'name'
-
     # Loading indicator
     NB_LINES_STEP = 100000
+
+    # Assets for map and tables
+    ASSETS = {
+        'map' : {
+            'template' : {
+                # source : v_target
+                local_path(__file__, 'MapAssets/template.html') : '%s_map.html',
+            },
+            'static' : {
+                # source : target
+                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
+                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
+            }
+        },
+        'table' : {
+            'template' : {
+                # source : v_target
+                local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
+            },
+            'static' : {}
+        }
+    }
 
 
     @staticmethod
@@ -332,6 +351,29 @@ class GeoBase(object):
         return data
 
 
+    def _configReader(self, **csv_opt):
+        '''Manually configure the reader, to bypass the limitations of csv.reader.
+
+        '''
+        delimiter = csv_opt['delimiter']
+        #quotechar = csv_opt['quotechar']
+
+        if len(delimiter) == 1:
+            return lambda source_fl : csv.reader(source_fl, **csv_opt)
+
+        if self._verbose:
+            print('/!\ Delimiter "%s" was not 1-character.' % delimiter)
+            print('/!\ Fallback on custom reader, but quoting is disabled.')
+
+        def _reader(source_fl):
+            '''Custom reader supporting multiple characters split.
+            '''
+            for row in source_fl:
+                yield row.rstrip('\r\n').split(delimiter)
+
+        return _reader
+
+
     def _loadFile(self, source_fl):
         '''Load the file and feed the self._things.
 
@@ -355,7 +397,9 @@ class GeoBase(object):
             'quotechar' : self._quotechar
         }
 
-        for line_nb, row in enumerate(csv.reader(source_fl, **csv_opt), start=1):
+        _reader = self._configReader(**csv_opt)
+
+        for line_nb, row in enumerate(_reader(source_fl), start=1):
 
             if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
                 print('%-10s lines loaded so far' % line_nb)
@@ -519,24 +563,16 @@ class GeoBase(object):
 
         except ValueError:
             # Decode geocode, if error, returns None
-            # Note that TypeError would mean that the input
-            # type was not even a string, probably NoneType
             return None
+
+        except KeyError:
+            # Probably means that there is not geocode support
+            # But could be that key is unkwown
+            return None
+        # Note that TypeError would mean that the input
+        # type was not even a string, probably NoneType
         else:
             return loc
-
-
-
-    def iterLocations(self):
-        '''
-        Returns all positions.
-
-        :returns: a list of all (key, lat, lng) in the database
-
-        >>> list(geo_a.iterLocations())
-        [('AGN', (57.50..., -134.585...)), ('AGM', (65...))]
-        '''
-        return ( (key, self.getLocation(key)) for key in self )
 
 
 
@@ -961,7 +997,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None):
         '''
         We get to the cool stuff.
 
@@ -1002,7 +1038,6 @@ class GeoBase(object):
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
         []
         '''
-
         if from_keys is None:
             # iter(self), since __iter__ is defined is equivalent to
             # self._things.iterkeys()
@@ -1019,7 +1054,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field=DEFAULT_FUZZY, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         '''
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -1048,7 +1083,6 @@ class GeoBase(object):
         >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         '''
-
         if from_keys is None:
             from_keys = iter(self)
 
@@ -1077,7 +1111,7 @@ class GeoBase(object):
 
     def fuzzyGetCached(self,
                        fuzzy_value,
-                       field=DEFAULT_FUZZY,
+                       field,
                        approximate=None,
                        min_match=0.75,
                        verbose=True,
@@ -1113,7 +1147,6 @@ class GeoBase(object):
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         [(0.5, 'Biased result')]
         '''
-
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
@@ -1323,41 +1356,62 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__', verbose=True):
-        '''Create map. Returns success code.
+    def visualizeOnMap(self, output='example', label='__key__', from_keys=None, verbose=True):
+        '''Creates map.
+
+        Returns success code, number of templates realized.
         '''
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
 
-        if not self.hasGeoSupport():
+        if self.hasGeoSupport():
+            geo_support = True
+        else:
+            geo_support = False
+
             if verbose:
-                print('/!\ No geocode support, could not visualize...')
-            return False
+                print('/!\ Could not find fields %s in headers %s.' % \
+                        (' and '.join(GeoBase.GEO_FIELDS), self.fields))
 
         if label not in self.fields:
             if verbose:
                 print('/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields))
-            return False
+            return 0
 
+        if from_keys is None:
+            from_keys = iter(self)
+
+        # Storing json data
         data = []
 
-        for key in self:
+        for key in from_keys:
 
             lat_lng = self.getLocation(key)
 
-            if lat_lng is not None:
-                data.append({
-                    'name'  : self.get(key, label),
-                    'lat'   : lat_lng[0],
-                    'lng'   : lat_lng[1]
-                })
+            if lat_lng is None:
+                lat_lng = '?', '?'
 
-        # Output names
-        json_name = '%s.json' % output
-        html_name = '%s.html' % output
+            elem = {
+                '__key__' : key,
+                '__lab__' : self.get(key, label),
+                'lat'     : lat_lng[0],
+                'lng'     : lat_lng[1]
+            }
+
+            for field in self.fields:
+                # Keeping only important fields
+                if not str(field).startswith('__') and \
+                   not str(field).endswith('@raw') and \
+                   field not in elem:
+
+                    elem[field] = str(self.get(key, field))
+
+            data.append(elem)
 
         # Dump the json geocodes
+        json_name = '%s.json' % output
+
         with open(json_name, 'w') as out:
             out.write(json.dumps(data))
 
@@ -1365,38 +1419,48 @@ class GeoBase(object):
             print('Dumped %s' % json_name)
 
         # Custom the template to connect to the json data
-        with open(local_path(__file__, 'MapAssets/template.html')) as temp:
+        tmp_template = []
+        tmp_static   = []
 
-            with open(html_name, 'w') as out:
+        for name, assets in GeoBase.ASSETS.items():
 
-                for row in temp:
-                    row = row.replace('{{file_name}}', output.capitalize())
-                    row = row.replace('{{json_file}}', json_name)
+            # We do not render the map template  if not geocodes
+            if name == 'map' and not geo_support:
+                continue
 
-                    out.write(row)
+            for template, v_target in assets['template'].items():
+                target = v_target % output
 
-        if verbose:
-            print('Dumped %s' % html_name)
+                with open(template) as temp:
+                    with open(target, 'w') as out:
 
-        # Dump assets
-        assets = [
-            local_path(__file__, 'MapAssets/blue_point.png'),
-            local_path(__file__, 'MapAssets/blue_marker.png')
-        ]
+                        for row in temp:
+                            row = row.replace('{{file_name}}', output)
+                            row = row.replace('{{json_file}}', json_name)
+                            out.write(row)
 
-        for a in assets:
-            copy(a, '.')
+                tmp_template.append(target)
+                if verbose:
+                    print('Dumped %s' % target)
 
-            if verbose:
-                print('Copied %s' % op.basename(a))
+            for source, target in assets['static'].items():
+
+                copy(source, target)
+
+                tmp_static.append(target)
+                if verbose:
+                    print('Copied %s' % target)
 
         if verbose:
             print('\n* Now you may use your browser to visualize:')
-            print('firefox %s' % html_name)
-            print('\n* If you want to clean the temporary files:')
-            print('rm %s %s %s' % (html_name, json_name, ' '.join(op.basename(a) for a in assets)))
+            print('firefox %s &' % ' '.join(tmp_template))
 
-        return True
+            print('\n* If you want to clean the temporary files:')
+            print('rm %s %s' % (json_name, ' '.join(tmp_static + tmp_template)))
+
+        # This is the numbered of templates rendered
+        return len(tmp_template)
+
 
 
 def ext_split(value, split):

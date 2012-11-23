@@ -24,7 +24,7 @@ _arguments \
  "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit (nb):$C_CLOSEST" \
  "(-t --trep)"{-t,--trep}"[OpenTrep mode]:value:()" \
  "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
- "(-w --without-grid)"{-w,--without-grid}"[Disabling grid for nearby searches]" \
+ "(-g --gridless)"{-g,--gridless}"[Disabling grid for nearby searches]" \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
@@ -34,9 +34,9 @@ _arguments \
  "(-Q --quiet-separator)"{-Q,--quiet-separator}"[Custom separator for quiet mode]:separator:()" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
  "(-M --map-label)"{-M,--map-label}"[Custom label for map points]:label:$F_FIELDS" \
- "(-v --verbose)"{-v,--verbose}"[Provide additional informations from data loading]" \
+ "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
- "(-V --version)"{-V,--version}"[Display version information]" \
+ "(-v --version)"{-v,--version}"[Display version information]" \
  "*:keys:()"
 
 # Magic modeline option lo use zsh coloration in vim
