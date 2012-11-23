@@ -103,9 +103,10 @@ setup(
     #    'GeoBases/DataSources/CheckDataUpdates.sh'
     #],
     data_files = [
-        ('test', [
-            'test/test_GeoBases.py'
-        ]),
+        # Tests should not be exported
+        #('test', [
+        #    'test/test_GeoBases.py'
+        #]),
         # Will create dir if needed
         (op.join(getenv('HOME'), '.zsh/completion/'), [
             'completion/_GeoBase'
