@@ -60,6 +60,10 @@ function initialize(jsonData) {
         mapOptions
     );
 
+    if (jsonData.length === 0){
+        return;
+    }
+
     // Computing fields order
     var fields = [];
     var field;
