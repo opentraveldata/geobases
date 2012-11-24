@@ -26,12 +26,22 @@ EXTRAS_REQUIRE = {
     'OpenTrep': ['OpenTrepWrapper>=0.6']
 }
 
+DEPENDENCY_LINKS = [
+    # That one is a fork supporting Python 3
+    'https://github.com/wor/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz',
+    #'http://github.com/miohtama/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz'
+]
+DEPENDENCY_LINKS_EXTRAS = {
+    'OpenTrep' : ['http://oridist.orinet/python/']
+}
+
 # Managing OpenTrep dependency
 WITH_OPENTREP = getenv('WITH_OPENTREP', None)
 
 if WITH_OPENTREP == '1':
     # Forcing OpenTrepWrapper support
     INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
+    DEPENDENCY_LINKS.extend(DEPENDENCY_LINKS_EXTRAS['OpenTrep'])
 
     print('/!\ Adding "%s" to mandatory dependencies' % \
             str(EXTRAS_REQUIRE['OpenTrep']), file=stderr)
@@ -79,13 +89,7 @@ setup(
     py_modules = [
         'GeoBaseMain'
     ],
-    dependency_links = [
-        'http://oridist.orinet/python/',
-        #
-        # That one is a fork supporting Python 3
-        'https://github.com/wor/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz',
-        #'http://github.com/miohtama/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz'
-    ],
+    dependency_links = DEPENDENCY_LINKS,
     install_requires = INSTALL_REQUIRES,
     extras_require   = EXTRAS_REQUIRE,
     package_dir = {
