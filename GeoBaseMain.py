@@ -22,29 +22,8 @@ import colorama
 # Private
 from GeoBases import GeoBase
 
-
-# Global defaults
+# Global default
 LETTERS = tuple('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-
-DEFAULT_NB_COL   = 5
-MIN_CHAR_COL     = 20
-MAX_CHAR_COL     = 40
-ENV_WARNINGS     = []
-BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
-
-if BACKGROUND_COLOR not in ['black', 'white']:
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    $BACKGROUND_COLOR environment variable not properly set.             *
-    Accepted values are 'black' and 'white'. Using default 'black' here. *
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
-                                                                         *
-        export BACKGROUND_COLOR=black # or white                         *
-                                                                         *
-    *************************************************************** README
-    """)
-
-    BACKGROUND_COLOR = 'black'
 
 
 def checkPath(command):
@@ -57,35 +36,6 @@ def checkPath(command):
         return True
     else:
         return False
-
-
-if not checkPath('GeoBase'):
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    "GeoBase" does not seem to be in your $PATH.                         *
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
-                                                                         *
-        export PATH=$PATH:$HOME/.local/bin                               *
-                                                                         *
-    *************************************************************** README
-    """)
-
-
-if ENV_WARNINGS:
-    # Assume the user did not read the wiki :D
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    By the way, since you probably did not read the documentation :D,    *
-    you should also add this for the completion to work with zsh.        *
-    You're using zsh right o_O?                                          *
-                                                                         *
-        # Add custom completion scripts                                  *
-        fpath=(~/.zsh/completion $fpath)                                 *
-        autoload -U compinit                                             *
-        compinit                                                         *
-                                                                         *
-    *************************************************************** README
-    """)
 
 
 def getObsoleteTermSize():
@@ -545,22 +495,90 @@ def error(name, *args):
     exit(1)
 
 
+#######
+#
+#  MAIN
+#
+#######
+
+# Global defaults
+DEF_BASE          = 'ori_por'
+DEF_FUZZY_LIMIT   = 0.70
+DEF_NEAR_LIMIT    = 50.
+DEF_CLOSEST_LIMIT = 10
+DEF_TREP_FORMAT   = 'S'
+DEF_QUIET_SEP     = '^'
+
+# Terminal width defaults
+DEF_CHAR_COL = 25
+MIN_CHAR_COL = 3
+MAX_CHAR_COL = 40
+DEF_NUM_COL  = int(getTermSize()[1] / float(DEF_CHAR_COL)) - 1
+
+ENV_WARNINGS = []
+
+BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
+
+if BACKGROUND_COLOR not in ['black', 'white']:
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    $BACKGROUND_COLOR environment variable not properly set.             *
+    Accepted values are 'black' and 'white'. Using default 'black' here. *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export BACKGROUND_COLOR=black # or white                         *
+                                                                         *
+    *************************************************************** README
+    """)
+
+    BACKGROUND_COLOR = 'black'
+
+
+if not checkPath('GeoBase'):
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    "GeoBase" does not seem to be in your $PATH.                         *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export PATH=$PATH:$HOME/.local/bin                               *
+                                                                         *
+    *************************************************************** README
+    """)
+
+
+if ENV_WARNINGS:
+    # Assume the user did not read the wiki :D
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    By the way, since you probably did not read the documentation :D,    *
+    you should also add this for the completion to work with zsh.        *
+    You're using zsh right o_O?                                          *
+                                                                         *
+        # Add custom completion scripts                                  *
+        fpath=(~/.zsh/completion $fpath)                                 *
+        autoload -U compinit                                             *
+        compinit                                                         *
+                                                                         *
+    *************************************************************** README
+    """)
+
+
 def handle_args():
     '''Command line parsing.
     '''
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
-    parser.epilog = 'Example: python %s ORY CDG' % parser.prog
+    parser.epilog = 'Example: %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
         help = 'Main argument (key, name, geocode depending on search mode)',
         nargs = '*')
 
     parser.add_argument('-b', '--base',
-        help = '''Choose a different base, default is "ori_por". Also available are
+        help = '''Choose a different base, default is "%s". Also available are
                         stations, airports, countries... Give unadmissible base
-                        and available values will be displayed.''',
-        default = 'ori_por')
+                        and available values will be displayed.''' % DEF_BASE,
+        default = DEF_BASE)
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
@@ -578,9 +596,9 @@ def handle_args():
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
-        help = '''Specify a min limit for fuzzy searches, default is 0.80.
-                        This is the Levenshtein ratio of the two strings.''',
-        default = 0.85,
+        help = '''Specify a min limit for fuzzy searches, default is %s.
+                        This is the Levenshtein ratio of the two strings.''' % DEF_FUZZY_LIMIT,
+        default = DEF_FUZZY_LIMIT,
         type = float)
 
     parser.add_argument('-e', '--exact',
@@ -595,7 +613,7 @@ def handle_args():
         help = '''When performing an exact search, specify the property to be chosen.
                         Default is "__key__". Give unadmissible property and available
                         values will be displayed.''',
-        default = '__key__')
+        default = None)
 
     parser.add_argument('-r', '--reverse',
         help = '''When possible, reverse the logic of the filter. Currently
@@ -612,8 +630,8 @@ def handle_args():
 
     parser.add_argument('-N', '--near-limit',
         help = '''Specify a radius in km when performing geographical
-                        searches with --near. Default is 50 km.''',
-        default = 50.,
+                        searches with --near. Default is %s km.''' % DEF_NEAR_LIMIT,
+        default = DEF_NEAR_LIMIT,
         type = float)
 
     parser.add_argument('-c', '--closest',
@@ -626,8 +644,8 @@ def handle_args():
 
     parser.add_argument('-C', '--closest-limit',
         help = '''Specify a limit for closest search with --closest,
-                        default is 10.''',
-        default = 10,
+                        default is %s.''' % DEF_CLOSEST_LIMIT,
+        default = DEF_CLOSEST_LIMIT,
         type = int)
 
     parser.add_argument('-t', '--trep',
@@ -637,8 +655,8 @@ def handle_args():
 
     parser.add_argument('-T', '--trep-format',
         help = '''Specify a format for trep searches with --trep,
-                        default is "S".''',
-        default = 'S')
+                        default is "%s".''' % DEF_TREP_FORMAT,
+        default = DEF_TREP_FORMAT)
 
     parser.add_argument('-g', '--gridless',
         help = '''When performing a geographical search, a geographical index is used.
@@ -666,7 +684,7 @@ def handle_args():
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
-                        Default is 4, except in quiet mode where it is disabled.''',
+                        Default is %s, except in quiet mode where it is disabled.''' % DEF_NUM_COL,
         default = None)
 
     parser.add_argument('-i', '--interactive',
@@ -694,8 +712,8 @@ def handle_args():
         action = 'store_true')
 
     parser.add_argument('-Q', '--quiet-separator',
-        help = '''Custom separator in quiet mode.''',
-        default = '^')
+        help = '''Custom separator in quiet mode. Default is "%s".''' % DEF_QUIET_SEP,
+        default = DEF_QUIET_SEP)
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
@@ -755,7 +773,7 @@ def main():
     if args['limit'] is None:
         # Limit was not set by user
         if frontend == 'terminal':
-            limit = DEFAULT_NB_COL
+            limit = DEF_NUM_COL
         else:
             limit = None
 
@@ -844,6 +862,9 @@ def main():
 
 
     # Tuning parameters
+    if args['exact_property'] is None:
+        args['exact_property'] = '__key__'
+
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
@@ -1017,7 +1038,7 @@ def main():
 
         if status < 2:
             frontend = 'terminal'
-            res = res[:DEFAULT_NB_COL]
+            res = res[:DEF_NUM_COL]
 
             print '\n/!\ Map was not rendered. Switching to terminal frontend...'
 
