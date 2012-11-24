@@ -241,7 +241,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
+def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -260,7 +260,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + sep.join(str(f) for f in show_wo_omit) + '\n')
+    stdout.write('#' + lim.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -277,7 +277,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
                 else:
                     l.append(str(v))
 
-        stdout.write(sep.join(l) + '\n')
+        stdout.write(lim.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -337,13 +337,13 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def guess_separator(row):
-    '''Heuristic to guess the top level separator.
+def guess_delimiter(row):
+    '''Heuristic to guess the top level delimiter.
     '''
     discarded  = set([
         '#', # this is for comments
         '_', # this is for spaces
-        ' ', # spaces are not usually separator, unless we find no other
+        ' ', # spaces are not usually delimiter, unless we find no other
         '"', # this is for quoting
     ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
@@ -507,7 +507,7 @@ DEF_FUZZY_LIMIT   = 0.70
 DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
-DEF_QUIET_SEP     = '^'
+DEF_QUIET_LIM     = '^'
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -689,13 +689,13 @@ def handle_args():
 
     parser.add_argument('-i', '--interactive',
         help = '''Specify metadata for stdin data input.
-                        3 optional values: separator, headers, indexes.
-                        Multiple fields may be specified with "/" separator.
+                        3 optional values: delimiter, headers, indexes.
+                        Multiple fields may be specified with "/" delimiter.
                         Default headers will use alphabet, and try to sniff lat/lng.
                         Use __head__ as header value to
                         burn the first line to define the headers.
                         Default indexes will take the first plausible field.
-                        Default separator is smart :).
+                        Default delimiter is smart :).
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
@@ -711,9 +711,9 @@ def handle_args():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
-    parser.add_argument('-Q', '--quiet-separator',
-        help = '''Custom separator in quiet mode. Default is "%s".''' % DEF_QUIET_SEP,
-        default = DEF_QUIET_SEP)
+    parser.add_argument('-Q', '--quiet-delimiter',
+        help = '''Custom delimiter in quiet mode. Default is "%s".''' % DEF_QUIET_LIM,
+        default = DEF_QUIET_LIM)
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
@@ -815,7 +815,7 @@ def main():
         first_l = first_l.rstrip()
 
         if args['interactive'] is None:
-            delimiter = guess_separator(first_l)
+            delimiter = guess_delimiter(first_l)
             headers   = guess_headers(first_l.split(delimiter))
             indexes   = guess_indexes(headers, first_l.split(delimiter))
         else:
@@ -824,7 +824,7 @@ def main():
             if len(dhi) >= 1:
                 delimiter = dhi[0]
             else:
-                delimiter = guess_separator(first_l)
+                delimiter = guess_delimiter(first_l)
 
             if len(dhi) >= 2:
                 if dhi[1] == '__head__':
@@ -1052,7 +1052,7 @@ def main():
 
 
     if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_delimiter'])
 
 
     if verbose:
