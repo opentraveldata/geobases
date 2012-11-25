@@ -1011,8 +1011,15 @@ def main():
 
 
     # Keeping only "limit" first results
+    nb_res_ini = len(res)
+
     if limit is not None:
         res = res[:limit]
+
+    nb_res = len(res)
+
+    if verbose:
+        print('Keeping %s result(s) from %s initially...' % (nb_res, nb_res_ini))
 
 
     # Highlighting some rows
@@ -1045,11 +1052,11 @@ def main():
                 if not template.endswith('_table.html'):
                     to_be_launched.append(template)
                 else:
-                    if len(res) <= 2000:
+                    if nb_res <= 2000:
                         to_be_launched.append(template)
                     else:
                         print('\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
-                                (template, len(res)))
+                                (template, nb_res))
 
             if to_be_launched:
                 os.system('firefox %s &' % ' '.join(to_be_launched))
