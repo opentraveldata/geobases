@@ -8,7 +8,6 @@ This module is a launcher for GeoBase.
 from sys import stdin, stdout, stderr
 import os
 
-import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
@@ -18,6 +17,7 @@ import textwrap
 # Not in standard library
 from termcolor import colored
 import colorama
+import argparse # in standard libraray for Python >= 2.7
 
 # Private
 from GeoBases import GeoBase
@@ -1035,25 +1035,40 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
+        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), big=100, verbose=True)
 
-        if status > 0 and verbose:
-            # At least one html rendered
-            os.system('firefox %s_*.html &' % g._data)
+        if verbose:
+            # We manually launch firefox, unless we risk a crash
+            to_be_launched = []
 
-        if status < 2:
+            for template in status:
+                if not template.endswith('_table.html'):
+                    to_be_launched.append(template)
+                else:
+                    if len(res) <= 2000:
+                        to_be_launched.append(template)
+                    else:
+                        print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
+                                (template, len(res))
+
+            if to_be_launched:
+                os.system('firefox %s &' % ' '.join(to_be_launched))
+
+        if len(status) < 2:
+            # At least one html not rendered
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '\n/!\ Map was not rendered. Switching to terminal frontend...'
+            print '\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
     if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        end = datetime.now()
-        print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
-                (end - before_init, after_init - before_init, end - after_init)
+        if verbose:
+            end = datetime.now()
+            print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
+                    (end - before_init, after_init - before_init, end - after_init)
 
 
     if frontend == 'quiet':
