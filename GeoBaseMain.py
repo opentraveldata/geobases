@@ -364,7 +364,7 @@ def guess_delimiter(row):
 def generate_headers(n):
     '''Generate n headers.
     '''
-    for i in xrange(n):
+    for i in range(n):
         yield 'H%s' % i
 
 
