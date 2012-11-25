@@ -996,7 +996,7 @@ def main():
 
     if verbose:
         end = datetime.now()
-        print 'Done in (total) %s = (init) %s + (post-init) %s' % \
+        print 'Done in %s = (load) %s + (search) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
 
 
