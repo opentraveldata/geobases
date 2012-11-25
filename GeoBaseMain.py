@@ -22,8 +22,6 @@ import colorama
 # Private
 from GeoBases import GeoBase
 
-# Global default
-LETTERS = tuple('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
 
 def checkPath(command):
@@ -363,10 +361,17 @@ def guess_delimiter(row):
         return ' '
 
 
+def generate_headers(n):
+    '''Generate n headers.
+    '''
+    for i in xrange(n):
+        yield 'H%s' % i
+
+
 def guess_headers(s_row):
     '''Heuristic to guess the lat/lng fields from first row.
     '''
-    headers = list(LETTERS[0:len(s_row)])
+    headers = list(generate_headers(len(s_row)))
 
     # Name candidates for lat/lng
     lat_candidates = set(['latitude',  'lat'])
@@ -418,13 +423,13 @@ def guess_indexes(headers, s_row):
             try:
                 val = float(v)
             except ValueError:
-                return h
+                return [h]
             else:
                 # Round values are possible as indexes
                 if val == int(val):
-                    return h
+                    return [h]
 
-    return headers[0]
+    return [headers[0]]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
