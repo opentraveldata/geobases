@@ -994,6 +994,11 @@ def main():
         last = 'fuzzy'
 
 
+    if verbose:
+        end = datetime.now()
+        print 'Done in (total) %s = (init) %s + (post-init) %s' % \
+                (end - before_init, after_init - before_init, end - after_init)
+
 
     #
     # DISPLAY
@@ -1071,11 +1076,6 @@ def main():
 
     if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
-
-        if verbose:
-            end = datetime.now()
-            print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
-                    (end - before_init, after_init - before_init, end - after_init)
 
 
     if frontend == 'quiet':
