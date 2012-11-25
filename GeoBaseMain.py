@@ -423,13 +423,13 @@ def guess_indexes(headers, s_row):
             try:
                 val = float(v)
             except ValueError:
-                return h
+                return [h]
             else:
                 # Round values are possible as indexes
                 if val == int(val):
-                    return h
+                    return [h]
 
-    return headers[0]
+    return [headers[0]]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
