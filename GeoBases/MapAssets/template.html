@@ -162,8 +162,8 @@ function initialize(jsonData) {
     for (i=0, c=markersArray.length; i<c; i++) {
         points.push(markersArray[i].getPosition());
     }
-    points.sort(sortPointY);
-    points.sort(sortPointX);
+    //points.sort(sortPointY);
+    //points.sort(sortPointX);
 
     var hull = new google.maps.Polygon({
         paths           : points,
@@ -180,6 +180,12 @@ function initialize(jsonData) {
         } else {
             hull.setMap(null);
         }
+    });
+
+    google.maps.event.addListener(hull, 'rightclick', function() {
+        //points.sort();
+        points.sort(sortPointY);
+        points.sort(sortPointX);
     });
 
 }
