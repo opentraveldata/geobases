@@ -1356,10 +1356,10 @@ class GeoBase(object):
         return []
 
 
-    def visualizeOnMap(self, output='example', label='__key__', from_keys=None, verbose=True):
-        '''Creates map.
+    def visualize(self, output='example', label='__key__', from_keys=None, big=100, verbose=True):
+        '''Creates map and other visualizations.
 
-        Returns success code, number of templates realized.
+        Returns list of templates successfully rendered.
         '''
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
@@ -1377,7 +1377,7 @@ class GeoBase(object):
             if verbose:
                 print('/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields))
-            return 0
+            return []
 
         if from_keys is None:
             from_keys = iter(self)
@@ -1415,15 +1415,12 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps(data))
 
-        if verbose:
-            print('Dumped %s' % json_name)
-
         # Custom the template to connect to the json data
+        image = 'blue_marker.png' if len(data) < big else 'blue_point.png'
         tmp_template = []
-        tmp_static   = []
+        tmp_static   = [json_name]
 
         for name, assets in GeoBase.ASSETS.items():
-
             # We do not render the map template  if not geocodes
             if name == 'map' and not geo_support:
                 continue
@@ -1433,33 +1430,27 @@ class GeoBase(object):
 
                 with open(template) as temp:
                     with open(target, 'w') as out:
-
                         for row in temp:
                             row = row.replace('{{file_name}}', output)
                             row = row.replace('{{json_file}}', json_name)
+                            row = row.replace('{{icon}}',      image)
                             out.write(row)
 
                 tmp_template.append(target)
-                if verbose:
-                    print('Dumped %s' % target)
 
             for source, target in assets['static'].items():
-
                 copy(source, target)
-
                 tmp_static.append(target)
-                if verbose:
-                    print('Copied %s' % target)
 
         if verbose:
             print('\n* Now you may use your browser to visualize:')
             print('firefox %s &' % ' '.join(tmp_template))
 
             print('\n* If you want to clean the temporary files:')
-            print('rm %s %s' % (json_name, ' '.join(tmp_static + tmp_template)))
+            print('rm %s' % ' '.join(tmp_static + tmp_template))
 
         # This is the numbered of templates rendered
-        return len(tmp_template)
+        return tmp_template
 
 
 
