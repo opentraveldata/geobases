@@ -1051,7 +1051,8 @@ def main():
                         print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
                                 (template, len(res))
 
-            os.system('firefox %s &' % ' '.join(to_be_launched))
+            if to_be_launched:
+                os.system('firefox %s &' % ' '.join(to_be_launched))
 
         if len(status) < 2:
             # At least one html not rendered
