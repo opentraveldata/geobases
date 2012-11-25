@@ -1035,7 +1035,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=True)
+        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), big=100, verbose=True)
 
         if verbose:
             # We manually launch firefox, unless we risk a crash
