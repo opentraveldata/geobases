@@ -1035,25 +1035,37 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
+        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=True)
 
-        if status > 0 and verbose:
-            # At least one html rendered
-            os.system('firefox %s_*.html &' % g._data)
+        if verbose:
+            # We manually launch firefox, unless we risk a crash
+            for template in status:
+                if template.endswith('_table.html'):
 
-        if status < 2:
+                    if len(res) <= 2000:
+                        os.system('firefox %s &' % template)
+                    else:
+                        print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
+                                (template, len(res))
+                else:
+                    os.system('firefox %s &' % template)
+
+
+        if len(status) < 2:
+            # At least one html not rendered
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '\n/!\ Map was not rendered. Switching to terminal frontend...'
+            print '\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
     if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        end = datetime.now()
-        print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
-                (end - before_init, after_init - before_init, end - after_init)
+        if verbose:
+            end = datetime.now()
+            print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
+                    (end - before_init, after_init - before_init, end - after_init)
 
 
     if frontend == 'quiet':
