@@ -1039,17 +1039,19 @@ def main():
 
         if verbose:
             # We manually launch firefox, unless we risk a crash
-            for template in status:
-                if template.endswith('_table.html'):
+            to_be_launched = []
 
+            for template in status:
+                if not template.endswith('_table.html'):
+                    to_be_launched.append(template)
+                else:
                     if len(res) <= 2000:
-                        os.system('firefox %s &' % template)
+                        to_be_launched.append(template)
                     else:
                         print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
                                 (template, len(res))
-                else:
-                    os.system('firefox %s &' % template)
 
+            os.system('firefox %s &' % ' '.join(to_be_launched))
 
         if len(status) < 2:
             # At least one html not rendered
