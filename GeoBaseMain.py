@@ -8,7 +8,6 @@ This module is a launcher for GeoBase.
 from sys import stdin, stdout, stderr
 import os
 
-import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
@@ -18,6 +17,7 @@ import textwrap
 # Not in standard library
 from termcolor import colored
 import colorama
+import argparse # in standard libraray for Python >= 2.7
 
 # Private
 from GeoBases import GeoBase
