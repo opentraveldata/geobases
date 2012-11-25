@@ -154,38 +154,51 @@ function initialize(jsonData) {
     }
 
     // Draw hull
-    function sortPointX(a,b) { return a.lng() - b.lng(); }
-    function sortPointY(a,b) { return a.lat() - b.lat(); }
-
     var points = [];
 
     for (i=0, c=markersArray.length; i<c; i++) {
         points.push(markersArray[i].getPosition());
     }
-    //points.sort(sortPointY);
-    //points.sort(sortPointX);
 
-    var hull = new google.maps.Polygon({
-        paths           : points,
+    var hull = new google.maps.Polyline({
+        path            : points,
         strokeColor     : "green",
         strokeOpacity   : 0.8,
         strokeWeight    : 2,
         fillColor       : "green",
-        fillOpacity     : 0
+        fillOpacity     : 0,
+        geodesic        : true
     });
+
+    // Control rightclick state
+    function sortPointX(a,b) { return a.lng() - b.lng(); }
+    function sortPointY(a,b) { return a.lat() - b.lat(); }
+
+    var state = 0;
 
     google.maps.event.addListener(map, 'rightclick', function() {
-        if (hull.getMap() !== map) {
+        if (state === 0) {
+            hull.setPath(points);
             hull.setMap(map);
-        } else {
+
+        } else if (state === 1) {
+            s_points = points.slice();
+            s_points.sort(sortPointY);
+            s_points.sort(sortPointX);
+            hull.setPath(s_points);
+
+        } else if (state === 2) {
+            s_points = points.slice();
+            s_points.sort(sortPointX);
+            s_points.sort(sortPointY);
+            hull.setPath(s_points);
+
+        } else if (state === 3) {
             hull.setMap(null);
         }
-    });
 
-    google.maps.event.addListener(hull, 'rightclick', function() {
-        //points.sort();
-        points.sort(sortPointY);
-        points.sort(sortPointX);
+        state += 1;
+        state = state === 4 ? 0 : state;
     });
 
 }
