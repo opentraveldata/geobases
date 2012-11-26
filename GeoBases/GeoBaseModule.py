@@ -636,31 +636,31 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        10897
+        7055
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        10897
+        7055
         >>> len(list(geo_o.getKeysWhere([('__dad__', '')], reverse=True))) # Counting duplicated keys
-        512
+        4365
 
         Testing several conditions.
 
         >>> c_1 = [('city_code'    , 'PAR')]
         >>> c_2 = [('location_type', 'H'  )]
         >>> len(list(geo_o.getKeysWhere(c_1)))
-        17
+        18
         >>> len(list(geo_o.getKeysWhere(c_2)))
-        59
+        68
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
-        74
+        84
 
         This works too \o/.
 
         >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
         0
         >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
-        18
+        20
         '''
 
         if from_keys is None:
@@ -922,7 +922,7 @@ class GeoBase(object):
         No grid.
 
         >>> list(geo_o.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
-        [(4.80..., 'III')]
+        [(0.60..., 'NCE@1')]
         >>> list(geo_a.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
         [(5.82..., 'NCE')]
         >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3, grid=False)) # Nice
