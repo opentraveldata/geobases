@@ -3,6 +3,11 @@
 Release notes
 =============
 
+V4
+==
+
++ 4.0  : ori_por major update with correct city_names and full deduplication
+
 V3
 ==
 
