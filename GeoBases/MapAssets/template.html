@@ -80,7 +80,7 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.length;
 
-    var best_icon = n < 100 ? 'blue_marker.png' : 'blue_point.png';
+    var best_icon = '{{icon}}';
 
     var markersArray = [];
     var i, j, e, latlng, marker;
@@ -133,6 +133,7 @@ function initialize(jsonData) {
 
     }
 
+
     // Fit the bounds
     var bounds   = new google.maps.LatLngBounds();
     var nbPoints = 0;
@@ -151,6 +152,54 @@ function initialize(jsonData) {
         // drift to the pacific ocean :)
         map.fitBounds(bounds);
     }
+
+    // Draw hull
+    var points = [];
+
+    for (i=0, c=markersArray.length; i<c; i++) {
+        points.push(markersArray[i].getPosition());
+    }
+
+    var hull = new google.maps.Polyline({
+        path            : points,
+        strokeColor     : "green",
+        strokeOpacity   : 0.8,
+        strokeWeight    : 2,
+        fillColor       : "green",
+        fillOpacity     : 0,
+        geodesic        : true
+    });
+
+    // Control rightclick state
+    function sortPointX(a,b) { return a.lng() - b.lng(); }
+    function sortPointY(a,b) { return a.lat() - b.lat(); }
+
+    var state = 0;
+
+    google.maps.event.addListener(map, 'rightclick', function() {
+        if (state === 0) {
+            hull.setPath(points);
+            hull.setMap(map);
+
+        } else if (state === 1) {
+            s_points = points.slice();
+            s_points.sort(sortPointY);
+            s_points.sort(sortPointX);
+            hull.setPath(s_points);
+
+        } else if (state === 2) {
+            s_points = points.slice();
+            s_points.sort(sortPointX);
+            s_points.sort(sortPointY);
+            hull.setPath(s_points);
+
+        } else if (state === 3) {
+            hull.setMap(null);
+        }
+
+        state += 1;
+        state = state === 4 ? 0 : state;
+    });
 
 }
 

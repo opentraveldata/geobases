@@ -24,12 +24,18 @@ EXTRAS_REQUIRE = {
     'OpenTrep': ['OpenTrepWrapper>=0.6']
 }
 
+DEPENDENCY_LINKS        = []
+DEPENDENCY_LINKS_EXTRAS = {
+    'OpenTrep' : ['http://oridist.orinet/python/']
+}
+
 # Managing OpenTrep dependency
 WITH_OPENTREP = getenv('WITH_OPENTREP', None)
 
 if WITH_OPENTREP == '1':
     # Forcing OpenTrepWrapper support
     INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
+    DEPENDENCY_LINKS.extend(DEPENDENCY_LINKS_EXTRAS['OpenTrep'])
 
     print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % \
             str(EXTRAS_REQUIRE['OpenTrep'])
@@ -77,9 +83,7 @@ setup(
     py_modules = [
         'GeoBaseMain'
     ],
-    dependency_links = [
-        'http://oridist.orinet/python/'
-    ],
+    dependency_links = DEPENDENCY_LINKS,
     install_requires = INSTALL_REQUIRES,
     extras_require   = EXTRAS_REQUIRE,
     package_dir = {

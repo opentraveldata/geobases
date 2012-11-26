@@ -8,7 +8,6 @@ This module is a launcher for GeoBase.
 from sys import stdin, stdout, stderr
 import os
 
-import argparse
 import pkg_resources
 from datetime import datetime
 from math import ceil
@@ -18,33 +17,11 @@ import textwrap
 # Not in standard library
 from termcolor import colored
 import colorama
+import argparse # in standard libraray for Python >= 2.7
 
 # Private
 from GeoBases import GeoBase
 
-
-# Global defaults
-LETTERS = tuple('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-
-DEFAULT_NB_COL   = 5
-MIN_CHAR_COL     = 20
-MAX_CHAR_COL     = 40
-ENV_WARNINGS     = []
-BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
-
-if BACKGROUND_COLOR not in ['black', 'white']:
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    $BACKGROUND_COLOR environment variable not properly set.             *
-    Accepted values are 'black' and 'white'. Using default 'black' here. *
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
-                                                                         *
-        export BACKGROUND_COLOR=black # or white                         *
-                                                                         *
-    *************************************************************** README
-    """)
-
-    BACKGROUND_COLOR = 'black'
 
 
 def checkPath(command):
@@ -57,35 +34,6 @@ def checkPath(command):
         return True
     else:
         return False
-
-
-if not checkPath('GeoBase'):
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    "GeoBase" does not seem to be in your $PATH.                         *
-    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
-                                                                         *
-        export PATH=$PATH:$HOME/.local/bin                               *
-                                                                         *
-    *************************************************************** README
-    """)
-
-
-if ENV_WARNINGS:
-    # Assume the user did not read the wiki :D
-    ENV_WARNINGS.append("""
-    **********************************************************************
-    By the way, since you probably did not read the documentation :D,    *
-    you should also add this for the completion to work with zsh.        *
-    You're using zsh right o_O?                                          *
-                                                                         *
-        # Add custom completion scripts                                  *
-        fpath=(~/.zsh/completion $fpath)                                 *
-        autoload -U compinit                                             *
-        compinit                                                         *
-                                                                         *
-    *************************************************************** README
-    """)
 
 
 def getObsoleteTermSize():
@@ -291,7 +239,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
+def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -310,7 +258,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + sep.join(str(f) for f in show_wo_omit) + '\n')
+    stdout.write('#' + lim.join(str(f) for f in show_wo_omit) + '\n')
 
     for h, k in list_of_things:
         l = []
@@ -327,7 +275,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, sep):
                 else:
                     l.append(str(v))
 
-        stdout.write(sep.join(l) + '\n')
+        stdout.write(lim.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -387,13 +335,13 @@ def scan_coords(u_input, geob, verbose):
         return coords
 
 
-def guess_separator(row):
-    '''Heuristic to guess the top level separator.
+def guess_delimiter(row):
+    '''Heuristic to guess the top level delimiter.
     '''
     discarded  = set([
         '#', # this is for comments
         '_', # this is for spaces
-        ' ', # spaces are not usually separator, unless we find no other
+        ' ', # spaces are not usually delimiter, unless we find no other
         '"', # this is for quoting
     ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
@@ -413,10 +361,17 @@ def guess_separator(row):
         return ' '
 
 
+def generate_headers(n):
+    '''Generate n headers.
+    '''
+    for i in xrange(n):
+        yield 'H%s' % i
+
+
 def guess_headers(s_row):
     '''Heuristic to guess the lat/lng fields from first row.
     '''
-    headers = list(LETTERS[0:len(s_row)])
+    headers = list(generate_headers(len(s_row)))
 
     # Name candidates for lat/lng
     lat_candidates = set(['latitude',  'lat'])
@@ -468,13 +423,13 @@ def guess_indexes(headers, s_row):
             try:
                 val = float(v)
             except ValueError:
-                return h
+                return [h]
             else:
                 # Round values are possible as indexes
                 if val == int(val):
-                    return h
+                    return [h]
 
-    return headers[0]
+    return [headers[0]]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -545,22 +500,90 @@ def error(name, *args):
     exit(1)
 
 
+#######
+#
+#  MAIN
+#
+#######
+
+# Global defaults
+DEF_BASE          = 'ori_por'
+DEF_FUZZY_LIMIT   = 0.70
+DEF_NEAR_LIMIT    = 50.
+DEF_CLOSEST_LIMIT = 10
+DEF_TREP_FORMAT   = 'S'
+DEF_QUIET_LIM     = '^'
+
+# Terminal width defaults
+DEF_CHAR_COL = 25
+MIN_CHAR_COL = 3
+MAX_CHAR_COL = 40
+DEF_NUM_COL  = int(getTermSize()[1] / float(DEF_CHAR_COL)) - 1
+
+ENV_WARNINGS = []
+
+BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
+
+if BACKGROUND_COLOR not in ['black', 'white']:
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    $BACKGROUND_COLOR environment variable not properly set.             *
+    Accepted values are 'black' and 'white'. Using default 'black' here. *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export BACKGROUND_COLOR=black # or white                         *
+                                                                         *
+    *************************************************************** README
+    """)
+
+    BACKGROUND_COLOR = 'black'
+
+
+if not checkPath('GeoBase'):
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    "GeoBase" does not seem to be in your $PATH.                         *
+    To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
+                                                                         *
+        export PATH=$PATH:$HOME/.local/bin                               *
+                                                                         *
+    *************************************************************** README
+    """)
+
+
+if ENV_WARNINGS:
+    # Assume the user did not read the wiki :D
+    ENV_WARNINGS.append("""
+    **********************************************************************
+    By the way, since you probably did not read the documentation :D,    *
+    you should also add this for the completion to work with zsh.        *
+    You're using zsh right o_O?                                          *
+                                                                         *
+        # Add custom completion scripts                                  *
+        fpath=(~/.zsh/completion $fpath)                                 *
+        autoload -U compinit                                             *
+        compinit                                                         *
+                                                                         *
+    *************************************************************** README
+    """)
+
+
 def handle_args():
     '''Command line parsing.
     '''
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
-    parser.epilog = 'Example: python %s ORY CDG' % parser.prog
+    parser.epilog = 'Example: %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
         help = 'Main argument (key, name, geocode depending on search mode)',
         nargs = '*')
 
     parser.add_argument('-b', '--base',
-        help = '''Choose a different base, default is "ori_por". Also available are
+        help = '''Choose a different base, default is "%s". Also available are
                         stations, airports, countries... Give unadmissible base
-                        and available values will be displayed.''',
-        default = 'ori_por')
+                        and available values will be displayed.''' % DEF_BASE,
+        default = DEF_BASE)
 
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
@@ -578,9 +601,9 @@ def handle_args():
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
-        help = '''Specify a min limit for fuzzy searches, default is 0.80.
-                        This is the Levenshtein ratio of the two strings.''',
-        default = 0.85,
+        help = '''Specify a min limit for fuzzy searches, default is %s.
+                        This is the Levenshtein ratio of the two strings.''' % DEF_FUZZY_LIMIT,
+        default = DEF_FUZZY_LIMIT,
         type = float)
 
     parser.add_argument('-e', '--exact',
@@ -595,7 +618,7 @@ def handle_args():
         help = '''When performing an exact search, specify the property to be chosen.
                         Default is "__key__". Give unadmissible property and available
                         values will be displayed.''',
-        default = '__key__')
+        default = None)
 
     parser.add_argument('-r', '--reverse',
         help = '''When possible, reverse the logic of the filter. Currently
@@ -612,8 +635,8 @@ def handle_args():
 
     parser.add_argument('-N', '--near-limit',
         help = '''Specify a radius in km when performing geographical
-                        searches with --near. Default is 50 km.''',
-        default = 50.,
+                        searches with --near. Default is %s km.''' % DEF_NEAR_LIMIT,
+        default = DEF_NEAR_LIMIT,
         type = float)
 
     parser.add_argument('-c', '--closest',
@@ -626,8 +649,8 @@ def handle_args():
 
     parser.add_argument('-C', '--closest-limit',
         help = '''Specify a limit for closest search with --closest,
-                        default is 10.''',
-        default = 10,
+                        default is %s.''' % DEF_CLOSEST_LIMIT,
+        default = DEF_CLOSEST_LIMIT,
         type = int)
 
     parser.add_argument('-t', '--trep',
@@ -637,8 +660,8 @@ def handle_args():
 
     parser.add_argument('-T', '--trep-format',
         help = '''Specify a format for trep searches with --trep,
-                        default is "S".''',
-        default = 'S')
+                        default is "%s".''' % DEF_TREP_FORMAT,
+        default = DEF_TREP_FORMAT)
 
     parser.add_argument('-g', '--gridless',
         help = '''When performing a geographical search, a geographical index is used.
@@ -666,18 +689,18 @@ def handle_args():
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
-                        Default is 4, except in quiet mode where it is disabled.''',
+                        Default is %s, except in quiet mode where it is disabled.''' % DEF_NUM_COL,
         default = None)
 
     parser.add_argument('-i', '--interactive',
         help = '''Specify metadata for stdin data input.
-                        3 optional values: separator, headers, indexes.
-                        Multiple fields may be specified with "/" separator.
+                        3 optional values: delimiter, headers, indexes.
+                        Multiple fields may be specified with "/" delimiter.
                         Default headers will use alphabet, and try to sniff lat/lng.
                         Use __head__ as header value to
                         burn the first line to define the headers.
                         Default indexes will take the first plausible field.
-                        Default separator is smart :).
+                        Default delimiter is smart :).
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
@@ -693,9 +716,9 @@ def handle_args():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
-    parser.add_argument('-Q', '--quiet-separator',
-        help = '''Custom separator in quiet mode.''',
-        default = '^')
+    parser.add_argument('-Q', '--quiet-delimiter',
+        help = '''Custom delimiter in quiet mode. Default is "%s".''' % DEF_QUIET_LIM,
+        default = DEF_QUIET_LIM)
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
@@ -755,7 +778,7 @@ def main():
     if args['limit'] is None:
         # Limit was not set by user
         if frontend == 'terminal':
-            limit = DEFAULT_NB_COL
+            limit = DEF_NUM_COL
         else:
             limit = None
 
@@ -797,7 +820,7 @@ def main():
         first_l = first_l.rstrip()
 
         if args['interactive'] is None:
-            delimiter = guess_separator(first_l)
+            delimiter = guess_delimiter(first_l)
             headers   = guess_headers(first_l.split(delimiter))
             indexes   = guess_indexes(headers, first_l.split(delimiter))
         else:
@@ -806,7 +829,7 @@ def main():
             if len(dhi) >= 1:
                 delimiter = dhi[0]
             else:
-                delimiter = guess_separator(first_l)
+                delimiter = guess_delimiter(first_l)
 
             if len(dhi) >= 2:
                 if dhi[1] == '__head__':
@@ -844,6 +867,9 @@ def main():
 
 
     # Tuning parameters
+    if args['exact_property'] is None:
+        args['exact_property'] = '__key__'
+
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
@@ -968,6 +994,11 @@ def main():
         last = 'fuzzy'
 
 
+    if verbose:
+        end = datetime.now()
+        print 'Done in %s = (load) %s + (search) %s' % \
+                (end - before_init, after_init - before_init, end - after_init)
+
 
     #
     # DISPLAY
@@ -985,8 +1016,15 @@ def main():
 
 
     # Keeping only "limit" first results
+    nb_res_ini = len(res)
+
     if limit is not None:
         res = res[:limit]
+
+    nb_res = len(res)
+
+    if verbose:
+        print 'Keeping %s result(s) from %s initially...' % (nb_res, nb_res_ini)
 
 
     # Highlighting some rows
@@ -1009,29 +1047,39 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualizeOnMap(output=g._data, label=args['map_label'], from_keys=ex_keys(res), verbose=verbose)
+        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), big=100, verbose=True)
 
-        if status > 0 and verbose:
-            # At least one html rendered
-            os.system('firefox %s_*.html &' % g._data)
+        if verbose:
+            # We manually launch firefox, unless we risk a crash
+            to_be_launched = []
 
-        if status < 2:
+            for template in status:
+                if not template.endswith('_table.html'):
+                    to_be_launched.append(template)
+                else:
+                    if nb_res <= 2000:
+                        to_be_launched.append(template)
+                    else:
+                        print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
+                                (template, nb_res)
+
+            if to_be_launched:
+                os.system('firefox %s &' % ' '.join(to_be_launched))
+
+        if len(status) < 2:
+            # At least one html not rendered
             frontend = 'terminal'
-            res = res[:DEFAULT_NB_COL]
+            res = res[:DEF_NUM_COL]
 
-            print '\n/!\ Map was not rendered. Switching to terminal frontend...'
+            print '\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
     if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        end = datetime.now()
-        print '\nDone in (total) %s = (init) %s + (post-init) %s' % \
-                (end - before_init, after_init - before_init, end - after_init)
-
 
     if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_separator'])
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_delimiter'])
 
 
     if verbose:
