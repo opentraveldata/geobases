@@ -416,26 +416,47 @@ def guess_headers(s_row):
     return headers
 
 
+def score_index(f):
+    '''Eval likelihood of being an index.
+
+    The shorter the better, and int get a len() of 1.
+    0, 1 and floats are weird for indexes, as well as 1-letter strings.
+    '''
+    try:
+        l = len(f) if len(f) >= 2 else 10
+    except TypeError:
+        # int or float
+        if f in [0, 1] or isinstance(f, float):
+            l = 1000
+        else:
+            l = 1
+    return l
+
+
 def guess_indexes(headers, s_row):
     '''Heuristic to guess indexes from headers and first row.
     '''
-    discarded = set(['lat', 'lng'])
+    discarded  = set(['lat', 'lng'])
+    candidates = []
 
     for h, v in zip(headers, s_row):
-
         # Skip discarded and empty values
         if h not in discarded and v:
-            # We test if the value is a float
             try:
                 val = float(v)
             except ValueError:
-                return [h]
+                # not a number
+                candidates.append((h, v))
             else:
-                # Round values are possible as indexes
                 if val == int(val):
-                    return [h]
+                    candidates.append((h, int(val)))
+                else:
+                    candidates.append((h, val))
 
-    return [headers[0]]
+    if not candidates:
+        return [headers[0]]
+
+    return [ min(candidates, key=lambda x: score_index(x[1]))[0] ]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
