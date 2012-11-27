@@ -838,35 +838,29 @@ def main():
             error('empty_stdin')
 
         source  = chain([first_l], stdin)
-        # For sniffers, we rstrip
-        first_l = first_l.rstrip()
+        first_l = first_l.rstrip() # For sniffers, we rstrip
 
-        if not args['interactive']:
-            delimiter = guess_delimiter(first_l)
-            headers   = guess_headers(first_l.split(delimiter))
-            indexes   = guess_indexes(headers, first_l.split(delimiter))
+        delimiter = guess_delimiter(first_l)
+        headers   = guess_headers(first_l.split(delimiter))
+        indexes   = guess_indexes(headers, first_l.split(delimiter))
+
+        if len(args['interactive']) >= 1:
+            delimiter = args['interactive'][0]
+
+        if len(args['interactive']) >= 2:
+            if args['interactive'][1] == '__head__':
+                headers = source.next().rstrip().split(delimiter)
+            else:
+                headers = args['interactive'][1].split('/')
         else:
-            dhi = args['interactive']
+            # Reprocessing the headers with custom delimiter
+            headers = guess_headers(first_l.split(delimiter))
 
-            if len(dhi) >= 1:
-                delimiter = dhi[0]
-            else:
-                delimiter = guess_delimiter(first_l)
-
-            if len(dhi) >= 2:
-                if dhi[1] == '__head__':
-                    headers = source.next().rstrip().split(delimiter)
-                else:
-                    headers = dhi[1].split('/')
-            else:
-                # Reprocessing the headers with custom delimiter
-                headers = guess_headers(first_l.split(delimiter))
-
-            if len(dhi) >= 3:
-                indexes = dhi[2].split('/')
-            else:
-                # Reprocessing the indexes with custom headers
-                indexes = guess_indexes(headers, first_l.split(delimiter))
+        if len(args['interactive']) >= 3:
+            indexes = args['interactive'][2].split('/')
+        else:
+            # Reprocessing the indexes with custom headers
+            indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
