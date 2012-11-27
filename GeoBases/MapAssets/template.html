@@ -28,6 +28,31 @@ if (!String.fmt) {
 }
 
 
+function haversine(lat1, lng1, lat2, lng2) {
+
+    lat1 = lat1 / 180 * Math.PI;
+    lat2 = lat2 / 180 * Math.PI;
+    lng1 = lng1 / 180 * Math.PI;
+    lng2 = lng2 / 180 * Math.PI;
+
+    return 2 * 6371.0 * Math.asin(Math.sqrt(
+        Math.pow(Math.sin(0.5 * (lat1 - lat2)), 2) +
+        Math.pow(Math.sin(0.5 * (lng1 - lng2)), 2) *
+        Math.cos(lat1) * Math.cos(lat2)
+    ));
+}
+
+
+function sortPointX(a, b) {
+    return a.lng() - b.lng();
+}
+
+
+function sortPointY(a, b) {
+    return a.lat() - b.lat();
+}
+
+
 function overflow(text) {
 
     if (typeof text === "number") {
@@ -80,11 +105,16 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.length;
 
-    var best_icon = '{{icon}}';
+    var icon = '{{icon}}';
 
     var markersArray = [];
-    var i, j, e, latlng, marker;
-    var infowindow = new google.maps.InfoWindow();
+    var circlesArray = [];
+    var centersArray = [];
+    var bounds       = new google.maps.LatLngBounds();
+    var infowindow   = new google.maps.InfoWindow();
+
+    var i, j, c, e, s, latlng, marker, circle;
+    var max_value = 0;
 
     // Load the data
     for (i=0 ; i<n ; i++) {
@@ -103,11 +133,12 @@ function initialize(jsonData) {
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
             title       : e.__lab__,
-            icon        : best_icon,
+            icon        : icon,
             clickable   : true,
             draggable   : false
         });
 
+        // Augmenting the marker type
         marker.help = ' ' +
         '<div class="infowindow" style="min-width:400px; max-height:300px; overflow-y:auto;">' +
             '<h3>{0}</h3>'.fmt(e.__lab__) +
@@ -130,38 +161,77 @@ function initialize(jsonData) {
 
         // Saving marker
         markersArray.push(marker);
+        bounds.extend(latlng);
+        centersArray.push(latlng);
 
-    }
+        // We compute the biggest __siz__ value
+        s = parseFloat(e.__siz__);
 
+        if ((! isNaN(s)) && s > 0) {
+            if (s > max_value) {
+                max_value = s;
+            }
+            circle = new google.maps.Circle({
+                center          : latlng,
+                radius          : 0,
+                strokeColor     : "#FF0000",
+                strokeOpacity   : 0.8,
+                strokeWeight    : 2,
+                fillColor       : "#FF0000",
+                fillOpacity     : 0.10,
+                map             : map,
+                clickable       : true
+            });
 
-    // Fit the bounds
-    var bounds   = new google.maps.LatLngBounds();
-    var nbPoints = 0;
-    var i, c;
+            // Augmenting the marker type
+            circle.size = s
+            circle.help = ' ' +
+            '<div>' +
+                '<h3>{0}</h3>'.fmt(e.__lab__) +
+                '{0}'.fmt(s) +
+            '</div>';
 
-    for (i=0, c=markersArray.length; i<c; i++) {
+            // Saving
+            circlesArray.push(circle);
 
-        if (markersArray[i].getMap() !== null) {
-            bounds.extend(markersArray[i].getPosition());
-            nbPoints += 1;
+            google.maps.event.addListener(circle, 'click', function(event) {
+                //infowindow.close(map, this);
+                infowindow.setContent(this.help);
+                infowindow.open(map, new google.maps.Marker({position : event.latLng}));
+            });
+
         }
     }
 
-    if (nbPoints >= 2) {
-        // If bound is nbPoints, we avoid a big
-        // drift to the pacific ocean :)
+    // Ratio of map size for circles on the map
+    //var R = 100;
+    var r = 0.10;
+
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+        // We compute the top radius given the map size
+        var mapBounds = map.getBounds();
+        var sw = mapBounds.getSouthWest();
+        var ne = mapBounds.getNorthEast();
+
+        var biggest = r * 1000 * haversine(sw.lat(), sw.lng(), ne.lat(), ne.lng());
+        //var biggest = R * 1000;
+
+        for (i=0, c=circlesArray.length; i<c; i++) {
+            circle = circlesArray[i];
+            circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
+        }
+
+    });
+
+    // If no markers, we avoid a big
+    // drift to the pacific ocean :)
+    if (n >= 2) {
         map.fitBounds(bounds);
     }
 
     // Draw hull
-    var points = [];
-
-    for (i=0, c=markersArray.length; i<c; i++) {
-        points.push(markersArray[i].getPosition());
-    }
-
     var hull = new google.maps.Polyline({
-        path            : points,
+        path            : centersArray,
         strokeColor     : "green",
         strokeOpacity   : 0.8,
         strokeWeight    : 2,
@@ -171,28 +241,27 @@ function initialize(jsonData) {
         clickable       : false
     });
 
-    // Control rightclick state
-    function sortPointX(a,b) { return a.lng() - b.lng(); }
-    function sortPointY(a,b) { return a.lat() - b.lat(); }
 
+    // Control rightclick state
     var state = 0;
+    var sortedCenters;
 
     google.maps.event.addListener(map, 'rightclick', function() {
         if (state === 0) {
-            hull.setPath(points);
+            hull.setPath(centersArray);
             hull.setMap(map);
 
         } else if (state === 1) {
-            s_points = points.slice();
-            s_points.sort(sortPointY);
-            s_points.sort(sortPointX);
-            hull.setPath(s_points);
+            sortedCenters = centersArray.slice();
+            sortedCenters.sort(sortPointY);
+            sortedCenters.sort(sortPointX);
+            hull.setPath(sortedCenters);
 
         } else if (state === 2) {
-            s_points = points.slice();
-            s_points.sort(sortPointX);
-            s_points.sort(sortPointY);
-            hull.setPath(s_points);
+            sortedCenters = centersArray.slice();
+            sortedCenters.sort(sortPointX);
+            sortedCenters.sort(sortPointY);
+            hull.setPath(sortedCenters);
 
         } else if (state === 3) {
             hull.setMap(null);
