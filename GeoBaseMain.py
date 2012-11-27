@@ -725,9 +725,15 @@ def handle_args():
                         the script will display the data on a map and exit.''',
         action = 'store_true')
 
-    parser.add_argument('-M', '--map-label',
-        help = '''Change the label on map points. Default is "name" if available,
-                        otherwise "__key__".''',
+    parser.add_argument('-M', '--map-data',
+        help = '''2 optional values.
+                        The first one is the field to display on map points.
+                        Default is "name" if available, otherwise "__key__".
+                        The second optional value is the field used to draw
+                        circles around points. Default is "page_rank" if available.
+                        Example: -M name population''',
+        nargs = '+',
+        metavar = 'FIELDS',
         default = None)
 
     parser.add_argument('-w', '--warnings',
@@ -873,8 +879,21 @@ def main():
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
-    if args['map_label'] is None:
-        args['map_label'] = 'name' if 'name' in g.fields else '__key__'
+    if args['map_data'] is None:
+        label = 'name'      if 'name'      in g.fields else '__key__'
+        size  = 'page_rank' if 'page_rank' in g.fields else None
+    else:
+        ls = args['map_data']
+
+        if len(ls) >= 1:
+            label = ls[0]
+        else:
+            label = 'name' if 'name' in g.fields else '__key__'
+
+        if len(ls) >= 2:
+            size = ls[1]
+        else:
+            size = 'page_rank' if 'page_rank' in g.fields else None
 
 
 
@@ -883,30 +902,25 @@ def main():
     #
     # Failing on lack of opentrep support if necessary
     if args['trep'] is not None:
-
         if not g.hasTrepSupport():
             error('trep_support')
 
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
-
         if not g.hasGeoSupport():
             error('geocode_support', args['base'])
 
     # Failing on wrong headers
     if args['exact'] is not None:
-
         if args['exact_property'] not in g.fields:
             error('property', args['exact_property'], args['base'], g.fields)
 
     if args['fuzzy'] is not None:
-
         if args['fuzzy_property'] not in g.fields:
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unkown fields
-    for field in args['show'] + args['omit']:
-
+    for field in args['show'] + args['omit'] + [label, size]:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
 
@@ -1047,7 +1061,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), big=100, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size, from_keys=ex_keys(res), big=100, verbose=True)
 
         if verbose:
             # We manually launch firefox, unless we risk a crash
