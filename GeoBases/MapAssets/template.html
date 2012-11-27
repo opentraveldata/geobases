@@ -174,11 +174,11 @@ function initialize(jsonData) {
             circle = new google.maps.Circle({
                 center          : latlng,
                 radius          : 0,
-                strokeColor     : "#FF0000",
-                strokeOpacity   : 0.8,
+                strokeColor     : "black",
+                strokeOpacity   : 0.25,
                 strokeWeight    : 2,
-                fillColor       : "#FF0000",
-                fillOpacity     : 0.10,
+                fillColor       : "black",
+                fillOpacity     : 0.15,
                 map             : map,
                 clickable       : true
             });
@@ -205,7 +205,7 @@ function initialize(jsonData) {
 
     // Ratio of map size for circles on the map
     //var R = 100;
-    var r = 0.10;
+    var r = 0.075;
 
     google.maps.event.addListener(map, 'bounds_changed', function() {
         // We compute the top radius given the map size
@@ -233,10 +233,10 @@ function initialize(jsonData) {
     var hull = new google.maps.Polyline({
         path            : centersArray,
         strokeColor     : "green",
-        strokeOpacity   : 0.8,
-        strokeWeight    : 2,
-        fillColor       : "green",
-        fillOpacity     : 0,
+        strokeOpacity   : 0.40,
+        strokeWeight    : 3,
+        //fillColor       : "green",
+        //fillOpacity     : 0,
         geodesic        : true,
         clickable       : false
     });
