@@ -239,7 +239,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
+def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -258,7 +258,13 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + lim.join(str(f) for f in show_wo_omit) + '\n')
+    if header == 'CH':
+        stdout.write('#' + delim.join(str(f) for f in show_wo_omit) + '\n')
+    elif header == 'RH':
+        stdout.write(delim.join(str(f) for f in show_wo_omit) + '\n')
+    else:
+        # Every other value will not display a header
+        pass
 
     for h, k in list_of_things:
         l = []
@@ -275,7 +281,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
                 else:
                     l.append(str(v))
 
-        stdout.write(lim.join(l) + '\n')
+        stdout.write(delim.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -513,6 +519,7 @@ DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
+DEF_QUIET_HEADER  = 'CH'
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -716,9 +723,17 @@ def handle_args():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
-    parser.add_argument('-Q', '--quiet-delimiter',
-        help = '''Custom delimiter in quiet mode. Default is "%s".''' % DEF_QUIET_LIM,
-        default = DEF_QUIET_LIM)
+    parser.add_argument('-Q', '--quiet-options',
+        help = '''Custom delimiter in quiet mode. Default is "%s".
+                        Accepts a second optional parameter to control
+                        header display: RH to add a raw header, CH to
+                        add a commented header, any other value will
+                        not display the header. Default is "%s".
+                        Example: -Q ';' RH''' % \
+                        (DEF_QUIET_LIM, DEF_QUIET_HEADER),
+        nargs = '+',
+        metavar = 'INFO',
+        default = None)
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
@@ -879,6 +894,7 @@ def main():
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
+
     if args['map_data'] is None:
         label = 'name'      if 'name'      in g.fields else '__key__'
         size  = 'page_rank' if 'page_rank' in g.fields else None
@@ -894,6 +910,23 @@ def main():
             size = ls[1]
         else:
             size = 'page_rank' if 'page_rank' in g.fields else None
+
+
+    if args['quiet_options'] is None:
+        quiet_delimiter = DEF_QUIET_LIM
+        header_display  = DEF_QUIET_HEADER
+    else:
+        qh = args['quiet_options']
+
+        if len(qh) >= 1:
+            quiet_delimiter = qh[0]
+        else:
+            quiet_delimiter = DEF_QUIET_LIM
+
+        if len(qh) >= 2:
+            header_display = qh[1]
+        else:
+            header_display = DEF_QUIET_HEADER
 
 
 
@@ -1093,7 +1126,7 @@ def main():
 
 
     if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_delimiter'])
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
 
     if verbose:
