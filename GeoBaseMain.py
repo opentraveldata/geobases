@@ -422,6 +422,9 @@ def score_index(f):
     The shorter the better, and int get a len() of 1.
     0, 1 and floats are weird for indexes, as well as 1-letter strings.
     '''
+    if str(f).endswith('__key__') or str(f).lower().endswith('id'):
+        return 0
+
     try:
         l = len(f) if len(f) >= 2 else 10
     except TypeError:
