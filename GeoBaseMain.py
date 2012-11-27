@@ -696,7 +696,8 @@ def handle_args():
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
-                        Default is %s, except in quiet mode where it is disabled.''' % DEF_NUM_COL,
+                        Default is %s, except in quiet mode where it is disabled.''' % \
+                        DEF_NUM_COL,
         default = None)
 
     parser.add_argument('-i', '--interactive',
@@ -904,22 +905,15 @@ def main():
     if len(args['map_data']) >= 2:
         size = args['map_data'][1]
 
+    # Reading quiet options
+    quiet_delimiter = DEF_QUIET_LIM
+    header_display  = DEF_QUIET_HEADER
 
-    if not args['quiet_options']:
-        quiet_delimiter = DEF_QUIET_LIM
-        header_display  = DEF_QUIET_HEADER
-    else:
-        qh = args['quiet_options']
+    if len(args['quiet_options']) >= 1:
+        quiet_delimiter = args['quiet_options'][0]
 
-        if len(qh) >= 1:
-            quiet_delimiter = qh[0]
-        else:
-            quiet_delimiter = DEF_QUIET_LIM
-
-        if len(qh) >= 2:
-            header_display = qh[1]
-        else:
-            header_display = DEF_QUIET_HEADER
+    if len(args['quiet_options']) >= 2:
+        header_display = args['quiet_options'][1]
 
 
 
