@@ -840,7 +840,7 @@ def main():
         # For sniffers, we rstrip
         first_l = first_l.rstrip()
 
-        if args['interactive']:
+        if not args['interactive']:
             delimiter = guess_delimiter(first_l)
             headers   = guess_headers(first_l.split(delimiter))
             indexes   = guess_indexes(headers, first_l.split(delimiter))
@@ -894,25 +894,18 @@ def main():
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
+    # Reading map options
+    label = 'name'      if 'name'      in g.fields else '__key__'
+    size  = 'page_rank' if 'page_rank' in g.fields else None
 
-    if args['map_data']:
-        label = 'name'      if 'name'      in g.fields else '__key__'
-        size  = 'page_rank' if 'page_rank' in g.fields else None
-    else:
-        ls = args['map_data']
+    if len(args['map_data']) >= 1:
+        label = args['map_data'][0]
 
-        if len(ls) >= 1:
-            label = ls[0]
-        else:
-            label = 'name' if 'name' in g.fields else '__key__'
-
-        if len(ls) >= 2:
-            size = ls[1]
-        else:
-            size = 'page_rank' if 'page_rank' in g.fields else None
+    if len(args['map_data']) >= 2:
+        size = args['map_data'][1]
 
 
-    if args['quiet_options']:
+    if not args['quiet_options']:
         quiet_delimiter = DEF_QUIET_LIM
         header_display  = DEF_QUIET_HEADER
     else:
