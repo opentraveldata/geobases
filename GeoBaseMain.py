@@ -711,7 +711,7 @@ def handle_args():
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
-        default = None)
+        default = [])
 
     parser.add_argument('-I', '--interactive-query',
         help = '''If passed, this option will consider stdin
@@ -733,7 +733,7 @@ def handle_args():
                         (DEF_QUIET_LIM, DEF_QUIET_HEADER),
         nargs = '+',
         metavar = 'INFO',
-        default = None)
+        default = [])
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
@@ -749,7 +749,7 @@ def handle_args():
                         Example: -M name population''',
         nargs = '+',
         metavar = 'FIELDS',
-        default = None)
+        default = [])
 
     parser.add_argument('-w', '--warnings',
         help = '''Provides additional information from GeoBase loading.''',
@@ -840,7 +840,7 @@ def main():
         # For sniffers, we rstrip
         first_l = first_l.rstrip()
 
-        if args['interactive'] is None:
+        if args['interactive']:
             delimiter = guess_delimiter(first_l)
             headers   = guess_headers(first_l.split(delimiter))
             indexes   = guess_indexes(headers, first_l.split(delimiter))
@@ -895,7 +895,7 @@ def main():
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
 
-    if args['map_data'] is None:
+    if args['map_data']:
         label = 'name'      if 'name'      in g.fields else '__key__'
         size  = 'page_rank' if 'page_rank' in g.fields else None
     else:
@@ -912,7 +912,7 @@ def main():
             size = 'page_rank' if 'page_rank' in g.fields else None
 
 
-    if args['quiet_options'] is None:
+    if args['quiet_options']:
         quiet_delimiter = DEF_QUIET_LIM
         header_display  = DEF_QUIET_HEADER
     else:
@@ -953,7 +953,7 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unkown fields
-    for field in args['show'] + args['omit'] + [label, size]:
+    for field in args['show'] + args['omit'] + args['map_data']:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
 
