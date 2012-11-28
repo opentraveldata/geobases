@@ -1107,14 +1107,21 @@ def main():
             to_be_launched = []
 
             for template in status:
-                if not template.endswith('_table.html'):
-                    to_be_launched.append(template)
-                else:
+                if template.endswith('_table.html'):
                     if nb_res <= 2000:
                         to_be_launched.append(template)
                     else:
-                        print '\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
+                        print '/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
                                 (template, nb_res)
+
+                elif template.endswith('_map.html'):
+                    if nb_res <= 8000:
+                        to_be_launched.append(template)
+                    else:
+                        print '/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
+                                (template, nb_res)
+                else:
+                    to_be_launched.append(template)
 
             if to_be_launched:
                 os.system('firefox %s &' % ' '.join(to_be_launched))
@@ -1124,7 +1131,7 @@ def main():
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
+            print '/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
     try:
