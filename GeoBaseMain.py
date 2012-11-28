@@ -751,8 +751,9 @@ def handle_args():
                         input as key for query, not data for loading.
                         It has optional arguments. The first one is the field
                         from which the data is supposed to be. The second is the
-                        type of matching, either "__get__" or "__fuzzy__". For fuzzy
-                        searches, the ratio is set to %s.''' % DEF_INTER_FUZZY_L,
+                        type of matching, either "__exact__" or "__fuzzy__". For fuzzy
+                        searches, the ratio is set to %s.
+                        Example: -I icao_code __fuzzy__''' % DEF_INTER_FUZZY_L,
         nargs = '*',
         metavar = 'OPTION',
         default = [])
@@ -949,7 +950,7 @@ def main():
 
     # Reading interactive query options
     interactive_field = '__key__'
-    interactive_type  = '__get__'
+    interactive_type  = '__exact__'
 
     if len(args['interactive_query']) >= 1:
         interactive_field = args['interactive_query'][0]
@@ -989,7 +990,7 @@ def main():
             error('field', field, args['base'], ['__ref__'] + g.fields)
 
     # Testing -M option
-    allowed_types = ['__get__', '__fuzzy__']
+    allowed_types = ['__exact__', '__fuzzy__']
 
     if interactive_type not in allowed_types:
         error('wrong_value', interactive_type, allowed_types)
@@ -1021,7 +1022,7 @@ def main():
             values.extend(row.strip().split())
 
         # Query type
-        if interactive_type == '__get__':
+        if interactive_type == '__exact__':
             if interactive_field == '__key__':
                 res = enumerate(values)
             else:
