@@ -1370,13 +1370,13 @@ class GeoBase(object):
             geo_support = False
 
             if verbose:
-                print '/!\ Could not find fields %s in headers %s.' % \
+                print '\n/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields)
 
         # Label is the field which labels the points
         if label not in self.fields:
             if verbose:
-                print '/!\ Label "%s" not in fields %s, could not visualize...' % \
+                print '\n/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields)
             return []
 
@@ -1452,11 +1452,13 @@ class GeoBase(object):
                 tmp_static.append(target)
 
         if verbose:
-            print '\n* Now you may use your browser to visualize:'
+            print
+            print '* Now you may use your browser to visualize:'
             print 'firefox %s &' % ' '.join(tmp_template)
-
-            print '\n* If you want to clean the temporary files:'
+            print
+            print '* If you want to clean the temporary files:'
             print 'rm %s' % ' '.join(tmp_static + tmp_template)
+            print
 
         # This is the numbered of templates rendered
         return tmp_template
