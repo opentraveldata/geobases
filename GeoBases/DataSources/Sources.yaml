@@ -312,11 +312,11 @@ currencies:
 
 
 airlines:
-    source    : Airlines/CRB_AIRLINE.csv
+    source    : Airlines/crb_airline.csv
     indexes   : iata_code
-    delimiter : ^
+    delimiter : "\t"
     headers   :
-        - oaci_code
+        - icao_code
         - old_code
         - num_code
         - name
