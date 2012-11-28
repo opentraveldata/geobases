@@ -756,7 +756,7 @@ def handle_args():
                         Example: -I icao_code __fuzzy__''' % DEF_INTER_FUZZY_L,
         nargs = '*',
         metavar = 'OPTION',
-        default = [])
+        default = None)
 
     parser.add_argument('-q', '--quiet',
         help = '''Does not provide the verbose output.
@@ -847,6 +847,8 @@ def main():
     else:
         limit = int(args['limit'])
 
+    # Interactive query?
+    interactive_query_mode = args['interactive_query'] is not None
 
 
     #
@@ -870,7 +872,7 @@ def main():
         GeoBase.update()
         exit(0)
 
-    if not stdin.isatty() and not args['interactive_query']:
+    if not stdin.isatty() and not interactive_query_mode:
         try:
             first_l = stdin.next()
         except StopIteration:
@@ -952,11 +954,12 @@ def main():
     interactive_field = '__key__'
     interactive_type  = '__exact__'
 
-    if len(args['interactive_query']) >= 1:
-        interactive_field = args['interactive_query'][0]
+    if interactive_query_mode:
+        if len(args['interactive_query']) >= 1:
+            interactive_field = args['interactive_query'][0]
 
-    if len(args['interactive_query']) >= 2:
-        interactive_type = args['interactive_query'][1]
+        if len(args['interactive_query']) >= 2:
+            interactive_type = args['interactive_query'][1]
 
 
 
@@ -1001,7 +1004,7 @@ def main():
     # MAIN
     #
     if verbose:
-        if not stdin.isatty() and args['interactive_query']:
+        if not stdin.isatty() and interactive_query_mode:
             print 'Looking for matches from stdin query...'
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
@@ -1016,7 +1019,7 @@ def main():
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not stdin.isatty() and args['interactive_query']:
+    if not stdin.isatty() and interactive_query_mode:
         values = []
         for row in stdin:
             values.extend(row.strip().split())
@@ -1135,7 +1138,7 @@ def main():
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
 
-    if args['interactive_query']:
+    if interactive_query_mode:
         important.add(interactive_field)
 
     # __ref__ may be different thing depending on the last filter
