@@ -13,6 +13,7 @@ from datetime import datetime
 from math import ceil
 from itertools import izip_longest, chain
 import textwrap
+import signal
 
 # Not in standard library
 from termcolor import colored
@@ -21,6 +22,9 @@ import argparse # in standard libraray for Python >= 2.7
 
 # Private
 from GeoBases import GeoBase
+
+# Do not produce broken pipes when head and tail are used
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 
@@ -1177,25 +1181,16 @@ def main():
             print '/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
-    try:
-        # We protect the stdout.write against the IOError
-        if frontend == 'terminal':
-            display(g, res, set(args['omit']), args['show'], important, ref_type)
+    # We protect the stdout.write against the IOError
+    if frontend == 'terminal':
+        display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        if frontend == 'quiet':
-            display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
+    if frontend == 'quiet':
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-        if verbose:
-            for warn_msg in ENV_WARNINGS:
-                print textwrap.dedent(warn_msg),
-
-    except IOError:
-        # This means that the user probably used head or tail on this mode
-        # We close stderr to prevent the error display:
-        # > close failed in file object destructor:
-        # > sys.excepthook is missing
-        # > lost sys.stderr
-        stderr.close()
+    if verbose:
+        for warn_msg in ENV_WARNINGS:
+            print textwrap.dedent(warn_msg),
 
 
 
