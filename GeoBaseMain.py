@@ -733,7 +733,8 @@ def handle_args():
         default = None)
 
     parser.add_argument('-i', '--interactive',
-        help = '''Specify metadata for stdin data input.
+        help = '''Specify metadata for data input, for stdin input
+                        as well as defaults overriding for existing bases.
                         3 optional values: delimiter, headers, indexes.
                         Multiple fields may be specified with "/" delimiter.
                         Default headers will use alphabet, and try to sniff lat/lng.
@@ -741,6 +742,7 @@ def handle_args():
                         burn the first line to define the headers.
                         Default indexes will take the first plausible field.
                         Default delimiter is smart :).
+                        For any field, you may put "_" to leave the default value.
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
@@ -885,10 +887,10 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
-        if len(args['interactive']) >= 1:
+        if len(args['interactive']) >= 1 and args['interactive'][0] != '_':
             delimiter = args['interactive'][0]
 
-        if len(args['interactive']) >= 2:
+        if len(args['interactive']) >= 2 and args['interactive'][1] != '_':
             if args['interactive'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
@@ -897,7 +899,7 @@ def main():
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
-        if len(args['interactive']) >= 3:
+        if len(args['interactive']) >= 3 and args['interactive'][2] != '_':
             indexes = args['interactive'][2].split('/')
         else:
             # Reprocessing the indexes with custom headers
@@ -914,10 +916,26 @@ def main():
                     indexes=indexes,
                     verbose=warnings)
     else:
-        if verbose:
-            print 'Loading GeoBase "%s"...' % args['base']
+        # -i options overrides default
+        add_options = {}
 
-        g = GeoBase(data=args['base'], verbose=warnings)
+        if len(args['interactive']) >= 1 and args['interactive'][0] != '_':
+            add_options['delimiter'] = args['interactive'][0]
+
+        if len(args['interactive']) >= 2 and args['interactive'][1] != '_':
+            add_options['headers'] = args['interactive'][1].split('/')
+
+        if len(args['interactive']) >= 3 and args['interactive'][2] != '_':
+            add_options['indexes'] = args['interactive'][2].split('/')
+
+        if verbose:
+            if not add_options:
+                print 'Loading GeoBase "%s"...' % args['base']
+            else:
+                print 'Loading GeoBase "%s" with custom %s...' % \
+                        (args['base'], ', '.join('%s=%s' % kv for kv in add_options.items()))
+
+        g = GeoBase(data=args['base'], verbose=warnings, **add_options)
 
     if verbose:
         after_init = datetime.now()
