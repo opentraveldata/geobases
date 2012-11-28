@@ -547,6 +547,7 @@ DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
+DEF_INTER_FUZZY_L = 0.99
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -746,7 +747,8 @@ def handle_args():
                         input as key for query, not data for loading.
                         It has optional arguments. The first one is the field
                         from which the data is supposed to be. The second is the
-                        type of matching, either "__get__" or "__fuzzy__".''',
+                        type of matching, either "__get__" or "__fuzzy__". For fuzzy
+                        searches, the ratio is set to %s.''' % DEF_INTER_FUZZY_L,
         nargs = '*',
         metavar = 'OPTION',
         default = [])
@@ -1026,7 +1028,7 @@ def main():
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=0.99)))
+                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
             last = 'fuzzy'
 
     elif args['keys']:
