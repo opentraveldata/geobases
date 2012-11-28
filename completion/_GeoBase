@@ -8,6 +8,7 @@ F_FUZZY="(0.5 0.6 0.7 0.8 0.9)"
 T_TREP="(F S I J)"
 L_LIMIT="(1 2 5)"
 I_INT="()"
+Q_QUIET="()"
 
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \
@@ -28,12 +29,12 @@ _arguments \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
- "(-i --interactive)"{-i,--interactive}"[Specify metadata for stdin data input.]:delimiter headers indexes:$I_INT" \
+ "(-i --interactive)"{-i,--interactive}"[Specify metadata for stdin data input.]:*:delimiter headers indexes:$I_INT" \
  "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]" \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
- "(-Q --quiet-delimiter)"{-Q,--quiet-delimiter}"[Custom delimiter for quiet mode]:delimiter:()" \
+ "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header_display:$Q_QUIET" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
- "(-M --map-label)"{-M,--map-label}"[Custom label for map points]:label:$F_FIELDS" \
+ "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size:$F_FIELDS" \
  "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
  "(-v --version)"{-v,--version}"[Display version information]" \

@@ -1356,7 +1356,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', from_keys=None, big=100, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, from_keys=None, big=100, verbose=True):
         '''Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1370,15 +1370,23 @@ class GeoBase(object):
             geo_support = False
 
             if verbose:
-                print('/!\ Could not find fields %s in headers %s.' % \
+                print('\n/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GeoBase.GEO_FIELDS), self.fields))
 
+        # Label is the field which labels the points
         if label not in self.fields:
             if verbose:
-                print('/!\ Label "%s" not in fields %s, could not visualize...' % \
+                print('\n/!\ Label "%s" not in fields %s, could not visualize...' % \
                         (label, self.fields))
             return []
 
+        # Optional function which gives points size
+        if point_size is not None and point_size in self.fields:
+            get_size = lambda key: self.get(key, point_size)
+        else:
+            get_size = lambda key: 0
+
+        # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
 
@@ -1395,6 +1403,7 @@ class GeoBase(object):
             elem = {
                 '__key__' : key,
                 '__lab__' : self.get(key, label),
+                '__siz__' : get_size(key), # in 100 kms on the map
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1]
             }
@@ -1443,11 +1452,13 @@ class GeoBase(object):
                 tmp_static.append(target)
 
         if verbose:
-            print('\n* Now you may use your browser to visualize:')
+            print()
+            print('* Now you may use your browser to visualize:')
             print('firefox %s &' % ' '.join(tmp_template))
-
-            print('\n* If you want to clean the temporary files:')
+            print()
+            print('* If you want to clean the temporary files:')
             print('rm %s' % ' '.join(tmp_static + tmp_template))
+            print()
 
         # This is the numbered of templates rendered
         return tmp_template

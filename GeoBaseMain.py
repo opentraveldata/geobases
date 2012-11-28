@@ -239,7 +239,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     stdout.write('\n')
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
+def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     '''
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -258,7 +258,13 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
     show_wo_omit = [f for f in show if f not in omit]
 
     # Displaying headers
-    stdout.write('#' + lim.join(str(f) for f in show_wo_omit) + '\n')
+    if header == 'CH':
+        stdout.write('#' + delim.join(str(f) for f in show_wo_omit) + '\n')
+    elif header == 'RH':
+        stdout.write(delim.join(str(f) for f in show_wo_omit) + '\n')
+    else:
+        # Every other value will not display a header
+        pass
 
     for h, k in list_of_things:
         l = []
@@ -275,7 +281,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, lim):
                 else:
                     l.append(str(v))
 
-        stdout.write(lim.join(l) + '\n')
+        stdout.write(delim.join(l) + '\n')
 
 
 def fixed_width(s, col, lim=25, truncate=None):
@@ -410,26 +416,50 @@ def guess_headers(s_row):
     return headers
 
 
+def score_index(f):
+    '''Eval likelihood of being an index.
+
+    The shorter the better, and int get a len() of 1.
+    0, 1 and floats are weird for indexes, as well as 1-letter strings.
+    '''
+    if str(f).endswith('__key__') or str(f).lower().endswith('id'):
+        return 0
+
+    try:
+        l = len(f) if len(f) >= 2 else 10
+    except TypeError:
+        # int or float
+        if f in [0, 1] or isinstance(f, float):
+            l = 1000
+        else:
+            l = 1
+    return l
+
+
 def guess_indexes(headers, s_row):
     '''Heuristic to guess indexes from headers and first row.
     '''
-    discarded = set(['lat', 'lng'])
+    discarded  = set(['lat', 'lng'])
+    candidates = []
 
     for h, v in zip(headers, s_row):
-
         # Skip discarded and empty values
         if h not in discarded and v:
-            # We test if the value is a float
             try:
                 val = float(v)
             except ValueError:
-                return [h]
+                # not a number
+                candidates.append((h, v))
             else:
-                # Round values are possible as indexes
                 if val == int(val):
-                    return [h]
+                    candidates.append((h, int(val)))
+                else:
+                    candidates.append((h, val))
 
-    return [headers[0]]
+    if not candidates:
+        return [headers[0]]
+
+    return [ min(candidates, key=lambda x: score_index(x[1]))[0] ]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
@@ -508,11 +538,12 @@ def error(name, *args):
 
 # Global defaults
 DEF_BASE          = 'ori_por'
-DEF_FUZZY_LIMIT   = 0.70
+DEF_FUZZY_LIMIT   = 0.85
 DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
+DEF_QUIET_HEADER  = 'CH'
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -689,7 +720,8 @@ def handle_args():
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
-                        Default is %s, except in quiet mode where it is disabled.''' % DEF_NUM_COL,
+                        Default is %s, except in quiet mode where it is disabled.''' % \
+                        DEF_NUM_COL,
         default = None)
 
     parser.add_argument('-i', '--interactive',
@@ -704,7 +736,7 @@ def handle_args():
                         Example: -i ',' key/name/key2 key/key2''',
         nargs = '+',
         metavar = 'METADATA',
-        default = None)
+        default = [])
 
     parser.add_argument('-I', '--interactive-query',
         help = '''If passed, this option will consider stdin
@@ -716,19 +748,34 @@ def handle_args():
                         May still be combined with --omit and --show.''',
         action = 'store_true')
 
-    parser.add_argument('-Q', '--quiet-delimiter',
-        help = '''Custom delimiter in quiet mode. Default is "%s".''' % DEF_QUIET_LIM,
-        default = DEF_QUIET_LIM)
+    parser.add_argument('-Q', '--quiet-options',
+        help = '''Custom delimiter in quiet mode. Default is "%s".
+                        Accepts a second optional parameter to control
+                        header display: RH to add a raw header, CH to
+                        add a commented header, any other value will
+                        not display the header. Default is "%s".
+                        Example: -Q ';' RH''' % \
+                        (DEF_QUIET_LIM, DEF_QUIET_HEADER),
+        nargs = '+',
+        metavar = 'INFO',
+        default = [])
 
     parser.add_argument('-m', '--map',
         help = '''If this option is set, instead of anything,
                         the script will display the data on a map and exit.''',
         action = 'store_true')
 
-    parser.add_argument('-M', '--map-label',
-        help = '''Change the label on map points. Default is "name" if available,
-                        otherwise "__key__".''',
-        default = None)
+    parser.add_argument('-M', '--map-data',
+        help = '''2 optional values.
+                        The first one is the field to display on map points.
+                        Default is "name" if available, otherwise "__key__".
+                        The second optional value is the field used to draw
+                        circles around points. Default is "page_rank" if available.
+                        Put "__none__" to disable circles.
+                        Example: -M name population''',
+        nargs = '+',
+        metavar = 'FIELDS',
+        default = [])
 
     parser.add_argument('-w', '--warnings',
         help = '''Provides additional information from GeoBase loading.''',
@@ -816,35 +863,29 @@ def main():
             error('empty_stdin')
 
         source  = chain([first_l], stdin)
-        # For sniffers, we rstrip
-        first_l = first_l.rstrip()
+        first_l = first_l.rstrip() # For sniffers, we rstrip
 
-        if args['interactive'] is None:
-            delimiter = guess_delimiter(first_l)
-            headers   = guess_headers(first_l.split(delimiter))
-            indexes   = guess_indexes(headers, first_l.split(delimiter))
+        delimiter = guess_delimiter(first_l)
+        headers   = guess_headers(first_l.split(delimiter))
+        indexes   = guess_indexes(headers, first_l.split(delimiter))
+
+        if len(args['interactive']) >= 1:
+            delimiter = args['interactive'][0]
+
+        if len(args['interactive']) >= 2:
+            if args['interactive'][1] == '__head__':
+                headers = source.next().rstrip().split(delimiter)
+            else:
+                headers = args['interactive'][1].split('/')
         else:
-            dhi = args['interactive']
+            # Reprocessing the headers with custom delimiter
+            headers = guess_headers(first_l.split(delimiter))
 
-            if len(dhi) >= 1:
-                delimiter = dhi[0]
-            else:
-                delimiter = guess_delimiter(first_l)
-
-            if len(dhi) >= 2:
-                if dhi[1] == '__head__':
-                    headers = next(source).rstrip().split(delimiter)
-                else:
-                    headers = dhi[1].split('/')
-            else:
-                # Reprocessing the headers with custom delimiter
-                headers = guess_headers(first_l.split(delimiter))
-
-            if len(dhi) >= 3:
-                indexes = dhi[2].split('/')
-            else:
-                # Reprocessing the indexes with custom headers
-                indexes = guess_indexes(headers, first_l.split(delimiter))
+        if len(args['interactive']) >= 3:
+            indexes = args['interactive'][2].split('/')
+        else:
+            # Reprocessing the indexes with custom headers
+            indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
             print('Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
@@ -873,8 +914,25 @@ def main():
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
-    if args['map_label'] is None:
-        args['map_label'] = 'name' if 'name' in g.fields else '__key__'
+    # Reading map options
+    label = 'name'      if 'name'      in g.fields else '__key__'
+    size  = 'page_rank' if 'page_rank' in g.fields else None
+
+    if len(args['map_data']) >= 1:
+        label = args['map_data'][0]
+
+    if len(args['map_data']) >= 2:
+        size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
+
+    # Reading quiet options
+    quiet_delimiter = DEF_QUIET_LIM
+    header_display  = DEF_QUIET_HEADER
+
+    if len(args['quiet_options']) >= 1:
+        quiet_delimiter = args['quiet_options'][0]
+
+    if len(args['quiet_options']) >= 2:
+        header_display = args['quiet_options'][1]
 
 
 
@@ -883,30 +941,25 @@ def main():
     #
     # Failing on lack of opentrep support if necessary
     if args['trep'] is not None:
-
         if not g.hasTrepSupport():
             error('trep_support')
 
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
-
         if not g.hasGeoSupport():
             error('geocode_support', args['base'])
 
     # Failing on wrong headers
     if args['exact'] is not None:
-
         if args['exact_property'] not in g.fields:
             error('property', args['exact_property'], args['base'], g.fields)
 
     if args['fuzzy'] is not None:
-
         if args['fuzzy_property'] not in g.fields:
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
-    # Failing on unkown fields
-    for field in args['show'] + args['omit']:
-
+    # Failing on unknown fields
+    for field in args['show'] + args['omit'] + [f for f in (label, size) if f is not None]:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
 
@@ -1047,21 +1100,28 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=args['map_label'], from_keys=ex_keys(res), big=100, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size, from_keys=ex_keys(res), big=50, verbose=True)
 
         if verbose:
             # We manually launch firefox, unless we risk a crash
             to_be_launched = []
 
             for template in status:
-                if not template.endswith('_table.html'):
-                    to_be_launched.append(template)
-                else:
+                if template.endswith('_table.html'):
                     if nb_res <= 2000:
                         to_be_launched.append(template)
                     else:
-                        print('\n/!\ Did not launch firefox for %s. We have %s rows and this may be slow.' % \
+                        print('/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
                                 (template, nb_res))
+
+                elif template.endswith('_map.html'):
+                    if nb_res <= 8000:
+                        to_be_launched.append(template)
+                    else:
+                        print('/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
+                                (template, nb_res))
+                else:
+                    to_be_launched.append(template)
 
             if to_be_launched:
                 os.system('firefox %s &' % ' '.join(to_be_launched))
@@ -1071,20 +1131,29 @@ def main():
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print('\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status)))
+            print('/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status)))
 
 
-    if frontend == 'terminal':
-        display(g, res, set(args['omit']), args['show'], important, ref_type)
+    try:
+        # We protect the stdout.write against the IOError
+        if frontend == 'terminal':
+            display(g, res, set(args['omit']), args['show'], important, ref_type)
 
+        if frontend == 'quiet':
+            display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-    if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, args['quiet_delimiter'])
+        if verbose:
+            for warn_msg in ENV_WARNINGS:
+                print(textwrap.dedent(warn_msg), end="")
 
+    except IOError:
+        # This means that the user probably used head or tail on this mode
+        # We close stderr to prevent the error display:
+        # > close failed in file object destructor:
+        # > sys.excepthook is missing
+        # > lost sys.stderr
+        stderr.close()
 
-    if verbose:
-        for warn_msg in ENV_WARNINGS:
-            print(textwrap.dedent(warn_msg), end="")
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.1  : map update with circle drawings from any field with -M, new -Q header control
 + 4.0  : ori_por major update with correct city_names and full deduplication
 
 V3
