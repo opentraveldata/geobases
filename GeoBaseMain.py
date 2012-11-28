@@ -1127,17 +1127,26 @@ def main():
             print '\n/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
 
 
-    if frontend == 'terminal':
-        display(g, res, set(args['omit']), args['show'], important, ref_type)
+    try:
+        # We protect the stdout.write against the IOError
+        if frontend == 'terminal':
+            display(g, res, set(args['omit']), args['show'], important, ref_type)
 
+        if frontend == 'quiet':
+            display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-    if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
+        if verbose:
+            for warn_msg in ENV_WARNINGS:
+                print textwrap.dedent(warn_msg),
 
+    except IOError:
+        # This means that the user probably used head or tail on this mode
+        # We close stderr to prevent the error display:
+        # > close failed in file object destructor:
+        # > sys.excepthook is missing
+        # > lost sys.stderr
+        stderr.close()
 
-    if verbose:
-        for warn_msg in ENV_WARNINGS:
-            print textwrap.dedent(warn_msg),
 
 
 if __name__ == '__main__':
