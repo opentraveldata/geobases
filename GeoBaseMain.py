@@ -499,7 +499,7 @@ def error(name, *args):
     '''
 
     if name == 'trep_support':
-        print >> stderr, '\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.'
+        print >> stderr, '\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.'
 
     elif name == 'geocode_support':
         print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
@@ -526,6 +526,9 @@ def error(name, *args):
 
     elif name == 'empty_stdin':
         print >> stderr, '\n/!\ Stdin was empty'
+
+    elif name == 'wrong_value':
+        print >> stderr, '\n/!\ Wrong value "%s", should be in "%s".' % (args[0], args[1])
 
     exit(1)
 
@@ -740,8 +743,13 @@ def handle_args():
 
     parser.add_argument('-I', '--interactive-query',
         help = '''If passed, this option will consider stdin
-                        input as key for query, not data for loading.''',
-        action = 'store_true')
+                        input as key for query, not data for loading.
+                        It has optional arguments. The first one is the field
+                        from which the data is supposed to be. The second is the
+                        type of matching, either "__get__" or "__fuzzy__".''',
+        nargs = '*',
+        metavar = 'OPTION',
+        default = [])
 
     parser.add_argument('-q', '--quiet',
         help = '''Does not provide the verbose output.
@@ -856,7 +864,6 @@ def main():
         exit(0)
 
     if not stdin.isatty() and not args['interactive_query']:
-
         try:
             first_l = stdin.next()
         except StopIteration:
@@ -934,6 +941,16 @@ def main():
     if len(args['quiet_options']) >= 2:
         header_display = args['quiet_options'][1]
 
+    # Reading interactive query options
+    interactive_field = '__key__'
+    interactive_type  = '__get__'
+
+    if len(args['interactive_query']) >= 1:
+        interactive_field = args['interactive_query'][0]
+
+    if len(args['interactive_query']) >= 2:
+        interactive_type = args['interactive_query'][1]
+
 
 
     #
@@ -959,9 +976,17 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unknown fields
-    for field in args['show'] + args['omit'] + [f for f in (label, size) if f is not None]:
+    fields_to_test = [f for f in (label, size, interactive_field) if f is not None]
+
+    for field in args['show'] + args['omit'] + fields_to_test:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
+
+    # Testing -M option
+    allowed_types = ['__get__', '__fuzzy__']
+
+    if interactive_type not in allowed_types:
+        error('wrong_value', interactive_type, allowed_types)
 
 
 
@@ -970,30 +995,44 @@ def main():
     #
     if verbose:
         if not stdin.isatty() and args['interactive_query']:
-            print 'Looking for matches from stdin...'
+            print 'Looking for matches from stdin query...'
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
         else:
             print 'Looking for matches from *all* data...'
 
+    # Keeping track of last filter applied
+    last = None
+
+    # Keeping only keys in intermediate search
+    ex_keys = lambda res : None if res is None else (e[1] for e in res)
+
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
     if not stdin.isatty() and args['interactive_query']:
-        res = []
+        values = []
         for row in stdin:
-            res.extend(row.strip().split())
-        res = enumerate(res)
+            values.extend(row.strip().split())
+
+        # Query type
+        if interactive_type == '__get__':
+            if interactive_field == '__key__':
+                res = enumerate(values)
+            else:
+                conditions = [(interactive_field, val) for val in values]
+                res = enumerate(g.getKeysWhere(conditions, force_str=True, mode='or'))
+                last = 'exact'
+
+        elif interactive_type == '__fuzzy__':
+            res = []
+            for val in values:
+                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=0.99)))
+            last = 'fuzzy'
 
     elif args['keys']:
         res = enumerate(args['keys'])
     else:
         res = enumerate(iter(g))
-
-    # Keeping only keys in intermediate search
-    ex_keys = lambda res : None if res is None else (e[1] for e in res)
-
-    # Keeping track of last filter applied
-    last = None
 
     # We are going to chain conditions
     # res will hold intermediate results
@@ -1089,6 +1128,8 @@ def main():
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
 
+    if args['interactive_query']:
+        important.add(interactive_field)
 
     # __ref__ may be different thing depending on the last filter
     if last in ['near', 'closest']:
