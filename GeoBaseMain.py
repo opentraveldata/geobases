@@ -771,6 +771,7 @@ def handle_args():
                         Default is "name" if available, otherwise "__key__".
                         The second optional value is the field used to draw
                         circles around points. Default is "page_rank" if available.
+                        Put "__none__" to disable circles.
                         Example: -M name population''',
         nargs = '+',
         metavar = 'FIELDS',
@@ -921,7 +922,7 @@ def main():
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2:
-        size = args['map_data'][1]
+        size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -957,8 +958,8 @@ def main():
         if args['fuzzy_property'] not in g.fields:
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
-    # Failing on unkown fields
-    for field in args['show'] + args['omit'] + args['map_data']:
+    # Failing on unknown fields
+    for field in args['show'] + args['omit'] + [f for f in (label, size) if f is not None]:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
 
