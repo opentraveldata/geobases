@@ -538,7 +538,7 @@ def error(name, *args):
 
 # Global defaults
 DEF_BASE          = 'ori_por'
-DEF_FUZZY_LIMIT   = 0.70
+DEF_FUZZY_LIMIT   = 0.85
 DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
