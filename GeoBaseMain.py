@@ -842,14 +842,17 @@ def handle_args():
         action = 'store_true')
 
     parser.add_argument('-M', '--map-data',
-        help = '''2 optional values.
+        help = '''3 optional values.
                         The first one is the field to display on map points.
                         Default is "name" if available, otherwise "__key__".
                         The second optional value is the field used to draw
                         circles around points. Default is "page_rank" if available.
                         Put "__none__" to disable circles.
+                        The third optional value is the field use to color icons.
+                        Default is "location_type" if available.
+                        Put "__none__" to disable coloring.
                         For any field, you may put "%s" to leave the default value.
-                        Example: -M name population''' % SKIP,
+                        Example: -M name population __none__''' % SKIP,
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1009,14 +1012,18 @@ def main():
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
     # Reading map options
-    label      = 'name'      if 'name'      in g.fields else '__key__'
-    size_field = 'page_rank' if 'page_rank' in g.fields else None
+    label       = 'name'          if 'name'          in g.fields else '__key__'
+    size_field  = 'page_rank'     if 'page_rank'     in g.fields else None
+    color_field = 'location_type' if 'location_type' in g.fields else None
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
         size_field = None if args['map_data'][1] == '__none__' else args['map_data'][1]
+
+    if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
+        color_field = None if args['map_data'][2] == '__none__' else args['map_data'][2]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -1229,7 +1236,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color='location_type', from_keys=ex_keys(res), big=50, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big=50, verbose=True)
 
         if verbose:
             display_browser(status, nb_res)

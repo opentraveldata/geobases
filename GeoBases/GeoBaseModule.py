@@ -116,8 +116,17 @@ class GeoBase(object):
             },
             'static' : {
                 # source : target
-                local_path(__file__, 'MapAssets/point.png')  : 'point.png',
-                local_path(__file__, 'MapAssets/marker.png') : 'marker.png'
+                local_path(__file__, 'MapAssets/point.png')         : 'point.png',
+                local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
+                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
+                local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
+                local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
+                local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
+                local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+                local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
+                local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
+                local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
+                local_path(__file__, 'MapAssets/white_marker.png')  : 'white_marker.png',
             }
         },
         'table' : {
@@ -1356,7 +1365,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, from_keys=None, big=100, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big=100, verbose=True):
         '''Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1386,6 +1395,12 @@ class GeoBase(object):
         else:
             get_size = lambda key: 0
 
+        # Optional function which gives points size
+        if point_color is not None and point_color in self.fields:
+            get_color = lambda key: self.get(key, point_color)
+        else:
+            get_color = lambda key: ''
+
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
@@ -1403,7 +1418,8 @@ class GeoBase(object):
             elem = {
                 '__key__' : key,
                 '__lab__' : self.get(key, label),
-                '__siz__' : get_size(key), # in 100 kms on the map
+                '__siz__' : get_size(key),
+                '__col__' : get_color(key),
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1]
             }
@@ -1426,6 +1442,7 @@ class GeoBase(object):
 
         # Custom the template to connect to the json data
         icon = 'marker.png' if len(data) < big else 'point.png'
+        icon = 'marker.png'
         tmp_template = []
         tmp_static   = [json_name]
 
