@@ -952,20 +952,20 @@ def main():
     label = 'name'      if 'name'      in g.fields else '__key__'
     size  = 'page_rank' if 'page_rank' in g.fields else None
 
-    if len(args['map_data']) >= 1:
+    if len(args['map_data']) >= 1 and args['map_data'][0] != '_':
         label = args['map_data'][0]
 
-    if len(args['map_data']) >= 2:
+    if len(args['map_data']) >= 2 and args['map_data'][1] != '_':
         size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
     header_display  = DEF_QUIET_HEADER
 
-    if len(args['quiet_options']) >= 1:
+    if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != '_':
         quiet_delimiter = args['quiet_options'][0]
 
-    if len(args['quiet_options']) >= 2:
+    if len(args['quiet_options']) >= 2 and args['quiet_options'][1] != '_':
         header_display = args['quiet_options'][1]
 
     # Reading interactive query options
@@ -973,10 +973,10 @@ def main():
     interactive_type  = '__exact__'
 
     if interactive_query_mode:
-        if len(args['interactive_query']) >= 1:
+        if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != '_':
             interactive_field = args['interactive_query'][0]
 
-        if len(args['interactive_query']) >= 2:
+        if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != '_':
             interactive_type = args['interactive_query'][1]
 
 
