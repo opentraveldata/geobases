@@ -67,6 +67,25 @@ function overflow(text) {
 
 }
 
+function next_color(){
+
+    if (typeof this.colors === "undefined") {
+        // Blue marker is not used because it is also the default marker
+        this.colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple', 'black', 'white'];
+        this.len = this.colors.length;
+
+        this.i = -1;
+    }
+
+    this.i += 1;
+
+    if (this.i < this.len) {
+        return this.colors[this.i];
+    } else {
+        return '';
+    }
+}
+
 
 function initialize(jsonData) {
 
@@ -105,7 +124,7 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.length;
 
-    var icon = '{{icon}}';
+    var base_icon = '{{icon}}';
 
     var markersArray = [];
     var circlesArray = [];
@@ -113,8 +132,9 @@ function initialize(jsonData) {
     var bounds       = new google.maps.LatLngBounds();
     var infowindow   = new google.maps.InfoWindow();
 
-    var i, j, c, e, s, latlng, marker, circle;
+    var i, j, c, e, s, latlng, marker, circle, color_value, icon;
     var max_value = 0;
+    catalog = {};
 
     // Load the data
     for (i=0 ; i<n ; i++) {
@@ -126,6 +146,23 @@ function initialize(jsonData) {
         if (isNaN(latlng.lat()) || isNaN(latlng.lng())) {
             //console.log(e.__lab__ + ' had no position: ' + e.lat + e.lng)
             continue;
+        }
+
+        // Compute point color
+        color_value = '' + e.__col__;
+
+        if (color_value === '') {
+            icon = base_icon;
+        } else {
+            if (typeof catalog[color_value] === "undefined") {
+                catalog[color_value] = next_color();
+            }
+
+            if (catalog[color_value] !== '') {
+                icon = catalog[color_value] + '_' + base_icon;
+            } else {
+                icon = base_icon;
+            }
         }
 
         marker = new google.maps.Marker({
