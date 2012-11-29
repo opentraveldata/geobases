@@ -68,20 +68,25 @@ function overflow(text) {
 }
 
 
+// Blue marker is not used because it is used as default marker
+var CATALOG = {};
+var COLORS  = [
+    'red', 'orange', 'yellow',
+    'green', 'cyan', 'purple',
+    'black'
+];
+
+
 function next_color(){
 
-    if (typeof this.colors === "undefined") {
-        // Blue marker is not used because it is also the default marker
-        this.colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple', 'black'];
-        this.len = this.colors.length;
-
-        this.i = -1;
+    if (typeof this.counter === "undefined") {
+        this.counter = -1;
     }
 
-    this.i += 1;
+    this.counter += 1;
 
-    if (this.i < this.len) {
-        return this.colors[this.i];
+    if (this.counter < COLORS.length) {
+        return COLORS[this.counter];
     } else {
         return '';
     }
@@ -125,7 +130,7 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.length;
 
-    var base_icon = '{{icon}}';
+    var base_icon = '{{base_icon}}';
 
     var markersArray = [];
     var circlesArray = [];
@@ -135,7 +140,6 @@ function initialize(jsonData) {
 
     var i, j, c, e, s, latlng, marker, circle, color_value, icon;
     var max_value = 0;
-    catalog = {};
 
     // Load the data
     for (i=0 ; i<n ; i++) {
@@ -155,12 +159,12 @@ function initialize(jsonData) {
         if (color_value === '') {
             icon = base_icon;
         } else {
-            if (typeof catalog[color_value] === "undefined") {
-                catalog[color_value] = next_color();
+            if (typeof CATALOG[color_value] === "undefined") {
+                CATALOG[color_value] = next_color();
             }
 
-            if (catalog[color_value] !== '') {
-                icon = catalog[color_value] + '_' + base_icon;
+            if (CATALOG[color_value] !== '') {
+                icon = CATALOG[color_value] + '_' + base_icon;
             } else {
                 icon = base_icon;
             }
