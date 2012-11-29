@@ -789,7 +789,7 @@ def handle_args():
                         DEF_NUM_COL,
         default = None)
 
-    parser.add_argument('-i', '--interactive',
+    parser.add_argument('-i', '--indexes',
         help = '''Specify metadata for data input, for stdin input
                         as well as defaults overriding for existing bases.
                         3 optional values: delimiter, headers, indexes.
@@ -947,20 +947,20 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
-        if len(args['interactive']) >= 1 and args['interactive'][0] != SKIP:
-            delimiter = args['interactive'][0]
+        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
+            delimiter = args['indexes'][0]
 
-        if len(args['interactive']) >= 2 and args['interactive'][1] != SKIP:
-            if args['interactive'][1] == '__head__':
+        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
+            if args['indexes'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['interactive'][1].split('/')
+                headers = args['indexes'][1].split('/')
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
-        if len(args['interactive']) >= 3 and args['interactive'][2] != SKIP:
-            indexes = args['interactive'][2].split('/')
+        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
+            indexes = args['indexes'][2].split('/')
         else:
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
@@ -979,14 +979,14 @@ def main():
         # -i options overrides default
         add_options = {}
 
-        if len(args['interactive']) >= 1 and args['interactive'][0] != SKIP:
-            add_options['delimiter'] = args['interactive'][0]
+        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
+            add_options['delimiter'] = args['indexes'][0]
 
-        if len(args['interactive']) >= 2 and args['interactive'][1] != SKIP:
-            add_options['headers'] = args['interactive'][1].split('/')
+        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
+            add_options['headers'] = args['indexes'][1].split('/')
 
-        if len(args['interactive']) >= 3 and args['interactive'][2] != SKIP:
-            add_options['indexes'] = args['interactive'][2].split('/')
+        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
+            add_options['indexes'] = args['indexes'][2].split('/')
 
         if verbose:
             if not add_options:
