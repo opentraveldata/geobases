@@ -117,6 +117,14 @@ class GeoBase(object):
             'static' : {
                 # source : target
                 local_path(__file__, 'MapAssets/point.png')         : 'point.png',
+                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
+                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
+                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
+                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
+                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
+                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
+                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
+                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
                 local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
                 local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
                 local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
@@ -126,7 +134,6 @@ class GeoBase(object):
                 local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
                 local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
                 local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
-                local_path(__file__, 'MapAssets/white_marker.png')  : 'white_marker.png',
             }
         },
         'table' : {
@@ -1442,7 +1449,6 @@ class GeoBase(object):
 
         # Custom the template to connect to the json data
         icon = 'marker.png' if len(data) < big else 'point.png'
-        icon = 'marker.png'
         tmp_template = []
         tmp_static   = [json_name]
 
