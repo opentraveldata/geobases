@@ -1425,7 +1425,7 @@ class GeoBase(object):
             out.write(json.dumps(data))
 
         # Custom the template to connect to the json data
-        image = 'marker.png' if len(data) < big else 'point.png'
+        icon = 'marker.png' if len(data) < big else 'point.png'
         tmp_template = []
         tmp_static   = [json_name]
 
@@ -1442,7 +1442,7 @@ class GeoBase(object):
                         for row in temp:
                             row = row.replace('{{file_name}}', output)
                             row = row.replace('{{json_file}}', json_name)
-                            row = row.replace('{{icon}}',      image)
+                            row = row.replace('{{icon}}',      icon)
                             out.write(row)
 
                 tmp_template.append(target)
