@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.4  : map coloring system with third option of -M
 + 4.3  : SimpleHTTPServer is now used to serve html files
 + 4.2  : -I option now accepts arguments to support different fields on input, and exact or fuzzy
 + 4.1  : map update with circle drawings from any field with -M, new -Q header control
