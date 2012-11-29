@@ -69,11 +69,11 @@ function overflow(text) {
 
 
 // Blue marker is not used because it is used as default marker
+// Black marker is not used because it is used for all points beyond the last category
 var CATALOG = {};
 var COLORS  = [
     'red', 'orange', 'yellow',
-    'green', 'cyan', 'purple',
-    'black'
+    'green', 'cyan', 'purple'
 ];
 
 
@@ -88,7 +88,8 @@ function next_color(){
     if (this.counter < COLORS.length) {
         return COLORS[this.counter];
     } else {
-        return '';
+        // Exceeding the number of category
+        return 'black';
     }
 }
 

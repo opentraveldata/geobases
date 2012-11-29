@@ -329,7 +329,7 @@ def display_browser(status, nb_res):
     httpd   = MyTCPServer(('0.0.0.0', PORT), Handler)
 
     try:
-        print '* Serving on localhost:%s' % PORT
+        print '* Serving on localhost:%s (hit ctrl+C to stop)' % PORT
         httpd.serve_forever()
 
     except KeyboardInterrupt:
