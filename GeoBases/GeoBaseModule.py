@@ -116,8 +116,8 @@ class GeoBase(object):
             },
             'static' : {
                 # source : target
-                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
-                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
+                local_path(__file__, 'MapAssets/point.png')  : 'point.png',
+                local_path(__file__, 'MapAssets/marker.png') : 'marker.png'
             }
         },
         'table' : {
@@ -1425,7 +1425,7 @@ class GeoBase(object):
             out.write(json.dumps(data))
 
         # Custom the template to connect to the json data
-        image = 'blue_marker.png' if len(data) < big else 'blue_point.png'
+        image = 'marker.png' if len(data) < big else 'point.png'
         tmp_template = []
         tmp_static   = [json_name]
 
