@@ -15,6 +15,9 @@ from itertools import izip_longest, chain
 import textwrap
 import signal
 
+import SimpleHTTPServer
+import SocketServer
+
 # Not in standard library
 from termcolor import colored
 import colorama
@@ -288,6 +291,54 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
         stdout.write(delim.join(l) + '\n')
 
 
+def display_browser(status, nb_res):
+    '''Display templates in the browser.
+
+    '''
+    # We manually launch firefox, unless we risk a crash
+    to_be_launched = []
+
+    for template in status:
+        if template.endswith('_table.html'):
+            if nb_res <= 2000:
+                to_be_launched.append(template)
+            else:
+                print '/!\ "firefox locahost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (PORT, template, nb_res)
+
+        elif template.endswith('_map.html'):
+            if nb_res <= 8000:
+                to_be_launched.append(template)
+            else:
+                print '/!\ "firefox locahost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (PORT, template, nb_res)
+        else:
+            to_be_launched.append(template)
+
+    if to_be_launched:
+        urls = ['localhost:%s/%s' % (PORT, tpl) for tpl in to_be_launched]
+        os.system('firefox %s &' % ' '.join(urls))
+
+
+    class MyTCPServer(SocketServer.TCPServer):
+        '''Overrides standard library.
+        '''
+        allow_reuse_address = True
+
+    Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+    httpd   = MyTCPServer(('0.0.0.0', PORT), Handler)
+
+    try:
+        print '* Serving on localhost:%s' % PORT
+        httpd.serve_forever()
+
+    except KeyboardInterrupt:
+        print '\n* Shutting down gracefully...'
+        httpd.shutdown()
+        print '* Done'
+
+
+
 def fixed_width(s, col, lim=25, truncate=None):
     '''
     This function is useful to display a string in the
@@ -555,6 +606,9 @@ DEF_INTER_FUZZY_L = 0.99
 
 # Magic value option to skip and leave default
 SKIP = '_'
+
+# Port for SimpleHTTPServer
+PORT = 8000
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -1178,28 +1232,7 @@ def main():
         status = g.visualize(output=g._data, label=label, point_size=size, from_keys=ex_keys(res), big=50, verbose=True)
 
         if verbose:
-            # We manually launch firefox, unless we risk a crash
-            to_be_launched = []
-
-            for template in status:
-                if template.endswith('_table.html'):
-                    if nb_res <= 2000:
-                        to_be_launched.append(template)
-                    else:
-                        print '/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
-                                (template, nb_res)
-
-                elif template.endswith('_map.html'):
-                    if nb_res <= 8000:
-                        to_be_launched.append(template)
-                    else:
-                        print '/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
-                                (template, nb_res)
-                else:
-                    to_be_launched.append(template)
-
-            if to_be_launched:
-                os.system('firefox %s &' % ' '.join(to_be_launched))
+            display_browser(status, nb_res)
 
         if len(status) < 2:
             # At least one html not rendered
