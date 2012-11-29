@@ -553,6 +553,9 @@ DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 
+# Magic value option to skip and leave default
+SKIP = '_'
+
 # Terminal width defaults
 DEF_CHAR_COL = 25
 MIN_CHAR_COL = 3
@@ -742,8 +745,8 @@ def handle_args():
                         burn the first line to define the headers.
                         Default indexes will take the first plausible field.
                         Default delimiter is smart :).
-                        For any field, you may put "_" to leave the default value.
-                        Example: -i ',' key/name/key2 key/key2''',
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -i ',' key/name/key2 key/key2''' % SKIP,
         nargs = '+',
         metavar = 'METADATA',
         default = [])
@@ -755,8 +758,8 @@ def handle_args():
                         from which the data is supposed to be. The second is the
                         type of matching, either "__exact__" or "__fuzzy__". For fuzzy
                         searches, the ratio is set to %s.
-                        For any field, you may put "_" to leave the default value.
-                        Example: -I icao_code __fuzzy__''' % DEF_INTER_FUZZY_L,
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -I icao_code __fuzzy__''' % (DEF_INTER_FUZZY_L, SKIP),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
@@ -772,9 +775,9 @@ def handle_args():
                         header display: RH to add a raw header, CH to
                         add a commented header, any other value will
                         not display the header. Default is "%s".
-                        For any field, you may put "_" to leave the default value.
+                        For any field, you may put "%s" to leave the default value.
                         Example: -Q ';' RH''' % \
-                        (DEF_QUIET_LIM, DEF_QUIET_HEADER),
+                        (DEF_QUIET_LIM, DEF_QUIET_HEADER, SKIP),
         nargs = '+',
         metavar = 'INFO',
         default = [])
@@ -791,8 +794,8 @@ def handle_args():
                         The second optional value is the field used to draw
                         circles around points. Default is "page_rank" if available.
                         Put "__none__" to disable circles.
-                        For any field, you may put "_" to leave the default value.
-                        Example: -M name population''',
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -M name population''' % SKIP,
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -890,10 +893,10 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
-        if len(args['interactive']) >= 1 and args['interactive'][0] != '_':
+        if len(args['interactive']) >= 1 and args['interactive'][0] != SKIP:
             delimiter = args['interactive'][0]
 
-        if len(args['interactive']) >= 2 and args['interactive'][1] != '_':
+        if len(args['interactive']) >= 2 and args['interactive'][1] != SKIP:
             if args['interactive'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
@@ -902,7 +905,7 @@ def main():
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
-        if len(args['interactive']) >= 3 and args['interactive'][2] != '_':
+        if len(args['interactive']) >= 3 and args['interactive'][2] != SKIP:
             indexes = args['interactive'][2].split('/')
         else:
             # Reprocessing the indexes with custom headers
@@ -922,13 +925,13 @@ def main():
         # -i options overrides default
         add_options = {}
 
-        if len(args['interactive']) >= 1 and args['interactive'][0] != '_':
+        if len(args['interactive']) >= 1 and args['interactive'][0] != SKIP:
             add_options['delimiter'] = args['interactive'][0]
 
-        if len(args['interactive']) >= 2 and args['interactive'][1] != '_':
+        if len(args['interactive']) >= 2 and args['interactive'][1] != SKIP:
             add_options['headers'] = args['interactive'][1].split('/')
 
-        if len(args['interactive']) >= 3 and args['interactive'][2] != '_':
+        if len(args['interactive']) >= 3 and args['interactive'][2] != SKIP:
             add_options['indexes'] = args['interactive'][2].split('/')
 
         if verbose:
@@ -955,20 +958,20 @@ def main():
     label = 'name'      if 'name'      in g.fields else '__key__'
     size  = 'page_rank' if 'page_rank' in g.fields else None
 
-    if len(args['map_data']) >= 1 and args['map_data'][0] != '_':
+    if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
-    if len(args['map_data']) >= 2 and args['map_data'][1] != '_':
+    if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
         size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
     header_display  = DEF_QUIET_HEADER
 
-    if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != '_':
+    if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != SKIP:
         quiet_delimiter = args['quiet_options'][0]
 
-    if len(args['quiet_options']) >= 2 and args['quiet_options'][1] != '_':
+    if len(args['quiet_options']) >= 2 and args['quiet_options'][1] != SKIP:
         header_display = args['quiet_options'][1]
 
     # Reading interactive query options
@@ -976,10 +979,10 @@ def main():
     interactive_type  = '__exact__'
 
     if interactive_query_mode:
-        if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != '_':
+        if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != SKIP:
             interactive_field = args['interactive_query'][0]
 
-        if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != '_':
+        if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != SKIP:
             interactive_type = args['interactive_query'][1]
 
 
