@@ -1009,14 +1009,14 @@ def main():
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
     # Reading map options
-    label = 'name'      if 'name'      in g.fields else '__key__'
-    size  = 'page_rank' if 'page_rank' in g.fields else None
+    label      = 'name'      if 'name'      in g.fields else '__key__'
+    size_field = 'page_rank' if 'page_rank' in g.fields else None
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
+        size_field = None if args['map_data'][1] == '__none__' else args['map_data'][1]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -1064,7 +1064,7 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unknown fields
-    fields_to_test = [f for f in (label, size, interactive_field) if f is not None]
+    fields_to_test = [f for f in (label, size_field, interactive_field) if f is not None]
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in ['__ref__'] + g.fields:
@@ -1229,7 +1229,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size, from_keys=ex_keys(res), big=50, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color='location_type', from_keys=ex_keys(res), big=50, verbose=True)
 
         if verbose:
             display_browser(status, nb_res)
