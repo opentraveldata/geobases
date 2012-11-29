@@ -139,8 +139,50 @@ function initialize(jsonData) {
     var bounds       = new google.maps.LatLngBounds();
     var infowindow   = new google.maps.InfoWindow();
 
-    var i, j, c, e, s, latlng, marker, circle, color_value, icon;
+    var i, j, c, e, s, latlng, marker, circle, color_value, icon, volume;
     var max_value = 0;
+    var categories = {};
+
+    // Count the categories for coloring
+    for (i=0 ; i<n ; i++) {
+        color_value = '' + jsonData[i].__col__;
+
+        if (color_value === '') {
+            // Empty values are not categorized, they get default marker at the end
+            continue;
+        }
+        if (typeof categories[color_value] === "undefined") {
+            categories[color_value] = 1;
+        }
+
+        categories[color_value] += 1;
+    }
+
+    // Sorting the categories by volume
+    var sorted_categories = [];
+
+    for (color_value in categories) {
+        if (categories.hasOwnProperty(color_value)) {
+            sorted_categories.push([color_value, categories[color_value]]);
+        }
+    }
+    sorted_categories.sort(function(a, b) {
+        return b[1] - a[1];
+    })
+
+    // We affect the colors in the catalog, starting from the biggest
+    // categories. Last categories will get black.
+    for (i=0 ; i<sorted_categories.length ; i++) {
+        color_value = sorted_categories[i][0];
+        volume      = sorted_categories[i][1];
+
+        if (typeof CATALOG[color_value] === "undefined") {
+            CATALOG[color_value] = {
+                'color'  : next_color(),
+                'volume' : volume
+            }
+        }
+    }
 
     // Load the data
     for (i=0 ; i<n ; i++) {
@@ -160,15 +202,7 @@ function initialize(jsonData) {
         if (color_value === '') {
             icon = base_icon;
         } else {
-            if (typeof CATALOG[color_value] === "undefined") {
-                CATALOG[color_value] = next_color();
-            }
-
-            if (CATALOG[color_value] !== '') {
-                icon = CATALOG[color_value] + '_' + base_icon;
-            } else {
-                icon = base_icon;
-            }
+            icon = CATALOG[color_value].color + '_' + base_icon;
         }
 
         marker = new google.maps.Marker({
