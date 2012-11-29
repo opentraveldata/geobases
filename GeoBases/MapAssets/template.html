@@ -249,7 +249,7 @@ function initialize(jsonData) {
     //var R = 100;
     var r = 0.075;
 
-    google.maps.event.addListener(map, 'bounds_changed', function() {
+    google.maps.event.addListener(map, 'idle', function() {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();

@@ -303,14 +303,14 @@ def display_browser(status, nb_res):
             if nb_res <= 2000:
                 to_be_launched.append(template)
             else:
-                print '/!\ "firefox locahost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (PORT, template, nb_res)
 
         elif template.endswith('_map.html'):
             if nb_res <= 8000:
                 to_be_launched.append(template)
             else:
-                print '/!\ "firefox locahost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (PORT, template, nb_res)
         else:
             to_be_launched.append(template)
@@ -849,7 +849,7 @@ def handle_args():
                         circles around points. Default is "page_rank" if available.
                         Put "__none__" to disable circles.
                         The third optional value is the field use to color icons.
-                        Default is "location_type" if available.
+                        Default is "timezone" if available.
                         Put "__none__" to disable coloring.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % SKIP,
@@ -1012,9 +1012,9 @@ def main():
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
     # Reading map options
-    label       = 'name'          if 'name'          in g.fields else '__key__'
-    size_field  = 'page_rank'     if 'page_rank'     in g.fields else None
-    color_field = 'location_type' if 'location_type' in g.fields else None
+    label       = 'name'      if 'name'      in g.fields else '__key__'
+    size_field  = 'page_rank' if 'page_rank' in g.fields else None
+    color_field = 'timezone'  if 'timezone'  in g.fields else None
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
