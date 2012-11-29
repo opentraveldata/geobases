@@ -849,7 +849,7 @@ def handle_args():
                         circles around points. Default is "page_rank" if available.
                         Put "__none__" to disable circles.
                         The third optional value is the field use to color icons.
-                        Default is "timezone" if available.
+                        Default is "raw_offset" if available.
                         Put "__none__" to disable coloring.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % SKIP,
@@ -1012,9 +1012,9 @@ def main():
         args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
 
     # Reading map options
-    label       = 'name'      if 'name'      in g.fields else '__key__'
-    size_field  = 'page_rank' if 'page_rank' in g.fields else None
-    color_field = 'timezone'  if 'timezone'  in g.fields else None
+    label       = 'name'       if 'name'       in g.fields else '__key__'
+    size_field  = 'page_rank'  if 'page_rank'  in g.fields else None
+    color_field = 'raw_offset' if 'raw_offset' in g.fields else None
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
