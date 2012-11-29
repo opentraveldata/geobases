@@ -67,11 +67,12 @@ function overflow(text) {
 
 }
 
+
 function next_color(){
 
     if (typeof this.colors === "undefined") {
         // Blue marker is not used because it is also the default marker
-        this.colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple', 'black', 'white'];
+        this.colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple', 'black'];
         this.len = this.colors.length;
 
         this.i = -1;
