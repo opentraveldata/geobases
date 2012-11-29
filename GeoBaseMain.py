@@ -1236,7 +1236,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big=50, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big=100, verbose=True)
 
         if verbose:
             display_browser(status, nb_res)
