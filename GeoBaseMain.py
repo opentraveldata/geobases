@@ -755,6 +755,7 @@ def handle_args():
                         from which the data is supposed to be. The second is the
                         type of matching, either "__exact__" or "__fuzzy__". For fuzzy
                         searches, the ratio is set to %s.
+                        For any field, you may put "_" to leave the default value.
                         Example: -I icao_code __fuzzy__''' % DEF_INTER_FUZZY_L,
         nargs = '*',
         metavar = 'OPTION',
@@ -771,6 +772,7 @@ def handle_args():
                         header display: RH to add a raw header, CH to
                         add a commented header, any other value will
                         not display the header. Default is "%s".
+                        For any field, you may put "_" to leave the default value.
                         Example: -Q ';' RH''' % \
                         (DEF_QUIET_LIM, DEF_QUIET_HEADER),
         nargs = '+',
@@ -789,6 +791,7 @@ def handle_args():
                         The second optional value is the field used to draw
                         circles around points. Default is "page_rank" if available.
                         Put "__none__" to disable circles.
+                        For any field, you may put "_" to leave the default value.
                         Example: -M name population''',
         nargs = '+',
         metavar = 'FIELDS',
