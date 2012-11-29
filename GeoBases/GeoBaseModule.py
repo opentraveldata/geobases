@@ -1477,7 +1477,7 @@ class GeoBase(object):
         if verbose:
             print
             print '* Now you may use your browser to visualize:'
-            print 'firefox %s &' % ' '.join(tmp_template)
+            print ' '.join(tmp_template)
             print
             print '* If you want to clean the temporary files:'
             print 'rm %s' % ' '.join(tmp_static + tmp_template)
