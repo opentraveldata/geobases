@@ -579,6 +579,9 @@ def error(name, *args):
     elif name == 'wrong_value':
         print('\n/!\ Wrong value "%s", should be in "%s".' % (args[0], args[1]), file=stderr)
 
+    elif name == 'type':
+        print >> stderr, '\n/!\ Wrong type for "%s", should be %s.' % (args[0], args[1])
+
     exit(1)
 
 
@@ -918,7 +921,10 @@ def main():
             limit = None
 
     else:
-        limit = int(args['limit'])
+        try:
+            limit = int(args['limit'])
+        except ValueError:
+            error('type', args['limit'], 'int')
 
     # Interactive query?
     interactive_query_mode = args['interactive_query'] is not None
@@ -1035,7 +1041,10 @@ def main():
         color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
 
     if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
-        big_icons = int(args['map_data'][3])
+        try:
+            big_icons = int(args['map_data'][3])
+        except ValueError:
+            error('type', args['map_data'][3], 'int')
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
