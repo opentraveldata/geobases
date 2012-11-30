@@ -13,6 +13,9 @@ from datetime import datetime
 from math import ceil
 from itertools import zip_longest, chain
 import textwrap
+import signal
+
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 # Not in standard library
 from termcolor import colored
@@ -21,6 +24,9 @@ import argparse # in standard libraray for Python >= 2.7
 
 # Private
 from GeoBases import GeoBase
+
+# Do not produce broken pipes when head and tail are used
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 
@@ -284,6 +290,49 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
         stdout.write(delim.join(l) + '\n')
 
 
+def display_browser(status, nb_res):
+    '''Display templates in the browser.
+
+    '''
+    # We manually launch firefox, unless we risk a crash
+    to_be_launched = []
+
+    for template in status:
+        if template.endswith('_table.html'):
+            if nb_res <= TABLE_BROWSER_LIM:
+                to_be_launched.append(template)
+            else:
+                print('/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (PORT, template, nb_res))
+
+        elif template.endswith('_map.html'):
+            if nb_res <= MAP_BROWSER_LIM:
+                to_be_launched.append(template)
+            else:
+                print('/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (PORT, template, nb_res))
+        else:
+            to_be_launched.append(template)
+
+    if to_be_launched:
+        urls = ['localhost:%s/%s' % (PORT, tpl) for tpl in to_be_launched]
+        os.system('firefox %s &' % ' '.join(urls))
+
+    # Note that in Python 3 we do not have to overload the class
+    # with allow_address_reuse
+    httpd = HTTPServer(('0.0.0.0', PORT), SimpleHTTPRequestHandler)
+
+    try:
+        print('* Serving on localhost:%s (hit ctrl+C to stop)' % PORT)
+        httpd.serve_forever()
+
+    except KeyboardInterrupt:
+        print('\n* Shutting down gracefully...')
+        httpd.shutdown()
+        print('* Done')
+
+
+
 def fixed_width(s, col, lim=25, truncate=None):
     '''
     This function is useful to display a string in the
@@ -499,7 +548,7 @@ def error(name, *args):
     '''
 
     if name == 'trep_support':
-        print('\n/!\ No opentrep support. Check if opentrep wrapper can import libpyopentrep.', file=stderr)
+        print('\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.', file=stderr)
 
     elif name == 'geocode_support':
         print('\n/!\ No geocoding support for data type %s.' % args[0], file=stderr)
@@ -527,6 +576,9 @@ def error(name, *args):
     elif name == 'empty_stdin':
         print('\n/!\ Stdin was empty', file=stderr)
 
+    elif name == 'wrong_value':
+        print('\n/!\ Wrong value "%s", should be in "%s".' % (args[0], args[1]), file=stderr)
+
     exit(1)
 
 
@@ -544,6 +596,23 @@ DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
+DEF_INTER_FUZZY_L = 0.99
+DEF_FUZZY_FIELD   = 'name'
+
+# Magic value option to skip and leave default, or disable
+SKIP    = '_'
+DISABLE = '__none__'
+
+# Port for SimpleHTTPServer
+PORT = 8000
+
+# Defaults for map
+DEF_LABEL_FIELD   = 'name'
+DEF_SIZE_FIELD    = 'page_rank'
+DEF_COLOR_FIELD   = 'raw_offset'
+DEF_BIG_ICONS     = 150  # threshold for using big icons
+MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
+TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -620,15 +689,16 @@ def handle_args():
         help = '''Rather than looking up a key, this mode will search the best
                         match from the property given by --fuzzy-property option for
                         the argument. Limit can be specified with --fuzzy-limit option.
-                        By default, the "name" property is used for the search.''',
+                        By default, the "%s" property is used for the search.''' % \
+                        DEF_FUZZY_FIELD,
         default = None,
         nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "name" if available, otherwise "__key__".
+                        Default is "%s" if available, otherwise "__key__".
                         Give unadmissible property and available
-                        values will be displayed.''',
+                        values will be displayed.''' % DEF_FUZZY_FIELD,
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
@@ -724,8 +794,9 @@ def handle_args():
                         DEF_NUM_COL,
         default = None)
 
-    parser.add_argument('-i', '--interactive',
-        help = '''Specify metadata for stdin data input.
+    parser.add_argument('-i', '--indexes',
+        help = '''Specify metadata for data input, for stdin input
+                        as well as defaults overriding for existing bases.
                         3 optional values: delimiter, headers, indexes.
                         Multiple fields may be specified with "/" delimiter.
                         Default headers will use alphabet, and try to sniff lat/lng.
@@ -733,15 +804,24 @@ def handle_args():
                         burn the first line to define the headers.
                         Default indexes will take the first plausible field.
                         Default delimiter is smart :).
-                        Example: -i ',' key/name/key2 key/key2''',
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -i ',' key/name/key2 key/key2''' % SKIP,
         nargs = '+',
         metavar = 'METADATA',
         default = [])
 
     parser.add_argument('-I', '--interactive-query',
         help = '''If passed, this option will consider stdin
-                        input as key for query, not data for loading.''',
-        action = 'store_true')
+                        input as key for query, not data for loading.
+                        It has optional arguments. The first one is the field
+                        from which the data is supposed to be. The second is the
+                        type of matching, either "__exact__" or "__fuzzy__". For fuzzy
+                        searches, the ratio is set to %s.
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -I icao_code __fuzzy__''' % (DEF_INTER_FUZZY_L, SKIP),
+        nargs = '*',
+        metavar = 'OPTION',
+        default = None)
 
     parser.add_argument('-q', '--quiet',
         help = '''Does not provide the verbose output.
@@ -754,8 +834,9 @@ def handle_args():
                         header display: RH to add a raw header, CH to
                         add a commented header, any other value will
                         not display the header. Default is "%s".
+                        For any field, you may put "%s" to leave the default value.
                         Example: -Q ';' RH''' % \
-                        (DEF_QUIET_LIM, DEF_QUIET_HEADER),
+                        (DEF_QUIET_LIM, DEF_QUIET_HEADER, SKIP),
         nargs = '+',
         metavar = 'INFO',
         default = [])
@@ -766,13 +847,20 @@ def handle_args():
         action = 'store_true')
 
     parser.add_argument('-M', '--map-data',
-        help = '''2 optional values.
+        help = '''4 optional values.
                         The first one is the field to display on map points.
-                        Default is "name" if available, otherwise "__key__".
+                        Default is "%s" if available, otherwise "__key__".
                         The second optional value is the field used to draw
-                        circles around points. Default is "page_rank" if available.
-                        Put "__none__" to disable circles.
-                        Example: -M name population''',
+                        circles around points. Default is "%s" if available.
+                        Put "%s" to disable circles.
+                        The third optional value is the field use to color icons.
+                        Default is "%s" if available.
+                        Put "%s" to disable coloring.
+                        The fourth optional value is the big icons threshold, this must
+                        be an integer, default is %s.
+                        For any field, you may put "%s" to leave the default value.
+                        Example: -M name population __none__''' % \
+                        (DEF_LABEL_FIELD, DEF_SIZE_FIELD, DISABLE, DEF_COLOR_FIELD, DISABLE, DEF_BIG_ICONS, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -832,6 +920,8 @@ def main():
     else:
         limit = int(args['limit'])
 
+    # Interactive query?
+    interactive_query_mode = args['interactive_query'] is not None
 
 
     #
@@ -855,8 +945,7 @@ def main():
         GeoBase.update()
         exit(0)
 
-    if not stdin.isatty() and not args['interactive_query']:
-
+    if not stdin.isatty() and not interactive_query_mode:
         try:
             first_l = next(stdin)
         except StopIteration:
@@ -869,20 +958,20 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
-        if len(args['interactive']) >= 1:
-            delimiter = args['interactive'][0]
+        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
+            delimiter = args['indexes'][0]
 
-        if len(args['interactive']) >= 2:
-            if args['interactive'][1] == '__head__':
+        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
+            if args['indexes'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['interactive'][1].split('/')
+                headers = args['indexes'][1].split('/')
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
-        if len(args['interactive']) >= 3:
-            indexes = args['interactive'][2].split('/')
+        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
+            indexes = args['indexes'][2].split('/')
         else:
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
@@ -898,10 +987,26 @@ def main():
                     indexes=indexes,
                     verbose=warnings)
     else:
-        if verbose:
-            print('Loading GeoBase "%s"...' % args['base'])
+        # -i options overrides default
+        add_options = {}
 
-        g = GeoBase(data=args['base'], verbose=warnings)
+        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
+            add_options['delimiter'] = args['indexes'][0]
+
+        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
+            add_options['headers'] = args['indexes'][1].split('/')
+
+        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
+            add_options['indexes'] = args['indexes'][2].split('/')
+
+        if verbose:
+            if not add_options:
+                print('Loading GeoBase "%s"...' % args['base'])
+            else:
+                print('Loading GeoBase "%s" with custom %s...' % \
+                        (args['base'], ', '.join('%s=%s' % kv for kv in add_options.items())))
+
+        g = GeoBase(data=args['base'], verbose=warnings, **add_options)
 
     if verbose:
         after_init = datetime.now()
@@ -912,27 +1017,46 @@ def main():
         args['exact_property'] = '__key__'
 
     if args['fuzzy_property'] is None:
-        args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
+        args['fuzzy_property'] = DEF_FUZZY_FIELD if DEF_FUZZY_FIELD in g.fields else '__key__'
 
     # Reading map options
-    label = 'name'      if 'name'      in g.fields else '__key__'
-    size  = 'page_rank' if 'page_rank' in g.fields else None
+    label       = DEF_LABEL_FIELD if DEF_LABEL_FIELD in g.fields else '__key__'
+    size_field  = DEF_SIZE_FIELD  if DEF_SIZE_FIELD  in g.fields else None
+    color_field = DEF_COLOR_FIELD if DEF_COLOR_FIELD in g.fields else None
+    big_icons   = DEF_BIG_ICONS
 
-    if len(args['map_data']) >= 1:
+    if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
-    if len(args['map_data']) >= 2:
-        size = None if args['map_data'][1] == '__none__' else args['map_data'][1]
+    if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
+        size_field = None if args['map_data'][1] == DISABLE else args['map_data'][1]
+
+    if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
+        color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+
+    if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
+        big_icons = int(args['map_data'][3])
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
     header_display  = DEF_QUIET_HEADER
 
-    if len(args['quiet_options']) >= 1:
+    if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != SKIP:
         quiet_delimiter = args['quiet_options'][0]
 
-    if len(args['quiet_options']) >= 2:
+    if len(args['quiet_options']) >= 2 and args['quiet_options'][1] != SKIP:
         header_display = args['quiet_options'][1]
+
+    # Reading interactive query options
+    interactive_field = '__key__'
+    interactive_type  = '__exact__'
+
+    if interactive_query_mode:
+        if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != SKIP:
+            interactive_field = args['interactive_query'][0]
+
+        if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != SKIP:
+            interactive_type = args['interactive_query'][1]
 
 
 
@@ -959,9 +1083,17 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unknown fields
-    for field in args['show'] + args['omit'] + [f for f in (label, size) if f is not None]:
+    fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
+
+    for field in args['show'] + args['omit'] + fields_to_test:
         if field not in ['__ref__'] + g.fields:
             error('field', field, args['base'], ['__ref__'] + g.fields)
+
+    # Testing -M option
+    allowed_types = ['__exact__', '__fuzzy__']
+
+    if interactive_type not in allowed_types:
+        error('wrong_value', interactive_type, allowed_types)
 
 
 
@@ -969,31 +1101,45 @@ def main():
     # MAIN
     #
     if verbose:
-        if not stdin.isatty() and args['interactive_query']:
-            print('Looking for matches from stdin...')
+        if not stdin.isatty() and interactive_query_mode:
+            print('Looking for matches from stdin query...')
         elif args['keys']:
             print('Looking for matches from %s...' % ', '.join(args['keys']))
         else:
             print('Looking for matches from *all* data...')
 
+    # Keeping track of last filter applied
+    last = None
+
+    # Keeping only keys in intermediate search
+    ex_keys = lambda res : None if res is None else (e[1] for e in res)
+
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not stdin.isatty() and args['interactive_query']:
-        res = []
+    if not stdin.isatty() and interactive_query_mode:
+        values = []
         for row in stdin:
-            res.extend(row.strip().split())
-        res = enumerate(res)
+            values.extend(row.strip().split())
+
+        # Query type
+        if interactive_type == '__exact__':
+            if interactive_field == '__key__':
+                res = enumerate(values)
+            else:
+                conditions = [(interactive_field, val) for val in values]
+                res = enumerate(g.getKeysWhere(conditions, force_str=True, mode='or'))
+                last = 'exact'
+
+        elif interactive_type == '__fuzzy__':
+            res = []
+            for val in values:
+                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
+            last = 'fuzzy'
 
     elif args['keys']:
         res = enumerate(args['keys'])
     else:
         res = enumerate(iter(g))
-
-    # Keeping only keys in intermediate search
-    ex_keys = lambda res : None if res is None else (e[1] for e in res)
-
-    # Keeping track of last filter applied
-    last = None
 
     # We are going to chain conditions
     # res will hold intermediate results
@@ -1014,7 +1160,10 @@ def main():
             else:
                 print('Applying property %s == "%s"' % (args['exact_property'], args['exact']))
 
-        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])], from_keys=ex_keys(res), reverse=args['reverse'], force_str=True)))
+        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])],
+                                            from_keys=ex_keys(res),
+                                            reverse=args['reverse'],
+                                            force_str=True)))
         last = 'exact'
 
 
@@ -1089,6 +1238,8 @@ def main():
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
 
+    if interactive_query_mode:
+        important.add(interactive_field)
 
     # __ref__ may be different thing depending on the last filter
     if last in ['near', 'closest']:
@@ -1100,31 +1251,16 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size, from_keys=ex_keys(res), big=50, verbose=True)
+        status = g.visualize(output=g._data,
+                             label=label,
+                             point_size=size_field,
+                             point_color=color_field,
+                             from_keys=ex_keys(res),
+                             big_limit=big_icons,
+                             verbose=True)
 
         if verbose:
-            # We manually launch firefox, unless we risk a crash
-            to_be_launched = []
-
-            for template in status:
-                if template.endswith('_table.html'):
-                    if nb_res <= 2000:
-                        to_be_launched.append(template)
-                    else:
-                        print('/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
-                                (template, nb_res))
-
-                elif template.endswith('_map.html'):
-                    if nb_res <= 8000:
-                        to_be_launched.append(template)
-                    else:
-                        print('/!\ "firefox %s" not launched automatically. %s results, may be slow.' % \
-                                (template, nb_res))
-                else:
-                    to_be_launched.append(template)
-
-            if to_be_launched:
-                os.system('firefox %s &' % ' '.join(to_be_launched))
+            display_browser(status, nb_res)
 
         if len(status) < 2:
             # At least one html not rendered
@@ -1134,26 +1270,16 @@ def main():
             print('/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status)))
 
 
-    try:
-        # We protect the stdout.write against the IOError
-        if frontend == 'terminal':
-            display(g, res, set(args['omit']), args['show'], important, ref_type)
+    # We protect the stdout.write against the IOError
+    if frontend == 'terminal':
+        display(g, res, set(args['omit']), args['show'], important, ref_type)
 
-        if frontend == 'quiet':
-            display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
+    if frontend == 'quiet':
+        display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-        if verbose:
-            for warn_msg in ENV_WARNINGS:
-                print(textwrap.dedent(warn_msg), end="")
-
-    except IOError:
-        # This means that the user probably used head or tail on this mode
-        # We close stderr to prevent the error display:
-        # > close failed in file object destructor:
-        # > sys.excepthook is missing
-        # > lost sys.stderr
-        stderr.close()
-
+    if verbose:
+        for warn_msg in ENV_WARNINGS:
+            print(textwrap.dedent(warn_msg), end="")
 
 
 if __name__ == '__main__':

@@ -8,8 +8,12 @@
     </head>
 
     <body>
-        <div id="canvas" style="width:1000px; height:700px">
-        </div>
+        <button id="legend" style="width: 80px; margin-bottom: 5px;">Legend   </button>
+        <button id="lines"  style="width: 80px; margin-bottom: 5px;">Lines (0)</button>
+
+        <span id="info" style="float:right;"></span>
+
+        <div id="canvas" style="width:1000px; height:700px"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -55,7 +59,7 @@ function sortPointY(a, b) {
 
 function overflow(text) {
 
-    if (typeof text === "number") {
+    if (typeof text !== "string") {
         return text;
     }
 
@@ -85,15 +89,15 @@ function initialize(jsonData) {
         mapOptions
     );
 
-    if (jsonData.length === 0){
+    if (jsonData.points.length === 0){
         return;
     }
 
     // Computing fields order
     var fields = [];
     var field;
-    for (field in jsonData[0]) {
-        if (jsonData[0].hasOwnProperty(field) && field !== '__lab__') {
+    for (field in jsonData.points[0]) {
+        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
             fields.push(field);
         }
     }
@@ -103,9 +107,9 @@ function initialize(jsonData) {
     })
 
     var f = fields.length;
-    var n = jsonData.length;
+    var n = jsonData.points.length;
 
-    var icon = '{{icon}}';
+    var base_icon = '{{base_icon}}';
 
     var markersArray = [];
     var circlesArray = [];
@@ -119,7 +123,7 @@ function initialize(jsonData) {
     // Load the data
     for (i=0 ; i<n ; i++) {
 
-        e = jsonData[i];
+        e = jsonData.points[i];
 
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
@@ -133,7 +137,7 @@ function initialize(jsonData) {
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
             title       : e.__lab__,
-            icon        : icon,
+            icon        : e.__col__ + '_' + base_icon,
             clickable   : true,
             draggable   : false
         });
@@ -207,7 +211,7 @@ function initialize(jsonData) {
     //var R = 100;
     var r = 0.075;
 
-    google.maps.event.addListener(map, 'bounds_changed', function() {
+    google.maps.event.addListener(map, 'idle', function() {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
@@ -242,11 +246,11 @@ function initialize(jsonData) {
     });
 
 
-    // Control rightclick state
+    // Control lines state when clicking on button
     var state = 0;
     var sortedCenters;
 
-    google.maps.event.addListener(map, 'rightclick', function() {
+    $('#lines').click(function() {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
@@ -269,7 +273,26 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
+        $(this).text('Lines (' + state + ')');
     });
+
+    $('#legend').click(function() {
+        var cat, vol, col;
+        var i, c;
+        var msg = '' + n + ' points:\n';
+
+        for (i=0, c=jsonData.categories.length; i<c ;i++) {
+            cat = jsonData.categories[i][0];
+            col = jsonData.categories[i][1].color;
+            vol = jsonData.categories[i][1].volume;
+            msg += ' * category "{0}" ({1} points) has color {2}\n'.fmt(cat, vol, col);
+        }
+        alert(msg);
+    });
+
+    // General information
+    $('#info').html('{0} points, {1} categorie(s), size max: {2}'.fmt(n, jsonData.categories.length, max_value));
+
 
 }
 

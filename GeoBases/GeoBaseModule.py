@@ -116,8 +116,24 @@ class GeoBase(object):
             },
             'static' : {
                 # source : target
-                local_path(__file__, 'MapAssets/blue_point.png')  : 'blue_point.png',
-                local_path(__file__, 'MapAssets/blue_marker.png') : 'blue_marker.png'
+                local_path(__file__, 'MapAssets/point.png')         : 'point.png',
+                local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
+                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
+                local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
+                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
+                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
+                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
+                local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
+                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
+                local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
+                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
+                local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
+                local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
+                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
+                local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
+                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
+                local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
             }
         },
         'table' : {
@@ -691,9 +707,13 @@ class GeoBase(object):
 
 
         for key in from_keys:
-
-            if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
-                yield key
+            try:
+                if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
+                    yield key
+            except KeyError:
+                # This means from_keys parameters contained unknown keys
+                if self._verbose:
+                    print('Key %-10s raised KeyError in getKeysWhere, moving on...' % key)
 
 
     def __str__(self):
@@ -1356,7 +1376,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, from_keys=None, big=100, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big_limit=100, verbose=True):
         '''Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1386,6 +1406,12 @@ class GeoBase(object):
         else:
             get_size = lambda key: 0
 
+        # Optional function which gives points size
+        if point_color is not None and point_color in self.fields:
+            get_category = lambda key: self.get(key, point_color)
+        else:
+            get_category = lambda key: None
+
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
@@ -1403,7 +1429,8 @@ class GeoBase(object):
             elem = {
                 '__key__' : key,
                 '__lab__' : self.get(key, label),
-                '__siz__' : get_size(key), # in 100 kms on the map
+                '__siz__' : get_size(key),
+                '__cat__' : get_category(key),
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1]
             }
@@ -1418,14 +1445,52 @@ class GeoBase(object):
 
             data.append(elem)
 
+        # Count the categories for coloring
+        categories = {}
+        for elem in data:
+            cat = elem['__cat__']
+            if cat not in categories:
+                categories[cat] = 0
+            categories[cat] += 1
+
+        # Color repartition given biggest categories
+        colors  = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple']
+        col_num = 0
+        for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+            categories[cat] = {
+                'volume' : vol
+            }
+            if cat is None:
+                # None is also the default category, when point_color is None
+                categories[cat]['color'] = 'blue'
+
+            elif col_num < len(colors):
+                # We affect the next color available
+                categories[cat]['color'] = colors[col_num]
+                col_num += 1
+            else:
+                # After all colors are used, remaining categories are black
+                categories[cat]['color'] = 'black'
+
+            if verbose:
+                print('> Affecting category %-8s to color %-7s (%-5s points)' % \
+                        (cat, categories[cat]['color'], vol))
+
+
+        for elem in data:
+            elem['__col__'] = categories[elem['__cat__']]['color']
+
         # Dump the json geocodes
         json_name = '%s.json' % output
 
         with open(json_name, 'w') as out:
-            out.write(json.dumps(data))
+            out.write(json.dumps({
+                'points'     : data,
+                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
+            }))
 
         # Custom the template to connect to the json data
-        image = 'blue_marker.png' if len(data) < big else 'blue_point.png'
+        base_icon    = 'marker.png' if len(data) < big_limit else 'point.png'
         tmp_template = []
         tmp_static   = [json_name]
 
@@ -1442,7 +1507,7 @@ class GeoBase(object):
                         for row in temp:
                             row = row.replace('{{file_name}}', output)
                             row = row.replace('{{json_file}}', json_name)
-                            row = row.replace('{{icon}}',      image)
+                            row = row.replace('{{base_icon}}', base_icon)
                             out.write(row)
 
                 tmp_template.append(target)
@@ -1454,7 +1519,7 @@ class GeoBase(object):
         if verbose:
             print()
             print('* Now you may use your browser to visualize:')
-            print('firefox %s &' % ' '.join(tmp_template))
+            print(' '.join(tmp_template))
             print()
             print('* If you want to clean the temporary files:')
             print('rm %s' % ' '.join(tmp_static + tmp_template))
