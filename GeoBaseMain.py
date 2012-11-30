@@ -603,6 +603,7 @@ DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
+DEF_FUZZY_FIELD   = 'name'
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -611,7 +612,11 @@ DISABLE = '__none__'
 # Port for SimpleHTTPServer
 PORT = 8000
 
-BIG_ICONS         = 150  # threshold for using big icons
+# Defaults for map
+DEF_LABEL_FIELD   = 'name'
+DEF_SIZE_FIELD    = 'page_rank'
+DEF_COLOR_FIELD   = 'raw_offset'
+DEF_BIG_ICONS     = 150  # threshold for using big icons
 MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
 
@@ -690,15 +695,16 @@ def handle_args():
         help = '''Rather than looking up a key, this mode will search the best
                         match from the property given by --fuzzy-property option for
                         the argument. Limit can be specified with --fuzzy-limit option.
-                        By default, the "name" property is used for the search.''',
+                        By default, the "%s" property is used for the search.''' % \
+                        DEF_FUZZY_FIELD,
         default = None,
         nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "name" if available, otherwise "__key__".
+                        Default is "%s" if available, otherwise "__key__".
                         Give unadmissible property and available
-                        values will be displayed.''',
+                        values will be displayed.''' % DEF_FUZZY_FIELD,
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
@@ -849,18 +855,18 @@ def handle_args():
     parser.add_argument('-M', '--map-data',
         help = '''4 optional values.
                         The first one is the field to display on map points.
-                        Default is "name" if available, otherwise "__key__".
+                        Default is "%s" if available, otherwise "__key__".
                         The second optional value is the field used to draw
-                        circles around points. Default is "page_rank" if available.
+                        circles around points. Default is "%s" if available.
                         Put "%s" to disable circles.
                         The third optional value is the field use to color icons.
-                        Default is "raw_offset" if available.
+                        Default is "%s" if available.
                         Put "%s" to disable coloring.
                         The fourth optional value is the big icons threshold, this must
                         be an integer, default is %s.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
-                            (DISABLE, DISABLE, BIG_ICONS, SKIP),
+                        (DEF_LABEL_FIELD, DEF_SIZE_FIELD, DISABLE, DEF_COLOR_FIELD, DISABLE, DEF_BIG_ICONS, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1017,13 +1023,13 @@ def main():
         args['exact_property'] = '__key__'
 
     if args['fuzzy_property'] is None:
-        args['fuzzy_property'] = 'name' if 'name' in g.fields else '__key__'
+        args['fuzzy_property'] = DEF_FUZZY_FIELD if DEF_FUZZY_FIELD in g.fields else '__key__'
 
     # Reading map options
-    label       = 'name'       if 'name'       in g.fields else '__key__'
-    size_field  = 'page_rank'  if 'page_rank'  in g.fields else None
-    color_field = 'raw_offset' if 'raw_offset' in g.fields else None
-    big_icons   = BIG_ICONS
+    label       = DEF_LABEL_FIELD if DEF_LABEL_FIELD in g.fields else '__key__'
+    size_field  = DEF_SIZE_FIELD  if DEF_SIZE_FIELD  in g.fields else None
+    color_field = DEF_COLOR_FIELD if DEF_COLOR_FIELD in g.fields else None
+    big_icons   = DEF_BIG_ICONS
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
