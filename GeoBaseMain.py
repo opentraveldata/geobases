@@ -300,14 +300,14 @@ def display_browser(status, nb_res):
 
     for template in status:
         if template.endswith('_table.html'):
-            if nb_res <= 2000:
+            if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
                 print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (PORT, template, nb_res)
 
         elif template.endswith('_map.html'):
-            if nb_res <= 8000:
+            if nb_res <= MAP_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
                 print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
@@ -611,6 +611,10 @@ DISABLE = '__none__'
 # Port for SimpleHTTPServer
 PORT = 8000
 
+BIG_ICONS         = 150  # threshold for using big icons
+MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
+TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
+
 # Terminal width defaults
 DEF_CHAR_COL = 25
 MIN_CHAR_COL = 3
@@ -843,7 +847,7 @@ def handle_args():
         action = 'store_true')
 
     parser.add_argument('-M', '--map-data',
-        help = '''3 optional values.
+        help = '''4 optional values.
                         The first one is the field to display on map points.
                         Default is "name" if available, otherwise "__key__".
                         The second optional value is the field used to draw
@@ -852,9 +856,11 @@ def handle_args():
                         The third optional value is the field use to color icons.
                         Default is "raw_offset" if available.
                         Put "%s" to disable coloring.
+                        The fourth optional value is the big icons threshold, this must
+                        be an integer, default is %s.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
-                            (DISABLE, DISABLE, SKIP),
+                            (DISABLE, DISABLE, BIG_ICONS, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1017,6 +1023,7 @@ def main():
     label       = 'name'       if 'name'       in g.fields else '__key__'
     size_field  = 'page_rank'  if 'page_rank'  in g.fields else None
     color_field = 'raw_offset' if 'raw_offset' in g.fields else None
+    big_icons   = BIG_ICONS
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
@@ -1026,6 +1033,9 @@ def main():
 
     if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
         color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+
+    if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
+        big_icons = int(args['map_data'][3])
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -1246,7 +1256,7 @@ def main():
                              point_size=size_field,
                              point_color=color_field,
                              from_keys=ex_keys(res),
-                             big_limit=100,
+                             big_limit=big_icons,
                              verbose=True)
 
         if verbose:
