@@ -67,7 +67,6 @@ except ImportError:
 
 
 setup(
-<<<<<<< HEAD
     name = 'GeoBases3K',
     version = '4.5.0',
     author = 'Alex Prengere',
