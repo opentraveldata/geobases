@@ -1469,7 +1469,7 @@ class GeoBase(object):
                 categories[cat]['color'] = 'black'
 
             if verbose:
-                print '> Affecting %-8s to color %-8s (volume %-8s)' % \
+                print '> Affecting category %-8s to color %-7s (%-5s points)' % \
                         (cat, categories[cat]['color'], vol)
 
 
@@ -1482,7 +1482,7 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'points'     : data,
-                'categories' : categories
+                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 
         # Custom the template to connect to the json data

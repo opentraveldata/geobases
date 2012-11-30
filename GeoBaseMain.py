@@ -604,8 +604,9 @@ DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 
-# Magic value option to skip and leave default
-SKIP = '_'
+# Magic value option to skip and leave default, or disable
+SKIP    = '_'
+DISABLE = '__none__'
 
 # Port for SimpleHTTPServer
 PORT = 8000
@@ -847,12 +848,13 @@ def handle_args():
                         Default is "name" if available, otherwise "__key__".
                         The second optional value is the field used to draw
                         circles around points. Default is "page_rank" if available.
-                        Put "__none__" to disable circles.
+                        Put "%s" to disable circles.
                         The third optional value is the field use to color icons.
                         Default is "raw_offset" if available.
-                        Put "__none__" to disable coloring.
+                        Put "%s" to disable coloring.
                         For any field, you may put "%s" to leave the default value.
-                        Example: -M name population __none__''' % SKIP,
+                        Example: -M name population __none__''' % \
+                            (DISABLE, DISABLE, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1020,10 +1022,10 @@ def main():
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        size_field = None if args['map_data'][1] == '__none__' else args['map_data'][1]
+        size_field = None if args['map_data'][1] == DISABLE else args['map_data'][1]
 
     if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
-        color_field = None if args['map_data'][2] == '__none__' else args['map_data'][2]
+        color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
