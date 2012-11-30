@@ -1457,12 +1457,21 @@ class GeoBase(object):
                 'volume' : vol
             }
             if cat is None:
+                # None is also the default category, when point_color is None
                 categories[cat]['color'] = 'blue'
+
             elif col_num < len(colors):
+                # We affect the next color available
                 categories[cat]['color'] = colors[col_num]
                 col_num += 1
             else:
+                # After all colors are used, remaining categories are black
                 categories[cat]['color'] = 'black'
+
+            if verbose:
+                print '> Affecting %-8s to color %-8s (volume %-8s)' % \
+                        (cat, categories[cat]['color'], vol)
+
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
