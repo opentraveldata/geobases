@@ -559,12 +559,12 @@ def error(name, *args):
 
     elif name == 'property':
         print('\n/!\ Wrong property "%s".' % args[0], file=stderr)
-        print('For data type %s, you may select:' % args[1], file=stderr)
+        print('For data type "%s", you may select:' % args[1], file=stderr)
         fmt_on_two_cols(args[2], stderr)
 
     elif name == 'field':
         print('\n/!\ Wrong field "%s".' % args[0], file=stderr)
-        print('For data type %s, you may select:' % args[1], file=stderr)
+        print('For data type "%s", you may select:' % args[1], file=stderr)
         fmt_on_two_cols(args[2], stderr)
 
     elif name == 'geocode_format':
@@ -1071,23 +1071,23 @@ def main():
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
         if not g.hasGeoSupport():
-            error('geocode_support', args['base'])
+            error('geocode_support', g._data)
 
     # Failing on wrong headers
     if args['exact'] is not None:
         if args['exact_property'] not in g.fields:
-            error('property', args['exact_property'], args['base'], g.fields)
+            error('property', args['exact_property'], g._data, g.fields)
 
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
-            error('property', args['fuzzy_property'], args['base'], g.fields)
+            error('property', args['fuzzy_property'], g._data, g.fields)
 
     # Failing on unknown fields
     fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in ['__ref__'] + g.fields:
-            error('field', field, args['base'], ['__ref__'] + g.fields)
+            error('field', field, g._data, ['__ref__'] + g.fields)
 
     # Testing -M option
     allowed_types = ['__exact__', '__fuzzy__']
