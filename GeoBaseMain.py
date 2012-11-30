@@ -580,7 +580,7 @@ def error(name, *args):
         print('\n/!\ Wrong value "%s", should be in "%s".' % (args[0], args[1]), file=stderr)
 
     elif name == 'type':
-        print >> stderr, '\n/!\ Wrong type for "%s", should be %s.' % (args[0], args[1])
+        print('\n/!\ Wrong type for "%s", should be %s.' % (args[0], args[1]), file=stderr)
 
     exit(1)
 
