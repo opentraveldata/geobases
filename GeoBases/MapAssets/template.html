@@ -8,8 +8,12 @@
     </head>
 
     <body>
-        <div id="canvas" style="width:1000px; height:700px">
-        </div>
+        <button id="legend" style="width: 80px; margin-bottom: 5px;">Legend   </button>
+        <button id="lines"  style="width: 80px; margin-bottom: 5px;">Lines (0)</button>
+
+        <span id="info" style="float:right;"></span>
+
+        <div id="canvas" style="width:1000px; height:700px"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -242,11 +246,11 @@ function initialize(jsonData) {
     });
 
 
-    // Control rightclick state
+    // Control lines state when clicking on button
     var state = 0;
     var sortedCenters;
 
-    google.maps.event.addListener(map, 'rightclick', function() {
+    $('#lines').click(function() {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
@@ -269,7 +273,26 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
+        $(this).text('Lines (' + state + ')');
     });
+
+    $('#legend').click(function() {
+        var cat, vol, col;
+        var i, c;
+        var msg = '' + n + ' points:\n';
+
+        for (i=0, c=jsonData.categories.length; i<c ;i++) {
+            cat = jsonData.categories[i][0];
+            col = jsonData.categories[i][1].color;
+            vol = jsonData.categories[i][1].volume;
+            msg += ' * category "{0}" ({1} points) has color {2}\n'.fmt(cat, vol, col);
+        }
+        alert(msg);
+    });
+
+    // General information
+    $('#info').html('{0} points, {1} categorie(s), size max: {2}'.fmt(n, jsonData.categories.length, max_value));
+
 
 }
 
