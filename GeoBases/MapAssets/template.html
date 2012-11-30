@@ -55,7 +55,7 @@ function sortPointY(a, b) {
 
 function overflow(text) {
 
-    if (typeof text === "number") {
+    if (typeof text !== "string") {
         return text;
     }
 
@@ -65,32 +65,6 @@ function overflow(text) {
 
     return ('' + text).slice(0, 25) + '...';
 
-}
-
-
-// Blue marker is not used because it is used as default marker
-// Black marker is not used because it is used for all points beyond the last category
-var CATALOG = {};
-var COLORS  = [
-    'red', 'orange', 'yellow',
-    'green', 'cyan', 'purple'
-];
-
-
-function next_color(){
-
-    if (typeof this.counter === "undefined") {
-        this.counter = -1;
-    }
-
-    this.counter += 1;
-
-    if (this.counter < COLORS.length) {
-        return COLORS[this.counter];
-    } else {
-        // Exceeding the number of category
-        return 'black';
-    }
 }
 
 
@@ -111,15 +85,15 @@ function initialize(jsonData) {
         mapOptions
     );
 
-    if (jsonData.length === 0){
+    if (jsonData.points.length === 0){
         return;
     }
 
     // Computing fields order
     var fields = [];
     var field;
-    for (field in jsonData[0]) {
-        if (jsonData[0].hasOwnProperty(field) && field !== '__lab__') {
+    for (field in jsonData.points[0]) {
+        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
             fields.push(field);
         }
     }
@@ -129,7 +103,7 @@ function initialize(jsonData) {
     })
 
     var f = fields.length;
-    var n = jsonData.length;
+    var n = jsonData.points.length;
 
     var base_icon = '{{base_icon}}';
 
@@ -139,55 +113,13 @@ function initialize(jsonData) {
     var bounds       = new google.maps.LatLngBounds();
     var infowindow   = new google.maps.InfoWindow();
 
-    var i, j, c, e, s, latlng, marker, circle, color_value, icon, volume;
+    var i, j, c, e, s, latlng, marker, circle;
     var max_value = 0;
-    var categories = {};
-
-    // Count the categories for coloring
-    for (i=0 ; i<n ; i++) {
-        color_value = '' + jsonData[i].__col__;
-
-        if (color_value === '') {
-            // Empty values are not categorized, they get default marker at the end
-            continue;
-        }
-        if (typeof categories[color_value] === "undefined") {
-            categories[color_value] = 1;
-        }
-
-        categories[color_value] += 1;
-    }
-
-    // Sorting the categories by volume
-    var sorted_categories = [];
-
-    for (color_value in categories) {
-        if (categories.hasOwnProperty(color_value)) {
-            sorted_categories.push([color_value, categories[color_value]]);
-        }
-    }
-    sorted_categories.sort(function(a, b) {
-        return b[1] - a[1];
-    })
-
-    // We affect the colors in the catalog, starting from the biggest
-    // categories. Last categories will get black.
-    for (i=0 ; i<sorted_categories.length ; i++) {
-        color_value = sorted_categories[i][0];
-        volume      = sorted_categories[i][1];
-
-        if (typeof CATALOG[color_value] === "undefined") {
-            CATALOG[color_value] = {
-                'color'  : next_color(),
-                'volume' : volume
-            }
-        }
-    }
 
     // Load the data
     for (i=0 ; i<n ; i++) {
 
-        e = jsonData[i];
+        e = jsonData.points[i];
 
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
@@ -196,21 +128,12 @@ function initialize(jsonData) {
             continue;
         }
 
-        // Compute point color
-        color_value = '' + e.__col__;
-
-        if (color_value === '') {
-            icon = base_icon;
-        } else {
-            icon = CATALOG[color_value].color + '_' + base_icon;
-        }
-
         marker = new google.maps.Marker({
             map         : map,
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
             title       : e.__lab__,
-            icon        : icon,
+            icon        : e.__col__ + '_' + base_icon,
             clickable   : true,
             draggable   : false
         });
