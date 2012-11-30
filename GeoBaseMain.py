@@ -1071,7 +1071,7 @@ def main():
             error('property', args['fuzzy_property'], args['base'], g.fields)
 
     # Failing on unknown fields
-    fields_to_test = [f for f in (label, size_field, interactive_field) if f is not None]
+    fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in ['__ref__'] + g.fields:
@@ -1236,7 +1236,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big=100, verbose=True)
+        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big_limit=100, verbose=True)
 
         if verbose:
             display_browser(status, nb_res)

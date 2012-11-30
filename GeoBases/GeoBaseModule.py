@@ -117,22 +117,22 @@ class GeoBase(object):
             'static' : {
                 # source : target
                 local_path(__file__, 'MapAssets/point.png')         : 'point.png',
-                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
-                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
-                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
-                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
-                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
-                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
-                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
-                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
                 local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
-                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
+                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
                 local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
+                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
+                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
+                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
                 local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
+                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
                 local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
+                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
                 local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
                 local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
+                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
                 local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
+                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
                 local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
             }
         },
@@ -1372,7 +1372,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big=100, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big_limit=100, verbose=True):
         '''Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1404,9 +1404,9 @@ class GeoBase(object):
 
         # Optional function which gives points size
         if point_color is not None and point_color in self.fields:
-            get_color = lambda key: self.get(key, point_color)
+            get_category = lambda key: self.get(key, point_color)
         else:
-            get_color = lambda key: ''
+            get_category = lambda key: None
 
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
@@ -1426,7 +1426,7 @@ class GeoBase(object):
                 '__key__' : key,
                 '__lab__' : self.get(key, label),
                 '__siz__' : get_size(key),
-                '__col__' : get_color(key),
+                '__cat__' : get_category(key),
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1]
             }
@@ -1441,14 +1441,43 @@ class GeoBase(object):
 
             data.append(elem)
 
+        # Count the categories for coloring
+        categories = {}
+        for elem in data:
+            cat = elem['__cat__']
+            if cat not in categories:
+                categories[cat] = 0
+            categories[cat] += 1
+
+        # Color repartition given biggest categories
+        colors  = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple']
+        col_num = 0
+        for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+            categories[cat] = {
+                'volume' : vol
+            }
+            if cat is None:
+                categories[cat]['color'] = 'blue'
+            elif col_num < len(colors):
+                categories[cat]['color'] = colors[col_num]
+                col_num += 1
+            else:
+                categories[cat]['color'] = 'black'
+
+        for elem in data:
+            elem['__col__'] = categories[elem['__cat__']]['color']
+
         # Dump the json geocodes
         json_name = '%s.json' % output
 
         with open(json_name, 'w') as out:
-            out.write(json.dumps(data))
+            out.write(json.dumps({
+                'points'     : data,
+                'categories' : categories
+            }))
 
         # Custom the template to connect to the json data
-        base_icon    = 'marker.png' if len(data) < big else 'point.png'
+        base_icon    = 'marker.png' if len(data) < big_limit else 'point.png'
         tmp_template = []
         tmp_static   = [json_name]
 

@@ -36,7 +36,7 @@ if (!String.fmt) {
 
 function overflow(text) {
 
-    if (typeof text === "number") {
+    if (typeof text !== "string") {
         return text;
     }
 
@@ -51,7 +51,7 @@ function overflow(text) {
 
 function initialize(jsonData) {
 
-    if (jsonData.length === 0){
+    if (jsonData.points.length === 0){
         alert('No data available.');
         return;
     }
@@ -59,8 +59,8 @@ function initialize(jsonData) {
     // Computing fields order
     var fields = [];
     var field;
-    for (field in jsonData[0]) {
-        if (jsonData[0].hasOwnProperty(field) && field !== '__lab__') {
+    for (field in jsonData.points[0]) {
+        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
             fields.push(field);
         }
     }
@@ -70,7 +70,7 @@ function initialize(jsonData) {
     })
 
     var f = fields.length;
-    var n = jsonData.length;
+    var n = jsonData.points.length;
 
     var i, j, e;
     var row = '<tr>';
@@ -86,7 +86,7 @@ function initialize(jsonData) {
     // Load the data
     for (i=0 ; i<n ; i++) {
 
-        e = jsonData[i];
+        e = jsonData.points[i];
 
         row = '<tr style="height:25px;">';
 
