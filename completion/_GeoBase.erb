@@ -30,11 +30,11 @@ _arguments \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
  "(-i --indexes)"{-i,--indexes}"[Specify metadata for stdin data input.]:*:delimiter headers indexes:$I_INT" \
- "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]:*:field exact?:$F_FIELDS" \
+ "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]:*:field __exact__/__fuzzy__:$F_FIELDS" \
  "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
  "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header_display:$Q_QUIET" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
- "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size:$F_FIELDS" \
+ "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color big:$F_FIELDS" \
  "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update some source files]" \
  "(-v --version)"{-v,--version}"[Display version information]" \
