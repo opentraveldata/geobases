@@ -707,9 +707,13 @@ class GeoBase(object):
 
 
         for key in from_keys:
-
-            if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
-                yield key
+            try:
+                if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
+                    yield key
+            except KeyError:
+                # This means from_keys parameters contained unknown keys
+                if self._verbose:
+                    print 'Key %-10s raised KeyError in getKeysWhere, moving on...' % key
 
 
     def __str__(self):
