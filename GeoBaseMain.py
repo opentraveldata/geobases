@@ -1148,7 +1148,10 @@ def main():
             else:
                 print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
 
-        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])], from_keys=ex_keys(res), reverse=args['reverse'], force_str=True)))
+        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])],
+                                            from_keys=ex_keys(res),
+                                            reverse=args['reverse'],
+                                            force_str=True)))
         last = 'exact'
 
 
@@ -1236,7 +1239,13 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data, label=label, point_size=size_field, point_color=color_field, from_keys=ex_keys(res), big_limit=100, verbose=True)
+        status = g.visualize(output=g._data,
+                             label=label,
+                             point_size=size_field,
+                             point_color=color_field,
+                             from_keys=ex_keys(res),
+                             big_limit=100,
+                             verbose=True)
 
         if verbose:
             display_browser(status, nb_res)
