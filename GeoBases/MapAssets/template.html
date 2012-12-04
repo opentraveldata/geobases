@@ -414,7 +414,8 @@ $(document).ready(function() {
     });
 
     // Press Escape event!
-    $(document).keypress(function (e) {
+    // Use keydown instead of keypress for webkit-based browsers
+    $(document).keydown(function (e) {
         if (e.keyCode === 27) {
             disablePopup('#legendPopup');
         }
