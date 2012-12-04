@@ -127,7 +127,8 @@ class RotatingColors(object):
 
 
     def get(self):
-        """Get current color."""
+        """Get current color.
+        """
         return self._availables[self._current]
 
 
