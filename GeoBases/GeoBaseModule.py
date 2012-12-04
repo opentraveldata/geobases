@@ -1486,6 +1486,11 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'points'     : data,
+                'meta'       : {
+                    'label'       : label,
+                    'point_size'  : point_size,
+                    'point_color' : point_color,
+                },
                 'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 

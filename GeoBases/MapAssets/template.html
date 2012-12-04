@@ -192,7 +192,7 @@ function initialize(jsonData) {
             circle.help = ' ' +
             '<div>' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '{0}'.fmt(s) +
+                '<i>{0}</i> {1}'.fmt(jsonData.meta.point_size, s) +
             '</div>';
 
             // Saving
@@ -285,13 +285,13 @@ function initialize(jsonData) {
             cat = jsonData.categories[i][0];
             col = jsonData.categories[i][1].color;
             vol = jsonData.categories[i][1].volume;
-            msg += ' * category "{0}" ({1} points) has color {2}\n'.fmt(cat, vol, col);
+            msg += ' * {0} "{1}" ({2} points) has color {3}\n'.fmt(jsonData.meta.point_color, cat, vol, col);
         }
         alert(msg);
     });
 
     // General information
-    $('#info').html('{0} points, {1} categorie(s), size max: {2}'.fmt(n, jsonData.categories.length, max_value));
+    $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, jsonData.meta.point_color, jsonData.meta.point_size, max_value));
 
 
 }
