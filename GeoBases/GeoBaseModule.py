@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 This module is a general class *GeoBase* to manipulate geographical
 data. It loads static csv files containing data about
 airports or train stations, and then provides tools to browse it.
@@ -44,7 +44,7 @@ From any point of reference:
     >>> geo = GeoBase(data='ori_por_multi')
     Import successful from ...
     Available fields for things: ...
-'''
+"""
 
 from __future__ import with_statement
 
@@ -108,11 +108,11 @@ __all__ = ['GeoBase']
 
 
 class GeoBase(object):
-    '''
+    """
     This is the main and only class. After __init__,
     a file is loaded in memory, and the user may use
     the instance to get information.
-    '''
+    """
 
     # Path to global configuration
     PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
@@ -170,15 +170,15 @@ class GeoBase(object):
 
     @staticmethod
     def update():
-        '''
+        """
         Launch update script on oripor data file.
-        '''
+        """
         os.system('bash ' + local_path(__file__, 'DataSources/CheckDataUpdates.sh'))
 
 
 
     def __init__(self, data, **kwargs):
-        '''Initialization
+        """Initialization
 
         :param data: the type of data wanted, 'airports', 'stations' \
             and 'feed' currently available. 'feed' will let you define your \
@@ -212,8 +212,7 @@ class GeoBase(object):
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
         {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
-        '''
-
+        """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
         self._data   = data
@@ -303,8 +302,8 @@ class GeoBase(object):
 
 
     def _configSubDelimiters(self):
-        '''Some precomputation on subdelimiters.
-        '''
+        """Some precomputation on subdelimiters.
+        """
         for h in self._headers:
             # If not in conf, do not sub split
             if h not in self._subdelimiters:
@@ -318,8 +317,8 @@ class GeoBase(object):
 
     @staticmethod
     def _configKeyer(indexes, headers):
-        '''Define thw function that build a line key.
-        '''
+        """Define thw function that build a line key.
+        """
         # It is possible to have a indexes which is a list
         # In this case we build the key as the concatenation between
         # the different fields
@@ -344,8 +343,8 @@ class GeoBase(object):
 
     @staticmethod
     def _buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb):
-        '''Building all data associated to this row.
-        '''
+        """Building all data associated to this row.
+        """
         # Erase everything, except duplicates counter
         data = {
             '__key__' : key,      # special field for key
@@ -382,9 +381,9 @@ class GeoBase(object):
 
 
     def _configReader(self, **csv_opt):
-        '''Manually configure the reader, to bypass the limitations of csv.reader.
+        """Manually configure the reader, to bypass the limitations of csv.reader.
 
-        '''
+        """
         delimiter = csv_opt['delimiter']
         #quotechar = csv_opt['quotechar']
 
@@ -396,8 +395,8 @@ class GeoBase(object):
             print '/!\ Fallback on custom reader, but quoting is disabled.'
 
         def _reader(source_fl):
-            '''Custom reader supporting multiple characters split.
-            '''
+            """Custom reader supporting multiple characters split.
+            """
             for row in source_fl:
                 yield row.rstrip('\r\n').split(delimiter)
 
@@ -405,12 +404,12 @@ class GeoBase(object):
 
 
     def _loadFile(self, source_fl):
-        '''Load the file and feed the self._things.
+        """Load the file and feed the self._things.
 
         :param verbose: display informations or not during runtime
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
-        '''
+        """
         # We cache all variables used in the main loop
         headers       = self._headers
         delimiter     = self._delimiter
@@ -490,14 +489,14 @@ class GeoBase(object):
 
 
     def hasGeoSupport(self):
-        '''
+        """
         Check if base has geocoding support.
 
         >>> geo_t.hasGeoSupport()
         True
         >>> geo_f.hasGeoSupport()
         False
-        '''
+        """
         fields = set(self.fields)
 
         for required in GeoBase.GEO_FIELDS:
@@ -509,7 +508,7 @@ class GeoBase(object):
 
 
     def get(self, key, field=None, **kwargs):
-        '''
+        """
         Simple get on the database.
         This get function raise exception when input is not correct.
 
@@ -541,8 +540,7 @@ class GeoBase(object):
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
         KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
-        '''
-
+        """
         if key not in self._things:
             # Unless default is set, we raise an Exception
             if 'default' in kwargs:
@@ -564,12 +562,12 @@ class GeoBase(object):
 
 
     def getLocation(self, key):
-        '''
+        """
         Returns proper geocode.
 
         >>> geo_a.getLocation('AGN')
         (57.50..., -134.585...)
-        '''
+        """
         try:
             loc = tuple(float(self.get(key, f)) for f in GeoBase.GEO_FIELDS)
 
@@ -589,19 +587,19 @@ class GeoBase(object):
 
 
     def hasDuplicates(self, key):
-        '''Tell if a key has duplicates.
+        """Tell if a key has duplicates.
 
         >>> geo_o.hasDuplicates('ORY')
         0
         >>> geo_o.hasDuplicates('THA')
         1
-        '''
+        """
         return len(self._things[key]['__dup__'])
 
 
 
     def getDuplicates(self, key, field=None, default=None):
-        '''Get all duplicates data, parent key included.
+        """Get all duplicates data, parent key included.
 
         >>> geo_o.getDuplicates('ORY', 'name')
         ['Paris-Orly']
@@ -611,8 +609,7 @@ class GeoBase(object):
         ['THA', 'THA@1']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
-        '''
-
+        """
         if key not in self._things:
             # Unless default is set, we raise an Exception
             if default is not None:
@@ -634,7 +631,7 @@ class GeoBase(object):
 
 
     def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
-        '''
+        """
         Get iterator of all keys with particular
         field.
         For example, if you want to know all airports in Paris.
@@ -677,8 +674,7 @@ class GeoBase(object):
         0
         >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
         20
-        '''
-
+        """
         if from_keys is None:
             from_keys = iter(self)
 
@@ -713,28 +709,28 @@ class GeoBase(object):
 
 
     def __str__(self):
-        '''Stringification.
+        """Stringification.
 
         >>> str(geo_t)
         '<GeoBases.GeoBaseModule.GeoBase(stations) object at 0x...>'
-        '''
+        """
         return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self._data
 
 
     def __iter__(self):
-        '''
+        """
         Returns iterator of all keys in the database.
 
         :returns: the iterator of all keys
 
         >>> list(a for a in geo_a)
         ['AGN', 'AGM', 'AGJ', 'AGH', ...
-        '''
+        """
         return self._things.iterkeys()
 
 
     def __contains__(self, key):
-        '''
+        """
         Test if a thing is in the base.
 
         :param key: the key of the thing to be tested
@@ -744,7 +740,7 @@ class GeoBase(object):
         False
         >>> 'AGN' in geo_a
         True
-        '''
+        """
         if key in self._things:
             return True
 
@@ -752,7 +748,7 @@ class GeoBase(object):
 
 
     def __nonzero__(self):
-        '''
+        """
         Testing GeoBase emptiness.
 
         :returns: a boolean
@@ -766,8 +762,7 @@ class GeoBase(object):
         >>> if not geo_f: print('empty')
         empty
         >>> if geo_f:     print('not empty')
-        '''
-
+        """
         if self._things:
             return True
 
@@ -775,27 +770,26 @@ class GeoBase(object):
 
 
     def keys(self):
-        '''
+        """
         Returns a list of all keys in the database.
 
         :returns: the list of all keys
 
         >>> geo_a.keys()
         ['AGN', 'AGM', 'AGJ', 'AGH', ...
-        '''
+        """
         return self._things.keys()
 
 
     def _buildDistances(self, lat_lng_ref, keys):
-        '''
+        """
         Compute the iterable of (dist, keys) of a reference
         lat_lng and a list of keys. Keys which have not valid
         geocodes will not appear in the results.
 
         >>> list(geo_a._buildDistances((0,0), ['ORY', 'CDG']))
         [(5422.74..., 'ORY'), (5455.45..., 'CDG')]
-        '''
-
+        """
         if lat_lng_ref is None:
             raise StopIteration
 
@@ -809,7 +803,7 @@ class GeoBase(object):
 
 
     def findNearPoint(self, lat_lng, radius=50, from_keys=None, grid=True, double_check=True):
-        '''
+        """
         Returns a list of nearby things from a point (given
         latidude and longitude), and a radius for the search.
         Note that the haversine function, which compute distance
@@ -845,8 +839,7 @@ class GeoBase(object):
         >>> # Paris, airports <= 50km with from_keys input list
         >>> sorted(geo_a.findNearPoint((48.84, 2.367), 50, from_keys=['ORY', 'CDG', 'BVE'], grid=False))
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
-        '''
-
+        """
         if from_keys is None:
             from_keys = iter(self)
 
@@ -860,7 +853,7 @@ class GeoBase(object):
 
 
     def findNearKey(self, key, radius=50, from_keys=None, grid=True, double_check=True):
-        '''
+        """
         Same as findNearPoint, except the point is given
         not by a lat/lng, but with its key, like ORY or SFO.
         We just look up in the base to retrieve lat/lng, and
@@ -893,8 +886,7 @@ class GeoBase(object):
         >>> 
         >>> sorted(geo_a.findNearKey('ORY', 50, grid=False, from_keys=['ORY', 'CDG', 'SFO']))
         [(0.0, 'ORY'), (34.8..., 'CDG')]
-        '''
-
+        """
         if from_keys is None:
             from_keys = iter(self)
 
@@ -905,7 +897,7 @@ class GeoBase(object):
 
 
     def findClosestFromPoint(self, lat_lng, N=1, from_keys=None, grid=True, double_check=True):
-        '''
+        """
         Concept close to findNearPoint, but here we do not
         look for the things radius-close to a point,
         we look for the closest thing from this point, given by
@@ -951,8 +943,7 @@ class GeoBase(object):
         [(0.56..., 'frnic')]
         >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
         [(482.84..., 'frbve'), (683.89..., 'frpaz')]
-        '''
-
+        """
         if from_keys is None:
             from_keys = iter(self)
 
@@ -964,14 +955,13 @@ class GeoBase(object):
 
 
     def _buildRatios(self, fuzzy_value, field, keys, min_match=0):
-        '''
+        """
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
         >>> list(geo_a._buildRatios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.50))
         [(0.66..., 'MRS')]
-        '''
-
+        """
         for key in keys:
 
             r = mod_leven(fuzzy_value, self.get(key, field))
@@ -982,7 +972,7 @@ class GeoBase(object):
 
 
     def fuzzyGet(self, fuzzy_value, field, approximate=None, min_match=0.50, from_keys=None):
-        '''
+        """
         We get to the cool stuff.
 
         Fuzzy searches are retrieving an information
@@ -1019,7 +1009,7 @@ class GeoBase(object):
         (0.78..., 'CDG')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
         []
-        '''
+        """
         if from_keys is None:
             # iter(self), since __iter__ is defined is equivalent to
             # self._things.iterkeys()
@@ -1037,7 +1027,7 @@ class GeoBase(object):
 
 
     def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
-        '''
+        """
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
 
@@ -1064,7 +1054,7 @@ class GeoBase(object):
         >>> # Now a request limited to some input keys
         >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
-        '''
+        """
         if from_keys is None:
             from_keys = iter(self)
 
@@ -1074,10 +1064,9 @@ class GeoBase(object):
 
 
     def _fuzzyGetBiased(self, entry, verbose=True):
-        '''
+        """
         Same as fuzzyGet but with bias system.
-        '''
-
+        """
         if entry in self._bias_cache_fuzzy:
             # If the entry is stored is our bias
             # cache, we do not perform the fuzzy search
@@ -1098,7 +1087,7 @@ class GeoBase(object):
                        min_match=0.75,
                        verbose=True,
                        show_bad=(1, 1)):
-        '''
+        """
         Same as fuzzyGet but with a caching and bias system.
 
         :param fuzzy_value: the value, like 'Marseille'
@@ -1128,7 +1117,7 @@ class GeoBase(object):
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, min_match=0.75)
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         [(0.5, 'Biased result')]
-        '''
+        """
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
@@ -1147,12 +1136,11 @@ class GeoBase(object):
 
 
     def biasFuzzyCache(self, fuzzy_value, field, approximate, min_match, biased_result):
-        '''
+        """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
         the research and force the result.
-        '''
-
+        """
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
 
@@ -1160,35 +1148,35 @@ class GeoBase(object):
 
 
     def clearCache(self):
-        '''
+        """
         Clear cache for fuzzy searches.
-        '''
+        """
         self._cache_fuzzy = {}
 
     def clearBiasCache(self):
-        '''
+        """
         Clear biasing cache for fuzzy searches.
-        '''
+        """
         self._bias_cache_fuzzy = {}
 
 
     @staticmethod
     def _buildCacheKey(fuzzy_value, field, approximate, min_match):
-        '''
+        """
         Key for the cache of fuzzyGet, based on parameters.
 
         >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None, min_match=0)
         ('paris+de+gaulle', 'name', None, 0)
         >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', approximate=3, min_match=0)
         ('antibes+sncf+2', 'name', 3, 0)
-        '''
+        """
         return '+'.join(clean(fuzzy_value)), field, approximate, min_match
 
 
     def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
-        '''
+        """
         Some debugging.
-        '''
+        """
         for m in match:
 
             if m[0] >= show_bad[0] and m[0] < show_bad[1]:
@@ -1201,7 +1189,7 @@ class GeoBase(object):
 
 
     def distance(self, key0, key1):
-        '''
+        """
         Compute distance between two elements.
         This is just a wrapper between the original haversine
         function, but it is probably the most used feature :)
@@ -1212,13 +1200,12 @@ class GeoBase(object):
 
         >>> geo_t.distance('frnic', 'frpaz')
         683.526...
-        '''
-
+        """
         return haversine(self.getLocation(key0), self.getLocation(key1))
 
 
     def set(self, key, field, value):
-        '''
+        """
         Method to manually change a value in the base.
 
         :param key:   the key we want to change a value of
@@ -1237,8 +1224,7 @@ class GeoBase(object):
         >>> geo_t.set('frnic', 'new_field', 'some_value')
         >>> geo_t.get('frnic', 'new_field')
         'some_value'
-        '''
-
+        """
         # If the key is not in the database,
         # we simply add it
         if key not in self._things:
@@ -1253,7 +1239,7 @@ class GeoBase(object):
 
 
     def setWithDict(self, key, dictionary):
-        '''
+        """
         Same as set method, except we perform
         the input with a whole dictionary.
 
@@ -1265,14 +1251,13 @@ class GeoBase(object):
         >>> geo_f.setWithDict('frnic', {'code' : 'frnic', 'name': 'Nice'})
         >>> geo_f.keys()
         ['frnic']
-        '''
-
+        """
         for field, val in dictionary.iteritems():
             self.set(key, field, val)
 
 
     def delete(self, key):
-        '''
+        """
         Method to manually remove a value in the base.
 
         :param key:   the key we want to change a value of
@@ -1290,22 +1275,21 @@ class GeoBase(object):
         >>> geo_t.setWithDict('frxrn', data)
         >>> geo_t.get('frxrn', 'name')
         'Redon'
-        '''
-
+        """
         del self._things[key]
 
 
     @staticmethod
     def hasTrepSupport():
-        '''
+        """
         Check if module has OpenTrep support.
-        '''
+        """
         return HAS_TREP_SUPPORT
 
 
     @staticmethod
     def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=False):
-        '''
+        """
         OpenTrep integration.
 
         If not hasTrepSupport(), main_trep is not defined
@@ -1320,7 +1304,7 @@ class GeoBase(object):
          -> Raw result: SFO/31.5192
          -> Fmt result: ([(31.5192, 'SFO')], '')
         [(31.5192, 'SFO')]
-        '''
+        """
         r = main_trep(searchString=fuzzy_value,
                       outputFormat=trep_format,
                       verbose=verbose)
@@ -1339,10 +1323,10 @@ class GeoBase(object):
 
 
     def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big_limit=100, verbose=True):
-        '''Creates map and other visualizations.
+        """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
-        '''
+        """
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
 
@@ -1498,8 +1482,8 @@ class GeoBase(object):
 
 
 def ext_split(value, split):
-    '''Extended split function handling None and '' splitter.
-    '''
+    """Extended split function handling None and '' splitter.
+    """
     if split is None:
         return value
     if split == '':
@@ -1510,8 +1494,8 @@ def ext_split(value, split):
 
 
 def recursive_split(value, splits):
-    '''Recursive extended split.
-    '''
+    """Recursive extended split.
+    """
     # Case where no subdelimiters
     if not splits:
         return value
@@ -1533,9 +1517,9 @@ def recursive_split(value, splits):
 
 
 def _test():
-    '''
+    """
     When called directly, launching doctests.
-    '''
+    """
     import doctest
 
     extraglobs = {
