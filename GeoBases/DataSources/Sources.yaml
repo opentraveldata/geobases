@@ -365,6 +365,17 @@ feature_classes:
         - name
 
 
+feature_codes:
+    source    : FeatureCodes/featureCodes_en.txt
+    indexes   : fcode
+    delimiter : "\t"
+    headers   :
+        - fclass
+        - fcode
+        - name
+        - description
+
+
 geonames_head:
     source    : Por/Geonames/allCountries.head.txt
     indexes   : geoname_id
