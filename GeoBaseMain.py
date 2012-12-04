@@ -149,19 +149,22 @@ class RotatingColors(object):
 
     @staticmethod
     def getEmph():
-        """Get special emphasized color."""
+        """Get special emphasized color.
+        """
         return ('white', 'on_blue', [])
 
 
     @staticmethod
     def getHeader():
-        """Get special header color."""
+        """Get special header color.
+        """
         return ('red', None, [])
 
 
     @staticmethod
     def getSpecial():
-        """Get special property color."""
+        """Get special property color.
+        """
         return ('magenta', None, [])
 
 
