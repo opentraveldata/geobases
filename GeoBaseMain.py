@@ -12,6 +12,7 @@ import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import izip_longest, chain
+import fcntl, termios, struct
 import textwrap
 import signal
 
@@ -58,22 +59,22 @@ def getObsoleteTermSize():
     return tuple(int(d) for d in size.split())
 
 
+def ioctl_GWINSZ(fd):
+    """Read terminal size.
+    """
+    try:
+        cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+    except IOError:
+        return
+    return cr
+
+
 def getTermSize():
     """
     This gives terminal size information.
     """
     env = os.environ
-
-    def ioctl_GWINSZ(fd):
-        """Read terminal size."""
-        try:
-            import fcntl, termios, struct
-            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
-        except IOError:
-            return
-        return cr
-
-    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    cr  = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
 
     if not cr:
         try:
