@@ -356,6 +356,15 @@ location_types:
         - type
 
 
+feature_classes:
+    source    : FeatureClasses/feature_classes.csv
+    indexes   : code
+    delimiter : ^
+    headers   :
+        - code
+        - fclass
+
+
 geonames_head:
     source    : Por/Geonames/allCountries.head.txt
     indexes   : geoname_id
