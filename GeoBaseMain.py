@@ -640,7 +640,7 @@ if BACKGROUND_COLOR not in ['black', 'white']:
     Accepted values are 'black' and 'white'. Using default 'black' here. *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
-        export BACKGROUND_COLOR=black # or white                         *
+        export BACKGROUND_COLOR=black # or white
                                                                          *
     *************************************************************** README
     """)
@@ -654,7 +654,7 @@ if not checkPath('GeoBase'):
     "GeoBase" does not seem to be in your $PATH.                         *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
-        export PATH=$PATH:$HOME/.local/bin                               *
+        export PATH=$PATH:$HOME/.local/bin
                                                                          *
     *************************************************************** README
     """)
@@ -668,10 +668,10 @@ if ENV_WARNINGS:
     you should also add this for the completion to work with zsh.        *
     You're using zsh right o_O?                                          *
                                                                          *
-        # Add custom completion scripts                                  *
-        fpath=(~/.zsh/completion $fpath)                                 *
-        autoload -U compinit                                             *
-        compinit                                                         *
+        # Add custom completion scripts
+        fpath=(~/.zsh/completion $fpath)
+        autoload -U compinit
+        compinit
                                                                          *
     *************************************************************** README
     """)
