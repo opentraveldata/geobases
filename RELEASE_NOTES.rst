@@ -6,7 +6,7 @@ Release notes
 V4
 ==
 
-+ 4.5  : big icons system, some refactoring
++ 4.5  : big icons system, legend and lines buttons
 + 4.4  : map coloring system with third option of -M
 + 4.3  : SimpleHTTPServer is now used to serve html files
 + 4.2  : -I option now accepts arguments to support different fields on input, and exact or fuzzy
