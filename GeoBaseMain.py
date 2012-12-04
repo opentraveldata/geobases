@@ -1015,8 +1015,8 @@ def main():
             if not add_options:
                 print 'Loading GeoBase "%s"...' % args['base']
             else:
-                print 'Loading GeoBase "%s" with custom %s...' % \
-                        (args['base'], ', '.join('%s=%s' % kv for kv in add_options.items()))
+                print 'Loading GeoBase "%s" with custom: %s ...' % \
+                        (args['base'], ' and '.join('%s = %s' % kv for kv in add_options.items()))
 
         g = GeoBase(data=args['base'], verbose=warnings, **add_options)
 

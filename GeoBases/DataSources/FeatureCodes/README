@@ -1,0 +1,4 @@
+This is a download from:
+http://download.geonames.org/export/dump/featureCodes_en.txt
+
+We just split the fclass.fcode into fclass\tfcode for data reading.
