@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 This module is a launcher for GeoBase.
-'''
+"""
 
 from sys import stdin, stdout, stderr
 import os
@@ -12,6 +12,7 @@ import pkg_resources
 from datetime import datetime
 from math import ceil
 from itertools import zip_longest, chain
+import fcntl, termios, struct
 import textwrap
 import signal
 
@@ -31,9 +32,9 @@ signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 def checkPath(command):
-    '''
+    """
     This checks if a command is in the PATH.
-    '''
+    """
     path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
     if path:
@@ -43,12 +44,12 @@ def checkPath(command):
 
 
 def getObsoleteTermSize():
-    '''
+    """
     This gives terminal size information using external
     command stty.
     This function is not great since where stdin is used, it
     raises an error.
-    '''
+    """
     size = os.popen('stty size 2>/dev/null', 'r').read()
 
     if not size:
@@ -57,22 +58,22 @@ def getObsoleteTermSize():
     return tuple(int(d) for d in size.split())
 
 
+def ioctl_GWINSZ(fd):
+    """Read terminal size.
+    """
+    try:
+        cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+    except IOError:
+        return
+    return cr
+
+
 def getTermSize():
-    '''
+    """
     This gives terminal size information.
-    '''
+    """
     env = os.environ
-
-    def ioctl_GWINSZ(fd):
-        '''Read terminal size.'''
-        try:
-            import fcntl, termios, struct
-            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
-        except IOError:
-            return
-        return cr
-
-    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    cr  = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
 
     if not cr:
         try:
@@ -89,10 +90,10 @@ def getTermSize():
 
 
 class RotatingColors(object):
-    '''
+    """
     This class is used for generating alternate colors
     for the Linux output.
-    '''
+    """
     def __init__(self, background):
 
         if background == 'black':
@@ -116,8 +117,8 @@ class RotatingColors(object):
 
 
     def __next__(self):
-        '''We increase the current color.
-        '''
+        """We increase the current color.
+        """
         self._current += 1
 
         if self._current == len(self._availables):
@@ -125,13 +126,14 @@ class RotatingColors(object):
 
 
     def get(self):
-        '''Get current color.'''
+        """Get current color.
+        """
         return self._availables[self._current]
 
 
     def convertRaw(self, col):
-        '''Get special raw color. Only change foreground color.
-        '''
+        """Get special raw color. Only change foreground color.
+        """
         current    = list(col)
         current[0] = 'yellow' if self._background == 'black' else 'green'
         return tuple(current)
@@ -139,8 +141,8 @@ class RotatingColors(object):
 
     @staticmethod
     def convertBold(col):
-        '''Get special field color. Only change bold type.
-        '''
+        """Get special field color. Only change bold type.
+        """
         current    = list(col)
         current[2] = ['bold']
         return tuple(current)
@@ -148,27 +150,30 @@ class RotatingColors(object):
 
     @staticmethod
     def getEmph():
-        '''Get special emphasized color.'''
+        """Get special emphasized color.
+        """
         return ('white', 'on_blue', [])
 
 
     @staticmethod
     def getHeader():
-        '''Get special header color.'''
+        """Get special header color.
+        """
         return ('red', None, [])
 
 
     @staticmethod
     def getSpecial():
-        '''Get special property color.'''
+        """Get special property color.
+        """
         return ('magenta', None, [])
 
 
 
 def fmt_ref(ref, ref_type, no_symb=False):
-    '''
+    """
     Display the __ref__ depending on its type.
-    '''
+    """
     if ref_type == 'distance':
         if no_symb:
             return '%.3f' % ref
@@ -187,10 +192,10 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
 
 def display(geob, list_of_things, omit, show, important, ref_type):
-    '''
+    """
     Main display function in Linux terminal, with
     nice color and everything.
-    '''
+    """
     if not list_of_things:
         stdout.write('\nNo elements to display.\n')
         return
@@ -246,12 +251,11 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
 
 def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
-    '''
+    """
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
     want to use use the result in a pipe for example.
-    '''
-
+    """
     if not show:
         # Temporary
         t_show = ['__ref__'] + geob.fields[:]
@@ -291,9 +295,8 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
 
 
 def display_browser(status, nb_res):
-    '''Display templates in the browser.
-
-    '''
+    """Display templates in the browser.
+    """
     # We manually launch firefox, unless we risk a crash
     to_be_launched = []
 
@@ -334,11 +337,11 @@ def display_browser(status, nb_res):
 
 
 def fixed_width(s, col, lim=25, truncate=None):
-    '''
+    """
     This function is useful to display a string in the
     terminal with a fixed width. It is especially
     tricky with unicode strings containing accents.
-    '''
+    """
     if truncate is None:
         truncate = 1000
 
@@ -358,12 +361,11 @@ def fixed_width(s, col, lim=25, truncate=None):
 
 
 def scan_coords(u_input, geob, verbose):
-    '''
+    """
     This function tries to interpret the main
     argument as either coordinates (lat, lng) or
     a key like ORY.
-    '''
-
+    """
     try:
         coords = tuple(float(l) for l in u_input.strip('()').split(','))
 
@@ -391,8 +393,8 @@ def scan_coords(u_input, geob, verbose):
 
 
 def guess_delimiter(row):
-    '''Heuristic to guess the top level delimiter.
-    '''
+    """Heuristic to guess the top level delimiter.
+    """
     discarded  = set([
         '#', # this is for comments
         '_', # this is for spaces
@@ -417,15 +419,15 @@ def guess_delimiter(row):
 
 
 def generate_headers(n):
-    '''Generate n headers.
-    '''
+    """Generate n headers.
+    """
     for i in range(n):
         yield 'H%s' % i
 
 
 def guess_headers(s_row):
-    '''Heuristic to guess the lat/lng fields from first row.
-    '''
+    """Heuristic to guess the lat/lng fields from first row.
+    """
     headers = list(generate_headers(len(s_row)))
 
     # Name candidates for lat/lng
@@ -466,11 +468,11 @@ def guess_headers(s_row):
 
 
 def score_index(f):
-    '''Eval likelihood of being an index.
+    """Eval likelihood of being an index.
 
     The shorter the better, and int get a len() of 1.
     0, 1 and floats are weird for indexes, as well as 1-letter strings.
-    '''
+    """
     if str(f).endswith('__key__') or str(f).lower().endswith('id'):
         return 0
 
@@ -486,8 +488,8 @@ def score_index(f):
 
 
 def guess_indexes(headers, s_row):
-    '''Heuristic to guess indexes from headers and first row.
-    '''
+    """Heuristic to guess indexes from headers and first row.
+    """
     discarded  = set(['lat', 'lng'])
     candidates = []
 
@@ -512,9 +514,9 @@ def guess_indexes(headers, s_row):
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
-    '''
+    """
     Some formatting for help.
-    '''
+    """
     n = float(len(L))
     h = int(ceil(n / 2)) # half+
 
@@ -532,21 +534,19 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
 
 
 def warn(name, *args):
-    '''
+    """
     Display a warning on stderr.
-    '''
-
+    """
     if name == 'key':
         print('/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
                 (args[0], args[1], args[2]), file=stderr)
 
 
 def error(name, *args):
-    '''
+    """
     Display an error on stderr, then exit.
     First argument is the error type.
-    '''
-
+    """
     if name == 'trep_support':
         print('\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.', file=stderr)
 
@@ -628,52 +628,52 @@ ENV_WARNINGS = []
 BACKGROUND_COLOR = os.getenv('BACKGROUND_COLOR', None) # 'white'
 
 if BACKGROUND_COLOR not in ['black', 'white']:
-    ENV_WARNINGS.append("""
+    ENV_WARNINGS.append('''
     **********************************************************************
     $BACKGROUND_COLOR environment variable not properly set.             *
     Accepted values are 'black' and 'white'. Using default 'black' here. *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
-        export BACKGROUND_COLOR=black # or white                         *
+        export BACKGROUND_COLOR=black # or white
                                                                          *
     *************************************************************** README
-    """)
+    ''')
 
     BACKGROUND_COLOR = 'black'
 
 
 if not checkPath('GeoBase'):
-    ENV_WARNINGS.append("""
+    ENV_WARNINGS.append('''
     **********************************************************************
     "GeoBase" does not seem to be in your $PATH.                         *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
-        export PATH=$PATH:$HOME/.local/bin                               *
+        export PATH=$PATH:$HOME/.local/bin
                                                                          *
     *************************************************************** README
-    """)
+    ''')
 
 
 if ENV_WARNINGS:
     # Assume the user did not read the wiki :D
-    ENV_WARNINGS.append("""
+    ENV_WARNINGS.append('''
     **********************************************************************
     By the way, since you probably did not read the documentation :D,    *
     you should also add this for the completion to work with zsh.        *
     You're using zsh right o_O?                                          *
                                                                          *
-        # Add custom completion scripts                                  *
-        fpath=(~/.zsh/completion $fpath)                                 *
-        autoload -U compinit                                             *
-        compinit                                                         *
+        # Add custom completion scripts
+        fpath=(~/.zsh/completion $fpath)
+        autoload -U compinit
+        compinit
                                                                          *
     *************************************************************** README
-    """)
+    ''')
 
 
 def handle_args():
-    '''Command line parsing.
-    '''
+    """Command line parsing.
+    """
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
@@ -885,10 +885,9 @@ def handle_args():
 
 
 def main():
-    '''
+    """
     Arguments handling.
-    '''
-
+    """
     # Filter colored signals on terminals.
     # Necessary for Windows CMD
     colorama.init()
