@@ -349,8 +349,8 @@ function initialize(jsonData) {
     // Fill legend
     var cat, vol, col;
     var i, c;
-    var msg = '<table style="width:100%; height:100%; align:center;">';
-    msg += '<tr><th>Icon</th><th>Color</th><th>Category</th><th>Volume</th></th>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
+    var msg = '<table style="width:100%; align:center;">';
+    msg += '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
         cat = jsonData.categories[i][0];
@@ -414,7 +414,8 @@ $(document).ready(function() {
     });
 
     // Press Escape event!
-    $(document).keypress(function (e) {
+    // Use keydown instead of keypress for webkit-based browsers
+    $(document).keydown(function (e) {
         if (e.keyCode === 27) {
             disablePopup('#legendPopup');
         }
