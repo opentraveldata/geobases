@@ -349,20 +349,20 @@ locales:
 
 location_types:
     source    : LocationTypes/location_types.csv
-    indexes   : code
+    indexes   : location_type
     delimiter : ^
     headers   :
-        - code
-        - type
+        - location_type
+        - name
 
 
 feature_classes:
     source    : FeatureClasses/feature_classes.csv
-    indexes   : code
+    indexes   : fclass
     delimiter : ^
     headers   :
-        - code
         - fclass
+        - name
 
 
 geonames_head:
