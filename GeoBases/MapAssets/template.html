@@ -14,6 +14,8 @@
         <span id="info" style="float:right;"></span>
 
         <div id="canvas" style="width:1000px; height:700px"></div>
+        <div id="legendPopup" class="popup"></div>
+        <div id="backgroundPopup"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -45,6 +47,74 @@ function haversine(lat1, lng1, lat2, lng2) {
         Math.cos(lat1) * Math.cos(lat2)
     ));
 }
+
+
+/**
+ *
+ * Popup management
+ *
+ */
+
+/**
+ * Loading popup
+ * @param {string} divId Container for the popup
+ * @see #centerPopup
+ * @see #disablePopup
+ */
+function loadPopup(divId) {
+
+    // First background fade in
+    $("#backgroundPopup").css({
+        "opacity": "0.7"
+    });
+    $("#backgroundPopup").fadeIn("slow");
+
+    // Then the popup over the background
+    $(divId).fadeIn("slow");
+
+}
+
+
+/**
+ * Disabling popup
+ * @param {string} divId Container for the popup
+ * @see #loadPopup
+ */
+function disablePopup(divId) {
+
+    // Background fade out
+    $("#backgroundPopup").fadeOut("slow");
+
+    // Popup fade out
+    $(divId).fadeOut("slow");
+
+}
+
+
+/**
+ * Centering popup
+ * @param {string} divId Container for the popup
+ * @see #loadPopup
+ */
+function centerPopup(divId) {
+
+    // Using jQuery functions to
+    // have cross-browser compatibility
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+
+    var popupHeight = $(divId).height();
+    var popupWidth = $(divId).width();
+
+    // Centering
+    $(divId).css({
+        //"position": "absolute",
+        "top": windowHeight/2 - popupHeight/2,
+        "left": windowWidth/2 - popupWidth/2
+    });
+
+}
+
 
 
 function sortPointX(a, b) {
@@ -276,23 +346,24 @@ function initialize(jsonData) {
         $(this).text('Lines (' + state + ')');
     });
 
-    $('#legend').click(function() {
-        var cat, vol, col;
-        var i, c;
-        var msg = '' + n + ' points:\n';
+    // Fill legend
+    var cat, vol, col;
+    var i, c;
+    var msg = '<table style="width:100%; height:100%; align:center;">';
+    msg += '<tr><th>Icon</th><th>Color</th><th>Category</th><th>Volume</th></th>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
 
-        for (i=0, c=jsonData.categories.length; i<c ;i++) {
-            cat = jsonData.categories[i][0];
-            col = jsonData.categories[i][1].color;
-            vol = jsonData.categories[i][1].volume;
-            msg += ' * {0} "{1}" ({2} points) has color {3}\n'.fmt(jsonData.meta.point_color, cat, vol, col);
-        }
-        alert(msg);
-    });
+    for (i=0, c=jsonData.categories.length; i<c ;i++) {
+        cat = jsonData.categories[i][0];
+        col = jsonData.categories[i][1].color;
+        vol = jsonData.categories[i][1].volume;
+        msg += '<tr><td><img src="{0}" alt="icon"/></td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
+    }
+    msg += '</table>';
+
+    $('#legendPopup').html(msg);
 
     // General information
     $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, jsonData.meta.point_color, jsonData.meta.point_size, max_value));
-
 
 }
 
@@ -304,6 +375,49 @@ $(document).ready(function() {
 
     $("#canvas").css({
         "width": $(window).width()*0.99
+    });
+
+    $('#backgroundPopup').css({
+        'display'    : 'none',
+        'position'   : 'fixed',
+        '_position'  : 'absolute', /* hack for internet explorer 6*/
+        'height'     : '100%',
+        'width'      : '100%',
+        'top'        : '0',
+        'left'       : '0',
+        'background' : '#000000',
+        'border'     : '0px solid #cecece',
+        'z-index'    : '1'
+    });
+
+    $('.popup').css({
+        'display'    : 'none',
+        'position'   : 'fixed',
+        '_position'  : 'absolute', /* hack for internet explorer 6*/
+        'height'     : '500px',
+        'width'      : '750px',
+        'padding'    : '0px',
+        'text-align' : 'center',
+        'color'      : 'white',
+        'background' : 'rgba(0, 0, 0, 0)',
+        'border'     : '0px solid #cecece',
+        'z-index'    : '2'
+    });
+
+    $('#legend').click(function() {
+        centerPopup('#legendPopup');
+        loadPopup('#legendPopup');
+    });
+
+    $("#backgroundPopup").click(function () {
+        disablePopup('#legendPopup');
+    });
+
+    // Press Escape event!
+    $(document).keypress(function (e) {
+        if (e.keyCode === 27) {
+            disablePopup('#legendPopup');
+        }
     });
 
     $.getJSON(
