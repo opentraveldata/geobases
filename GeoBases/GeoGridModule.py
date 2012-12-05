@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 This module is grid implementation, in order
 to provide geographical indexation features.
 
@@ -33,9 +33,7 @@ to provide geographical indexation features.
     [(0.0, 'ORY'), (3.33..., 'CDG')]
     >>> list(a.findClosestFromPoint((48.75, 2.361), N=2, double_check=True))
     [(0.0, 'CDG'), (3.33..., 'ORY')]
-'''
-
-
+"""
 
 
 import itertools
@@ -47,35 +45,34 @@ from .GeoUtils import haversine
 # Max recursion when iterating on frontiers
 MAX_RECURSIVE_FRONTIER = 5000
 
+# Thanks wikipedia
+# hash length | lat bits | lng bits | lat error | lng error | km error
+HASH_TO_ERROR = {
+    1 : (2,  3,  23,       23,      2500),
+    2 : (5,  5,  2.8,      5.6,     630),
+    3 : (7,  8,  0.70,     0.7,     78),
+    4 : (10, 10, 0.087,    0.18,    20),
+    5 : (12, 13, 0.022,    0.022,   2.4),
+    6 : (15, 15, 0.0027,   0.0055,  0.61),
+    7 : (17, 18, 0.00068,  0.00068, 0.076),
+    8 : (20, 20, 0.000085, 0.00017, 0.019)
+}
+
 
 class GeoGrid(object):
-    '''
+    """
     This is the main and only class.
-    '''
-
+    """
     def __init__(self, precision=5, radius=None, verbose=True):
-
-        # Thanks wikipedia
-        # hash length | lat bits | lng bits | lat error | lng error | km error
-        precision_to_errors = {
-            1 : (2,  3,  23,       23,      2500),
-            2 : (5,  5,  2.8,      5.6,     630),
-            3 : (7,  8,  0.70,     0.7,     78),
-            4 : (10, 10, 0.087,    0.18,    20),
-            5 : (12, 13, 0.022,    0.022,   2.4),
-            6 : (15, 15, 0.0027,   0.0055,  0.61),
-            7 : (17, 18, 0.00068,  0.00068, 0.076),
-            8 : (20, 20, 0.000085, 0.00017, 0.019)
-        }
-
+        """Creates grid.
+        """
         if radius is not None:
-
+            get_error = lambda x: (x[1][4] < radius,  abs(radius - x[1][4]))
             # Tricky, min of values only positive here
-            precision = min(iter(precision_to_errors.items()),
-                            key=lambda x: (x[1][4] < radius,  abs(radius - x[1][4])))[0]
+            precision = min(HASH_TO_ERROR.items(), key=get_error)[0]
 
         self._precision  = precision
-        self._avg_radius = precision_to_errors[precision][4]
+        self._avg_radius = HASH_TO_ERROR[precision][4]
 
         # Double mapping
         self._keys = {}
@@ -86,21 +83,20 @@ class GeoGrid(object):
 
 
     def _computeCaseId(self, lat_lng):
-        '''
+        """
         Computing the id the case for a (lat, lng).
-        '''
-
+        """
         return encode(*lat_lng, precision=self._precision)
 
 
 
     def add(self, key, lat_lng, verbose=True):
-        '''
+        """
         Add a point to the grid.
-        '''
-
+        """
         try:
             case_id = self._computeCaseId(lat_lng)
+
         except (TypeError, Exception):
             # TypeError for wrong type (NoneType, str)
             # Exception for invalid coordinates
@@ -121,11 +117,10 @@ class GeoGrid(object):
 
 
     def _recursiveFrontier(self, case_id, N=1, stop=True):
-        '''
+        """
         Yield the successive frontiers from a case.
         A frontier is a set of case ids.
-        '''
-
+        """
         if stop is True:
             gen = range(N)
         else:
@@ -148,22 +143,22 @@ class GeoGrid(object):
 
     @staticmethod
     def _nextFrontier(frontier, interior):
-        '''
+        """
         Compute next frontier from a frontier and a 
         matching interior.
         Interior is the set of case ids in the frontier.
-        '''
+        """
         return set([k for cid in frontier for k in neighbors(cid) if k not in interior])
 
 
 
     def _check_distance(self, candidate, ref_lat_lng, radius):
-        '''
+        """
         Filter from a iterator of candidates, the ones 
         who are within a radius if a ref_lat_lng.
 
         Yields the good ones.
-        '''
+        """
         for can in candidate:
 
             dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
@@ -173,9 +168,9 @@ class GeoGrid(object):
 
 
     def _allKeysInCases(self, cases):
-        '''
+        """
         Yields all keys in a iterable of case ids.
-        '''
+        """
         for case_id in cases:
 
             if case_id in self._grid:
@@ -185,11 +180,10 @@ class GeoGrid(object):
 
 
     def _findInAdjacentCases(self, case_id, N=1):
-        '''
+        """
         Find keys in adjacent cases from a case_id.
         Yields found keys.
-        '''
-
+        """
         for frontier in self._recursiveFrontier(case_id, N):
 
             for key in self._allKeysInCases(frontier):
@@ -197,11 +191,11 @@ class GeoGrid(object):
 
 
     def _findNearCase(self, case_id, radius=20):
-        '''
+        """
         Same as _findInAdjacentCases, but the limitation
         is given with a radius and not with a recursive limit
         in adjacency computation.
-        '''
+        """
         # Do your homework :D
         # A more accurate formula would be with
         # self._avg_radius = min(r1, r2) where r1 are r2 are
@@ -216,10 +210,10 @@ class GeoGrid(object):
 
 
     def findNearPoint(self, lat_lng, radius=20, double_check=False):
-        '''
+        """
         Find keys near a (lat, lng).
         Returns an iterator of (dist, key).
-        '''
+        """
         if lat_lng is None:
             # Case where the lat_lng was missing from base
             return iter([])
@@ -234,10 +228,10 @@ class GeoGrid(object):
 
 
     def findNearKey(self, key, radius=20, double_check=False):
-        '''
+        """
         Find keys near an input key.
         Returns an iterator of (dist, key).
-        '''
+        """
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode 
             # and as such was never indexed
@@ -253,10 +247,10 @@ class GeoGrid(object):
 
 
     def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
-        '''
+        """
         Find closest keys from a (lat, lng).
         Returns a iterator of (dist, key).
-        '''
+        """
         if from_keys is not None:
             # We convert to set before testing to nullity
             # because of empty iterators
@@ -302,9 +296,9 @@ class GeoGrid(object):
 
 
 def _test():
-    '''
+    """
     When called directly, launching doctests.
-    '''
+    """
     import doctest
 
     extraglobs = {}
@@ -320,6 +314,4 @@ def _test():
 
 if __name__ == '__main__':
     _test()
-
-
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 This module is composed of several functions useful
 for performing string comparisons. It is oriented for data like names of
 cities, airports, train stations, because the string comparisons
@@ -31,8 +31,7 @@ Simple examples::
     0.92...
     >>> mod_leven('Aéroport CDG  2', 'aeroport-cdg')
     1.0
-
-'''
+"""
 
 import re
 from Levenshtein import ratio as LevenRatio
@@ -89,7 +88,7 @@ HEURISTIC_INCLUSION_VALUE = 0.99
 
 
 def str_lowercase(string):
-    '''
+    """
     Lower case adapted for str type.
     With Python3, this function has become pretty useless.
 
@@ -97,7 +96,7 @@ def str_lowercase(string):
     étaples
     >>> print(str_lowercase('Étaples')) # Win!
     étaples
-    '''
+    """
     if isinstance(string, str):
         return string.lower()
 
@@ -106,7 +105,7 @@ def str_lowercase(string):
 
 
 def handle_accents(string):
-    '''
+    """
     Remove accentuated characters in a word, and
     replace them with non-accentuated ones.
 
@@ -117,8 +116,7 @@ def handle_accents(string):
     'etre'
     >>> handle_accents('St-Etienne SNCF (Châteaucreux)')
     'St-Etienne SNCF (Chateaucreux)'
-
-    '''
+    """
     for a, u in ACCENTS:
         string = string.replace(a, u)
 
@@ -126,7 +124,7 @@ def handle_accents(string):
 
 
 def handle_parenthesis_info(string, parts=None):
-    '''
+    """
     When a word contains parenthesis, this function picks
     only the part *before* the parenthesis.
 
@@ -143,7 +141,7 @@ def handle_parenthesis_info(string, parts=None):
     'Sncf City'
     >>> handle_parenthesis_info('St-Etienne SNCF (Chateaucreux)')
     'St-Etienne SNCF Chateaucreux'
-    '''
+    """
     if parts is None:
         parts = PARTS
 
@@ -157,7 +155,7 @@ def handle_parenthesis_info(string, parts=None):
 
 
 def split_separators(string):
-    '''
+    """
     When a word contains different separators, this function
     split the word using all separators.
 
@@ -168,8 +166,7 @@ def split_separators(string):
     ['Lyon', 'Part', 'Dieu']
     >>> split_separators('St-Etienne SNCF ')
     ['St', 'Etienne', 'SNCF', '']
-    '''
-
+    """
     for sep in SEPARATORS:
         string = string.replace(sep, SEPARATORS[0])
 
@@ -177,7 +174,7 @@ def split_separators(string):
 
 
 def handle_alias(strings):
-    '''
+    """
     Some common words have different ways to be used.
     This function normalize those, to have a better
     comparison tool later.
@@ -188,12 +185,12 @@ def handle_alias(strings):
 
     >>> handle_alias(['st', 'etienne', 'SNCF', ''])
     ['saint', 'etienne', 'SNCF', '']
-    '''
+    """
     return [ dict(ALIASES).get(s, s) for s in strings ]
 
 
 def handle_transparent(strings):
-    '''
+    """
     Some words are often parts irrelevant to string comparison.
     This function remove those, to have a better
     comparison tool later.
@@ -206,12 +203,12 @@ def handle_transparent(strings):
     ['saint', 'etienne', '']
     >>> handle_transparent(['aix', 'ville'])
     ['aix']
-    '''
+    """
     return [ s for s in strings if s not in TRANSPARENTS ]
 
 
 def handle_numbers_spaces(strings):
-    '''
+    """
     Some words contains numbers irrelevant to string comparison.
     This function remove those, to have a better
     comparison tool later.
@@ -223,14 +220,14 @@ def handle_numbers_spaces(strings):
 
     >>> handle_numbers_spaces(['saint', 'etienne', '2', ''])
     ['saint', 'etienne']
-    '''
+    """
     # We remove blanks or tabulation, and number
     return [ s for s in strings if s.strip() and not s.isdigit() ]
 
 
 
 def clean(string):
-    '''
+    """
     Global cleaning function which put
     all previous ones together.
 
@@ -255,7 +252,7 @@ def clean(string):
     ['aix']
     >>> clean('antibes sncf 2 (centre)')
     ['antibes', 'centre']
-    '''
+    """
     # Basic cleaning
     # We remove blanks or tabulation, and number
     return handle_numbers_spaces(
@@ -270,7 +267,7 @@ def clean(string):
 
 
 def is_sublist(subL, L):
-    '''
+    """
     This function tests the inclusion of a list in another one.
 
     :param sublst:  the tested sub-list
@@ -293,7 +290,7 @@ def is_sublist(subL, L):
     False
     >>> is_sublist([2,3], [2,3,4])
     True
-    '''
+    """
     n, ns  = len(L), len(subL)
 
     return any( (subL == L[i:i+ns]) for i in range(n-ns+1) )
@@ -301,7 +298,7 @@ def is_sublist(subL, L):
 
 
 def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inclusion_value=HEURISTIC_INCLUSION_VALUE):
-    '''
+    """
     The main comparison function.
     In fact, the real work has already been done previously,
     with the cleaning function.
@@ -342,7 +339,7 @@ def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inc
 
     >>> mod_leven('Aéroport CDG  2 TGV', 'aeroport-cdg', False) # No inclusion
     0.85...
-    '''
+    """
     str1 = clean(str1)
     str2 = clean(str2)
 
@@ -366,10 +363,9 @@ def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inc
 
 
 def _test():
-    '''
+    """
     When called directly, launching doctests.
-    '''
-
+    """
     import doctest
     opt =  (doctest.ELLIPSIS |
             doctest.NORMALIZE_WHITESPACE |
@@ -380,6 +376,7 @@ def _test():
 
 
 if __name__ == '__main__':
+
     _test()
 
     import sys
