@@ -43,6 +43,9 @@ countries:
     source    : Countries/countryInfo.txt
     indexes   : code
     delimiter : "\t"
+    subdelimiters :
+        languages : ','
+        neighbors : ','
     headers   :
         - code
         - iso_alpha3
@@ -78,6 +81,8 @@ stations:
     source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     indexes   : code
     delimiter : ^
+    subdelimiters :
+        lines: ','
     headers   :
         - code
         - lines
@@ -136,6 +141,8 @@ cities:
     source    : Cities/cities15000.txt
     indexes   : code
     delimiter : "\t"
+    subdelimiters :
+        alternatenames : ','
     headers   :
         - code
         - name
@@ -229,6 +236,8 @@ ori_por_private:
     source    : Por/Ori/ori_por.csv
     indexes   : iata_code
     delimiter : ^
+    subdelimiters :
+        alt_name_section : ['=', '|']
     headers   : &ori_por_private_headers
         - iata_code
         - icao_code
@@ -303,6 +312,8 @@ currencies:
     source    : Currencies/wiki_source_ISO_4217.csv
     indexes   : code
     delimiter : ;
+    subdelimiters :
+        countries : ','
     headers   :
         - code
         - numeric_code
