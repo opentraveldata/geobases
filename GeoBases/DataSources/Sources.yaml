@@ -67,6 +67,17 @@ countries:
         - neighbors
 
 
+capitals:
+    source    : Countries/capitals.csv
+    indexes   : code
+    delimiter : ^
+    headers   :
+        - name
+        - code
+        - lat
+        - lng
+
+
 continents:
     source    : Continents/continentCodes.txt
     indexes   : code
