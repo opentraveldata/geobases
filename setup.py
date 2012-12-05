@@ -60,9 +60,11 @@ except ImportError:
     raise
 
 
+VERSION = '4.7.0'
+
 setup(
     name = 'GeoBasesPypy',
-    version = '4.7.0',
+    version = VERSION,
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
