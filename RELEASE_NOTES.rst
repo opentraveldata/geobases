@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.7  : new base capitals, which contains countries capitals coordinates
 + 4.6  : countries, stations, currencies and ori_por_private now have subdelimiters
 + 4.5  : big icons system, legend and lines buttons
 + 4.4  : map coloring system with third option of -M
