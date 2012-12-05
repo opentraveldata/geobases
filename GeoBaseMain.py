@@ -1125,10 +1125,7 @@ def main():
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
     if not stdin.isatty() and interactive_query_mode:
-        values = []
-        for row in stdin:
-            values.extend(row.strip().split())
-
+        values = [row.strip() for row in stdin]
         # Query type
         if interactive_type == '__exact__':
             if interactive_field == '__key__':
