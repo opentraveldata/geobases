@@ -543,7 +543,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
