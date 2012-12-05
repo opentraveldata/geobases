@@ -70,17 +70,16 @@ ALIASES = ( ('st', 'saint'),
             ('hb', 'hbf') )
 
 # These are removed
-TRANSPARENTS = ('le',
-                'la',
-                'les',
-                'ville',
-                'sncf',
-                'hbf',
-                'bains',
-                'eaux',
-                'rive',
-                'droite',
-                'gauche')
+TRANSPARENTS = (
+    # French ones
+    'le',     'la',    'les',
+    'ville',  'sncf',  'hbf',
+    'bains',  'eaux',  'rive',
+    'droite', 'gauche',
+    # English ones
+    'a',      'an',    'the',
+    'and',    'or'
+)
 
 # Toggle inclusion heuristic
 HEURISTIC_INCLUSION       = True
