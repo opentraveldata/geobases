@@ -399,8 +399,9 @@ feature_codes:
         - description
 
 
-geonames_head:
-    source    : Por/Geonames/allCountries.head.txt
+geonames_all:
+    local     : false
+    source    : /remote/orihome/aprengere/public/allCountries.txt
     indexes   : geoname_id
     delimiter : "\t"
     headers   : &geonames_headers
@@ -408,8 +409,8 @@ geonames_head:
         - name
         - asciiname
         - alternatenames
-        - latitude  # not lat on purpose, avoid gridding (too long on full geonames)
-        - longitude # not lng on purpose, avoid gridding (too long on full geonames)
+        - lat
+        - lng
         - fclass
         - fcode
         - country_code
@@ -425,10 +426,8 @@ geonames_head:
         - moddate
 
 
-geonames_full:
-    local     : false
-    #source    : /home/aprengere/public/allCountries.txt
-    source    : /remote/orihome/aprengere/public/allCountries.txt
+geonames_FR:
+    source    : Por/Geonames/FR.txt
     indexes   : geoname_id
     delimiter : "\t"
     headers   : *geonames_headers
