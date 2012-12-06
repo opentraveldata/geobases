@@ -80,6 +80,7 @@ REF_URL_4='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/c
 REF_URL_5='http://download.geonames.org/export/dump/countryInfo.txt'
 REF_URL_6='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_7='http://download.geonames.org/export/dump/iso-languagecodes.txt'
+REF_URL_8='http://download.geonames.org/export/dump/featureCodes_en.txt'
 
 LOC_CSV_1='Por/Ori/ori_por_public.csv'
 LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
@@ -88,6 +89,7 @@ LOC_CSV_4='Airlines/crb_airline.csv'
 LOC_CSV_5='Countries/countryInfo.txt'
 LOC_CSV_6='TimeZones/timeZones.txt'
 LOC_CSV_7='Languages/iso-languagecodes.txt'
+LOC_CSV_8='FeatureCodes/featureCodes_en.txt'
 
 do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
 do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
@@ -96,4 +98,5 @@ do_a_file "$REF_URL_4" "$LOC_CSV_4" 1
 do_a_file "$REF_URL_5" "$LOC_CSV_5" 0
 do_a_file "$REF_URL_6" "$LOC_CSV_6" 1
 do_a_file "$REF_URL_7" "$LOC_CSV_7" 1
+do_a_file "$REF_URL_8" "$LOC_CSV_8" 0
 
