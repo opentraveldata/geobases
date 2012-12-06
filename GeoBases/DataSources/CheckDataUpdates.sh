@@ -30,6 +30,7 @@ do_a_file() {
     local LOC_CSV="$2"
     local NO_HEAD="$3"
     local UNZIP_F="$4"
+    local CHOOSED="$5"
 
     echo -e "\n* Comparing local file and remote:"
     echo -e "1. $PWD/$LOC_CSV"
@@ -40,8 +41,8 @@ do_a_file() {
 
     # Unzip if necessary
     if [ "$UNZIP_F" = "1" ]; then
-        unzip -p $TMP_CSV > "$TMP_CSV".unzipped
-        mv "$TMP_CSV".unzipped $TMP_CSV
+        unzip -q $TMP_CSV $CHOOSED
+        mv $CHOOSED $TMP_CSV
     fi
 
     # Commenting header
@@ -79,38 +80,43 @@ do_a_file() {
 }
 
 # Files
-#REF_URL_1='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
-#REF_URL_2='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
-REF_URL_1='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
-REF_URL_2='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
-REF_URL_3='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
-REF_URL_4='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/crb_airline.csv'
-REF_URL_5='http://download.geonames.org/export/dump/countryInfo.txt'
-REF_URL_6='http://download.geonames.org/export/dump/timeZones.txt'
-REF_URL_7='http://download.geonames.org/export/dump/iso-languagecodes.txt'
-REF_URL_8='http://download.geonames.org/export/dump/featureCodes_en.txt'
-REF_URL_9='http://download.geonames.org/export/dump/cities15000.zip'
+#REF_URL_01='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
+#REF_URL_02='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
+REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
+REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
+REF_URL_03='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
+REF_URL_04='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/crb_airline.csv'
+REF_URL_05='http://download.geonames.org/export/dump/countryInfo.txt'
+REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
+REF_URL_07='http://download.geonames.org/export/dump/iso-languagecodes.txt'
+REF_URL_08='http://download.geonames.org/export/dump/featureCodes_en.txt'
+REF_URL_09='http://download.geonames.org/export/dump/cities15000.zip'
+CHOOSED_09='cities15000.txt'
+REF_URL_10='http://download.geonames.org/export/dump/FR.zip'
+CHOOSED_10='FR.txt'
 
-LOC_CSV_1='Por/Ori/ori_por_public.csv'
-LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
-LOC_CSV_3='Por/Ori/ori_por.csv'
-LOC_CSV_4='Airlines/crb_airline.csv'
-LOC_CSV_5='Countries/countryInfo.txt'
-LOC_CSV_6='TimeZones/timeZones.txt'
-LOC_CSV_7='Languages/iso-languagecodes.txt'
-LOC_CSV_8='FeatureCodes/featureCodes_en.txt'
-LOC_CSV_9='Cities/cities15000.txt'
+LOC_CSV_01='Por/Ori/ori_por_public.csv'
+LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
+LOC_CSV_03='Por/Ori/ori_por.csv'
+LOC_CSV_04='Airlines/crb_airline.csv'
+LOC_CSV_05='Countries/countryInfo.txt'
+LOC_CSV_06='TimeZones/timeZones.txt'
+LOC_CSV_07='Languages/iso-languagecodes.txt'
+LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
+LOC_CSV_09='Cities/cities15000.txt'
+LOC_CSV_10='Por/Geonames/FR.txt'
 
 #do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
-do_a_file "$REF_URL_4" "$LOC_CSV_4" 1
-do_a_file "$REF_URL_5" "$LOC_CSV_5" 0
-do_a_file "$REF_URL_6" "$LOC_CSV_6" 1
-do_a_file "$REF_URL_7" "$LOC_CSV_7" 1
-do_a_file "$REF_URL_8" "$LOC_CSV_8" 0
-do_a_file "$REF_URL_9" "$LOC_CSV_9" 0 1
+do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
+do_a_file "$REF_URL_05" "$LOC_CSV_05" 0
+do_a_file "$REF_URL_06" "$LOC_CSV_06" 1
+do_a_file "$REF_URL_07" "$LOC_CSV_07" 1
+do_a_file "$REF_URL_08" "$LOC_CSV_08" 0
+do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
+do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
 
 # The longest at the end
-do_a_file "$REF_URL_3" "$LOC_CSV_3" 1
-do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
-do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
+do_a_file "$REF_URL_03" "$LOC_CSV_03" 1
+do_a_file "$REF_URL_02" "$LOC_CSV_02" 1
+do_a_file "$REF_URL_01" "$LOC_CSV_01" 1
 
