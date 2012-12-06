@@ -433,6 +433,13 @@ geonames_FR:
     headers   : *geonames_headers
 
 
+geonames_MC:
+    source    : Por/Geonames/MC.txt
+    indexes   : geoname_id
+    delimiter : "\t"
+    headers   : *geonames_headers
+
+
 office_ids_midt:
     local     : false
     source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
