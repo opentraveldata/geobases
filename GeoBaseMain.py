@@ -479,10 +479,9 @@ def score_index(f):
     if isinstance(f, float):
         return 1000
 
-    if f <= 1: # we avoid a domain error on next case
-        return 10
-
     if isinstance(f, int):
+        if f <= 1: # we avoid a domain error on next case
+            return 10
         return max(2, 25 / log(f))
 
     return len(f) if len(f) >= 2 else 10
