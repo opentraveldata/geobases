@@ -29,29 +29,37 @@ do_a_file() {
     local REF_URL="$1"
     local LOC_CSV="$2"
     local NO_HEAD="$3"
+    local UNZIP_F="$4"
 
-    echo -e "\n* Comparing local file and remote:\n"
+    echo -e "\n* Comparing local file and remote:"
     echo -e "1. $PWD/$LOC_CSV"
     echo -e "2. $REF_URL"
 
     # Downloading
     wget $REF_URL -O $TMP_CSV -o /dev/null
 
+    # Unzip if necessary
+    if [ "$UNZIP_F" = "1" ]; then
+        unzip -p $TMP_CSV > "$TMP_CSV".unzipped
+        mv "$TMP_CSV".unzipped $TMP_CSV
+    fi
+
     # Commenting header
     if [ "$NO_HEAD" = "1" ]; then
         sed -i '1s/^/#/g' $TMP_CSV
     fi
 
-    echo -e "\n* Unified diff:"
-    diff -u $LOC_CSV $TMP_CSV
+    # Computing diff
     DIFF=`diff -u $LOC_CSV $TMP_CSV`
-    echo
 
     if [ "$DIFF" = "" ]; then
-        echo "Nothing to do."
+        echo "* Nothing to do."
         rm -f $TMP_CSV
         return 0
     fi
+
+    echo -e "\n* Unified diff:"
+    diff -u $LOC_CSV $TMP_CSV
 
     if [ "$FORCE" = "0" ]; then
         echo -n "Replace? [Y/N]: "
@@ -81,6 +89,7 @@ REF_URL_5='http://download.geonames.org/export/dump/countryInfo.txt'
 REF_URL_6='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_7='http://download.geonames.org/export/dump/iso-languagecodes.txt'
 REF_URL_8='http://download.geonames.org/export/dump/featureCodes_en.txt'
+REF_URL_9='http://download.geonames.org/export/dump/cities15000.zip'
 
 LOC_CSV_1='Por/Ori/ori_por_public.csv'
 LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
@@ -90,13 +99,18 @@ LOC_CSV_5='Countries/countryInfo.txt'
 LOC_CSV_6='TimeZones/timeZones.txt'
 LOC_CSV_7='Languages/iso-languagecodes.txt'
 LOC_CSV_8='FeatureCodes/featureCodes_en.txt'
+LOC_CSV_9='Cities/cities15000.txt'
 
-do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
-do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
-do_a_file "$REF_URL_3" "$LOC_CSV_3" 1
+#do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
 do_a_file "$REF_URL_4" "$LOC_CSV_4" 1
 do_a_file "$REF_URL_5" "$LOC_CSV_5" 0
 do_a_file "$REF_URL_6" "$LOC_CSV_6" 1
 do_a_file "$REF_URL_7" "$LOC_CSV_7" 1
 do_a_file "$REF_URL_8" "$LOC_CSV_8" 0
+do_a_file "$REF_URL_9" "$LOC_CSV_9" 0 1
+
+# The longest at the end
+do_a_file "$REF_URL_3" "$LOC_CSV_3" 1
+do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
+do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
 
