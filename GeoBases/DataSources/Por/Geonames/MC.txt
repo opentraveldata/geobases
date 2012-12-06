@@ -1,0 +1,41 @@
+2992741	Monte-Carlo	Monte-Carlo	Monte Carlo,Monte Karlo,Monte Karló,Monte-Karlo,Montecarlo,XMM,Монте-Карло	43.74965	7.43701	P	PPLX	MC		00				16012		60	Europe/Monaco	2011-02-24
+2993456	Rocher de Monaco	Rocher de Monaco		43.73102	7.42516	T	HDLD	MC		00				0		50	Europe/Monaco	2011-09-11
+2993457	Principality of Monaco	Principality of Monaco	Manaka,Manako,Mo-na-co,Monaakoo,Monaco,Monaco - Monaco,Monacó,Monacô,Monakaen,Monakas,Monakho,Monako,Monako nutome,Monakoeo,Monaku,Monakän,Monaköo,Monegue,Monoecus,Moonako,Munaku,Mònaco,Mónaco,Mónaco - Monaco,Mónakó,Mónegue,Mô-na-cô,Mônaco,Mônakô,Mɔnako,Orileede Monako,Orílẹ́ède Monako,Principa de Monego,Principado de Monaco,Principado de Mónaco,Principado de Mônaco,Principat de Monaco,Principat de Mònaco,Principato di Monaco,Principaute de Monaco,Principauté de Monaco,Principâ de Monego,Prinzsipato de Monaco,Prinzsipato de Mònaco,i-Monaco,meaneakkea,mnakw,mo na ge,monaiko,monakko,monako,moneko,mwnakw,mwnkw,mwnqw,prathes monako,Μονακό,Манака,Монако,Մոնակո,מונקו,مناکو,موناكو,موناکو,مۆناکۆ,ܡܘܢܟܘ,मोनाको,मोनॅको,मोनैको,মোনাকো,મોનાકો,ମୋନାକୋ,மொனாகோ,மொனாக்கோ,మొనాకో,ಮೊನಾಕೊ,മൊണോക്കൊ,මොනාකෝව,ประเทศโมนาโก,โมนาโก,ໂມນາໂກ,མོ་ན་ཀོ།,မိုနကို,მონაკო,ሞናኮ,ម៉ូណាកូ,モナコ,摩纳哥,모나코	43.73141	7.41903	A	PCLI	MC		00				32965		43	Europe/Monaco	2012-01-06
+2993458	Monaco	Monaco	MCM,Monaco,Monaco-Ville,Monako,Mònaco,Mónaco,Mónakó,Μονακό,Монако	43.73333	7.41667	P	PPLC	MC						32965		62	Europe/Monaco	2012-01-18
+3009937	La Condamine	La Condamine	Condamine,La Condamine,La-Kondamin,Ла-Кондамин	43.7344	7.42024	P	PPLX	MC		00				12167		16	Europe/Monaco	2012-01-18
+3017814	Fontvieille	Fontvieille	Fontvieille,Fonv'ej,Фонвьей	43.72687	7.41766	P	PPLX	MC		00				3880		9	Europe/Monaco	2012-01-18
+3018192	Pointe Focinane	Pointe Focinane	Cap de Fucinane,Pointe Focinana,Pointe Focinane	43.73806	7.42996	T	PT	MC		00				0		11	Europe/Monaco	2012-01-18
+3028762	Anse de Canton	Anse de Canton		43.73333	7.41667	H	COVE	MC		00				0		62	Europe/Monaco	1999-06-07
+3225753	Pointe Saint-Martin	Pointe Saint-Martin	Point Saint-Martin,Pointe Saint-Martin,Punta de Saint Martin	43.72942	7.42424	T	PT	MC		00				0		23	Europe/Monaco	2012-01-19
+3225755	Port de Fontvieille	Port de Fontvieille		43.72962	7.42047	H	HBR	MC		00				0		17	Europe/Monaco	2011-09-12
+3225756	Pointe de la Poudrière	Pointe de la Poudriere	Pointe de la Poudriere,Pointe de la Poudrière,Punta de la Poudriere,Punta de la Poudrière	43.73075	7.42724	T	PT	MC		00				0		1	Europe/Monaco	2012-01-19
+3225758	Pointe Saint-Antoine	Pointe Saint-Antoine	Pointe Saint-Antoine,Punta de Saint Antoine	43.73314	7.42808	T	PT	MC		00				0		-9999	Europe/Monaco	2012-01-19
+3225759	Port Hercule	Port Hercule	Port Hercule,Port de Monaco,Port de Mònaco,Port de la Condamine	43.73521	7.4252	L	PRT	MC		00				0		-9999	Europe/Monaco	2012-02-02
+3225774	Saint-Roman	Saint-Roman		43.7489	7.43423	P	PPLX	MC						3000		59	Europe/Monaco	2010-07-27
+3319157	Stade Louis Deux	Stade Louis Deux	Estadio Luis II,Stade Louis Deux,Stade Louis II,Stade Louis-II,Stadio Louis II,スタッド・ルイ・ドゥ	43.72738	7.41557	S	STDM	MC		00				0		25	Europe/Monaco	2012-01-19
+3319159	Pointe Sainte-Barbe	Pointe Sainte-Barbe		43.72984	7.42048	T	PT	MC		00				0		17	Europe/Monaco	2011-09-12
+3319160	Ciappaira	Ciappaira		43.73185	7.4281	T	CLF	MC		00				0		4	Europe/Monaco	2011-09-12
+3319162	Plage du Larvotto	Plage du Larvotto	Plage du Larvotto,Platje de Larvotto	43.74656	7.43404	T	BCH	MC		00				0		9	Europe/Monaco	2012-01-19
+3319163	Larvotto	Larvotto	Area de Larvotto,Larvotto,Àrea de Larvotto	43.74714	7.43356	L	AREA	MC		00				0		43	Europe/Monaco	2012-01-19
+3319169	Anse de la Grue	Anse de la Grue		43.72984	7.42134	H	COVE	MC		00				0		42	Europe/Monaco	2011-09-12
+3319170	Réserve Sous-marine de Monaco	Reserve Sous-marine de Monaco	Reserva submarina de Larvotto,Reserve Sous-marine de Monaco,Reserve Sous-marine du Larvotto,Réserve Sous-marine de Monaco,Réserve Sous-marine du Larvotto	43.74466	7.43897	L	RESN	MC		00				0		-9999	Europe/Monaco	2012-01-19
+3319172	Jardin Exotique	Jardin Exotique		43.73253	7.41776	S	GDN	MC		00				0		33	Europe/Monaco	2011-09-12
+3319174	Jardin Japonais	Jardin Japonais	Jardin Japonais,Jardins japonesos	43.74152	7.43054	S	GDN	MC		00				0		4	Europe/Monaco	2012-01-19
+3319175	Anse du Portier	Anse du Portier		43.7408	7.43091	H	COVE	MC		00				0		4	Europe/Monaco	2011-09-12
+3319177	Moneghetti	Moneghetti	Les Moneghetti,Moneghetti,Monegue	43.73679	7.41647	P	PPLX	MC		00				3000		99	Europe/Monaco	2012-01-19
+3319178	Commune de Monaco	Commune de Monaco	Comu de Monaco,Comuna de Monaco,Comuna de Mónaco,Comú de Mònaco	43.73216	7.41981	A	ADM1	MC		00				0		20	Europe/Monaco	2009-04-05
+6500736	Le Meridien Beach Plaza	Le Meridien Beach Plaza		43.7483	7.4355	S	HTL	MC						0		17	Europe/Monaco	2008-07-04
+6954047	Grimaldi Forum Monaco	Grimaldi Forum Monaco		43.744	7.432	S	CTRF	MC						0		16	Europe/Monaco	2009-10-07
+8029384	Beausoleil	Beausoleil	Beausoleil	43.7439	7.41843	P	PPLX	MC		00				0		240	Europe/Monaco	2012-01-21
+8029385	Les Révoires	Les Revoires	Les Revoires,Les Révoires	43.73422	7.41306	P	PPLX	MC		00				0		159	Europe/Monaco	2012-01-21
+8029386	Port de Cap d’Ail	Port de Cap d'Ail		43.72497	7.4158	H	HBR	MC		00				0		254	Europe/Monaco	2011-09-13
+8029387	Cap d’ Ail	Cap d' Ail	Cap d' Ail,Cap d’ Ail,Pointe des Douaniers	43.71879	7.40608	T	PT	MC		00				0		2	Europe/Monaco	2012-01-21
+8029388	Cap Rognoso	Cap Rognoso		43.71892	7.39891	T	PT	MC		00				0		7	Europe/Monaco	2011-09-13
+8298432	Bureau de Poste de La Turbie	Bureau de Poste de La Turbie		43.73189	7.42307	S	PO	MC						0		55	Europe/Monaco	2012-05-16
+8298434	Bureau de Poste de Monaco Fontvieille	Bureau de Poste de Monaco Fontvieille		43.72813	7.41704	S	PO	MC						0		18	Europe/Monaco	2012-05-16
+8298435	Bureau de Poste de Monaco Condamine	Bureau de Poste de Monaco Condamine		43.7343	7.41854	S	PO	MC						0		28	Europe/Monaco	2012-05-16
+8298436	Bureau de Poste de Monte Carlo	Bureau de Poste de Monte Carlo		43.73874	7.42513	S	PO	MC						0		58	Europe/Monaco	2012-05-16
+8298437	Bureau de Poste de Monaco Ville	Bureau de Poste de Monaco Ville		43.73099	7.42353	S	PO	MC						0		67	Europe/Monaco	2012-05-16
+8298438	Bureau de Poste de Monte Carlo Moulins	Bureau de Poste de Monte Carlo Moulins		43.74532	7.42906	S	PO	MC						0		67	Europe/Monaco	2012-05-16
+8298439	Bureau de Poste de Monaco Herculis	Bureau de Poste de Monaco Herculis		43.7373	7.4174	S	PO	MC						0		105	Europe/Monaco	2012-05-16
+8298440	Bureau de Poste de Monte Carlo Larvotto	Bureau de Poste de Monte Carlo Larvotto		43.74702	7.4333	S	PO	MC						0		12	Europe/Monaco	2012-05-16

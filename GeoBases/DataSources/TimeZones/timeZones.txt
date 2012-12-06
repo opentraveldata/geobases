@@ -383,7 +383,7 @@ FM	Pacific/Chuuk	10.0	10.0	10.0
 CL	Pacific/Easter	-5.0	-6.0	-6.0
 VU	Pacific/Efate	11.0	11.0	11.0
 KI	Pacific/Enderbury	13.0	13.0	13.0
-TK	Pacific/Fakaofo	14.0	14.0	14.0
+TK	Pacific/Fakaofo	13.0	13.0	13.0
 FJ	Pacific/Fiji	13.0	12.0	12.0
 TV	Pacific/Funafuti	12.0	12.0	12.0
 EC	Pacific/Galapagos	-6.0	-6.0	-6.0
