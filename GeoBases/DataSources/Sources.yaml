@@ -251,6 +251,7 @@ ori_por_private:
     delimiter : ^
     subdelimiters :
         alt_name_section : ['=', '|']
+        alternatenames   : ','
     headers   : &ori_por_private_headers
         - iata_code
         - icao_code
@@ -405,6 +406,8 @@ geonames_all:
     source    : /remote/orihome/aprengere/public/allCountries.txt
     indexes   : geoname_id
     delimiter : "\t"
+    subdelimiters :
+        alternatenames : ','
     headers   : &geonames_headers
         - geoname_id
         - name
@@ -431,6 +434,8 @@ geonames_FR:
     source    : Por/Geonames/FR.txt
     indexes   : geoname_id
     delimiter : "\t"
+    subdelimiters :
+        alternatenames : ','
     headers   : *geonames_headers
 
 
@@ -438,6 +443,8 @@ geonames_MC:
     source    : Por/Geonames/MC.txt
     indexes   : geoname_id
     delimiter : "\t"
+    subdelimiters :
+        alternatenames : ','
     headers   : *geonames_headers
 
 
