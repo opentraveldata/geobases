@@ -94,6 +94,8 @@ REF_URL_09='http://download.geonames.org/export/dump/cities15000.zip'
 CHOOSED_09='cities15000.txt'
 REF_URL_10='http://download.geonames.org/export/dump/FR.zip'
 CHOOSED_10='FR.txt'
+REF_URL_11='http://download.geonames.org/export/dump/MC.zip'
+CHOOSED_11='MC.txt'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
@@ -105,6 +107,7 @@ LOC_CSV_07='Languages/iso-languagecodes.txt'
 LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
 LOC_CSV_09='Cities/cities15000.txt'
 LOC_CSV_10='Por/Geonames/FR.txt'
+LOC_CSV_11='Por/Geonames/MC.txt'
 
 #do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
 do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
@@ -114,6 +117,7 @@ do_a_file "$REF_URL_07" "$LOC_CSV_07" 1
 do_a_file "$REF_URL_08" "$LOC_CSV_08" 0
 do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
 do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
+do_a_file "$REF_URL_11" "$LOC_CSV_11" 0 1 "$CHOOSED_11"
 
 # The longest at the end
 do_a_file "$REF_URL_03" "$LOC_CSV_03" 1
