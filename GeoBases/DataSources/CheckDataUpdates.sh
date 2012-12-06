@@ -78,16 +78,19 @@ REF_URL_2='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_
 REF_URL_3='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
 REF_URL_4='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/crb_airline.csv'
 REF_URL_5='http://download.geonames.org/export/dump/countryInfo.txt'
+REF_URL_6='http://download.geonames.org/export/dump/timeZones.txt'
 
 LOC_CSV_1='Por/Ori/ori_por_public.csv'
 LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
 LOC_CSV_3='Por/Ori/ori_por.csv'
 LOC_CSV_4='Airlines/crb_airline.csv'
 LOC_CSV_5='Countries/countryInfo.txt'
+LOC_CSV_6='TimeZones/timeZones.txt'
 
 do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
 do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
 do_a_file "$REF_URL_3" "$LOC_CSV_3" 1
 do_a_file "$REF_URL_4" "$LOC_CSV_4" 1
 do_a_file "$REF_URL_5" "$LOC_CSV_5" 0
+do_a_file "$REF_URL_6" "$LOC_CSV_6" 1
 
