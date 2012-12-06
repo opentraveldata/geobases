@@ -24,6 +24,20 @@ while getopts ":f" opt; do
 done
 
 
+extract_one() {
+    unzip -q $1 $2
+    mv $2 $1
+}
+
+comment_head() {
+    sed -i '1s/^/#/g' $1
+}
+
+split_fcodes() {
+    sed -i 's/^\(.\)\./\1\t/g' $1
+}
+
+
 do_a_file() {
 
     local REF_URL="$1"
@@ -31,6 +45,7 @@ do_a_file() {
     local NO_HEAD="$3"
     local UNZIP_F="$4"
     local CHOOSED="$5"
+    local SPECIAL="$6"
 
     echo -e "\n* Comparing local file and remote:"
     echo -e "1. $PWD/$LOC_CSV"
@@ -41,13 +56,17 @@ do_a_file() {
 
     # Unzip if necessary
     if [ "$UNZIP_F" = "1" ]; then
-        unzip -q $TMP_CSV $CHOOSED
-        mv $CHOOSED $TMP_CSV
+        extract_one $TMP_CSV $CHOOSED
     fi
 
     # Commenting header
     if [ "$NO_HEAD" = "1" ]; then
-        sed -i '1s/^/#/g' $TMP_CSV
+        comment_head $TMP_CSV
+    fi
+
+    # Special process
+    if [ "$SPECIAL" = "1" ]; then
+        split_fcodes $TMP_CSV
     fi
 
     # Computing diff
@@ -114,7 +133,7 @@ do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
 do_a_file "$REF_URL_05" "$LOC_CSV_05" 0
 do_a_file "$REF_URL_06" "$LOC_CSV_06" 1
 do_a_file "$REF_URL_07" "$LOC_CSV_07" 1
-do_a_file "$REF_URL_08" "$LOC_CSV_08" 0
+do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 0 ""            1
 do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
 do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
 do_a_file "$REF_URL_11" "$LOC_CSV_11" 0 1 "$CHOOSED_11"
