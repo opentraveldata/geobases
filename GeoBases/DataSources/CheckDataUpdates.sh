@@ -28,6 +28,7 @@ do_a_file() {
 
     local REF_URL="$1"
     local LOC_CSV="$2"
+    local NO_HEAD="$3"
 
     echo -e "\n* Comparing local file and remote:\n"
     echo -e "1. $PWD/$LOC_CSV"
@@ -37,7 +38,9 @@ do_a_file() {
     wget $REF_URL -O $TMP_CSV -o /dev/null
 
     # Commenting header
-    sed -i '1s/^/#/g' $TMP_CSV
+    if [ "$NO_HEAD" = "1" ]; then
+        sed -i '1s/^/#/g' $TMP_CSV
+    fi
 
     echo -e "\n* Unified diff:"
     diff -u $LOC_CSV $TMP_CSV
@@ -74,14 +77,17 @@ REF_URL_1='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_
 REF_URL_2='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
 REF_URL_3='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
 REF_URL_4='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/crb_airline.csv'
+REF_URL_5='http://download.geonames.org/export/dump/countryInfo.txt'
 
 LOC_CSV_1='Por/Ori/ori_por_public.csv'
 LOC_CSV_2='Por/Ori/ori_por_non_iata.csv'
 LOC_CSV_3='Por/Ori/ori_por.csv'
 LOC_CSV_4='Airlines/crb_airline.csv'
+LOC_CSV_5='Countries/countryInfo.txt'
 
-do_a_file "$REF_URL_1" "$LOC_CSV_1"
-do_a_file "$REF_URL_2" "$LOC_CSV_2"
-do_a_file "$REF_URL_3" "$LOC_CSV_3"
-do_a_file "$REF_URL_4" "$LOC_CSV_4"
+do_a_file "$REF_URL_1" "$LOC_CSV_1" 1
+do_a_file "$REF_URL_2" "$LOC_CSV_2" 1
+do_a_file "$REF_URL_3" "$LOC_CSV_3" 1
+do_a_file "$REF_URL_4" "$LOC_CSV_4" 1
+do_a_file "$REF_URL_5" "$LOC_CSV_5" 0
 
