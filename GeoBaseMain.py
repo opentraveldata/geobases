@@ -10,7 +10,7 @@ import os
 
 import pkg_resources
 from datetime import datetime
-from math import ceil
+from math import ceil, log
 from itertools import izip_longest, chain
 import fcntl, termios, struct
 import textwrap
@@ -482,15 +482,16 @@ def score_index(f):
     if str(f).endswith('__key__') or str(f).lower().endswith('id'):
         return 0
 
-    try:
-        l = len(f) if len(f) >= 2 else 10
-    except TypeError:
-        # int or float
-        if f in [0, 1] or isinstance(f, float):
-            l = 1000
-        else:
-            l = 1
-    return l
+    if isinstance(f, float):
+        return 1000
+
+    if f <= 1: # we avoid a domain error on next case
+        return 10
+
+    if isinstance(f, int):
+        return max(2, 25 / log(f))
+
+    return len(f) if len(f) >= 2 else 10
 
 
 def guess_indexes(headers, s_row):
@@ -505,18 +506,19 @@ def guess_indexes(headers, s_row):
             try:
                 val = float(v)
             except ValueError:
-                # not a number
-                candidates.append((h, v))
+                # is *not* a number
+                candidates.append((h, score_index(v)))
             else:
+                # is a number
                 if val == int(val):
-                    candidates.append((h, int(val)))
+                    candidates.append((h, score_index(int(val))))
                 else:
-                    candidates.append((h, val))
+                    candidates.append((h, score_index(val)))
 
     if not candidates:
         return [headers[0]]
 
-    return [ min(candidates, key=lambda x: score_index(x[1]))[0] ]
+    return [ min(candidates, key=lambda x: x[1])[0] ]
 
 
 def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
