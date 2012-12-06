@@ -62,7 +62,7 @@ except ImportError:
     raise
 
 
-VERSION = '4.7.1'
+VERSION = '4.8.0'
 
 setup(
     name = 'GeoBases',
