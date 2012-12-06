@@ -394,7 +394,6 @@ feature_codes:
     indexes   : fcode
     delimiter : "\t"
     headers   :
-        - fclass
         - fcode
         - name
         - description
