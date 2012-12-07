@@ -72,8 +72,9 @@ capitals:
     indexes   : code
     delimiter : ^
     headers   :
-        - name
         - code
+        - name
+        - country
         - area_in_sq_km
         - population
         - lat
