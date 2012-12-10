@@ -618,6 +618,9 @@ DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
 
+ALLOWED_ICON_TYPES = [None, 'auto', 'S', 'B']
+ALLOWED_INTERACTIVE_TYPES = ['__exact__', '__fuzzy__']
+
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
 DISABLE = '__none__'
@@ -880,13 +883,13 @@ def handle_args():
                         The third optional value is the field use to color icons.
                         Default is %s depending on fields.
                         Put "%s" to disable coloring.
-                        The fourth optional value is the icon type.
+                        The fourth optional value is the icon type, either "B" for big,
+                        "S" for small, "auto" for automatic, or "%s" to disable icons.
                         Default is "%s".
-                        Put "%s" to disable icons.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
                         (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
-                         fmt_or(DEF_COLOR_FIELDS), DISABLE, DEF_ICON_TYPE, DISABLE, SKIP),
+                         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1119,17 +1122,13 @@ def main():
         if field not in [REF] + g.fields:
             error('field', field, g._data, [REF] + g.fields)
 
-    # Testing icon_type
-    allowed_types = [None, 'auto', 'S', 'B']
+    # Testing icon_type from -M
+    if icon_type not in ALLOWED_ICON_TYPES:
+        error('wrong_value', icon_type, ALLOWED_ICON_TYPES)
 
-    if icon_type not in allowed_types:
-        error('wrong_value', icon_type, allowed_types)
-
-    # Testing -M option
-    allowed_types = ['__exact__', '__fuzzy__']
-
-    if interactive_type not in allowed_types:
-        error('wrong_value', interactive_type, allowed_types)
+    # Testing -I option
+    if interactive_type not in ALLOWED_INTERACTIVE_TYPES:
+        error('wrong_value', interactive_type, ALLOWED_INTERACTIVE_TYPES)
 
 
 
