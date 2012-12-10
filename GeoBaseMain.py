@@ -616,7 +616,7 @@ DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
-DEF_FUZZY_FIELDS  = ('name', 'capital_name', '__key__')
+DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
