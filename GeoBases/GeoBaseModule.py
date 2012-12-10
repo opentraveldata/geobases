@@ -1491,7 +1491,7 @@ class GeoBase(object):
 
         # Custom the template to connect to the json data
         if icon_type is None:
-            base_icon = 'null'
+            base_icon = ''
         elif icon_type == 'auto':
             base_icon = 'marker.png' if len(data) < 100 else 'point.png'
         elif icon_type == 'S':
