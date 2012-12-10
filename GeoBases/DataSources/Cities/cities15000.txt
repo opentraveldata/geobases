@@ -654,8 +654,8 @@
 1336137	Barisāl	Barisal	Barisal,Barisal Sadar,Barisāl,Barīsal Sadar,barisala,Барисал,বরিশাল	22.70497	90.37013	P	PPLA	BD		85				202242		2	Asia/Dhaka	2012-07-05
 1336140	Jessore	Jessore	JSR,Jessore	23.16971	89.21371	P	PPL	BD		82				243987		16	Asia/Dhaka	2012-07-05
 1336143	Pābna	Pabna	Pabna,Pabne,Pābna,Пабне	24.00644	89.2372	P	PPL	BD		00				137888		25	Asia/Dhaka	2012-11-09
-1336144	Tāngāil	Tangail	Tangail,Tāngāil	24.25	89.91667	P	PPL	BD		00				180144		17	Asia/Dhaka	2012-01-19
-1337233	Bogra	Bogra	Bogra,Богра	24.85	89.36667	P	PPL	BD		83				210000		28	Asia/Dhaka	2012-01-19
+1336144	Tāngāil	Tangail	Tangail,Tāngāil	24.25903	89.92039	P	PPL	BD		00				180144		12	Asia/Dhaka	2012-12-06
+1337233	Bogra	Bogra	Bogra,Богра	24.84585	89.3728	P	PPL	BD		83				210000		24	Asia/Dhaka	2012-12-06
 1337239	Pīrgaaj	Pirgaaj	Pirgaaj,Pirganj,Pīrgaaj,Pīrganj	25.85587	88.35943	P	PPL	BD		87				34606		36	Asia/Dhaka	2012-11-09
 1337240	Nawābganj	Nawabganj	Nawabganj,Nawābganj	24.59112	88.27102	P	PPL	BD		83				142361		27	Asia/Dhaka	2012-01-19
 1337245	Mādārīpur	Madaripur		23.17097	90.20935	P	PPL	BD		81				84789		4	Asia/Dhaka	2012-07-05
@@ -3393,7 +3393,7 @@
 1810846	Fuyang	Fuyang	Fu-yang-hsien,Fujan',Fuyang,Fuyang Shi,Puyang,fu yang,fu yang shi,Фуянь,富阳,富阳市	30.05333	119.95194	P	PPLA3	CN		02				70183		22	Asia/Shanghai	2012-01-18
 1810920	Qingyang	Qingyang	Fu-shan-hsien,Fushan,Fushan Qu,Qingyang,Qingyang Jiedao,fu shan,fu shan qu,qing yang,qing yang jie dao,清洋,清洋街道,福山,福山区	37.49583	121.25806	P	PPLA3	CN		25				65622		12	Asia/Shanghai	2012-12-05
 1810979	Fuling	Fuling	Fou-chou,Fou-ling,Fou-ling-hsien,Fowchou,Fowchow,Fowling,Fowlinghsien,Fuchou,Fulin,Fuling,Pei-ling,fu ling,Фулин,涪陵	29.706	107.39575	P	PPL	CN		33				166507		258	Asia/Chongqing	2012-11-08
-1811103	Foshan	Foshan	Fachan,Fatshan,Fo-shan-chen,Fo-shan-shih,Foshan,Foshan',Fu-shan-chen,Namhoi,Nan-hai,Nanhai-hsien,Nanhoi,Nom Hoy,Phat Son,Phật Sơn,fo shan,fu shan,fu shan shi,Фошань,فۇشەن شەھىر,仏山,佛山,佛山市	23.02677	113.13148	P	PPLA2	CN		30				627348		5	Asia/Shanghai	2012-01-18
+1811103	Foshan	Foshan	FUO,Fachan,Fatshan,Fo-shan-chen,Fo-shan-shih,Foshan,Foshan',Fu-shan-chen,Namhoi,Nan-hai,Nanhai-hsien,Nanhoi,Nom Hoy,Phat Son,Phật Sơn,fo shan,fu shan,fu shan shi,Фошань,فۇشەن شەھىر,仏山,佛山,佛山市	23.02677	113.13148	P	PPLA2	CN		30				627348		5	Asia/Shanghai	2012-12-09
 1811114	Fenyi	Fenyi	Chieh-ch'iao,Chieh-ch'iao-chen,Chieh-ch’iao,Chieh-ch’iao-chen,Fen-i,Fen-i-chen,Fenyi,Fenyi Xian,Fenyi Zhen,I-chieh-ch'iao,I-chieh-ch’iao,fen yi,fen yi xian,fen yi zhen,分宜,分宜县,分宜镇	27.81117	114.66805	P	PPLA3	CN		03				58478		84	Asia/Shanghai	2012-01-18
 1811200	Fengxian	Fengxian	Feng,Feng-hsien,Fengxian	34.70388	116.58717	P	PPLA3	CN		04				57153		40	Asia/Shanghai	2012-01-18
 1811260	Fengrun	Fengrun	Chiu-feng-jun,Feng-jun,Feng-jun-ch'eng-kuan,Feng-jun-ch’eng-kuan,Feng-jun-hsien,Fengrun	39.83333	118.11667	P	PPL	CN		10				65150		28	Asia/Shanghai	2012-01-18
@@ -3514,7 +3514,7 @@
 2033301	Youhao	Youhao	Youhao,Yu-hao	47.86667	128.83333	P	PPL	CN		08				78402		234	Asia/Harbin	2012-01-18
 2033370	Yingkou	Yingkou	Eiko,Inkou,Newchwang,Niu-chuang,Ying-k'ou-hsien,Ying-k'ou-shih,Ying-k’ou-hsien,Ying-k’ou-shih,Yingkou,Yingkou Shi,Yingkow,ying kou,ying kou shi,Инкоу,营口,营口市	40.66482	122.22833	P	PPLA2	CN		19				591159		4	Asia/Shanghai	2012-01-18
 2033403	Yilan	Yilan	I-lan,I-lan-chen,I-lan-hsien,San-hsing,Sang-hsing,Sansing,Sen-hsing,YLN,Yilan	46.31667	129.56667	P	PPL	CN		08				71180		98	Asia/Harbin	2012-01-18
-2033413	Yichun	Yichun	I-ch'un,I-ch'un-shih,I-ch’un,I-ch’un-shih,Ichun',Yichun,Ичунь	47.7	128.9	P	PPL	CN		08				155762		403	Asia/Harbin	2012-01-18
+2033413	Yichun	Yichun	Ichun',LDS,Yichun,Yīchūn,yi chun,Ичунь,伊春	47.72143	128.87529	P	PPL	CN		08				155762		219	Asia/Harbin	2012-12-09
 2033423	Yebaishou	Yebaishou	Chien-p'ing,Chien-p’ing,Jianping,Teh-pai-shou,Tszyan'pin,Tszyan’pin,Yebaishou,Yeh-pai-shou,Yeh-pai-shou-chen,Yeh-pai-shu,Yeh-po-shou	41.3975	119.64083	P	PPL	CN		19				65536		412	Asia/Shanghai	2012-01-18
 2033449	Yantongshan	Yantongshan	Yantongshan,Yen-t'ung-shan,Yen-t’ung-shan	43.29194	126.00944	P	PPL	CN		05				57515		250	Asia/Harbin	2012-01-18
 2033467	Yanji	Yanji	Chu-tzu-chieh,Chu-tzu-kai,Chü-tzu-chieh,Chü-tzu-kai,Jan'czi,YNJ,Yang-chi-t'eng,Yen-chi,Yen-chi-shih,Яньцзи	42.9075	129.50778	P	PPL	CN		05				326957		178	Asia/Harbin	2010-01-29
@@ -4672,7 +4672,7 @@
 2879697	Leer	Leer	Hleri,Leer,Ler,Lera,Lier,lr,lr, nydrzaksn,rea,Лер,Лера,לר,لر، نیدرزاکسن,レーア	53.23157	7.461	P	PPL	DE		06				33886		7	Europe/Berlin	2011-11-07
 2879832	Lebach	Lebach	Lebach	49.41122	6.90988	P	PPL	DE		09				21583		231	Europe/Berlin	2012-09-06
 2880077	Laupheim	Laupheim	Laupheim	48.22786	9.87874	P	PPL	DE		01				19012		517	Europe/Berlin	2012-09-06
-2880144	Lauf an der Pegnitz	Lauf an der Pegnitz	Lauf,Lauf an der Pegnitz	49.51386	11.28247	P	PPL	DE		02				26403		330	Europe/Berlin	2012-09-06
+2880144	Lauf an der Pegnitz	Lauf an der Pegnitz	Lauf,Lauf an der Pegnitz	49.51386	11.28247	P	PPL	DE		02	095			26403		330	Europe/Berlin	2012-12-07
 2880221	Lauchhammer	Lauchhammer	Lauchhammer,Lauchhammer East,Stadt Lauchhammer	51.48813	13.76623	P	PPL	DE		11				18990		96	Europe/Berlin	2012-06-05
 2880498	Lankwitz	Lankwitz		52.43623	13.3459	P	PPLX	DE		16	00	11000	11000000	41242		43	Europe/Berlin	2012-06-09
 2881018	Langenhorn	Langenhorn		53.66556	10.00137	P	PPLX	DE		04				41560		27	Europe/Berlin	2011-08-21
@@ -4998,7 +4998,7 @@
 2936267	Donaueschingen	Donaueschingen	Donauehshingen,Donaueschingen,donauesshingen,Донауэшинген,ドナウエッシンゲン	47.95514	8.49707	P	PPL	DE		01	083			21604		678	Europe/Berlin	2012-12-05
 2936658	Döbeln	Dobeln	Debel'n,Dobeln,Doebeln,Doeberln,Döbeln,Stadt Dobeln,Stadt Döbeln,Дебельн	51.1221	13.11027	P	PPL	DE		13	145			21338		167	Europe/Berlin	2012-09-06
 2936705	Ditzingen	Ditzingen		48.82672	9.06703	P	PPL	DE		01				24149		300	Europe/Berlin	2008-12-21
-2936871	Dinslaken	Dinslaken	Dinslaken,Dinslakena,Ntinslaken,ZCV,Ντίνσλακεν,Динслакена	51.56227	6.7434	P	PPL	DE		07				70573		30	Europe/Berlin	2012-08-04
+2936871	Dinslaken	Dinslaken	Dinslaken,Dinslakena,Ntinslaken,ZCV,Ντίνσλακεν,Динслакена	51.56227	6.7434	P	PPL	DE		07	051			70573		30	Europe/Berlin	2012-12-07
 2936909	Dingolfing	Dingolfing	Dingelfing,Dingolfing	48.64244	12.49283	P	PPL	DE		02				18805		357	Europe/Berlin	2012-11-13
 2936974	Dillingen an der Donau	Dillingen an der Donau	Dillingen,Dillingen an der Donau,Dillingen-na-Dunae,Диллинген-на-Дунае	48.58153	10.49528	P	PPL	DE		02				18734		428	Europe/Berlin	2012-09-06
 2936977	Dillingen	Dillingen	Dillengen,Dillingen	49.35557	6.72781	P	PPL	DE		09				21526		185	Europe/Berlin	2012-09-06
@@ -5819,7 +5819,7 @@
 2512177	Puertollano	Puertollano	Puehrtol'jano,Puertollano,UER,Пуэртольяно	38.68712	-4.10734	P	PPLA3	ES		54	CR	13071		51842		701	Europe/Madrid	2012-03-04
 2512186	Puerto del Rosario	Puerto del Rosario	Puehrto-del'-Rosario,Puerto Cabras,Puerto Rosario,Puerto de Cabras,Puerto del Rosario,Пуэрто-дель-Росарио	28.50038	-13.86272	P	PPLA3	ES		53	GC	35017		35667		43	Atlantic/Canary	2012-03-04
 2512196	Puerto de la Cruz	Puerto de la Cruz	Puerto de la Cruz	28.41397	-16.54867	P	PPLA3	ES		53	TF	38028		32219		43	Atlantic/Canary	2012-03-04
-2512232	Puente-Genil	Puente-Genil	GEN,Puente Genil	37.38943	-4.76686	P	PPL	ES		51	CO	14056		30033		215	Europe/Madrid	2012-11-24
+2512232	Puente-Genil	Puente-Genil	GEN,Puente Genil,Puente-Genil	37.38943	-4.76686	P	PPL	ES		51	CO	14056		30033		215	Europe/Madrid	2012-12-06
 2512251	La Pobla de Vallbona	La Pobla de Vallbona	La Pobla de Vallbona,Puebla de Vallbona	39.6	-0.55	P	PPL	ES		60	V	46202		20431		120	Europe/Madrid	2010-04-22
 2512282	Priego de Córdoba	Priego de Cordoba	Priego	37.43807	-4.19523	P	PPLA3	ES		51	CO	14055		23513		661	Europe/Madrid	2012-03-04
 2512340	Pozoblanco	Pozoblanco	Pozoblanco	38.37906	-4.84827	P	PPLA3	ES		51	CO	14054		17669		657	Europe/Madrid	2012-03-04
@@ -5899,7 +5899,7 @@
 2516326	Jerez de la Frontera	Jerez de la Frontera	Herezo,Jarez de la Frontera,Jerez,Jerez de la Frontera,Xeres,Xérès,hrs dh lh prwntrh,shrysh,Ĥerezo,חרס דה לה פרונטרה,شريش,ヘレス・デ・ラ・フロンテーラ	36.68645	-6.13606	P	PPLA3	ES		51	CA	11020		207532		53	Europe/Madrid	2012-03-04
 2516336	Javea	Javea	Javea,Jávea,Xabia,Xàbia	38.78333	0.16667	P	PPL	ES		60	A	03063		31593		14	Europe/Madrid	2011-10-19
 2516345	Xàtiva	Xativa	Jativa,Játiva,Khativa,Xativa,Xàtiva,shatbt,Хатива,شاطبة	38.98333	-0.51667	P	PPLA3	ES		60	V	46145		29386		268	Europe/Madrid	2012-03-04
-2516395	Jaén	Jaen	Haeno,Jaen,Jaén,Khaehn,Xaen - Jaen,Xaén - Jaén,haen,jyan,Ĥaeno,Хаэн,جيان,ハエン	37.76667	-3.78333	P	PPLA2	ES		51	J	23050		116557		541	Europe/Madrid	2010-08-22
+2516395	Jaén	Jaen	Haeno,JEA,Jaen,Jaén,Khaehn,Xaen - Jaen,Xaén - Jaén,haen,jyan,Ĥaeno,Хаэн,جيان,ハエン	37.76922	-3.79028	P	PPLA2	ES		51	J	23050		116557		569	Europe/Madrid	2012-12-08
 2516431	Isla Cristina	Isla Cristina		37.2	-7.31667	P	PPLA3	ES		51	H	21042		21324		7	Europe/Madrid	2012-03-04
 2516443	Ingenio	Ingenio	Carrizal de Ingenio,Ingenio	27.92086	-15.4406	P	PPLA3	ES		53	GC	35011		29319		306	Atlantic/Canary	2012-03-04
 2516452	Inca	Inca	Inca,Inka,Инка	39.7211	2.91093	P	PPLA3	ES		07	PM	07027		29308		127	Europe/Madrid	2012-03-04
@@ -5946,7 +5946,7 @@
 2519651	Cehegín	Cehegin	Cehegin,Cehegín	38.09242	-1.7985	P	PPL	ES		31	MU	30028		16235		541	Europe/Madrid	2010-05-24
 2519690	Catarroja	Catarroja	Catarroja,Katarrokh,Катаррох	39.4	-0.4	P	PPLA3	ES		60	V	46094		27035		11	Europe/Madrid	2012-03-04
 2519738	Castilleja de la Cuesta	Castilleja de la Cuesta	Castilleja,Castilleja de la Cuesta	37.38594	-6.05258	P	PPLA3	ES		51	SE	41029		17150		101	Europe/Madrid	2012-03-04
-2519752	Castelló de la Plana	Castello de la Plana	Castello,Castello de la Plana,Castellon,Castellon de la Plana,Castelló,Castelló de la Plana,Castellón,Castellón de la Plana,Kastel'on-de-la-Plana,Kastelon de la Plana,ka si te li weng-de la pu la na,Кастельон-де-ла-Плана,Кастељон де ла Плана,קאסטלון,カステリョン・デ・ラ・プラナ,卡斯特利翁-德拉普拉納	39.98333	-0.03333	P	PPLA2	ES		60	CS	12040		180005	30	35	Europe/Madrid	2010-08-22
+2519752	Castelló de la Plana	Castello de la Plana	CDT,Castello,Castello de la Plana,Castellon,Castellon de la Plana,Castelló,Castelló de la Plana,Castellón,Castellón de la Plana,Kastel'on-de-la-Plana,Kastelon de la Plana,ka si te li weng-de la pu la na,Кастельон-де-ла-Плана,Кастељон де ла Плана,קאסטלון,カステリョン・デ・ラ・プラナ,卡斯特利翁-德拉普拉納	39.98333	-0.03333	P	PPLA2	ES		60	CS	12040		180005	30	35	Europe/Madrid	2012-12-08
 2520052	Cartaya	Cartaya	Cartaya	37.28114	-7.15071	P	PPLA3	ES		51	H	21021		17905		16	Europe/Madrid	2012-03-04
 2520055	Cártama	Cartama		36.71068	-4.63297	P	PPLA3	ES		51	MA	29038		21313		89	Europe/Madrid	2012-03-04
 2520058	Cartagena	Cartagena	Cartagena,Carthagene,Carthago Nova,Carthagène,Kartagena,Kartakhena,XUF,karutahena,qrthnh,Картагена,Картахена,קרטחנה,カルタヘナ	37.60512	-0.98623	P	PPLA3	ES		31	MU	30016		211996		5	Europe/Madrid	2012-03-04
@@ -6024,10 +6024,10 @@
 2522437	Adeje	Adeje	Adeje,Costa Adeje	28.12271	-16.726	P	PPLA3	ES		53	TF	38001		43204		284	Atlantic/Canary	2012-03-04
 2567529	Groa de Murviedro	Groa de Murviedro		39.64167	-0.23889	P	PPL	ES		60	V	46220		62368		3	Europe/Madrid	2006-01-27
 3104316	Zarautz	Zarautz	Zarautz,Zarauz	43.28444	-2.16992	P	PPLA3	ES		59	SS	20079		22627		6	Europe/Madrid	2012-11-19
-3104324	Zaragoza	Zaragoza	Caesaraugusta,Caesarea Augusta,Salduba,Salduie,Saragoca,Saragosa,Saragossa,Saragosse,Saragozza,Saragoça,ZAZ,ZGZ,Zaragosa,Zaragoza,Zaragozo,Zargoza,sa la ge sa,saragosa,srgwsh,srqstt,Сарагоса,סרגוסה,سرقسطة,サラゴサ,萨拉戈萨	41.65606	-0.87734	P	PPLA	ES		52	Z	50297		674317		214	Europe/Madrid	2010-04-22
+3104324	Zaragoza	Zaragoza	Caesaraugusta,Caesarea Augusta,Salduba,Salduie,Saragoca,Saragosa,Saragossa,Saragosse,Saragozza,Saragoça,ZAZ,ZGZ,Zaragosa,Zaragoza,Zaragozo,Zargoza,sa la ge sa,saragosa,srgwsh,srqstt,Сарагоса,סרגוסה,سرقسطة,サラゴサ,萨拉戈萨	41.65606	-0.87734	P	PPLA	ES		52	Z	50297		674317		214	Europe/Madrid	2012-12-08
 3104342	Zamora	Zamora	Samora,Zamora,Zamoro,samora,thamora,zamwra,Самора,زامورا,থামোরা,サモラ	41.5	-5.75	P	PPLA2	ES		55	ZA	49275		66293		633	Europe/Madrid	2010-08-23
 3104475	Viveiro	Viveiro		43.66228	-7.59344	P	PPLA3	ES		58	LU	27066		16238	30	26	Europe/Madrid	2012-03-04
-3104499	Gasteiz / Vitoria	Vitoria-Gasteiz	Bittorixa,Gasteiz,Victoriacum,Vitoria,Vitoria-Gasteiz,Vitorija,Vitorio,Vitòria,Vitória,bitoria,wytwryh,Витория,ויטוריה,ビトリア	42.85	-2.66667	P	PPLA	ES		59	VI	01059		235661		522	Europe/Madrid	2012-04-13
+3104499	Gasteiz / Vitoria	Gasteiz / Vitoria	Bittorixa,Gasteiz,VIT,Victoriacum,Vitoria,Vitoria-Gasteiz,Vitorija,Vitorio,Vitòria,Vitória,bitoria,wytwryh,Витория,ויטוריה,ビトリア	42.84998	-2.67268	P	PPLA	ES		59	VI	01059		235661		516	Europe/Madrid	2012-12-09
 3104584	Vinaròs	Vinaros	Vinaros,Vinarose,Vinaroz,Винаросе	40.47033	0.47559	P	PPLA3	ES		60	CS	12138		28273		12	Europe/Madrid	2012-03-04
 3104703	Villaviciosa de Odón	Villaviciosa de Odon	Vil'javisiosa-de-Odon,Villaviciosa de Odon,Villaviciosa de Odón,Вильявисиоса-де-Одон	40.35692	-3.90011	P	PPLA3	ES		29	M	28181		26475		648	Europe/Madrid	2012-03-04
 3104748	Villaverde	Villaverde		40.35	-3.7	P	PPLX	ES		29	M	28079		126802		597	Europe/Madrid	2012-08-20
@@ -6060,13 +6060,13 @@
 3107955	Tordera	Tordera	Tordera	41.69914	2.71888	P	PPLA3	ES		56	B	08284		15345		41	Europe/Madrid	2012-03-04
 3108008	Tolosa	Tolosa	Tolosa	43.13484	-2.07801	P	PPLA3	ES		59	SS	20071		18044		80	Europe/Madrid	2012-03-04
 3108118	Tetuán de las Victorias	Tetuan de las Victorias	Tetuan,Tetuan de las Victorias,Tetuán,Tetuán de las Victorias	40.46667	-3.71667	P	PPLX	ES		29	M	28079		155000		679	Europe/Madrid	2012-09-22
-3108126	Teruel	Teruel	Provincia Terulium,Tergueel,Tergüel,Terol,Teruehl',Teruel,Teruelo,Terulium,terueru,Теруэль,テルエル	40.3456	-1.10646	P	PPLA2	ES		52	TE	44216		35396		908	Europe/Madrid	2010-08-22
+3108126	Teruel	Teruel	Provincia Terulium,TEJ,Tergueel,Tergüel,Terol,Teruehl',Teruel,Teruelo,Terulium,terueru,Теруэль,テルエル	40.3456	-1.10646	P	PPLA2	ES		52	TE	44216		35396		908	Europe/Madrid	2012-12-09
 3108165	Teo	Teo	Santa Maria,Santa María,Teo	42.75	-8.5	P	PPLA3	ES		58	C	15082		17807		170	Europe/Madrid	2012-03-04
 3108285	Tàrrega	Tarrega	Tarrega,Tàrrega	41.64704	1.13957	P	PPLA3	ES		56	L	25217		16539		384	Europe/Madrid	2012-03-04
 3108286	Terrassa	Terrassa	Terasa,Terrassa,telasa,terrasa,Τεράσα,Террасса,テッラーサ,테라사	41.56667	2.01667	P	PPL	ES		56	B	08279		210941		302	Europe/Madrid	2010-04-22
 3108288	Tarragona	Tarragona	QGN,Taragono,Tarraco,Tarrago,Tarragona,Tarragone,taragona,taragwna,trgwnh,Таррагона,טרגונה,تاراگونا,タラゴナ	41.11667	1.25	P	PPLA2	ES		56	T	43148		140323		43	Europe/Madrid	2010-08-23
 3108317	Tarancón	Tarancon	Tarancon,Tarancón	40.00851	-3.00731	P	PPLA3	ES		54	CU	16203		15651		817	Europe/Madrid	2012-03-04
-3108681	Soria	Soria	Sorija,Сория	41.76401	-2.46883	P	PPLA2	ES		55	SO	42173		39528		1064	Europe/Madrid	2010-08-23
+3108681	Soria	Soria	RII,Soria,Sorija,Сория	41.76401	-2.46883	P	PPLA2	ES		55	SO	42173		39528		1064	Europe/Madrid	2012-12-08
 3108877	Sitges	Sitges	Sitges,Sitzhes,Ситжес	41.23506	1.81193	P	PPLA3	ES		56	B	08270		27668		18	Europe/Madrid	2012-03-04
 3109041	Sestao	Sestao	Sestao	43.30975	-3.00716	P	PPLA3	ES		59	BI	48084		29476		65	Europe/Madrid	2012-03-04
 3109050	Seseña	Sesena		40.10473	-3.69793	P	PPLA3	ES		54	TO	45161		16231		610	Europe/Madrid	2011-07-31
@@ -6104,7 +6104,7 @@
 3110962	Sama	Sama	Langreo,Llangreu,Llangréu,Sama de Langreo,Same,Саме	43.29568	-5.68416	P	PPL	ES		34	O	33031		45565		220	Europe/Madrid	2010-04-22
 3110983	Salt	Salt	Salt	41.97489	2.79281	P	PPLA3	ES		56	GI	17155		29985		86	Europe/Madrid	2012-03-04
 3110986	Salou	Salou	Salou,Салоу	41.07663	1.14163	P	PPL	ES		56	T	43171		26649		6	Europe/Madrid	2010-04-22
-3111108	Salamanca	Salamanca	Helmantica,SLM,Salamanca,Salamanka,Salamanko,Salamanque,Salmantica,saramanka,slmnqt,Саламанка,سلمنقة,サラマンカ	40.96667	-5.65	P	PPLA2	ES		55	SA	37274		155619		816	Europe/Madrid	2010-08-23
+3111108	Salamanca	Salamanca	Helmantica,SLM,Salamanca,Salamanka,Salamanko,Salamanque,Salmantica,saramanka,slmnqt,Саламанка,سلمنقة,サラマンカ	40.96882	-5.66388	P	PPLA2	ES		55	SA	37274		155619		810	Europe/Madrid	2012-12-09
 3111199	Sabadell	Sabadell	QSA,Sabadell	41.54329	2.10942	P	PPLA3	ES		56	B	08187		206493		187	Europe/Madrid	2012-03-04
 3111294	Rubí	Rubi	Rubi,Rubí,Руби	41.49226	2.03305	P	PPLA3	ES		56	B	08184		72987		145	Europe/Madrid	2012-03-04
 3111348	Roses	Roses	Rhode,Rosas,Roses,Росас	42.26199	3.17689	P	PPLA3	ES		56	GI	17152		20197		11	Europe/Madrid	2012-03-04
@@ -6120,8 +6120,8 @@
 3113035	Poio	Poio	San Juan	42.44423	-8.71482	P	PPL	ES		58	PO	36038		16043		193	Europe/Madrid	2010-04-22
 3113082	Portugalete	Portugalete	Portu,Portugalete,la villa jarrillera,Португалете	43.32099	-3.02064	P	PPLA3	ES		59	BI	48078		48105		49	Europe/Madrid	2012-11-14
 3113157	Porriño	Porrino		42.16156	-8.6198	P	PPL	ES		58	PO	36039		17475		39	Europe/Madrid	2010-04-22
-3113209	Pontevedra	Pontevedra	Pontevedra,Pontevedro,pontebedora,Понтеведра,ポンテベドラ	42.431	-8.64435	P	PPLA2	ES		58	PO	36038		81576		29	Europe/Madrid	2010-08-22
-3113236	Ponferrada	Ponferrada	Pomeriada,Ponferrada,Понферрада	42.54664	-6.59619	P	PPLA3	ES		55	LE	24115		68736		519	Europe/Madrid	2012-03-04
+3113209	Pontevedra	Pontevedra	PTE,Pontevedra,Pontevedro,pontebedora,Понтеведра,ポンテベドラ	42.431	-8.64435	P	PPLA2	ES		58	PO	36038		81576		29	Europe/Madrid	2012-12-08
+3113236	Ponferrada	Ponferrada	PFE,Pomeriada,Ponferrada,Понферрада	42.54664	-6.59619	P	PPLA3	ES		55	LE	24115		68736		519	Europe/Madrid	2012-12-08
 3113268	Pola de Siero	Pola de Siero	Pola de Siero,Pola-de-S'ero,Siero,Пола-де-Сьеро	43.39228	-5.66335	P	PPL	ES		34	O	33066		51181		218	Europe/Madrid	2012-01-19
 3113331	Plasencia	Plasencia	Plasence,Plasencia,Plasencio,Plasensia,Plasència,Пласенсиа	40.03116	-6.08845	P	PPLA3	ES		57	CC	10148		41148		368	Europe/Madrid	2012-03-04
 3113415	Pinto	Pinto	Pinto,Пинто	40.24147	-3.69999	P	PPLA3	ES		29	M	28113		43501		612	Europe/Madrid	2012-03-04
@@ -6129,12 +6129,12 @@
 3114256	Parla	Parla	Parla,Парла	40.23604	-3.76752	P	PPLA3	ES		29	M	28106		115611		648	Europe/Madrid	2012-03-04
 3114267	Parets del Vallès	Parets del Valles	Parets del Valles,Parets del Vallès,Sant Esteve de Parets	41.57481	2.23306	P	PPL	ES		56	B	08107		17632		99	Europe/Madrid	2011-12-23
 3114472	Pamplona	Pamplona	Iruinea,Iruna,Irunea,Iruña,Iruñea,Lungsod ng Irunea,Lungsod ng Iruñea,PNA,Pampeluna,Pampelune,Pampljona,Pamplona,Pamplono,Pompaelo,bamblwna,panpurona,Памплона,Памплёна,بامبلونا,パンプローナ	42.81687	-1.64323	P	PPLA	ES		32	NA	31201		198491	460	455	Europe/Madrid	2010-04-22
-3114531	Palencia	Palencia	Palencia,Palencio,Palensija,Pallantia,Palència,Palência,parenshia,Паленсия,パレンシア	42.01667	-4.53333	P	PPLA2	ES		55	P	34120		82651		742	Europe/Madrid	2010-08-23
+3114531	Palencia	Palencia	PCI,Palencia,Palencio,Palensija,Pallantia,Palència,Palência,parenshia,Паленсия,パレンシア	42.01667	-4.53333	P	PPLA2	ES		55	P	34120		82651		742	Europe/Madrid	2012-12-08
 3114566	Palamós	Palamos	Palamos,Palamós	41.84843	3.12912	P	PPLA3	ES		56	GI	17118		18161		11	Europe/Madrid	2012-03-04
 3114567	Palafrugell	Palafrugell	Palafrugell,Palafruzhel',Палафружель	41.91738	3.1631	P	PPLA3	ES		56	GI	17117		22365		69	Europe/Madrid	2012-03-04
-3114711	Oviedo	Oviedo	Gorad Aueda,Ov'edo,Ovetum,Oviedo,Oviedu,Ovieu,Ovijedo,Ovjedas,Ovjedo,Uvieu,Uviéu,abydw,ao wei ye duo,awfyydw,awwydw,obiedo,ovhiyedo,oviedo,oviyeto,Горад Аўеда,Ов'єдо,Овиедо,Овиједо,Овьедо,אוביידו,أوفييدو,ابیدو,اوویدو,ओव्हियेदो,ஒவியேதோ,ოვიედო,オビエド,奥维耶多,오비에도	43.36029	-5.84476	P	PPLA	ES		34	O	33044		224005		237	Europe/Madrid	2010-07-12
+3114711	Oviedo	Oviedo	Gorad Aueda,OVD,Ov'edo,Ovetum,Oviedo,Oviedu,Ovieu,Ovijedo,Ovjedas,Ovjedo,Uvieu,Uviéu,abydw,ao wei ye duo,awfyydw,awwydw,obiedo,ovhiyedo,oviedo,oviyeto,Горад Аўеда,Ов'єдо,Овиедо,Овиједо,Овьедо,אוביידו,أوفييدو,ابیدو,اوویدو,ओव्हियेदो,ஒவியேதோ,ოვიედო,オビエド,奥维耶多,오비에도	43.36029	-5.84476	P	PPLA	ES		34	O	33044		224005		237	Europe/Madrid	2012-12-08
 3114957	Oria	Oria	Oria	43.25541	-2.01873	P	PPL	ES		59	SS	20902		17842		40	Europe/Madrid	2012-11-19
-3114965	Ourense	Ourense	Orense,Orenso,Ourense,ourense,Оренсе,オウレンセ	42.33333	-7.85	P	PPLA2	ES		58	OR	32054		107742		297	Europe/Madrid	2010-08-22
+3114965	Ourense	Ourense	OUQ,Orense,Orenso,Ourense,ourense,Оренсе,オウレンセ	42.33669	-7.86407	P	PPLA2	ES		58	OR	32054		107742		188	Europe/Madrid	2012-12-08
 3115093	Olot	Olot	Olot,Олот	42.18096	2.49012	P	PPLA3	ES		56	GI	17114		33524		438	Europe/Madrid	2012-03-04
 3115171	Olesa de Montserrat	Olesa de Montserrat	Olesa,Olesa de Montserrat	41.54372	1.89408	P	PPL	ES		56	B	08076		23301		116	Europe/Madrid	2012-01-19
 3115177	Oleiros	Oleiros	Oleiros,Olejros,Santa Maria,Santa María,Олейрос	43.33333	-8.31667	P	PPLA3	ES		58	C	15058		33443		127	Europe/Madrid	2012-03-04
@@ -6166,7 +6166,7 @@
 3117667	Majadahonda	Majadahonda	Makhadaonda,Махадаонда	40.47353	-3.87182	P	PPLA3	ES		29	M	28080		68110		743	Europe/Madrid	2012-03-04
 3117735	Madrid	Madrid	La Villa y Corte,Los Madriles,Lungsod ng Madrid,MAD,Madrid,Madridas,Madride,Madridi,Madrido,Madril,Madrite,Madryd,Madryt,Madríd,Magerit,Maidrid,Matritum,Sanchinarro,ma de li,madeulideu,madorido,madorido shi,madrid,madrida,madridi,madryd,mdryd,Μαδρίτη,Мадрид,Мадрыд,Մադրիդ,מדריד,مادرىد,مادرید,مدريد,میڈرڈ,ܡܕܪܝܕ,मद्रीद,माद्रिद,มาดริด,მადრიდი,ማድሪድ,マドリード,マドリード市,馬德里,马德里,마드리드	40.4165	-3.70256	P	PPLC	ES		29	M	28079		3255944		665	Europe/Madrid	2011-06-16
 3117814	Lugo	Lugo	Lugo,lwghw,rugo,Луго,لوغو,ルーゴ	43	-7.56667	P	PPLA2	ES		58	LU	27028		96678		402	Europe/Madrid	2010-08-22
-3118150	Logroño	Logrono	Logron'o,Logronjo,Logrono,Logronyo,Logroño,lwgrwnyw,roguronyo,Логроньо,לוגרוניו,ログローニョ	42.46667	-2.45	P	PPLA	ES		27	LO	26089		152107		389	Europe/Madrid	2012-01-19
+3118150	Logroño	Logrono	Logron'o,Logronjo,Logrono,Logronyo,Logroño,RJL,lwgrwnyw,roguronyo,Логроньо,לוגרוניו,ログローニョ	42.46667	-2.45	P	PPLA	ES		27	LO	26089		152107		389	Europe/Madrid	2012-12-08
 3118212	Lloret de Mar	Lloret de Mar	L'oret-de-Mar,Ljoret de Mar,Lloret de Mar,Љорет де Мар,Льорет-де-Мар	41.69993	2.84565	P	PPLA3	ES		56	GI	17095		39363		14	Europe/Madrid	2012-03-04
 3118228	Laudio / Llodio	Llodio	Laudio,Laudio-Llodio,Llodio,Plaza,Plaza de Gogenuri	43.14322	-2.96204	P	PPL	ES		59	VI	01036		18314		125	Europe/Madrid	2012-11-08
 3118514	Lleida	Lleida	ILD,Ilerda,Ilerdo,Lerida,Lheida,Lhèida,Ljeida,Lleida,Lérida,lyydh,rerida,ryeida,Љеида,Лерида,ליידה,リェイダ,レリダ	41.61667	0.61667	P	PPLA2	ES		56	L	25120		135919	155	183	Europe/Madrid	2011-07-02
@@ -6190,7 +6190,7 @@
 3120811	Hernani	Hernani	Hernani	43.26615	-1.97615	P	PPL	ES		59	SS	20040		19289	42	50	Europe/Madrid	2010-04-22
 3120989	Gernika-Lumo	Gernika-Lumo	Gernika,Gernika-Lumo,Guernica,Guernica y Luno	43.31667	-2.68333	P	PPLA3	ES		59	BI	48046		16244		97	Europe/Madrid	2012-11-12
 3121007	Getxo	Getxo	Getxo,Guecho	43.35689	-3.01146	P	PPL	ES		59	BI	48044		80770		43	Europe/Madrid	2010-04-22
-3121070	Guadalajara	Guadalajara	Guadalajara,Gvadalaharo,Gvadalakhara,guadarahara,Гвадалахара,グアダラハラ	40.63333	-3.16667	P	PPLA2	ES		54	GU	19130		83039		708	Europe/Madrid	2010-08-22
+3121070	Guadalajara	Guadalajara	GDU,Guadalajara,Gvadalaharo,Gvadalakhara,guadarahara,Гвадалахара,グアダラハラ	40.63333	-3.16667	P	PPLA2	ES		54	GU	19130		83039		708	Europe/Madrid	2012-12-08
 3121145	Granollers	Granollers	Granollers	41.60797	2.28773	P	PPL	ES		56	B	08181		60658		154	Europe/Madrid	2010-04-22
 3121245	Gràcia	Gracia	Gracia,Gràcia,Vila de Gracia,Vila de Gràcia	41.40237	2.15641	P	PPLX	ES		56	B	08019		120087		76	Europe/Madrid	2012-06-26
 3121424	Gijón	Gijon	Gijon,Gijón,Hihono,Khikhon,Kixoi,Xixon,Xixon - Gijon,Xixón,Xixón - Gijón,hihon,khykhwn,Ĥiĥono,Хихон,خيخون,ヒホン	43.53573	-5.66152	P	PPLA3	ES		34	O	33024		277554		22	Europe/Madrid	2012-03-04
@@ -6214,7 +6214,7 @@
 3123709	Eibar	Eibar	Ehibar,Ehjbar,Eibar,Eybar,Heivar,Heybar,Villanueva de San Andres,Villanueva de San Andres de Heybar,Villanueva de San Andrés,Villanueva de San Andrés de Heybar,Éibar,Эйбар	43.18493	-2.47158	P	PPLA3	ES		59	SS	20030		27419		133	Europe/Madrid	2012-11-19
 3123773	Durango	Durango	Durango,Tavira,Дуранго	43.17124	-2.6338	P	PPLA3	ES		59	BI	48027		28229		116	Europe/Madrid	2012-11-09
 3124041	Culleredo	Culleredo	Culleredo,Kul'eredo,San Esteban,Кульередо	43.28788	-8.38858	P	PPLA3	ES		58	C	15031		28227		80	Europe/Madrid	2012-03-04
-3124132	Cuenca	Cuenca	Cuenca,Kuehnka,Куэнка	40.06667	-2.13333	P	PPLA2	ES		54	CU	16078		55866		941	Europe/Madrid	2010-08-22
+3124132	Cuenca	Cuenca	CEJ,Cuenca,Kuehnka,Куэнка	40.06667	-2.13333	P	PPLA2	ES		54	CU	16078		55866		941	Europe/Madrid	2012-12-07
 3124408	Coslada	Coslada	Coslada,Koslada,Кослада	40.42378	-3.56129	P	PPLA3	ES		29	M	28049		90280		619	Europe/Madrid	2012-03-04
 3124432	Corvera	Corvera		43.26697	-3.9471	P	PPL	ES		39	S	39056		15997		95	Europe/Madrid	2011-02-08
 3124569	Cornellà de Llobregat	Cornella de Llobregat	Cornella de Llobregat,Cornellà de Llobregat	41.35	2.08333	P	PPL	ES		56	B	08019		86519		12	Europe/Madrid	2010-04-22
@@ -6261,7 +6261,7 @@
 3129028	Badalona	Badalona	Badalona,Бадалона	41.45004	2.24741	P	PPLA3	ES		56	B	08015		219547		16	Europe/Madrid	2012-03-04
 3129046	Azuqueca de Henares	Azuqueca de Henares	Asukeka-de-Ehnares,Azuqueca,Azuqueca de Henares,Асукека-де-Энарес	40.56688	-3.25992	P	PPLA3	ES		54	GU	19046		32744		623	Europe/Madrid	2012-03-04
 3129135	Avilés	Aviles	Aviles,Avilés,Авилес	43.55473	-5.92483	P	PPL	ES		34	O	33004		84242		26	Europe/Madrid	2012-01-19
-3129136	Ávila de los Caballeros	Avila de los Caballeros	Avila,Avila de los Caballeros,Avila de los Santos,Avilo,abira,Àvila,Ávila,Ávila de los Caballeros,Ávila de los Santos,Авила,アビラ	40.65	-4.7	P	PPLA2	ES		55	AV	05019		56855		1076	Europe/Madrid	2010-08-23
+3129136	Ávila	Avila	AVJ,Abela,Abila,Abula,Aebura,Albicella,Avela,Avila,Avila de los Caballeros,Avila de los Santos,Avilo,Obila,abira,Àvila,Ávila,Ávila de los Caballeros,Ávila de los Santos,Авила,アビラ	40.65	-4.7	P	PPLA2	ES		55	AV	05019		56855		1076	Europe/Madrid	2012-12-09
 3129329	Arteixo	Arteixo	Santiago	43.30482	-8.50749	P	PPLA3	ES		58	C	15005		29762		24	Europe/Madrid	2012-03-04
 3129636	Arganda	Arganda	Arganda,Арганда	40.30076	-3.43722	P	PPL	ES		29	M	28014		51489		626	Europe/Madrid	2012-01-19
 3129857	Aranjuez	Aranjuez	Aranjuez,Arankhuehs,Аранхуэс,ארנחואס	40.03108	-3.60246	P	PPLA3	ES		29	M	28013		54055		508	Europe/Madrid	2012-03-04
@@ -11405,14 +11405,14 @@
 145233	Ābdānān	Abdanan	Abdanan,Qal`a Ab-i-Danan,Qal`eh Ab-i-Danan,Qal`eh-ye Ab Danan,Qal‘a Ab-ī-Danan,Qal‘eh Āb-ī-Dānān,Qal‘eh-ye Āb Dānān,abdanan,Ābdānān,آبدانان,قَلعِۀ آب دانان	32.9926	47.4198	P	PPL	IR		10				19360		889	Asia/Tehran	2012-01-17
 145449	Ābādeh	Abadeh	Abadeh,abadh,Ābādeh,آباده	31.1608	52.6506	P	PPL	IR		07				56988		2006	Asia/Tehran	2012-01-17
 145459	Ābādān	Abadan	Abadan,Abadan - abadan,Abadano,Abadán,Abadán - آبادان,a ba dan,abadan,Ábádán,Ābādān,Абадан,آبادان,عبدان,アバダーン,アーバーダーン,阿巴丹	30.3392	48.3043	P	PPL	IR		15				370180		6	Asia/Tehran	2012-01-17
-406993	Eqbālīyeh	Eqbaliyeh	Eqbalieh,Eqbaliyeh,Eqbālīeh,Eqbālīyeh,aiqbalyih,aqbalyh,اقباليّه,اِقباليِه	35.3022	51.5358	P	PPL	IR		26				36709		879	Asia/Tehran	2012-01-19
+406993	Eqbālīyeh	Eqbaliyeh	Eqbaliyeh,Eqbālīyeh,aqbalyh,اقباليّه	35.3022	51.5358	P	PPL	IR		26				36709		879	Asia/Tehran	2012-12-06
 417594	Shāhreẕā	Shahreza		32.03389	51.87944	P	PPL	IR		28				100790		1807	Asia/Tehran	2006-01-17
-418521	Rehnān	Rehnan	Rahnan,Rehnan,Rehnān,Renan,Renān,Rohanan,Rohnan,rhnan,رهنان	32.68462	51.60129	P	PPL	IR		28				49143		1582	Asia/Tehran	2012-01-19
+418521	Rehnān	Rehnan	Rahnan,Rehnan,Rehnān,Renan,Renān,Rohanan,Rohnan,rhnan,رهنان	32.68325	51.60158	P	PPL	IR		28				49143		1575	Asia/Tehran	2012-12-06
 418571	Qahderījān	Qahderijan	Kedargun,Kedargūn,Qadrijan,Qadrijān,Qadrja,Qadrjā,Qahderijan,Qahderījān,qhdryjan,قهدریجان	32.5767	51.455	P	PPL	IR		28				29392		1613	Asia/Tehran	2012-01-19
 418606	Najafābād	Najafabad	Nadzhafabad,Najafabad,Najafābād,Nejafabad,Nejafābād,njf abad,Наджафабад,نجف آباد	32.6344	51.3668	P	PPL	IR		28				223450		1649	Asia/Tehran	2012-01-19
-418710	Khomeynī Shahr	Khomeyni Shahr	Homayoon Shahr,Homayunshahr,Homāyūnshahr,Khomeyni Shahr,Khomeynishahr,Khomeynī Shahr,Khomeynīshahr,Sedeh,khmyny shhr,خمینی شهر	32.70018	51.52113	P	PPL	IR		28				277334		1607	Asia/Tehran	2012-01-19
-418723	Kelīshād	Kelishad	Baba `Abdollah,Bābā ‘Abdollāh,Gulshad,Gulshād,Kalushad,Kalūshād,Kelishad,Kelishad-e Sofla,Kelishad-e Vasuderjan,Kelīshād,Kelīshād-e Soflá,Kelīshād-e Vasūderjān,klyshad,کلیشاد	32.55603	51.5263	P	PPL	IR		28				33630		1609	Asia/Tehran	2012-01-19
-418851	Mollāvarjān	Mollavarjan	Falavar Jan,Falavarjan,Falāvar Jān,Falāvarjān,Felavarjan,Felāvarjān,Mollavarjan,Mollāvarjān,Pol-e Vargan,Pol-e Vargān,Pol-e Varqan,Pol-e Varqān,Pul-i-Vargan,Pul-i-Vargān,flawrjan,mlawrjan,فلاورجان,ملّاورجان	32.5553	51.50974	P	PPL	IR		28				49843		1609	Asia/Tehran	2012-01-19
+418710	Khomeynī Shahr	Khomeyni Shahr	Homayoon Shahr,Homayunshahr,Homāyūnshahr,Khomeyni Shahr,Khomeynishahr,Khomeynī Shahr,Khomeynīshahr,Sedeh,khmyny shhr,خمینی شهر	32.69362	51.5274	P	PPLX	IR		28				277334		1589	Asia/Tehran	2012-12-06
+418723	Kelīshād-e Vasūderjān	Kelishad-e Vasuderjan	Baba `Abdollah,Bābā ‘Abdollāh,Gulshad,Gulshād,Kalushad,Kalūshād,Kelishad,Kelishad-e Sofla,Kelishad-e Vasuderjan,Kelīshād,Kelīshād-e Soflá,Kelīshād-e Vasūderjān,klyshad,klyshad wswdrjan,کلیشاد,کلیشاد وسودرجان	32.55118	51.52758	P	PPL	IR		28				33630		1607	Asia/Tehran	2012-12-06
+418851	Felāvarjān	Felavarjan	Falavar Jan,Falavarjan,Falāvar Jān,Falāvarjān,Felavarjan,Felāvarjān,Mollavarjan,Mollāvarjān,Pol-e Vargan,Pol-e Vargān,Pol-e Varqan,Pol-e Varqān,Pul-i-Vargan,Pul-i-Vargān,flawrjan,mlawrjan,فلاورجان,ملاورجان	32.5553	51.50974	P	PPL	IR		28				49843		1609	Asia/Tehran	2012-12-06
 418863	Eşfahān	Esfahan	Aspadana,Esfahan,Esfehan,Eşfahān,Eşfehān,Isfahan,Isfakhan,Ispahan,asfhan,Исфахан,اصفهان	32.65722	51.67761	P	PPLA	IR		28				1547164		1570	Asia/Tehran	2012-01-19
 418868	Dowlatābād	Dowlatabad	Daulatabad,Daulatābād,Dowlatabad,Dowlatābād,dwlt abad,دولت آباد	32.79978	51.69553	P	PPL	IR		28				33607		1569	Asia/Tehran	2012-01-19
 418896	Dorcheh Pīāz	Dorcheh Piaz	Darcheh Piaz,Darcheh Pīāz,Dorcheh Peyaz,Dorcheh Peyāz,Dorcheh Piaz,Dorcheh Pīāz	32.61528	51.55556	P	PPL	IR		28				37462		1599	Asia/Tehran	2011-09-12
@@ -13160,7 +13160,7 @@
 285704	As Sālimīyah	As Salimiyah	Ad Dumna,Ad Dumnah,As - Salimiyah,As Salimiyah,As Sālimīyah,As-Saimiyah,As-Salimiyah,As-Sālimiyah,As-S̅āimiyah,As̄ - Sālimiyah,Dimnah,Salimiyah,Salmiya,Salmiyah,Salmiyyeh,aalsaalimiat,alsalmyt,السالمية,اَلسَّالِمِيَّة	29.33389	48.07611	P	PPLX	KW		00				147649		11	Asia/Kuwait	2012-01-18
 285728	Ar Riqqah	Ar Riqqah	Al-Riqqah,Ar Riqqah,Reqqa,aalriqat,alrqt,الرقة,اَلرِّقَّة	29.14583	48.09472	P	PPL	KW		04				52068		45	Asia/Kuwait	2012-01-18
 285778	Al Manqaf	Al Manqaf	Al Manjaf,Al Manqaf,Al-Mangaf,Manqaf,aalmanqaf,almnqf,المنقف,اَلْمَنْقَف	29.09611	48.13278	P	PPL	KW		04				39025		14	Asia/Kuwait	2012-01-18
-285782	Al Mahbūlah	Al Mahbulah	Al Mahbulah,Al Mahbūlah,Al-Mahabulah,Al-Mahabūlah,Mahboola,aalmahbulat,almhbwlt,المهبولة,اَلْمَهْبُولَة	29.145	48.13028	P	PPL	KW		00				18178		7	Asia/Kuwait	2012-01-18
+285782	Al Mahbūlah	Al Mahbulah	Al Mahbulah,Al Mahbūlah,Al-Mahabulah,Al-Mahabūlah,Mahboola,aalmahbulat,almhbwlt,المهبولة,اَلْمَهْبُولَة	29.145	48.13028	P	PPL	KW		04				18178		7	Asia/Kuwait	2012-12-06
 285787	Kuwait City	Kuwait City	Al Kuwait,Al Kuwayt,Al-Kuwait,Ciudad de Kuwait,KWI,Koeweit,Kota Kuwait,Koveyit,Koweit,Koweït,Kuvaeyt,Kuvajt,Kuvajto,Kuvajturbo,Kuveitas,Kuvejt,Kuväyt,Kuwait,Kuwait City,Kuwait Stad,Kuwait by,Kuwait-Stadt,Kuwait-Urbo,Kuwayt,Kuweit,Kuwejt,Madinat al Kuwayt,Madinat al-Kuwait,Madīnat al Kuwayt,Pole tou Koubeit,Safat,aalkuayt,ke wei te shi,khuwet si ti,kuu~eto,kuweiteu si,kwwyt syty,mdynt alkwyt,Πόλη του Κουβέιτ,Кувейт,כווית סיטי,اَلْكُوَيْت,مدينة الكويت,คูเวตซิตี,クウェート,科威特市,쿠웨이트 시	29.36972	47.97833	P	PPLC	KW		02				60064		16	Asia/Kuwait	2012-05-17
 285799	Al Jahrā’	Al Jahra'	Al Jahara,Al Jahra,Al Jahra',Al Jahrah,Al Jahrā’,Al-Jaharah,Iahara,Jahra Village,Jahrah,اَلْجَهْرَاء	29.3375	47.65806	P	PPL	KW		05				24281		40	Asia/Kuwait	2011-03-16
 285811	Al Faḩāḩīl	Al Fahahil	Al Fahahil,Al Faḩāḩīl,Al Fuhaihil,Al Fuhayhil,Al Fuħaiħil,Al Fuḩayḩīl,Al Ifhaihil,Al-Fahaheel,Al-Fahahil,Fahaheel,Fahahil,Fahaihil,Fahaihīl,Fahayhil,Fahāhīl,Faḩayḩīl,Fuhayhil,Fuḩayḩīl,aalfuhayhil,alfhahyl,الفحاحيل,اَلْفُحَيْحِيل	29.0825	48.13028	P	PPL	KW		04				68290		18	Asia/Kuwait	2012-10-19
@@ -13444,7 +13444,7 @@
 2536074	Sidi Bennour	Sidi Bennour		32.65236	-8.42769	P	PPLA3	MA		51	181	1118101071		40044		182	Africa/Casablanca	2011-07-31
 2537406	Settat	Settat	Settat,stat,Сеттат,سطات	33.00103	-7.61662	P	PPLA	MA		50	461	0646101151		119082		390	Africa/Casablanca	2012-06-05
 2537545	Sefrou	Sefrou	Sefrou,Sefru,Sefrú	33.83186	-4.828	P	PPLA3	MA		46	451	1445101091		65150		809	Africa/Casablanca	2011-07-31
-2537763	Salé	Sale	Sala,Sale,Sali,Sallee,Salé,Sla,sla,Сале,سلا	34.03892	-6.8166	P	PPL	MA		49				903485		21	Africa/Casablanca	2012-01-19
+2537763	Sale	Sale	Sala,Sale,Sali,Sallee,Salé,Sla,sla,Сале,سلا	34.0531	-6.79846	P	PPL	MA		49				903485		31	Africa/Casablanca	2012-12-06
 2537881	Safi	Safi	Asfi,Safi,Safim,asfy,Сафи,أسفي	32.29939	-9.23718	P	PPLA	MA		51	431	1143101031		288163		45	Africa/Casablanca	2012-01-19
 2538475	Rabat	Rabat	RBA,Rabat,Rabatas,Rampat,alrbat,la ba te,labateu,rabat,rabato,rbat,Ραμπάτ,Рабат,רבאט,الرباط,رباط,ར་བ་ཐེ,ራባት,ラバト,拉巴特,라바트	34.01325	-6.83255	P	PPLC	MA		49	421			1655753		46	Africa/Casablanca	2010-08-03
 2539134	Oulad Teïma	Oulad Teima	Oulad Teima,Oulad Teïma,Ouled Teima	30.39467	-9.20897	P	PPL	MA		55				66832		129	Africa/Casablanca	2012-01-19
@@ -13589,7 +13589,7 @@
 785113	Теарце	Tearce	Tearce,Теарце	42.07444	21.0525	P	PPLA	MK		A5				23096		503	Europe/Skopje	2007-08-11
 785345	Студеничани	Studenichani	Studenicane,Studenichani,Studeničane,Студеничани	41.91583	21.53056	P	PPLA	MK		A2				18219		292	Europe/Skopje	2007-08-06
 785380	Strumica	Strumica	Stromitza,Stromnitsa,Stromnitza,Stroumitsa,Strumica,Strumitsa,Strumitza,Ustrumcha,Струмица	41.4375	22.64333	P	PPLA	MK		E7				45508		228	Europe/Skopje	2012-04-06
-785387	Struga	Struga	QXP,Struga,Ustrugha,astrwga,Струга,استروگا	41.17806	20.67611	P	PPLA	MK		E6				37387		696	Europe/Skopje	2012-04-06
+785387	Struga	Struga	QXP,Struga,Ustrugha,astrwga,Струга,استروگا	41.17799	20.67784	P	PPLA	MK		E6				37387		681	Europe/Skopje	2012-12-06
 785482	Shtip	Shtip	Ishtib,Istip,Shhip,Shtip,Stip,Stiplia,İştip,Štip,Штип,Щип	41.74583	22.19583	P	PPLA	MK		98				48279		294	Europe/Skopje	2011-08-15
 785842	Skopje	Skopje	Gorad Skop'e,SKP,Scopia,Scupi,Shkup,Shkupi,Skop'e,Skope,Skopeia,Skopia,Skopie,Skopiye,Skopje,Skopjo,Skopjė,Skople,Skoplie,Skoplje,Skopye,Szkopje,UEskuep,Uskub,Usküb,askwpyh,s ko peiy,seukope,si ke pu li,skopye,skwbyh,sqwpyh,sukopie,Üsküp,Σκόπια,Горад Скоп'е,Скоп'є,Скопе,Скопие,Скопье,Скопје,Скопље,Съкопиѥ,Սկոպյե,סקופיה,اسکوپیه,سكوبيه,سكوپليې,سکوپ جے,स्कोप्ये,สโกเปีย,སི་ཀོཔ་ཇི།,სკოპიე,ስኮፕዬ,スコピエ,斯科普里,스코페	42.00122	21.42878	P	PPLC	MK		41				474889		260	Europe/Skopje	2012-10-07
 786093	Сарај	Saraj	Saraj,Сарай,Сарај	42	21.32778	P	PPLA	MK		90				25379		271	Europe/Skopje	2010-01-29
@@ -13607,7 +13607,7 @@
 789541	Kavadarci	Kavadarci	Kavadar,Kavadarci,Tikves,Tikvesh,Tikveš,Кавадарци	41.43306	22.01194	P	PPL	MK		42				38799		276	Europe/Skopje	2011-08-15
 789611	Kamenjane	Kamenjane	Kamenane,Kamenjan,Kamenjane,Камењане	41.94444	20.92667	P	PPL	MK		C7				15376		501	Europe/Skopje	2012-04-06
 790295	Gostivar	Gostivar	Gostivar,Gostivari,Kostovon,Гостивар	41.79722	20.90833	P	PPLA	MK		D4				50974		533	Europe/Skopje	2012-04-06
-790744	Gevgelija	Gevgelija	Devdelijad,Gevegeli,Gevgeli,Gevgelia,Gevgelija,Ðevđelijad,Гевгелия,Гевгелија	41.13917	22.5025	P	PPLA	MK		33				20664		62	Europe/Skopje	2012-01-19
+790744	Gevgelija	Gevgelija	Devdelijad,Gevegeli,Gevgeli,Gevgelia,Gevgelija,Ðevđelijad,Гевгелия,Гевгелија	41.14166	22.50141	P	PPLA	MK		33				20664		25	Europe/Skopje	2012-12-06
 791559	Делчево	Delchevo	Carevo Selo,Delcevo,Delchevo,Делчево	41.96722	22.76944	P	PPLA	MK		22				17415		593	Europe/Skopje	2007-08-11
 791606	Дебар	Debar	Bebar,Debar,Debur,Dibra,Dibre-i-Bala,debre,Дебар,Дебър	41.525	20.5275	P	PPLA	MK		D2				18074		669	Europe/Skopje	2010-08-09
 792227	Brvenica	Brvenica	Bervenice,Brvence,Brvenica,Bërvenicë,Брвеница	41.96722	20.98083	P	PPLA	MK		12				16267		435	Europe/Skopje	2012-02-28
@@ -13634,66 +13634,66 @@
 2460546	Banamba	Banamba		13.54773	-7.44808	P	PPL	ML		07				30591		373	Africa/Bamako	2012-11-08
 2460596	Bamako	Bamako	BKO,Bamaco - Bamako,Bamakas,Bamako,Bamaku,Bamakó,Bamakɔ,Bammaco,Bammako,Mpamako,ba ma ke,bamako,bamakw,bmqw,Μπαμάκο,Бамако,Բամակո,במקו,باماكو,باماکو,ባማኮ,バマコ,巴馬科,바마코	12.65	-8	P	PPLC	ML		01				1297281		338	Africa/Bamako	2012-01-18
 2460755	Bafoulabé	Bafoulabe	Bafoulabe,Bafoulabé,Bafulabe	13.8065	-10.8321	P	PPL	ML		03				26823		103	Africa/Bamako	2012-01-18
-1285173	Yenangyaung	Yenangyaung	Yaynangyoung,Yenangyaung,Yenangyoung	20.46667	94.88333	P	PPL	MM		15				110553		94	Asia/Rangoon	2012-01-19
-1285871	Nyaungdon	Nyaungdon	Nyanngdon,Nyaung-dun,Nyaungdon,Yandoon,Yandun	17.03333	95.65	P	PPL	MM		03				40092		6	Asia/Rangoon	2012-01-19
-1285899	Yamethin	Yamethin	Yamethin,Yamethinn	20.43333	96.15	P	PPL	MM		08				59867		193	Asia/Rangoon	2012-01-19
-1289828	Wakema	Wakema	Wagay-ma,Wagema,Wagèma,Wakema,Wancuma,Wankinna	16.6	95.18333	P	PPL	MM		03				42705		4	Asia/Rangoon	2012-01-19
-1290374	Twante	Twante		16.71667	95.93333	P	PPL	MM		17				46516		13	Asia/Rangoon	2006-01-17
-1290596	Taungoo	Taungoo	Taung-ngu,Taungoo,Taungu,Toungoo,Таунгу	18.93333	96.43333	P	PPL	MM		16				106945		52	Asia/Rangoon	2012-01-19
-1291193	Thongwa	Thongwa	Thon-Khwa,Thongwa	16.76194	96.52778	P	PPL	MM		17				52496		10	Asia/Rangoon	2012-01-19
-1292037	Thayetmyo	Thayetmyo	Thayetmo,Thayetmyo,Thyatmyo	19.31667	95.18333	P	PPL	MM		15				98185		40	Asia/Rangoon	2012-01-19
-1292288	Thaton	Thaton	Tha-tun,Thadon,Thadôn,Thaton	16.92056	97.37139	P	PPL	MM		13				123727		31	Asia/Rangoon	2012-01-19
-1292313	Tharyarwady	Tharyarwady	Tharrawaddy,Tharyarwady,Thayawadi	17.65	95.8	P	PPL	MM		16				54386		18	Asia/Rangoon	2012-01-19
-1292579	Thanatpin	Thanatpin	Thanatpin	17.3	96.58333	P	PPL	MM		16				38059		7	Asia/Rangoon	2012-05-06
+1285173	Yenangyaung	Yenangyaung	Yaynangyoung,Yenangyaung,Yenangyoung	20.46504	94.8712	P	PPL	MM		15				110553		44	Asia/Rangoon	2012-12-06
+1285871	Nyaungdon	Nyaungdon	Nyanngdon,Nyaung-dun,Nyaungdon,Yandoon,Yandun	17.04459	95.63957	P	PPL	MM		03				40092		23	Asia/Rangoon	2012-12-06
+1285899	Yamethin	Yamethin	Yamethin,Yamethinn	20.43189	96.13874	P	PPL	MM		08				59867		187	Asia/Rangoon	2012-12-06
+1289828	Wakema	Wakema	Wagay-ma,Wagema,Wagèma,Wakema,Wancuma,Wankinna	16.60333	95.18278	P	PPL	MM		03				42705		7	Asia/Rangoon	2012-12-06
+1290374	Twante	Twante		16.71047	95.92866	P	PPL	MM		17				46516		15	Asia/Rangoon	2012-12-06
+1290596	Taungoo	Taungoo	Taung-ngu,Taungoo,Taungu,Toungoo,Таунгу	18.94291	96.43408	P	PPL	MM		16				106945		29	Asia/Rangoon	2012-12-06
+1291193	Thongwa	Thongwa	Thon-Khwa,Thongwa	16.75998	96.52498	P	PPL	MM		17				52496		5	Asia/Rangoon	2012-12-06
+1292037	Thayetmyo	Thayetmyo	Thayetmo,Thayetmyo,Thyatmyo	19.32076	95.18272	P	PPL	MM		15				98185		52	Asia/Rangoon	2012-12-06
+1292288	Thaton	Thaton	Tha-tun,Thadon,Thadôn,Thaton	16.91867	97.37001	P	PPL	MM		13				123727		20	Asia/Rangoon	2012-12-06
+1292313	Tharyarwady	Tharyarwady	Tharrawaddy,Tharyarwady,Thayawadi	17.65399	95.78813	P	PPL	MM		16				54386		12	Asia/Rangoon	2012-12-06
+1292579	Thanatpin	Thanatpin	Thanatpin	17.29136	96.57523	P	PPL	MM		16				38059		7	Asia/Rangoon	2012-12-06
 1292580	Thanatpin	Thanatpin		17.21194	96.30333	P	PPLL	MM		16				39000	10	9	Asia/Rangoon	2007-08-04
-1293625	Dawei	Dawei	Dawei,Tavoy,Tawe,Tawè	14.08333	98.2	P	PPLA	MM		12				136783		16	Asia/Rangoon	2012-01-19
-1293960	Taunggyi	Taunggyi	Taunggi Mong,Taunggyi	20.78333	97.03333	P	PPLA	MM		11				160115		1406	Asia/Rangoon	2012-01-19
-1294041	Taungdwingyi	Taungdwingyi	Taungdwingyi	20.01667	95.55	P	PPL	MM		15				70094		141	Asia/Rangoon	2012-01-19
-1295395	Syriam	Syriam		16.77222	96.23778	P	PPL	MM		17				69448		18	Asia/Rangoon	2006-01-17
-1295765	Sittwe	Sittwe	AKY,Ak'jab,Akyab,Sittwe,Акьяб	20.15	92.9	P	PPLA	MM		01				177743		3	Asia/Rangoon	2012-04-29
-1296736	Shwebo	Shwebo	Shwebo	22.56667	95.7	P	PPL	MM		10				88914		109	Asia/Rangoon	2012-01-19
+1293625	Dawei	Dawei	Dawei,Tavoy,Tawe,Tawè	14.07375	98.19423	P	PPLA	MM		12				136783		3	Asia/Rangoon	2012-12-06
+1293960	Taunggyi	Taunggyi	Taunggi Mong,Taunggyi	20.78919	97.03776	P	PPLA	MM		11				160115		1478	Asia/Rangoon	2012-12-06
+1294041	Taungdwingyi	Taungdwingyi	Taungdwingyi	20.0065	95.54531	P	PPL	MM		15				70094		135	Asia/Rangoon	2012-12-06
+1295395	Syriam	Syriam		16.76887	96.24503	P	PPL	MM		17				69448		19	Asia/Rangoon	2012-12-06
+1295765	Sittwe	Sittwe	AKY,Ak'jab,Akyab,Sittwe,Акьяб	20.14624	92.89835	P	PPLA	MM		01				177743		8	Asia/Rangoon	2012-12-06
+1296736	Shwebo	Shwebo	Shwebo	22.56925	95.69818	P	PPL	MM		10				88914		95	Asia/Rangoon	2012-12-06
 1298482	Sagaing	Sagaing	Sagajn,Sagang,Sitkaing,Сагайн	21.8787	95.97965	P	PPLA	MM		10				78739		75	Asia/Rangoon	2010-01-29
 1298824	Rangoon	Rangoon	Dagon,Gian'nkon,Jangon,Jangona,RGN,Rangoon,Rangun,Rangunas,Rangún,Rangūnas,Yangon,Yangôn,iyanguna,ranguna,yang guang,yang-gon,yangkung,yangon,yangwn,Γιανγκόν,Рангун,Янгон,יאנגון,یانگون,रंगून,ইয়াংগুন,ย่างกุ้ง,ヤンゴン,仰光,양곤	16.80528	96.15611	P	PPLA	MM		17				4477638		30	Asia/Rangoon	2012-11-29
-1298911	Pyu	Pyu	Pyu	18.48333	96.43333	P	PPL	MM		16				40386		57	Asia/Rangoon	2012-01-19
-1298987	Pyinmana	Pyinmana	P'inmana,Pjinmana,Pyinmana,Pyinmank,Rangun,bin ma na,nai bi duo,pin ma na,pinmana,Пьинмана,Рангун,ปีนมานา,ピンマナ,奈比多,彬馬那,핀마나	19.73333	96.21667	P	PPL	MM		08				97409		94	Asia/Rangoon	2012-01-19
-1299154	Pyay	Pyay	PRU,Prome,Pyay,Pye,Pyei,Pyit,Проме	18.81667	95.21667	P	PPL	MM		16				135308		33	Asia/Rangoon	2012-07-04
-1299237	Pyapon	Pyapon	P'japon,Pyabon,Pyabôn,Pyapon,Pyapun,Пьяпон	16.28333	95.68333	P	PPL	MM		03				65601		8	Asia/Rangoon	2012-01-19
-1300466	Bago	Bago	Bago,Pegu,Пегу	17.33667	96.47972	P	PPLA	MM		16				244376		13	Asia/Rangoon	2012-01-19
-1300969	Paungde	Paungde	Paung-deh,Paungde	18.48333	95.5	P	PPL	MM		16				36971		37	Asia/Rangoon	2012-01-19
-1302439	Pakokku	Pakokku	PKK,Pagukku,Pakkoku,Pakokku,Пакокку	21.33333	95.1	P	PPL	MM		15				126938		54	Asia/Rangoon	2012-01-19
-1303406	Nyaunglebin	Nyaunglebin		17.95	96.73333	P	PPL	MM		16				89626		12	Asia/Rangoon	2006-01-17
-1307741	Myitkyinā	Myitkyina	M'ichina,Myitkyin,Myitkyina,Myitkyinā,Мьичина	25.38333	97.4	P	PPLA	MM		04				90894		149	Asia/Rangoon	2012-04-05
-1307835	Myingyan	Myingyan	Myingan,Myingyan	21.46667	95.38333	P	PPL	MM		08				141713		68	Asia/Rangoon	2012-01-19
-1308204	Myanaung	Myanaung	Myanaung	18.28333	95.31667	P	PPL	MM		03				42252		31	Asia/Rangoon	2012-01-19
-1308415	Mudon	Mudon	Mudon	16.25778	97.71639	P	PPL	MM		13				89123		13	Asia/Rangoon	2012-01-19
-1308464	Mawlamyinegyunn	Mawlamyinegyunn	Mawlamyainggyun,Mawlamyinegyunn,Moulmeingyu,Moulmeingyun	16.38333	95.26667	P	PPL	MM		03				39115		10	Asia/Rangoon	2012-01-19
-1308465	Mawlamyine	Mawlamyine	Mawlamyaing,Mawlamyine,Molamyaing,Moulmein	16.49139	97.62556	P	PPLA	MM		13				438861		24	Asia/Rangoon	2012-01-19
-1308522	Monywa	Monywa	Monywa	22.11667	95.13333	P	PPL	MM		10				182011		83	Asia/Rangoon	2012-01-19
-1308937	Mogok	Mogok	Magok,Mogok,Могок	22.91667	96.5	P	PPL	MM		08				90843		1117	Asia/Rangoon	2012-04-05
-1309289	Minbu	Minbu		20.18333	94.88333	P	PPL	MM		15				57342		35	Asia/Rangoon	2006-01-17
-1309611	Myeik	Myeik	MGZ,Mergui,Myeik	12.43333	98.6	P	PPL	MM		12				173298		7	Asia/Rangoon	2012-01-19
-1309793	Meiktila	Meiktila	Meiktila	20.86667	95.86667	P	PPL	MM		08				177442		237	Asia/Rangoon	2012-01-19
-1309937	Maymyo	Maymyo	Maymo,Maymyo,Meimyu,Memyo	22.03333	96.46667	P	PPL	MM		08				117303		1068	Asia/Rangoon	2012-01-19
+1298911	Pyu	Pyu	Pyu	18.4813	96.43742	P	PPL	MM		16				40386		39	Asia/Rangoon	2012-12-06
+1298987	Pyinmana	Pyinmana	P'inmana,Pjinmana,Pyinmana,Pyinmank,Rangun,bin ma na,nai bi duo,pin ma na,pinmana,Пьинмана,Рангун,ปีนมานา,ピンマナ,奈比多,彬馬那,핀마나	19.7381	96.20742	P	PPL	MM		08				97409		93	Asia/Rangoon	2012-12-06
+1299154	Pyay	Pyay	PRU,Prome,Pyay,Pye,Pyei,Pyit,Проме	18.82464	95.22216	P	PPL	MM		16				135308		21	Asia/Rangoon	2012-12-06
+1299237	Pyapon	Pyapon	P'japon,Pyabon,Pyabôn,Pyapon,Pyapun,Пьяпон	16.28543	95.67882	P	PPL	MM		03				65601		20	Asia/Rangoon	2012-12-06
+1300466	Bago	Bago	Bago,Pegu,Пегу	17.33521	96.48135	P	PPLA	MM		16				244376		3	Asia/Rangoon	2012-12-06
+1300969	Paungde	Paungde	Paung-deh,Paungde	18.49167	95.50591	P	PPL	MM		16				36971		28	Asia/Rangoon	2012-12-06
+1302439	Pakokku	Pakokku	PKK,Pagukku,Pakkoku,Pakokku,Пакокку	21.33489	95.08438	P	PPL	MM		15				126938		58	Asia/Rangoon	2012-12-06
+1303406	Nyaunglebin	Nyaunglebin		17.95363	96.72247	P	PPL	MM		16				89626		14	Asia/Rangoon	2012-12-06
+1307741	Myitkyinā	Myitkyina	M'ichina,Myitkyin,Myitkyina,Myitkyinā,Мьичина	25.38641	97.39439	P	PPLA	MM		04				90894		164	Asia/Rangoon	2012-12-06
+1307835	Myingyan	Myingyan	Myingan,Myingyan	21.46002	95.3884	P	PPL	MM		08				141713		67	Asia/Rangoon	2012-12-06
+1308204	Myanaung	Myanaung	Myanaung	18.28651	95.32014	P	PPL	MM		03				42252		20	Asia/Rangoon	2012-12-06
+1308415	Mudon	Mudon	Mudon	16.25624	97.7246	P	PPL	MM		13				89123		18	Asia/Rangoon	2012-12-06
+1308464	Mawlamyinegyunn	Mawlamyinegyunn	Mawlamyainggyun,Mawlamyinegyunn,Moulmeingyu,Moulmeingyun	16.3772	95.26488	P	PPL	MM		03				39115		11	Asia/Rangoon	2012-12-06
+1308465	Mawlamyine	Mawlamyine	Mawlamyaing,Mawlamyine,Molamyaing,Moulmein	16.49051	97.62825	P	PPLA	MM		13				438861		30	Asia/Rangoon	2012-12-06
+1308522	Monywa	Monywa	Monywa	22.10856	95.13583	P	PPL	MM		10				182011		83	Asia/Rangoon	2012-12-06
+1308937	Mogok	Mogok	Magok,Mogok,Могок	22.91766	96.50982	P	PPL	MM		08				90843		1251	Asia/Rangoon	2012-12-06
+1309289	Minbu	Minbu		20.18059	94.87595	P	PPL	MM		15				57342		39	Asia/Rangoon	2012-12-06
+1309611	Myeik	Myeik	MGZ,Mergui,Myeik	12.43954	98.60028	P	PPL	MM		12				173298		14	Asia/Rangoon	2012-12-06
+1309793	Meiktila	Meiktila	Meiktila	20.87776	95.85844	P	PPL	MM		08				177442		221	Asia/Rangoon	2012-12-06
+1309937	Maymyo	Maymyo	Maymo,Maymyo,Meimyu,Memyo	22.02826	96.47066	P	PPL	MM		08				117303		1090	Asia/Rangoon	2012-12-06
 1310120	Mawlaik	Mawlaik		23.64254	94.40478	P	PPL	MM		10				44540		105	Asia/Rangoon	2012-11-08
-1310362	Maubin	Maubin	Ma-oo-beng,Manbin,Maubin	16.73333	95.65	P	PPL	MM		03				51542		11	Asia/Rangoon	2012-01-19
-1310460	Martaban	Martaban	Martaban,Marteban,Moktama,Мартабан	16.53139	97.61111	P	PPL	MM		13				48629		76	Asia/Rangoon	2012-01-19
+1310362	Maubin	Maubin	Ma-oo-beng,Manbin,Maubin	16.73148	95.65441	P	PPL	MM		03				51542		13	Asia/Rangoon	2012-12-06
+1310460	Martaban	Martaban	Martaban,Marteban,Moktama,Мартабан	16.52834	97.6157	P	PPL	MM		13				48629		43	Asia/Rangoon	2012-12-06
 1311874	Mandalay	Mandalay	Mandalaj,Mandalay,Mandalay piirkond,Mandale,man de lei,mandare,Мандалай,マンダレー,曼德勒	21.97473	96.08359	P	PPLA	MM		08				1208099		83	Asia/Rangoon	2010-05-30
-1312609	Magway	Magway	Magueh,Magway,Magwe,Магуэ	20.15	94.91667	P	PPLA	MM		15				96954		46	Asia/Rangoon	2012-01-19
-1313479	Loikaw	Loikaw	LIW,Loikaw,Lwegaw,Lwègaw	19.67417	97.20944	P	PPLA	MM		06				17293		877	Asia/Rangoon	2012-04-05
-1314042	Letpandan	Letpandan	Letpadan,Letpandan,Letpatan	17.78333	95.75	P	PPL	MM		16				38936		23	Asia/Rangoon	2012-01-19
-1314759	Lashio	Lashio	LSH,Lasha,Lashio,Lasho,Лаша	22.93333	97.75	P	PPL	MM		11				131016		847	Asia/Rangoon	2012-01-19
-1316703	Kyaukse	Kyaukse	Kyaukse	21.6	96.13333	P	PPL	MM		08				50480		95	Asia/Rangoon	2012-01-19
-1317375	Kyaikto	Kyaikto	Kyaikto	17.3	97.01667	P	PPL	MM		13				48658		10	Asia/Rangoon	2012-04-05
-1317397	Kyaiklat	Kyaiklat	Keiklat,Kyaiklat	16.43333	95.73333	P	PPL	MM		03				52425		0	Asia/Rangoon	2012-01-19
-1317402	Kyaikkami	Kyaikkami	Amherst,Kyaikkami	16.08	97.5675	P	PPL	MM		13				48100		15	Asia/Rangoon	2012-01-19
-1319533	Kayan	Kayan		16.90556	96.56306	P	PPL	MM		17				40322		11	Asia/Rangoon	2006-01-17
-1320944	Kanbe	Kanbe	Kanbe,Kanhe,Канбе	16.70528	96.00167	P	PPL	MM		17				58146		12	Asia/Rangoon	2012-04-05
-1325211	Hinthada	Hinthada	Henzada,Hintada,Hinthada	17.63333	95.46667	P	PPL	MM		03				134947		13	Asia/Rangoon	2012-01-19
-1327659	Chauk	Chauk	Chauk,Chouk,Чаук	20.88333	94.81667	P	PPL	MM		15				90870		77	Asia/Rangoon	2012-01-19
-1328121	Bogale	Bogale	Bogale	16.28333	95.4	P	PPL	MM		03				68938		10	Asia/Rangoon	2012-01-19
-1328218	Bhamo	Bhamo	BMO,Bamo,Banmaw,Banmo,Bhamo,Hsinkai,Бамо	24.26667	97.23333	P	PPL	MM		04				47920		111	Asia/Rangoon	2012-01-19
-1328421	Pathein	Pathein	Bassein,Patejn,Pathein,Puthein,Патейн	16.78333	94.73333	P	PPLA	MM		03				237089		13	Asia/Rangoon	2012-01-19
-1329239	Myaydo	Myaydo	Allanmyo,Aunglan,Aunglanmyo,Myaydo	19.36667	95.21667	P	PPL	MM		15				57897		55	Asia/Rangoon	2012-01-19
+1312609	Magway	Magway	Magueh,Magway,Magwe,Магуэ	20.14956	94.93246	P	PPLA	MM		15				96954		48	Asia/Rangoon	2012-12-06
+1313479	Loikaw	Loikaw	LIW,Loikaw,Lwegaw,Lwègaw	19.67798	97.20975	P	PPLA	MM		06				17293		887	Asia/Rangoon	2012-12-06
+1314042	Letpandan	Letpandan	Letpadan,Letpandan,Letpatan	17.78664	95.75076	P	PPL	MM		16				38936		5	Asia/Rangoon	2012-12-06
+1314759	Lashio	Lashio	LSH,Lasha,Lashio,Lasho,Лаша	22.9359	97.7498	P	PPL	MM		11				131016		848	Asia/Rangoon	2012-12-06
+1316703	Kyaukse	Kyaukse	Kyaukse	21.6056	96.13508	P	PPL	MM		08				50480		82	Asia/Rangoon	2012-12-06
+1317375	Kyaikto	Kyaikto	Kyaikto	17.30858	97.01124	P	PPL	MM		13				48658		14	Asia/Rangoon	2012-12-06
+1317397	Kyaiklat	Kyaiklat	Keiklat,Kyaiklat	16.44502	95.72373	P	PPL	MM		03				52425		7	Asia/Rangoon	2012-12-06
+1317402	Kyaikkami	Kyaikkami	Amherst,Kyaikkami	16.07686	97.56388	P	PPL	MM		13				48100		-9999	Asia/Rangoon	2012-12-06
+1319533	Kayan	Kayan		16.90802	96.56037	P	PPL	MM		17				40322		5	Asia/Rangoon	2012-12-06
+1320944	Kanbe	Kanbe	Kanbe,Kanhe,Канбе	16.70728	96.00168	P	PPL	MM		17				58146		17	Asia/Rangoon	2012-12-06
+1325211	Hinthada	Hinthada	HEB,Henzada,Hintada,Hinthada	17.64944	95.45706	P	PPL	MM		03				134947		8	Asia/Rangoon	2012-12-09
+1327659	Chauk	Chauk	Chauk,Chouk,Чаук	20.89921	94.81784	P	PPL	MM		15				90870		60	Asia/Rangoon	2012-12-06
+1328121	Bogale	Bogale	Bogale	16.29416	95.39742	P	PPL	MM		03				68938		25	Asia/Rangoon	2012-12-06
+1328218	Bhamo	Bhamo	BMO,Bamo,Banmaw,Banmo,Bhamo,Hsinkai,Бамо	24.25256	97.23357	P	PPL	MM		04				47920		110	Asia/Rangoon	2012-12-06
+1328421	Pathein	Pathein	Bassein,Patejn,Pathein,Puthein,Патейн	16.77919	94.73212	P	PPLA	MM		03				237089		12	Asia/Rangoon	2012-12-06
+1329239	Myaydo	Myaydo	Allanmyo,Aunglan,Aunglanmyo,Myaydo	19.36838	95.21512	P	PPL	MM		15				57897		38	Asia/Rangoon	2012-12-06
 6611854	Nay Pyi Taw	Nay Pyi Taw	NYT,Nay Pyi Taw,Naypyidaw,Ne Pyi Daw	19.745	96.12972	P	PPLC	MM		08				925000		122	Asia/Rangoon	2012-02-09
 1515029	Ulaangom	Ulaangom	ULANGOM,ULO,Ulaan Goom,Ulaanggom,Ulaangom,Ulaangom sumu,Ulan Kan,Ulangom,Ulankom,Wu-lan-ku-mu,УЛАНГОМ,Улаангом,Улангом	49.98111	92.06667	P	PPLA	MN		19				28085		935	Asia/Hovd	2012-01-17
 1515436	Ölgiy	OElgiy	Bayan-Ulegey,Olgii,Ologey,Ul'gey,Ulegei,Ulegey,Ulegy,Ulgij,Ölögey,Улгий,Өлгий	48.96833	89.9625	P	PPLA	MN		03				28400		1715	Asia/Hovd	2009-02-25
@@ -14040,16 +14040,16 @@
 3815453	Vicente Guerrero	Vicente Guerrero	San Pablo del Monte,Vicente Guerrero,Villa Vicente Guerrero	19.12516	-98.16192	P	PPL	MX		29				52591		2330	America/Mexico_City	2012-09-07
 3816721	Tonalá	Tonala	Tonala,Tonalá	16.0887	-93.75588	P	PPL	MX		05				32855		82	America/Mexico_City	2012-08-05
 3816739	Arriaga	Arriaga	Arriaga	16.2375	-93.90184	P	PPL	MX		05				22820		92	America/Mexico_City	2012-08-05
-3827254	San Mateo Otzacatipan	San Mateo Otzacatipan		19.32722	-99.60667	P	PPL	MX		15				18823		2607	America/Mexico_City	2006-01-17
-3827256	San María Totoltepec	San Maria Totoltepec		19.305	-99.5925	P	PPL	MX		15				18779		2600	America/Mexico_City	2006-01-17
+3827254	San Mateo Otzacatipan	San Mateo Otzacatipan		19.33241	-99.60349	P	PPL	MX		15				18823		2595	America/Mexico_City	2012-12-06
+3827256	San María Totoltepec	San Maria Totoltepec		19.3056	-99.59399	P	PPL	MX		15				18779		2596	America/Mexico_City	2012-12-06
 3827406	Benito Juarez	Benito Juarez		19.3984	-99.15766	P	PPL	MX		09				355017		2224	America/Mexico_City	2012-08-28
-3827407	Venustiano Carranza	Venustiano Carranza	Venustiano Carranza	19.43	-99.09917	P	PPL	MX		09				447459		2238	America/Mexico_City	2012-09-28
-3827408	Miguel Hidalgo	Miguel Hidalgo	Miguel Hidalgo	19.4225	-99.20278	P	PPL	MX		09				353534		2278	America/Mexico_City	2012-09-28
+3827407	Venustiano Carranza	Venustiano Carranza	Venustiano Carranza	19.44286	-99.09724	P	PPL	MX		09				447459		2212	America/Mexico_City	2012-12-06
+3827408	Miguel Hidalgo	Miguel Hidalgo	Miguel Hidalgo	19.43471	-99.20091	P	PPL	MX		09				353534		2270	America/Mexico_City	2012-12-06
 3827409	Cuauhtémoc	Cuauhtemoc	Cuauhtemoc,Cuauhtémoc	19.44506	-99.14612	P	PPL	MX		09				521348		2219	America/Mexico_City	2012-09-28
-3827414	Huixquilucan	Huixquilucan	Huixquilucan	19.36028	-99.35139	P	PPL	MX		15				124846		2720	America/Mexico_City	2012-01-20
-3827586	Melchor Ocampo	Melchor Ocampo		19.69972	-99.1475	P	PPL	MX		15				34489		2254	America/Mexico_City	2006-01-17
+3827414	Huixquilucan	Huixquilucan	Huixquilucan	19.35985	-99.35016	P	PPL	MX		15				124846		2694	America/Mexico_City	2012-12-06
+3827586	Melchor Ocampo	Melchor Ocampo		19.70246	-99.1438	P	PPL	MX		15				34489		2239	America/Mexico_City	2012-12-06
 3827588	Huilango	Huilango		19.68694	-99.25	P	PPL	MX		15				15551		2307	America/Mexico_City	2006-01-17
-3827596	Santiago Teyahualco	Santiago Teyahualco	Santiago Atocan,Santiago Teyahualco	19.65889	-99.12694	P	PPL	MX		15				41757		2245	America/Mexico_City	2012-01-20
+3827596	Santiago Teyahualco	Santiago Teyahualco	Santiago Atocan,Santiago Teyahualco	19.65791	-99.1234	P	PPL	MX		15				41757		2240	America/Mexico_City	2012-12-06
 3976775	Gabriel Leyva Solano	Gabriel Leyva Solano		25.66407	-108.63456	P	PPL	MX		25				27536		22	America/Mazatlan	2012-07-04
 3976999	Cihuatlán	Cihuatlan		19.2366	-104.56512	P	PPL	MX		14				16520		29	America/Mexico_City	2008-07-18
 3979505	Guadalupe Victoria	Guadalupe Victoria	Guadalupe Victoria	32.28924	-115.10534	P	PPL	MX		02				18244		12	America/Tijuana	2012-06-05
@@ -15158,7 +15158,7 @@
 3692863	Rioja	Rioja	RIJ,Rioja	-6.05861	-77.165	P	PPLA3	PE		22	2208	220801		25057		838	America/Lima	2012-07-19
 3693057	Querecotillo	Querecotillo		-4.83778	-80.64556	P	PPLA3	PE		20	2006	200607		25396		53	America/Lima	2012-07-19
 3693345	Pucallpa	Pucallpa	Callaria,PCL,Pucallpa,Pucalpa,Pukal'pa,Pulcalla,pu lan er pa,pukaruba,Пукальпа,プカルバ,普兰尔帕	-8.37915	-74.55387	P	PPLA	PE		25	2501	250101		310750		155	America/Lima	2012-07-19
-3693528	Piura	Piura	PIU,Piura,Piŭra,Пиура	-5.2	-80.63333	P	PPLA	PE		20	2001	200101		325466		30	America/Lima	2012-07-19
+3693528	Piura	Piura	PIU,Piura,Piŭra,Пиура	-5.19449	-80.63282	P	PPLA	PE		20	2001	200101		325466		26	America/Lima	2012-12-06
 3693584	Pimentel	Pimentel		-6.83667	-79.93417	P	PPLA3	PE		14	1401	140112		15552		7	America/Lima	2012-07-19
 3693645	Picsi	Picsi	Picsi,Piksi,Pisci,Pixi,Пикси	-6.71778	-79.76972	P	PPLA3	PE		14	1401	140111		43610		41	America/Lima	2012-07-19
 3694112	Paita	Paita	Paita,Паита	-5.08917	-81.11444	P	PPLA3	PE		20	2005	200501		56151		16	America/Lima	2012-07-19
@@ -15168,7 +15168,7 @@
 3694666	Monsefú	Monsefu	Monsefu,Monsefú	-6.87719	-79.86998	P	PPL	PE		14	1401	140108		25707		1	America/Lima	2012-11-08
 3694725	Moche	Moche		-8.17111	-79.00917	P	PPLA3	PE		13	1301	130107		22581		13	America/Lima	2012-07-19
 3694939	Marcavelica	Marcavelica	Marcavelica,Marcavelica Hacienda	-4.87778	-80.70528	P	PPLA3	PE		20	2006	200605		25645		62	America/Lima	2012-07-19
-3695466	La Unión	La Union		-5.4	-80.75	P	PPL	PE		20	2001	200110		34834		13	America/Lima	2012-07-19
+3695466	La Unión	La Union		-5.40232	-80.74224	P	PPL	PE		20	2001	200110		34834		6	America/Lima	2012-12-06
 3695617	Laredo	Laredo	Laredo,Laredo Hacienda,Ларедо	-8.08965	-78.9602	P	PPLA3	PE		13	1301	130106		24691		97	America/Lima	2012-07-19
 3695675	La Peca	La Peca	La Peca,La Peca Nueva	-5.61111	-78.435	P	PPLA3	PE		01	0102	010206		27045		897	America/Lima	2012-07-19
 3695754	Lambayeque	Lambayeque	Lambajeke,Lambayeque,Ламбайеке	-6.70111	-79.90611	P	PPLA3	PE		14	1403	140301		43710		23	America/Lima	2012-07-19
@@ -15192,7 +15192,7 @@
 3699088	Cajamarca	Cajamarca	CJA,Cajamarca,Caxamarca,Kachamarka,Kakhamarka,Kasamarko,Kaŝamarko,Qasha Marka,Qashamarka,Кахамарка	-7.16378	-78.50027	P	PPLA	PE		06	0601	060101		135000	2700	2684	America/Lima	2012-07-19
 3699364	Bellavista	Bellavista	BLP,Bellavista	-7.05614	-76.5911	P	PPLA3	PE		22	2202	220201		15231		319	America/Lima	2012-07-19
 3699484	Bagua Grande	Bagua Grande	Bagua Grande	-5.75611	-78.44111	P	PPLA3	PE		01	0107	010701		20382		450	America/Lima	2012-07-19
-3814568	La Breita	La Breita	La Brea,La Breita	-4.26083	-80.8875	P	PPL	PE		20	2006	200605		17693		233	America/Lima	2012-07-19
+3814568	La Breita	La Breita	La Brea,La Breita	-4.26054	-80.88807	P	PPL	PE		20	2006	200605		17693		233	America/Lima	2012-12-06
 3818398	Zarumilla	Zarumilla		-3.50306	-80.27306	P	PPLA3	PE		24	2403	240301		16907		14	America/Lima	2012-07-19
 3925476	Yunguyo	Yunguyo	Yunguyo	-16.25	-69.08333	P	PPLA3	PE		21	2113	211301		16140		3857	America/Lima	2012-07-19
 3925863	Yanacancha	Yanacancha	Yanacancha,Yanacocha	-10.24111	-76.64556	P	PPL	PE		10	1010	101007		23175		3997	America/Lima	2012-07-19
@@ -15202,12 +15202,12 @@
 3928245	Surco	Surco	Santiago de Surco,Surco	-12.13952	-77.00615	P	PPLX	PE		15	1501	150140		251648		71	America/Lima	2012-11-08
 3928679	Sicuani	Sicuani		-14.26944	-71.22611	P	PPLA3	PE		08	0806	080601		33575		3551	America/Lima	2012-07-19
 3928924	Satipo	Satipo	San Francisco de Satipo,Satipo	-11.25222	-74.63861	P	PPLA3	PE		12	1206	120601		15532		629	America/Lima	2012-07-19
-3928993	San Vicente de Cañete	San Vicente de Canete	Canete,Cañete,Pueblo Nuevo,San Vicente de Canete,San Vicente de Cañete	-13.07512	-76.38352	P	PPL	PE		15	1505	150501		25517		46	America/Lima	2012-07-19
+3928993	San Vicente de Cañete	San Vicente de Canete	Canete,Cañete,Pueblo Nuevo,San Vicente de Canete,San Vicente de Cañete	-13.07556	-76.38528	P	PPL	PE		15	1505	150501		25517		51	America/Lima	2012-12-06
 3929295	Santa Ana	Santa Ana		-12.86667	-72.71667	P	PPL	PE		08	0809	080901		25145		1646	America/Lima	2012-07-19
 3929631	San Isidro	San Isidro		-12.11667	-77.05	P	PPL	PE		15	1501	150122		68309	109	6	America/Lima	2012-07-19
 3929768	San Clemente	San Clemente		-13.66667	-76.15	P	PPLA3	PE		11	1105	110507		15815		80	America/Lima	2012-07-19
 3931276	Puno	Puno	Punas,Puno,Punum,puno,Пуно,プーノ	-15.8422	-70.0199	P	PPLA	PE		21	2101	210101		116552		3780	America/Lima	2012-11-08
-3931470	Puerto Maldonado	Puerto Maldonado	Maldonado,PEM,Portus Maldonatus,Puehrto-Mal'donado,Puerto Maldonado,puerutomarudonado,Пуэрто-Мальдонадо,プエルトマルドナド	-12.6	-69.18333	P	PPLA	PE		17	1701	170101		37543		199	America/Lima	2012-07-19
+3931470	Puerto Maldonado	Puerto Maldonado	Maldonado,PEM,Portus Maldonatus,Puehrto-Mal'donado,Puerto Maldonado,puerutomarudonado,Пуэрто-Мальдонадо,プエルトマルドナド	-12.59331	-69.18913	P	PPLA	PE		17	1701	170101		37543		193	America/Lima	2012-12-06
 3932145	Pisco	Pisco	PIO,Pisco,Pisko,Писко	-13.7	-76.21667	P	PPLA3	PE		11	1105	110501		61869		7	America/Lima	2012-07-19
 3933024	Paramonga	Paramonga	Hacienda Paramonga,Paramonga,Paramonga Hacienda,Parmonga,Парамонга	-10.66667	-77.83333	P	PPLA3	PE		15	1502	150202		27631		11	America/Lima	2012-07-19
 3934239	Nuevo Imperial	Nuevo Imperial		-13.07541	-76.31719	P	PPLA3	PE		15	1505	150510		32344		153	America/Lima	2012-07-19
@@ -15224,7 +15224,7 @@
 3938396	Imperial	Imperial		-13.05927	-76.35269	P	PPLA3	PE		15	1505	150507		32344		91	America/Lima	2012-07-19
 3938415	Ilo	Ilo	ILQ,Ilo,New Ilo,Pacocha,Ило	-17.63944	-71.3375	P	PPLA3	PE		18	1803	180301		53476		36	America/Lima	2012-07-19
 3938451	Ilave	Ilave	Ilave,Ylave	-16.08333	-69.66667	P	PPLA3	PE		21	2105	210501		16033		3841	America/Lima	2012-07-19
-3938527	Ica	Ica	Ica,Ika,Ика	-14.06528	-75.73083	P	PPLA	PE		11	1101	110101		246844		409	America/Lima	2012-07-19
+3938527	Ica	Ica	Ica,Ika,Ика	-14.06777	-75.72861	P	PPLA	PE		11	1101	110101		246844		421	America/Lima	2012-12-06
 3939023	Huaura	Huaura	Huaura	-11.07	-77.59944	P	PPLA3	PE		15	1508	150806		20723		72	America/Lima	2012-07-19
 3939168	Huarmey	Huarmey	Huarmei,Huarmey,Puerto de Huarmey	-10.06806	-78.15222	P	PPLA3	PE		02	0211	021101		16172		13	America/Lima	2012-07-19
 3939285	Huaral	Huaral	Huaral	-11.495	-77.20778	P	PPLA3	PE		15	1506	150601		62174		183	America/Lima	2012-07-19
@@ -15233,7 +15233,7 @@
 3939470	Huancavelica	Huancavelica	Huancavelica,Uankavelika,Wankawillka,Уанкавелика	-12.78542	-74.97501	P	PPLA	PE		09	0901	090118		41576		4008	America/Lima	2012-11-08
 3939761	Hualmay	Hualmay		-11.09639	-77.61389	P	PPLA3	PE		15	1508	150805		26658		39	America/Lima	2012-07-19
 3940002	Huacho	Huacho	Huacho,Uacho,Уачо	-11.10667	-77.605	P	PPLA	PE		15	1508	150801		54545		41	America/Lima	2012-07-19
-3941584	Cusco	Cusco	Ciudad del Cuzco,Cusco,Cuscum,Cuzco,Kuskas,Kusko,Qusqu,ku si ke,kuseuko,kusuko,kwzkw,qwsqw,Куско,קוסקו,كوزكو,کوزکو,クスコ,庫斯科,쿠스코	-13.51833	-71.97806	P	PPLA	PE		08	0801	080101		312140		3398	America/Lima	2012-07-19
+3941584	Cusco	Cusco	Ciudad del Cuzco,Cusco,Cuscum,Cuzco,Kuskas,Kusko,Qusqu,ku si ke,kuseuko,kusuko,kwzkw,qwsqw,Куско,קוסקו,كوزكو,کوزکو,クスコ,庫斯科,쿠스코	-13.52264	-71.96734	P	PPLA	PE		08	0801	080101		312140		3330	America/Lima	2012-12-06
 3943423	Chosica	Chosica	Chosica,Nueva Chosica	-11.94306	-76.70944	P	PPLA3	PE		15	1501	150118		88606		831	America/Lima	2012-07-19
 3943789	Chincha Alta	Chincha Alta	Chincha Alta	-13.40985	-76.13235	P	PPLA3	PE		11	1102	110201		153076		111	America/Lima	2012-07-19
 3944179	Chaupimarca	Chaupimarca		-10.40696	-76.46168	P	PPL	PE		19	1902	190201		28666		2986	America/Lima	2012-11-08
@@ -15243,7 +15243,7 @@
 3946083	Callao	Callao	Callao,El Callao,Kaljao,Kallao,Kallaw,Regio de Callao,Regió de Callao,ka ya e,kayao,Каляо,カヤオ,卡亞俄	-12.05658	-77.11814	P	PPLA	PE		07	0701	070101		813264		12	America/Lima	2012-11-08
 3946820	Barranca	Barranca	Barranca	-10.75	-77.76667	P	PPLA3	PE		15	1502	150201		46290		52	America/Lima	2012-07-19
 3946985	Ayaviri	Ayaviri		-14.88639	-70.58889	P	PPLA3	PE		21	2108	210801		19310		3898	America/Lima	2012-07-19
-3947019	Ayacucho	Ayacucho	AYP,Ajakucho,Ayacucho,Wamanqa,Аякучо	-13.15833	-74.22389	P	PPLA	PE		05	0501	050101		140033		2746	America/Lima	2012-07-19
+3947019	Ayacucho	Ayacucho	AYP,Ajakucho,Ayacucho,Wamanqa,Аякучо	-13.1615	-74.22154	P	PPLA	PE		05	0501	050101		140033		2805	America/Lima	2012-12-06
 3947322	Arequipa	Arequipa	AQP,Arekipa,Arekipo,Arequipa,Arikipa,Ariqipa,arekipa,Арекипа,ארקיפה,アレキパ	-16.39889	-71.535	P	PPLA	PE		04	0401	040101		841130		2355	America/Lima	2012-07-19
 3947740	Andahuaylas	Andahuaylas	ANS,Andahuailas,Andahuavlas,Andahuaylas	-13.65556	-73.38722	P	PPLA3	PE		03	0302	030201		17444		2902	America/Lima	2012-07-19
 3948642	Abancay	Abancay	Abancai,Abancaius,Abancay,Abankaj,Abankay,Awankay,a ban kai,Абанкай,阿班凯	-13.63389	-72.88139	P	PPLA	PE		03	0301	030101		55111		2410	America/Lima	2012-07-19
@@ -18726,7 +18726,7 @@
 323828	Anamur	Anamur	Anamur,Anemurium,Анамур	36.07508	32.83691	P	PPLA2	TR		32				57128		28	Europe/Istanbul	2012-01-18
 324106	Aliağa	Aliaga	Aliaga,Aliagaciftligi,Aliağa,Aliağaçiftliği,Алиага	38.79975	26.97203	P	PPL	TR		35				44883		24	Europe/Istanbul	2012-01-18
 324172	Alaşehir	Alasehir	Ala Shehr,Alachehir,Alachehr,Alaschehir,Alasehir,Alashehir,Alashekhir,Alaşehir,Alesehir,Aleşehir,Filadelfeia,Philadelphia,arashehiru,Алашехир,アラシェヒル	38.35083	28.51718	P	PPL	TR		45				40735		207	Europe/Istanbul	2012-01-18
-324190	Alanya	Alanya	Alaia,Alaiye,Alan'ja,Alanija,Alanya,Alaya,Alâiye,Coracesium,Алания,Аланья,אלניה	36.54375	31.99982	P	PPLA2	TR		07				112969		11	Europe/Istanbul	2012-01-18
+324190	Alanya	Alanya	Alaia,Alaiye,Alan'ja,Alanija,Alanya,Alaya,Alâiye,Coracesium,Алания,Аланья,אלניה	36.54375	31.99982	P	PPLA2	TR		07	7732185			112969		11	Europe/Istanbul	2012-12-07
 324490	Akşehir	Aksehir	Ak Shehr,Aksehir,Akşehir,Philomelium	38.3575	31.41639	P	PPLA2	TR		71				64446		1033	Europe/Istanbul	2012-01-18
 324496	Aksaray	Aksaray	Aksaraj,Aksaray,Аксарай	38.37255	34.02537	P	PPLA	TR		75				152201		976	Europe/Istanbul	2012-01-18
 324698	Akhisar	Akhisar	Akhisar,Akhissar,Akkhisar,Aq Hisar,Axari,Azarion,Thyatira,Акхисар	38.91852	27.84006	P	PPL	TR		45				84659		103	Europe/Istanbul	2012-01-18
@@ -22617,7 +22617,7 @@
 1563926	Trà Vinh	Tra Vinh	Phu Vinh,Phú Vinh,Tra Vin",Tra Vinh,Tra Vin”,Trà Vinh	9.93472	106.34528	P	PPLA	VN		67				57408		4	Asia/Ho_Chi_Minh	2012-01-16
 1565022	Thủ Dầu Một	Thu Dau Mot	Phu Cuong,Phú Cường,Thu Dau Mot,Thủ Dầu Một	10.98671	106.65497	P	PPLA	VN		75				91009		23	Asia/Ho_Chi_Minh	2012-07-04
 1566083	Thành phố Hồ Chí Minh	Thanh pho Ho Chi Minh	Cathair Ho Chi Minh,Cidade de Ho Chi Minh,Ciudad Ho Chi Minh,HCMC,HCMV,Ho Chi Minh,Ho Chi Minh City,Ho Chi Minh Ville,Ho Chi Minh-borg,Ho Chi Minh-byen,Ho Chi Minhin kaupunki,Ho Chi Minhstad,Ho Ci Minovo Mesto,Ho Si Minh-varos,Ho Si Minh-város,Ho Či Minovo Město,Ho-Chi-Minh-Stadt,Ho-Chi-Minh-Ville,Ho-Ci-Min-urbo,Ho-Ĉi-Min-urbo,HoChiMinh City,Hociminovo Mesto,Hosimina,Hosiminh,Hočiminovo Mesto,Hošimina,Hošiminh,Hô Chi Minh Ville,Hô-Chi-Minh-Ville,Hồ Chí Minhin kaupunki,Khoshimin,Kota Ho Chi Minh,SGN,Sai Gon,Saigon,Saïgon,Sài Gòn,TPHCM,Thanh pho Ho Chi Minh,Thành phố Hồ Chí Minh,hochimin,hochimin shi,hojjimin si,hu zhi ming shi,hw tshy mnh,hw z'y myn syty,saigon,saygwn,Хошимин,הו צ'י מין סיטי,سايگون,هو تشي منه,サイゴン,ホーチミン,ホーチミン市,胡志明市,호찌민 시	10.75	106.66667	P	PPLA	VN		20				3467331		5	Asia/Ho_Chi_Minh	2012-11-26
-1566166	Thanh Hóa	Thanh Hoa	Than" Hoa,Thanh Hoa,Thanh Hóa,Than” Hoa	19.8	105.76667	P	PPLA	VN		34				112473		5	Asia/Ho_Chi_Minh	2012-01-16
+1566166	Thanh Hóa	Thanh Hoa	THD,Than" Hoa,Thanh Hoa,Thanh Hóa,Than” Hoa	19.8	105.76667	P	PPLA	VN		34				112473		5	Asia/Ho_Chi_Minh	2012-12-09
 1566319	Thái Nguyên	Thai Nguyen	Taj-Nguen,Thai Nguyen,Thái Nguyên,Тай-Нгуен	21.59278	105.84417	P	PPLA	VN		85				133877		32	Asia/Ho_Chi_Minh	2012-01-16
 1566346	Thái Bình	Thai Binh	Kua Loc,Taibinh,Thai Bin",Thai Binh,Thai Bin”,Thái Bình	20.45	106.33333	P	PPLA	VN		35				53071		4	Asia/Ho_Chi_Minh	2012-01-16
 1566559	Tây Ninh	Tay Ninh	Tai nin,Tay Ninh,Tei Nin,Tây Ninh	11.3	106.1	P	PPLA	VN	VN	33				36456		1	Asia/Ho_Chi_Minh	2012-01-16
