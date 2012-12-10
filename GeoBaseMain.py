@@ -173,7 +173,7 @@ class RotatingColors(object):
 
 def fmt_ref(ref, ref_type, no_symb=False):
     """
-    Display the __ref__ depending on its type.
+    Display the reference depending on its type.
     """
     if ref_type == 'distance':
         if no_symb:
@@ -202,7 +202,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         return
 
     if not show:
-        show = ['__ref__'] + geob.fields[:]
+        show = [REF] + geob.fields[:]
 
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
@@ -226,7 +226,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if f in important:
             col = c.getEmph()
-        elif f == '__ref__':
+        elif f == REF:
             col = c.getHeader()
         elif str(f).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
@@ -239,7 +239,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         # Fields on the left
         stdout.write('\n' + fixed_width(f, c.convertBold(col), lim, truncate))
 
-        if f == '__ref__':
+        if f == REF:
             for h, _ in list_of_things:
                 stdout.write(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
@@ -259,7 +259,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     """
     if not show:
         # Temporary
-        t_show = ['__ref__'] + geob.fields[:]
+        t_show = [REF] + geob.fields[:]
 
         # In this default case, we remove splitted valued if
         # corresponding raw values exist
@@ -280,7 +280,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     for h, k in list_of_things:
         l = []
         for f in show_wo_omit:
-            if f == '__ref__':
+            if f == REF:
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
                 v = geob.get(k, f)
@@ -621,6 +621,7 @@ DEF_FUZZY_FIELDS  = ('name', 'capital_name', '__key__')
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
 DISABLE = '__none__'
+REF     = '__ref__'
 
 # Port for SimpleHTTPServer
 PORT = 8000
@@ -795,17 +796,17 @@ def handle_args():
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
-                        May help to get cleaner output. "__ref__" is an
+                        May help to get cleaner output. "%s" is an
                         available keyword with the
-                        other geobase headers.''',
+                        other geobase headers.''' % REF,
         nargs = '+',
         default = [])
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
-                        May help to get cleaner output. "__ref__" is an
+                        May help to get cleaner output. "%s" is an
                         available keyword with the
-                        other geobase headers.''',
+                        other geobase headers.''' % REF,
         nargs = '+',
         default = [])
 
@@ -1113,8 +1114,8 @@ def main():
     fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
 
     for field in args['show'] + args['omit'] + fields_to_test:
-        if field not in ['__ref__'] + g.fields:
-            error('field', field, g._data, ['__ref__'] + g.fields)
+        if field not in [REF] + g.fields:
+            error('field', field, g._data, [REF] + g.fields)
 
     # Testing -M option
     allowed_types = ['__exact__', '__fuzzy__']
@@ -1265,7 +1266,7 @@ def main():
     if interactive_query_mode:
         important.add(interactive_field)
 
-    # __ref__ may be different thing depending on the last filter
+    # reference may be different thing depending on the last filter
     if last in ['near', 'closest']:
         ref_type = 'distance'
     elif last in ['trep', 'fuzzy']:
