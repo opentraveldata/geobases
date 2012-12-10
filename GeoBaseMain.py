@@ -172,7 +172,7 @@ class RotatingColors(object):
 
 def fmt_ref(ref, ref_type, no_symb=False):
     """
-    Display the __ref__ depending on its type.
+    Display the reference depending on its type.
     """
     if ref_type == 'distance':
         if no_symb:
@@ -201,7 +201,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         return
 
     if not show:
-        show = ['__ref__'] + geob.fields[:]
+        show = [REF] + geob.fields[:]
 
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
@@ -225,7 +225,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if f in important:
             col = c.getEmph()
-        elif f == '__ref__':
+        elif f == REF:
             col = c.getHeader()
         elif str(f).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
@@ -238,7 +238,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         # Fields on the left
         stdout.write('\n' + fixed_width(f, c.convertBold(col), lim, truncate))
 
-        if f == '__ref__':
+        if f == REF:
             for h, _ in list_of_things:
                 stdout.write(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
@@ -258,7 +258,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     """
     if not show:
         # Temporary
-        t_show = ['__ref__'] + geob.fields[:]
+        t_show = [REF] + geob.fields[:]
 
         # In this default case, we remove splitted valued if
         # corresponding raw values exist
@@ -279,7 +279,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     for h, k in list_of_things:
         l = []
         for f in show_wo_omit:
-            if f == '__ref__':
+            if f == REF:
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
                 v = geob.get(k, f)
@@ -294,13 +294,13 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
         stdout.write(delim.join(l) + '\n')
 
 
-def display_browser(status, nb_res):
+def display_browser(templates, nb_res):
     """Display templates in the browser.
     """
     # We manually launch firefox, unless we risk a crash
     to_be_launched = []
 
-    for template in status:
+    for template in templates:
         if template.endswith('_table.html'):
             if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
@@ -455,12 +455,12 @@ def guess_headers(s_row):
                 continue
 
             if -90 < val < 90 and not lat_found:
-                # latitude candidate
+                # possible latitude field
                 headers[i] = 'lat'
                 lat_found  = True
 
             elif -180 < val < 180 and not lng_found:
-                # longitude candidate
+                # possible longitude field
                 headers[i] = 'lng'
                 lng_found  = True
 
@@ -534,6 +534,15 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
         print('\t%-20s\t%-20s' % p, file=descriptor)
 
 
+def best_field(candidates, possibilities, default=None):
+    """Select best candidate in possibilities.
+    """
+    for candidate in candidates:
+        if candidate in possibilities:
+            return candidate
+    return default
+
+
 def warn(name, *args):
     """
     Display a warning on stderr.
@@ -601,22 +610,26 @@ DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
-DEF_FUZZY_FIELD   = 'name'
+DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
+
+ALLOWED_ICON_TYPES = [None, 'auto', 'S', 'B']
+ALLOWED_INTERACTIVE_TYPES = ['__exact__', '__fuzzy__']
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
 DISABLE = '__none__'
+REF     = '__ref__'
 
 # Port for SimpleHTTPServer
 PORT = 8000
 
 # Defaults for map
-DEF_LABEL_FIELD   = 'name'
-DEF_SIZE_FIELD    = 'page_rank'
-DEF_COLOR_FIELD   = 'raw_offset'
-DEF_BIG_ICONS     = 150  # threshold for using big icons
-MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
-TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
+DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
+DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
+DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
+DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
+MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
+TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -675,12 +688,16 @@ if ENV_WARNINGS:
 def handle_args():
     """Command line parsing.
     """
+    # or list formatter
+    fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
+
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
-        help = 'Main argument (key, name, geocode depending on search mode)',
+        help = '''Main argument. This will be used as a list of keys on which we
+                        apply filters. Leave empty to consider all keys.''',
         nargs = '*')
 
     parser.add_argument('-b', '--base',
@@ -692,17 +709,15 @@ def handle_args():
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
                         match from the property given by --fuzzy-property option for
-                        the argument. Limit can be specified with --fuzzy-limit option.
-                        By default, the "%s" property is used for the search.''' % \
-                        DEF_FUZZY_FIELD,
+                        the argument. Limit can be specified with --fuzzy-limit option.''',
         default = None,
         nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "%s" if available, otherwise "__key__".
+                        Default is %s depending on fields.
                         Give unadmissible property and available
-                        values will be displayed.''' % DEF_FUZZY_FIELD,
+                        values will be displayed.''' % fmt_or(DEF_FUZZY_FIELDS),
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
@@ -778,22 +793,23 @@ def handle_args():
 
     parser.add_argument('-o', '--omit',
         help = '''Does not print some characteristics of POR in stdout.
-                        May help to get cleaner output. "__ref__" is an
+                        May help to get cleaner output. "%s" is an
                         available keyword with the
-                        other geobase headers.''',
+                        other geobase headers.''' % REF,
         nargs = '+',
         default = [])
 
     parser.add_argument('-s', '--show',
         help = '''Only print some characterics of POR in stdout.
-                        May help to get cleaner output. "__ref__" is an
+                        May help to get cleaner output. "%s" is an
                         available keyword with the
-                        other geobase headers.''',
+                        other geobase headers.''' % REF,
         nargs = '+',
         default = [])
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
+                        This must be an integer.
                         Default is %s, except in quiet mode where it is disabled.''' % \
                         DEF_NUM_COL,
         default = None)
@@ -853,18 +869,21 @@ def handle_args():
     parser.add_argument('-M', '--map-data',
         help = '''4 optional values.
                         The first one is the field to display on map points.
-                        Default is "%s" if available, otherwise "__key__".
+                        Default is %s depending on fields.
                         The second optional value is the field used to draw
-                        circles around points. Default is "%s" if available.
+                        circles around points.
+                        Default is %s depending on fields.
                         Put "%s" to disable circles.
                         The third optional value is the field use to color icons.
-                        Default is "%s" if available.
+                        Default is %s depending on fields.
                         Put "%s" to disable coloring.
-                        The fourth optional value is the big icons threshold, this must
-                        be an integer, default is %s.
+                        The fourth optional value is the icon type, either "B" for big,
+                        "S" for small, "auto" for automatic, or "%s" to disable icons.
+                        Default is "%s".
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
-                        (DEF_LABEL_FIELD, DEF_SIZE_FIELD, DISABLE, DEF_COLOR_FIELD, DISABLE, DEF_BIG_ICONS, SKIP),
+                        (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
+                         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1017,34 +1036,30 @@ def main():
     if verbose:
         after_init = datetime.now()
 
-
     # Tuning parameters
     if args['exact_property'] is None:
         args['exact_property'] = '__key__'
 
     if args['fuzzy_property'] is None:
-        args['fuzzy_property'] = DEF_FUZZY_FIELD if DEF_FUZZY_FIELD in g.fields else '__key__'
+        args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
     # Reading map options
-    label       = DEF_LABEL_FIELD if DEF_LABEL_FIELD in g.fields else '__key__'
-    size_field  = DEF_SIZE_FIELD  if DEF_SIZE_FIELD  in g.fields else None
-    color_field = DEF_COLOR_FIELD if DEF_COLOR_FIELD in g.fields else None
-    big_icons   = DEF_BIG_ICONS
+    label       = best_field(DEF_LABEL_FIELDS, g.fields)
+    point_size  = best_field(DEF_SIZE_FIELDS,  g.fields)
+    point_color = best_field(DEF_COLOR_FIELDS, g.fields)
+    icon_type   = DEF_ICON_TYPE
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        size_field = None if args['map_data'][1] == DISABLE else args['map_data'][1]
+        point_size = None if args['map_data'][1] == DISABLE else args['map_data'][1]
 
     if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
-        color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+        point_color = None if args['map_data'][2] == DISABLE else args['map_data'][2]
 
     if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
-        try:
-            big_icons = int(args['map_data'][3])
-        except ValueError:
-            error('type', args['map_data'][3], 'int')
+        icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -1092,17 +1107,22 @@ def main():
             error('property', args['fuzzy_property'], g._data, g.fields)
 
     # Failing on unknown fields
-    fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
+    fields_to_test = [
+        f for f in (label, point_size, point_color, interactive_field)
+        if f is not None
+    ]
 
     for field in args['show'] + args['omit'] + fields_to_test:
-        if field not in ['__ref__'] + g.fields:
-            error('field', field, g._data, ['__ref__'] + g.fields)
+        if field not in [REF] + g.fields:
+            error('field', field, g._data, [REF] + g.fields)
 
-    # Testing -M option
-    allowed_types = ['__exact__', '__fuzzy__']
+    # Testing icon_type from -M
+    if icon_type not in ALLOWED_ICON_TYPES:
+        error('wrong_value', icon_type, ALLOWED_ICON_TYPES)
 
-    if interactive_type not in allowed_types:
-        error('wrong_value', interactive_type, allowed_types)
+    # Testing -I option
+    if interactive_type not in ALLOWED_INTERACTIVE_TYPES:
+        error('wrong_value', interactive_type, ALLOWED_INTERACTIVE_TYPES)
 
 
 
@@ -1247,7 +1267,7 @@ def main():
     if interactive_query_mode:
         important.add(interactive_field)
 
-    # __ref__ may be different thing depending on the last filter
+    # reference may be different thing depending on the last filter
     if last in ['near', 'closest']:
         ref_type = 'distance'
     elif last in ['trep', 'fuzzy']:
@@ -1257,23 +1277,24 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data,
-                             label=label,
-                             point_size=size_field,
-                             point_color=color_field,
-                             from_keys=ex_keys(res),
-                             big_limit=big_icons,
-                             verbose=True)
+        templates, max_t = g.visualize(output=g._data,
+                                       label=label,
+                                       point_size=point_size,
+                                       point_color=point_color,
+                                       icon_type=icon_type,
+                                       from_keys=ex_keys(res),
+                                       verbose=True)
 
-        if verbose:
-            display_browser(status, nb_res)
+        if templates and verbose:
+            display_browser(templates, nb_res)
 
-        if len(status) < 2:
+        if len(templates) < max_t:
             # At least one html not rendered
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print('/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status)))
+            print('/!\ %s template(s) not rendered. Switching to terminal frontend...' % \
+                    (max_t - len(templates)))
 
 
     # We protect the stdout.write against the IOError

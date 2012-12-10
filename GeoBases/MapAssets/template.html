@@ -116,7 +116,6 @@ function centerPopup(divId) {
 }
 
 
-
 function sortPointX(a, b) {
     return a.lng() - b.lng();
 }
@@ -167,7 +166,9 @@ function initialize(jsonData) {
     var fields = [];
     var field;
     for (field in jsonData.points[0]) {
-        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
+        if (jsonData.points[0].hasOwnProperty(field)
+                && field !== '__lab__'
+                && field !== '__col__') {
             fields.push(field);
         }
     }
@@ -181,13 +182,29 @@ function initialize(jsonData) {
 
     var base_icon = '{{base_icon}}';
 
+    if (base_icon === '') {
+        var getMarkerIcon  = function (color) { return null; };
+        var getCircleColor = function (color) { return color; };
+    } else {
+        var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
+        var getCircleColor = function (color) { return 'black'; };
+    }
+
     var markersArray = [];
     var circlesArray = [];
     var centersArray = [];
     var bounds       = new google.maps.LatLngBounds();
     var infowindow   = new google.maps.InfoWindow();
 
-    var i, j, c, e, s, latlng, marker, circle;
+    // closure fun
+    document.closeInfoWindow = function() {
+        var i, c;
+        for (i=0, c=markersArray.length; i<c; i++) {
+            infowindow.close(map, markersArray[i]);
+        }
+    }
+
+    var i, j, c, e, s, latlng, marker, circle, icon, ccol;
     var max_value = 0;
 
     // Load the data
@@ -202,15 +219,22 @@ function initialize(jsonData) {
             continue;
         }
 
+        icon = getMarkerIcon(e.__col__);
+        ccol = getCircleColor(e.__col__);
+
         marker = new google.maps.Marker({
-            map         : map,
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
             title       : e.__lab__,
-            icon        : e.__col__ + '_' + base_icon,
             clickable   : true,
             draggable   : false
         });
+
+        // icon is null if base_icon is empty string ''
+        if (icon !== null) {
+            marker.setMap(map);
+            marker.setIcon(icon);
+        }
 
         // Augmenting the marker type
         marker.help = ' ' +
@@ -228,7 +252,6 @@ function initialize(jsonData) {
         '</div>';
 
         google.maps.event.addListener(marker, 'click', function() {
-            //infowindow.close(map, this);
             infowindow.setContent(this.help);
             infowindow.open(map, this);
         });
@@ -248,10 +271,10 @@ function initialize(jsonData) {
             circle = new google.maps.Circle({
                 center          : latlng,
                 radius          : 0,
-                strokeColor     : "black",
+                strokeColor     : ccol,
                 strokeOpacity   : 0.25,
                 strokeWeight    : 2,
-                fillColor       : "black",
+                fillColor       : ccol,
                 fillOpacity     : 0.15,
                 map             : map,
                 clickable       : true
@@ -262,14 +285,19 @@ function initialize(jsonData) {
             circle.help = ' ' +
             '<div>' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}'.fmt(jsonData.meta.point_size, s) +
+                '<i>{0}</i> {1}<br/>'.fmt(jsonData.meta.point_size, s);
+
+            if (base_icon === '') {
+                circle.help += '<i>{0}</i> {1} ({2})'.fmt(jsonData.meta.point_color, e.__cat__, ccol);
+            }
+
+            circle.help += ' ' +
             '</div>';
 
             // Saving
             circlesArray.push(circle);
 
             google.maps.event.addListener(circle, 'click', function(event) {
-                //infowindow.close(map, this);
                 infowindow.setContent(this.help);
                 infowindow.open(map, new google.maps.Marker({position : event.latLng}));
             });
@@ -347,16 +375,22 @@ function initialize(jsonData) {
     });
 
     // Fill legend
-    var cat, vol, col;
+    var cat, vol, col, icon;
     var i, c;
     var msg = '<table style="width:100%; align:center;">';
-    msg += '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
+    msg += '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
-        cat = jsonData.categories[i][0];
-        col = jsonData.categories[i][1].color;
-        vol = jsonData.categories[i][1].volume;
-        msg += '<tr><td><img src="{0}" alt="icon"/></td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt(col + '_' + base_icon, col, jsonData.meta.point_color, cat, vol);
+        cat  = jsonData.categories[i][0];
+        col  = jsonData.categories[i][1].color;
+        vol  = jsonData.categories[i][1].volume;
+        icon = getMarkerIcon(col);
+
+        if (icon !== null) {
+            msg += '<tr><td><img src="{0}" alt="No icon"/></td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt(icon, col, jsonData.meta.point_color, cat, vol);
+        } else {
+            msg += '<tr><td>{0}</td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt('No icon', col, jsonData.meta.point_color, cat, vol);
+        }
     }
     msg += '</table>';
 
@@ -418,6 +452,7 @@ $(document).ready(function() {
     $(document).keydown(function (e) {
         if (e.keyCode === 27) {
             disablePopup('#legendPopup');
+            document.closeInfoWindow();
         }
     });
 

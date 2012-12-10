@@ -69,11 +69,12 @@ countries:
 
 capitals:
     source    : Countries/capitals.csv
-    indexes   : code
+    indexes   : country_code
     delimiter : ^
     headers   :
-        - name
-        - code
+        - country_code
+        - capital_name
+        - country_name
         - area_in_sq_km
         - population
         - lat
@@ -324,15 +325,15 @@ ori_por_non_iata:
 
 currencies:
     source    : Currencies/wiki_source_ISO_4217.csv
-    indexes   : code
+    indexes   : currency_code
     delimiter : ;
     subdelimiters :
         countries : ','
     headers   :
-        - code
+        - currency_code
         - numeric_code
         - digits_number
-        - currency
+        - currency_name
         - countries
 
 
