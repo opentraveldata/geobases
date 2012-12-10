@@ -325,15 +325,15 @@ ori_por_non_iata:
 
 currencies:
     source    : Currencies/wiki_source_ISO_4217.csv
-    indexes   : code
+    indexes   : currency_code
     delimiter : ;
     subdelimiters :
         countries : ','
     headers   :
-        - code
+        - currency_code
         - numeric_code
         - digits_number
-        - currency
+        - currency_name
         - countries
 
 
