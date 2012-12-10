@@ -1369,7 +1369,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, from_keys=None, big_limit=100, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1388,22 +1388,25 @@ class GeoBase(object):
 
         # Label is the field which labels the points
         if label not in self.fields:
-            if verbose:
-                print '\n/!\ Label "%s" not in fields %s, could not visualize...' % \
-                        (label, self.fields)
-            return []
+            raise ValueError('label "%s" not in fields %s.' % (label, self.fields))
+
+        if point_size is not None and point_size not in self.fields:
+            raise ValueError('point_size "%s" not in fields %s.' % (point_size, self.fields))
+
+        if point_color is not None and point_color not in self.fields:
+            raise ValueError('point_color "%s" not in fields %s.' % (point_color, self.fields))
 
         # Optional function which gives points size
-        if point_size is not None and point_size in self.fields:
-            get_size = lambda key: self.get(key, point_size)
-        else:
+        if point_size is None:
             get_size = lambda key: 0
+        else:
+            get_size = lambda key: self.get(key, point_size)
 
         # Optional function which gives points size
-        if point_color is not None and point_color in self.fields:
-            get_category = lambda key: self.get(key, point_color)
-        else:
+        if point_color is None:
             get_category = lambda key: None
+        else:
+            get_category = lambda key: self.get(key, point_color)
 
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
@@ -1469,7 +1472,6 @@ class GeoBase(object):
                 print '> Affecting category %-8s to color %-7s (%-5s points)' % \
                         (cat, categories[cat]['color'], vol)
 
-
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
@@ -1488,7 +1490,18 @@ class GeoBase(object):
             }))
 
         # Custom the template to connect to the json data
-        base_icon    = 'marker.png' if len(data) < big_limit else 'point.png'
+        if icon_type is None:
+            base_icon = 'null'
+        elif icon_type == 'auto':
+            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
+        elif icon_type == 'S':
+            base_icon = 'point.png'
+        elif icon_type == 'B':
+            base_icon = 'marker.png'
+        else:
+            raise ValueError('icon_type "%s" not in %s.' % \
+                             (icon_type, ['auto', 'S', 'B', None]))
+
         tmp_template = []
         tmp_static   = [json_name]
 
@@ -1524,7 +1537,7 @@ class GeoBase(object):
             print
 
         # This is the numbered of templates rendered
-        return tmp_template
+        return tmp_template, sum(len(a['template']) for a in GeoBase.ASSETS.values())
 
 
 
