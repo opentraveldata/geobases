@@ -69,12 +69,12 @@ countries:
 
 capitals:
     source    : Countries/capitals.csv
-    indexes   : code
+    indexes   : country_code
     delimiter : ^
     headers   :
-        - code
-        - name
-        - country
+        - country_code
+        - capital_name
+        - country_name
         - area_in_sq_km
         - population
         - lat
