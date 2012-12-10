@@ -461,12 +461,12 @@ def guess_headers(s_row):
                 continue
 
             if -90 < val < 90 and not lat_found:
-                # latitude candidate
+                # possible latitude field
                 headers[i] = 'lat'
                 lat_found  = True
 
             elif -180 < val < 180 and not lng_found:
-                # longitude candidate
+                # possible longitude field
                 headers[i] = 'lng'
                 lng_found  = True
 
@@ -540,6 +540,15 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
         print >> descriptor, '\t%-20s\t%-20s' % p
 
 
+def best_field(candidates, possibilities, default=None):
+    """Select best candidate in possibilities.
+    """
+    for candidate in candidates:
+        if candidate in possibilities:
+            return candidate
+    return default
+
+
 def warn(name, *args):
     """
     Display a warning on stderr.
@@ -607,7 +616,7 @@ DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_LIM     = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
-DEF_FUZZY_FIELD   = 'name'
+DEF_FUZZY_FIELDS  = ('name', 'capital_name', '__key__')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -617,9 +626,9 @@ DISABLE = '__none__'
 PORT = 8000
 
 # Defaults for map
-DEF_LABEL_FIELD   = 'name'
-DEF_SIZE_FIELD    = 'page_rank'
-DEF_COLOR_FIELD   = 'raw_offset'
+DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
+DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
+DEF_COLOR_FIELDS  = ('raw_offset', 'fcode',        None)
 DEF_BIG_ICONS     = 150  # threshold for using big icons
 MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
@@ -681,12 +690,16 @@ if ENV_WARNINGS:
 def handle_args():
     """Command line parsing.
     """
+    # or list formatter
+    fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
+
     parser = argparse.ArgumentParser(description='Provide POR information.')
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
-        help = 'Main argument (key, name, geocode depending on search mode)',
+        help = '''Main argument. This will be used as a list of keys on which we
+                        apply filters. Leave empty to consider all keys.''',
         nargs = '*')
 
     parser.add_argument('-b', '--base',
@@ -698,17 +711,15 @@ def handle_args():
     parser.add_argument('-f', '--fuzzy',
         help = '''Rather than looking up a key, this mode will search the best
                         match from the property given by --fuzzy-property option for
-                        the argument. Limit can be specified with --fuzzy-limit option.
-                        By default, the "%s" property is used for the search.''' % \
-                        DEF_FUZZY_FIELD,
+                        the argument. Limit can be specified with --fuzzy-limit option.''',
         default = None,
         nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
         help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is "%s" if available, otherwise "__key__".
+                        Default is %s depending on fields.
                         Give unadmissible property and available
-                        values will be displayed.''' % DEF_FUZZY_FIELD,
+                        values will be displayed.''' % fmt_or(DEF_FUZZY_FIELDS),
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
@@ -859,18 +870,20 @@ def handle_args():
     parser.add_argument('-M', '--map-data',
         help = '''4 optional values.
                         The first one is the field to display on map points.
-                        Default is "%s" if available, otherwise "__key__".
+                        Default is %s depending on fields.
                         The second optional value is the field used to draw
-                        circles around points. Default is "%s" if available.
+                        circles around points.
+                        Default is %s depending on fields.
                         Put "%s" to disable circles.
                         The third optional value is the field use to color icons.
-                        Default is "%s" if available.
+                        Default is %s depending on fields.
                         Put "%s" to disable coloring.
                         The fourth optional value is the big icons threshold, this must
                         be an integer, default is %s.
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
-                        (DEF_LABEL_FIELD, DEF_SIZE_FIELD, DISABLE, DEF_COLOR_FIELD, DISABLE, DEF_BIG_ICONS, SKIP),
+                        (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS),
+                         DISABLE, fmt_or(DEF_COLOR_FIELDS), DISABLE, DEF_BIG_ICONS, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1023,18 +1036,17 @@ def main():
     if verbose:
         after_init = datetime.now()
 
-
     # Tuning parameters
     if args['exact_property'] is None:
         args['exact_property'] = '__key__'
 
     if args['fuzzy_property'] is None:
-        args['fuzzy_property'] = DEF_FUZZY_FIELD if DEF_FUZZY_FIELD in g.fields else '__key__'
+        args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
     # Reading map options
-    label       = DEF_LABEL_FIELD if DEF_LABEL_FIELD in g.fields else '__key__'
-    size_field  = DEF_SIZE_FIELD  if DEF_SIZE_FIELD  in g.fields else None
-    color_field = DEF_COLOR_FIELD if DEF_COLOR_FIELD in g.fields else None
+    label       = best_field(DEF_LABEL_FIELDS, g.fields)
+    size_field  = best_field(DEF_SIZE_FIELDS,  g.fields)
+    color_field = best_field(DEF_COLOR_FIELDS, g.fields)
     big_icons   = DEF_BIG_ICONS
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
