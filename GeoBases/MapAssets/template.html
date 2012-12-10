@@ -204,7 +204,7 @@ function initialize(jsonData) {
         }
     }
 
-    var i, j, c, e, s, latlng, marker, circle, icon, col;
+    var i, j, c, e, s, latlng, marker, circle, icon, ccol;
     var max_value = 0;
 
     // Load the data
@@ -220,7 +220,7 @@ function initialize(jsonData) {
         }
 
         icon = getMarkerIcon(e.__col__);
-        col  = getCircleColor(e.__col__);
+        ccol = getCircleColor(e.__col__);
 
         marker = new google.maps.Marker({
             position    : latlng,
@@ -271,10 +271,10 @@ function initialize(jsonData) {
             circle = new google.maps.Circle({
                 center          : latlng,
                 radius          : 0,
-                strokeColor     : col,
+                strokeColor     : ccol,
                 strokeOpacity   : 0.25,
                 strokeWeight    : 2,
-                fillColor       : col,
+                fillColor       : ccol,
                 fillOpacity     : 0.15,
                 map             : map,
                 clickable       : true
@@ -285,8 +285,13 @@ function initialize(jsonData) {
             circle.help = ' ' +
             '<div>' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}<br/>'.fmt(jsonData.meta.point_size, s) +
-                '<i>{0}</i> category: {1}'.fmt(jsonData.meta.point_color, e.__cat__) +
+                '<i>{0}</i> {1}<br/>'.fmt(jsonData.meta.point_size, s);
+
+            if (base_icon === '') {
+                circle.help += '<i>{0}</i>: {1} ({2})'.fmt(jsonData.meta.point_color, e.__cat__, ccol);
+            }
+
+            circle.help += ' ' +
             '</div>';
 
             // Saving
