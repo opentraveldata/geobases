@@ -167,7 +167,9 @@ function initialize(jsonData) {
     var fields = [];
     var field;
     for (field in jsonData.points[0]) {
-        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
+        if (jsonData.points[0].hasOwnProperty(field)
+                && field !== '__lab__'
+                && field !== '__col__') {
             fields.push(field);
         }
     }
