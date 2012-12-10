@@ -295,13 +295,13 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
         stdout.write(delim.join(l) + '\n')
 
 
-def display_browser(status, nb_res):
+def display_browser(templates, nb_res):
     """Display templates in the browser.
     """
     # We manually launch firefox, unless we risk a crash
     to_be_launched = []
 
-    for template in status:
+    for template in templates:
         if template.endswith('_table.html'):
             if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
@@ -618,6 +618,9 @@ DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
 
+ALLOWED_ICON_TYPES = [None, 'auto', 'S', 'B']
+ALLOWED_INTERACTIVE_TYPES = ['__exact__', '__fuzzy__']
+
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
 DISABLE = '__none__'
@@ -629,10 +632,10 @@ PORT = 8000
 # Defaults for map
 DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS  = ('raw_offset', 'fcode',        None)
-DEF_BIG_ICONS     = 150  # threshold for using big icons
-MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
-TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
+DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
+DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
+MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
+TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -812,6 +815,7 @@ def handle_args():
 
     parser.add_argument('-l', '--limit',
         help = '''Specify a limit for the number of results.
+                        This must be an integer.
                         Default is %s, except in quiet mode where it is disabled.''' % \
                         DEF_NUM_COL,
         default = None)
@@ -879,12 +883,13 @@ def handle_args():
                         The third optional value is the field use to color icons.
                         Default is %s depending on fields.
                         Put "%s" to disable coloring.
-                        The fourth optional value is the big icons threshold, this must
-                        be an integer, default is %s.
+                        The fourth optional value is the icon type, either "B" for big,
+                        "S" for small, "auto" for automatic, or "%s" to disable icons.
+                        Default is "%s".
                         For any field, you may put "%s" to leave the default value.
                         Example: -M name population __none__''' % \
-                        (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS),
-                         DISABLE, fmt_or(DEF_COLOR_FIELDS), DISABLE, DEF_BIG_ICONS, SKIP),
+                        (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
+                         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1046,24 +1051,21 @@ def main():
 
     # Reading map options
     label       = best_field(DEF_LABEL_FIELDS, g.fields)
-    size_field  = best_field(DEF_SIZE_FIELDS,  g.fields)
-    color_field = best_field(DEF_COLOR_FIELDS, g.fields)
-    big_icons   = DEF_BIG_ICONS
+    point_size  = best_field(DEF_SIZE_FIELDS,  g.fields)
+    point_color = best_field(DEF_COLOR_FIELDS, g.fields)
+    icon_type   = DEF_ICON_TYPE
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        size_field = None if args['map_data'][1] == DISABLE else args['map_data'][1]
+        point_size = None if args['map_data'][1] == DISABLE else args['map_data'][1]
 
     if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
-        color_field = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+        point_color = None if args['map_data'][2] == DISABLE else args['map_data'][2]
 
     if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
-        try:
-            big_icons = int(args['map_data'][3])
-        except ValueError:
-            error('type', args['map_data'][3], 'int')
+        icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_LIM
@@ -1111,17 +1113,22 @@ def main():
             error('property', args['fuzzy_property'], g._data, g.fields)
 
     # Failing on unknown fields
-    fields_to_test = [f for f in (label, size_field, color_field, interactive_field) if f is not None]
+    fields_to_test = [
+        f for f in (label, point_size, point_color, interactive_field)
+        if f is not None
+    ]
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in [REF] + g.fields:
             error('field', field, g._data, [REF] + g.fields)
 
-    # Testing -M option
-    allowed_types = ['__exact__', '__fuzzy__']
+    # Testing icon_type from -M
+    if icon_type not in ALLOWED_ICON_TYPES:
+        error('wrong_value', icon_type, ALLOWED_ICON_TYPES)
 
-    if interactive_type not in allowed_types:
-        error('wrong_value', interactive_type, allowed_types)
+    # Testing -I option
+    if interactive_type not in ALLOWED_INTERACTIVE_TYPES:
+        error('wrong_value', interactive_type, ALLOWED_INTERACTIVE_TYPES)
 
 
 
@@ -1276,23 +1283,24 @@ def main():
 
     # Display
     if frontend == 'map':
-        status = g.visualize(output=g._data,
-                             label=label,
-                             point_size=size_field,
-                             point_color=color_field,
-                             from_keys=ex_keys(res),
-                             big_limit=big_icons,
-                             verbose=True)
+        templates, max_t = g.visualize(output=g._data,
+                                       label=label,
+                                       point_size=point_size,
+                                       point_color=point_color,
+                                       icon_type=icon_type,
+                                       from_keys=ex_keys(res),
+                                       verbose=True)
 
-        if verbose:
-            display_browser(status, nb_res)
+        if templates and verbose:
+            display_browser(templates, nb_res)
 
-        if len(status) < 2:
+        if len(templates) < max_t:
             # At least one html not rendered
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '/!\ %s template(s) not rendered. Switching to terminal frontend...' % (2 - len(status))
+            print '/!\ %s template(s) not rendered. Switching to terminal frontend...' % \
+                    (max_t - len(templates))
 
 
     # We protect the stdout.write against the IOError
