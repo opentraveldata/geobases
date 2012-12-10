@@ -629,7 +629,7 @@ PORT = 8000
 # Defaults for map
 DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS  = ('raw_offset', 'fcode',        None)
+DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
 DEF_BIG_ICONS     = 150  # threshold for using big icons
 MAP_BROWSER_LIM   = 8000 # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000 # limit for launching browser automatically
