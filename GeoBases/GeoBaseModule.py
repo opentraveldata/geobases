@@ -42,12 +42,6 @@ Examples for stations::
 From any point of reference:
 
     >>> geo = GeoBase(data='ori_por_multi') # we have a few duplicates even with (iata, loc_type) key
-    /!\ [lno ...] RBM+A is duplicated #1, first found lno ...
-    /!\ [lno ...] RBM+A is duplicated #2, first found lno ...
-    /!\ [lno ...] RBM+A is duplicated #3, first found lno ...
-    /!\ [lno ...] RBM+C is duplicated #1, first found lno ...
-    /!\ [lno ...] RBM+C is duplicated #2, first found lno ...
-    /!\ [lno ...] RBM+C is duplicated #3, first found lno ...
     /!\ [lno ...] RDU+CA is duplicated #1, first found lno ...
     /!\ [lno ...] RDU+CA is duplicated #2, first found lno ...
     /!\ [lno ...] RDU+CA is duplicated #3, first found lno ...
@@ -662,11 +656,11 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7054
+        7057
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7054
+        7057
         >>> len(list(geo_o.getKeysWhere([('__dad__', '')], reverse=True))) # Counting duplicated keys
-        4374
+        4407
 
         Testing several conditions.
 
@@ -675,11 +669,11 @@ class GeoBase(object):
         >>> len(list(geo_o.getKeysWhere(c_1)))
         18
         >>> len(list(geo_o.getKeysWhere(c_2)))
-        68
+        87
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
-        84
+        103
 
         This works too \o/.
 
