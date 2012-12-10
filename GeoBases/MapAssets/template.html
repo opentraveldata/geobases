@@ -116,7 +116,6 @@ function centerPopup(divId) {
 }
 
 
-
 function sortPointX(a, b) {
     return a.lng() - b.lng();
 }
@@ -167,7 +166,9 @@ function initialize(jsonData) {
     var fields = [];
     var field;
     for (field in jsonData.points[0]) {
-        if (jsonData.points[0].hasOwnProperty(field) && field !== '__lab__') {
+        if (jsonData.points[0].hasOwnProperty(field)
+                && field !== '__lab__'
+                && field !== '__col__') {
             fields.push(field);
         }
     }
@@ -186,6 +187,14 @@ function initialize(jsonData) {
     var centersArray = [];
     var bounds       = new google.maps.LatLngBounds();
     var infowindow   = new google.maps.InfoWindow();
+
+    // closure fun
+    document.closeInfoWindow = function() {
+        var i, c;
+        for (i=0, c=markersArray.length; i<c; i++) {
+            infowindow.close(map, markersArray[i]);
+        }
+    }
 
     var i, j, c, e, s, latlng, marker, circle;
     var max_value = 0;
@@ -228,7 +237,6 @@ function initialize(jsonData) {
         '</div>';
 
         google.maps.event.addListener(marker, 'click', function() {
-            //infowindow.close(map, this);
             infowindow.setContent(this.help);
             infowindow.open(map, this);
         });
@@ -269,7 +277,6 @@ function initialize(jsonData) {
             circlesArray.push(circle);
 
             google.maps.event.addListener(circle, 'click', function(event) {
-                //infowindow.close(map, this);
                 infowindow.setContent(this.help);
                 infowindow.open(map, new google.maps.Marker({position : event.latLng}));
             });
@@ -418,6 +425,7 @@ $(document).ready(function() {
     $(document).keydown(function (e) {
         if (e.keyCode === 27) {
             disablePopup('#legendPopup');
+            document.closeInfoWindow();
         }
     });
 
