@@ -286,7 +286,7 @@ function initialize(jsonData) {
     //var R = 100;
     var r = 0.075;
 
-    google.maps.event.addListener(map, 'idle', function() {
+    google.maps.event.addListener(map, 'zoom_changed', function() {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
@@ -300,6 +300,11 @@ function initialize(jsonData) {
             circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
         }
 
+    });
+
+    // We trigger manually a zoom_changed to force first circle drawing
+    google.maps.event.addListenerOnce(map, 'bounds_changed', function(){
+        google.maps.event.trigger(map, 'zoom_changed');
     });
 
     // If no markers, we avoid a big
