@@ -352,12 +352,12 @@ function initialize(jsonData) {
     });
 
     // Fill legend
-    var cat, vol, col;
+    var cat, vol, col, row, icon;
     var msg = ' ' +
     '<table style="width:100%; align:center;">' +
-        '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
+        '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Circle</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
-    var line = '<tr><td>{0}</td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>';
+    row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>{5} points</td></tr>';
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
         cat  = jsonData.categories[i][0];
@@ -365,10 +365,11 @@ function initialize(jsonData) {
         vol  = jsonData.categories[i][1].volume;
 
         if (with_markers) {
-            msg += line.fmt('<img src="{0}" alt="No icon"/>'.fmt(getMarkerIcon(col)), col, point_color, cat, vol);
+            icon = '<img src="{0}" alt="No icon"/>'.fmt(getMarkerIcon(col));
         } else {
-            msg += line.fmt('No icon', col, point_color, cat, vol);
+            icon = '(none)';
         }
+        msg += row.fmt(icon, col, getCircleColor(col) + ' circle', point_color, cat, vol);
     }
     msg += '</table>';
 
