@@ -286,7 +286,7 @@ function initialize(jsonData) {
     //var R = 100;
     var r = 0.075;
 
-    google.maps.event.addListener(map, 'idle', function() {
+    google.maps.event.addListener(map, 'zoom_changed', function() {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
