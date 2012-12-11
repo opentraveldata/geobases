@@ -466,12 +466,12 @@ def guess_headers(s_row):
                 # Round values are improbable as lat/lng
                 continue
 
-            if -90 < val < 90 and not lat_found:
+            if -90 <= val <= 90 and not lat_found:
                 # possible latitude field
                 headers[i] = 'lat'
                 lat_found  = True
 
-            elif -180 < val < 180 and not lng_found:
+            elif -180 <= val <= 180 and not lng_found:
                 # possible longitude field
                 headers[i] = 'lng'
                 lng_found  = True
