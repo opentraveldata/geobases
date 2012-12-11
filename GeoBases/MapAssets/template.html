@@ -179,15 +179,20 @@ function initialize(jsonData) {
 
     var f = fields.length;
     var n = jsonData.points.length;
+    var point_color = jsonData.meta.point_color;
+    var point_size  = jsonData.meta.point_size;
+    var base_icon   = jsonData.meta.base_icon;
+    var icon_type   = jsonData.meta.icon_type;
 
-    var base_icon = '{{base_icon}}';
+    var with_markers = icon_type   !== null;
+    var with_colors  = point_color !== null;
 
-    if (base_icon === '') {
-        var getMarkerIcon  = function (color) { return null; };
-        var getCircleColor = function (color) { return color; };
-    } else {
-        var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
+    var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
+
+    if (with_markers || ! with_colors) {
         var getCircleColor = function (color) { return 'black'; };
+    } else {
+        var getCircleColor = function (color) { return color; };
     }
 
     var markersArray = [];
@@ -204,7 +209,7 @@ function initialize(jsonData) {
         }
     }
 
-    var i, j, c, e, s, latlng, marker, circle, icon, ccol;
+    var i, j, c, e, s, latlng, marker, circle, ccol;
     var max_value = 0;
 
     // Load the data
@@ -219,9 +224,6 @@ function initialize(jsonData) {
             continue;
         }
 
-        icon = getMarkerIcon(e.__col__);
-        ccol = getCircleColor(e.__col__);
-
         marker = new google.maps.Marker({
             position    : latlng,
             //animation   : google.maps.Animation.DROP,
@@ -230,10 +232,9 @@ function initialize(jsonData) {
             draggable   : false
         });
 
-        // icon is null if base_icon is empty string ''
-        if (icon !== null) {
+        if (with_markers) {
             marker.setMap(map);
-            marker.setIcon(icon);
+            marker.setIcon(getMarkerIcon(e.__col__));
         }
 
         // Augmenting the marker type
@@ -262,7 +263,8 @@ function initialize(jsonData) {
         centersArray.push(latlng);
 
         // We compute the biggest __siz__ value
-        s = parseFloat(e.__siz__);
+        s    = parseFloat(e.__siz__);
+        ccol = getCircleColor(e.__col__);
 
         if ((! isNaN(s)) && s > 0) {
             if (s > max_value) {
@@ -285,10 +287,10 @@ function initialize(jsonData) {
             circle.help = ' ' +
             '<div>' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}<br/>'.fmt(jsonData.meta.point_size, s);
+                '<i>{0}</i> {1}<br/>'.fmt(point_size, s);
 
-            if (base_icon === '') {
-                circle.help += '<i>{0}</i> {1} ({2})'.fmt(jsonData.meta.point_color, e.__cat__, ccol);
+            if (! with_markers && with_colors) {
+                circle.help += '<i>{0}</i> {1} ({2})'.fmt(point_color, e.__cat__, ccol);
             }
 
             circle.help += ' ' +
@@ -375,29 +377,30 @@ function initialize(jsonData) {
     });
 
     // Fill legend
-    var cat, vol, col, icon;
+    var cat, vol, col;
     var i, c;
-    var msg = '<table style="width:100%; align:center;">';
-    msg += '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
+    var msg = ' ' +
+    '<table style="width:100%; align:center;">' +
+        '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
+
+    var line = '<tr><td>{0}</td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>';
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
         cat  = jsonData.categories[i][0];
         col  = jsonData.categories[i][1].color;
         vol  = jsonData.categories[i][1].volume;
-        icon = getMarkerIcon(col);
 
-        if (icon !== null) {
-            msg += '<tr><td><img src="{0}" alt="No icon"/></td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt(icon, col, jsonData.meta.point_color, cat, vol);
+        if (with_markers) {
+            msg += line.fmt('<img src="{0}" alt="No icon"/>'.fmt(getMarkerIcon(col)), col, point_color, cat, vol);
         } else {
-            msg += '<tr><td>{0}</td><td>{1}</td><td>{2} "{3}"</td><td>{4} points</td></tr>'.fmt('No icon', col, jsonData.meta.point_color, cat, vol);
+            msg += line.fmt('No icon', col, point_color, cat, vol);
         }
     }
     msg += '</table>';
 
-    $('#legendPopup').html(msg);
-
     // General information
-    $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, jsonData.meta.point_color, jsonData.meta.point_size, max_value));
+    $('#legendPopup').html(msg);
+    $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, point_color, point_size, max_value));
 
 }
 
