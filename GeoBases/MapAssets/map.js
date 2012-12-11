@@ -433,6 +433,7 @@ $(document).ready(function() {
         }
     });
 
+    // JSON_FILE is defined in the template
     $.getJSON(JSON_FILE, function(data){
         initialize(data);
     });

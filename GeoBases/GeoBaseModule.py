@@ -145,7 +145,10 @@ class GeoBase(object):
                 # source : v_target
                 local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
             },
-            'static' : {}
+            'static' : {
+                # source : target
+                local_path(__file__, 'TablesAssets/table.js') : 'table.js',
+            }
         }
     }
 
