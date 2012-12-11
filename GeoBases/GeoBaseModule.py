@@ -1469,20 +1469,6 @@ class GeoBase(object):
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
-        # Dump the json geocodes
-        json_name = '%s.json' % output
-
-        with open(json_name, 'w') as out:
-            out.write(json.dumps({
-                'meta'       : {
-                    'label'       : label,
-                    'point_size'  : point_size,
-                    'point_color' : point_color,
-                },
-                'points'     : data,
-                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
-            }))
-
         # Custom the template to connect to the json data
         if icon_type is None:
             base_icon = ''
@@ -1495,6 +1481,22 @@ class GeoBase(object):
         else:
             raise ValueError('icon_type "%s" not in %s.' % \
                              (icon_type, ['auto', 'S', 'B', None]))
+
+        # Dump the json geocodes
+        json_name = '%s.json' % output
+
+        with open(json_name, 'w') as out:
+            out.write(json.dumps({
+                'meta'       : {
+                    'label'       : label,
+                    'point_size'  : point_size,
+                    'point_color' : point_color,
+                    'icon_type'   : icon_type,
+                    'base_icon'   : base_icon,
+                },
+                'points'     : data,
+                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
+            }))
 
         tmp_template = []
         tmp_static   = [json_name]
@@ -1512,7 +1514,6 @@ class GeoBase(object):
                         for row in temp:
                             row = row.replace('{{file_name}}', output)
                             row = row.replace('{{json_file}}', json_name)
-                            row = row.replace('{{base_icon}}', base_icon)
                             out.write(row)
 
                 tmp_template.append(target)
