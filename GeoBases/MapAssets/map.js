@@ -302,6 +302,11 @@ function initialize(jsonData) {
 
     });
 
+    // We trigger manually a zoom_changed to force first circle drawing
+    google.maps.event.addListenerOnce(map, 'bounds_changed', function(){
+        google.maps.event.trigger(map, 'zoom_changed');
+    });
+
     // If no markers, we avoid a big
     // drift to the pacific ocean :)
     if (n >= 2) {
