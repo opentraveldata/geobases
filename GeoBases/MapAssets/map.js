@@ -381,14 +381,6 @@ function initialize(jsonData) {
 
 $(document).ready(function() {
 
-    $("#canvas").css({
-        "height": $(window).height()*0.90
-    });
-
-    $("#canvas").css({
-        "width": $(window).width()*0.99
-    });
-
     $('#backgroundPopup').css({
         'display'    : 'none',
         'position'   : 'fixed',
@@ -434,10 +426,23 @@ $(document).ready(function() {
         }
     });
 
-    // JSON_FILE is defined in the template
-    $.getJSON(JSON_FILE, function(data){
-        initialize(data);
-    });
+    // This is weird, but $(window).height seems to change after
+    // document is ready
+    setTimeout(function () {
+        $("#canvas").css({
+            "height": $(window).height() * 0.90
+        });
+        $("#canvas").css({
+            "width": $(window).width() * 0.99
+        });
+    }, 100);
+
+    setTimeout(function () {
+        // JSON_FILE is defined in the template
+        $.getJSON(JSON_FILE, function(data){
+            initialize(data);
+        });
+    }, 200);
 
 });
 
