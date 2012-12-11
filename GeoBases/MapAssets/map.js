@@ -440,14 +440,14 @@ $(document).ready(function() {
         $("#canvas").css({
             "width": $(window).width() * 0.99
         });
-    }, 100);
+    }, 300);
 
     setTimeout(function () {
         // JSON_FILE is defined in the template
         $.getJSON(JSON_FILE, function(data){
             initialize(data);
         });
-    }, 200);
+    }, 500);
 
 });
 

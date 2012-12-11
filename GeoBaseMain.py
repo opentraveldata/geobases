@@ -321,12 +321,16 @@ def display_browser(templates, nb_res):
         urls = ['localhost:%s/%s' % (PORT, tpl) for tpl in to_be_launched]
         os.system('firefox %s &' % ' '.join(urls))
 
+
+def launch_http_server(address, port):
+    """Launch a SimpleHTTPServer.
+    """
     # Note that in Python 3 we do not have to overload the class
     # with allow_address_reuse
-    httpd = HTTPServer(('0.0.0.0', PORT), SimpleHTTPRequestHandler)
+    httpd = HTTPServer((address, port), SimpleHTTPRequestHandler)
 
     try:
-        print('* Serving on localhost:%s (hit ctrl+C to stop)' % PORT)
+        print('* Serving on localhost:%s (hit ctrl+C to stop)' % port)
         httpd.serve_forever()
 
     except KeyboardInterrupt:
@@ -627,7 +631,8 @@ DISABLE = '__none__'
 REF     = '__ref__'
 
 # Port for SimpleHTTPServer
-PORT = 8000
+ADDRESS = '0.0.0.0'
+PORT    = 8000
 
 # Defaults for map
 DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
@@ -1293,6 +1298,7 @@ def main():
 
         if templates and verbose:
             display_browser(templates, nb_res)
+            launch_http_server(ADDRESS, PORT)
 
         if len(templates) < max_t:
             # At least one html not rendered
