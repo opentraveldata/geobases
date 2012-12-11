@@ -4101,7 +4101,7 @@
 3064288	Teplice	Teplice	Teplice,Teplice-Sanov,Teplice-Šanov,Teplitz,Teplitz-Schoenau,Teplitz-Schönau,Теплице	50.6404	13.82451	P	PPL	CZ		89	0426			51223		229	Europe/Prague	2012-11-27
 3064379	Tábor	Tabor	Tabor,Tábor,tabor,taboru,Табор,ターボル	49.41441	14.6578	P	PPL	CZ		79	0317			36264		456	Europe/Prague	2007-11-05
 3064454	Svitavy	Svitavy	Svitave,Svitavy,Zwittau	49.75594	16.46829	P	PPL	CZ		86	0533			17427		442	Europe/Prague	2012-11-27
-3064673	Šumperk	Sumperk	Maehrisch-Schoenberg,Mährisch-Schönberg,Shumperk,Шумперк	49.96528	16.97061	P	PPL	CZ		84				28768		336	Europe/Prague	2010-01-29
+3064673	Šumperk	Sumperk	Maehrisch-Schoenberg,Mährisch-Schönberg,Shumperk,Шумперк	49.96528	16.97061	P	PPL	CZ		84	0715			28768		336	Europe/Prague	2012-12-10
 3065067	Strakonice	Strakonice	Strakonice,Strakonitz,Страконице	49.26141	13.90237	P	PPL	CZ		79				23545		403	Europe/Prague	2010-01-29
 3065281	Starý Bohumín	Stary Bohumin	Bogumin,Bohumin,Bohumín,Oderberg,Stary Bohumin,Starý Bohumín	49.9169	18.33619	P	PPLX	CZ		85				23034		200	Europe/Prague	2012-01-19
 3065617	Sokolov	Sokolov	Faiknov,Falkenau,Falkenau an der Eger,Falknov,Falknov nad Ohri,Falknov nad Ohří,Sokolov,Sokolov nad Ohri,Sokolov nad Ohří,sokollopeu,Соколов,소콜로프	50.1813	12.6401	P	PPL	CZ		81				24901		402	Europe/Prague	2008-11-28
@@ -4114,7 +4114,7 @@
 3067580	Přerov	Prerov	Prerau,Prerov,Přerov,Преров	49.45511	17.4509	P	PPL	CZ		84				47311		221	Europe/Prague	2010-01-29
 3067696	Prague	Prague	PRG,Praag,Prag,Praga,Pragae,Prago,Prague,Praha,Pràg,Prág,Prága,Prâg,Prāga,bragh,bu la ge,peulaha,prag,praga,prak,prg,puraha,Πράγα,Праг,Прагæ,Прага,פראג,براغ,پراگ,پراگا,ܦܪܓ,ปราก,པུ་ལ་ཁེ,პრაღა,ፕራግ,プラハ,布拉格,프라하	50.08804	14.42076	P	PPLC	CZ		52				1165581		202	Europe/Prague	2011-12-02
 3068160	Plzeň	Plzen	Pilsen,Pilsna,Pilzen,Pilzenas,Pilzno,Pl'zen',Plzen,Plzena,Plzeņa,Plzeň,bylzn,peuljen,piruzen,Πίλζεν,Πίλσεν,Пилзен,Плзен,Плзењ,Пльзень,بيلزن,ピルゼン,플젠	49.74747	13.37759	P	PPLA	CZ		87	0323			164180		316	Europe/Prague	2012-11-27
-3068293	Písek	Pisek	Pisek,Písek,Писек	49.3088	14.1475	P	PPL	CZ		79				29774		374	Europe/Prague	2007-02-18
+3068293	Písek	Pisek	Pisek,Písek,Писек	49.3088	14.1475	P	PPL	CZ		79	0314			29774		374	Europe/Prague	2012-12-10
 3068445	Pelhřimov	Pelhrimov	Pilgram	49.43134	15.22336	P	PPL	CZ		80				16541		496	Europe/Prague	2006-11-25
 3068582	Pardubice	Pardubice	PED,Pardubice,Pardubitz,Parntoumpitse,Παρντουμπίτσε,Пардубице	50.04075	15.77659	P	PPLA	CZ		86				88741		227	Europe/Prague	2008-06-18
 3068689	Otrokovice	Otrokovice	Bahnak,Bahňák,Otrokovice,Otrokovice-Kvitkovice,Otrokovice-Kvítkovice	49.21667	17.51667	P	PPL	CZ		90				18745		183	Europe/Prague	2010-08-10
@@ -4123,7 +4123,7 @@
 3068799	Ostrava	Ostrava	OSR,Ostraba,Ostrava,Ostrawa,ao si te la wa,awstrafa,e si te la fa,oseuteulaba,osutoravu~a,Οστράβα,Острава,אוסטרבה,أوسترافا,オストラヴァ,俄斯特拉發,奥斯特拉瓦,오스트라바	49.83465	18.28204	P	PPLA	CZ		85				313088		211	Europe/Prague	2006-11-25
 3068873	Orlová	Orlova	Orlau,Orlova,Orlowa,Orłowa,Орлова	49.84527	18.43011	P	PPL	CZ		00				34282		226	Europe/Prague	2010-01-29
 3068927	Opava	Opava	Opava,Opawa,Oppavia,Troppau,Опава	49.93866	17.90257	P	PPL	CZ		85				60252		262	Europe/Prague	2008-11-28
-3069011	Olomouc	Olomouc	Aebura,Eburum,OLO,Olmuetz,Olmütz,Olomouc,Olomouca,Olomoucas,Olomouch,Olomuc,Olomucium,Olomuniec,Ołomuniec,ao luo mu ke,awlwmwts,oromoutsu,Оломоуц,Оломуц,أولوموتس,オロモウツ,奧洛穆克	49.59552	17.25175	P	PPLA	CZ		84				101268		223	Europe/Prague	2012-03-30
+3069011	Olomouc	Olomouc	Aebura,Eburum,OLO,Olmuetz,Olmütz,Olomouc,Olomouca,Olomoucas,Olomouch,Olomuc,Olomucium,Olomuniec,Ołomuniec,ao luo mu ke,awlwmwts,oromoutsu,Оломоуц,Оломуц,أولوموتس,オロモウツ,奧洛穆克	49.59552	17.25175	P	PPLA	CZ		84	0712			101268		223	Europe/Prague	2012-12-10
 3069305	Nový Jičín	Novy Jicin	Neutitschein,Novi-Jichin,Novy Jicin,Nový Jičín,Nowy Jiczyn,xin yi qin,Нови-Йичин,新伊钦	49.59438	18.01028	P	PPL	CZ		85				26547		287	Europe/Prague	2008-11-28
 3069844	Neratovice	Neratovice	Nerarovice,Neratowitz	50.25926	14.51759	P	PPL	CZ		88				16427		170	Europe/Prague	2006-11-25
 3070122	Náchod	Nachod		50.4167	16.16289	P	PPL	CZ		82				21263		350	Europe/Prague	2006-11-25
@@ -4138,7 +4138,7 @@
 3071966	Libeň	Liben		50.10819	14.47457	P	PPLX	CZ		52				31756		192	Europe/Prague	2007-04-24
 3072137	Letňany	Letnany	Letnan,Letňan	50.13333	14.51667	P	PPLX	CZ	CZ	52				15862		276	Europe/Prague	2007-04-24
 3072463	Kutná Hora	Kutna Hora	Kutna Hora,Kutna-Gora,Kutná Hora,Kuttenberg,gu te na huo la,ku te na huo la,kuteuna hola,Кутна-Гора,古特纳霍拉,库特纳霍拉,쿠트나 호라	49.94839	15.26816	P	PPL	CZ		88	0205			21280		255	Europe/Prague	2012-11-22
-3072649	Kroměříž	Kromeriz	Kremsier,Kromeriz,Kromerizas,Kromerižas,Kromnerzhizh,Kroměříž,Кромнержиж	49.29785	17.39312	P	PPL	CZ		90				29126		208	Europe/Prague	2010-01-29
+3072649	Kroměříž	Kromeriz	Kremsier,Kromeriz,Kromerizas,Kromerižas,Kromnerzhizh,Kroměříž,Кромнержиж	49.29785	17.39312	P	PPL	CZ		90	0721			29126		208	Europe/Prague	2012-12-10
 3072656	Krnov	Krnov	Jaegerndorf,Jägerndorf,Karniow,Karníow,Krnov,Крнов	50.08967	17.70385	P	PPL	CZ		00				25547		320	Europe/Prague	2010-01-29
 3072929	Kralupy nad Vltavou	Kralupy nad Vltavou	Kralup,Kralupy	50.24107	14.31149	P	PPL	CZ		88				17373		179	Europe/Prague	2006-11-25
 3073254	Kopřivnice	Koprivnice	Koprshivnicakh,Nesselsdorf,Копршивницах	49.59947	18.1448	P	PPL	CZ		00				23424		321	Europe/Prague	2010-01-29
@@ -4149,11 +4149,11 @@
 3073789	Karviná	Karvina	Freistadt,Frystat,Frysztat,Fryštát,Karvina,Karvina 1,Karviná 1,Карвина	49.854	18.54169	P	PPL	CZ		85				63677		238	Europe/Prague	2010-01-29
 3073803	Karlovy Vary	Karlovy Vary	Carlsbad,KLV,Karl Vary,Karloby Bary,Karlove Vari,Karlovi Varai,Karlovi Vari,Karlovy Vary,Karlsbad,kaleullobi bali,Κάρλοβυ Βάρυ,Карлове Вари,Карлови Вари,Карловы Вары,Карлові Вари,קרלובי וארי,カルロヴィ・ヴァリ,카를로비 바리	50.23271	12.87117	P	PPLA	CZ		81	0412			51807		374	Europe/Prague	2012-11-21
 3074020	Kadaň	Kadan		50.38333	13.26667	P	PPL	CZ		00				17648		302	Europe/Prague	2006-01-17
-3074039	Kadaň	Kadan	Kaaden	50.37598	13.27131	P	PPL	CZ	CZ	89				17639		301	Europe/Prague	2006-11-25
+3074039	Kadaň	Kadan	Kaaden	50.37598	13.27131	P	PPL	CZ	CZ	89	0422			17639		301	Europe/Prague	2012-12-10
 3074110	Jirkov	Jirkov	Gorkau,Görkau	50.49979	13.44769	P	PPL	CZ		89				21056		306	Europe/Prague	2006-11-25
 3074149	Jindřichův Hradec	Jindrichuv Hradec	Neuhaus	49.14404	15.00301	P	PPL	CZ		79	0313			22812		480	Europe/Prague	2012-12-05
-3074199	Jihlava	Jihlava	Iglau,Iglawa,Igława,Jiglava,Jihlava,Jikhlava,Јихлава,Йиглава	49.3961	15.59124	P	PPLA	CZ		80				50100		523	Europe/Prague	2008-11-28
-3074204	Jičín	Jicin	Gitschin,Jichin,Jicin,Jitschin,Jičín,Titschein,Йичин	50.43723	15.35162	P	PPL	CZ		82				16328		288	Europe/Prague	2006-11-25
+3074199	Jihlava	Jihlava	Iglau,Iglawa,Igława,Jiglava,Jihlava,Jikhlava,Јихлава,Йиглава	49.3961	15.59124	P	PPLA	CZ		80	0612			50100		523	Europe/Prague	2012-12-10
+3074204	Jičín	Jicin	Gitschin,Jichin,Jicin,Jitschin,Jičín,Titschein,Йичин	50.43723	15.35162	P	PPL	CZ		82	0522			16328		288	Europe/Prague	2012-12-10
 3074603	Jablonec nad Nisou	Jablonec nad Nisou	Gablonz,Gablonz an der Neisse,Jablonec,Jablonec nad Nisou,Jablonec nad Nysa,Jablonec nad Nysą,Jablonecas prie Nisos,yabeullonecheunateunisou,Яблонец,야블로네츠나트니소우	50.72431	15.17108	P	PPL	CZ		83	0512			44878		518	Europe/Prague	2012-12-03
 3074893	Hranice	Hranice	Mahrisch Weisskirchen,Mährisch Weisskirchen	49.54796	17.73469	P	PPL	CZ		84				19582		261	Europe/Prague	2006-11-25
 3074967	Hradec Králové	Hradec Kralove	Chrantek Kralobe,Gradec Kralove,Gradets Kralove,Hradec Kralove,Hradec Králové,Khradec Kralove,Koeniggraetz,Königgrätz,Χράντεκ Κράλοβε,Градец Кралове,Храдец Кралове	50.20923	15.83277	P	PPLA	CZ		82				95195		250	Europe/Prague	2008-11-28
@@ -4164,7 +4164,7 @@
 3077244	Děčín	Decin	Dechin,Decin,Decinas,Dečinas,Děčín,Tetschen,Дечин	50.78215	14.21478	P	PPL	CZ		89	0421			52058		138	Europe/Prague	2012-11-27
 3077539	Chrudim	Chrudim		49.95109	15.79558	P	PPL	CZ		86				23630		274	Europe/Prague	2006-11-25
 3077685	Chomutov	Chomutov	Chomutov,Khomutov,Komotau,homutofu,Хомутов,ホムトフ	50.46048	13.41779	P	PPL	CZ		89				50251		341	Europe/Prague	2008-11-28
-3077835	Cheb	Cheb	Cheb,Chebas,Eger,Kheb,hepu,Хеб,ヘプ	50.07963	12.37392	P	PPL	CZ		81				33242		445	Europe/Prague	2010-01-29
+3077835	Cheb	Cheb	Cheb,Chebas,Eger,Kheb,hepu,Хеб,ヘプ	50.07963	12.37392	P	PPL	CZ		81	0411			33242		445	Europe/Prague	2012-12-10
 3077882	Český Těšín	Cesky Tesin	Ceski Tjesin,Cesky Tesin,Cheski-Teshin,Czeski Cieszyn,Teschen,Tesin,Tschechisch Teschen,Český Tešín,Český Těšín,Češki Tješin,Чески-Тешин	49.74613	18.62613	P	PPL	CZ		00				26159		275	Europe/Prague	2008-11-28
 3077916	České Budějovice	Ceske Budejovice	Boehmisch Budweis,Budejovice,Budweis,Böhmisch Budweis,Ceske Budejovicai,Ceske Budejovice,Cheshke Budjejovice,Cheske Budejovice,Cheske-Budejovice,Czeskie Budziejowice,Tseske Mpountegiobitse,Česke Budejovicai,České Budějovice,Τσέσκε Μπουντεγιόβιτσε,Ческе Будейовице,Ческе-Будеёвице,Чешке Будјејовице,Чешке Буђејовице	48.97447	14.47434	P	PPLA	CZ		79	0311			96053	381	390	Europe/Prague	2012-11-27
 3077920	Česká Třebová	Ceska Trebova	Bohmisch-Trubau,Böhmisch-Trübau	49.90436	16.44413	P	PPL	CZ		86				16655		370	Europe/Prague	2008-07-08
@@ -4281,7 +4281,7 @@
 2815678	Wachtberg	Wachtberg		50.63333	7.1	P	PPLA4	DE		07	053	05382	05382072	20032		194	Europe/Berlin	2011-07-31
 2815824	Vreden	Vreden	Freden,Frethenna,Vreden,Фреден	52.03792	6.828	P	PPL	DE		07	055			22412		41	Europe/Berlin	2012-11-28
 2816630	Völklingen	Volklingen	Volklingen,Völklingen	49.25162	6.85873	P	PPL	DE		09				41132		197	Europe/Berlin	2011-09-25
-2817065	Voerde	Voerde	Ferde,Voerde,Ферде	51.59703	6.6863	P	PPL	DE		07				38759		26	Europe/Berlin	2012-08-04
+2817065	Voerde	Voerde	Ferde,Voerde,Ферде	51.59703	6.6863	P	PPL	DE		07	051			38759		26	Europe/Berlin	2012-12-10
 2817105	Vlotho	Vlotho	Flotowe,Flôtôwe	52.1653	8.85996	P	PPL	DE		07	057			20214		68	Europe/Berlin	2011-11-06
 2817202	Vilshofen	Vilshofen		48.62695	13.19222	P	PPL	DE		02				16695		318	Europe/Berlin	2012-09-06
 2817220	Villingen-Schwenningen	Villingen-Schwenningen	Villingen-Schwenningen,Villingen-Shvenningen,ZQL,Виллинген-Швеннинген	48.06226	8.49358	P	PPL	DE		01				81770		751	Europe/Berlin	2012-06-05
@@ -4374,7 +4374,7 @@
 2833080	Senden	Senden		48.32441	10.04442	P	PPL	DE		02				22275		487	Europe/Berlin	2010-08-16
 2833170	Selm	Selm	Selm,Stadt Selm,Zel'm,Зельм	51.69689	7.46809	P	PPL	DE		07				27540		68	Europe/Berlin	2012-08-04
 2833242	Seligenstadt	Seligenstadt		50.0432	8.97394	P	PPL	DE		05	064			19569		112	Europe/Berlin	2012-11-23
-2833296	Selb	Selb		50.17058	12.13054	P	PPL	DE		02				17132		546	Europe/Berlin	2008-07-28
+2833296	Selb	Selb		50.17058	12.13054	P	PPL	DE		02	094			17132		546	Europe/Berlin	2012-12-10
 2833475	Sehnde	Sehnde		52.31394	9.9682	P	PPL	DE		06	00			22265		66	Europe/Berlin	2010-11-22
 2833564	Seevetal	Seevetal		53.4	9.96667	P	PPLA4	DE		06	00	03353	03353031	41266		45	Europe/Berlin	2011-07-31
 2833592	Seesen	Seesen	Seesen	51.89096	10.17847	P	PPL	DE		06				21909		236	Europe/Berlin	2012-08-04
@@ -4449,7 +4449,7 @@
 2847666	Rheinbach	Rheinbach		50.62562	6.94911	P	PPL	DE		07	053			26262		182	Europe/Berlin	2010-11-15
 2847689	Rhede	Rhede	Rhede	51.83537	6.69602	P	PPL	DE		07				19140		33	Europe/Berlin	2012-08-04
 2847690	Rheda-Wiedenbrück	Rheda-Wiedenbruck	Red-Videnbrjuk,Ред-Виденбрюк	51.84967	8.30017	P	PPL	DE		07				46123		72	Europe/Berlin	2010-06-17
-2847736	Reutlingen	Reutlingen	Reutlingen,Rojtlingen,ZPP,roitoringen,rwytlyngn,Ройтлинген,Ројтлинген,רויטלינגן,ロイトリンゲン	48.49144	9.20427	P	PPL	DE		01				112627		374	Europe/Berlin	2010-01-29
+2847736	Reutlingen	Reutlingen	Reutlingen,Rojtlingen,ZPP,roitoringen,rwytlyngn,Ройтлинген,Ројтлинген,רויטלינגן,ロイトリンゲン	48.49144	9.20427	P	PPL	DE		01	084			112627		374	Europe/Berlin	2012-12-10
 2848175	Renningen	Renningen		48.76974	8.93871	P	PPL	DE		01	081	08115	08115041	17442		405	Europe/Berlin	2012-09-06
 2848245	Rendsburg	Rendsburg	Rendsborg,Rendsbourg,Rendsburg	54.30663	9.66313	P	PPL	DE		10				28323		9	Europe/Berlin	2012-07-04
 2848273	Remscheid	Remscheid	Remscheid,Remshajd,ZPN,remushaito,Ремшайд,レムシャイト	51.17983	7.1925	P	PPL	DE		07	051			117118		301	Europe/Berlin	2012-11-27
@@ -4626,7 +4626,7 @@
 2873776	Marbach am Neckar	Marbach am Neckar	Marbach	48.93964	9.25995	P	PPL	DE		01				15604		242	Europe/Berlin	2008-12-21
 2873891	Mannheim	Mannheim	Gorad Mangejm,MHG,Man'chaim,Man'geym,Man'géym,Mangejm,Manhajmi,Manheima,Manheimas,Manhemium,Mankhajm,Mannheim,Monnem,man hai mu,manaha'ima,manhaim,manhaimi,manhaimu,manhaym,mnhyym,Μάνχαϊμ,Горад Мангейм,Мангейм,Манхайм,Манхајм,מנהיים,مانهايم,مانهایم,मानहाइम,მანჰაიმი,ማንሃይም,マンハイム,曼海姆,만하임	49.49671	8.47955	P	PPL	DE		01				307960		93	Europe/Berlin	2012-09-06
 2874225	Mainz	Mainz	Gorad Majnc,Maganza,Magonza,Maguncia,Maguntzia,Magunza,Magúncia,Maianca,Maiança,Mainca,Maincas,Maints,Mainz,Majenco,Majnc,Majnci,Mayence,Mayns,Meenz,Mogontiacum,Moguncja,Moguntiacum,Mohuc,Mohuč,ma'intsa,maincheu,maintsi,maintsu,maynts,maynz,mei yin ci,mins,myynz,Μάιντς,Горад Майнц,Майнц,Мајнц,מיינץ,مائنز,ماينتس,ماینتس,माइंत्स,ไมนซ์,მაინცი,マインツ,美因茨,마인츠	49.98419	8.2791	P	PPLA	DE		08				184997		112	Europe/Berlin	2012-09-06
-2874230	Maintal	Maintal	Maintal	50.15	8.83333	P	PPL	DE		05				38313		107	Europe/Berlin	2012-01-18
+2874230	Maintal	Maintal	Maintal	50.15	8.83333	P	PPL	DE		05	064			38313		107	Europe/Berlin	2012-12-10
 2874455	Mahlsdorf	Mahlsdorf	Berlin-Mahlsdorf	52.50935	13.61373	P	PPLX	DE	DE	16	00	11000	11000000	26954		53	Europe/Berlin	2012-06-09
 2874545	Magdeburg	Magdeburg	CSO,Maagdenburg,Magdebourg,Magdebourgo,Magdeburg,Magdeburgas,Magdeburgo,Meideborch,ma ge de bao,magdbwrg,mageudebuleukeu,makudeburuku,Μαγδεβούργο,Магдебург,ماگدبورگ,マクデブルク,马格德堡,마그데부르크	52.12773	11.62916	P	PPLA	DE		14				229826		47	Europe/Berlin	2012-08-04
 2875107	Lünen	Lunen	Hliunon,Luenen,Lunen,Lünen,ryunen,リューネン	51.61634	7.52872	P	PPL	DE		07				91009		57	Europe/Berlin	2012-08-04
@@ -4761,7 +4761,7 @@
 2896753	Idar-Oberstein	Idar-Oberstein	Idar-Obershtajn,Idar-Oberstein,Идар-Оберштайн	49.71443	7.30776	P	PPL	DE		08				31610		315	Europe/Berlin	2012-09-06
 2896817	Ibbenbüren	Ibbenburen	Ibbenburen,Ibbenbüren	52.27964	7.71457	P	PPL	DE		07				50577		82	Europe/Berlin	2012-08-04
 2897132	Husum	Husum	Huesem,Husum,Hüsem,Khuzum,Хузум	54.4858	9.05239	P	PPL	DE		10	00			20841		12	Europe/Berlin	2010-11-20
-2897216	Hürth	Hurth		50.87079	6.86761	P	PPL	DE		07				54678		91	Europe/Berlin	2010-09-08
+2897216	Hürth	Hurth		50.87079	6.86761	P	PPL	DE		07	053			54678		91	Europe/Berlin	2012-12-10
 2897436	Hünfeld	Hunfeld		50.67966	9.76727	P	PPL	DE		05	066			16323		277	Europe/Berlin	2010-11-15
 2897674	Hummelsbüttel	Hummelsbuettel		53.64773	10.04149	P	PPLX	DE		04				17365		20	Europe/Berlin	2011-08-21
 2898079	Hude	Hude	Hude	53.10766	8.46322	P	PPL	DE		06				15567		13	Europe/Berlin	2012-08-04
@@ -4890,7 +4890,7 @@
 2921139	Geretsried	Geretsried		47.85775	11.48054	P	PPL	DE		02	091			23364		607	Europe/Berlin	2010-11-15
 2921232	Gera	Gera	Gera,ZGA,ge la,gera,Гера,ゲーラ,格拉	50.88029	12.08187	P	PPL	DE		15				104659		203	Europe/Berlin	2010-05-23
 2921242	Georgsmarienhütte	Georgsmarienhutte	Georgsmarienhutte,Georgsmarienhütte	52.20296	8.0448	P	PPL	DE		06				32580		100	Europe/Berlin	2012-08-04
-2921466	Gelsenkirchen	Gelsenkirchen	Chaesekerken,Chäsekerken,Gel'zenkirkhen,Gelsenkirchen,Gelsenkirhene,Gelzenkirchenas,Gelzenkirkhen,Gelzenkirxen,Nkelzen'kirchen,ZEJ,gai er sen ji xing,geljenkileuhen,geruzenkiruhyen,ghylznkyrshn,glznqyrsn,kel sen kheiyr sen,Γκελζενκίρχεν,Гелзенкирхен,Гельзенкирхен,גלזנקירשן,غيلزنكيرشن,گلزن‌کیرشن,เกลเซนเคียร์เซน,ゲルゼンキルヒェン,盖尔森基兴,겔젠키르헨	51.5075	7.12283	P	PPL	DE		07				270028		60	Europe/Berlin	2012-08-04
+2921466	Gelsenkirchen	Gelsenkirchen	Chaesekerken,Chäsekerken,Gel'zenkirkhen,Gelsenkirchen,Gelsenkirhene,Gelzenkirchenas,Gelzenkirkhen,Gelzenkirxen,Nkelzen'kirchen,ZEJ,gai er sen ji xing,geljenkileuhen,geruzenkiruhyen,ghylznkyrshn,glznqyrsn,kel sen kheiyr sen,Γκελζενκίρχεν,Гелзенкирхен,Гельзенкирхен,גלזנקירשן,غيلزنكيرشن,گلزن‌کیرشن,เกลเซนเคียร์เซน,ゲルゼンキルヒェン,盖尔森基兴,겔젠키르헨	51.5075	7.12283	P	PPL	DE		07	055			270028		60	Europe/Berlin	2012-12-10
 2921473	Gelnhausen	Gelnhausen	Gelnhausen	50.20164	9.18742	P	PPL	DE		05	064			21881		188	Europe/Berlin	2012-12-03
 2921528	Geldern	Geldern	Geldern	51.51908	6.32363	P	PPL	DE		07				34013		24	Europe/Berlin	2012-08-04
 2921653	Geislingen an der Steige	Geislingen an der Steige	Geislingen,Stadt Geislingen an der Steige	48.62423	9.82736	P	PPL	DE		01	081			27962		426	Europe/Berlin	2010-11-15
@@ -8157,12 +8157,12 @@
 3191648	Rijeka	Rijeka	Estado libre de Fiume,Fiume,Fkumen,Flumen Sancti Viti,RJK,Reka,Rieka,Rijeka,Rijeko,Rěka,Sankt Veit am Flaum,Sankt Veit am Pflaum,Slobodna Drzava Rijeka,Slobodna Drzhava Rijeka,Slobodna Država Rijeka,Stato libero di Fiume,Vitipolis,rieka,Риека,Ријека,Слободна Држава Ријека,リエカ	45.34306	14.40917	P	PPLA	HR		12				141172		125	Europe/Zagreb	2012-09-17
 3192224	Pula	Pula	PUY,Pluj,Pola,Poła,Pula,Pulj,pu la,pura,Пула,プーラ,普拉	44.86833	13.84806	P	PPL	HR		04	3192222			59078		11	Europe/Zagreb	2012-11-23
 3193935	Osijek	Osijek	Colonia Aelia Mursa,Esseg,Essegg,Essek,Eszek,Eszék,Mursa,Mursia,OSI,Osek,Osiek,Osigiek,Osijek,Osijeka,Osijekas,Osik,oshieku,xo siyekh,Οσιγιέκ,Осиек,Осијек,โอซีเยค,オシエク	45.55111	18.69389	P	PPLA	HR		10	3193934			88140		87	Europe/Zagreb	2012-11-21
-3197728	Koprivnica	Koprivnica	Caprontza,Kapronca,Kaproncza,Kopreinitz,Koprivnica,Koprivnicza,Kopriwnitza,Копривница	46.16278	16.8275	P	PPLA	HR		06				25579		139	Europe/Zagreb	2012-01-19
+3197728	Koprivnica	Koprivnica	Caprontza,Kapronca,Kaproncza,Kopreinitz,Koprivnica,Koprivnicza,Kopriwnitza,Копривница	46.16278	16.8275	P	PPLA	HR		06	3197726			25579		139	Europe/Zagreb	2012-12-10
 3198259	Karlovac	Karlovac	Karlovac,Karlstadt,Karolyvaros,Karolyváros,Károlyváros,Карловац	45.48722	15.54778	P	PPLA	HR		05	3198257			48123		112	Europe/Zagreb	2012-11-27
 3201047	Dubrovnik	Dubrovnik	Communitas Ragusina,DBV,Dubrava,Dubrounik,Dubrovacka Republika,Dubrovačka Republika,Dubrovnik,Dubrovnikas,Dubrovník,Dubrownik,Dùbrōvnik,Laus,Pearl of the Adriatic,Ragusa,Repubblica di Ragusa,Republic of Ragusa,Respublica Ragusina,do~uburovuniku,du bu luo fu ni ke,dwbrwbnyq,la perla del Adriatico,la perla del Adriático,Дубровник,Дуброўнік,דוברובניק,ドゥブロヴニク,杜布羅夫尼克	42.64807	18.09216	P	PPLA	HR		03	7577034			28428		52	Europe/Zagreb	2012-11-15
 3202888	Čakovec	Cakovec	Cakovec,Chakovec,Csakathurn,Csaktornya,Csáktornya,Čakovec,Чаковец	46.38444	16.43389	P	PPLA	HR		09				15867		162	Europe/Zagreb	2012-01-19
 3203982	Bjelovar	Bjelovar	Belavar,Bellovar,Belovar,Belovár,Belowar,Bjelovar,Bélavár,Беловар	45.89861	16.84889	P	PPLA	HR		01				28275		128	Europe/Zagreb	2012-01-19
-6618983	Zagreb - Centar	Zagreb - Centar		45.81313	15.97753	P	PPLX	HR		21				800000		134	Europe/Zagreb	2011-06-14
+6618983	Zagreb - Centar	Zagreb - Centar		45.81313	15.97753	P	PPLX	HR		21	3186885			800000		134	Europe/Zagreb	2012-12-10
 3716044	Verrettes	Verrettes	Les Verettes,Les Verrettes	19.05	-72.46667	P	PPLA	HT		06				48724		76	America/Port-au-Prince	2007-05-17
 3716667	Thomazeau	Thomazeau		18.65194	-72.09472	P	PPL	HT		11				52017		43	America/Port-au-Prince	2010-01-27
 3717546	Saint-Raphaël	Saint-Raphael		19.43333	-72.2	P	PPL	HT		09				37739		373	America/Port-au-Prince	2010-01-27
@@ -13347,18 +13347,18 @@
 593926	Telšiai	Telsiai	TEL'SHJAJ,Tel'shjaj,Telsai,Telsche,Telschen,Telshay,Telshi,Telshyay,Telsi,Telsiai,Telsiu,Telsze,Telšai,Telši,Telšiai,Telšių,terishiai,Τελσιάι,ТЕЛЬШЯЙ,Тельшяй,テリシアイ	55.98139	22.24722	P	PPLA	LT		63				30098		135	Europe/Vilnius	2012-01-17
 593959	Tauragė	Taurage	Taouranke,Taurage,Taurages,Tauragė,Tauragės,Tauraģe,Taurogen,Tauroggen,Taurogi,Ταουραγκέ,Таураге	55.25222	22.28972	P	PPLA	LT		62				27662		36	Europe/Vilnius	2012-01-17
 594656	Šilutė	Silute	Heidekrug,Heydekrug,Heydekrug-Matzicken,SHILUTE,Shilute,Silute,Szylokarczma,Szyłokarczma,sillute,Šilute,Šilutė,ШИЛУТЕ,실루테	55.34889	21.48306	P	PPL	LT		00				21760		8	Europe/Vilnius	2012-01-17
-594739	Šiauliai	Siauliai	Sauli,Schaulen,Shaulyay,Shavli,Shjauljaj,Shyaulyay,Siauliai,Siauliu,Sokniai,Szawle,Šauļi,Šiauliai,Šiaulių,Шяуляй	55.93333	23.31667	P	PPLA	LT		61				130587		129	Europe/Vilnius	2012-01-17
+594739	Šiauliai	Siauliai	Sauli,Schaulen,Shaulyay,Shavli,Shjauljaj,Shyaulyay,Siauliai,Siauliu,Sokniai,Szawle,Šauļi,Šiauliai,Šiaulių,Шяуляй	55.93333	23.31667	P	PPLA	LT		61	594743			130587		129	Europe/Vilnius	2012-12-10
 595213	Rokiškis	Rokiskis	Myasto Rokishkis,ROKISHKIS,Rakischki,Rakishki,Rakiskis,Rakiszki,Rakiškis,Rokishkis,Rokiski,Rokiskio,Rokiskis,Rokiškio,Rokiškis,Rokišķi,РОКИШКИС,Рокишкис	55.96667	25.58333	P	PPL	LT		00				16255		126	Europe/Vilnius	2012-01-17
 595449	Radviliškis	Radviliskis	RADVILISHKIS,Radvilai,Radvilishkis,Radviliski,Radviliskio,Radviliskis,Radviliskis-Nemunelio,Radvilisks,Radviliškio,Radviliškis,Radvilišks,Radvilišķi,Radziwiliszki,Rantbiliskis,Ραντβιλίσκις,РАДВИЛИШКИС	55.81667	23.53333	P	PPL	LT		00				19914		124	Europe/Vilnius	2012-01-17
 595689	Plungė	Plunge	PLUNGE,Plunge,Plunges,Plungiany,Plungė,Plungės,Płungiany,ПЛУНГЕ	55.91139	21.84417	P	PPL	LT		00				23381		106	Europe/Vilnius	2012-01-17
-596128	Panevėžys	Panevezys	PANEVEZHIS,Paneveza,Panevezhi,Panevezhis,Panevezio,Panevezys,Panevēža,Panevėžio,Panevėžys,Panjavezhis,Ponewesch,Poniewesch,Poniewiesh,Poniewiez,Poniewież,pnbz'ys,ПАНЕВЕЖИС,Паневежис,Панявежис,פנבז'יס	55.73333	24.35	P	PPLA	LT		60				117395		52	Europe/Vilnius	2012-01-17
+596128	Panevėžys	Panevezys	PANEVEZHIS,Paneveza,Panevezhi,Panevezhis,Panevezio,Panevezys,Panevēža,Panevėžio,Panevėžys,Panjavezhis,Ponewesch,Poniewesch,Poniewiesh,Poniewiez,Poniewież,pnbz'ys,ПАНЕВЕЖИС,Паневежис,Панявежис,פנבז'יס	55.73333	24.35	P	PPLA	LT		60	596130			117395		52	Europe/Vilnius	2012-12-10
 596238	Palanga	Palanga	PALANGA,Palanga,Palangos,Polaga,Polanga,Polangen,Połąga,palanga,ПАЛАНГА,Паланга	55.9175	21.06861	P	PPL	LT		58	598099			17796		5	Europe/Vilnius	2012-11-27
 597188	Mažeikiai	Mazeikiai	Mazeiki,Mazeikiai,Mazeikiu,Mazhejkjaj,Mazheykyay,Mažeikiai,Mažeikių,Mažeiķi,Mozejki,Możejki,Muravjovo,Murawlewo,Μαζεϊκιάι,Мажейкяй	56.31667	22.33333	P	PPL	LT		00				41309		70	Europe/Vilnius	2012-01-17
 597231	Marijampolė	Marijampole	Kapsukas,MARIJAMPOLE,Mariampol,Mariampol',Mariampole,Mariampoles,Mariampolė,Mariampolės,Mariampol’,Marigiampole,Marijampole,Marijampolė,Mariyampol',Mariyampole,Mariyampol’,Marjampol,Pasesupiai,Pašešupiai,Starapole,Starapolė,Μαριγιαμπολέ,МАРИЯМПОЛЕ,Мариямполе	54.56667	23.35	P	PPLA	LT		59				47613		66	Europe/Vilnius	2012-01-17
 597989	Kretinga	Kretinga	Kratinga,Kretin'nka,Kretinga,Kretingos,Kretynga,Krottingen,Myasto Kretinga,keuleting-ga,Κρετίνγκα,Кретинга,크레팅가	55.87583	21.25083	P	PPL	LT		00				22236		28	Europe/Vilnius	2012-01-17
 598098	Klaipėda	Klaipeda	Klaipada,Klaipeda,Klaipenta,Klaipéda,Klaipēda,Klaipėda,Klajpeda,Klaypeda,Kłajpeda,Lungsod ng Klaipeda,Lungsod ng Klaipėda,Memel,Memela,ke lai pei da,keullaipeda,khil pheda,klaipedas,kuraipeda,qlypdh,qlyypdh,Κλαϊπέντα,Клаипеда,Клайпеда,Клајпеда,קלייפדה,קליפדה,ไคลเพดา,クライペダ,克莱佩达,클라이페다	55.71722	21.1175	P	PPLA	LT		58	598099			192307		3	Europe/Vilnius	2012-11-27
 598272	Kėdainiai	Kedainiai	KEDAJNJAJ,Kedaini,Kedainiai,Kedainiu,Kedainių,Kedajnaj,Kedayny,Kedaynyai,Kedaynyay,Keidany,Kentainiai,Keydany,Kiejdany,Kēdaiņi,Kėdainiai,kedajnjaj,Κενταϊνιάι,КЕДАЙНЯЙ,Кедаjњај,Кедайняй	55.28833	23.97472	P	PPL	LT		00				31980		32	Europe/Vilnius	2012-01-17
-598316	Kaunas	Kaunas	Caunas,KAUNAS,KUN,Kauen,Kauna,Kaunas,Kauno,Kauņa,Kovno,Kowno,Palemonas,КАУНАС,Каунас	54.9	23.9	P	PPLA	LT		57				374643		66	Europe/Vilnius	2012-03-16
+598316	Kaunas	Kaunas	Caunas,KAUNAS,KUN,Kauen,Kauna,Kaunas,Kauno,Kauņa,Kovno,Kowno,Palemonas,КАУНАС,Каунас	54.9	23.9	P	PPLA	LT		57	598318			374643		66	Europe/Vilnius	2012-12-10
 598818	Jonava	Jonava	IONAVA,Ionava,Janow,Janów,Jonava,Jonavos Miestelis,Yonava,ИОНАВА	55.08333	24.28333	P	PPL	LT		00				34993		70	Europe/Vilnius	2012-01-17
 599506	Gargždai	Gargzdai	GARGZHDAJ,Gardzdai,Gardždai,Gargzdai,Gargzdi,Gargzdu,Gargzhdaj,Gargzhday,Gargždai,Gargždi,Gargždų,Garsden,Garzdai,Garždai,Gorzdy,Gorżdy,ГАРГЖДАЙ,Гаргждай	55.71278	21.40333	P	PPL	LT		00				15949		30	Europe/Vilnius	2012-01-17
 599757	Druskininkai	Druskininkai	DRUSKININKAJ,Druskeniki,Druskieniki,Druskiniki,Druskininkai,Druskininkaj,Druskininkay,Druskininki,Druśkieniki,ДРУСКИНИНКАЙ,Друскининкай	54.01667	23.96667	P	PPL	LT		00				17791		88	Europe/Vilnius	2012-01-17
@@ -16575,7 +16575,7 @@
 667101	Şimleu Silvaniei	Simleu Silvaniei	Simleu Silvaniei,Simleul Silvaiei,Szilagysomlyo,Szilágysomlyó,Şimleu Silvaniei	47.23333	22.8	P	PPLA2	RO		31	139884			15721		238	Europe/Bucharest	2012-06-12
 667227	Sighetu Marmaţiei	Sighetu Marmatiei	Maramaros Szighet,Maramarossziget,Marmaros Sihot,Marmarosska,Marmaroš Sihot,Máramarossziget,Sighet,Sighetu Marmatiei,Sighetu Marmaţiei,Sigit Marmaros'kij,sygt,Сигіт Мармароський,סיגט	47.93195	23.88603	P	PPLA2	RO		25	106559			40653		271	Europe/Bucharest	2012-06-12
 667268	Sibiu	Sibiu	Hermannstadt,Nagy-Szeben,Nagy-Szében,Nagyszeben,SBZ,Sibiu,Sybin,Szeben,shibiu,sibiu,Сибиу,シビウ,시비우	45.8	24.15	P	PPLA	RO		33				151894		410	Europe/Bucharest	2012-01-18
-667303	Sfântu-Gheorghe	Sfantu-Gheorghe	Sepsiszentgyorgy,Sepsiszentgyőrgy,Sfantu-Gheorghe,Sfantul,Sfantul-Gheorghe,Sfehntu-Georg,Sfintu Gheorghe,Sfântu-Gheorghe,Sfântul,Sfântul-Gheorghe,Sfîntu Gheorghe,Сфэнту-Георг	45.86667	25.78333	P	PPLA	RO		15				60677		552	Europe/Bucharest	2012-01-18
+667303	Sfântu-Gheorghe	Sfantu-Gheorghe	Sepsiszentgyorgy,Sepsiszentgyőrgy,Sfantu-Gheorghe,Sfantul,Sfantul-Gheorghe,Sfehntu-Georg,Sfintu Gheorghe,Sfântu-Gheorghe,Sfântul,Sfântul-Gheorghe,Sfîntu Gheorghe,Сфэнту-Георг	45.86667	25.78333	P	PPLA	RO		15	63394			60677		552	Europe/Bucharest	2012-12-10
 667526	Sebeş	Sebes	Muehlbach,Muhlbach,Mühlbach,Sebes,Sebesh,Sebeş,Себеш	45.95646	23.571	P	PPLA2	RO		01	1874			27246		270	Europe/Bucharest	2012-06-12
 667873	Satu Mare	Satu Mare	SUJ,Sathmar,Satmar,Satu Mare,Satu-Mare,Satul Mare,Szathmar,Szatmar,Szatmar-Nemeti,Szatmarnemeti,Szatmár,Szatmár-Németi,Szatmárnémeti,Sătmar,Сату Маре,Сату-Маре,סאַטמאַר,סאטו מארה,סאטמאר,סטו מארה,サトゥ・マーレ	47.8	22.88333	P	PPLA	RO		32				112490		124	Europe/Bucharest	2012-01-18
 668129	Salonta	Salonta	Nagyszalonta,Salonta,Салонта	46.8	21.65	P	PPLA2	RO		05	26975			17561		92	Europe/Bucharest	2012-06-12
@@ -16670,7 +16670,7 @@
 685948	Bacău	Bacau	Bacau,Bacău,Bako,Bakuu,Bákó,Бакъу,בקאו	46.56667	26.9	P	PPLA	RO		04	20297			171396		173	Europe/Bucharest	2012-11-23
 686254	Arad	Arad	ARW,Altarad,Arad,Aradia,Aradinum Vetus,Micalaca,Micălaca,Mikelaka,Murasel,Muresel,Mureşel,Murăşel,O-Arad,Orodinum,Zsigmondhaza,Zsigmondháza,Ō-Arad,Арад	46.18333	21.31667	P	PPLA	RO		02				169065		109	Europe/Bucharest	2012-01-18
 686502	Alexandria	Alexandria	Alexandria	43.98333	25.33333	P	PPLA	RO		35				49346		48	Europe/Bucharest	2012-01-18
-686578	Alba Iulia	Alba Iulia	Alba Iulia,Alba Julija,Balgrad,Bălgrad,Gyulafehervar,Gyulafehérvár,Karlsburg,QAY,Weissenburg,Weisskirchen,Weißenburg,Weißkirchen,Алба Юлия	46.06667	23.58333	P	PPLA	RO		01				66085		219	Europe/Bucharest	2012-01-18
+686578	Alba Iulia	Alba Iulia	Alba Iulia,Alba Julija,Balgrad,Bălgrad,Gyulafehervar,Gyulafehérvár,Karlsburg,QAY,Weissenburg,Weisskirchen,Weißenburg,Weißkirchen,Алба Юлия	46.06667	23.58333	P	PPLA	RO		01	1017			66085		219	Europe/Bucharest	2012-12-10
 686590	Aiud	Aiud	Aiud,Ajud,Nagyenyed,Strassburg,Айуд	46.31006	23.72128	P	PPLA2	RO		01	1213			28341		242	Europe/Bucharest	2012-06-12
 686669	Adjud	Adjud	Ad Judul,Adjud	46.1	27.16667	P	PPL	RO		00				17298		101	Europe/Bucharest	2012-01-18
 6697993	Baia Mare	Baia Mare		47.65331	23.57949	P	PPL	RO		32				137976	228	227	Europe/Bucharest	2008-11-18
@@ -16920,7 +16920,7 @@
 497927	Segezha	Segezha	Poselok Segezha,Posëlok Segezha,SEGEZHA,Segesha,Segezha,Segezja,Sekee,СЕГЕЖА,Сегежа	63.74147	34.32218	P	PPL	RU		28				33354		88	Europe/Moscow	2012-01-17
 498418	Satka	Satka	SATKA,Satka,САТКА,Сатка	55.0425	59.04	P	PPL	RU		13				49384		413	Asia/Yekaterinburg	2012-01-17
 498525	Sarov	Sarov	Arzamas-16,Kremlev,Kremlëv,Sarou,Sarov,Sarova,salopeu,Саров,Сароў,사로프	54.93583	43.32352	P	PPL	RU		51				88000		143	Europe/Moscow	2012-01-17
-498677	Saratov	Saratov	RTW,Saratov,Saratova,Saratovas,Saratow,Saratów,Saretow,salatopeu,saratofu,srtwb,Саратов,סרטוב,サラトフ,사라토프	51.54056	46.00861	P	PPLA	RU		67				863725		73	Europe/Volgograd	2012-02-28
+498677	Saratov	Saratov	RTW,Saratov,Saratova,Saratovas,Saratow,Saratów,Saretow,salatopeu,saratofu,srtwb,Саратов,סרטוב,サラトフ,사라토프	51.54056	46.00861	P	PPLA	RU		67	498661			863725		73	Europe/Volgograd	2012-12-10
 498687	Sarapul	Sarapul	Sarapul,Сарапул	56.47633	53.79782	P	PPL	RU		80				98830		117	Europe/Samara	2010-08-16
 498698	Saransk	Saransk	SKX,Saransk,Sarańsk,salanseukeu,srnsq,Саранск,סרנסק,사란스크	54.1838	45.1749	P	PPLA	RU		46				303394		173	Europe/Moscow	2012-01-17
 498708	Saraktash	Saraktash	SARAKTASH,Saraktash,Saraktasj,САРАКТАШ,Саракташ	51.78771	56.36091	P	PPL	RU		55				17413		144	Asia/Yekaterinburg	2012-12-05
@@ -17166,7 +17166,7 @@
 543731	Kotel’niki	Kotel'niki	Kotel'niki,Kotel`nika,Kotelniki,Kotel’niki,Котельники	55.63546	37.8445	P	PPL	RU		47				18300		175	Europe/Moscow	2012-01-17
 543737	Kotel’nich	Kotel'nich	Kotel'nich,Kotelnitsj,Kotel’nich,Котельнич	58.3089	48.348	P	PPL	RU		33				27600		108	Europe/Volgograd	2012-01-17
 543878	Kostroma	Kostroma	KMW,Kostroma,Kostromna,koseuteuloma,Кострома,코스트로마	57.76647	40.92686	P	PPLA	RU		37				277656		109	Europe/Moscow	2012-01-17
-543899	Kostomuksha	Kostomuksha	Kostamus,Kostomuksa,Kostomukscha,Kostomuksha,Kostomuksja,Kostomuksza,Kostomukŝa,koseutomugsya,Костомукша,코스토묵샤	64.571	30.57667	P	PPL	RU		28				30135		212	Europe/Moscow	2008-11-29
+543899	Kostomuksha	Kostomuksha	Kostamus,Kostomuksa,Kostomukscha,Kostomuksha,Kostomuksja,Kostomuksza,Kostomukŝa,koseutomugsya,Костомукша,코스토묵샤	64.571	30.57667	P	PPL	RU		28				30135		212	Europe/Moscow	2012-12-10
 544293	Kosaya Gora	Kosaya Gora	KOSAJA GORA,Kosaja Gora,Kosaya Gora,Poselok Kosaya Gora,Posëlok Kosaya Gora,КОСАЯ ГОРА,Косая Гора	54.11896	37.54459	P	PPLX	RU		76				17836		233	Europe/Moscow	2012-01-17
 544370	Koryazhma	Koryazhma	KORJAZHMA,Korjazhma,Korjazjma,Koryazhemka,Koryazhemskaya,Koryazhma,Koryazma,КОРЯЖМА,Коряжма	61.31433	47.16914	P	PPL	RU		06				42627		90	Europe/Moscow	2012-01-17
 544896	Korenovsk	Korenovsk	KORENOVSK,Korenovsk,Korenovskaya,Korenowskaja,КОРЕНОВСК,Кореновск	45.46899	39.45136	P	PPL	RU		38				41665		33	Europe/Moscow	2012-01-17
@@ -17488,7 +17488,7 @@
 1496503	Noyabr'sk	Noyabr'sk	NOJABR'SK,Nojabr'sk,Noyabr'sk,НОЯБРЬСК,Ноябрьск	63.19936	75.45067	P	PPL	RU		87				110000		113	Asia/Yekaterinburg	2009-10-29
 1496511	Novyy Urengoy	Novyy Urengoy	Novyj Urengoj,Novyy Urengoy,Новый Уренгой	66.08333	76.63333	P	PPL	RU		87				94212		45	Asia/Yekaterinburg	2012-01-17
 1496739	Novosilikatnyy	Novosilikatnyy	NOVOSILIKATNYJ,Novosilikatnyj,Novosilikatnyy,НОВОСИЛИКАТНЫЙ,Новосиликатный	53.30972	83.62389	P	PPL	RU		04				15241		201	Asia/Omsk	2012-01-17
-1496747	Novosibirsk	Novosibirsk	Cen Ceper,Gorad Navasibirsk,Nobosimpirsk,Novo-Nikolaevsk,Novo-Nikolaievsk,Novo-Nikolaïevsk,Novonikolaevsk,Novonikolayevsk,Novosibir'sku,Novosibirs'k,Novosibirscum,Novosibirsk,Novosibirska,Novosibirskaj,Novosibirskas,Novosimpirsk,Novossibirsk,Novoszibirszk,Nowosibirsk,Nowosibirski,Nowosybirsk,OVB,Odsibiren' osh,Vil' Sibirkar,nobosibileuseukeu,novosibirsk,novosibirska,novu~oshibirusuku,nwbwsybyrsq,nwfwsybyrsk,nwwsybrsk,nwwsybyrsk,xin xi bo li ya,Çĕн Çĕпĕр,Νοβοσιμπίρσκ,Νοβοσιμπιρσκ,Виль Сибиркар,Горад Навасібірск,Новониколаевск,Новосибирск,Новосибирскай,Новосибирьскъ,Новосибірськ,Одсибирень ош,Նովոսիբիրսկ,נובוסיבירסק,نوفوسيبيرسك,نووسیبرسک,نووسیبیرسک,नोवोसिबिर्स्क,ნოვოსიბირსკი,ノヴォシビルスク,新西伯利亚,노보시비르스크	55.0415	82.9346	P	PPLA	RU		53				1419007		164	Asia/Novosibirsk	2012-01-17
+1496747	Novosibirsk	Novosibirsk	Cen Ceper,Gorad Navasibirsk,Nobosimpirsk,Novo-Nikolaevsk,Novo-Nikolaievsk,Novo-Nikolaïevsk,Novonikolaevsk,Novonikolayevsk,Novosibir'sku,Novosibirs'k,Novosibirscum,Novosibirsk,Novosibirska,Novosibirskaj,Novosibirskas,Novosimpirsk,Novossibirsk,Novoszibirszk,Nowosibirsk,Nowosibirski,Nowosybirsk,OVB,Odsibiren' osh,Vil' Sibirkar,nobosibileuseukeu,novosibirsk,novosibirska,novu~oshibirusuku,nwbwsybyrsq,nwfwsybyrsk,nwwsybrsk,nwwsybyrsk,xin xi bo li ya,Çĕн Çĕпĕр,Νοβοσιμπίρσκ,Νοβοσιμπιρσκ,Виль Сибиркар,Горад Навасібірск,Новониколаевск,Новосибирск,Новосибирскай,Новосибирьскъ,Новосибірськ,Одсибирень ош,Նովոսիբիրսկ,נובוסיבירסק,نوفوسيبيرسك,نووسیبرسک,نووسیبیرسک,नोवोसिबिर्स्क,ნოვოსიბირსკი,ノヴォシビルスク,新西伯利亚,노보시비르스크	55.0415	82.9346	P	PPLA	RU		53	1496742			1419007		164	Asia/Novosibirsk	2012-12-10
 1496990	Novokuznetsk	Novokuznetsk	Kuvnetsk,Kuznetsk,Kuznetsk-Sibirskiy,NOZ,Novokoeznetsk,Novokuzneck,Novokuznetsk,Novokuznjeck,Novokuzněck,Nowokusnezk,Nowokuznieck,Nowokuźnieck,Stalinsk,nobokujeunecheukeu,novu~okuzunetsuku,Новокузнецк,Новокузњецк,Сталинск,ノヴォクズネツク,노보쿠즈네츠크	53.7557	87.1099	P	PPL	RU		29				539616		208	Asia/Novokuznetsk	2012-01-17
 1497173	Novoaltaysk	Novoaltaysk	Chesnokovka,Chesnokovo,Chesnokovskoye,NOVOALTAJSK,Novoaltajsk,Novoaltaysk,noboaltaiseukeu,НОВОАЛТАЙСК,Новоалтайск,노보알타이스크	53.3917	83.9363	P	PPL	RU		04				61050		147	Asia/Omsk	2012-01-17
 1497337	Noril’sk	Noril'sk	NORIL'SK,Noril'sk,Norilskoe,Noril’sk,НОРИЛЬСК,Норильск	69.3535	88.2027	P	PPL	RU		91				140800		76	Asia/Krasnoyarsk	2012-01-17
@@ -17904,7 +17904,7 @@
 723559	Snina	Snina	Snina,Szinna,Снина	48.98857	22.15099	P	PPL	SK		05				22221		215	Europe/Bratislava	2012-01-18
 723713	Rožňava	Roznava	Rosenau,Rozhnjava,Roznava,Rozsnyo,Rozsnyó,Rožňava,Рожнява	48.66008	20.53758	P	PPL	SK		03				19261		318	Europe/Bratislava	2012-01-18
 723736	Rimavská Sobota	Rimavska Sobota	Rima-Szombat,Rimaszombat,Rimavska Sobota,Rimavská Sobota,Sobota Rimavska,Sobota Rimavská,Римавска Собота	48.38284	20.0224	P	PPL	SK		01				25235		208	Europe/Bratislava	2012-01-18
-723819	Prešov	Presov	Eperjes,Prasiv,Preshov,Presov,Presova,Preszow,Preszów,Prešov,Prešova,Prjashev,prswb,Прешов,Пряшев,Пряшів,פרשוב	48.99839	21.23393	P	PPLA	SK		05				94718		247	Europe/Bratislava	2012-01-18
+723819	Prešov	Presov	Eperjes,Prasiv,Preshov,Presov,Presova,Preszow,Preszów,Prešov,Prešova,Prjashev,prswb,Прешов,Пряшев,Пряшів,פרשוב	48.99839	21.23393	P	PPLA	SK		05	723818			94718		247	Europe/Bratislava	2012-12-10
 723846	Poprad	Poprad	Deutschendorf,Poprad,TAT,Попрад	49.06144	20.29798	P	PPL	SK		05	723844			57431		668	Europe/Bratislava	2012-11-23
 724144	Michalovce	Michalovce	Grossmichel,Großmichel,Michalovce,Mikhalovce,Nagymihaly,Nagymihály,miharofutsu~e,Михаловце,ミハロフツェ	48.75434	21.9195	P	PPL	SK		03				40360		111	Europe/Bratislava	2012-01-18
 724443	Košice	Kosice	Kaschau,Kassa,Koesice,Koshice,Kosice,Koszyce,Košice,Kösice,ke xi ce,koshitsu~e,kosiche,qwsyzh,Кошице,קושיצה,コシツェ,科希策,코시체	48.71395	21.25808	P	PPLA	SK		03				236563		205	Europe/Bratislava	2012-01-18
@@ -17916,7 +17916,7 @@
 3056508	Žilina	Zilina	Sillein,Solna,Zhilina,Zilina,Zsolna,Zylina,Żylina,Žilina,Жилина	49.22315	18.73941	P	PPLA	SK		08	3056507			85985		347	Europe/Bratislava	2012-12-03
 3056523	Žiar nad Hronom	Ziar nad Hronom	Svaty Kriz nad Hronom,Svätý Kríž nad Hronom,Ziar nad Hronom,Žiar nad Hronom	48.59184	18.84958	P	PPL	SK		01				19392		279	Europe/Bratislava	2012-01-18
 3057124	Trnava	Trnava	Nagyszombat,Trnava,Trnawa,Tyrnau,Трнава	48.3774	17.58723	P	PPLA	SK		07	3057122			69785		147	Europe/Bratislava	2012-11-27
-3057140	Trenčín	Trencin	Trenchin,Trencin,Trencsen,Trencsén,Trenczyn,Trentschin,Trentsen,Trenčin,Trenčín,Тренчин	48.89452	18.04436	P	PPLA	SK		06				58278		284	Europe/Bratislava	2008-11-28
+3057140	Trenčín	Trencin	Trenchin,Trencin,Trencsen,Trencsén,Trenczyn,Trentschin,Trentsen,Trenčin,Trenčín,Тренчин	48.89452	18.04436	P	PPLA	SK		06	3057139			58278		284	Europe/Bratislava	2012-12-10
 3057630	Skalica	Skalica	Skalica	48.8449	17.22635	P	PPL	SK		07				15013		179	Europe/Bratislava	2012-01-18
 3057691	Senica	Senica	Senica,Сеница	48.67922	17.36697	P	PPL	SK		07				21741		209	Europe/Bratislava	2012-01-18
 3057769	Sellye	Sellye	Sal'a,Sala,Sala nad Vahom,Sellye,Shalja,Vagsellye,Vágsellye,Šala nad Váhom,Šaľa,Шаля	48.15127	17.88062	P	PPL	SK		04				24513		114	Europe/Bratislava	2012-01-18
@@ -17924,7 +17924,7 @@
 3057963	Púchov	Puchov	Pucho,Puchov,Puho,Puhó,Pukhov,Púchov,Пухов	49.12494	18.32596	P	PPL	SK		04				18833		264	Europe/Bratislava	2012-01-18
 3058000	Prievidza	Prievidza	Pr'evidza,Prievidza,Privigye,Прьевидза	48.77446	18.6275	P	PPL	SK		04				52987		295	Europe/Bratislava	2012-01-18
 3058060	Považská Bystrica	Povazska Bystrica	Bystrica,Povazhska Bistrica,Povazska Bystrica,Povazske Bystraica,Považská Bystrica,Powazska Bystrzyca,Poważska Bystrzyca,Vagbeszterce,Vágbeszterce,Waagbistritz,Поважска Бистрица	49.12153	18.42169	P	PPLA2	SK		06	3058059			43936		280	Europe/Bratislava	2012-05-27
-3058202	Piešťany	Piestany	Piest'anoch,Piest'any,Piestany,Pieszczany,Piešťanoch,Piešťany,Poestyen,Pöstyén,p'eshtjany,Пьештяны	48.59479	17.82591	P	PPL	SK		07				30000		161	Europe/Bratislava	2011-04-19
+3058202	Piešťany	Piestany	Piest'anoch,Piest'any,Piestany,Pieszczany,Piešťanoch,Piešťany,Poestyen,Pöstyén,p'eshtjany,Пьештяны	48.59479	17.82591	P	PPL	SK		07	3057122			30000		161	Europe/Bratislava	2012-12-10
 3058210	Pezinok	Pezinok	Bazin,Pezinok,Poesing,Pösing,Пезинок	48.28986	17.26664	P	PPL	SK		02				21343		162	Europe/Bratislava	2012-01-18
 3058268	Partizánske	Partizanske	Bat'ovany,Baťovany,Partizanske,Partizánske,Partyzanske,Partyzánske,Simonovany,Simony,Šimonovany,Παρτιζάνσκε,Партизанске	48.62861	18.38456	P	PPL	SK		04				24370		192	Europe/Bratislava	2012-01-18
 3058472	Nové Zámky	Nove Zamky	Ersekujvar,Neuhaeusel,Neuhaus,Neuhäusel,Nove Zamky,Nové Zámky,Uyvar,awywar,nove zamki,Érsekújvár,Нове Замки,اویوار	47.98544	18.16195	P	PPL	SK		00				42044		122	Europe/Bratislava	2009-03-23
