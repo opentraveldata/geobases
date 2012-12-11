@@ -372,15 +372,8 @@ def scan_coords(u_input, geob, verbose):
     argument as either coordinates (lat, lng) or
     a key like ORY.
     """
-    try:
-        coords = tuple(float(l) for l in u_input.strip('()').split(','))
-
-    except ValueError:
-        # Scan coordinates failed, perhaps input was key
-        if u_input not in geob:
-            warn('key', u_input, geob._data, geob._source)
-            exit(1)
-
+    # First we try input a direct key
+    if u_input in geob:
         coords = geob.getLocation(u_input)
 
         if coords is None:
@@ -388,14 +381,27 @@ def scan_coords(u_input, geob, verbose):
 
         return coords
 
+    # Then we try input as geocode
+    try:
+        coords = tuple(float(l) for l in u_input.strip('()').split(','))
+
+    except ValueError:
+        pass
     else:
-        if len(coords) != 2:
-            error('geocode_format', u_input)
+        if len(coords) == 2        and \
+           -90  <= coords[0] <= 90 and \
+           -180 <= coords[1] <= 180:
 
-        if verbose:
-            print 'Geocode recognized: (%.3f, %.3f)' % coords
+            if verbose:
+                print 'Geocode recognized: (%.3f, %.3f)' % coords
 
-        return coords
+            return coords
+
+        error('geocode_format', u_input)
+
+    # All cases failed
+    warn('key', u_input, geob._data, geob._source)
+    exit(1)
 
 
 def guess_delimiter(row):
