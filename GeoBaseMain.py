@@ -323,16 +323,20 @@ def display_browser(templates, nb_res):
         os.system('firefox %s &' % ' '.join(urls))
 
 
+
+def launch_http_server(address, port):
+    """Launch a SimpleHTTPServer.
+    """
     class MyTCPServer(SocketServer.TCPServer):
         """Overrides standard library.
         """
         allow_reuse_address = True
 
     Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-    httpd   = MyTCPServer(('0.0.0.0', PORT), Handler)
+    httpd   = MyTCPServer((address, port), Handler)
 
     try:
-        print '* Serving on localhost:%s (hit ctrl+C to stop)' % PORT
+        print '* Serving on localhost:%s (hit ctrl+C to stop)' % port
         httpd.serve_forever()
 
     except KeyboardInterrupt:
@@ -633,7 +637,8 @@ DISABLE = '__none__'
 REF     = '__ref__'
 
 # Port for SimpleHTTPServer
-PORT = 8000
+ADDRESS = '0.0.0.0'
+PORT    = 8000
 
 # Defaults for map
 DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
@@ -1299,6 +1304,7 @@ def main():
 
         if templates and verbose:
             display_browser(templates, nb_res)
+            launch_http_server(ADDRESS, PORT)
 
         if len(templates) < max_t:
             # At least one html not rendered
