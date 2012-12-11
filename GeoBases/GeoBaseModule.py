@@ -119,6 +119,7 @@ class GeoBase(object):
             },
             'static' : {
                 # source : target
+                local_path(__file__, 'MapAssets/map.js')            : 'map.js',
                 local_path(__file__, 'MapAssets/point.png')         : 'point.png',
                 local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
                 local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
