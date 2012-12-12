@@ -450,7 +450,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend');
     $('#lines').attr('title', 'Draw lines between points');
-    $('#ratio').attr('title', 'Circles size (%)');
+    $('#ratio').attr('title', 'Circle size (%)');
 
     // This is weird, but $(window).height seems to change after
     // document is ready
