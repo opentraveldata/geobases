@@ -1491,7 +1491,7 @@ class GeoBase(object):
                 categories[cat]['color'] = 'black'
 
             if verbose:
-                print '> Affecting category %-8s to color %-7s (%s %9s)' % \
+                print '> Affecting category %-8s to color %-7s | %s %s' % \
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
         for elem in data:
