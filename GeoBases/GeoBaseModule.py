@@ -1439,6 +1439,19 @@ class GeoBase(object):
 
             data.append(elem)
 
+        # Icon type
+        if icon_type is None:
+            base_icon = ''
+        elif icon_type == 'auto':
+            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
+        elif icon_type == 'S':
+            base_icon = 'point.png'
+        elif icon_type == 'B':
+            base_icon = 'marker.png'
+        else:
+            allowed = ('auto', 'S', 'B', None)
+            raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
+
         # Count the categories for coloring
         categories = {}
         for elem in data:
@@ -1473,18 +1486,6 @@ class GeoBase(object):
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
-        # Custom the template to connect to the json data
-        if icon_type is None:
-            base_icon = ''
-        elif icon_type == 'auto':
-            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
-        elif icon_type == 'S':
-            base_icon = 'point.png'
-        elif icon_type == 'B':
-            base_icon = 'marker.png'
-        else:
-            allowed = ('auto', 'S', 'B', None)
-            raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
 
         # Dump the json geocodes
         json_name = '%s.json' % output
