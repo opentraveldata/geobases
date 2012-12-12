@@ -284,7 +284,8 @@ function initialize(jsonData) {
 
     // Ratio of map size for circles on the map
     //var R = 100;
-    var r = 0.075;
+    var r = 0.15;
+    $('#ratio').val(r);
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
         // We compute the top radius given the map size
@@ -292,7 +293,7 @@ function initialize(jsonData) {
         var sw = mapBounds.getSouthWest();
         var ne = mapBounds.getNorthEast();
 
-        var biggest = r * 1000 * haversine(sw.lat(), sw.lng(), ne.lat(), ne.lng());
+        var biggest = 0.5 * r * 1000 * haversine(sw.lat(), sw.lng(), ne.lat(), ne.lng());
         //var biggest = R * 1000;
 
         for (i=0, c=circlesArray.length; i<c; i++) {
@@ -305,6 +306,13 @@ function initialize(jsonData) {
     // We trigger manually a zoom_changed to force first circle drawing
     google.maps.event.addListenerOnce(map, 'bounds_changed', function(){
         google.maps.event.trigger(map, 'zoom_changed');
+    });
+
+    $('#ratio').keyup(function(e){
+        if(e.keyCode == 13) {
+            r = parseFloat($('#ratio').val());
+            google.maps.event.trigger(map, 'zoom_changed');
+        }
     });
 
     // If no markers, we avoid a big
