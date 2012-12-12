@@ -1448,7 +1448,7 @@ class GeoBase(object):
             categories[cat] += 1
 
         # Color repartition given biggest categories
-        colors  = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple']
+        colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
@@ -1483,8 +1483,8 @@ class GeoBase(object):
         elif icon_type == 'B':
             base_icon = 'marker.png'
         else:
-            raise ValueError('icon_type "%s" not in %s.' % \
-                             (icon_type, ['auto', 'S', 'B', None]))
+            allowed = ('auto', 'S', 'B', None)
+            raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
 
         # Dump the json geocodes
         json_name = '%s.json' % output
