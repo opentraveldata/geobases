@@ -177,12 +177,12 @@ function initialize(jsonData) {
     var infowindow   = new google.maps.InfoWindow();
 
     // closure fun
-    document.closeInfoWindow = function() {
+    function closeInfoWindow() {
         var i, c;
         for (i=0, c=markersArray.length; i<c; i++) {
             infowindow.close(map, markersArray[i]);
         }
-    };
+    }
 
     var i, j, c, e, s, latlng, marker, circle, ccol;
     var max_value = 0;
@@ -287,7 +287,7 @@ function initialize(jsonData) {
     var r = 0.15;
     $('#ratio').val(r);
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
+    function updateCircles() {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
@@ -301,17 +301,16 @@ function initialize(jsonData) {
             circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
         }
 
-    });
+    }
 
-    // We trigger manually a zoom_changed to force first circle drawing
-    google.maps.event.addListenerOnce(map, 'bounds_changed', function(){
-        google.maps.event.trigger(map, 'zoom_changed');
-    });
+    // We trigger manually an updateCircles once the fitBounds is finished
+    google.maps.event.addListenerOnce(map, 'bounds_changed', updateCircles);
+    google.maps.event.addListener(map, 'zoom_changed', updateCircles);
 
     $('#ratio').keyup(function(e){
         if(e.keyCode == 13) {
             r = parseFloat($('#ratio').val());
-            google.maps.event.trigger(map, 'zoom_changed');
+            updateCircles();
         }
     });
 
@@ -394,6 +393,14 @@ function initialize(jsonData) {
     $('#legendPopup').html(msg);
     $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, point_color, point_size, max_value));
 
+    // Press Escape event!
+    // Use keydown instead of keypress for webkit-based browsers
+    $(document).keydown(function (e) {
+        if (e.keyCode === 27) {
+            disablePopup('#legendPopup');
+            closeInfoWindow();
+        }
+    });
 }
 
 $(document).ready(function() {
@@ -434,14 +441,9 @@ $(document).ready(function() {
         disablePopup('#legendPopup');
     });
 
-    // Press Escape event!
-    // Use keydown instead of keypress for webkit-based browsers
-    $(document).keydown(function (e) {
-        if (e.keyCode === 27) {
-            disablePopup('#legendPopup');
-            document.closeInfoWindow();
-        }
-    });
+    $('#legend').attr('title', 'Display legend');
+    $('#lines').attr('title', 'Draw lines between points');
+    $('#ratio').attr('title', 'Circles size (%), press enter for map update');
 
     // This is weird, but $(window).height seems to change after
     // document is ready
