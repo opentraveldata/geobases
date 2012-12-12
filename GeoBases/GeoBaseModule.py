@@ -1458,7 +1458,18 @@ class GeoBase(object):
             cat = elem['__cat__']
             if cat not in categories:
                 categories[cat] = 0
-            categories[cat] += 1
+
+            if icon_type is None:
+                # Here we are in no-icon mode, categories
+                # will be based on the entries who will have a circle
+                try:
+                    c = float(elem['__siz__'])
+                except ValueError:
+                    c = 0
+            else:
+                c = 1
+
+            categories[cat] += c if c > 0 else 0
 
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
@@ -1480,8 +1491,8 @@ class GeoBase(object):
                 categories[cat]['color'] = 'black'
 
             if verbose:
-                print '> Affecting category %-8s to color %-7s (%-5s points)' % \
-                        (cat, categories[cat]['color'], vol)
+                print '> Affecting category %-8s to color %-7s (%s %9s)' % \
+                        (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
