@@ -628,8 +628,8 @@ DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
 
-ALLOWED_ICON_TYPES = [None, 'auto', 'S', 'B']
-ALLOWED_INTERACTIVE_TYPES = ['__exact__', '__fuzzy__']
+ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
+ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -1138,8 +1138,8 @@ def main():
         error('wrong_value', icon_type, ALLOWED_ICON_TYPES)
 
     # Testing -I option
-    if interactive_type not in ALLOWED_INTERACTIVE_TYPES:
-        error('wrong_value', interactive_type, ALLOWED_INTERACTIVE_TYPES)
+    if interactive_type not in ALLOWED_INTER_TYPES:
+        error('wrong_value', interactive_type, ALLOWED_INTER_TYPES)
 
 
 
