@@ -5,12 +5,38 @@
         <meta name="{{file_name}}" content="{{file_name}}" />
 
         <title>Map of "{{file_name}}"</title>
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" />
+
+        <style>
+            .ui-widget {
+                font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+                font-size: 0.8em/*{fsDefault}*/;
+            }
+            .padded {
+                padding-left:  10px;
+                padding-right:  0px;
+                padding-top:    0px;
+                padding-bottom: 0px;
+            }
+        </style>
     </head>
 
     <body>
-        <button id="legend" style="width: 100px; margin-bottom: 5px;">Legend   </button>
-        <button id="lines"  style="width: 100px; margin-bottom: 5px;">Lines (0)</button>
-        <input  id="ratio"  style="width: 100px; margin-bottom: 5px;" type="text"/>
+        <table cellspacing="0" cellpadding="0" style="width:50%; display:inline-block;">
+            <tr>
+                <td><button id="legend" style="width:100px;">Legend</button></td>
+                <td><button id="lines"  style="width:100px;">Lines (0)</button></td>
+
+                <td class="padded">
+                    <div style="width: 200px;">
+                        <div id="slider"></div>
+                    </div>
+                </td>
+
+                <td class="padded"><span id="ratio"></span></td>
+            </tr>
+        </table>
 
         <span id="info" style="float:right;"></span>
 
@@ -19,6 +45,7 @@
         <div id="backgroundPopup"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
         <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>

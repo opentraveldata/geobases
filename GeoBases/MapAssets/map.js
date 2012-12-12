@@ -285,9 +285,11 @@ function initialize(jsonData) {
     // Ratio of map size for circles on the map
     //var R = 100;
     var r = 0.15;
-    $('#ratio').val(r);
 
     function updateCircles() {
+        // We update the span where r is displayed
+        $('#ratio').html(parseInt(100 * r, 10) + '%');
+
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
@@ -300,19 +302,24 @@ function initialize(jsonData) {
             circle = circlesArray[i];
             circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
         }
-
     }
+
+    $( "#slider" ).slider({
+        range          : false,
+        min            : 0,
+        max            : 0.50,
+        step           : 0.01,
+        value          : r,
+        //animate      : 'slow',
+        stop           : function (event, ui) {
+            r = parseFloat(ui.value);
+            updateCircles();
+        }
+    });
 
     // We trigger manually an updateCircles once the fitBounds is finished
     google.maps.event.addListenerOnce(map, 'bounds_changed', updateCircles);
     google.maps.event.addListener(map, 'zoom_changed', updateCircles);
-
-    $('#ratio').keyup(function(e){
-        if(e.keyCode == 13) {
-            r = parseFloat($('#ratio').val());
-            updateCircles();
-        }
-    });
 
     // If no markers, we avoid a big
     // drift to the pacific ocean :)
@@ -443,7 +450,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend');
     $('#lines').attr('title', 'Draw lines between points');
-    $('#ratio').attr('title', 'Circles size (%), press enter for map update');
+    $('#ratio').attr('title', 'Circles size (%)');
 
     // This is weird, but $(window).height seems to change after
     // document is ready
