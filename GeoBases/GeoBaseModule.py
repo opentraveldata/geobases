@@ -1439,16 +1439,40 @@ class GeoBase(object):
 
             data.append(elem)
 
+        # Icon type
+        if icon_type is None:
+            base_icon = ''
+        elif icon_type == 'auto':
+            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
+        elif icon_type == 'S':
+            base_icon = 'point.png'
+        elif icon_type == 'B':
+            base_icon = 'marker.png'
+        else:
+            allowed = ('auto', 'S', 'B', None)
+            raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
+
         # Count the categories for coloring
         categories = {}
         for elem in data:
             cat = elem['__cat__']
             if cat not in categories:
                 categories[cat] = 0
-            categories[cat] += 1
+
+            if icon_type is None:
+                # Here we are in no-icon mode, categories
+                # will be based on the entries who will have a circle
+                try:
+                    c = float(elem['__siz__'])
+                except ValueError:
+                    c = 0
+            else:
+                c = 1
+
+            categories[cat] += c if c > 0 else 0
 
         # Color repartition given biggest categories
-        colors  = ['red', 'orange', 'yellow', 'green', 'cyan', 'purple']
+        colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
@@ -1467,24 +1491,12 @@ class GeoBase(object):
                 categories[cat]['color'] = 'black'
 
             if verbose:
-                print('> Affecting category %-8s to color %-7s (%-5s points)' % \
-                        (cat, categories[cat]['color'], vol))
+                print('> Affecting category %-8s to color %-7s (%s %9s)' % \
+                        (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol))
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
-        # Custom the template to connect to the json data
-        if icon_type is None:
-            base_icon = ''
-        elif icon_type == 'auto':
-            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
-        elif icon_type == 'S':
-            base_icon = 'point.png'
-        elif icon_type == 'B':
-            base_icon = 'marker.png'
-        else:
-            raise ValueError('icon_type "%s" not in %s.' % \
-                             (icon_type, ['auto', 'S', 'B', None]))
 
         # Dump the json geocodes
         json_name = '%s.json' % output
