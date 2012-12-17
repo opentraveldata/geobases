@@ -449,12 +449,12 @@ geonames_MC:
     headers   : *geonames_headers
 
 
-postalcodes_all:
+postal_codes_all:
     local     : false
     source    : /remote/orihome/aprengere/public/data/PostalCodes/GeoNames/allCountries.txt
-    indexes   : [country_code, postal_code]
+    indexes   : &postal_codes_ind [country_code, postal_code]
     delimiter : "\t"
-    headers   : &postalcodes_headers
+    headers   : &postal_codes_headers
         - country_code
         - postal_code
         - name
@@ -469,18 +469,18 @@ postalcodes_all:
         - accuracy
 
 
-postalcodes_FR:
+postal_codes_FR:
     source    : PostalCodes/GeoNames/FR.txt
-    indexes   : [country_code, postal_code]
+    indexes   : *postal_codes_ind
     delimiter : "\t"
-    headers   : *postalcodes_headers
+    headers   : *postal_codes_headers
 
 
-postalcodes_MC:
+postal_codes_MC:
     source    : PostalCodes/GeoNames/MC.txt
-    indexes   : [country_code, postal_code]
+    indexes   : *postal_codes_ind
     delimiter : "\t"
-    headers   : *postalcodes_headers
+    headers   : *postal_codes_headers
 
 
 office_ids_midt:
