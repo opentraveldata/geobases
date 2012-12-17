@@ -458,12 +458,12 @@ postal_codes_all:
         - country_code
         - postal_code
         - name
-        - adm1_code
         - adm1_name
-        - adm2_code
+        - adm1_code
         - adm2_name
-        - adm3_code
+        - adm2_code
         - adm3_name
+        - adm3_code
         - lat
         - lng
         - accuracy
