@@ -404,7 +404,7 @@ feature_codes:
 
 geonames_all:
     local     : false
-    source    : /remote/orihome/aprengere/public/allCountries.txt
+    source    : /remote/orihome/aprengere/public/data/Por/GeoNames/allCountries.txt
     indexes   : geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -451,7 +451,7 @@ geonames_MC:
 
 office_ids_midt:
     local     : false
-    source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
+    source    : /remote/orihome/aprengere/public/data/Office_IDs/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
     indexes   : office_id
     delimiter : ^
     headers   :
