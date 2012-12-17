@@ -52,7 +52,7 @@ HHA^ZGCS^^Y^6301358^^Changsha Datuopu Airport^Changsha Datuopu Airport^28.19^113
 HIC^PRETORIA HIC^PRETORIA HIC^PRETORIA/ZA:ISCOR HPT^PRY^Y^^ZA^AFRIC^ITC2^ZA^-25.82^28.17^0^N^H
 HIX^HIVA OA^HIVA OA^HIVA OA/PF^HIX^Y^^PF^PACIF^ITC3^PF086^-9.75^-139^0^N^CA
 HNK^HINCHINBROOK ISL^HINCHINBROOK IS^HINCHINBROOK ISL/QL/AU^HNK^Y^QL^AU^AUSTL^ITC3^AU131^-18.38^146.3^0^N^CA
-HPP^ZZZZ^^Y^8298820^^Poipet^Poipet^13.65^102.7^S^AIRP^^^2012-10-27^IATA Notification #33 (2012)^KH^^Cambodia^01^^^^^^^^0^^35^Asia/Phnom_Penh^7.0^7.0^7.0^2012-05-18^Y^N^HPP^^^^SEASI^CA^^
+HPP^ZZZZ^^Y^8298820^^Poipet^Poipet^13.65^102.7^S^AIRP^^^2012-10-27^IATA Notification #33 (2012) - Airport not operational^KH^^Cambodia^01^^^^^^^^0^^35^Asia/Phnom_Penh^7.0^7.0^7.0^2012-05-18^Y^N^HPP^^^^SEASI^CA^^
 HPR^PRETORIA HPR^PRETORIA HPR^PRETORIA/ZA:CENTRAL HPR^PRY^Y^^ZA^AFRIC^ITC2^ZA^-25.98^28.15^0^N^H
 HTF^UNKNOWN3352^UNKNOWN3352^UNKNOWN3352/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.75^-0.2333^0^N^CA
 IIN^ZZZZ^^Y^1855203^1^Nishinoomote Airport^Nishinoomote Airport^30.83^131^P^PPL^^^2012-11-01^IATA Notification #39 (2012) - Same location as TNE^JP^^Japan^18^Kagoshima^Kagoshima^^^^^^17832^^38^Asia/Tokyo^9.0^9.0^9.0^2006-01-17^Y^N^IIN^Nishinoomote^Nishinoomote^^ASIA^CA^http://en.wikipedia.org/wiki/Nishinoomote%2C_Kagoshima^|Nisinoomote|
@@ -67,6 +67,7 @@ KNO^UNKNOWN4253^UNKNOWN4253^UNKNOWN4253/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.42^3.25^0^
 KOB^UNKNOWN4266^UNKNOWN4266^UNKNOWN4266/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5^10^0^N^CA
 KQB^ZZZZ^2068246^Koonibba^Koonibba^-31.9666700^133.4500000^AU^^P^PPL^05^41010^^^130^0^66^Australia/Adelaide^10.5^9.5^9.5^2011-06-04^KQB
 KYB^YANGOONABIE^YANGOONABIE^YANGOONABIE/SA/AU^KYB^Y^SA^AU^AUSTL^ITC3^AU009^-34.75^138.7^0^N^CA
+KZK^ZZZZ^^N^0^^Kompong Thom^Kompong Thom^12.72^104.9^S^AIRP^^^2012-12-01^IATA Notification #33 (2012) - Airport not found^KH^^Cambodia^05^Kompong Thom^Kompong Thom^^^^^^0^^17^Asia/Phnom_Penh^7.0^7.0^7.0^2012-12-01^Y^N^KZD^Kompong Thom^Kompong Thom^^SEASI^CA^^
 LIU^UNKNOWN4676^UNKNOWN4676^UNKNOWN4676/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^35.83^12.83^0^N^CA
 LKT^UNKNOWN4702^UNKNOWN4702^UNKNOWN4702/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5.85^-5.683^0^N^CA
 LPH^UNKNOWN4802^UNKNOWN4802^UNKNOWN4802/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^56.05^-5.433^0^N^CA
@@ -96,17 +97,21 @@ NSA^ZZZZ^^Y^8299129^1^Noosa Airport^Noosa Airport^-26.25^153.2^S^AIRP^^^2012-02-
 OHP^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^56.58^-5.5^0^N^CA
 OMN^ZZZZ^Y^8298864^1^Osmanabad^Osmanabad^OMN^18.15^76.1^S^AIRP^^^2012-09-01^IATA Notification #37 (2012) - Airport not found^IN^^16^^^^0^^640^Asia/Kolkata^5.5^5.5^5.5^2012-05-18^Y^N^OMN^^ASIA^CA^
 OSP^UNKNOWN6248^UNKNOWN6248^UNKNOWN6248/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^54.478889^17.1075^0^N^CA
+OUI^VLHS^^Y^7668610^^Ban Huoeisay Airport^Ban Huoeisay Airport^20.25^100.4^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Same location as HOE^LA^^Laos^22^Bokèo^Bokeo^^^^^^0^^389^Asia/Vientiane^7.0^7.0^7.0^2011-02-17^Y^N^OUI^Ban Huoeisay Airport^Ban Huoeisay Airport^^SEASI^CA^http://en.wikipedia.org/wiki/Ban_Huoeisay_Airport^
 PAI^UNKNOWN6248^UNKNOWN6248^UNKNOWN6248/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^12.85^102.60^N^CA
 PBW^ZZZZ^^Y^7057982^^Palibelo^Palibelo^-0.8833^119.9^P^PPL^^^2012-10-12^^ID^^Indonesia^17^Nusa Tenggara Barat^Nusa Tenggara Barat^^^^^^0^^4^Asia/Makassar^8.0^8.0^8.0^2012-01-20^Y^N^PBW^^^^SEASI^CA^^id|Palibelo|
 PEJ^ZZZZ^3171157^Peschici^Peschici^41.9460500^16.0158600^IT^^P^PPLA3^13^FG^071038^^4339^0^101^Europe/Rome^1.0^2.0^1.0^2012-02-15^PEJ,Peschici
 PHM^UNKNOWN6492^UNKNOWN6492^UNKNOWN6492/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^48.68^9^0^N^CA
+PKS^ZZZZ^^N^0^^PAKSANE/LA^PAKSANE/LA^18.37^103.7^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Defunct airport^LA^^LA^^^^^^^^^^^^LA^^^^-1^Y^N^PKS^PAKSANE/LA^PAKSANE/LA^^SEASI^CA^^
 PLB^UNKNOWN6559^UNKNOWN6559^UNKNOWN6559/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^44.68^-73.52^0^N^CA
 PTE^ZZZZ^2148398^Port Stephens^Port Stephens^-32.6966000^152.0634800^AU^AU^P^PPL^02^^^^26000^0^-9999^Australia/Sydney^11.0^10.0^10.0^2009-12-22^PTE,Port Stephen
 PVX^UNKNOWN6810^UNKNOWN6810^UNKNOWN6810/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^64.37^173.2^0^N^CA
 QBS^ZZZZ^^Y^3181554^^Brescia^Brescia^45.54^10.222^P^PPLA2^^^2012-10-27^IATA Monthly Amendment Bulletin July 2012 - With the assignment of BRZ, Brescia no longer requires an off-line point^IT^^Italy^09^Lombardy^Lombardy^BS^Provincia di Brescia^Provincia di Brescia^017029^^187567^^132^Europe/Rome^1.0^2.0^1.0^2011-02-23^Y^N^QBS^^^^EUROP^O^^es|Brescia|=de|Brescia|=pl|Brescia|=en|Brescia|=ar|بريشيا|=ca|Brescia|=cs|Brescia|=eo|Brescia|=et|Brescia|=fi|Brescia|=fr|Brescia|=id|Brescia|=it|Brescia|=ja|ブレシア|=la|Brixia|=nap|Brescia|=nl|Brescia|=no|Brescia|=pt|Bréscia|=ro|Brescia|=ru|Брешия|=sv|Brescia|=sl|Brescia|=vec|Bresia|=co|Brescia|=pms|Bressia|=sr|Бреша|=zh|布雷西亚|
+QEJ^ZZZZ^^N^0^^Elgarhbolli^Elgarhbolli^^^S^AIRP^^^2012-01-01^^LY^^Libya^47^^^^^^^^0^^43^Africa/Tripoli^2.0^2.0^2.0^2012-04-29^Y^N^QEJ^Elgarhbolli^Elgarhbolli^^AFRIC^CA^^
 QLU^ZZZZ^Y^765876^1^Lublin^Lublin^Liublinas,Ljublin,Lublin,Lublina,Lublino,Lyublin,QLU,lublini,lwblyn,ruburin,Ļubļina,Лублин,Люблин,Люблін,לובלין,ლუბლინი,ルブリン^51.24^22.572^P^PPLA^^^2012-06-01^IATA Amendment Bulletin of June 2012 - With the assignment of LUZ, Lublin no longer requires an off-line point^PL^^75^^^^360044^^183^Europe/Warsaw^1.0^2.0^1.0^2012-01-19^N^N^QLU^^EEURO^O^http://en.wikipedia.org/wiki/Lublin^^Lyublin^^pl^Lublin^^de^Lublin^^en^Lublin^^bg^Люблин^^bs^Lublin^^cs^Lublin^^eo^Lublin^^et^Lublin^^fi^Lublin^^fr^Lublin^^he^לובלין^^hu^Lublin^^it^Lublino^^ja^ルブリン^^lt^Liublinas^^lv^Ļubļina^^na^Lublin^^nds^Lublin^^nl^Lublin^^no^Lublin^^ro^Lublin^^ru^Люблин^^sr^Лублин^^sv^Lublin^^ua^Люблін^^es^Lublin^^eu^Lublin^^id^Lublin^^ka^ლუბლინი^^pt^Lublin^^tr^Lublin^^be^Люблін^^gl^Lublin^^^Lublin^
 QMT^UNKNOWN7182^UNKNOWN7182^UNKNOWN7182/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^36.7^3.233^0^N^CA
 QTC^ZZZZ^^Y^3179866^^Caserta^Caserta^41.0667^14.3333^P^PPLA2^^^2012-10-27^IATA Monthly Amendment Bulletin July 2012 - With the assignment of CTJ, Caserta no longer requires an off-line point^IT^^Italy^04^Campania^Campania^CE^Provincia di Caserta^Provincia di Caserta^061022^^75208^^81^Europe/Rome^1.0^2.0^1.0^2012-08-22^Y^N^QTC^^^^EUROP^O^http://en.wikipedia.org/wiki/Caserta^de|Caserta|=en|Caserta|=cs|Caserta|=eo|Caserta|=fr|Caserte|=it|Caserta|=ja|カゼルタ|=nap|Caserta|=nl|Caserta|=pl|Caserta|=pt|Caserta|=ro|Caserta|=ru|Казерта|=sv|Caserta|=es|Caserta|
+RAU^ZZZZ^^N^0^^Rangpur Airport^Rangpur Airport^25.75^89.23^S^AIRP^^^2012-12-01^IATA Notification #33 (2012) - Airport not found^BD^^Bangladesh^70^^^^^^^^0^^56^Asia/Dhaka^6.0^6.0^6.0^2012-01-01^Y^N^RAU^Rangpur^Rangpur^^ASIA^CA^^
 RAY^UNKNOWN7534^UNKNOWN7534^UNKNOWN7534/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.85^-5.05^0^N^CA
 RKO^ZZZZ^^Y^0^1^Sipora Airport^Sipora Airport^-2.08333^99.6833^S^AIRP^^^2012-09-01^IATA Notification #38 (2012) - Same location as RKI^ID^^Indonesia^24^West Sumatra^West Sumatra^^^^^^0^^-9999^Asia/Jakarta^7.0^7.0^7.0^2012-10-21^Y^N^RKO^Rokot^Rokot^^SEASI^CA^^
 SAE^ZZZZ^^Y^7731478^^Sangir Airport^Sangir Airport^2.317^125.4^S^AIRP^^^2012-10-12^^ID^^Indonesia^^^^^^^^^0^^4^Asia/Makassar^8.0^8.0^8.0^2011-03-18^Y^N^SAE^^^^SEASI^CA^^
@@ -117,12 +122,19 @@ SDW^UNKNOWN7939^UNKNOWN7939^UNKNOWN7939/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^22.67^91.17^0
 SEJ^UNKNOWN7974^UNKNOWN7974^UNKNOWN7974/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^65.27^-14^0^N^CA
 SEK^UNKNOWN7975^UNKNOWN7975^UNKNOWN7975/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^31.93^-4.433^0^N^CA
 SEX^UNKNOWN7988^UNKNOWN7988^UNKNOWN7988/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^49.5^7.867^0^N^CA
+SHO^RKND^^Y^7668418^^Sokcho Airport^Sokcho Airport^38.142614^128.598556^S^AIRP^^^2012-12-14^IATA Notification #39 (2012) - Airport closed, replaced by Yangyang
+airport (YNY).^KR^^South Korea^06^Gangwon^Gangwon^^^^^^0^^21^Asia/Seoul^9.0^9.0^9.0^2011-02-17^Y^N^SHO^Sokcho Airport^Sokcho Airport^^ASIA^CA^http://en.wikipedia.org/wiki/Sokcho_Airport^
+SND^ZZZZ^^Y^8299043^^Seno^Seno^16.67^105^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Defunct airport^LA^^Laos^20^Savannahkhét^Savannahkhet^^^^^^0^^190^Asia/Vientiane^7.0^7.0^7.0^2012-05-18^Y^N^SND^Seno^Seno^^SEASI^CA^^
+SQD^ZZZZ^^Y^739600^^Sinop^Sinop^42.0333^35.15^P^PPLA^0.013800567425^^2011-01-01^IATA Notification #12 (2011) - At the time, deleted duplicate with SIC (now, in 2012, NOP)^TR^^Turkey^57^Sinop^Sinop^^^^^^34834^^100^Europe/Istanbul^2.0^3.0^2.0^2012-01-18^Y^Y^SIC^Sinop^Sinop^^CAMER^CA^^
 SQJ^SHEHDI^SHEHDI^SHEHDI/ET^SQJ^Y^^ET^AFRIC^ITC2^ET^12.78^36.22^0^N^CA
 SQP^STARCKE^STARCKE^STARCKE/QL/AU^SQP^Y^QL^AU^AUSTL^ITC3^AU131^-14.2^147.2^4662^N^CA
 SRK^SIERRA LEONE^SIERRA LEONE^SIERRA LEONE/SL^SRK^Y^^SL^AFRIC^ITC2^SL^8.5^-13.5^4673^N^CA
+SSX^LTAQ^^Y^6299734^^Samsun^Samsun^41.28^36.33^S^AIRP^^^2012-12-14^IATA Notification #12 (2011) - Airport closed, city (Samsun) is now SZF^TR^^Turkey^55^Samsun^Samsun^^^^^^0^162^162^Europe/Istanbul^2.0^3.0^2.0^2007-03-30^Y^N^SSX^Samsun^Samsun^^EURAS^A^^
+SSX^ZZZZ^^N^0^^Samsun^Samsun^41.28^36.33^P^PPL^0.0131671386793^^2012-12-14^IATA Notification #12 (2011) - Airport closed, city (Samsun) is now SZF^TR^^Turkey^55^Samsun^Samsun^^^^^^0^162^162^Europe/Istanbul^2.0^3.0^2.0^2007-03-30^N^N^SSX^Samsun^Samsun^^EURAS^C^^
 SUY^UNKNOWN8404^UNKNOWN8404^UNKNOWN8404/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^66.02^-23.83^0^N^CA
 SVR^UNKNOWN8404^UNKNOWN8404^UNKNOWN8404/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^11.08^105.8^0^N^CA
 SWZ^SYDNEY WEST^SYDNEY WEST^SYDNEY/NS/AU:SYDNEY WEST^SYD^Y^NS^AU^AUSTL^ITC3^AU007^-33.88^150.7^0^N^A
+SZD^ZZZZ^^N^0^^Sheffield Airport^Sheffield Airport^53.394256^-1.388486^S^BUSTN^^^2012-01-01^^GB^^United Kingdom^ENG^England^England^D5^Borough of Doncaster^Borough of Doncaster^00CE043^^0^^40^Europe/London^0.0^1.0^0.0^2012-07-16^Y^N^SZD^Sheffield^Sheffield^^EUROP^CA^^
 SZH^ZZZZ^^Y^7731530^^Senipah Airport^Senipah Airport^-0.9667^117.1^S^AIRP^^^2012-10-12^^ID^^Indonesia^14^East Kalimantan^East Kalimantan^^^^^^0^^16^Asia/Makassar^8.0^8.0^8.0^2011-03-18^Y^N^SZH^^^^SEASI^CA^^
 T71^ZZZZ^4684559^Cuero Municipal Airport^Cuero Municipal Airport^29.0835900^-97.2669300^US^^S^AIRP^TX^123^^^0^63^66^America/Chicago^-6.0^-5.0^-6.0^2011-07-23^T71
 TBX^UNKNOWN8585^UNKNOWN8585^UNKNOWN8585/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5.833^-5.367^0^N^CA
@@ -130,7 +142,9 @@ TFY^UNKNOWN8665^UNKNOWN8665^UNKNOWN8665/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^27.95^-12.92^
 TGX^UNKNOWN8687^UNKNOWN8687^UNKNOWN8687/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^10.48^-6.417^0^N^CA
 THF^UNKNOWN8693^UNKNOWN8693^UNKNOWN8693/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^52.473025^13.403944^0^N^CA
 TLK^UNKNOWN8787^UNKNOWN8787^UNKNOWN8787/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^65.3^-22.25^0^N^CA
+UDO^ZZZZ^^Y^8298797^^Udomxay^Udomxay^19.13^103.8^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Same location as ODY^LA^^Laos^14^Xiangkhoang^Xiangkhoang^^^^^^0^^2320^Asia/Vientiane^7.0^7.0^7.0^2012-05-18^Y^N^UDO^Udomxay^Udomxay^^SEASI^CA^^
 UHF^UNKNOWN9110^UNKNOWN9110^UNKNOWN9110/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.67^-0.4167^0^N^CA
+UON^ZZZZ^^Y^8299199^^Muong Sai^Muong Sai^20.82^102^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Same location as ODY^LA^^Laos^07^Oudômxai^Oudomxai^^^^^^0^^1101^Asia/Vientiane^7.0^7.0^7.0^2012-05-18^Y^N^UON^Muong Sai^Muong Sai^^SEASI^CA^^
 VCC^LIMBE^LIMBE^LIMBE/CM^VCC^Y^^CM^AFRIC^ITC2^CM^4.017^9.2^0^N^CA
 VDD^UNKNOWN9312^UNKNOWN9312^UNKNOWN9312/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^48.13^16.53^0^N^CA
 VEJ^UNKNOWN9325^UNKNOWN9325^UNKNOWN9325/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.75^9.333^0^N^CA
