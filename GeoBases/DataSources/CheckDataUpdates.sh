@@ -47,7 +47,7 @@ do_a_file() {
     local CHOOSED="$5"
     local SPECIAL="$6"
 
-    echo -e "\n* Comparing local file and remote:"
+    echo -e "\n* Comparing local and source:"
     echo -e "1. $PWD/$LOC_CSV"
     echo -e "2. $REF_URL"
 
@@ -115,6 +115,10 @@ REF_URL_10='http://download.geonames.org/export/dump/FR.zip'
 CHOOSED_10='FR.txt'
 REF_URL_11='http://download.geonames.org/export/dump/MC.zip'
 CHOOSED_11='MC.txt'
+REF_URL_12='http://download.geonames.org/export/zip/FR.zip'
+CHOOSED_12='FR.txt'
+REF_URL_13='http://download.geonames.org/export/zip/MC.zip'
+CHOOSED_13='MC.txt'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
@@ -127,6 +131,9 @@ LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
 LOC_CSV_09='Cities/cities15000.txt'
 LOC_CSV_10='Por/GeoNames/FR.txt'
 LOC_CSV_11='Por/GeoNames/MC.txt'
+LOC_CSV_12='PostalCodes/GeoNames/FR.txt'
+LOC_CSV_13='PostalCodes/GeoNames/MC.txt'
+
 
 #do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
 do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
@@ -137,6 +144,8 @@ do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 0 ""            1
 do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
 do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
 do_a_file "$REF_URL_11" "$LOC_CSV_11" 0 1 "$CHOOSED_11"
+do_a_file "$REF_URL_12" "$LOC_CSV_12" 0 1 "$CHOOSED_12"
+do_a_file "$REF_URL_13" "$LOC_CSV_13" 0 1 "$CHOOSED_13"
 
 # The longest at the end
 do_a_file "$REF_URL_03" "$LOC_CSV_03" 1
