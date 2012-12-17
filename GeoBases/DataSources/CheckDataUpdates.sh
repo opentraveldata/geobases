@@ -125,8 +125,8 @@ LOC_CSV_06='TimeZones/timeZones.txt'
 LOC_CSV_07='Languages/iso-languagecodes.txt'
 LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
 LOC_CSV_09='Cities/cities15000.txt'
-LOC_CSV_10='Por/Geonames/FR.txt'
-LOC_CSV_11='Por/Geonames/MC.txt'
+LOC_CSV_10='Por/GeoNames/FR.txt'
+LOC_CSV_11='Por/GeoNames/MC.txt'
 
 #do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
 do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
