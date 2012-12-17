@@ -286,10 +286,12 @@ function initialize(jsonData) {
     //var R = 100;
     var r = 0.15;
 
-    function updateCircles() {
+    function updateLabel(value) {
         // We update the span where r is displayed
-        $('#ratio').html(parseInt(100 * r, 10) + '%');
+        $('#ratio').html(parseInt(100 * parseFloat(value), 10) + '%');
+    }
 
+    function updateCircles(value) {
         // We compute the top radius given the map size
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
@@ -311,13 +313,19 @@ function initialize(jsonData) {
         step           : 0.01,
         value          : r,
         //animate      : 'slow',
+        slide          : function (event, ui) {
+            updateLabel(ui.value);
+        },
         stop           : function (event, ui) {
+            // Updating global variable
             r = parseFloat(ui.value);
+
             updateCircles();
         }
     });
 
     // We trigger manually an updateCircles once the fitBounds is finished
+    updateLabel(r);
     google.maps.event.addListenerOnce(map, 'bounds_changed', updateCircles);
     google.maps.event.addListener(map, 'zoom_changed', updateCircles);
 
@@ -449,8 +457,9 @@ $(document).ready(function() {
     });
 
     $('#legend').attr('title', 'Display legend');
-    $('#lines').attr('title', 'Draw lines between points');
+    $('#lines').attr('title', 'Draw lines between points. Click again to change sorting.');
     $('#ratio').attr('title', 'Circle size (%)');
+    $('#slider').attr('title', 'Circle size (%)');
 
     // This is weird, but $(window).height seems to change after
     // document is ready
