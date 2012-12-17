@@ -3,7 +3,7 @@
 #
 
 airports:
-    source    : Airports/Geonames/airports_geonames_only_clean.csv
+    source    : Airports/GeoNames/airports_geonames_only_clean.csv
     indexes   : iata_code
     delimiter : ^
     headers   :
@@ -404,7 +404,7 @@ feature_codes:
 
 geonames_all:
     local     : false
-    source    : /remote/orihome/aprengere/public/allCountries.txt
+    source    : /remote/orihome/aprengere/public/data/Por/GeoNames/allCountries.txt
     indexes   : geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -432,7 +432,7 @@ geonames_all:
 
 
 geonames_FR:
-    source    : Por/Geonames/FR.txt
+    source    : Por/GeoNames/FR.txt
     indexes   : geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -441,7 +441,7 @@ geonames_FR:
 
 
 geonames_MC:
-    source    : Por/Geonames/MC.txt
+    source    : Por/GeoNames/MC.txt
     indexes   : geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -449,9 +449,43 @@ geonames_MC:
     headers   : *geonames_headers
 
 
+postal_codes_all:
+    local     : false
+    source    : /remote/orihome/aprengere/public/data/PostalCodes/GeoNames/allCountries.txt
+    indexes   : &postal_codes_ind postal_code
+    delimiter : "\t"
+    headers   : &postal_codes_headers
+        - country_code
+        - postal_code
+        - name
+        - adm1_name
+        - adm1_code
+        - adm2_name
+        - adm2_code
+        - adm3_name
+        - adm3_code
+        - lat
+        - lng
+        - accuracy
+
+
+postal_codes_FR:
+    source    : PostalCodes/GeoNames/FR.txt
+    indexes   : *postal_codes_ind
+    delimiter : "\t"
+    headers   : *postal_codes_headers
+
+
+postal_codes_MC:
+    source    : PostalCodes/GeoNames/MC.txt
+    indexes   : *postal_codes_ind
+    delimiter : "\t"
+    headers   : *postal_codes_headers
+
+
 office_ids_midt:
     local     : false
-    source    : /remote/orihome/aprengere/public/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
+    source    : /remote/orihome/aprengere/public/data/Office_IDs/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020120901.sf.csv
     indexes   : office_id
     delimiter : ^
     headers   :
