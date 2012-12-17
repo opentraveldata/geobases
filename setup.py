@@ -60,7 +60,7 @@ except ImportError:
     raise
 
 
-VERSION = '4.10.0'
+VERSION = '4.10.1'
 
 setup(
     name = 'GeoBasesPypy',
