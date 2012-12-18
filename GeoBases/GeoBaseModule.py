@@ -191,12 +191,12 @@ class GeoBase(object):
         ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -344,7 +344,7 @@ class GeoBase(object):
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
             '__dup__' : [],       # special field for duplicates
-            '__dad__' : '',       # special field for parent
+            '__dad__' : [],       # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -451,7 +451,7 @@ class GeoBase(object):
                     # We update the data with this info
                     row_data['__key__'] = d_key
                     row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__dad__'] = key
+                    row_data['__dad__'] = [key]
 
                     # We add the d_key as a new duplicate, and store the duplicate in the main _things
                     self._things[key]['__dup__'].append(d_key)
@@ -632,14 +632,9 @@ class GeoBase(object):
 
         # Key is in geobase here
         keys = [key]
-        for d in self._things[key]['__dup__']:
+        for d in self._things[key]['__dup__'] + self._things[key]['__dad__']:
             if d not in keys:
                 keys.append(d)
-
-        dad = self._things[key]['__dad__']
-        if dad != '':
-            if dad not in keys:
-                keys.append(dad)
 
         if field is None:
             return [self._things[d] for d in keys]
@@ -675,7 +670,7 @@ class GeoBase(object):
         7034
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
         7034
-        >>> len(list(geo_o.getKeysWhere([('__dad__', '')], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.getKeysWhere([('__dad__', [])], reverse=True))) # Counting duplicated keys
         4429
 
         Testing several conditions.
@@ -1441,7 +1436,7 @@ class GeoBase(object):
 
         if link_duplicates:
             for key in self:
-                if self.get(key, '__dad__') == '':
+                if self.get(key, '__dad__') == []:
                     add_lines.append(self.getDuplicates(key, '__key__'))
 
         # Storing json data
