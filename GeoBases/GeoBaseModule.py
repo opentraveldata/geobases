@@ -597,13 +597,28 @@ class GeoBase(object):
 
 
 
+    def hasParents(self, key):
+        """Tell if a key has parents.
+
+        >>> geo_o.hasParents('MRS')
+        0
+        >>> geo_o.hasParents('MRS@1')
+        1
+        >>> geo_o.hasParents('PAR')
+        0
+        """
+        return len(self._things[key]['__dad__'])
+
+
     def hasDuplicates(self, key):
         """Tell if a key has duplicates.
 
-        >>> geo_o.hasDuplicates('ORY')
-        0
-        >>> geo_o.hasDuplicates('THA')
+        >>> geo_o.hasDuplicates('MRS')
         1
+        >>> geo_o.hasDuplicates('MRS@1')
+        1
+        >>> geo_o.hasDuplicates('PAR')
+        0
         """
         return len(self._things[key]['__dup__'])
 
@@ -1436,7 +1451,7 @@ class GeoBase(object):
 
         if link_duplicates:
             for key in self:
-                if self.get(key, '__dad__') == []:
+                if not self.hasParents(key):
                     add_lines.append(self.getDuplicates(key, '__key__'))
 
         # Storing json data
