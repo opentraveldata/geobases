@@ -1516,6 +1516,7 @@ class GeoBase(object):
                     'base_icon'   : base_icon,
                 },
                 'points'     : data,
+                'lines'      : [],
                 'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 

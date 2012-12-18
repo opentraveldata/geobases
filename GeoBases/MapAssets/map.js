@@ -343,6 +343,29 @@ function initialize(jsonData) {
         map.fitBounds(bounds);
     }
 
+    // Add specified lines
+    var od, coordinates, line;
+
+    for (i=0, c=jsonData.lines.length; i<c; i++) {
+
+        od = jsonData.lines[i];
+
+        coordinates = [
+            new google.maps.LatLng(od[0].lat, od[0].lng),
+            new google.maps.LatLng(od[1].lat, od[1].lng)
+        ];
+
+        line = new google.maps.Polyline({
+            map             : map,
+            geodesic        : true,      // to have curved lines on the map
+            clickable       : false,     // clickable would mess user experience
+            path            : coordinates,
+            strokeColor     : 'blue',
+            strokeOpacity   : 0.6,
+            strokeWeight    : 8
+        });
+    }
+
     // Draw hull
     var hull = new google.maps.Polyline({
         path            : centersArray,
@@ -383,7 +406,7 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $(this).text('Lines (' + state + ')');
+        $(this).text('Lines ({0})'.fmt(state));
     });
 
     // Fill legend
