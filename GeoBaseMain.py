@@ -620,7 +620,7 @@ DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
-DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
+DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
@@ -636,7 +636,7 @@ ADDRESS = '0.0.0.0'
 PORT    = 8000
 
 # Defaults for map
-DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
+DEF_LABEL_FIELDS  = ('name',       'country_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
@@ -703,7 +703,7 @@ def handle_args():
     # or list formatter
     fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
 
-    parser = argparse.ArgumentParser(description='Provide POR information.',
+    parser = argparse.ArgumentParser(description='Provide data services.',
                                      formatter_class=argparse.RawTextHelpFormatter)
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
