@@ -14298,7 +14298,7 @@
 1733440	Putatan	Putatan	Kampong Putatan,Putatan Station	5.9258	116.06094	P	PPL	MY		16				78340		6	Asia/Kuching	2010-06-16
 1733449	Kinarut	Kinarut	Kinarut,Kinarut Station	5.8231	116.0466	P	PPL	MY		16				15716		9	Asia/Kuching	2012-01-17
 1733502	Ranau	Ranau	RNU,Ranau	5.9538	116.6641	P	PPL	MY		16				19294		570	Asia/Kuching	2012-01-17
-1733697	Semporna	Semporna	SMM,Selangor,Semporna,Semporna Settlement,Sempurna,Simporan,Simporna,Селангор	4.48178	118.61118	P	PPL	MY		16				62641		7	Asia/Kuching	2012-01-17
+1733697	Semporna	Semporna	SMM,Semporna,Semporna Settlement,Sempurna,Simporan,Simporna,Семпорна	4.48178	118.61118	P	PPL	MY		16				62641		7	Asia/Kuching	2012-12-17
 1733782	Victoria	Victoria	Labuan,Victoria,Victoria Town,Viktorija,Виктория	5.27667	115.24167	P	PPLA	MY		15				73653		4	Asia/Kuching	2012-01-17
 1733874	Beaufort	Beaufort	Beaufort	5.3473	115.7455	P	PPL	MY		16				15855		18	Asia/Kuching	2012-01-17
 1733953	Lahad Datu	Lahad Datu	LDU,Lahad Datu,Lahad Datu Town	5.0268	118.327	P	PPL	MY		16				105622		23	Asia/Kuching	2012-01-17
