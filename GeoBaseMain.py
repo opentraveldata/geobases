@@ -288,7 +288,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
                 if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
-                    l.append('/'.join(str(el) for el in v))
+                    l.append("/".join(str(el) for el in v))
                 else:
                     l.append(str(v))
 
@@ -623,7 +623,7 @@ DEF_FUZZY_LIMIT   = 0.85
 DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
-DEF_QUIET_LIM     = '^'
+DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
@@ -914,7 +914,7 @@ def handle_args():
         not display the header. Default is "%s".
         For any field, you may put "%s" to leave the default value.
         Example: -Q ';' RH
-        ''' % (DEF_QUIET_LIM, DEF_QUIET_HEADER, SKIP)),
+        ''' % (DEF_QUIET_DELIM, DEF_QUIET_HEADER, SKIP)),
         nargs = '+',
         metavar = 'INFO',
         default = [])
@@ -1129,7 +1129,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     # Reading quiet options
-    quiet_delimiter = DEF_QUIET_LIM
+    quiet_delimiter = DEF_QUIET_DELIM
     header_display  = DEF_QUIET_HEADER
 
     if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != SKIP:
