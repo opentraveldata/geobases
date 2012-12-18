@@ -1441,10 +1441,6 @@ class GeoBase(object):
         #    ' ' : 'blue'
         #}
 
-        # catalog is a user defined color scheme
-        if catalog is None:
-            catalog = {}
-
         # Additional lines
         if add_lines is None:
             add_lines = []
@@ -1544,14 +1540,15 @@ class GeoBase(object):
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
         # catalog is a user defined color scheme
-        for cat in categories:
-            if cat not in catalog:
-                print '! Missing category "%s" in catalog' % cat
-            else:
-                if verbose:
-                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                            (cat, catalog[cat], categories[cat]['color'])
-                categories[cat]['color'] = catalog[cat]
+        if catalog is not None:
+            for cat in categories:
+                if cat not in catalog:
+                    print '! Missing category "%s" in catalog' % cat
+                else:
+                    if verbose:
+                        print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                                (cat, catalog[cat], categories[cat]['color'])
+                    categories[cat]['color'] = catalog[cat]
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
