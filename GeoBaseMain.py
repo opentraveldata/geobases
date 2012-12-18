@@ -288,7 +288,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
                 if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
-                    l.append("/".join(str(el) for el in v))
+                    l.append('/'.join(str(el) for el in v))
                 else:
                     l.append(str(v))
 
@@ -633,6 +633,7 @@ ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
+SPLIT   = '/'
 DISABLE = '__none__'
 REF     = '__ref__'
 
@@ -872,10 +873,10 @@ def handle_args():
         Use __head__ as header value to
         burn the first line to define the headers.
         Default indexes will take the first plausible field.
-        Multiple fields may be specified with "/" delimiter.
+        Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/key2 key/key2 _
-        ''' % SKIP),
+        ''' % (SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
@@ -1057,20 +1058,20 @@ def main():
             if args['indexes'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['indexes'][1].split('/')
+                headers = args['indexes'][1].split(SPLIT)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            indexes = args['indexes'][2].split('/')
+            indexes = args['indexes'][2].split(SPLIT)
         else:
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
-                    (delimiter, '/'.join(headers), '/'.join(indexes))
+                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes))
 
         g = GeoBase(data='feed',
                     source=source,
@@ -1086,10 +1087,10 @@ def main():
             add_options['delimiter'] = args['indexes'][0]
 
         if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
-            add_options['headers'] = args['indexes'][1].split('/')
+            add_options['headers'] = args['indexes'][1].split(SPLIT)
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            add_options['indexes'] = args['indexes'][2].split('/')
+            add_options['indexes'] = args['indexes'][2].split(SPLIT)
 
         if verbose:
             if not add_options:
