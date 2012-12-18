@@ -1422,6 +1422,15 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        # Diff view play
+        # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0
+        #link_duplicates = True
+        #catalog = {
+        #    '+' : 'green',
+        #    '-' : 'red',
+        #    ' ' : 'blue'
+        #}
+
         # catalog is a user defined color scheme
         if catalog is None:
             catalog = {}
