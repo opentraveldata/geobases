@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.12 : __dad__ is now a list, hasParents method, visualize now supports lines drawing
 + 4.11 : new bases for postal codes
 + 4.10 : new coloring scheme for markerless maps, slider to control circle size
 + 4.9  : multiple fields for global fuzzy/map defaults, markerless maps (only colored circles)
