@@ -1474,6 +1474,11 @@ class GeoBase(object):
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
+        if not categories:
+            step = 1
+        else:
+            step = max(1, len(colors) / len(categories))
+
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
                 'volume' : vol
@@ -1485,7 +1490,7 @@ class GeoBase(object):
             elif col_num < len(colors):
                 # We affect the next color available
                 categories[cat]['color'] = colors[col_num]
-                col_num += 1
+                col_num += step
             else:
                 # After all colors are used, remaining categories are black
                 categories[cat]['color'] = 'black'
