@@ -13,42 +13,47 @@
                 font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
                 font-size: 0.8em/*{fsDefault}*/;
             }
-            .padded {
-                padding-left:  10px;
-                padding-right:  0px;
-                padding-top:    0px;
-                padding-bottom: 0px;
-            }
             .button {
                 color              : black;
                 border-color       : black;
                 background-color   : #CCFFCC;
                 border             : 1px solid;
                 font               : bold 75% 'trebuchet ms',helvetica,sans-serif;
-                width              : 100px;
+                width              : 100%;
                 -moz-border-radius : 5px 5px;
                 border-radius      : 5px 5px;
+            }
+            .width100 {
+                width : 100px;
+            }
+            .slider {
+                min-width     : 100px;
+                padding-left  : 10px;
+                padding-right : 10px;
+                text-align    : center;
+            }
+            .ratio {
+                width      : 50px;
+                text-align : center;
+            }
+            .info {
+                width      : 50%;
+                text-align : right;
             }
         </style>
     </head>
 
     <body>
-        <table cellspacing="0" cellpadding="0" style="width:50%; display:inline-block;">
+        <table cellspacing="0" cellpadding="0" style="width:100%; margin-bottom: 5px;">
             <tr>
-                <td><button id="legend" class="button">Legend</button></td>
-                <td><button id="lines"  class="button">Lines (0)</button></td>
-
-                <td class="padded">
-                    <div style="width: 200px;">
-                        <div id="slider"></div>
-                    </div>
-                </td>
-
-                <td class="padded"><span id="ratio"></span></td>
+                <td class="width100"><button id="legend" class="button">Legend</button></td>
+                <td class="width100"><button id="lines"  class="button">Lines (0)</button></td>
+                <td class="slider"><div id="slider"></div></td>
+                <td class="ratio"><span id="ratio"></span></td>
+                <!-- This will take 50% of horizontal space -->
+                <td class="info"><span id="info"></span></td>
             </tr>
         </table>
-
-        <span id="info" style="float:right;"></span>
 
         <div id="canvas" style="width:1000px; height:700px"></div>
         <div id="legendPopup" class="popup"></div>
