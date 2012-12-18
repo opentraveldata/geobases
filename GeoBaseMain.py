@@ -875,7 +875,7 @@ def handle_args():
         Default indexes will take the first plausible field.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
-        Example: -i ',' key/name/key2 key/key2 _
+        Example: -i ',' key/name/country key/country _
         ''' % (SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
