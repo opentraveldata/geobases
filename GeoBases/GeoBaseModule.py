@@ -1546,11 +1546,11 @@ class GeoBase(object):
         # catalog is a user defined color scheme
         for cat in categories:
             if cat not in catalog:
-                print '! Missing category "%s" in catalog' % cat
+                print('! Missing category "%s" in catalog' % cat)
             else:
                 if verbose:
-                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                            (cat, catalog[cat], categories[cat]['color'])
+                    print('> Overrides category %-8s to color %-7s (from %-7s)' % \
+                            (cat, catalog[cat], categories[cat]['color']))
                 categories[cat]['color'] = catalog[cat]
 
         for elem in data:
