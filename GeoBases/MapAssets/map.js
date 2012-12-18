@@ -344,22 +344,27 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coordinates, line;
+    var od, coords, line;
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         od = jsonData.lines[i];
 
-        coordinates = [
+        coords = [
             new google.maps.LatLng(od[0].lat, od[0].lng),
             new google.maps.LatLng(od[1].lat, od[1].lng)
         ];
+
+        if (isNaN(coords[0].lat()) || isNaN(coords[0].lng()) ||
+            isNaN(coords[1].lat()) || isNaN(coords[1].lng())) {
+            continue;
+        }
 
         line = new google.maps.Polyline({
             map             : map,
             geodesic        : true,      // to have curved lines on the map
             clickable       : false,     // clickable would mess user experience
-            path            : coordinates,
+            path            : coords,
             strokeColor     : 'blue',
             strokeOpacity   : 0.6,
             strokeWeight    : 8
