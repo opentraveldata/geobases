@@ -1367,7 +1367,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1514,6 +1514,28 @@ class GeoBase(object):
             elem['__col__'] = categories[elem['__cat__']]['color']
 
 
+        # Additional lines
+        lines = []
+        if add_lines is not None:
+            for ori, des in add_lines:
+                lat_lng_ori = self.getLocation(ori)
+                lat_lng_des = self.getLocation(des)
+
+                if lat_lng_ori is None:
+                    lat_lng_ori = '?', '?'
+
+                if lat_lng_des is None:
+                    lat_lng_des = '?', '?'
+
+                lines.append([{
+                    'lat' : lat_lng_ori[0],
+                    'lng' : lat_lng_ori[1]
+                }, {
+                    'lat' : lat_lng_des[0],
+                    'lng' : lat_lng_des[1]
+                }])
+
+
         # Dump the json geocodes
         json_name = '%s.json' % output
 
@@ -1527,7 +1549,7 @@ class GeoBase(object):
                     'base_icon'   : base_icon,
                 },
                 'points'     : data,
-                'lines'      : [],
+                'lines'      : lines,
                 'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 
