@@ -213,12 +213,12 @@ class GeoBase(object):
         ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': '', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -358,7 +358,7 @@ class GeoBase(object):
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
             '__dup__' : [],       # special field for duplicates
-            '__dad__' : '',       # special field for parent
+            '__dad__' : [],       # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -465,7 +465,7 @@ class GeoBase(object):
                     # We update the data with this info
                     row_data['__key__'] = d_key
                     row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__dad__'] = key
+                    row_data['__dad__'] = [key]
 
                     # We add the d_key as a new duplicate, and store the duplicate in the main _things
                     self._things[key]['__dup__'].append(d_key)
@@ -593,19 +593,34 @@ class GeoBase(object):
 
 
 
+    def hasParents(self, key):
+        """Tell if a key has parents.
+
+        >>> geo_o.hasParents('MRS')
+        0
+        >>> geo_o.hasParents('MRS@1')
+        1
+        >>> geo_o.hasParents('PAR')
+        0
+        """
+        return len(self._things[key]['__dad__'])
+
+
     def hasDuplicates(self, key):
         """Tell if a key has duplicates.
 
-        >>> geo_o.hasDuplicates('ORY')
-        0
-        >>> geo_o.hasDuplicates('THA')
+        >>> geo_o.hasDuplicates('MRS')
         1
+        >>> geo_o.hasDuplicates('MRS@1')
+        1
+        >>> geo_o.hasDuplicates('PAR')
+        0
         """
         return len(self._things[key]['__dup__'])
 
 
 
-    def getDuplicates(self, key, field=None, default=None):
+    def getDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
         >>> geo_o.getDuplicates('ORY', 'name')
@@ -614,26 +629,33 @@ class GeoBase(object):
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
         >>> geo_o.getDuplicates('THA', '__key__')
         ['THA', 'THA@1']
+        >>> geo_o.getDuplicates('THA@1', '__key__')
+        ['THA@1', 'THA']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
-            if default is not None:
-                return [default]
+            if 'default' in kwargs:
+                return kwargs['default']
 
             raise KeyError("Thing not found: %s" % str(key))
 
         # Key is in geobase here
+        keys = [key]
+        for d in self._things[key]['__dup__'] + self._things[key]['__dad__']:
+            if d not in keys:
+                keys.append(d)
+
         if field is None:
-            return [self._things[key]] + [self._things[d] for d in self._things[key]['__dup__']]
+            return [self._things[d] for d in keys]
 
         try:
-            res = [self._things[key][field]]
+            res = [self._things[d][field] for d in keys]
         except KeyError:
             raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
-            return res + [self._things[d][field] for d in self._things[key]['__dup__']]
+            return res
 
 
 
@@ -659,7 +681,7 @@ class GeoBase(object):
         7034
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
         7034
-        >>> len(list(geo_o.getKeysWhere([('__dad__', '')], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.getKeysWhere([('__dad__', [])], reverse=True))) # Counting duplicated keys
         4429
 
         Testing several conditions.
@@ -1329,7 +1351,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=False, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1371,6 +1393,28 @@ class GeoBase(object):
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
+
+        # Diff view play
+        # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0
+        #link_duplicates = True
+        #catalog = {
+        #    '+' : 'green',
+        #    '-' : 'red',
+        #    ' ' : 'blue'
+        #}
+
+        # catalog is a user defined color scheme
+        if catalog is None:
+            catalog = {}
+
+        # Additional lines
+        if add_lines is None:
+            add_lines = []
+
+        if link_duplicates:
+            for key in self:
+                if not self.hasParents(key):
+                    add_lines.append(self.getDuplicates(key, '__key__'))
 
         # Storing json data
         data = []
@@ -1436,6 +1480,11 @@ class GeoBase(object):
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
+        if not categories:
+            step = 1
+        else:
+            step = max(1, len(colors) / len(categories))
+
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
                 'volume' : vol
@@ -1447,7 +1496,7 @@ class GeoBase(object):
             elif col_num < len(colors):
                 # We affect the next color available
                 categories[cat]['color'] = colors[col_num]
-                col_num += 1
+                col_num += step
             else:
                 # After all colors are used, remaining categories are black
                 categories[cat]['color'] = 'black'
@@ -1456,8 +1505,38 @@ class GeoBase(object):
                 print '> Affecting category %-8s to color %-7s | %s %s' % \
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
+        # catalog is a user defined color scheme
+        for cat in categories:
+            if cat not in catalog:
+                print '! Missing category "%s" in catalog' % cat
+            else:
+                if verbose:
+                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                            (cat, catalog[cat], categories[cat]['color'])
+                categories[cat]['color'] = catalog[cat]
+
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
+
+
+        # Gathering data for lines
+        data_lines = []
+
+        for line in add_lines:
+            data_line = []
+
+            for l_key in line:
+                lat_lng = self.getLocation(l_key)
+
+                if lat_lng is None:
+                    lat_lng = '?', '?'
+
+                data_line.append({
+                    'lat' : lat_lng[0],
+                    'lng' : lat_lng[1]
+                })
+
+            data_lines.append(data_line)
 
 
         # Dump the json geocodes
@@ -1473,6 +1552,7 @@ class GeoBase(object):
                     'base_icon'   : base_icon,
                 },
                 'points'     : data,
+                'lines'      : data_lines,
                 'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 
