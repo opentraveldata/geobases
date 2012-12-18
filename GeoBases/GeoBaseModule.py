@@ -609,7 +609,7 @@ class GeoBase(object):
 
 
 
-    def getDuplicates(self, key, field=None, default=None):
+    def getDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
         >>> geo_o.getDuplicates('ORY', 'name')
@@ -623,8 +623,8 @@ class GeoBase(object):
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
-            if default is not None:
-                return [default]
+            if 'default' in kwargs:
+                return kwargs['default']
 
             raise KeyError("Thing not found: %s" % str(key))
 
