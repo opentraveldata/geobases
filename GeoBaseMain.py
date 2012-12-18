@@ -13,7 +13,7 @@ from datetime import datetime
 from math import ceil, log
 from itertools import zip_longest, chain
 import fcntl, termios, struct
-import textwrap
+from textwrap import dedent
 import signal
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -617,7 +617,7 @@ DEF_FUZZY_LIMIT   = 0.85
 DEF_NEAR_LIMIT    = 50.
 DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
-DEF_QUIET_LIM     = '^'
+DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'capital_name', 'currency_name', '__key__')
@@ -627,6 +627,7 @@ ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
+SPLIT   = '/'
 DISABLE = '__none__'
 REF     = '__ref__'
 
@@ -637,7 +638,7 @@ PORT    = 8000
 # Defaults for map
 DEF_LABEL_FIELDS  = ('name',       'capital_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       'adm1_code', None)
+DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
@@ -702,214 +703,264 @@ def handle_args():
     # or list formatter
     fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
 
-    parser = argparse.ArgumentParser(description='Provide POR information.')
+    parser = argparse.ArgumentParser(description='Provide POR information.',
+                                     formatter_class=argparse.RawTextHelpFormatter)
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
 
     parser.add_argument('keys',
-        help = '''Main argument. This will be used as a list of keys on which we
-                        apply filters. Leave empty to consider all keys.''',
+        help = dedent('''\
+        Main argument. This will be used as a list of keys on which we
+        apply filters. Leave empty to consider all keys.
+        '''),
         nargs = '*')
 
     parser.add_argument('-b', '--base',
-        help = '''Choose a different base, default is "%s". Also available are
-                        stations, airports, countries... Give unadmissible base
-                        and available values will be displayed.''' % DEF_BASE,
+        help = dedent('''\
+        Choose a different base, default is "%s". Also available are
+        stations, airports, countries... Give unadmissible base
+        and available values will be displayed.
+        ''' % DEF_BASE),
         default = DEF_BASE)
 
     parser.add_argument('-f', '--fuzzy',
-        help = '''Rather than looking up a key, this mode will search the best
-                        match from the property given by --fuzzy-property option for
-                        the argument. Limit can be specified with --fuzzy-limit option.''',
+        help = dedent('''\
+        Rather than looking up a key, this mode will search the best
+        match from the property given by --fuzzy-property option for
+        the argument. Limit can be specified with --fuzzy-limit option.
+        '''),
         default = None,
         nargs = '+')
 
     parser.add_argument('-F', '--fuzzy-property',
-        help = '''When performing a fuzzy search, specify the property to be chosen.
-                        Default is %s depending on fields.
-                        Give unadmissible property and available
-                        values will be displayed.''' % fmt_or(DEF_FUZZY_FIELDS),
+        help = dedent('''\
+        When performing a fuzzy search, specify the property to be chosen.
+        Default is %s
+        depending on fields.
+        Give unadmissible property and available values will be displayed.
+        ''' % fmt_or(DEF_FUZZY_FIELDS)),
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
-        help = '''Specify a min limit for fuzzy searches, default is %s.
-                        This is the Levenshtein ratio of the two strings.''' % DEF_FUZZY_LIMIT,
+        help = dedent('''\
+        Specify a min limit for fuzzy searches, default is %s.
+        This is the Levenshtein ratio of the two strings.
+        ''' % DEF_FUZZY_LIMIT),
         default = DEF_FUZZY_LIMIT,
         type = float)
 
     parser.add_argument('-e', '--exact',
-        help = '''Rather than looking up a key, this mode will search all keys
-                        whose specific property given by --exact-property match the
-                        argument. By default, the "__key__" property is used
-                        for the search.''',
+        help = dedent('''\
+        Rather than looking up a key, this mode will search all keys
+        whose specific property given by --exact-property match the
+        argument. By default, the "__key__" property is used for the search.
+        '''),
         default = None,
         nargs = '+')
 
     parser.add_argument('-E', '--exact-property',
-        help = '''When performing an exact search, specify the property to be chosen.
-                        Default is "__key__". Give unadmissible property and available
-                        values will be displayed.''',
+        help = dedent('''\
+        When performing an exact search, specify the property to be chosen.
+        Default is "__key__". Give unadmissible property and available
+        values will be displayed.
+        '''),
         default = None)
 
     parser.add_argument('-r', '--reverse',
-        help = '''When possible, reverse the logic of the filter. Currently
-                        only --exact support that.''',
+        help = dedent('''\
+        When possible, reverse the logic of the filter. Currently
+        only --exact supports that.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-n', '--near',
-        help = '''Rather than looking up a key, this mode will search the entries
-                        in a radius from a geocode or a key. Radius is given by --near-limit option,
-                        and geocode is passed as argument. If you wish to give a geocode as
-                        input, just pass it as argument with "lat, lng" format.''',
+        help = dedent('''\
+        Rather than looking up a key, this mode will search the entries
+        in a radius from a geocode or a key. Radius is given by --near-limit
+        option, and geocode is passed as argument. If you wish to give a geocode
+        as input, just pass it as argument with "lat, lng" format.
+        '''),
         default = None,
         nargs = '+')
 
     parser.add_argument('-N', '--near-limit',
-        help = '''Specify a radius in km when performing geographical
-                        searches with --near. Default is %s km.''' % DEF_NEAR_LIMIT,
+        help = dedent('''\
+        Specify a radius in km when performing geographical
+        searches with --near. Default is %s km.
+        ''' % DEF_NEAR_LIMIT),
         default = DEF_NEAR_LIMIT,
         type = float)
 
     parser.add_argument('-c', '--closest',
-        help = '''Rather than looking up a key, this mode will search the closest entries
-                        from a geocode or a key. Number of results is limited by --closest-limit option,
-                        and geocode is passed as argument. If you wish to give a geocode as
-                        input, just pass it as argument with "lat, lng" format.''',
+        help = dedent('''\
+        Rather than looking up a key, this mode will search the closest entries
+        from a geocode or a key. Number of results is limited by --closest-limit
+        option, and geocode is passed as argument. If you wish to give a geocode
+        as input, just pass it as argument with "lat, lng" format.
+        '''),
         default = None,
         nargs = '+')
 
     parser.add_argument('-C', '--closest-limit',
-        help = '''Specify a limit for closest search with --closest,
-                        default is %s.''' % DEF_CLOSEST_LIMIT,
+        help = dedent('''\
+        Specify a limit for closest search with --closest, default is %s.
+        ''' % DEF_CLOSEST_LIMIT),
         default = DEF_CLOSEST_LIMIT,
         type = int)
 
     parser.add_argument('-t', '--trep',
-        help = '''Rather than looking up a key, this mode will use opentrep.''',
+        help = dedent('''\
+        Rather than looking up a key, this mode will use opentrep.
+        '''),
         default = None,
         nargs = '+')
 
     parser.add_argument('-T', '--trep-format',
-        help = '''Specify a format for trep searches with --trep,
-                        default is "%s".''' % DEF_TREP_FORMAT,
+        help = dedent('''\
+        Specify a format for trep searches with --trep, default is "%s".
+        ''' % DEF_TREP_FORMAT),
         default = DEF_TREP_FORMAT)
 
     parser.add_argument('-g', '--gridless',
-        help = '''When performing a geographical search, a geographical index is used.
-                        This may lead to inaccurate results in some (rare) case when using
-                        --closest searches (--near searches are never impacted).
-                        Adding this option will disable the index, and browse the full
-                        data set to look for the results.''',
+        help = dedent('''\
+        When performing a geographical search, a geographical index is used.
+        This may lead to inaccurate results in some (rare) case when using
+        --closest searches (--near searches are never impacted).
+        Adding this option will disable the index, and browse the full
+        data set to look for the results.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-o', '--omit',
-        help = '''Does not print some characteristics of POR in stdout.
-                        May help to get cleaner output. "%s" is an
-                        available keyword with the
-                        other geobase headers.''' % REF,
+        help = dedent('''\
+        Does not print some fields on stdout.
+        May help to get cleaner output.
+        "%s" is an available keyword as well as any other geobase fields.
+        ''' % REF),
         nargs = '+',
         default = [])
 
     parser.add_argument('-s', '--show',
-        help = '''Only print some characterics of POR in stdout.
-                        May help to get cleaner output. "%s" is an
-                        available keyword with the
-                        other geobase headers.''' % REF,
+        help = dedent('''\
+        Only print some fields on stdout.
+        May help to get cleaner output.
+        "%s" is an available keyword as well as any other geobase fields.
+        ''' % REF),
         nargs = '+',
         default = [])
 
     parser.add_argument('-l', '--limit',
-        help = '''Specify a limit for the number of results.
-                        This must be an integer.
-                        Default is %s, except in quiet mode where it is disabled.''' % \
-                        DEF_NUM_COL,
+        help = dedent('''\
+        Specify a limit for the number of results.
+        This must be an integer.
+        Default is %s, except in quiet mode where it is disabled.
+        ''' % DEF_NUM_COL),
         default = None)
 
     parser.add_argument('-i', '--indexes',
-        help = '''Specify metadata for data input, for stdin input
-                        as well as defaults overriding for existing bases.
-                        3 optional values: delimiter, headers, indexes.
-                        Multiple fields may be specified with "/" delimiter.
-                        Default headers will use alphabet, and try to sniff lat/lng.
-                        Use __head__ as header value to
-                        burn the first line to define the headers.
-                        Default indexes will take the first plausible field.
-                        Default delimiter is smart :).
-                        For any field, you may put "%s" to leave the default value.
-                        Example: -i ',' key/name/key2 key/key2''' % SKIP,
+        help = dedent('''\
+        Specify metadata, for stdin input as well as existing bases.
+        This will override defaults for existing bases.
+        3 optional arguments: delimiter, headers, indexes.
+        Default delimiter is smart :).
+        Default headers will use numbers, and try to sniff lat/lng.
+        Use __head__ as header value to
+        burn the first line to define the headers.
+        Default indexes will take the first plausible field.
+        Multiple fields may be specified with "%s" delimiter.
+        For any field, you may put "%s" to leave the default value.
+        Example: -i ',' key/name/country key/country _
+        ''' % (SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
 
     parser.add_argument('-I', '--interactive-query',
-        help = '''If passed, this option will consider stdin
-                        input as key for query, not data for loading.
-                        It has optional arguments. The first one is the field
-                        from which the data is supposed to be. The second is the
-                        type of matching, either "__exact__" or "__fuzzy__". For fuzzy
-                        searches, the ratio is set to %s.
-                        For any field, you may put "%s" to leave the default value.
-                        Example: -I icao_code __fuzzy__''' % (DEF_INTER_FUZZY_L, SKIP),
+        help = dedent('''\
+        If passed, this option will consider stdin
+        input as key for query, not data for loading.
+        It has optional arguments. The first one is the field
+        from which the data is supposed to be. The second is the
+        type of matching, either "__exact__" or "__fuzzy__". For fuzzy
+        searches, the ratio is set to %s.
+        For any field, you may put "%s" to leave the default value.
+        Example: -I icao_code __fuzzy__
+        ''' % (DEF_INTER_FUZZY_L, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
 
     parser.add_argument('-q', '--quiet',
-        help = '''Does not provide the verbose output.
-                        May still be combined with --omit and --show.''',
+        help = dedent('''\
+        Turn off verbosity and provide a programmer friendly output.
+        This is a csv-like output, and may still be combined with
+        --omit and --show. Configure with --quiet-options.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-Q', '--quiet-options',
-        help = '''Custom delimiter in quiet mode. Default is "%s".
-                        Accepts a second optional parameter to control
-                        header display: RH to add a raw header, CH to
-                        add a commented header, any other value will
-                        not display the header. Default is "%s".
-                        For any field, you may put "%s" to leave the default value.
-                        Example: -Q ';' RH''' % \
-                        (DEF_QUIET_LIM, DEF_QUIET_HEADER, SKIP),
+        help = dedent('''\
+        Custom the quiet mode.
+        2 optional arguments: delimiter, header.
+        Default delimiter is "%s".
+        The second parameter is used to control
+        header display: RH to add a raw header, CH to
+        add a commented header, any other value will
+        not display the header. Default is "%s".
+        For any field, you may put "%s" to leave the default value.
+        Example: -Q ';' RH
+        ''' % (DEF_QUIET_DELIM, DEF_QUIET_HEADER, SKIP)),
         nargs = '+',
         metavar = 'INFO',
         default = [])
 
     parser.add_argument('-m', '--map',
-        help = '''If this option is set, instead of anything,
-                        the script will display the data on a map and exit.''',
+        help = dedent('''\
+        This is the map output.
+        Configure with --map-data.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-M', '--map-data',
-        help = '''4 optional values.
-                        The first one is the field to display on map points.
-                        Default is %s depending on fields.
-                        The second optional value is the field used to draw
-                        circles around points.
-                        Default is %s depending on fields.
-                        Put "%s" to disable circles.
-                        The third optional value is the field use to color icons.
-                        Default is %s depending on fields.
-                        Put "%s" to disable coloring.
-                        The fourth optional value is the icon type, either "B" for big,
-                        "S" for small, "auto" for automatic, or "%s" to disable icons.
-                        Default is "%s".
-                        For any field, you may put "%s" to leave the default value.
-                        Example: -M name population __none__''' % \
-                        (fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
-                         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP),
+        help = dedent('''\
+        4 optional arguments.
+        The first one is the field to display on map points.
+        Default is %s depending on fields.
+        The second optional value is the field used to draw
+        circles around points.
+        Default is %s depending on fields.
+        Put "%s" to disable circles.
+        The third optional value is the field use to color icons.
+        Default is %s depending on fields.
+        Put "%s" to disable coloring.
+        The fourth optional value is the icon type, either "B" for big,
+        "S" for small, "auto" for automatic, or "%s" to disable icons.
+        Default is "%s".
+        For any field, you may put "%s" to leave the default value.
+        Example: -M _ population __none__
+        ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
+         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
 
     parser.add_argument('-w', '--warnings',
-        help = '''Provides additional information from GeoBase loading.''',
+        help = dedent('''\
+        Provides additional information from data loading.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-u', '--update',
-        help = '''If this option is set, instead of anything,
-                        the script will try to update some source files.''',
+        help = dedent('''\
+        If this option is set, instead of anything,
+        the script will try to update some source files.
+        '''),
         action = 'store_true')
 
     parser.add_argument('-v', '--version',
-        help = '''Display version information.''',
+        help = dedent('''\
+        Display version information.
+        '''),
         action = 'store_true')
 
     return vars(parser.parse_args())
@@ -1001,20 +1052,20 @@ def main():
             if args['indexes'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['indexes'][1].split('/')
+                headers = args['indexes'][1].split(SPLIT)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            indexes = args['indexes'][2].split('/')
+            indexes = args['indexes'][2].split(SPLIT)
         else:
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
 
         if verbose:
             print('Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
-                    (delimiter, '/'.join(headers), '/'.join(indexes)))
+                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes)))
 
         g = GeoBase(data='feed',
                     source=source,
@@ -1030,10 +1081,10 @@ def main():
             add_options['delimiter'] = args['indexes'][0]
 
         if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
-            add_options['headers'] = args['indexes'][1].split('/')
+            add_options['headers'] = args['indexes'][1].split(SPLIT)
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            add_options['indexes'] = args['indexes'][2].split('/')
+            add_options['indexes'] = args['indexes'][2].split(SPLIT)
 
         if verbose:
             if not add_options:
@@ -1073,7 +1124,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     # Reading quiet options
-    quiet_delimiter = DEF_QUIET_LIM
+    quiet_delimiter = DEF_QUIET_DELIM
     header_display  = DEF_QUIET_HEADER
 
     if len(args['quiet_options']) >= 1 and args['quiet_options'][0] != SKIP:
@@ -1318,7 +1369,7 @@ def main():
 
     if verbose:
         for warn_msg in ENV_WARNINGS:
-            print(textwrap.dedent(warn_msg), end="")
+            print(dedent(warn_msg), end="")
 
 
 if __name__ == '__main__':
