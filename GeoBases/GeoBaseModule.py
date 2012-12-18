@@ -1367,7 +1367,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1498,6 +1498,17 @@ class GeoBase(object):
             if verbose:
                 print '> Affecting category %-8s to color %-7s | %s %s' % \
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
+
+        # catalog is a user defined color scheme
+        if catalog is not None:
+            for cat in categories:
+                if cat not in catalog:
+                    print '! Missing category "%s" in catalog' % cat
+                else:
+                    if verbose:
+                        print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                                (cat, catalog[cat], categories[cat]['color'])
+                    categories[cat]['color'] = catalog[cat]
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
