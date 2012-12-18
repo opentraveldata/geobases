@@ -184,18 +184,29 @@ function initialize(jsonData) {
         }
     }
 
-    var i, j, c, e, s, latlng, marker, circle, ccol;
+    var i, j, c, e, s, latlng, marker, circle, circle_col, has_circle;
     var max_value = 0;
 
     // Load the data
     for (i=0 ; i<n ; i++) {
 
         e = jsonData.points[i];
+        s = parseFloat(e.__siz__);
 
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
         if (isNaN(latlng.lat()) || isNaN(latlng.lng())) {
             //console.log(e.__lab__ + ' had no position: ' + e.lat + e.lng)
+            continue;
+        }
+
+        has_circle = (! isNaN(s)) && s > 0;
+        circle_col = getCircleColor(e.__col__);
+
+        if (! with_markers && ! has_circle) {
+            // If no markers, only circles are displayed.
+            // If no circle too, let's move on
+            // Note that lines will not go through these
             continue;
         }
 
@@ -237,21 +248,18 @@ function initialize(jsonData) {
         bounds.extend(latlng);
         centersArray.push(latlng);
 
-        // We compute the biggest __siz__ value
-        s    = parseFloat(e.__siz__);
-        ccol = getCircleColor(e.__col__);
-
-        if ((! isNaN(s)) && s > 0) {
+        if (has_circle) {
+            // We compute the biggest __siz__ value
             if (s > max_value) {
                 max_value = s;
             }
             circle = new google.maps.Circle({
                 center          : latlng,
                 radius          : 0,
-                strokeColor     : ccol,
+                strokeColor     : circle_col,
                 strokeOpacity   : 0.25,
                 strokeWeight    : 2,
-                fillColor       : ccol,
+                fillColor       : circle_col,
                 fillOpacity     : 0.15,
                 map             : map,
                 clickable       : true
@@ -309,7 +317,7 @@ function initialize(jsonData) {
     $( "#slider" ).slider({
         range          : false,
         min            : 0,
-        max            : 0.50,
+        max            : 1.00,
         step           : 0.01,
         value          : r,
         //animate      : 'slow',
@@ -406,7 +414,7 @@ function initialize(jsonData) {
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} points, {1} <i>{2}</i> categorie(s), <i>{3}</i> max: {4}'.fmt(n, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} points <i>on map</i> (out of {1}), {2} <i>{3}</i> categorie(s), <i>{4}</i> max: {5}'.fmt(markersArray.length, n, jsonData.categories.length, point_color, point_size, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
