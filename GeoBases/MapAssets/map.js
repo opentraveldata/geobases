@@ -344,19 +344,26 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coords, line;
+    var od, coords, line, d, wrong_coords;
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         od = jsonData.lines[i];
 
-        coords = [
-            new google.maps.LatLng(od[0].lat, od[0].lng),
-            new google.maps.LatLng(od[1].lat, od[1].lng)
-        ];
+        coords = [];
 
-        if (isNaN(coords[0].lat()) || isNaN(coords[0].lng()) ||
-            isNaN(coords[1].lat()) || isNaN(coords[1].lng())) {
+        for (j=0, d=od.length; j<d; j++) {
+            coords.push(new google.maps.LatLng(od[j].lat, od[j].lng));
+        }
+
+        wrong_coords = false;
+        for (j=0, d=coords.length; j<d; j++) {
+            if (isNaN(coords[j].lat()) || isNaN(coords[j].lng())) {
+                wrong_coords = true;
+            }
+        }
+
+        if (wrong_coords) {
             continue;
         }
 

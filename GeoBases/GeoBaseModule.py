@@ -1379,7 +1379,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=False, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1421,6 +1421,19 @@ class GeoBase(object):
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
+
+        # catalog is a user defined color scheme
+        if catalog is None:
+            catalog = {}
+
+        # Additional lines
+        if add_lines is None:
+            add_lines = []
+
+        if link_duplicates:
+            for key in self:
+                if self.get(key, '__dad__') == '':
+                    add_lines.append(self.getDuplicates(key, '__key__'))
 
         # Storing json data
         data = []
@@ -1512,40 +1525,37 @@ class GeoBase(object):
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
         # catalog is a user defined color scheme
-        if catalog is not None:
-            for cat in categories:
-                if cat not in catalog:
-                    print '! Missing category "%s" in catalog' % cat
-                else:
-                    if verbose:
-                        print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                                (cat, catalog[cat], categories[cat]['color'])
-                    categories[cat]['color'] = catalog[cat]
+        for cat in categories:
+            if cat not in catalog:
+                print '! Missing category "%s" in catalog' % cat
+            else:
+                if verbose:
+                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                            (cat, catalog[cat], categories[cat]['color'])
+                categories[cat]['color'] = catalog[cat]
 
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
 
-        # Additional lines
-        lines = []
-        if add_lines is not None:
-            for ori, des in add_lines:
-                lat_lng_ori = self.getLocation(ori)
-                lat_lng_des = self.getLocation(des)
+        # Gathering data for lines
+        data_lines = []
 
-                if lat_lng_ori is None:
-                    lat_lng_ori = '?', '?'
+        for line in add_lines:
+            data_line = []
 
-                if lat_lng_des is None:
-                    lat_lng_des = '?', '?'
+            for l_key in line:
+                lat_lng = self.getLocation(l_key)
 
-                lines.append([{
-                    'lat' : lat_lng_ori[0],
-                    'lng' : lat_lng_ori[1]
-                }, {
-                    'lat' : lat_lng_des[0],
-                    'lng' : lat_lng_des[1]
-                }])
+                if lat_lng is None:
+                    lat_lng = '?', '?'
+
+                data_line.append({
+                    'lat' : lat_lng[0],
+                    'lng' : lat_lng[1]
+                })
+
+            data_lines.append(data_line)
 
 
         # Dump the json geocodes
@@ -1561,7 +1571,7 @@ class GeoBase(object):
                     'base_icon'   : base_icon,
                 },
                 'points'     : data,
-                'lines'      : lines,
+                'lines'      : data_lines,
                 'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
             }))
 
