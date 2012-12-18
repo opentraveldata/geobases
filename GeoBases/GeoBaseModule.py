@@ -618,6 +618,8 @@ class GeoBase(object):
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
         >>> geo_o.getDuplicates('THA', '__key__')
         ['THA', 'THA@1']
+        >>> geo_o.getDuplicates('THA@1', '__key__')
+        ['THA@1', 'THA']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
         """
@@ -629,15 +631,25 @@ class GeoBase(object):
             raise KeyError("Thing not found: %s" % str(key))
 
         # Key is in geobase here
+        keys = [key]
+        for d in self._things[key]['__dup__']:
+            if d not in keys:
+                keys.append(d)
+
+        dad = self._things[key]['__dad__']
+        if dad != '':
+            if dad not in keys:
+                keys.append(dad)
+
         if field is None:
-            return [self._things[key]] + [self._things[d] for d in self._things[key]['__dup__']]
+            return [self._things[d] for d in keys]
 
         try:
-            res = [self._things[key][field]]
+            res = [self._things[d][field] for d in keys]
         except KeyError:
             raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
         else:
-            return res + [self._things[d][field] for d in self._things[key]['__dup__']]
+            return res
 
 
 
