@@ -214,7 +214,7 @@ function initialize(jsonData) {
 
         marker = new google.maps.Marker({
             position    : latlng,
-            //animation   : google.maps.Animation.DROP,
+            animation   : null,
             title       : e.__lab__,
             clickable   : true,
             draggable   : false
@@ -243,6 +243,14 @@ function initialize(jsonData) {
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.setContent(this.help);
             infowindow.open(map, this);
+        });
+
+        google.maps.event.addListener(marker, 'rightclick', function () {
+            if (this.getAnimation() === null) {
+                this.setAnimation(google.maps.Animation.BOUNCE);
+            } else {
+                this.setAnimation(null);
+            }
         });
 
         // Saving marker
