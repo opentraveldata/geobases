@@ -645,19 +645,21 @@ class GeoBase(object):
 
             raise KeyError("Thing not found: %s" % str(key))
 
-        # Key is in geobase here
+        # Building the list of all duplicates
         keys = [key]
         for d in self._things[key]['__dup__'] + self._things[key]['__par__']:
             if d not in keys:
                 keys.append(d)
 
+        # Key is in geobase here
         if field is None:
             return [self._things[d] for d in keys]
 
         try:
             res = [self._things[d][field] for d in keys]
         except KeyError:
-            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % \
+                           (field, key, self._things[key].keys()))
         else:
             return res
 
