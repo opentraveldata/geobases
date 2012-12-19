@@ -18,7 +18,6 @@
                 border-color       : black;
                 background-color   : #CCFFCC;
                 border             : 1px solid;
-                font               : bold 75% 'trebuchet ms',helvetica,sans-serif;
                 width              : 100%;
                 -moz-border-radius : 5px 5px;
                 border-radius      : 5px 5px;
@@ -40,6 +39,12 @@
                 width      : 50%;
                 text-align : right;
             }
+            .small {
+                font : 85% 'trebuchet ms',helvetica,sans-serif;
+            }
+            button {
+                font : bold 75% 'trebuchet ms',helvetica,sans-serif;
+            }
         </style>
     </head>
 
@@ -48,10 +53,11 @@
             <tr>
                 <td class="width100"><button id="legend" class="button">Legend</button></td>
                 <td class="width100"><button id="lines"  class="button">Lines (0)</button></td>
+                <td class="width100"><button id="dups"   class="button">Duplicates</button></td>
                 <td class="slider"><div id="slider"></div></td>
-                <td class="ratio"><span id="ratio"></span></td>
+                <td class="ratio small"><span id="ratio"></span></td>
                 <!-- This will take 50% of horizontal space -->
-                <td class="info"><span id="info"></span></td>
+                <td class="info small"><span id="info"></span></td>
             </tr>
         </table>
 

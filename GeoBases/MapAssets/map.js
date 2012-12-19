@@ -398,6 +398,8 @@ function initialize(jsonData) {
         }
     }
 
+    $('#dups').click(toggleLines);
+
     // Draw hull
     var hull = new google.maps.Polyline({
         path            : centersArray,
@@ -529,6 +531,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend');
     $('#lines').attr('title', 'Draw lines between points. Click again to change sorting.');
+    $('#dups').attr('title', 'Toggle lines between duplicates.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
 
