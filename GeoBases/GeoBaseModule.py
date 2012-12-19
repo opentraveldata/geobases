@@ -624,16 +624,16 @@ class GeoBase(object):
 
 
 
-    def getDuplicates(self, key, field=None, **kwargs):
+    def getAllDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
-        >>> geo_o.getDuplicates('ORY', 'name')
+        >>> geo_o.getAllDuplicates('ORY', 'name')
         ['Paris-Orly']
-        >>> geo_o.getDuplicates('THA', 'name')
+        >>> geo_o.getAllDuplicates('THA', 'name')
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
-        >>> geo_o.getDuplicates('THA', '__key__')
+        >>> geo_o.getAllDuplicates('THA', '__key__')
         ['THA', 'THA@1']
-        >>> geo_o.getDuplicates('THA@1', '__key__')
+        >>> geo_o.getAllDuplicates('THA@1', '__key__')
         ['THA@1', 'THA']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
@@ -1450,7 +1450,7 @@ class GeoBase(object):
         if link_duplicates:
             for key in self:
                 if not self.hasParents(key):
-                    add_lines.append(self.getDuplicates(key, '__key__'))
+                    add_lines.append(self.getAllDuplicates(key, '__key__'))
 
         # Storing json data
         data = []
