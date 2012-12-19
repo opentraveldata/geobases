@@ -643,11 +643,11 @@ ADDRESS = '0.0.0.0'
 PORT    = 8000
 
 # Defaults for map
-DEF_LABEL_FIELDS  = ('name',       'country_name', '__key__')
-DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
-DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
-DEF_LINK_DUPS     = True
+DEF_LABEL_FIELDS    = ('name',       'country_name', '__key__')
+DEF_SIZE_FIELDS     = ('page_rank',  'population',   None)
+DEF_COLOR_FIELDS    = ('raw_offset', 'fclass',       None)
+DEF_ICON_TYPE       = 'auto' # icon type: small, big, auto, ...
+DEF_LINK_DUPLICATES = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
@@ -956,8 +956,8 @@ def handle_args():
         For any field, you may put "%s" to leave the default value.
         Example: -M _ population _ __none__ _
         ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
-         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
-                DEF_LINK_DUPS, fmt_or(TRUTHY_DUPLICATES), SKIP))),
+                fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
+                DEF_LINK_DUPLICATES, fmt_or(TRUTHY_DUPLICATES), SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1124,11 +1124,11 @@ def main():
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
     # Reading map options
-    label       = best_field(DEF_LABEL_FIELDS, g.fields)
-    point_size  = best_field(DEF_SIZE_FIELDS,  g.fields)
-    point_color = best_field(DEF_COLOR_FIELDS, g.fields)
-    icon_type   = DEF_ICON_TYPE
-    link_dups   = DEF_LINK_DUPS
+    label           = best_field(DEF_LABEL_FIELDS, g.fields)
+    point_size      = best_field(DEF_SIZE_FIELDS,  g.fields)
+    point_color     = best_field(DEF_COLOR_FIELDS, g.fields)
+    icon_type       = DEF_ICON_TYPE
+    link_duplicates = DEF_LINK_DUPLICATES
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
@@ -1143,7 +1143,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_dups = True if args['map_data'][4] in TRUTHY_DUPLICATES else False
+        link_duplicates = True if args['map_data'][4] in TRUTHY_DUPLICATES else False
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
@@ -1367,7 +1367,7 @@ def main():
                                        point_color=point_color,
                                        icon_type=icon_type,
                                        from_keys=ex_keys(res),
-                                       link_duplicates=link_dups,
+                                       link_duplicates=link_duplicates,
                                        verbose=True)
 
         if templates and verbose:
