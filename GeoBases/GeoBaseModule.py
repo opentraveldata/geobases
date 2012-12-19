@@ -1550,7 +1550,8 @@ class GeoBase(object):
 
             if verbose:
                 print '> Affecting category %-8s to color %-7s | %s %s' % \
-                        (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
+                        (cat, categories[cat]['color'],
+                         point_size if icon_type is None else 'volume', vol)
 
 
         # catalog is a user defined color scheme
@@ -1589,8 +1590,10 @@ class GeoBase(object):
                     lat_lng = '?', '?'
 
                 data_line.append({
-                    'lat' : lat_lng[0],
-                    'lng' : lat_lng[1]
+                    '__key__' : l_key,
+                    '__lab__' : self.get(l_key, label),
+                    'lat'     : lat_lng[0],
+                    'lng'     : lat_lng[1],
                 })
 
             data_lines.append(data_line)
@@ -1602,15 +1605,18 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'meta'       : {
-                    'label'       : label,
-                    'point_size'  : point_size,
-                    'point_color' : point_color,
-                    'icon_type'   : icon_type,
-                    'base_icon'   : base_icon,
+                    'label'           : label,
+                    'point_size'      : point_size,
+                    'point_color'     : point_color,
+                    'icon_type'       : icon_type,
+                    'base_icon'       : base_icon,
+                    'link_duplicates' : link_duplicates,
                 },
                 'points'     : data,
                 'lines'      : data_lines,
-                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
+                'categories' : sorted(categories.items(),
+                                      key=lambda x: x[1]['volume'],
+                                      reverse=True)
             }))
 
         tmp_template = []
