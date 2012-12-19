@@ -344,13 +344,15 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coords, line, d;
+    var od, coords, line, d, help;
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         od = jsonData.lines[i];
 
         coords = [];
+        help   = '<div class="infowindow" style="max-height:300px; overflow-y:auto;">' +
+                     '<h3>Duplicates</h3><table>';
 
         for (j=0, d=od.length; j<d; j++) {
 
@@ -358,17 +360,27 @@ function initialize(jsonData) {
 
             if (! isNaN(latlng.lat()) && ! isNaN(latlng.lng())) {
                 coords.push(latlng);
+                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(od[j]['__key__'], od[j]['__lab__']);
             }
         }
 
+        help += '</table></div>';
+
         line = new google.maps.Polyline({
             map             : map,
-            geodesic        : true,      // to have curved lines on the map
-            clickable       : false,     // clickable would mess user experience
+            geodesic        : true,
+            clickable       : true,
             path            : coords,
             strokeColor     : 'blue',
-            strokeOpacity   : 0.6,
-            strokeWeight    : 8
+            strokeOpacity   : 0.5,
+            strokeWeight    : 5
+        });
+
+        line.help = help;
+
+        google.maps.event.addListener(line, 'click', function(event) {
+            infowindow.setContent(this.help);
+            infowindow.open(map, new google.maps.Marker({position : event.latLng}));
         });
     }
 
@@ -389,7 +401,7 @@ function initialize(jsonData) {
     var state = 0;
     var sortedCenters;
 
-    $('#lines').click(function() {
+    function connectMarkers() {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
@@ -412,8 +424,11 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $(this).text('Lines ({0})'.fmt(state));
-    });
+        $('#lines').text('Lines ({0})'.fmt(state));
+    }
+
+    $('#lines').click(connectMarkers);
+    google.maps.event.addListener(map, 'rightclick', connectMarkers);
 
     // Fill legend
     var cat, vol, col, row, icon;
@@ -443,7 +458,7 @@ function initialize(jsonData) {
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} points <i>on map</i> (out of {1}), {2} <i>{3}</i> categorie(s), <i>{4}</i> max: {5}'.fmt(markersArray.length, n, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>points on map</i> (out of {1}), {2} <i>lines</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
