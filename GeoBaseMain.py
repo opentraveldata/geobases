@@ -646,6 +646,8 @@ DEF_LABEL_FIELDS  = ('name',       'country_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
+DEF_LINK_DUPS     = True
+
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
@@ -1116,6 +1118,7 @@ def main():
     point_size  = best_field(DEF_SIZE_FIELDS,  g.fields)
     point_color = best_field(DEF_COLOR_FIELDS, g.fields)
     icon_type   = DEF_ICON_TYPE
+    link_dups   = DEF_LINK_DUPS
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
@@ -1128,6 +1131,9 @@ def main():
 
     if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
+
+    if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
+        link_dups = False if args['map_data'][4] == DISABLE else True
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
@@ -1351,6 +1357,7 @@ def main():
                                        point_color=point_color,
                                        icon_type=icon_type,
                                        from_keys=ex_keys(res),
+                                       link_duplicates=link_dups,
                                        verbose=True)
 
         if templates and verbose:

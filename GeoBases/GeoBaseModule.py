@@ -213,12 +213,12 @@ class GeoBase(object):
         ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -358,7 +358,7 @@ class GeoBase(object):
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
             '__dup__' : [],       # special field for duplicates
-            '__dad__' : [],       # special field for parent
+            '__par__' : [],       # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -465,7 +465,7 @@ class GeoBase(object):
                     # We update the data with this info
                     row_data['__key__'] = d_key
                     row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__dad__'] = [key]
+                    row_data['__par__'] = [key]
 
                     # We add the d_key as a new duplicate, and store the duplicate in the main _things
                     self._things[key]['__dup__'].append(d_key)
@@ -477,7 +477,7 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__dup__', '__dad__', '__lno__']
+        self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
             if subdelimiters[h] is not None:
@@ -546,7 +546,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__par__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
@@ -603,7 +603,7 @@ class GeoBase(object):
         >>> geo_o.hasParents('PAR')
         0
         """
-        return len(self._things[key]['__dad__'])
+        return len(self._things[key]['__par__'])
 
 
     def hasDuplicates(self, key):
@@ -620,16 +620,16 @@ class GeoBase(object):
 
 
 
-    def getDuplicates(self, key, field=None, **kwargs):
+    def getAllDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
-        >>> geo_o.getDuplicates('ORY', 'name')
+        >>> geo_o.getAllDuplicates('ORY', 'name')
         ['Paris-Orly']
-        >>> geo_o.getDuplicates('THA', 'name')
+        >>> geo_o.getAllDuplicates('THA', 'name')
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
-        >>> geo_o.getDuplicates('THA', '__key__')
+        >>> geo_o.getAllDuplicates('THA', '__key__')
         ['THA', 'THA@1']
-        >>> geo_o.getDuplicates('THA@1', '__key__')
+        >>> geo_o.getAllDuplicates('THA@1', '__key__')
         ['THA@1', 'THA']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
@@ -641,19 +641,21 @@ class GeoBase(object):
 
             raise KeyError("Thing not found: %s" % str(key))
 
-        # Key is in geobase here
+        # Building the list of all duplicates
         keys = [key]
-        for d in self._things[key]['__dup__'] + self._things[key]['__dad__']:
-            if d not in keys:
-                keys.append(d)
+        for k in self._things[key]['__dup__'] + self._things[key]['__par__']:
+            if k not in keys:
+                keys.append(k)
 
+        # Key is in geobase here
         if field is None:
-            return [self._things[d] for d in keys]
+            return [self._things[k] for k in keys]
 
         try:
-            res = [self._things[d][field] for d in keys]
+            res = [self._things[k][field] for k in keys]
         except KeyError:
-            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % \
+                           (field, key, self._things[key].keys()))
         else:
             return res
 
@@ -681,7 +683,7 @@ class GeoBase(object):
         7034
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
         7034
-        >>> len(list(geo_o.getKeysWhere([('__dad__', [])], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
         4429
 
         Testing several conditions.
@@ -1351,7 +1353,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=False, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=True, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
@@ -1393,28 +1395,6 @@ class GeoBase(object):
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
-
-        # Diff view play
-        # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0
-        #link_duplicates = True
-        #catalog = {
-        #    '+' : 'green',
-        #    '-' : 'red',
-        #    ' ' : 'blue'
-        #}
-
-        # catalog is a user defined color scheme
-        if catalog is None:
-            catalog = {}
-
-        # Additional lines
-        if add_lines is None:
-            add_lines = []
-
-        if link_duplicates:
-            for key in self:
-                if not self.hasParents(key):
-                    add_lines.append(self.getDuplicates(key, '__key__'))
 
         # Storing json data
         data = []
@@ -1458,8 +1438,36 @@ class GeoBase(object):
             allowed = ('auto', 'S', 'B', None)
             raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
 
+        # Additional lines
+        if add_lines is None:
+            add_lines = []
+
+        if link_duplicates:
+            # We add to add_lines all list of duplicates
+            # We keep a set of already processed "master" keys to avoid
+            # putting several identical lists in the json
+            done_keys = set()
+
+            for elem in data:
+                key = elem['__key__']
+
+                if not self.hasParents(key):
+                    mkey = set([key])
+                else:
+                    mkey = set(self.get(key, '__par__'))
+
+                if self.hasDuplicates(key) and not mkey.issubset(done_keys):
+                    # mkey have some keys which are not in done_keys
+                    add_lines.append(self.getAllDuplicates(key, '__key__'))
+                    done_keys = done_keys | mkey
+
+                    if verbose:
+                        print '* Added %-8s with master %-8s for duplicates linking (%s elements)' % \
+                                (key, '/'.join(mkey), len(add_lines[-1]))
+
         # Count the categories for coloring
         categories = {}
+
         for elem in data:
             cat = elem['__cat__']
             if cat not in categories:
@@ -1480,6 +1488,7 @@ class GeoBase(object):
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
+
         if not categories:
             step = 1
         else:
@@ -1503,18 +1512,29 @@ class GeoBase(object):
 
             if verbose:
                 print '> Affecting category %-8s to color %-7s | %s %s' % \
-                        (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
+                        (cat, categories[cat]['color'],
+                         point_size if icon_type is None else 'volume', vol)
+
 
         # catalog is a user defined color scheme
-        for cat in categories:
-            if cat not in catalog:
-                print '! Missing category "%s" in catalog' % cat
-            else:
+        if catalog is None:
+            # Diff view play
+            # diff -u * |tail -n +4 |sed 's/^\(.\)/\1\t/g' |GeoBase -m -M _ _ H0 _ Y
+            catalog = {
+                ' ' : 'blue',
+                '+' : 'green',
+                '-' : 'red',
+            }
+
+        for cat in catalog:
+            if cat in categories:
                 if verbose:
                     print '> Overrides category %-8s to color %-7s (from %-7s)' % \
                             (cat, catalog[cat], categories[cat]['color'])
+
                 categories[cat]['color'] = catalog[cat]
 
+        # Finally, we write the colors as an element attribute
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
@@ -1532,8 +1552,10 @@ class GeoBase(object):
                     lat_lng = '?', '?'
 
                 data_line.append({
-                    'lat' : lat_lng[0],
-                    'lng' : lat_lng[1]
+                    '__key__' : l_key,
+                    '__lab__' : self.get(l_key, label),
+                    'lat'     : lat_lng[0],
+                    'lng'     : lat_lng[1],
                 })
 
             data_lines.append(data_line)
@@ -1545,15 +1567,18 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'meta'       : {
-                    'label'       : label,
-                    'point_size'  : point_size,
-                    'point_color' : point_color,
-                    'icon_type'   : icon_type,
-                    'base_icon'   : base_icon,
+                    'label'           : label,
+                    'point_size'      : point_size,
+                    'point_color'     : point_color,
+                    'icon_type'       : icon_type,
+                    'base_icon'       : base_icon,
+                    'link_duplicates' : link_duplicates,
                 },
                 'points'     : data,
                 'lines'      : data_lines,
-                'categories' : sorted(categories.items(), key=lambda x: x[1]['volume'], reverse=True)
+                'categories' : sorted(categories.items(),
+                                      key=lambda x: x[1]['volume'],
+                                      reverse=True)
             }))
 
         tmp_template = []
