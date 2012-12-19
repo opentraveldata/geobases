@@ -624,6 +624,7 @@ DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
+TRUTHY_DUPLICATES   = ('1', 'true')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -636,11 +637,11 @@ ADDRESS = '0.0.0.0'
 PORT    = 8000
 
 # Defaults for map
-DEF_LABEL_FIELDS  = ('name',       'country_name', '__key__')
-DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
-DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
-DEF_LINK_DUPS     = True
+DEF_LABEL_FIELDS    = ('name',       'country_name', '__key__')
+DEF_SIZE_FIELDS     = ('page_rank',  'population',   None)
+DEF_COLOR_FIELDS    = ('raw_offset', 'fclass',       None)
+DEF_ICON_TYPE       = 'auto' # icon type: small, big, auto, ...
+DEF_LINK_DUPLICATES = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
@@ -864,11 +865,11 @@ def handle_args():
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
         3 optional arguments: delimiter, headers, indexes.
-        Default delimiter is smart :).
-        Default headers will use numbers, and try to sniff lat/lng.
-        Use __head__ as header value to
-        burn the first line to define the headers.
-        Default indexes will take the first plausible field.
+            1) default delimiter is smart :).
+            2) default headers will use numbers, and try to sniff lat/lng.
+               Use __head__ as header value to
+               burn the first line to define the headers.
+            3) default indexes will take the first plausible field.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
@@ -881,10 +882,10 @@ def handle_args():
         help = dedent('''\
         If passed, this option will consider stdin
         input as key for query, not data for loading.
-        It has optional arguments. The first one is the field
-        from which the data is supposed to be. The second is the
-        type of matching, either "__exact__" or "__fuzzy__". For fuzzy
-        searches, the ratio is set to %s.
+        2 optional arguments: field, type.
+            1) field is the field from which the data is supposed to be.
+            2) type is the type of matching, either "__exact__" or "__fuzzy__".
+               For fuzzy searches, the ratio is set to %s.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
         ''' % (DEF_INTER_FUZZY_L, SKIP)),
@@ -904,11 +905,13 @@ def handle_args():
         help = dedent('''\
         Custom the quiet mode.
         2 optional arguments: delimiter, header.
-        Default delimiter is "%s".
-        The second parameter is used to control
-        header display: RH to add a raw header, CH to
-        add a commented header, any other value will
-        not display the header. Default is "%s".
+            1) default delimiter is "%s".
+            2) the second parameter is used to control
+               header display:
+                   - RH to add a raw header,
+                   - CH to add a commented header,
+                   - any other value will not display the header.
+               Default is "%s".
         For any field, you may put "%s" to leave the default value.
         Example: -Q ';' RH
         ''' % (DEF_QUIET_DELIM, DEF_QUIET_HEADER, SKIP)),
@@ -925,23 +928,30 @@ def handle_args():
 
     parser.add_argument('-M', '--map-data',
         help = dedent('''\
-        4 optional arguments.
-        The first one is the field to display on map points.
-        Default is %s depending on fields.
-        The second optional value is the field used to draw
-        circles around points.
-        Default is %s depending on fields.
-        Put "%s" to disable circles.
-        The third optional value is the field use to color icons.
-        Default is %s depending on fields.
-        Put "%s" to disable coloring.
-        The fourth optional value is the icon type, either "B" for big,
-        "S" for small, "auto" for automatic, or "%s" to disable icons.
-        Default is "%s".
+        5 optional arguments: label, size, color, icon, duplicates.
+            1) label is the field to display on map points.
+               Default is %s depending on fields.
+            2) size is the field used to draw circles around points.
+               Default is %s depending on fields.
+               Put "%s" to disable circles.
+            3) color is the field use to color icons.
+               Default is %s depending on fields.
+               Put "%s" to disable coloring.
+            4) icon is the icon type, either:
+                   - "B" for big,
+                   - "S" for small,
+                   - "auto" for automatic,
+                   - "%s" to disable icons.
+               Default is "%s".
+            5) duplicates is a boolean for drawing lines between
+               duplicateid keys or not.
+               Default is %s. Put %s as a truthy value,
+               any other value will be falsy.
         For any field, you may put "%s" to leave the default value.
-        Example: -M _ population __none__
+        Example: -M _ population _ __none__ _
         ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
-         fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE, SKIP))),
+                fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
+                DEF_LINK_DUPLICATES, fmt_or(TRUTHY_DUPLICATES), SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1108,11 +1118,11 @@ def main():
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
     # Reading map options
-    label       = best_field(DEF_LABEL_FIELDS, g.fields)
-    point_size  = best_field(DEF_SIZE_FIELDS,  g.fields)
-    point_color = best_field(DEF_COLOR_FIELDS, g.fields)
-    icon_type   = DEF_ICON_TYPE
-    link_dups   = DEF_LINK_DUPS
+    label           = best_field(DEF_LABEL_FIELDS, g.fields)
+    point_size      = best_field(DEF_SIZE_FIELDS,  g.fields)
+    point_color     = best_field(DEF_COLOR_FIELDS, g.fields)
+    icon_type       = DEF_ICON_TYPE
+    link_duplicates = DEF_LINK_DUPLICATES
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
         label = args['map_data'][0]
@@ -1127,7 +1137,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_dups = False if args['map_data'][4] == DISABLE else True
+        link_duplicates = True if args['map_data'][4] in TRUTHY_DUPLICATES else False
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
@@ -1351,7 +1361,7 @@ def main():
                                        point_color=point_color,
                                        icon_type=icon_type,
                                        from_keys=ex_keys(res),
-                                       link_duplicates=link_dups,
+                                       link_duplicates=link_duplicates,
                                        verbose=True)
 
         if templates and verbose:
