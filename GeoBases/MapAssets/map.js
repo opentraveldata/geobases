@@ -344,7 +344,7 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coords, line, d, wrong_coords;
+    var od, coords, line, d;
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
@@ -353,18 +353,12 @@ function initialize(jsonData) {
         coords = [];
 
         for (j=0, d=od.length; j<d; j++) {
-            coords.push(new google.maps.LatLng(od[j].lat, od[j].lng));
-        }
 
-        wrong_coords = false;
-        for (j=0, d=coords.length; j<d; j++) {
-            if (isNaN(coords[j].lat()) || isNaN(coords[j].lng())) {
-                wrong_coords = true;
+            latlng = new google.maps.LatLng(od[j].lat, od[j].lng);
+
+            if (! isNaN(latlng.lat()) && ! isNaN(latlng.lng())) {
+                coords.push(latlng);
             }
-        }
-
-        if (wrong_coords) {
-            continue;
         }
 
         line = new google.maps.Polyline({
