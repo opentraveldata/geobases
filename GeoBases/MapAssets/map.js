@@ -227,7 +227,7 @@ function initialize(jsonData) {
 
         // Augmenting the marker type
         marker.help = ' ' +
-        '<div class="infowindow large" style="min-width: 400px;">' +
+        '<div class="infowindow medium" style="min-width: 400px;">' +
             '<h3>{0}</h3>'.fmt(e.__lab__) +
             '<table cellpadding="1">';
 
@@ -475,7 +475,7 @@ function initialize(jsonData) {
     // Fill legend
     var cat, vol, col, row, icon;
     var msg = ' ' +
-    '<table id="legendcontent" class="large">' +
+    '<table id="legendcontent" class="medium">' +
         '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Circle</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
     if (with_markers) {
