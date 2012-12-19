@@ -1449,7 +1449,7 @@ class GeoBase(object):
 
         if link_duplicates:
             for key in self:
-                if not self.hasParents(key):
+                if not self.hasParents(key) and self.hasDuplicates(key):
                     add_lines.append(self.getAllDuplicates(key, '__key__'))
 
         # Storing json data
