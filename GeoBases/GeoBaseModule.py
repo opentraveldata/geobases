@@ -647,16 +647,16 @@ class GeoBase(object):
 
         # Building the list of all duplicates
         keys = [key]
-        for d in self._things[key]['__dup__'] + self._things[key]['__par__']:
-            if d not in keys:
-                keys.append(d)
+        for k in self._things[key]['__dup__'] + self._things[key]['__par__']:
+            if k not in keys:
+                keys.append(k)
 
         # Key is in geobase here
         if field is None:
-            return [self._things[d] for d in keys]
+            return [self._things[k] for k in keys]
 
         try:
-            res = [self._things[d][field] for d in keys]
+            res = [self._things[k][field] for k in keys]
         except KeyError:
             raise KeyError("Field '%s' [for key '%s'] not in %s" % \
                            (field, key, self._things[key].keys()))
