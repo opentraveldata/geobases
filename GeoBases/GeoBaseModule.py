@@ -191,12 +191,12 @@ class GeoBase(object):
         ...         indexes='code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__par__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         >>> fl.close()
         >>> GeoBase(data='airports_csv',
         ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__dad__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__par__': [], '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -344,7 +344,7 @@ class GeoBase(object):
             '__lno__' : line_nb,  # special field for line number
             '__gar__' : [],       # special field for garbage
             '__dup__' : [],       # special field for duplicates
-            '__dad__' : [],       # special field for parent
+            '__par__' : [],       # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -451,7 +451,7 @@ class GeoBase(object):
                     # We update the data with this info
                     row_data['__key__'] = d_key
                     row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__dad__'] = [key]
+                    row_data['__par__'] = [key]
 
                     # We add the d_key as a new duplicate, and store the duplicate in the main _things
                     self._things[key]['__dup__'].append(d_key)
@@ -463,7 +463,7 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
-        self.fields = ['__key__', '__dup__', '__dad__', '__lno__']
+        self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
             if subdelimiters[h] is not None:
@@ -550,7 +550,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__dad__', '__lno__']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__dup__', '__key__', 'lat', 'lng', '__par__', '__lno__']"
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
@@ -607,7 +607,7 @@ class GeoBase(object):
         >>> geo_o.hasParents('PAR')
         0
         """
-        return len(self._things[key]['__dad__'])
+        return len(self._things[key]['__par__'])
 
 
     def hasDuplicates(self, key):
@@ -647,7 +647,7 @@ class GeoBase(object):
 
         # Key is in geobase here
         keys = [key]
-        for d in self._things[key]['__dup__'] + self._things[key]['__dad__']:
+        for d in self._things[key]['__dup__'] + self._things[key]['__par__']:
             if d not in keys:
                 keys.append(d)
 
@@ -685,7 +685,7 @@ class GeoBase(object):
         7034
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
         7034
-        >>> len(list(geo_o.getKeysWhere([('__dad__', [])], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
         4429
 
         Testing several conditions.
