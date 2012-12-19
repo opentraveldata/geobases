@@ -1490,10 +1490,27 @@ class GeoBase(object):
             add_lines = []
 
         if link_duplicates:
+            # We add to add_lines all list of duplicates
+            # We keep a set of already processed "master" keys to avoid
+            # putting several identical lists in the json
+            done_keys = set()
+
             for elem in data:
                 key = elem['__key__']
-                if not self.hasParents(key) and self.hasDuplicates(key):
+
+                if not self.hasParents(key):
+                    mkey = set([key])
+                else:
+                    mkey = set(self.get(key, '__par__'))
+
+                if self.hasDuplicates(key) and not mkey.issubset(done_keys):
+                    # mkey have some keys which are not in done_keys
                     add_lines.append(self.getAllDuplicates(key, '__key__'))
+                    done_keys = done_keys | mkey
+
+                    if verbose:
+                        print '* Added %s with master %s for duplicates linking (%s elements)' % \
+                                (key, mkey, len(add_lines[-1]))
 
         # Count the categories for coloring
         categories = {}
