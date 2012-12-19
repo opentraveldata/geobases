@@ -344,39 +344,65 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coords, line, d, wrong_coords;
+    var od, coords, line, d, help;
+    var linesArray = [];
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         od = jsonData.lines[i];
 
         coords = [];
+        help   = '<div class="infowindow" style="max-height:300px; overflow-y:auto;">' +
+                     '<h3>Duplicates</h3><table>';
 
         for (j=0, d=od.length; j<d; j++) {
-            coords.push(new google.maps.LatLng(od[j].lat, od[j].lng));
-        }
 
-        wrong_coords = false;
-        for (j=0, d=coords.length; j<d; j++) {
-            if (isNaN(coords[j].lat()) || isNaN(coords[j].lng())) {
-                wrong_coords = true;
+            latlng = new google.maps.LatLng(od[j].lat, od[j].lng);
+
+            if (! isNaN(latlng.lat()) && ! isNaN(latlng.lng())) {
+                coords.push(latlng);
+                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(od[j]['__key__'], od[j]['__lab__']);
             }
         }
 
-        if (wrong_coords) {
-            continue;
-        }
+        help += '</table></div>';
 
         line = new google.maps.Polyline({
             map             : map,
-            geodesic        : true,      // to have curved lines on the map
-            clickable       : false,     // clickable would mess user experience
+            geodesic        : true,
+            clickable       : true,
             path            : coords,
             strokeColor     : 'blue',
-            strokeOpacity   : 0.6,
-            strokeWeight    : 8
+            strokeOpacity   : 0.5,
+            strokeWeight    : 5
         });
+
+        line.help = help;
+
+        google.maps.event.addListener(line, 'click', function(event) {
+            infowindow.setContent(this.help);
+            infowindow.open(map, new google.maps.Marker({position : event.latLng}));
+        });
+
+        linesArray.push(line);
     }
+
+    var toggled = true;
+
+    function toggleLines() {
+        var i, c;
+        for (i=0, c=linesArray.length; i<c; i++) {
+            if (linesArray[i].getMap() === null) {
+                linesArray[i].setMap(map);
+            } else {
+                linesArray[i].setMap(null);
+            }
+        }
+        toggled = ! toggled;
+        $('#dups').text('Duplicates ({0})'.fmt(toggled ? '1' : '0'));
+    }
+
+    $('#dups').click(toggleLines);
 
     // Draw hull
     var hull = new google.maps.Polyline({
@@ -395,7 +421,7 @@ function initialize(jsonData) {
     var state = 0;
     var sortedCenters;
 
-    $('#lines').click(function() {
+    function connectMarkers() {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
@@ -418,7 +444,15 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $(this).text('Lines ({0})'.fmt(state));
+        $('#lines').text('Lines ({0})'.fmt(state));
+    }
+
+    $('#lines').click(connectMarkers);
+
+    google.maps.event.addListener(map, 'rightclick', function () {
+        connectMarkers();
+        // If the rightclick shall go through
+        //$(this).trigger();
     });
 
     // Fill legend
@@ -449,7 +483,7 @@ function initialize(jsonData) {
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} points <i>on map</i> (out of {1}), {2} <i>{3}</i> categorie(s), <i>{4}</i> max: {5}'.fmt(markersArray.length, n, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>points on map</i> (out of {1}), {2} <i>lines</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
@@ -501,6 +535,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend');
     $('#lines').attr('title', 'Draw lines between points. Click again to change sorting.');
+    $('#dups').attr('title', 'Toggle lines between duplicates.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
 
