@@ -624,7 +624,7 @@ DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
-TRUTHY_DUPLICATES   = ('1', 'true')
+TRUTHY_DUPLICATES   = ('1', 'Y')
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -943,8 +943,7 @@ def handle_args():
                    - "auto" for automatic,
                    - "%s" to disable icons.
                Default is "%s".
-            5) duplicates is a boolean for drawing lines between
-               duplicateid keys or not.
+            5) duplicates is a boolean to toggle lines between duplicated keys.
                Default is %s. Put %s as a truthy value,
                any other value will be falsy.
         For any field, you may put "%s" to leave the default value.

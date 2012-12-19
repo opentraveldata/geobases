@@ -1499,9 +1499,8 @@ class GeoBase(object):
                     add_lines.append(self.getAllDuplicates(key, '__key__'))
                     done_keys = done_keys | mkey
 
-                    if verbose:
-                        print('* Added %-8s with master %-8s for duplicates linking (%s elements)' % \
-                                (key, '/'.join(mkey), len(add_lines[-1])))
+            if verbose:
+                print('* Added lines for duplicates linking, total %s' % len(add_lines))
 
         # Count the categories for coloring
         categories = {}
