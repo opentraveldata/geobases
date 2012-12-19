@@ -387,6 +387,8 @@ function initialize(jsonData) {
         linesArray.push(line);
     }
 
+    var toggled = true;
+
     function toggleLines() {
         var i, c;
         for (i=0, c=linesArray.length; i<c; i++) {
@@ -396,6 +398,8 @@ function initialize(jsonData) {
                 linesArray[i].setMap(null);
             }
         }
+        toggled = ! toggled;
+        $('#dups').text('Duplicates ({0})'.fmt(toggled ? '1' : '0'));
     }
 
     $('#dups').click(toggleLines);
