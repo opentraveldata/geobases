@@ -386,6 +386,8 @@ function initialize(jsonData) {
             infowindow.open(map, new google.maps.Marker({position : event.latLng}));
         });
 
+        $('#dups').text('Duplicates (1)');
+
         linesArray.push(line);
     }
 
