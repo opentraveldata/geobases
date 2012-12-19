@@ -153,10 +153,12 @@ function initialize(jsonData) {
 
     var f = fields.length;
     var n = jsonData.points.length;
-    var point_color = jsonData.meta.point_color;
-    var point_size  = jsonData.meta.point_size;
-    var base_icon   = jsonData.meta.base_icon;
-    var icon_type   = jsonData.meta.icon_type;
+
+    var point_color     = jsonData.meta.point_color;
+    var point_size      = jsonData.meta.point_size;
+    var base_icon       = jsonData.meta.base_icon;
+    var icon_type       = jsonData.meta.icon_type;
+    var link_duplicates = jsonData.meta.link_duplicates;
 
     var with_markers = icon_type   !== null;
     var with_colors  = point_color !== null;
@@ -403,6 +405,13 @@ function initialize(jsonData) {
     }
 
     $('#dups').click(toggleLines);
+
+    if (! link_duplicates) {
+        // If not duplicates, we disable the button
+        $('#dups').text('Duplicates');
+        $('#dups').attr('disabled', 'true');
+        $('#dups').css({'color': 'grey'});
+    }
 
     // Draw hull
     var hull = new google.maps.Polyline({
