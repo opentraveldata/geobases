@@ -1434,15 +1434,6 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        # Diff view play
-        # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0
-        #link_duplicates = True
-        #catalog = {
-        #    '+' : 'green',
-        #    '-' : 'red',
-        #    ' ' : 'blue'
-        #}
-
         # Storing json data
         data = []
 
@@ -1514,6 +1505,7 @@ class GeoBase(object):
 
         # Count the categories for coloring
         categories = {}
+
         for elem in data:
             cat = elem['__cat__']
             if cat not in categories:
@@ -1534,6 +1526,7 @@ class GeoBase(object):
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
         col_num = 0
+
         if not categories:
             step = 1
         else:
@@ -1559,17 +1552,26 @@ class GeoBase(object):
                 print '> Affecting category %-8s to color %-7s | %s %s' % \
                         (cat, categories[cat]['color'], point_size if icon_type is None else 'volume', vol)
 
-        # catalog is a user defined color scheme
-        if catalog is not None:
-            for cat in categories:
-                if cat not in catalog:
-                    print '! Missing category "%s" in catalog' % cat
-                else:
-                    if verbose:
-                        print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                                (cat, catalog[cat], categories[cat]['color'])
-                    categories[cat]['color'] = catalog[cat]
 
+        # catalog is a user defined color scheme
+        if catalog is None:
+            # Diff view play
+            # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0 _ Y
+            catalog = {
+                ' ' : 'blue',
+                '+' : 'green',
+                '-' : 'red',
+            }
+
+        for cat in catalog:
+            if cat in categories:
+                if verbose:
+                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                            (cat, catalog[cat], categories[cat]['color'])
+
+                categories[cat]['color'] = catalog[cat]
+
+        # Finally, we write the colors as an element attribute
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
