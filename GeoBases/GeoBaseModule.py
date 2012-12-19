@@ -1391,7 +1391,7 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=False, verbose=True):
+    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=True, verbose=True):
         """Creates map and other visualizations.
 
         Returns list of templates successfully rendered.
