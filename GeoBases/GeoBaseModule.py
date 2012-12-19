@@ -1500,8 +1500,8 @@ class GeoBase(object):
                     done_keys = done_keys | mkey
 
                     if verbose:
-                        print '* Added %s with master %s for duplicates linking (%s elements)' % \
-                                (key, mkey, len(add_lines[-1]))
+                        print '* Added %-8s with master %-8s for duplicates linking (%s elements)' % \
+                                (key, '/'.join(mkey), len(add_lines[-1]))
 
         # Count the categories for coloring
         categories = {}
@@ -1557,7 +1557,7 @@ class GeoBase(object):
         # catalog is a user defined color scheme
         if catalog is None:
             # Diff view play
-            # diff -u 1.txt 2.txt |tail -n +4 |sed 's/^\(.\)/\1\t/g' | GeoBase -m -M _ _ H0 _ Y
+            # diff -u * |tail -n +4 |sed 's/^\(.\)/\1\t/g' |GeoBase -m -M _ _ H0 _ Y
             catalog = {
                 ' ' : 'blue',
                 '+' : 'green',

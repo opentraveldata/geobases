@@ -345,6 +345,7 @@ function initialize(jsonData) {
 
     // Add specified lines
     var od, coords, line, d, help;
+    var linesArray = [];
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
@@ -382,6 +383,19 @@ function initialize(jsonData) {
             infowindow.setContent(this.help);
             infowindow.open(map, new google.maps.Marker({position : event.latLng}));
         });
+
+        linesArray.push(line);
+    }
+
+    function toggleLines() {
+        var i, c;
+        for (i=0, c=linesArray.length; i<c; i++) {
+            if (linesArray[i].getMap() === null) {
+                linesArray[i].setMap(map);
+            } else {
+                linesArray[i].setMap(null);
+            }
+        }
     }
 
     // Draw hull
@@ -428,7 +442,12 @@ function initialize(jsonData) {
     }
 
     $('#lines').click(connectMarkers);
-    google.maps.event.addListener(map, 'rightclick', connectMarkers);
+
+    google.maps.event.addListener(map, 'rightclick', function () {
+        connectMarkers();
+        // If the rightclick shall go through
+        //$(this).trigger();
+    });
 
     // Fill legend
     var cat, vol, col, row, icon;
