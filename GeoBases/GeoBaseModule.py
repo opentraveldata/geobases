@@ -1443,15 +1443,6 @@ class GeoBase(object):
         #    ' ' : 'blue'
         #}
 
-        # Additional lines
-        if add_lines is None:
-            add_lines = []
-
-        if link_duplicates:
-            for key in self:
-                if not self.hasParents(key) and self.hasDuplicates(key):
-                    add_lines.append(self.getAllDuplicates(key, '__key__'))
-
         # Storing json data
         data = []
 
@@ -1493,6 +1484,16 @@ class GeoBase(object):
         else:
             allowed = ('auto', 'S', 'B', None)
             raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
+
+        # Additional lines
+        if add_lines is None:
+            add_lines = []
+
+        if link_duplicates:
+            for elem in data:
+                key = elem['__key__']
+                if not self.hasParents(key) and self.hasDuplicates(key):
+                    add_lines.append(self.getAllDuplicates(key, '__key__'))
 
         # Count the categories for coloring
         categories = {}
