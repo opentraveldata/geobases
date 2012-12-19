@@ -646,7 +646,7 @@ DEF_LABEL_FIELDS  = ('name',       'country_name', '__key__')
 DEF_SIZE_FIELDS   = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS  = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE     = 'auto' # icon type: small, big, auto, ...
-DEF_LINK_DUPS     = True
+DEF_LINK_DUPS     = False
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
