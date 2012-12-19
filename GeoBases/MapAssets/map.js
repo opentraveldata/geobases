@@ -370,7 +370,7 @@ function initialize(jsonData) {
         help += '</table></div>';
 
         line = new google.maps.Polyline({
-            map             : map,
+            map             : null, // not drawn by default
             geodesic        : true,
             clickable       : true,
             path            : coords,
@@ -386,12 +386,10 @@ function initialize(jsonData) {
             infowindow.open(map, new google.maps.Marker({position : event.latLng}));
         });
 
-        $('#dups').text('Duplicates (1)');
-
         linesArray.push(line);
     }
 
-    var toggled = true;
+    var toggled = false;
 
     function toggleLines() {
         var i, c;
