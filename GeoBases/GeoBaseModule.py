@@ -1506,10 +1506,6 @@ class GeoBase(object):
         categories = {}
 
         for elem in data:
-            cat = elem['__cat__']
-            if cat not in categories:
-                categories[cat] = 0
-
             if icon_type is None:
                 # Here we are in no-icon mode, categories
                 # will be based on the entries who will have a circle
@@ -1520,7 +1516,11 @@ class GeoBase(object):
             else:
                 c = 1
 
-            categories[cat] += c if c > 0 else 0
+            cat = elem['__cat__']
+            if cat not in categories:
+                categories[cat] = 0
+            if c > 0:
+                categories[cat] += c
 
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
