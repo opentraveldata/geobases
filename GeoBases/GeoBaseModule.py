@@ -1529,7 +1529,10 @@ class GeoBase(object):
         if not categories:
             step = 1
         else:
-            step = max(1, len(colors) / len(categories))
+            # c > 0 makes sure we do not create a category
+            # for stuff that will not be displayed
+            nb_non_empty_cat = len([c for c in categories.values() if c > 0])
+            step = max(1, len(colors) / nb_non_empty_cat)
 
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
