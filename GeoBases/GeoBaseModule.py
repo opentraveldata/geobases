@@ -1563,7 +1563,9 @@ class GeoBase(object):
             catalog = {
                 ' ' : 'blue',
                 '+' : 'green',
+                'Y' : 'green',
                 '-' : 'red',
+                'N' : 'red',
             }
 
         for cat in catalog:
