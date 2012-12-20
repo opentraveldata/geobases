@@ -1573,6 +1573,7 @@ class GeoBase(object):
 
                 old_color = categories[cat]['color']
                 new_color = catalog[cat]
+                categories[cat]['color'] = new_color
 
                 if verbose:
                     print '> Overrides category %-8s to color %-7s (from %-7s)' % \
@@ -1580,15 +1581,17 @@ class GeoBase(object):
 
                 # We test other categories to avoid duplicates in coloring
                 for ocat in categories:
+                    if ocat == cat:
+                        continue
                     ocat_color = categories[ocat]['color']
 
                     if ocat_color == new_color:
+                        categories[ocat]['color'] = old_color
+
                         if verbose:
                             print '> Switching category %-8s to color %-7s (from %-7s)' % \
                                     (ocat, old_color, ocat_color)
-                        categories[ocat]['color'] = old_color
 
-                categories[cat]['color'] = new_color
 
         # Finally, we write the colors as an element attribute
         for elem in data:
