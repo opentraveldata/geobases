@@ -326,8 +326,8 @@ class GeoBase(object):
                 raise ValueError()
 
         except ValueError:
-            raise ValueError("Inconsistent: indexes = %s with headers = %s" % \
-                             (indexes, headers))
+            raise ValueError("Inconsistent: headers = %s with indexes = %s" % \
+                             (headers, indexes))
         else:
             keyer = lambda row, pos: '+'.join(row[p] for p in pos)
 
