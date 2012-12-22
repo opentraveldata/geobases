@@ -340,8 +340,8 @@ class GeoBase(object):
                 raise ValueError()
 
         except ValueError:
-            raise ValueError("Inconsistent: indexes = %s with headers = %s" % \
-                             (indexes, headers))
+            raise ValueError("Inconsistent: headers = %s with indexes = %s" % \
+                             (headers, indexes))
         else:
             keyer = lambda row, pos: '+'.join(row[p] for p in pos)
 
@@ -419,18 +419,20 @@ class GeoBase(object):
         """
         # We cache all variables used in the main loop
         headers       = self._headers
+        indexes       = self._indexes
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
+        quotechar     = self._quotechar
         limit         = self._limit
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
-        pos, keyer = self._configKeyer(self._indexes, headers)
+        pos, keyer = self._configKeyer(indexes, headers)
 
         # csv reader options
         csv_opt = {
-            'delimiter' : self._delimiter,
-            'quotechar' : self._quotechar
+            'delimiter' : delimiter,
+            'quotechar' : quotechar
         }
 
         _reader = self._configReader(**csv_opt)
@@ -450,7 +452,14 @@ class GeoBase(object):
             if not row or row[0].startswith('#'):
                 continue
 
-            key      = keyer(row, pos)
+            try:
+                key = keyer(row, pos)
+            except IndexError:
+                if verbose:
+                    print '/!\ Could not compute key with headers %s, indexes %s for line %s: %s' % \
+                            (headers, indexes, line_nb, row)
+                continue
+
             row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
 
             # No duplicates ever, we will erase all data after if it is
@@ -1468,10 +1477,6 @@ class GeoBase(object):
         categories = {}
 
         for elem in data:
-            cat = elem['__cat__']
-            if cat not in categories:
-                categories[cat] = 0
-
             if icon_type is None:
                 # Here we are in no-icon mode, categories
                 # will be based on the entries who will have a circle
@@ -1482,7 +1487,11 @@ class GeoBase(object):
             else:
                 c = 1
 
-            categories[cat] += c if c > 0 else 0
+            cat = elem['__cat__']
+            if cat not in categories:
+                categories[cat] = 0
+            if c > 0:
+                categories[cat] += c
 
         # Color repartition given biggest categories
         colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
@@ -1491,7 +1500,10 @@ class GeoBase(object):
         if not categories:
             step = 1
         else:
-            step = max(1, len(colors) / len(categories))
+            # c > 0 makes sure we do not create a category
+            # for stuff that will not be displayed
+            nb_non_empty_cat = len([c for c in categories.values() if c > 0])
+            step = max(1, len(colors) / nb_non_empty_cat)
 
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
@@ -1522,16 +1534,35 @@ class GeoBase(object):
             catalog = {
                 ' ' : 'blue',
                 '+' : 'green',
+                'Y' : 'green',
                 '-' : 'red',
+                'N' : 'red',
             }
 
         for cat in catalog:
             if cat in categories:
+
+                old_color = categories[cat]['color']
+                new_color = catalog[cat]
+                categories[cat]['color'] = new_color
+
                 if verbose:
                     print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                            (cat, catalog[cat], categories[cat]['color'])
+                            (cat, new_color, old_color)
 
-                categories[cat]['color'] = catalog[cat]
+                # We test other categories to avoid duplicates in coloring
+                for ocat in categories:
+                    if ocat == cat:
+                        continue
+                    ocat_color = categories[ocat]['color']
+
+                    if ocat_color == new_color:
+                        categories[ocat]['color'] = old_color
+
+                        if verbose:
+                            print '> Switching category %-8s to color %-7s (from %-7s)' % \
+                                    (ocat, old_color, ocat_color)
+
 
         # Finally, we write the colors as an element attribute
         for elem in data:

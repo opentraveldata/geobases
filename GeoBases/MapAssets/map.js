@@ -214,7 +214,7 @@ function initialize(jsonData) {
 
         marker = new google.maps.Marker({
             position    : latlng,
-            //animation   : google.maps.Animation.DROP,
+            animation   : null,
             title       : e.__lab__,
             clickable   : true,
             draggable   : false
@@ -227,7 +227,7 @@ function initialize(jsonData) {
 
         // Augmenting the marker type
         marker.help = ' ' +
-        '<div class="infowindow" style="min-width:400px; max-height:300px; overflow-y:auto;">' +
+        '<div class="infowindow medium" style="min-width: 400px;">' +
             '<h3>{0}</h3>'.fmt(e.__lab__) +
             '<table cellpadding="1">';
 
@@ -243,6 +243,14 @@ function initialize(jsonData) {
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.setContent(this.help);
             infowindow.open(map, this);
+        });
+
+        google.maps.event.addListener(marker, 'rightclick', function () {
+            if (this.getAnimation() === null) {
+                this.setAnimation(google.maps.Animation.BOUNCE);
+            } else {
+                this.setAnimation(null);
+            }
         });
 
         // Saving marker
@@ -270,7 +278,7 @@ function initialize(jsonData) {
             // Augmenting the marker type
             circle.size = s;
             circle.help = ' ' +
-            '<div>' +
+            '<div class="infowindow large">' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
                 '<i>{0}</i> {1}<br/>'.fmt(point_size, s);
 
@@ -354,7 +362,7 @@ function initialize(jsonData) {
         od = jsonData.lines[i];
 
         coords = [];
-        help   = '<div class="infowindow" style="max-height:300px; overflow-y:auto;">' +
+        help   = '<div class="infowindow large">' +
                      '<h3>Duplicates</h3><table>';
 
         for (j=0, d=od.length; j<d; j++) {
@@ -467,7 +475,7 @@ function initialize(jsonData) {
     // Fill legend
     var cat, vol, col, row, icon;
     var msg = ' ' +
-    '<table style="width:100%; align:center; text-align:left;">' +
+    '<table id="legendcontent" class="medium">' +
         '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Circle</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
     if (with_markers) {
@@ -519,7 +527,7 @@ $(document).ready(function() {
         'z-index'    : '1'
     });
 
-    $('.popup').css({
+    $('#legendPopup').css({
         'display'    : 'none',
         'position'   : 'fixed',
         '_position'  : 'absolute', /* hack for internet explorer 6*/
