@@ -405,18 +405,20 @@ class GeoBase(object):
         """
         # We cache all variables used in the main loop
         headers       = self._headers
+        indexes       = self._indexes
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
+        quotechar     = self._quotechar
         limit         = self._limit
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
-        pos, keyer = self._configKeyer(self._indexes, headers)
+        pos, keyer = self._configKeyer(indexes, headers)
 
         # csv reader options
         csv_opt = {
-            'delimiter' : self._delimiter,
-            'quotechar' : self._quotechar
+            'delimiter' : delimiter,
+            'quotechar' : quotechar
         }
 
         _reader = self._configReader(**csv_opt)
@@ -436,7 +438,14 @@ class GeoBase(object):
             if not row or row[0].startswith('#'):
                 continue
 
-            key      = keyer(row, pos)
+            try:
+                key = keyer(row, pos)
+            except IndexError:
+                if verbose:
+                    print '/!\ Could not compute key with headers %s, indexes %s for line %s: %s' % \
+                            (headers, indexes, line_nb, row)
+                continue
+
             row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
 
             # No duplicates ever, we will erase all data after if it is
