@@ -69,6 +69,11 @@ do_a_file() {
         split_fcodes $TMP_CSV
     fi
 
+    if [ ! -f "$LOC_CSV" ]; then
+        echo -e "\n* $LOC_CSV does not exist!"
+        touch "$LOC_CSV"
+    fi
+
     # Computing diff
     DIFF=`diff -u $LOC_CSV $TMP_CSV`
 
@@ -104,7 +109,7 @@ do_a_file() {
 REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
 REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
 REF_URL_03='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
-REF_URL_04='http://orinet.nce.amadeus.net/Projects/Data_Center/VOLATILE/airline/crb_airline.csv'
+REF_URL_04='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
 REF_URL_05='http://download.geonames.org/export/dump/countryInfo.txt'
 REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_07='http://download.geonames.org/export/dump/iso-languagecodes.txt'
@@ -123,7 +128,7 @@ CHOOSED_13='MC.txt'
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
 LOC_CSV_03='Por/Ori/ori_por.csv'
-LOC_CSV_04='Airlines/crb_airline.csv'
+LOC_CSV_04='Airlines/ori_airlines.csv'
 LOC_CSV_05='Countries/countryInfo.txt'
 LOC_CSV_06='TimeZones/timeZones.txt'
 LOC_CSV_07='Languages/iso-languagecodes.txt'
