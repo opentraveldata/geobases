@@ -1,4 +1,4 @@
-#CountryCode	TimeZoneId	GMT offset 1. Jan 2012	DST offset 1. Jul 2012	rawOffset (independant of DST)
+#CountryCode	TimeZoneId	GMT offset 1. Jan 2013	DST offset 1. Jul 2013	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -48,14 +48,14 @@ MR	Africa/Nouakchott	0.0	0.0	0.0
 BF	Africa/Ouagadougou	0.0	0.0	0.0
 BJ	Africa/Porto-Novo	1.0	1.0	1.0
 ST	Africa/Sao_Tome	0.0	0.0	0.0
-LY	Africa/Tripoli	2.0	2.0	2.0
+LY	Africa/Tripoli	1.0	2.0	1.0
 TN	Africa/Tunis	1.0	1.0	1.0
 NA	Africa/Windhoek	2.0	1.0	1.0
 US	America/Adak	-10.0	-9.0	-10.0
 US	America/Anchorage	-9.0	-8.0	-9.0
 AI	America/Anguilla	-4.0	-4.0	-4.0
 AG	America/Antigua	-4.0	-4.0	-4.0
-BR	America/Araguaina	-3.0	-3.0	-3.0
+BR	America/Araguaina	-2.0	-3.0	-3.0
 AR	America/Argentina/Buenos_Aires	-3.0	-3.0	-3.0
 AR	America/Argentina/Catamarca	-3.0	-3.0	-3.0
 AR	America/Argentina/Cordoba	-3.0	-3.0	-3.0
@@ -71,7 +71,7 @@ AR	America/Argentina/Ushuaia	-3.0	-3.0	-3.0
 AW	America/Aruba	-4.0	-4.0	-4.0
 PY	America/Asuncion	-3.0	-4.0	-4.0
 CA	America/Atikokan	-5.0	-5.0	-5.0
-BR	America/Bahia	-2.0	-3.0	-3.0
+BR	America/Bahia	-3.0	-3.0	-3.0
 MX	America/Bahia_Banderas	-6.0	-5.0	-6.0
 BB	America/Barbados	-4.0	-4.0	-4.0
 BR	America/Belem	-3.0	-3.0	-3.0
@@ -163,7 +163,7 @@ PA	America/Panama	-5.0	-5.0	-5.0
 CA	America/Pangnirtung	-5.0	-4.0	-5.0
 SR	America/Paramaribo	-3.0	-3.0	-3.0
 US	America/Phoenix	-7.0	-7.0	-7.0
-HT	America/Port-au-Prince	-5.0	-4.0	-5.0
+HT	America/Port-au-Prince	-5.0	-5.0	-5.0
 TT	America/Port_of_Spain	-4.0	-4.0	-4.0
 BR	America/Porto_Velho	-4.0	-4.0	-4.0
 PR	America/Puerto_Rico	-4.0	-4.0	-4.0
@@ -199,8 +199,8 @@ CA	America/Whitehorse	-8.0	-7.0	-8.0
 CA	America/Winnipeg	-6.0	-5.0	-6.0
 US	America/Yakutat	-9.0	-8.0	-9.0
 CA	America/Yellowknife	-7.0	-6.0	-7.0
-AQ	Antarctica/Casey	11.0	8.0	8.0
-AQ	Antarctica/Davis	5.0	7.0	7.0
+AQ	Antarctica/Casey	8.0	8.0	8.0
+AQ	Antarctica/Davis	7.0	7.0	7.0
 AQ	Antarctica/DumontDUrville	10.0	10.0	10.0
 AQ	Antarctica/Macquarie	11.0	11.0	11.0
 AQ	Antarctica/Mawson	5.0	5.0	5.0
@@ -213,7 +213,7 @@ AQ	Antarctica/Vostok	6.0	6.0	6.0
 SJ	Arctic/Longyearbyen	1.0	2.0	1.0
 YE	Asia/Aden	3.0	3.0	3.0
 KZ	Asia/Almaty	6.0	6.0	6.0
-JO	Asia/Amman	2.0	3.0	2.0
+JO	Asia/Amman	3.0	3.0	2.0
 RU	Asia/Anadyr	12.0	12.0	12.0
 KZ	Asia/Aqtau	5.0	5.0	5.0
 KZ	Asia/Aqtobe	5.0	5.0	5.0
@@ -233,9 +233,9 @@ BD	Asia/Dhaka	6.0	6.0	6.0
 TL	Asia/Dili	9.0	9.0	9.0
 AE	Asia/Dubai	4.0	4.0	4.0
 TJ	Asia/Dushanbe	5.0	5.0	5.0
-PS	Asia/Gaza	2.0	3.0	2.0
+PS	Asia/Gaza	2.0	2.0	2.0
 CN	Asia/Harbin	8.0	8.0	8.0
-PS	Asia/Hebron	2.0	3.0	2.0
+PS	Asia/Hebron	2.0	2.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
 HK	Asia/Hong_Kong	8.0	8.0	8.0
 MN	Asia/Hovd	7.0	7.0	7.0
