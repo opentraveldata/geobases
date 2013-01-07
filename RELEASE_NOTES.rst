@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.14 : new airlines data, with alliances
 + 4.13 : duplicates lines feature on map, __dad__ is renamed __par__, smart coloring for +/-
 + 4.12 : __dad__ is now a list, hasParents method, visualize now supports lines drawing
 + 4.11 : new bases for postal codes
