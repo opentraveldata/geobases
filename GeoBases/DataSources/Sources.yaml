@@ -339,15 +339,17 @@ currencies:
 
 airlines:
     source    : Airlines/ori_airlines.csv
-    indexes   : iata_code
-    delimiter : "\t"
+    indexes   : unified_code
+    delimiter : ^
     headers   :
-        - icao_code
-        - old_code
+        - unified_code
+        - 3char_code
+        - 2char_code
         - num_code
         - name
-        - ticketing_name
-        - iata_code
+        - name2
+        - alliance_code
+        - alliance_status
 
 
 regions:
