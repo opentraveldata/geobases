@@ -338,7 +338,7 @@ currencies:
 
 
 airlines:
-    source    : Airlines/crb_airline.csv
+    source    : Airlines/ori_airlines.csv
     indexes   : iata_code
     delimiter : "\t"
     headers   :
