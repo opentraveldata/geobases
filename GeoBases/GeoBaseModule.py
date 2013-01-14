@@ -176,11 +176,13 @@ class GeoBase(object):
 
 
     @staticmethod
-    def update():
+    def update(force=False):
+        """Launch update script on oripor data file.
         """
-        Launch update script on oripor data file.
-        """
-        os.system('bash ' + local_path(__file__, 'DataSources/CheckDataUpdates.sh'))
+        script_path  = local_path(__file__, 'DataSources/CheckDataUpdates.sh')
+        force_option = '' if not force else '-f'
+
+        os.system('bash %s %s' % (script_path, force_option))
 
 
 
@@ -689,9 +691,9 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7028
+        7027
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7028
+        7027
         >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
         4429
 

@@ -13,7 +13,7 @@ FORCE=0
 while getopts ":f" opt; do
     case $opt in
         f)
-            echo "-f was triggered! Replacing old file anyway..." >&2
+            echo "Forced update! All files will be replaced..." >&2
             FORCE=1
             ;;
         \?)
@@ -104,8 +104,6 @@ do_a_file() {
 }
 
 # Files
-#REF_URL_01='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_public.csv'
-#REF_URL_02='http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/raw/refdata/ORI/ori_por_non_iata.csv'
 REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
 REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
 REF_URL_03='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'

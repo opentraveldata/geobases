@@ -86,7 +86,7 @@ BV	BVT	074	BV	Bouvet Island			0	AN	.bv	NOK	Krone					3371123
 BW	BWA	072	BC	Botswana	Gaborone	600370	2029307	AF	.bw	BWP	Pula	267			en-BW,tn-BW	933860	ZW,ZA,NA	
 BY	BLR	112	BO	Belarus	Minsk	207600	9685000	EU	.by	BYR	Ruble	375	######	^(\d{6})$	be,ru	630336	PL,LT,UA,RU,LV	
 BZ	BLZ	084	BH	Belize	Belmopan	22966	314522	NA	.bz	BZD	Dollar	501			en-BZ,es	3582678	GT,MX	
-CA	CAN	124	CA	Canada	Ottawa	9984670	33679000	NA	.ca	CAD	Dollar	1	@#@ #@#	^([a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d)$	en-CA,fr-CA,iu	6251999	US	
+CA	CAN	124	CA	Canada	Ottawa	9984670	33679000	NA	.ca	CAD	Dollar	1	@#@ #@#	^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$	en-CA,fr-CA,iu	6251999	US	
 CC	CCK	166	CK	Cocos Islands	West Island	14	628	AS	.cc	AUD	Dollar	61			ms-CC,en	1547376		
 CD	COD	180	CG	Democratic Republic of the Congo	Kinshasa	2345410	70916439	AF	.cd	CDF	Franc	243			fr-CD,ln,kg	203312	TZ,CF,SS,RW,ZM,BI,UG,CG,AO	
 CF	CAF	140	CT	Central African Republic	Bangui	622984	4844927	AF	.cf	XAF	Franc	236			fr-CF,sg,ln,kg	239880	TD,SD,CD,SS,CM,CG	
