@@ -154,11 +154,13 @@ class GeoBase(object):
 
 
     @staticmethod
-    def update():
+    def update(force=False):
+        """Launch update script on oripor data file.
         """
-        Launch update script on oripor data file.
-        """
-        os.system('bash ' + local_path(__file__, 'DataSources/CheckDataUpdates.sh'))
+        script_path  = local_path(__file__, 'DataSources/CheckDataUpdates.sh')
+        force_option = '' if not force else '-f'
+
+        os.system('bash %s %s' % (force_option, script_path))
 
 
 
