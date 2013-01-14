@@ -160,7 +160,7 @@ class GeoBase(object):
         script_path  = local_path(__file__, 'DataSources/CheckDataUpdates.sh')
         force_option = '' if not force else '-f'
 
-        os.system('bash %s %s' % (force_option, script_path))
+        os.system('bash %s %s' % (script_path, force_option))
 
 
 
