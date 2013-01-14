@@ -976,7 +976,7 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-U', '--force-update',
+    parser.add_argument('-U', '--update-forced',
         help = dedent('''\
         If this option is set, instead of anything,
         the script will force the update of all data files.
@@ -1058,7 +1058,7 @@ def main():
         GeoBase.update()
         exit(0)
 
-    if args['force_update']:
+    if args['update_forced']:
         GeoBase.update(force=True)
         exit(0)
 

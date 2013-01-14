@@ -37,7 +37,7 @@ _arguments \
  "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color icon duplicates:$F_FIELDS" \
  "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
  "(-u --update)"{-u,--update}"[Try to update the data files]" \
- "(-U --force-update)"{-U,--force-update}"[Force the update of all data files]" \
+ "(-U --update-forced)"{-U,--update-forced}"[Force the update of all data files]" \
  "(-v --version)"{-v,--version}"[Display version information]" \
  "*:keys:()"
 
