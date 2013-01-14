@@ -970,7 +970,16 @@ def handle_args():
     parser.add_argument('-u', '--update',
         help = dedent('''\
         If this option is set, instead of anything,
-        the script will try to update some source files.
+        the script will try to update the data files.
+        Differences will be shown and the user has to answer
+        'Y' or 'N' for each file.
+        '''),
+        action = 'store_true')
+
+    parser.add_argument('-U', '--force-update',
+        help = dedent('''\
+        If this option is set, instead of anything,
+        the script will force the update of all data files.
         '''),
         action = 'store_true')
 
@@ -1047,6 +1056,10 @@ def main():
     # Updating file
     if args['update']:
         GeoBase.update()
+        exit(0)
+
+    if args['force_update']:
+        GeoBase.update(force=True)
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
