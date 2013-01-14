@@ -13,7 +13,7 @@ FORCE=0
 while getopts ":f" opt; do
     case $opt in
         f)
-            echo "-f was triggered! Replacing old file anyway..." >&2
+            echo "Forced update! All files will be replaced..." >&2
             FORCE=1
             ;;
         \?)
