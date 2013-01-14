@@ -352,6 +352,15 @@ airlines:
         - alliance_status
 
 
+cabins:
+    source    : Cabins/cabins.csv
+    indexes   : code
+    delimiter : ^
+    headers   :
+        - code
+        - name
+
+
 regions:
     source    : Regions/regions.csv
     indexes   : code
