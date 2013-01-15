@@ -899,11 +899,11 @@ def handle_args():
         input as key for query, not data for loading.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
-            2) type is the type of matching, either "__exact__" or "__fuzzy__".
+            2) type is the type of matching, either %s.
                For fuzzy searches, the ratio is set to %s.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
-        ''' % (DEF_INTER_FUZZY_L, SKIP)),
+        ''' % (fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_FUZZY_L, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
