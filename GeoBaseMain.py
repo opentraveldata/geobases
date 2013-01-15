@@ -879,16 +879,19 @@ def handle_args():
         help = dedent('''\
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
-        3 optional arguments: delimiter, headers, indexes.
+        4 optional arguments: delimiter, headers, indexes, discard_dups.
             1) default delimiter is smart :).
             2) default headers will use numbers, and try to sniff lat/lng.
                Use __head__ as header value to
                burn the first line to define the headers.
             3) default indexes will take the first plausible field.
+            4) discard_dups is a boolean to toggle duplicated keys dropping.
+               Default is %s. Put %s as a truthy value,
+               any other value will be falsy.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
-        ''' % (SPLIT, SKIP)),
+        ''' % (DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
