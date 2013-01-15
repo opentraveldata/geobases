@@ -632,6 +632,10 @@ ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 TRUTHY_DUPLICATES   = ('1', 'Y')
 
+# Duplicates handling in feed mode
+DEF_DISCARD_RAW = 'F'
+DEF_DISCARD     = False
+
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
 SPLIT   = '/'
@@ -1075,6 +1079,9 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
+        discard_dups_r = DEF_DISCARD_RAW
+        discard_dups   = DEF_DISCARD
+
         if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
             delimiter = args['indexes'][0]
 
@@ -1093,15 +1100,20 @@ def main():
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
 
+        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
+            discard_dups_r = args['indexes'][3]
+            discard_dups   = True if discard_dups_r in TRUTHY_DUPLICATES else False
+
         if verbose:
-            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
-                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes))
+            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
+                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes), discard_dups_r)
 
         g = GeoBase(data='feed',
                     source=source,
                     delimiter=delimiter,
                     headers=headers,
                     indexes=indexes,
+                    discard_dups=discard_dups,
                     verbose=warnings)
     else:
         # -i options overrides default
@@ -1115,6 +1127,9 @@ def main():
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
             add_options['indexes'] = args['indexes'][2].split(SPLIT)
+
+        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
+            add_options['discard_dups'] = True if args['indexes'][3] in TRUTHY_DUPLICATES else False
 
         if verbose:
             if not add_options:
