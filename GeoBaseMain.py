@@ -630,7 +630,9 @@ DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
-TRUTHY_DUPLICATES   = ('1', 'Y')
+
+# Considered truthy values for command line option
+TRUTHY = ('1', 'Y')
 
 # Duplicates handling in feed mode
 DEF_DISCARD_RAW = 'F'
@@ -960,7 +962,7 @@ def handle_args():
         Example: -M _ population _ __none__ _
         ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
                 fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
-                DEF_LINK_DUPLICATES, fmt_or(TRUTHY_DUPLICATES), SKIP))),
+                DEF_LINK_DUPLICATES, fmt_or(TRUTHY), SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1102,7 +1104,7 @@ def main():
 
         if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
             discard_dups_r = args['indexes'][3]
-            discard_dups   = True if discard_dups_r in TRUTHY_DUPLICATES else False
+            discard_dups   = True if discard_dups_r in TRUTHY else False
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
@@ -1129,7 +1131,7 @@ def main():
             add_options['indexes'] = args['indexes'][2].split(SPLIT)
 
         if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
-            add_options['discard_dups'] = True if args['indexes'][3] in TRUTHY_DUPLICATES else False
+            add_options['discard_dups'] = True if args['indexes'][3] in TRUTHY else False
 
         if verbose:
             if not add_options:
@@ -1170,7 +1172,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_duplicates = True if args['map_data'][4] in TRUTHY_DUPLICATES else False
+        link_duplicates = True if args['map_data'][4] in TRUTHY else False
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
