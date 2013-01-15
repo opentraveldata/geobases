@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.16 : --indexes has a fourth optional parameter to toggle duplicates discarding
 + 4.15 : new cabins data, -U option to force data updates
 + 4.14 : new airlines data, with alliances
 + 4.13 : duplicates lines feature on map, __dad__ is renamed __par__, smart coloring for +/-
