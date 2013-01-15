@@ -630,7 +630,16 @@ DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
-TRUTHY_DUPLICATES   = ('1', 'Y')
+
+DEF_INTER_FIELD = '__key__'
+DEF_INTER_TYPE  = '__exact__'
+
+# Considered truthy values for command line option
+TRUTHY = ('1', 'Y')
+
+# Duplicates handling in feed mode
+DEF_DISCARD_RAW = 'F'
+DEF_DISCARD     = False
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -870,16 +879,19 @@ def handle_args():
         help = dedent('''\
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
-        3 optional arguments: delimiter, headers, indexes.
+        4 optional arguments: delimiter, headers, indexes, discard_dups.
             1) default delimiter is smart :).
             2) default headers will use numbers, and try to sniff lat/lng.
                Use __head__ as header value to
                burn the first line to define the headers.
             3) default indexes will take the first plausible field.
+            4) discard_dups is a boolean to toggle duplicated keys dropping.
+               Default is %s. Put %s as a truthy value,
+               any other value will be falsy.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
-        ''' % (SPLIT, SKIP)),
+        ''' % (DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
@@ -890,11 +902,11 @@ def handle_args():
         input as key for query, not data for loading.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
-            2) type is the type of matching, either "__exact__" or "__fuzzy__".
+            2) type is the type of matching, either %s.
                For fuzzy searches, the ratio is set to %s.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
-        ''' % (DEF_INTER_FUZZY_L, SKIP)),
+        ''' % (fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_FUZZY_L, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
@@ -956,7 +968,7 @@ def handle_args():
         Example: -M _ population _ __none__ _
         ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
                 fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
-                DEF_LINK_DUPLICATES, fmt_or(TRUTHY_DUPLICATES), SKIP))),
+                DEF_LINK_DUPLICATES, fmt_or(TRUTHY), SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1075,6 +1087,9 @@ def main():
         headers   = guess_headers(first_l.split(delimiter))
         indexes   = guess_indexes(headers, first_l.split(delimiter))
 
+        discard_dups_r = DEF_DISCARD_RAW
+        discard_dups   = DEF_DISCARD
+
         if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
             delimiter = args['indexes'][0]
 
@@ -1093,15 +1108,20 @@ def main():
             # Reprocessing the indexes with custom headers
             indexes = guess_indexes(headers, first_l.split(delimiter))
 
+        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
+            discard_dups_r = args['indexes'][3]
+            discard_dups   = discard_dups_r in TRUTHY
+
         if verbose:
-            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s"' % \
-                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes))
+            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
+                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes), discard_dups_r)
 
         g = GeoBase(data='feed',
                     source=source,
                     delimiter=delimiter,
                     headers=headers,
                     indexes=indexes,
+                    discard_dups=discard_dups,
                     verbose=warnings)
     else:
         # -i options overrides default
@@ -1115,6 +1135,9 @@ def main():
 
         if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
             add_options['indexes'] = args['indexes'][2].split(SPLIT)
+
+        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
+            add_options['discard_dups'] = args['indexes'][3] in TRUTHY
 
         if verbose:
             if not add_options:
@@ -1155,7 +1178,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_duplicates = True if args['map_data'][4] in TRUTHY_DUPLICATES else False
+        link_duplicates = args['map_data'][4] in TRUTHY
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
@@ -1168,8 +1191,8 @@ def main():
         header_display = args['quiet_options'][1]
 
     # Reading interactive query options
-    interactive_field = '__key__'
-    interactive_type  = '__exact__'
+    interactive_field = DEF_INTER_FIELD
+    interactive_type  = DEF_INTER_TYPE
 
     if interactive_query_mode:
         if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != SKIP:

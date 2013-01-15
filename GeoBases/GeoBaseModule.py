@@ -482,9 +482,13 @@ class GeoBase(object):
                     self._things[key]['__dup__'].append(d_key)
                     self._things[d_key] = row_data
 
-                if verbose:
-                    print "/!\ [lno %s] %s is duplicated #%s, first found lno %s" % \
-                            (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'])
+                    if verbose:
+                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
+                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'], d_key)
+                else:
+                    if verbose:
+                        print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
+                                (line_nb, key, self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
