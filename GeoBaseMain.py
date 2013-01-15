@@ -631,6 +631,9 @@ DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 
+DEF_INTER_FIELD = '__key__'
+DEF_INTER_TYPE  = '__exact__'
+
 # Considered truthy values for command line option
 TRUTHY = ('1', 'Y')
 
@@ -1185,8 +1188,8 @@ def main():
         header_display = args['quiet_options'][1]
 
     # Reading interactive query options
-    interactive_field = '__key__'
-    interactive_type  = '__exact__'
+    interactive_field = DEF_INTER_FIELD
+    interactive_type  = DEF_INTER_TYPE
 
     if interactive_query_mode:
         if len(args['interactive_query']) >= 1 and args['interactive_query'][0] != SKIP:
