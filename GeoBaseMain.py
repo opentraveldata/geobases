@@ -1104,7 +1104,7 @@ def main():
 
         if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
             discard_dups_r = args['indexes'][3]
-            discard_dups   = True if discard_dups_r in TRUTHY else False
+            discard_dups   = discard_dups_r in TRUTHY
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
@@ -1131,7 +1131,7 @@ def main():
             add_options['indexes'] = args['indexes'][2].split(SPLIT)
 
         if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
-            add_options['discard_dups'] = True if args['indexes'][3] in TRUTHY else False
+            add_options['discard_dups'] = args['indexes'][3] in TRUTHY
 
         if verbose:
             if not add_options:
@@ -1172,7 +1172,7 @@ def main():
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
 
     if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_duplicates = True if args['map_data'][4] in TRUTHY else False
+        link_duplicates = args['map_data'][4] in TRUTHY
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
