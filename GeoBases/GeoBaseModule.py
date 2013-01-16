@@ -80,12 +80,66 @@ else:
     # No problem here
     HAS_TREP_SUPPORT = True
 
+
 # Relative paths handling
 local_path = lambda file_p, rel_p : op.join(op.realpath(op.dirname(file_p)), rel_p)
 
-
 # We only export the main class
 __all__ = ['GeoBase']
+
+# Path to global configuration
+PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
+
+# Special fields for latitude and longitude recognition
+LAT_FIELD  = 'lat'
+LNG_FIELD  = 'lng'
+GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
+
+# Loading indicator
+NB_LINES_STEP = 100000
+
+# Assets for map and tables
+ASSETS = {
+    'map' : {
+        'template' : {
+            # source : v_target
+            local_path(__file__, 'MapAssets/template.html') : '%s_map.html',
+        },
+        'static' : {
+            # source : target
+            local_path(__file__, 'MapAssets/map.js')            : 'map.js',
+            local_path(__file__, 'MapAssets/point.png')         : 'point.png',
+            local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
+            local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
+            local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
+            local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
+            local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
+            local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
+            local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
+            local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
+            local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
+            local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
+            local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+            local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
+            local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
+            local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
+            local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
+            local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
+            local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
+        }
+    },
+    'table' : {
+        'template' : {
+            # source : v_target
+            local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
+        },
+        'static' : {
+            # source : target
+            local_path(__file__, 'TablesAssets/table.js') : 'table.js',
+        }
+    }
+}
+
 
 
 class GeoBase(object):
@@ -95,62 +149,9 @@ class GeoBase(object):
     the instance to get information.
     """
 
-    # Path to global configuration
-    PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
-
     # Loading configuration
     with open(PATH_CONF) as fl:
         BASES = yaml.load(fl)
-
-    # Special fields for latitude and longitude recognition
-    LAT_FIELD  = 'lat'
-    LNG_FIELD  = 'lng'
-    GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
-
-    # Loading indicator
-    NB_LINES_STEP = 100000
-
-    # Assets for map and tables
-    ASSETS = {
-        'map' : {
-            'template' : {
-                # source : v_target
-                local_path(__file__, 'MapAssets/template.html') : '%s_map.html',
-            },
-            'static' : {
-                # source : target
-                local_path(__file__, 'MapAssets/map.js')            : 'map.js',
-                local_path(__file__, 'MapAssets/point.png')         : 'point.png',
-                local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
-                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
-                local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
-                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
-                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
-                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
-                local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
-                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
-                local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
-                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
-                local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
-                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
-                local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
-                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
-                local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
-                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
-                local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
-            }
-        },
-        'table' : {
-            'template' : {
-                # source : v_target
-                local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
-            },
-            'static' : {
-                # source : target
-                local_path(__file__, 'TablesAssets/table.js') : 'table.js',
-            }
-        }
-    }
 
 
     @staticmethod
@@ -258,7 +259,7 @@ class GeoBase(object):
             # "local" is only used for sources from configuration
             # to have a relative path from the configuration file
             if props['source'] is not None and props['local'] is True:
-                props['source'] = local_path(GeoBase.PATH_CONF, props['source'])
+                props['source'] = local_path(PATH_CONF, props['source'])
 
         # Final parameters affectation
         self._local         = props['local']
@@ -426,7 +427,7 @@ class GeoBase(object):
 
         for line_nb, row in enumerate(_reader(source_fl), start=1):
 
-            if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+            if verbose and line_nb % NB_LINES_STEP == 0:
                 print '%-10s lines loaded so far' % line_nb
 
             if limit is not None and line_nb > limit:
@@ -505,7 +506,7 @@ class GeoBase(object):
         """
         fields = set(self.fields)
 
-        for required in GeoBase.GEO_FIELDS:
+        for required in GEO_FIELDS:
             if required not in fields:
                 return False
 
@@ -524,7 +525,7 @@ class GeoBase(object):
             if lat_lng is None:
                 if self._verbose:
                     print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
-                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD))
+                            (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
             else:
                 self._ggrid.add(key, lat_lng, self._verbose)
 
@@ -591,7 +592,7 @@ class GeoBase(object):
         (57.50..., -134.585...)
         """
         try:
-            loc = tuple(float(self.get(key, f)) for f in GeoBase.GEO_FIELDS)
+            loc = tuple(float(self.get(key, f)) for f in GEO_FIELDS)
 
         except ValueError:
             # Decode geocode, if error, returns None
@@ -1404,7 +1405,7 @@ class GeoBase(object):
 
             if verbose:
                 print '\n/!\ Could not find fields %s in headers %s.' % \
-                        (' and '.join(GeoBase.GEO_FIELDS), self.fields)
+                        (' and '.join(GEO_FIELDS), self.fields)
 
         # Label is the field which labels the points
         if label not in self.fields:
@@ -1641,7 +1642,7 @@ class GeoBase(object):
         tmp_template = []
         tmp_static   = [json_name]
 
-        for name, assets in GeoBase.ASSETS.iteritems():
+        for name, assets in ASSETS.iteritems():
             # We do not render the map template  if not geocodes
             if name == 'map' and not geo_support:
                 continue
@@ -1672,7 +1673,7 @@ class GeoBase(object):
             print
 
         # This is the numbered of templates rendered
-        return tmp_template, sum(len(a['template']) for a in GeoBase.ASSETS.values())
+        return tmp_template, sum(len(a['template']) for a in ASSETS.values())
 
 
 
