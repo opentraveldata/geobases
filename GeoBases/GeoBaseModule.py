@@ -80,12 +80,74 @@ else:
     # No problem here
     HAS_TREP_SUPPORT = True
 
+
 # Relative paths handling
-local_path = lambda file_p, rel_p : op.join(op.realpath(op.dirname(file_p)), rel_p)
+def relative(rel_path, root_file=__file__):
+    """Handle relative paths.
+    """
+    return op.join(op.realpath(op.dirname(root_file)), rel_path)
+
+
+# Path to global configuration
+PATH_CONF = relative('DataSources/Sources.yaml')
+
+with open(PATH_CONF) as fl:
+    BASES = yaml.load(fl)
+
+# Special fields for latitude and longitude recognition
+LAT_FIELD  = 'lat'
+LNG_FIELD  = 'lng'
+GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
+
+# Loading indicator
+NB_LINES_STEP = 100000
+
+# Assets for map and tables
+ASSETS = {
+    'map' : {
+        'template' : {
+            # source : v_target
+            relative('MapAssets/template.html') : '%s_map.html',
+        },
+        'static' : {
+            # source : target
+            relative('MapAssets/map.js')            : 'map.js',
+            relative('MapAssets/point.png')         : 'point.png',
+            relative('MapAssets/marker.png')        : 'marker.png',
+            relative('MapAssets/red_point.png')     : 'red_point.png',
+            relative('MapAssets/red_marker.png')    : 'red_marker.png',
+            relative('MapAssets/orange_point.png')  : 'orange_point.png',
+            relative('MapAssets/orange_marker.png') : 'orange_marker.png',
+            relative('MapAssets/yellow_point.png')  : 'yellow_point.png',
+            relative('MapAssets/yellow_marker.png') : 'yellow_marker.png',
+            relative('MapAssets/green_point.png')   : 'green_point.png',
+            relative('MapAssets/green_marker.png')  : 'green_marker.png',
+            relative('MapAssets/cyan_point.png')    : 'cyan_point.png',
+            relative('MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+            relative('MapAssets/blue_point.png')    : 'blue_point.png',
+            relative('MapAssets/blue_marker.png')   : 'blue_marker.png',
+            relative('MapAssets/purple_point.png')  : 'purple_point.png',
+            relative('MapAssets/purple_marker.png') : 'purple_marker.png',
+            relative('MapAssets/black_point.png')   : 'black_point.png',
+            relative('MapAssets/black_marker.png')  : 'black_marker.png',
+        }
+    },
+    'table' : {
+        'template' : {
+            # source : v_target
+            relative('TablesAssets/template.html') : '%s_table.html',
+        },
+        'static' : {
+            # source : target
+            relative('TablesAssets/table.js') : 'table.js',
+        }
+    }
+}
+
 
 
 # We only export the main class
-__all__ = ['GeoBase']
+__all__ = ['GeoBase', 'BASES']
 
 
 class GeoBase(object):
@@ -95,73 +157,14 @@ class GeoBase(object):
     the instance to get information.
     """
 
-    # Path to global configuration
-    PATH_CONF = local_path(__file__, 'DataSources/Sources.yaml')
-
-    # Loading configuration
-    with open(PATH_CONF) as fl:
-        BASES = yaml.load(fl)
-
-    # Special fields for latitude and longitude recognition
-    LAT_FIELD  = 'lat'
-    LNG_FIELD  = 'lng'
-    GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
-
-    # Loading indicator
-    NB_LINES_STEP = 100000
-
-    # Assets for map and tables
-    ASSETS = {
-        'map' : {
-            'template' : {
-                # source : v_target
-                local_path(__file__, 'MapAssets/template.html') : '%s_map.html',
-            },
-            'static' : {
-                # source : target
-                local_path(__file__, 'MapAssets/map.js')            : 'map.js',
-                local_path(__file__, 'MapAssets/point.png')         : 'point.png',
-                local_path(__file__, 'MapAssets/marker.png')        : 'marker.png',
-                local_path(__file__, 'MapAssets/red_point.png')     : 'red_point.png',
-                local_path(__file__, 'MapAssets/red_marker.png')    : 'red_marker.png',
-                local_path(__file__, 'MapAssets/orange_point.png')  : 'orange_point.png',
-                local_path(__file__, 'MapAssets/orange_marker.png') : 'orange_marker.png',
-                local_path(__file__, 'MapAssets/yellow_point.png')  : 'yellow_point.png',
-                local_path(__file__, 'MapAssets/yellow_marker.png') : 'yellow_marker.png',
-                local_path(__file__, 'MapAssets/green_point.png')   : 'green_point.png',
-                local_path(__file__, 'MapAssets/green_marker.png')  : 'green_marker.png',
-                local_path(__file__, 'MapAssets/cyan_point.png')    : 'cyan_point.png',
-                local_path(__file__, 'MapAssets/cyan_marker.png')   : 'cyan_marker.png',
-                local_path(__file__, 'MapAssets/blue_point.png')    : 'blue_point.png',
-                local_path(__file__, 'MapAssets/blue_marker.png')   : 'blue_marker.png',
-                local_path(__file__, 'MapAssets/purple_point.png')  : 'purple_point.png',
-                local_path(__file__, 'MapAssets/purple_marker.png') : 'purple_marker.png',
-                local_path(__file__, 'MapAssets/black_point.png')   : 'black_point.png',
-                local_path(__file__, 'MapAssets/black_marker.png')  : 'black_marker.png',
-            }
-        },
-        'table' : {
-            'template' : {
-                # source : v_target
-                local_path(__file__, 'TablesAssets/template.html') : '%s_table.html',
-            },
-            'static' : {
-                # source : target
-                local_path(__file__, 'TablesAssets/table.js') : 'table.js',
-            }
-        }
-    }
-
-
     @staticmethod
     def update(force=False):
-        """Launch update script on oripor data file.
+        """Launch update script on data files.
         """
-        script_path  = local_path(__file__, 'DataSources/CheckDataUpdates.sh')
-        force_option = '' if not force else '-f'
+        script_path  = relative('DataSources/CheckDataUpdates.sh')
+        force_option = '-f' if force else ''
 
         os.system('bash %s %s' % (script_path, force_option))
-
 
 
     def __init__(self, data, **kwargs):
@@ -186,7 +189,7 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
-        >>> fl = open(local_path(__file__, 'DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
+        >>> fl = open(relative('DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
         >>> GeoBase(data='feed',
         ...         source=fl,
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
@@ -230,8 +233,8 @@ class GeoBase(object):
             'verbose'       : True,
         }
 
-        if data in GeoBase.BASES:
-            conf = GeoBase.BASES[data]
+        if data in BASES:
+            conf = BASES[data]
 
             # File configuration overrides defaults
             for name in conf:
@@ -244,7 +247,7 @@ class GeoBase(object):
             # User input defining everything
             pass
         else:
-            raise ValueError('Wrong data type. Not in %s' % sorted(GeoBase.BASES.keys()))
+            raise ValueError('Wrong data type. Not in %s' % sorted(BASES.keys()))
 
         # User input overrides default configuration
         # or file configuration
@@ -258,7 +261,7 @@ class GeoBase(object):
             # "local" is only used for sources from configuration
             # to have a relative path from the configuration file
             if props['source'] is not None and props['local'] is True:
-                props['source'] = local_path(GeoBase.PATH_CONF, props['source'])
+                props['source'] = relative(props['source'], root_file=PATH_CONF)
 
         # Final parameters affectation
         self._local         = props['local']
@@ -312,7 +315,7 @@ class GeoBase(object):
 
     @staticmethod
     def _configKeyer(indexes, headers):
-        """Define thw function that build a line key.
+        """Define the function that build a line key.
         """
         # It is possible to have a indexes which is a list
         # In this case we build the key as the concatenation between
@@ -358,7 +361,7 @@ class GeoBase(object):
             if h is None:
                 continue
             # if h is an empty string, it means there was more
-            # data than the headers said, we store it in the 
+            # data than the headers said, we store it in the
             # __gar__ special field
             if not h:
                 data['__gar__'].append(v)
@@ -377,10 +380,9 @@ class GeoBase(object):
 
     def _configReader(self, **csv_opt):
         """Manually configure the reader, to bypass the limitations of csv.reader.
-
         """
-        delimiter = csv_opt['delimiter']
         #quotechar = csv_opt['quotechar']
+        delimiter = csv_opt['delimiter']
 
         if len(delimiter) == 1:
             return lambda source_fl : csv.reader(source_fl, **csv_opt)
@@ -427,7 +429,7 @@ class GeoBase(object):
 
         for line_nb, row in enumerate(_reader(source_fl), start=1):
 
-            if verbose and line_nb % GeoBase.NB_LINES_STEP == 0:
+            if verbose and line_nb % NB_LINES_STEP == 0:
                 print('%-10s lines loaded so far' % line_nb)
 
             if limit is not None and line_nb > limit:
@@ -497,8 +499,7 @@ class GeoBase(object):
 
 
     def hasGeoSupport(self):
-        """
-        Check if base has geocoding support.
+        """Check if data type has geocoding support.
 
         >>> geo_t.hasGeoSupport()
         True
@@ -507,7 +508,7 @@ class GeoBase(object):
         """
         fields = set(self.fields)
 
-        for required in GeoBase.GEO_FIELDS:
+        for required in GEO_FIELDS:
             if required not in fields:
                 return False
 
@@ -516,8 +517,7 @@ class GeoBase(object):
 
 
     def createGrid(self):
-        """
-        Create the grid for geographical indexation after loading the data.
+        """Create the grid for geographical indexation after loading the data.
         """
         self._ggrid = GeoGrid(radius=50, verbose=False)
 
@@ -527,16 +527,16 @@ class GeoBase(object):
             if lat_lng is None:
                 if self._verbose:
                     print('No usable geocode for %s: ("%s","%s"), skipping point...' % \
-                            (key, self.get(key, GeoBase.LAT_FIELD), self.get(key, GeoBase.LNG_FIELD)))
+                            (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD)))
             else:
                 self._ggrid.add(key, lat_lng, self._verbose)
 
 
 
     def get(self, key, field=None, **kwargs):
-        """
-        Simple get on the database.
-        This get function raise exception when input is not correct.
+        """Simple get on the base.
+
+        This get function raises an exception when input is not correct.
 
         :param key:   the key of the thing (like 'SFO')
         :param field: the field (like 'name' or 'iata_code')
@@ -588,14 +588,13 @@ class GeoBase(object):
 
 
     def getLocation(self, key):
-        """
-        Returns proper geocode.
+        """Returns geocode as (float, float) or None.
 
         >>> geo_a.getLocation('AGN')
         (57.50..., -134.585...)
         """
         try:
-            loc = tuple(float(self.get(key, f)) for f in GeoBase.GEO_FIELDS)
+            loc = tuple(float(self.get(key, f)) for f in GEO_FIELDS)
 
         except ValueError:
             # Decode geocode, if error, returns None
@@ -681,9 +680,8 @@ class GeoBase(object):
 
 
     def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
-        """
-        Get iterator of all keys with particular
-        field.
+        """Get iterator of all keys with particular field.
+
         For example, if you want to know all airports in Paris.
 
         :param conditions: a list of (field, value) conditions
@@ -768,8 +766,7 @@ class GeoBase(object):
 
 
     def __iter__(self):
-        """
-        Returns iterator of all keys in the database.
+        """Returns iterator of all keys in the base.
 
         :returns: the iterator of all keys
 
@@ -780,8 +777,7 @@ class GeoBase(object):
 
 
     def __contains__(self, key):
-        """
-        Test if a thing is in the base.
+        """Test if a thing is in the base.
 
         :param key: the key of the thing to be tested
         :returns:   a boolean
@@ -798,8 +794,7 @@ class GeoBase(object):
 
 
     def __bool__(self):
-        """
-        Testing GeoBase emptiness.
+        """Testing emptiness of structure.
 
         :returns: a boolean
 
@@ -820,8 +815,7 @@ class GeoBase(object):
 
 
     def keys(self):
-        """
-        Returns a list of all keys in the database.
+        """Returns a list of all keys in the base.
 
         :returns: the list of all keys
 
@@ -1060,12 +1054,12 @@ class GeoBase(object):
         Fuzzy searches are retrieving an information
         on a thing when we do not know the code.
         We compare the value fuzzy_value which is supposed to be a field
-        (e.g. a city or a name), to all things we have in the database,
+        (e.g. a city or a name), to all things we have in the base,
         and we output the best match.
         Matching is performed using Levenshtein module, with a modified
         version of the Lenvenshtein ratio, adapted to the type of data.
 
-        Example: we look up 'Marseille Saint Ch.' in our database
+        Example: we look up 'Marseille Saint Ch.' in our base
         and we find the corresponding code by comparing all station
         names with ''Marseille Saint Ch.''.
 
@@ -1232,22 +1226,20 @@ class GeoBase(object):
 
 
     def clearCache(self):
-        """
-        Clear cache for fuzzy searches.
+        """Clear cache for fuzzy searches.
         """
         self._cache_fuzzy = {}
 
+
     def clearBiasCache(self):
-        """
-        Clear biasing cache for fuzzy searches.
+        """Clear biasing cache for fuzzy searches.
         """
         self._bias_cache_fuzzy = {}
 
 
     @staticmethod
     def _buildCacheKey(fuzzy_value, field, approximate, min_match):
-        """
-        Key for the cache of fuzzyGet, based on parameters.
+        """Key for the cache of fuzzyGet, based on parameters.
 
         >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None, min_match=0)
         ('paris+de+gaulle', 'name', None, 0)
@@ -1258,8 +1250,7 @@ class GeoBase(object):
 
 
     def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
-        """
-        Some debugging.
+        """Some debugging.
         """
         for m in match:
 
@@ -1273,8 +1264,8 @@ class GeoBase(object):
 
 
     def distance(self, key0, key1):
-        """
-        Compute distance between two elements.
+        """Compute distance between two elements.
+
         This is just a wrapper between the original haversine
         function, but it is probably the most used feature :)
 
@@ -1289,8 +1280,7 @@ class GeoBase(object):
 
 
     def set(self, key, field, value):
-        """
-        Method to manually change a value in the base.
+        """Method to manually change a value in the base.
 
         :param key:   the key we want to change a value of
         :param field: the concerned field, like 'name'
@@ -1309,7 +1299,7 @@ class GeoBase(object):
         >>> geo_t.get('frnic', 'new_field')
         'some_value'
         """
-        # If the key is not in the database,
+        # If the key is not in the base,
         # we simply add it
         if key not in self._things:
             self._things[key] = {}
@@ -1341,8 +1331,7 @@ class GeoBase(object):
 
 
     def delete(self, key):
-        """
-        Method to manually remove a value in the base.
+        """Method to manually remove a value in the base.
 
         :param key:   the key we want to change a value of
         :param field: the concerned field, like 'name'
@@ -1365,16 +1354,14 @@ class GeoBase(object):
 
     @staticmethod
     def hasTrepSupport():
-        """
-        Check if module has OpenTrep support.
+        """Check if module has OpenTrep support.
         """
         return HAS_TREP_SUPPORT
 
 
     @staticmethod
     def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=False):
-        """
-        OpenTrep integration.
+        """OpenTrep integration.
 
         If not hasTrepSupport(), main_trep is not defined
         and trepGet will raise an exception if called.
@@ -1421,7 +1408,7 @@ class GeoBase(object):
 
             if verbose:
                 print('\n/!\ Could not find fields %s in headers %s.' % \
-                        (' and '.join(GeoBase.GEO_FIELDS), self.fields))
+                        (' and '.join(GEO_FIELDS), self.fields))
 
         # Label is the field which labels the points
         if label not in self.fields:
@@ -1573,8 +1560,7 @@ class GeoBase(object):
 
         # catalog is a user defined color scheme
         if catalog is None:
-            # Diff view play
-            # diff -u * |tail -n +4 |sed 's/^\(.\)/\1\t/g' |GeoBase -m -M _ _ H0 _ Y
+            # Default diff-friendly catalog
             catalog = {
                 ' ' : 'blue',
                 '+' : 'green',
@@ -1658,7 +1644,7 @@ class GeoBase(object):
         tmp_template = []
         tmp_static   = [json_name]
 
-        for name, assets in GeoBase.ASSETS.items():
+        for name, assets in ASSETS.items():
             # We do not render the map template  if not geocodes
             if name == 'map' and not geo_support:
                 continue
@@ -1689,7 +1675,7 @@ class GeoBase(object):
             print()
 
         # This is the numbered of templates rendered
-        return tmp_template, sum(len(a['template']) for a in GeoBase.ASSETS.values())
+        return tmp_template, sum(len(a['template']) for a in ASSETS.values())
 
 
 
@@ -1729,8 +1715,7 @@ def recursive_split(value, splits):
 
 
 def _test():
-    """
-    When called directly, launching doctests.
+    """When called directly, launching doctests.
     """
     import doctest
 
