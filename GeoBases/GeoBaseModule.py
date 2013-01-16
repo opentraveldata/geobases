@@ -159,13 +159,12 @@ class GeoBase(object):
 
     @staticmethod
     def update(force=False):
-        """Launch update script on oripor data file.
+        """Launch update script on data files.
         """
         script_path  = relative('DataSources/CheckDataUpdates.sh')
-        force_option = '' if not force else '-f'
+        force_option = '-f' if force else ''
 
         os.system('bash %s %s' % (script_path, force_option))
-
 
 
     def __init__(self, data, **kwargs):
@@ -1231,6 +1230,7 @@ class GeoBase(object):
         """
         self._cache_fuzzy = {}
 
+
     def clearBiasCache(self):
         """Clear biasing cache for fuzzy searches.
         """
@@ -1560,8 +1560,7 @@ class GeoBase(object):
 
         # catalog is a user defined color scheme
         if catalog is None:
-            # Diff view play
-            # diff -u * |tail -n +4 |sed 's/^\(.\)/\1\t/g' |GeoBase -m -M _ _ H0 _ Y
+            # Default diff-friendly catalog
             catalog = {
                 ' ' : 'blue',
                 '+' : 'green',
