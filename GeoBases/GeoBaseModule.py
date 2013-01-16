@@ -88,11 +88,11 @@ def relative(rel_path, root_file=__file__):
     return op.join(op.realpath(op.dirname(root_file)), rel_path)
 
 
-# We only export the main class
-__all__ = ['GeoBase']
-
 # Path to global configuration
 PATH_CONF = relative('DataSources/Sources.yaml')
+
+with open(PATH_CONF) as fl:
+    BASES = yaml.load(fl)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -146,17 +146,16 @@ ASSETS = {
 
 
 
+# We only export the main class
+__all__ = ['GeoBase', 'BASES']
+
+
 class GeoBase(object):
     """
     This is the main and only class. After __init__,
     a file is loaded in memory, and the user may use
     the instance to get information.
     """
-
-    # Loading configuration
-    with open(PATH_CONF) as fl:
-        BASES = yaml.load(fl)
-
 
     @staticmethod
     def update(force=False):
@@ -235,8 +234,8 @@ class GeoBase(object):
             'verbose'       : True,
         }
 
-        if data in GeoBase.BASES:
-            conf = GeoBase.BASES[data]
+        if data in BASES:
+            conf = BASES[data]
 
             # File configuration overrides defaults
             for name in conf:
@@ -249,7 +248,7 @@ class GeoBase(object):
             # User input defining everything
             pass
         else:
-            raise ValueError('Wrong data type. Not in %s' % sorted(GeoBase.BASES.keys()))
+            raise ValueError('Wrong data type. Not in %s' % sorted(BASES.keys()))
 
         # User input overrides default configuration
         # or file configuration

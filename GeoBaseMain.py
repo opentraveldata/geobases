@@ -25,7 +25,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase
+from GeoBases import GeoBase, BASES
 
 # Do not produce broken pipes when head and tail are used
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -1062,8 +1062,8 @@ def main():
         print 'Location : %s' % r.location
         exit(0)
 
-    if args['base'] not in GeoBase.BASES:
-        error('base', args['base'], sorted(GeoBase.BASES.keys()))
+    if args['base'] not in BASES:
+        error('base', args['base'], sorted(BASES.keys()))
 
     # Updating file
     if args['update']:
