@@ -82,7 +82,7 @@ else:
 
 
 # Relative paths handling
-def local_path(rel_path, root_file=__file__):
+def relative(rel_path, root_file=__file__):
     """Handle relative paths.
     """
     return op.join(op.realpath(op.dirname(root_file)), rel_path)
@@ -92,7 +92,7 @@ def local_path(rel_path, root_file=__file__):
 __all__ = ['GeoBase']
 
 # Path to global configuration
-PATH_CONF = local_path('DataSources/Sources.yaml')
+PATH_CONF = relative('DataSources/Sources.yaml')
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -107,39 +107,39 @@ ASSETS = {
     'map' : {
         'template' : {
             # source : v_target
-            local_path('MapAssets/template.html') : '%s_map.html',
+            relative('MapAssets/template.html') : '%s_map.html',
         },
         'static' : {
             # source : target
-            local_path('MapAssets/map.js')            : 'map.js',
-            local_path('MapAssets/point.png')         : 'point.png',
-            local_path('MapAssets/marker.png')        : 'marker.png',
-            local_path('MapAssets/red_point.png')     : 'red_point.png',
-            local_path('MapAssets/red_marker.png')    : 'red_marker.png',
-            local_path('MapAssets/orange_point.png')  : 'orange_point.png',
-            local_path('MapAssets/orange_marker.png') : 'orange_marker.png',
-            local_path('MapAssets/yellow_point.png')  : 'yellow_point.png',
-            local_path('MapAssets/yellow_marker.png') : 'yellow_marker.png',
-            local_path('MapAssets/green_point.png')   : 'green_point.png',
-            local_path('MapAssets/green_marker.png')  : 'green_marker.png',
-            local_path('MapAssets/cyan_point.png')    : 'cyan_point.png',
-            local_path('MapAssets/cyan_marker.png')   : 'cyan_marker.png',
-            local_path('MapAssets/blue_point.png')    : 'blue_point.png',
-            local_path('MapAssets/blue_marker.png')   : 'blue_marker.png',
-            local_path('MapAssets/purple_point.png')  : 'purple_point.png',
-            local_path('MapAssets/purple_marker.png') : 'purple_marker.png',
-            local_path('MapAssets/black_point.png')   : 'black_point.png',
-            local_path('MapAssets/black_marker.png')  : 'black_marker.png',
+            relative('MapAssets/map.js')            : 'map.js',
+            relative('MapAssets/point.png')         : 'point.png',
+            relative('MapAssets/marker.png')        : 'marker.png',
+            relative('MapAssets/red_point.png')     : 'red_point.png',
+            relative('MapAssets/red_marker.png')    : 'red_marker.png',
+            relative('MapAssets/orange_point.png')  : 'orange_point.png',
+            relative('MapAssets/orange_marker.png') : 'orange_marker.png',
+            relative('MapAssets/yellow_point.png')  : 'yellow_point.png',
+            relative('MapAssets/yellow_marker.png') : 'yellow_marker.png',
+            relative('MapAssets/green_point.png')   : 'green_point.png',
+            relative('MapAssets/green_marker.png')  : 'green_marker.png',
+            relative('MapAssets/cyan_point.png')    : 'cyan_point.png',
+            relative('MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+            relative('MapAssets/blue_point.png')    : 'blue_point.png',
+            relative('MapAssets/blue_marker.png')   : 'blue_marker.png',
+            relative('MapAssets/purple_point.png')  : 'purple_point.png',
+            relative('MapAssets/purple_marker.png') : 'purple_marker.png',
+            relative('MapAssets/black_point.png')   : 'black_point.png',
+            relative('MapAssets/black_marker.png')  : 'black_marker.png',
         }
     },
     'table' : {
         'template' : {
             # source : v_target
-            local_path('TablesAssets/template.html') : '%s_table.html',
+            relative('TablesAssets/template.html') : '%s_table.html',
         },
         'static' : {
             # source : target
-            local_path('TablesAssets/table.js') : 'table.js',
+            relative('TablesAssets/table.js') : 'table.js',
         }
     }
 }
@@ -162,7 +162,7 @@ class GeoBase(object):
     def update(force=False):
         """Launch update script on oripor data file.
         """
-        script_path  = local_path('DataSources/CheckDataUpdates.sh')
+        script_path  = relative('DataSources/CheckDataUpdates.sh')
         force_option = '' if not force else '-f'
 
         os.system('bash %s %s' % (script_path, force_option))
@@ -191,7 +191,7 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
-        >>> fl = open(local_path('DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
+        >>> fl = open(relative('DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
         >>> GeoBase(data='feed',
         ...         source=fl,
         ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
@@ -263,7 +263,7 @@ class GeoBase(object):
             # "local" is only used for sources from configuration
             # to have a relative path from the configuration file
             if props['source'] is not None and props['local'] is True:
-                props['source'] = local_path(props['source'], root_file=PATH_CONF)
+                props['source'] = relative(props['source'], root_file=PATH_CONF)
 
         # Final parameters affectation
         self._local         = props['local']
