@@ -25,7 +25,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase
+from GeoBases import GeoBase, BASES
 
 # Do not produce broken pipes when head and tail are used
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -580,7 +580,7 @@ def error(name, *args):
         print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'base':
-        print >> stderr, '\n/!\ Wrong base "%s". You may select:' % args[0]
+        print >> stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
         fmt_on_two_cols(args[1], stderr)
 
     elif name == 'property':
@@ -735,9 +735,9 @@ def handle_args():
 
     parser.add_argument('-b', '--base',
         help = dedent('''\
-        Choose a different base, default is "%s". Also available are
-        stations, airports, countries... Give unadmissible base
-        and available values will be displayed.
+        Choose a different data type, default is "%s". Also available are
+        stations, airports, countries... Give unadmissible value
+        and all possibilities will be displayed.
         ''' % DEF_BASE),
         default = DEF_BASE)
 
@@ -1062,8 +1062,8 @@ def main():
         print 'Location : %s' % r.location
         exit(0)
 
-    if args['base'] not in GeoBase.BASES:
-        error('base', args['base'], sorted(GeoBase.BASES.keys()))
+    if args['base'] not in BASES:
+        error('base', args['base'], sorted(BASES.keys()))
 
     # Updating file
     if args['update']:
