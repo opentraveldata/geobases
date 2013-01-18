@@ -461,10 +461,10 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $('#lines').text('Lines ({0})'.fmt(state));
+        $('#connect').text('Connect ({0})'.fmt(state));
     }
 
-    $('#lines').click(connectMarkers);
+    $('#connect').click(connectMarkers);
 
     google.maps.event.addListener(map, 'rightclick', function () {
         connectMarkers();
@@ -550,8 +550,8 @@ $(document).ready(function() {
         disablePopup('#legendPopup');
     });
 
-    $('#legend').attr('title', 'Display legend');
-    $('#lines').attr('title', 'Draw lines between points. Click again to change sorting.');
+    $('#legend').attr('title', 'Display legend.');
+    $('#connect').attr('title', 'Draw lines between points. Click again to change sorting.');
     $('#dups').attr('title', 'Toggle lines between duplicates.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
