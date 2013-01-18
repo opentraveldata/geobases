@@ -500,7 +500,7 @@ function initialize(jsonData) {
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} <i>points on map</i> (out of {1}), {2} <i>lines</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>points on map</i> (out of {1}), {2} <i>duplicates</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
