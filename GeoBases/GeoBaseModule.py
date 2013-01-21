@@ -697,11 +697,11 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7027
+        7025
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7027
+        7025
         >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
-        4429
+        4431
 
         Testing several conditions.
 
