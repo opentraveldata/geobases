@@ -721,7 +721,7 @@ def handle_args():
     # or list formatter
     fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
 
-    parser = argparse.ArgumentParser(description='Provide data services.',
+    parser = argparse.ArgumentParser(description='Provides data services.',
                                      formatter_class=argparse.RawTextHelpFormatter)
 
     parser.epilog = 'Example: %s ORY CDG' % parser.prog
