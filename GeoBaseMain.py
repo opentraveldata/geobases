@@ -1059,7 +1059,10 @@ def main():
         r = pkg_resources.require("GeoBases")[0]
         print 'Project  : %s' % r.project_name
         print 'Version  : %s' % r.version
+        print 'Egg name : %s' % r.egg_name()
         print 'Location : %s' % r.location
+        print 'Requires : %s' % ', '.join(str(e) for e in r.requires())
+        print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
         exit(0)
 
     if args['base'] not in BASES:
