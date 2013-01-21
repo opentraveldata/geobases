@@ -1,4 +1,5 @@
-recursive-include GeoBases *rst *txt *csv *sh *yaml *html *png
+recursive-include GeoBases *.rst *.txt *.csv *.sh *.yaml *.html *.js *.png
 recursive-include completion *
 recursive-include examples *
-include *rst
+include *.rst
+include VERSION

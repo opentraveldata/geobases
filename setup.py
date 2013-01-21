@@ -66,7 +66,14 @@ except ImportError:
     raise
 
 
-VERSION = '4.16.0'
+# local files handling
+def local(rel_path, root_file=__file__):
+    """Handle local paths.
+    """
+    return op.join(op.realpath(op.dirname(root_file)), rel_path)
+
+
+VERSION = open(local('VERSION')).read().rstrip()
 
 setup(
     name = 'GeoBases3K',
@@ -75,8 +82,7 @@ setup(
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
     description = 'Some geographical functions.',
-    ## This line induces bugs because it lacks the file relative path
-    #long_description = open('README').read(),
+    long_description = open(local('README')).read(),
     #
     # Manage standalone scripts
     entry_points = {
