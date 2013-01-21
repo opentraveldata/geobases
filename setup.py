@@ -54,7 +54,7 @@ try:
     #import setuptools.command.easy_install # only if easy_install avaible
     from setuptools.sandbox import DirectorySandbox as DS
 
-    def _ok(self, path):
+    def _ok(*_):
         """Return True if ``path`` can be written during installation."""
         return True
 
