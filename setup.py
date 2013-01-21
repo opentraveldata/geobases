@@ -5,6 +5,8 @@
 Main installation file for GeoBases.
 '''
 
+from __future__ import with_statement
+
 from setuptools import setup
 from os import getenv
 import os.path as op
@@ -56,7 +58,7 @@ try:
     #import setuptools.command.easy_install # only if easy_install avaible
     from setuptools.sandbox import DirectorySandbox as DS
 
-    def _ok(self, path):
+    def _ok(*_):
         """Return True if ``path`` can be written during installation."""
         return True
 
@@ -72,8 +74,11 @@ def local(rel_path, root_file=__file__):
     """
     return op.join(op.realpath(op.dirname(root_file)), rel_path)
 
+with open(local('VERSION')) as fl:
+    VERSION = fl.read().rstrip()
 
-VERSION = open(local('VERSION')).read().rstrip()
+with open(local('README')) as fl:
+    LONG_DESCRIPTION = fl.read()
 
 setup(
     name = 'GeoBases3K',
@@ -81,8 +86,8 @@ setup(
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
     url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
-    description = 'Some geographical functions.',
-    long_description = open(local('README')).read(),
+    description = 'Provides data services.',
+    long_description = LONG_DESCRIPTION,
     #
     # Manage standalone scripts
     entry_points = {
