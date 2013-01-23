@@ -116,7 +116,7 @@ you absolutely need to upgrade to the very last unreleased version of
 virtualenv, before executing rake:
 
 | ``% pip uninstall virtualenv``
-| ``% pip install --user ``\ ```https://github.com/pypa/virtualenv/tarball/develop`` <https://github.com/pypa/virtualenv/tarball/develop>`__
+| ``% pip install --user https://github.com/pypa/virtualenv/tarball/develop``
 
 Tests
 -----
@@ -297,46 +297,46 @@ Then you may use:
 
 
 Trouver les entrees en PACA::
-    % GeoBase -E adm1\_code -e B8
+ % GeoBase -E adm1\_code -e B8
 
 Idem avec output programmer-friendly::
-    % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+ % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
 Combiner avec une recherche par nom::
-    % GeoBase -E adm1_code -e B8 --fuzzy sur mer
+ % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
 Tous les heliports dans un rayon de 200k de Paris::
-    % GeoBase --near PAR -N 200 -E location_type -e 'H'
+ % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
 50 gares les plus proches de Paris::
-    % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
+ % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
 
 Entrees ayant pour code iata SUF (il y en a plusieurs dans ori_por_multi!)::
-    % GeoBase -b ori_por_multi -E iata_code -e SUF
+ % GeoBase -b ori_por_multi -E iata_code -e SUF
 
 Pays dont le code postal est non-vide::
-    % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
+ % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
 OpenTrep binding::
-    % GeoBase -t sna francisco los agneles
+ % GeoBase -t sna francisco los agneles
 
 Reading data input on stdin::
-    % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
+ % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
 
 Displaying all data on cities (e.g. location_type C or CA)::
-    % echo 'C\nCA' | GeoBase -I location_type -s iata_code name location_type -q
+ % echo 'C\nCA' | GeoBase -I location_type -s iata_code name location_type -q
 
 Display on map::
-    % GeoBase -b stations --map
+ % GeoBase -b stations --map
 
 Europe marker-less map::
-    % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
+ % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
 
 How to display data on a map::
-    % cat tutu
-    ORY^3
-    CDG^7
-    % cat tutu | cut -f 1 -d'^' |GeoBase -I -s iata_code lat lng -q -Q '^' N |join -t '^' - tutu |GeoBase -m -M H0 H3
+ % cat tutu
+ ORY^3
+ CDG^7
+ % cat tutu | cut -f 1 -d'^' |GeoBase -I -s iata_code lat lng -q -Q '^' N |join -t '^' - tutu |GeoBase -m -M H0 H3
 
 If the previous commands fail, it might be because you PATH does not
 include the local bin directory, and you installed the package in user
