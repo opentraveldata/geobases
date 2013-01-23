@@ -365,7 +365,26 @@ geonames_FR:
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
-    headers   : *geonames_headers
+    headers   : &geonames_headers
+        - geoname_id
+        - name
+        - asciiname
+        - alternatenames
+        - lat
+        - lng
+        - fclass
+        - fcode
+        - country_code
+        - cc2
+        - adm1_code
+        - adm2_code
+        - adm3_code
+        - adm4_code
+        - population
+        - elevation
+        - dem
+        - timezone
+        - moddate
 
 
 geonames_MC:
@@ -379,9 +398,21 @@ geonames_MC:
 
 postal_codes_FR:
     source    : PostalCodes/GeoNames/FR.txt
-    indexes   : *postal_codes_ind
+    indexes   : &postal_codes_ind postal_code
     delimiter : "\t"
-    headers   : *postal_codes_headers
+    headers   : &postal_codes_headers
+        - country_code
+        - postal_code
+        - name
+        - adm1_name
+        - adm1_code
+        - adm2_name
+        - adm2_code
+        - adm3_name
+        - adm3_code
+        - lat
+        - lng
+        - accuracy
 
 
 postal_codes_MC:
