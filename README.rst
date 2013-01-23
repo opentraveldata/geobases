@@ -70,39 +70,6 @@ your ``~/.zshrc``:
 | ``autoload -U compinit``
 | ``compinit``
 
-Alternate branches
-~~~~~~~~~~~~~~~~~~
-
-You may switch branches before installation to have the compatibility
-with Python 3 or Pypy.
-
-Python 3
-^^^^^^^^
-
-If you want to use Python 3, you have to install the same prerequisites
-as before, but for Python 3, something like:
-
-``# yum install python3-setuptools.noarch python3-devel``
-
-Then install:
-
-| ``% cd geobases``
-| ``% git checkout 3000``
-| ``% python3 setup.py install --user``
-
-Pypy
-^^^^
-
-For Pypy, you must install it with:
-
-``# yum install pypy pypy-devel``
-
-Then install:
-
-| ``% cd geobases``
-| ``% git checkout pypy``
-| ``% sudo pypy setup.py install # this is not in user-space, not supported in pypy``
-
 OpenTrep wrapper
 ^^^^^^^^^^^^^^^^
 
@@ -181,8 +148,7 @@ You may provide other values than *data="ori\_por"*,
    *ori\_por* may have several lines for one iata\_code, and duplicates
    are dropped. \_\_id\_\_ is the special field containing the key.
 -  *data="airports"* will use geonames as data source for airports
--  *data="airports\_csv"* will use `Airport ORI <Airport ORI>`__ as data
-   source for airports
+-  *data="airports\_csv"* will use an airports data source
 -  *data="stations"* will use RFF data, from `the open data
    website <http://www.data.gouv.fr>`__, as data source for french train
    stations
@@ -217,20 +183,6 @@ You may provide other values than *data="ori\_por"*,
 All features are then data independent, and are available as long as
 geocodes are included in the data sources (which is not the case for
 countries or NLS nomenclature).
-
-Light version
--------------
-
-GeoBase contains many dependencies and data files, and this may be a
-pain when:
-
--  you want to package it for deployment in production (with a debian
-   package, you would have to package dependencies as well and so on)
--  you want to use it in a Hadoop streaming job, so you have to specify
-   every file that should be distributed on the Hadoop nodes
-
-If you only care a the Python API, the *ori\_por* source and only the
-major features, you may be interested in GeoBasesLight.
 
 Features
 --------
@@ -343,47 +295,48 @@ Then you may use:
 | ``% GeoBase --fuzzy marseille``
 | ``% GeoBase --help``
 
-Advanced usage: # Trouver les entrees en PACA % GeoBase -E adm1\_code -e
-B8
 
-| ``# Idem avec output programmer-friendly``
-| ``% GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name``
+Trouver les entrees en PACA::
+    % GeoBase -E adm1\_code -e B8
 
-| ``# Combiner avec une recherche par nom``
-| ``% GeoBase -E adm1_code -e B8 --fuzzy sur mer``
+Idem avec output programmer-friendly::
+    % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
-| ``# Tous les heliports dans un rayon de 200k de Paris``
-| ``% GeoBase --near PAR -N 200 -E location_type -e 'H' ``
+Combiner avec une recherche par nom::
+    % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
-| ``# 50 gares les plus proches de Paris``
-| ``% GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name``
+Tous les heliports dans un rayon de 200k de Paris::
+    % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
-| ``# Entrees ayant pour code iata SUF (il y en a plusieurs dans ori_por_multi!)``
-| ``% GeoBase -b ori_por_multi -E iata_code -e SUF ``
+50 gares les plus proches de Paris::
+    % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
 
-| ``# Pays dont le code postal est non-vide``
-| ``% GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet``
+Entrees ayant pour code iata SUF (il y en a plusieurs dans ori_por_multi!)::
+    % GeoBase -b ori_por_multi -E iata_code -e SUF
 
-| ``# OpenTrep binding``
-| ``% GeoBase -t sna francisco los agneles``
+Pays dont le code postal est non-vide::
+    % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
-| ``# Reading data input on stdin``
-| ``echo -e 'ORY^Orly\nCDG^Charles' |GeoBase  ``
+OpenTrep binding::
+    % GeoBase -t sna francisco los agneles
 
-| ``# Displaying all data on cities (e.g. location_type C or CA)``
-| ``echo 'C\nCA' | GeoBase -I location_type -s iata_code name location_type -q``
+Reading data input on stdin::
+    % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
 
-| ``# Display on map``
-| ``GeoBase -b stations --map``
-| `` ``
-| ``# Europe marker-less map``
-| ``GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__ ``
+Displaying all data on cities (e.g. location_type C or CA)::
+    % echo 'C\nCA' | GeoBase -I location_type -s iata_code name location_type -q
 
-| ``# How to display data on a map``
-| ``% cat tutu``
-| ``ORY^3``
-| ``CDG^7``
-| ``% cat tutu | cut -f 1 -d'^' |GeoBase -I -s iata_code lat lng -q -Q '^' N |join -t '^' - tutu |GeoBase -m -M H0 H3 ``
+Display on map::
+    % GeoBase -b stations --map
+
+Europe marker-less map::
+    % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
+
+How to display data on a map::
+    % cat tutu
+    ORY^3
+    CDG^7
+    % cat tutu | cut -f 1 -d'^' |GeoBase -I -s iata_code lat lng -q -Q '^' N |join -t '^' - tutu |GeoBase -m -M H0 H3
 
 If the previous commands fail, it might be because you PATH does not
 include the local bin directory, and you installed the package in user
@@ -392,7 +345,6 @@ space:
 | ``% export PATH=$PATH:$HOME/.local/bin``
 | ``% export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration``
 
-|GeoBaseMain.PNG|
 
 Further packaging
 -----------------
@@ -406,4 +358,3 @@ To create rpm packages
 | ``% rm -rf build dist *.egg-info``
 | ``% python setup.py bdist_rpm``
 
-.. |GeoBaseMain.PNG| image:: GeoBaseMain.PNG
