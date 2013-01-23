@@ -246,60 +246,6 @@ ori_por_multi:
     headers       : *ori_por_headers
 
 
-ori_por_private:
-    source    : Por/Ori/ori_por.csv
-    indexes   : iata_code
-    delimiter : ^
-    subdelimiters :
-        alt_name_section : ['=', '|']
-        alternatenames   : ','
-    headers   : &ori_por_private_headers
-        - iata_code
-        - icao_code
-        - is_geonames
-        - geoname_id
-        - name
-        - asciiname
-        - alternatenames
-        - lat
-        - lng
-        - fclass
-        - fcode
-        - country_code
-        - cc2
-        - admin1
-        - admin2
-        - admin3
-        - admin4
-        - population
-        - elevation
-        - gtopo30
-        - timezone
-        - gmt_offset
-        - dst_offset
-        - raw_offset
-        - moddate
-        - is_airport
-        - is_commercial
-        - continent_code
-        - tz_group
-        - numeric_code
-        - city_full_name
-        - city_code
-        - state_code
-        - region_code
-        - location_type
-        - wiki_link
-        - alt_name_section
-
-
-ori_por_private_multi:
-    source    : Por/Ori/ori_por.csv
-    indexes   : [iata_code, location_type]
-    delimiter : ^
-    headers   : *ori_por_private_headers
-
-
 ori_por_non_iata:
     source    : Por/Ori/ori_por_non_iata.csv
     indexes   : iata_code

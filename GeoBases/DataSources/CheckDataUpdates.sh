@@ -106,7 +106,6 @@ do_a_file() {
 # Files
 REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
 REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
-REF_URL_03='http://redmine.orinet.nce.amadeus.net/projects/oripor/repository/revisions/trunk/raw/admin/ori_por.csv'
 REF_URL_04='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
 REF_URL_05='http://download.geonames.org/export/dump/countryInfo.txt'
 REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
@@ -125,7 +124,6 @@ CHOOSED_13='MC.txt'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
-LOC_CSV_03='Por/Ori/ori_por.csv'
 LOC_CSV_04='Airlines/ori_airlines.csv'
 LOC_CSV_05='Countries/countryInfo.txt'
 LOC_CSV_06='TimeZones/timeZones.txt'
@@ -151,7 +149,6 @@ do_a_file "$REF_URL_12" "$LOC_CSV_12" 0 1 "$CHOOSED_12"
 do_a_file "$REF_URL_13" "$LOC_CSV_13" 0 1 "$CHOOSED_13"
 
 # The longest at the end
-do_a_file "$REF_URL_03" "$LOC_CSV_03" 1
 do_a_file "$REF_URL_02" "$LOC_CSV_02" 1
 do_a_file "$REF_URL_01" "$LOC_CSV_01" 1
 
