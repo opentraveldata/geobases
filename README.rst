@@ -12,13 +12,13 @@ written in Python.
 
 It relies on three other modules:
 
--  `GeoUtils <http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases/blobs/trunk/GeoBases/GeoUtils.py>`__:
+-  *GeoUtils*:
    to compute haversine distances between points
--  `LevenshteinUtils <http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases/blobs/trunk/GeoBases/LevenshteinUtils.py>`__:
+-  *LevenshteinUtils*:
    to calculate distances between strings. Indeed, we need a good tool
    to do it, in order to recognize things like station names in schedule
    files where we do not have the station id
--  `GeoGridModule <http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases/blobs/trunk/GeoBases/GeoGridModule.py>`__:
+-  *GeoGridModule*:
    a class implementing a geographical index based on geohashing
 
 
@@ -54,8 +54,7 @@ Then install the package:
 | ``% cd geobases``
 | ``% python setup.py install --user``
 
-This should install some dependencies from a local python packages
-repository `here <http://oridist.orinet/python/>`__.
+This should install some dependencies.
 
 A standalone script is put in ``~/.local/bin``, to benefit from it, put
 that in your ``~/.bashrc`` or ``~/.zshrc``:
