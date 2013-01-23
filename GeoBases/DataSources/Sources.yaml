@@ -390,13 +390,3 @@ postal_codes_MC:
     delimiter : "\t"
     headers   : *postal_codes_headers
 
-
-office_ids:
-    source    : Office_IDs/OfficeIDs_and_names.csv
-    indexes   : office_id
-    delimiter : ","
-    #quotechar : '"' # that is the default
-    headers   :
-        - office_id
-        - name
-
