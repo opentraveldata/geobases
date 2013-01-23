@@ -128,11 +128,7 @@ So you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 
 You will also find a `Rakefile <http://rake.rubyforge.org/>`__ at the
-root of the project.
-
-This is used by
-`Hudson <http://hudson.orinet/view/SRH/job/SRH_CI_GeoBases/>`__ for
-building and deploying the packages. Hudson executes the Rakefile which
+root of the project. This may be used to build and deploy the packages. The Rakefile
 is configured by the local ``release.yaml`` file.
 
 Deployment is done using webdav, and the Rakefile expects ``nd`` to be
@@ -178,8 +174,7 @@ You may provide other values than *data="ori\_por"*,
 *data="airports\_csv"* or *data="stations"*. Here is an overview:
 
 -  *data="ori\_por"* will load a local version of this
-   `file <http://redmine.orinet.nce.amadeus.net/projects/optd/repository/revisions/trunk/entry/refdata/ORI/ori_por_public.csv>`__
-   from `Redmine <http://redmine.orinet.nce.amadeus.net/projects/>`__
+   `file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`__
 -  *data="ori\_por\_multi"* is the same as previous, but the key for a
    line is not the iata\_code, but the concatenation of iata\_code and
    location\_type. This feature makes every line unique, whereas
@@ -213,22 +208,10 @@ You may provide other values than *data="ori\_por"*,
 -  *data="feature\_codes"* will load data on feature codes
 -  *data="ori\_por\_non\_iata"* will load some non-iata data excluded
    from *ori\_por*
--  *data="ori\_por\_private"* will load the private version of
-   *ori\_por*
--  *data="ori\_por\_private\_multi"* will load the private version of
-   *ori\_por\_multi*
 -  *data="geonames\_MC"* will load MC data of geonames
 -  *data="geonames\_FR"* will load FR data of geonames
--  *data="geonames\_all"* will load full data of geonames (data is
-   stored on the datacenter in this case, and loading may take one hour)
--  *data="office\_ids"* will load some office IDs information
--  *data="office\_ids\_midt"* will load some office IDs information that
-   is delivered through MIDT feed, loading may take 30 seconds (data is
-   not local)
 -  *data="postal\_codes\_MC"* will load MC postal codes data
 -  *data="postal\_codes\_FR"* will load FR postal codes data
--  *data="postal\_codes\_all"* will load all postal codes data (data is
-   stored on the datacenter in this case, and loading may take one hour)
 -  *data="feed"* will create an empty instance
 
 All features are then data independent, and are available as long as
@@ -402,13 +385,6 @@ B8
 | ``CDG^7``
 | ``% cat tutu | cut -f 1 -d'^' |GeoBase -I -s iata_code lat lng -q -Q '^' N |join -t '^' - tutu |GeoBase -m -M H0 H3 ``
 
-You may use
-`tag\_diff <http://gitorious.orinet.nce.amadeus.net/ipt/geodifftagger>`__
-to tag the geographical differences between two files, and then display
-this on a map:
-
-``% diff -u FR0.txt FR1.txt|grep -v '^ '|tag_diff - -i 1 5 6 |GeoBase -m -M _ _ H0 B``
-
 If the previous commands fail, it might be because you PATH does not
 include the local bin directory, and you installed the package in user
 space:
@@ -417,34 +393,6 @@ space:
 | ``% export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration``
 
 |GeoBaseMain.PNG|
-
-Webservices
------------
-
-Another package is built on top of GeoBases and contains webservices.
-
-| ``% git clone git@gitorious.orinet.nce.amadeus.net:dataanalysis/geobaseswebservices.git``
-| ``% cd geobaseswebservices``
-| ``% python setup.py install --user``
-
-Another standalone script is deployed after installation, to start
-webservices. % WebSrvGeoBases start % WebSrvGeoBases status
-
-Currently there are some experimental webservices providing some GeoBase
-features: http://nceorilnx06:14003/airports/ORY
-http://nceorilnx06:14003/airports/fuzzyGet?value=Marseille&N=3
-http://nceorilnx06:14003/airports/findNearPoint?lat=43&lng=2.55&radius=50
-http://nceorilnx06:14003/airports/findClosestFromPoint?lat=43&lng=2.55&N=2
-http://nceorilnx06:14003/stations/findClosestFromPoint?lat=43&lng=2.55&N=2
-http://nceorilnx06:14003/airports_csv/ORY
-http://nceorilnx06:14003/ori_por/ORY
-http://nceorilnx06:14003/ori_por/trepGet?value\ =%22sna%20francisco%22
-
-Some help is maintained here: http://nceorilnx06:14003/help
-
-If you have problem accessing the urls, perhaps the machine nceorilnx06
-has been rebooted recently. You may check `this <Nceorilnx06_reboot>`__
-to restart the server.
 
 Further packaging
 -----------------
@@ -457,10 +405,5 @@ To create rpm packages
 
 | ``% rm -rf build dist *.egg-info``
 | ``% python setup.py bdist_rpm``
-
-Aggregation
------------
-
-To perform aggregation on geographical data, visit the Aggregator page.
 
 .. |GeoBaseMain.PNG| image:: GeoBaseMain.PNG
