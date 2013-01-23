@@ -280,59 +280,72 @@ Installation of the package will also deploy a standalone script under
 the name GeoBase.
 
 If you use zsh and want to benefit from the *autocomplete*, add this to
-your ``~/.zshrc``:
+your ``~/.zshrc``::
 
-| ``# Add custom completion scripts``
-| ``fpath=(~/.zsh/completion $fpath)``
-| ``autoload -U compinit``
-| ``compinit``
+    # Add custom completion scripts
+    fpath=(~/.zsh/completion $fpath)
+    autoload -U compinit
+    compinit
 
-Then you may use:
+Then you may use::
 
-| ``% GeoBase ORY CDG``
-| ``% GeoBase --closest CDG``
-| ``% GeoBase --near LIG``
-| ``% GeoBase --fuzzy marseille``
-| ``% GeoBase --help``
+    % GeoBase ORY CDG
+    % GeoBase --closest CDG
+    % GeoBase --near LIG
+    % GeoBase --fuzzy marseille
+    % GeoBase --help
 
 
 Trouver les entrees en PACA::
+
  % GeoBase -E adm1\_code -e B8
 
 Idem avec output programmer-friendly::
+
  % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
 Combiner avec une recherche par nom::
+
  % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
 Tous les heliports dans un rayon de 200k de Paris::
+
  % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
 50 gares les plus proches de Paris::
+
  % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
 
 Entrees ayant pour code iata SUF (il y en a plusieurs dans ori_por_multi!)::
+
  % GeoBase -b ori_por_multi -E iata_code -e SUF
 
 Pays dont le code postal est non-vide::
+
  % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
 OpenTrep binding::
+
  % GeoBase -t sna francisco los agneles
 
 Reading data input on stdin::
+
  % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
 
 Displaying all data on cities (e.g. location_type C or CA)::
+
  % echo 'C\nCA' | GeoBase -I location_type -s iata_code name location_type -q
 
 Display on map::
+
  % GeoBase -b stations --map
 
 Europe marker-less map::
+
  % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
 
 How to display data on a map::
+
  % cat tutu
  ORY^3
  CDG^7
@@ -340,21 +353,21 @@ How to display data on a map::
 
 If the previous commands fail, it might be because you PATH does not
 include the local bin directory, and you installed the package in user
-space:
+space::
 
-| ``% export PATH=$PATH:$HOME/.local/bin``
-| ``% export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration``
+    % export PATH=$PATH:$HOME/.local/bin
+    % export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
 
 
 Further packaging
 -----------------
 
-To create source distribution (pip-installable):
+To create source distribution (pip-installable)::
 
-``% python setup.py sdist --format=zip``
+    % python setup.py sdist --format=zip
 
-To create rpm packages
+To create rpm packages::
 
-| ``% rm -rf build dist *.egg-info``
-| ``% python setup.py bdist_rpm``
+    % rm -rf build dist *.egg-info
+    % python setup.py bdist_rpm
 
