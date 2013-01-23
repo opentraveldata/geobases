@@ -359,35 +359,6 @@ feature_codes:
         - description
 
 
-geonames_all:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/Por/GeoNames/allCountries.txt
-    indexes   : geoname_id
-    delimiter : "\t"
-    subdelimiters :
-        alternatenames : ','
-    headers   : &geonames_headers
-        - geoname_id
-        - name
-        - asciiname
-        - alternatenames
-        - lat
-        - lng
-        - fclass
-        - fcode
-        - country_code
-        - cc2
-        - adm1_code
-        - adm2_code
-        - adm3_code
-        - adm4_code
-        - population
-        - elevation
-        - dem
-        - timezone
-        - moddate
-
-
 geonames_FR:
     source    : Por/GeoNames/FR.txt
     indexes   : geoname_id
@@ -406,26 +377,6 @@ geonames_MC:
     headers   : *geonames_headers
 
 
-postal_codes_all:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/PostalCodes/GeoNames/allCountries.txt
-    indexes   : &postal_codes_ind postal_code
-    delimiter : "\t"
-    headers   : &postal_codes_headers
-        - country_code
-        - postal_code
-        - name
-        - adm1_name
-        - adm1_code
-        - adm2_name
-        - adm2_code
-        - adm3_name
-        - adm3_code
-        - lat
-        - lng
-        - accuracy
-
-
 postal_codes_FR:
     source    : PostalCodes/GeoNames/FR.txt
     indexes   : *postal_codes_ind
@@ -438,20 +389,6 @@ postal_codes_MC:
     indexes   : *postal_codes_ind
     delimiter : "\t"
     headers   : *postal_codes_headers
-
-
-office_ids_midt:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/Office_IDs/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020121101.sf.csv
-    indexes   : office_id
-    delimiter : ^
-    headers   :
-        - office_id
-        - other_code
-        - country_code
-        - name
-        - address
-        - country_code_2
 
 
 office_ids:
