@@ -31,54 +31,54 @@ Prerequisites
 These prerequisites are very standard packages which are often installed
 by default on Linux distributions. But make sure you have them anyway.
 
-First you need to install *setuptools*:
+First you need to install *setuptools*::
 
-| ``# apt-get install python-setuptools    # for debian``
-| ``# yum install python-setuptools.noarch # for fedora``
+    # apt-get install python-setuptools    # for debian
+    # yum install python-setuptools.noarch # for fedora
 
-Then you need some basics compilation stuff to compile dependencies.
+Then you need some basics compilation stuff to compile dependencies::
 
-| ``# apt-get install python-dev g++    # for debian``
-| ``# yum install python-devel gcc-c++  # for fedora``
+    # apt-get install python-dev g++    # for debian
+    # yum install python-devel gcc-c++  # for fedora
 
 Installation
 ~~~~~~~~~~~~
 
 To clone the project from
-`github <https://github.com/opentraveldata/geobases.git>`__:
+`github <https://github.com/opentraveldata/geobases.git>`__::
 
-``% git clone https://github.com/opentraveldata/geobases.git``
+    % git clone https://github.com/opentraveldata/geobases.git
 
-Then install the package:
+Then install the package::
 
-| ``% cd geobases``
-| ``% python setup.py install --user``
+    % cd geobases
+    % python setup.py install --user
 
 This should install some dependencies.
 
 A standalone script is put in ``~/.local/bin``, to benefit from it, put
-that in your ``~/.bashrc`` or ``~/.zshrc``:
+that in your ``~/.bashrc`` or ``~/.zshrc``::
 
-| ``export PATH=$PATH:$HOME/.local/bin``
-| ``export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration``
+    export PATH=$PATH:$HOME/.local/bin
+    export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
 
 If you use zsh and want to benefit from the *autocomplete*, add this to
-your ``~/.zshrc``:
+your ``~/.zshrc``::
 
-| ``# Add custom completion scripts``
-| ``fpath=(~/.zsh/completion $fpath)``
-| ``autoload -U compinit``
-| ``compinit``
+    # Add custom completion scripts
+    fpath=(~/.zsh/completion $fpath)
+    autoload -U compinit
+    compinit
 
 OpenTrep wrapper
 ^^^^^^^^^^^^^^^^
 
 You may also export this variable before installation to install the
-*OpenTrepWrapper* as a dependency:
+*OpenTrepWrapper* as a dependency::
 
-| ``% git checkout trunk``
-| ``% export WITH_OPENTREP=1``
-| ``% python setup.py install --user``
+    % git checkout trunk
+    % export WITH_OPENTREP=1
+    % python setup.py install --user
 
 Note that this will only install the wrapper, not OpenTrep itself.
 
@@ -103,39 +103,39 @@ installed (this is a webdav client).
 
 To install nd, fetch the sources from
 `http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__. Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before:
+and install them. On 64 bits Fedora, you need to install libxml2 before::
 
-``# yum install libxml2.x86_64 libxml2-devel.x86_64``
+    # yum install libxml2.x86_64 libxml2-devel.x86_64
 
-After nd and rake installation, you may try:
+After nd and rake installation, you may try::
 
-``% rake``
+    % rake
 
 Virtualenv has bugs on 64 bits systems, if you are using such a system,
 you absolutely need to upgrade to the very last unreleased version of
-virtualenv, before executing rake:
+virtualenv, before executing rake::
 
-| ``% pip uninstall virtualenv``
-| ``% pip install --user https://github.com/pypa/virtualenv/tarball/develop``
+    % pip uninstall virtualenv
+    % pip install --user https://github.com/pypa/virtualenv/tarball/develop
 
 Tests
 -----
 
-You may try to run the tests with:
+You may try to run the tests with::
 
-| ``% find ./ -name '*.pyc' -exec rm {} \;``
-| ``% python test/test_GeoBases.py -v``
+    % find ./ -name '*.pyc' -exec rm {} \;
+    % python test/test_GeoBases.py -v
 
 Quickstart
 ----------
 
-To load the class, just import the main class with:
+To load the class, just import the main class with::
 
-| ``% python``
-| ``>>> from GeoBases import GeoBase``
-| ``>>> geo_o = GeoBase(data='ori_por', verbose=False)``
-| ``>>> geo_a = GeoBase(data='airports', verbose=False)``
-| ``>>> geo_t = GeoBase(data='stations', verbose=False)``
+    % python
+    >>> from GeoBases import GeoBase
+    >>> geo_o = GeoBase(data='ori_por', verbose=False)
+    >>> geo_a = GeoBase(data='airports', verbose=False)
+    >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You may provide other values than *data="ori\_por"*,
 *data="airports\_csv"* or *data="stations"*. Here is an overview:
@@ -189,89 +189,98 @@ Features
 
 Information access
 ~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> geo_a.get('CDG', 'city_code')``
-| ``'PAR'``
-| ``>>> geo_a.get('BRU', 'name')``
-| ``'Bruxelles National'``
-| ``>>> geo_t.get('frnic', 'name')``
-| ``'Nice-Ville'``
-| ``>>>``
-| ``>>> geo_t.get('frnic', 'not_a_field')``
-| ``Traceback (most recent call last):``
-| ``KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"``
-| ``>>> geo_t.get('fr_not_exist', 'name', default='NAME')``
-| ``'NAME'``
+    >>> geo_a.get('CDG', 'city_code')
+    'PAR'
+    >>> geo_a.get('BRU', 'name')
+    'Bruxelles National'
+    >>> geo_t.get('frnic', 'name')
+    'Nice-Ville'
+    >>>
+    >>> geo_t.get('frnic', 'not_a_field')
+    Traceback (most recent call last):
+    KeyError: "Field not_a_field not in ['code', 'lines', 'name', 'info', 'lat', 'lng', 'type']"
+    >>> geo_t.get('fr_not_exist', 'name', default='NAME')
+    'NAME'
 
 Find airports with properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]``
-| ``>>> list(geo_o.getKeysWhere(conditions, mode='and'))``
-| ``['JDP', 'JPU']``
-| ``>>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]``
-| ``>>> len(list(geo_o.getKeysWhere(conditions, mode='or')))``
-| ``34``
+    >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
+    >>> list(geo_o.getKeysWhere(conditions, mode='and'))
+    ['JDP', 'JPU']
+    >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
+    >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
+    34
 
 Distance calculation
 ~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> geo_a.distance('CDG', 'NCE')``
-| ``694.5162...``
+    >>> geo_a.distance('CDG', 'NCE')
+    694.5162...
 
 Find airports near a point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> # Paris, airports <= 50km``
-| ``>>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]``
-| ``['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']``
-| ``>>>``
-| ``>>> # Nice, stations <= 5km``
-| ``>>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]``
-| ``['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']``
+    >>> # Paris, airports <= 50km
+    >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
+    ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+    >>>
+    >>> # Nice, stations <= 5km
+    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
+    ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
 
 Find airports near a key
 ~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km``
-| ``[(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]``
-| ``>>> sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations <= 5km``
-| ``[(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]``
+    >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
+    [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
+    >>> sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations <= 5km
+    [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
 
 Find closest airports from a point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice``
-| ``[(5.82..., 'NCE')]``
-| ``>>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice``
-| ``[(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]``
-| ``>>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice``
-| ``[(0.56..., 'frnic')]``
-| ``>>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=('frpaz', 'frply', 'frbve'))) # Nice``
-| ``[(482.84..., 'frbve'), (683.89..., 'frpaz')]``
+    >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
+    [(5.82..., 'NCE')]
+    >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
+    [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
+    >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
+    [(0.56..., 'frnic')]
+    >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=('frpaz', 'frply', 'frbve'))) # Nice
+    [(482.84..., 'frbve'), (683.89..., 'frpaz')]
 
 Approximate name matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-| ``>>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]``
-| ``(0.8..., 'frmsc')``
-| ``>>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]``
-| ``(0.78..., 'CDG')``
-| ``>>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)``
-| ``[(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]``
-| ``>>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls``
-| ``(0.8..., 'frmsc')``
+    >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
+    (0.8..., 'frmsc')
+    >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+    (0.78..., 'CDG')
+    >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
+    [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
+    >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls
+    (0.8..., 'frmsc')
 
 OpenTrep binding
 ~~~~~~~~~~~~~~~~
+::
 
-| ``>>> geo_t.trepGet('sna francisco los agneles')``
-| ``[(31.5192, 'SFO'), (46.284, 'LAX')]``
+    >>> geo_t.trepGet('sna francisco los agneles')
+    [(31.5192, 'SFO'), (46.284, 'LAX')]
 
 Map display
 ~~~~~~~~~~~
+::
 
-``>>> geo_t.visualize()``
+    >>> geo_t.visualize()
 
 Standalone script
 -----------------
