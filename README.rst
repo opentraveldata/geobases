@@ -45,9 +45,9 @@ Installation
 ~~~~~~~~~~~~
 
 To clone the project from
-`gitorious <http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases>`__:
+`github <https://github.com/opentraveldata/geobases.git>`__:
 
-``% git clone git@gitorious.orinet.nce.amadeus.net:dataanalysis/geobases.git``
+``% git clone https://github.com/opentraveldata/geobases.git``
 
 Then install the package:
 
