@@ -21,8 +21,6 @@ It relies on three other modules:
 -  `GeoGridModule <http://gitorious.orinet.nce.amadeus.net/dataanalysis/geobases/blobs/trunk/GeoBases/GeoGridModule.py>`__:
    a class implementing a geographical index based on geohashing
 
-This module is currently a subpart of the `route server
-project <Routes>`__ , but can be used independently.
 
 Project
 -------
