@@ -101,7 +101,7 @@ To load the class, just import the main class with::
     >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You may provide other values than *data="ori\_por"*,
-*data="airports\_csv"* or *data="stations"*. Here is an overview:
+*data="airports"* or *data="stations"*. Here is an overview:
 
 -  *data="ori\_por"* will load a local version of this
    `file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`__

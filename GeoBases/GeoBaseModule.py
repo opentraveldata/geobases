@@ -189,19 +189,19 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
-        >>> fl = open(relative('DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
+        >>> fl = open(relative('DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'))
         >>> GeoBase(data='feed',
         ...         source=fl,
-        ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
-        ...         indexes='code',
+        ...         headers=['iata_code', 'name', 'city'],
+        ...         indexes='iata_code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
         >>> fl.close()
-        >>> GeoBase(data='airports_csv',
-        ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
+        >>> GeoBase(data='airports',
+        ...         headers=['iata_code', 'name', 'city'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
