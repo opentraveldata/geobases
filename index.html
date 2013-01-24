@@ -279,16 +279,16 @@ compinit
 
 <p>Then you may use:</p>
 
-<pre><code>% GeoBase ORY CDG
-% GeoBase --closest CDG
-% GeoBase --near LIG
-% GeoBase --fuzzy marseille
+<pre><code>% GeoBase ORY CDG              # query on the keys ORY and CDG
+% GeoBase --closest CDG        # closest from CDG
+% GeoBase --near LIG           # near LIG
+% GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
 % GeoBase --help
 </code></pre>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image"></p>
-
-<p>French riviera entries:</p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image">
+More examples here, for example how to do a search on a field, like
+admin code (french riviera here):</p>
 
 <pre><code>% GeoBase -E adm1_code -e B8
 </code></pre>
@@ -355,36 +355,34 @@ space:</p>
 </code></pre>
 
 <p>The <code>MANIFEST.in</code> file is used to determine which files will be included
-in a source distribution.</p>
-
-<p><code>package_data</code> directive in <code>setup.py</code> file is about which file will be
-exported in site-package after installation.</p>
-
-<p>So you really need both if you want to produce installable packages like
+in a source distribution. <code>package_data</code> directive in <code>setup.py</code> file is
+about which file will be exported in site-package after installation. So
+you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.</p>
 
 <p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the
 root of the project. This may be used to build and deploy the packages.
 Deployment may be done using webdav, and the Rakefile expects <code>nd</code> to be
 installed (this is a webdav client). To install nd, fetch the sources
-from <a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd/">http://www.gohome.org/nd/</a>. Then
-compile and install them. On 64 bits Fedora, you need to install libxml2
-before:</p>
+from
+<a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd">http://www.gohome.org/nd</a>/.
+Then compile and install them. On 64 bits Fedora, you need to install
+libxml2 before:</p>
 
-<pre><code># yum install libxml2.x86_64 libxml2-devel.x86_64
+<pre><code># yum install libxml2.x86_64 libxml2-devel.x86_64
 </code></pre>
 
 <p>After nd and rake installation, you may try:</p>
 
-<pre><code>% rake
+<pre><code>% rake
 </code></pre>
 
 <p>Virtualenv has bugs on 64 bits systems, if you are using such a system,
 you absolutely need to upgrade to the very last unreleased version of
 virtualenv, before executing rake:</p>
 
-<pre><code>% pip uninstall virtualenv
-% pip install --user https://github.com/pypa/virtualenv/tarball/develop
+<pre><code>% pip uninstall virtualenv
+% pip install --user https://github.com/pypa/virtualenv/tarball/develop
 </code></pre>
       </section>
     </div>
