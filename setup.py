@@ -34,7 +34,7 @@ DEPENDENCY_LINKS = [
     #'http://github.com/miohtama/python-Levenshtein/tarball/master#egg=python-Levenshtein-0.10.2.tar.gz'
 ]
 DEPENDENCY_LINKS_EXTRAS = {
-    'OpenTrep' : ['http://oridist.orinet/python/']
+    'OpenTrep' : ['https://github.com/trep/wrapper/tarball/master#egg=OpenTrepWrapper-0.7.tar.gz']
 }
 
 # Managing OpenTrep dependency
