@@ -237,7 +237,7 @@ Map display
     <BLANKLINE>
     (['example_map.html', 'example_table.html'], 2)
 
-.. image:: GeoBases-map.png
+.. image:: 'https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png'
 
 Standalone script
 -----------------
@@ -261,7 +261,7 @@ Then you may use::
     % GeoBase --fuzzy marseille
     % GeoBase --help
 
-.. image:: GeoBases-CLI.png
+.. image:: 'https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png'
 
 French riviera entries::
 
