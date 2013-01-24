@@ -273,7 +273,7 @@ OpenTrep binding
 ~~~~~~~~~~~~~~~~
 ::
 
-    >>> geo_t.trepGet('sna francisco los agneles')
+    >>> geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
     [(0.31..., 'SFO'), (0.46..., 'LAX')]
 
 
