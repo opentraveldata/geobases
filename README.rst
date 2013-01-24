@@ -274,37 +274,37 @@ your ``~/.zshrc``::
 
 Then you may use::
 
-    % GeoBase ORY CDG
-    % GeoBase --closest CDG
-    % GeoBase --near LIG
-    % GeoBase --fuzzy marseille
+    % GeoBase ORY CDG              # query on the keys ORY and CDG
+    % GeoBase --closest CDG        # closest from CDG
+    % GeoBase --near LIG           # near LIG
+    % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
     % GeoBase --help
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
 
-French riviera entries::
+More examples here, for example how to do a search on a field, like admin code (french riviera here)::
 
- % GeoBase -E adm1_code -e B8
+    % GeoBase -E adm1_code -e B8
 
 Same with programmer-friendly output (csv-like)::
 
- % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+    % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
 Add a fuzzy name search::
 
- % GeoBase -E adm1_code -e B8 --fuzzy sur mer
+    % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
 All heliports under 200 km from Paris::
 
- % GeoBase --near PAR -N 200 -E location_type -e 'H'
+    % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
 50 train stations closest to Paris::
 
- % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
+    % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
 
 Countries with non-empty postal code regex::
 
- % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
+    % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
 OpenTrep binding::
 
@@ -312,15 +312,15 @@ OpenTrep binding::
 
 Reading data input on stdin::
 
- % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
+    % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
 
 Display on map::
 
- % GeoBase -b stations --map
+    % GeoBase -b stations --map
 
 Europe marker-less map::
 
- % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
+    % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
 
 If the previous commands fail, it might be because you PATH does not
 include the local bin directory, and you installed the package in user
@@ -352,14 +352,11 @@ So you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 
 You will also find a `Rakefile <http://rake.rubyforge.org/>`__ at the
-root of the project. This may be used to build and deploy the packages. The Rakefile
-
-Deployment is done using webdav, and the Rakefile expects ``nd`` to be
+root of the project. This may be used to build and deploy the packages.
+Deployment may be done using webdav, and the Rakefile expects ``nd`` to be
 installed (this is a webdav client).
-
-To install nd, fetch the sources from
-`http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__. Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before::
+To install nd, fetch the sources from `http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__.
+Then compile and install them. On 64 bits Fedora, you need to install libxml2 before::
 
     # yum install libxml2.x86_64 libxml2-devel.x86_64
 
