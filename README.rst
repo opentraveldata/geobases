@@ -1,4 +1,3 @@
-
 GeoBases
 ========
 
@@ -238,6 +237,7 @@ Map display
     <BLANKLINE>
     (['example_map.html', 'example_table.html'], 2)
 
+.. image:: examples/GeoBases-map.png
 
 Standalone script
 -----------------
@@ -261,10 +261,11 @@ Then you may use::
     % GeoBase --fuzzy marseille
     % GeoBase --help
 
+.. image:: examples/GeoBases-CLI.png
 
 French riviera entries::
 
- % GeoBase -E adm1\_code -e B8
+ % GeoBase -E adm1_code -e B8
 
 Same with programmer-friendly output (csv-like)::
 
