@@ -88,7 +88,7 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 
 <pre><code>export PATH=$PATH:$HOME/.local/bin
-export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
+export BACKGROUND_COLOR=black # or 'white', your call
 </code></pre>
 
 <p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
@@ -119,8 +119,8 @@ compinit
 &gt;&gt;&gt; geo_t = GeoBase(data='stations', verbose=False)
 </code></pre>
 
-<p>You may provide other values than <em>data="ori_por"</em>,
-<em>data="airports"</em> or <em>data="stations"</em>. Here is an overview:</p>
+<p>You may provide other values than <em>data="ori_por"</em>, <em>data="airports"</em>
+or <em>data="stations"</em>. Here is an overview:</p>
 
 <ul>
 <li>  <em>data="ori_por"</em> will load a local version of this
@@ -177,10 +177,6 @@ countries or NLS nomenclature).</p>
 'Bruxelles National'
 &gt;&gt;&gt; geo_t.get('frnic', 'name')
 'Nice-Ville'
-&gt;&gt;&gt;
-&gt;&gt;&gt; geo_t.get('frnic', 'not_a_field')
-Traceback (most recent call last):
-KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__par__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
 &gt;&gt;&gt; geo_t.get('fr_not_exist', 'name', default='NAME')
 'NAME'
 </code></pre>
@@ -204,32 +200,30 @@ KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name',
 <h3>Find airports near a point</h3>
 
 <pre><code>&gt;&gt;&gt; # Paris, airports &lt;= 50km
-&gt;&gt;&gt; [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
-['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+&gt;&gt;&gt; [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
+['ORY', 'LBG', 'TNF', 'CDG']
 &gt;&gt;&gt;
 &gt;&gt;&gt; # Nice, stations &lt;= 5km
-&gt;&gt;&gt; [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
-['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+&gt;&gt;&gt; [geo_t.get(k, 'name') for _, k in geo_t.findNearPoint((43.70, 7.26), 4)]
+['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
 </code></pre>
 
 <h3>Find airports near a key</h3>
 
 <pre><code>&gt;&gt;&gt; sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports &lt;= 50km
 [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations &lt;= 5km
-[(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+&gt;&gt;&gt;
+&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations &lt;= 3km
+[(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
 </code></pre>
 
 <h3>Find closest airports from a point</h3>
 
 <pre><code>&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
 [(5.82..., 'NCE')]
+&gt;&gt;&gt;
 &gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
 [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-&gt;&gt;&gt; list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
-[(0.56..., 'frnic')]
-&gt;&gt;&gt; list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=('frpaz', 'frply', 'frbve'))) # Nice
-[(482.84..., 'frbve'), (683.89..., 'frpaz')]
 </code></pre>
 
 <h3>Approximate name matching</h3>
@@ -238,10 +232,6 @@ KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name',
 (0.8..., 'frmsc')
 &gt;&gt;&gt; geo_a.fuzzyGet('paris de gaulle', 'name')[0]
 (0.78..., 'CDG')
-&gt;&gt;&gt; geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
-[(0.78..., 'CDG')]
-&gt;&gt;&gt; geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls
-(0.8..., 'frmsc')
 </code></pre>
 
 <h3>Map display</h3>
@@ -261,22 +251,10 @@ rm example.json ...
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png" alt="image"></p>
 
-<h2>API documentation</h2>
-You may find the Sphinx API documentation <a href="api/index.html">here</a>.
-
 <h2>Standalone script</h2>
 
-<p>Installation of the package will also deploy a standalone script under
-the name GeoBase.</p>
-
-<p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
-your <code>~/.zshrc</code>:</p>
-
-<pre><code># Add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
-autoload -U compinit
-compinit
-</code></pre>
+<p>Installation of the package will also deploy a standalone script named
+<code>GeoBase</code>.</p>
 
 <p>Then you may use:</p>
 
@@ -294,7 +272,8 @@ admin code (french riviera here):</p>
 <pre><code>% GeoBase -E adm1_code -e B8
 </code></pre>
 
-<p>Same with programmer-friendly output (csv-like):</p>
+<p>Same with programmer-friendly output (csv-like, controlled with
+<code>--show</code>):</p>
 
 <pre><code>% GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 </code></pre>
@@ -311,7 +290,7 @@ admin code (french riviera here):</p>
 
 <p>50 train stations closest to Paris:</p>
 
-<pre><code>% GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
+<pre><code>% GeoBase -E location_type -e R --closest PAR -C 50
 </code></pre>
 
 <p>Countries with non-empty postal code regex:</p>
@@ -321,7 +300,7 @@ admin code (french riviera here):</p>
 
 <p>Reading data input on stdin:</p>
 
-<pre><code>% echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
+<pre><code>% echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
 </code></pre>
 
 <p>Display on map:</p>
@@ -332,14 +311,6 @@ admin code (french riviera here):</p>
 <p>Europe marker-less map:</p>
 
 <pre><code>% GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
-</code></pre>
-
-<p>If the previous commands fail, it might be because you PATH does not
-include the local bin directory, and you installed the package in user
-space:</p>
-
-<pre><code>% export PATH=$PATH:$HOME/.local/bin
-% export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
 </code></pre>
 
 <h2>Packaging</h2>
