@@ -305,31 +305,27 @@ Then you may use::
     % GeoBase --help
 
 
-Trouver les entrees en PACA::
+French riviera entries::
 
  % GeoBase -E adm1\_code -e B8
 
-Idem avec output programmer-friendly::
+Same with programmer-friendly output (csv-like)::
 
  % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
-Combiner avec une recherche par nom::
+Add a fuzzy name search::
 
  % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
-Tous les heliports dans un rayon de 200k de Paris::
+All heliports under 200 km from Paris::
 
  % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
-50 gares les plus proches de Paris::
+50 train stations closest to Paris::
 
  % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
 
-Entrees ayant pour code iata SUF (il y en a plusieurs dans ori_por_multi!)::
-
- % GeoBase -b ori_por_multi -E iata_code -e SUF
-
-Pays dont le code postal est non-vide::
+Countries with non-empty postal code regex::
 
  % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
