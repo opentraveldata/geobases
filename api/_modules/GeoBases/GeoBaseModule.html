@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="GeoBases 4 documentation" href="../../index.html" />
-    <link rel="up" title="GeoBases" href="../GeoBases.html" /> 
+    <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,8 +39,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="../../index.html">GeoBases 4 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../GeoBases.html" accesskey="U">GeoBases</a> &raquo;</li> 
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -241,19 +240,19 @@
 <span class="sd">        Traceback (most recent call last):</span>
 <span class="sd">        ValueError: Wrong data type. Not in [&#39;airlines&#39;, ...]</span>
 <span class="sd">        &gt;&gt;&gt; </span>
-<span class="sd">        &gt;&gt;&gt; fl = open(relative(&#39;DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; fl = open(relative(&#39;DataSources/Airports/GeoNames/airports_geonames_only_clean.csv&#39;))</span>
 <span class="sd">        &gt;&gt;&gt; GeoBase(data=&#39;feed&#39;,</span>
 <span class="sd">        ...         source=fl,</span>
-<span class="sd">        ...         headers=[&#39;code&#39;, &#39;ref_name&#39;, &#39;ref_name_2&#39;, &#39;name&#39;],</span>
-<span class="sd">        ...         indexes=&#39;code&#39;,</span>
+<span class="sd">        ...         headers=[&#39;iata_code&#39;, &#39;name&#39;, &#39;city&#39;],</span>
+<span class="sd">        ...         indexes=&#39;iata_code&#39;,</span>
 <span class="sd">        ...         delimiter=&#39;^&#39;,</span>
 <span class="sd">        ...         verbose=False).get(&#39;ORY&#39;)</span>
-<span class="sd">        {&#39;code&#39;: &#39;ORY&#39;, &#39;name&#39;: &#39;PARIS/FR:ORLY&#39;, &#39;__gar__&#39;: &#39;PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A&#39;, &#39;__par__&#39;: [], &#39;__dup__&#39;: [], &#39;__key__&#39;: &#39;ORY&#39;, &#39;ref_name_2&#39;: &#39;PARIS ORLY&#39;, &#39;__lno__&#39;: 6014, &#39;ref_name&#39;: &#39;PARIS ORLY&#39;}</span>
+<span class="sd">        {&#39;city&#39;: &#39;PAR&#39;, &#39;name&#39;: &#39;Paris-Orly&#39;, &#39;iata_code&#39;: &#39;ORY&#39;, &#39;__gar__&#39;: &#39;FR^France^48.7252780^2.3594440&#39;, &#39;__par__&#39;: [], &#39;__dup__&#39;: [], &#39;__key__&#39;: &#39;ORY&#39;, &#39;__lno__&#39;: 798}</span>
 <span class="sd">        &gt;&gt;&gt; fl.close()</span>
-<span class="sd">        &gt;&gt;&gt; GeoBase(data=&#39;airports_csv&#39;,</span>
-<span class="sd">        ...         headers=[&#39;iata_code&#39;, &#39;ref_name&#39;, &#39;ref_name_2&#39;, &#39;name&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; GeoBase(data=&#39;airports&#39;,</span>
+<span class="sd">        ...         headers=[&#39;iata_code&#39;, &#39;name&#39;, &#39;city&#39;],</span>
 <span class="sd">        ...         verbose=False).get(&#39;ORY&#39;)</span>
-<span class="sd">        {&#39;name&#39;: &#39;PARIS/FR:ORLY&#39;, &#39;iata_code&#39;: &#39;ORY&#39;, &#39;__gar__&#39;: &#39;PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A&#39;, &#39;__par__&#39;: [], &#39;__dup__&#39;: [], &#39;__key__&#39;: &#39;ORY&#39;, &#39;ref_name_2&#39;: &#39;PARIS ORLY&#39;, &#39;__lno__&#39;: 6014, &#39;ref_name&#39;: &#39;PARIS ORLY&#39;}</span>
+<span class="sd">        {&#39;city&#39;: &#39;PAR&#39;, &#39;name&#39;: &#39;Paris-Orly&#39;, &#39;iata_code&#39;: &#39;ORY&#39;, &#39;__gar__&#39;: &#39;FR^France^48.7252780^2.3594440&#39;, &#39;__par__&#39;: [], &#39;__dup__&#39;: [], &#39;__key__&#39;: &#39;ORY&#39;, &#39;__lno__&#39;: 798}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># Main structure in which everything will be loaded</span>
         <span class="c"># Dictionary of dictionary</span>
@@ -1823,8 +1822,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="../../index.html">GeoBases 4 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../GeoBases.html" >GeoBases</a> &raquo;</li> 
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
