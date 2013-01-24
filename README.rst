@@ -59,7 +59,7 @@ A standalone script is put in ``~/.local/bin``, to benefit from it, put
 that in your ``~/.bashrc`` or ``~/.zshrc``::
 
     export PATH=$PATH:$HOME/.local/bin
-    export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
+    export BACKGROUND_COLOR=black # or 'white', your call
 
 If you use zsh and want to benefit from the *autocomplete*, add this to
 your ``~/.zshrc``::
@@ -159,10 +159,6 @@ Information access
     'Bruxelles National'
     >>> geo_t.get('frnic', 'name')
     'Nice-Ville'
-    >>>
-    >>> geo_t.get('frnic', 'not_a_field')
-    Traceback (most recent call last):
-    KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__par__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
     >>> geo_t.get('fr_not_exist', 'name', default='NAME')
     'NAME'
 
@@ -189,12 +185,12 @@ Find airports near a point
 ::
 
     >>> # Paris, airports <= 50km
-    >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
-    ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+    >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
+    ['ORY', 'LBG', 'TNF', 'CDG']
     >>>
     >>> # Nice, stations <= 5km
-    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
-    ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+    >>> [geo_t.get(k, 'name') for _, k in geo_t.findNearPoint((43.70, 7.26), 4)]
+    ['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
 
 Find airports near a key
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,8 +198,10 @@ Find airports near a key
 
     >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
     [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-    >>> sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations <= 5km
-    [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+    >>>
+    >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations <= 3km
+    [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
+
 
 Find closest airports from a point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,12 +209,9 @@ Find closest airports from a point
 
     >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
     [(5.82..., 'NCE')]
+    >>>
     >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
     [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-    >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
-    [(0.56..., 'frnic')]
-    >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=('frpaz', 'frply', 'frbve'))) # Nice
-    [(482.84..., 'frbve'), (683.89..., 'frpaz')]
 
 Approximate name matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,10 +221,6 @@ Approximate name matching
     (0.8..., 'frmsc')
     >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
     (0.78..., 'CDG')
-    >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
-    [(0.78..., 'CDG')]
-    >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls
-    (0.8..., 'frmsc')
 
 OpenTrep binding
 ~~~~~~~~~~~~~~~~
@@ -260,16 +251,7 @@ Map display
 Standalone script
 -----------------
 
-Installation of the package will also deploy a standalone script under
-the name GeoBase.
-
-If you use zsh and want to benefit from the *autocomplete*, add this to
-your ``~/.zshrc``::
-
-    # Add custom completion scripts
-    fpath=(~/.zsh/completion $fpath)
-    autoload -U compinit
-    compinit
+Installation of the package will also deploy a standalone script named ``GeoBase``.
 
 Then you may use::
 
@@ -285,7 +267,7 @@ More examples here, for example how to do a search on a field, like admin code (
 
     % GeoBase -E adm1_code -e B8
 
-Same with programmer-friendly output (csv-like)::
+Same with programmer-friendly output (csv-like, controlled with ``--show``)::
 
     % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
@@ -299,7 +281,7 @@ All heliports under 200 km from Paris::
 
 50 train stations closest to Paris::
 
-    % GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
+    % GeoBase -E location_type -e R --closest PAR -C 50
 
 Countries with non-empty postal code regex::
 
@@ -311,7 +293,7 @@ OpenTrep binding::
 
 Reading data input on stdin::
 
-    % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
+    % echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
 
 Display on map::
 
@@ -320,13 +302,6 @@ Display on map::
 Europe marker-less map::
 
     % GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
-
-If the previous commands fail, it might be because you PATH does not
-include the local bin directory, and you installed the package in user
-space::
-
-    % export PATH=$PATH:$HOME/.local/bin
-    % export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
 
 
 Packaging
