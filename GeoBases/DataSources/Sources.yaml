@@ -338,15 +338,6 @@ cabins:
         - name
 
 
-regions:
-    source    : Regions/regions.csv
-    indexes   : code
-    delimiter : ;
-    headers   :
-        - code
-        - name
-
-
 locales:
     source    : Locales/locales.csv
     indexes   : locale

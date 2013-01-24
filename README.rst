@@ -129,7 +129,6 @@ You may provide other values than *data="ori\_por"*,
 -  *data="airlines"* will load data on airlines, extracted from
    this `file <https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv>`__
 -  *data="cabins"* will load data on cabins
--  *data="regions"* will load data on regions
 -  *data="locales"* will load data on locales
 -  *data="location\_types"* will load data on location types
 -  *data="feature\_classes"* will load data on feature classes
