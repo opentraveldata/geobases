@@ -110,8 +110,8 @@ You may provide other values than *data="ori\_por"*,
 -   *data="cities"* will load data on cities, extracted from geonames
 -   *data="currencies"* will load data on currencies, extracted from
     wikipedia
--   *data="airlines"* will load data on airlines, extracted from
-    this [file](https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv)
+-   *data="airlines"* will load data on airlines, extracted from this
+    [file](https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv)
 -   *data="cabins"* will load data on cabins
 -   *data="regions"* will load data on regions
 -   *data="locales"* will load data on locales
@@ -307,14 +307,11 @@ rpms or zip which can be installed afterwards.
 
 You will also find a [Rakefile](http://rake.rubyforge.org/) at the
 root of the project. This may be used to build and deploy the packages.
-The Rakefile
-
-Deployment is done using webdav, and the Rakefile expects `nd` to be
-installed (this is a webdav client).
-
-To install nd, fetch the sources from
-[<http://www.gohome.org/nd/>](http://www.gohome.org/nd/). Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before:
+Deployment may be done using webdav, and the Rakefile expects `nd` to be
+installed (this is a webdav client). To install nd, fetch the sources
+from [<http://www.gohome.org/nd/>](http://www.gohome.org/nd/). Then
+compile and install them. On 64 bits Fedora, you need to install libxml2
+before:
 
     # yum install libxml2.x86_64 libxml2-devel.x86_64
 
