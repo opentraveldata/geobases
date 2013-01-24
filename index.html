@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="GeoBases : Data services and visualization" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>GeoBases</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/opentraveldata/geobases">View on GitHub</a>
+
+          <h1 id="project_title">GeoBases</h1>
+          <h2 id="project_tagline">Data services and visualization</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/opentraveldata/geobases/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/opentraveldata/geobases/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>GeoBases</h1>
+
+<h2>Introduction</h2>
+
+<p>This module is a general class <em>GeoBase</em> to manipulate geographical
+data. It loads static csv files containing data about airports or train
+stations, and then provides tools to play with it. This is entirely
+written in Python.</p>
+
+<p>It relies on three other modules:</p>
+
+<ul>
+<li>  <em>GeoUtils</em>: to compute haversine distances between points</li>
+<li>  <em>LevenshteinUtils</em>: to calculate distances between strings. Indeed,
+we need a good tool to do it, in order to recognize things like
+station names in schedule files where we do not have the station id</li>
+<li>  <em>GeoGridModule</em>: a class implementing a geographical index based on
+geohashing</li>
+</ul><h2>Project</h2>
+
+<h3>Prerequisites</h3>
+
+<p>These prerequisites are very standard packages which are often installed
+by default on Linux distributions. But make sure you have them anyway.</p>
+
+<p>First you need to install <em>setuptools</em>:</p>
+
+<pre><code># apt-get install python-setuptools    # for debian
+# yum install python-setuptools.noarch # for fedora
+</code></pre>
+
+<p>Then you need some basics compilation stuff to compile dependencies:</p>
+
+<pre><code># apt-get install python-dev g++    # for debian
+# yum install python-devel gcc-c++  # for fedora
+</code></pre>
+
+<h3>Installation</h3>
+
+<p>To clone the project from
+<a href="https://github.com/opentraveldata/geobases.git">github</a>:</p>
+
+<pre><code>% git clone https://github.com/opentraveldata/geobases.git
+</code></pre>
+
+<p>Then install the package:</p>
+
+<pre><code>% cd geobases
+% python setup.py install --user
+</code></pre>
+
+<p>This should install some dependencies.</p>
+
+<p>A standalone script is put in <code>~/.local/bin</code>, to benefit from it, put
+that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
+
+<pre><code>export PATH=$PATH:$HOME/.local/bin
+export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
+</code></pre>
+
+<p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
+your <code>~/.zshrc</code>:</p>
+
+<pre><code># Add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
+</code></pre>
+
+<h2>Tests</h2>
+
+<p>You may try to run the tests with:</p>
+
+<pre><code>% find ./ -name '*.pyc' -exec rm {} \;
+% python test/test_GeoBases.py -v
+</code></pre>
+
+<h2>Quickstart</h2>
+
+<p>To load the class, just import the main class with:</p>
+
+<pre><code>% python
+&gt;&gt;&gt; from GeoBases import GeoBase
+&gt;&gt;&gt; geo_o = GeoBase(data='ori_por', verbose=False)
+&gt;&gt;&gt; geo_a = GeoBase(data='airports', verbose=False)
+&gt;&gt;&gt; geo_t = GeoBase(data='stations', verbose=False)
+</code></pre>
+
+<p>You may provide other values than <em>data="ori_por"</em>,
+<em>data="airports_csv"</em> or <em>data="stations"</em>. Here is an overview:</p>
+
+<ul>
+<li>  <em>data="ori_por"</em> will load a local version of this
+<a href="https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv">file</a>
+</li>
+<li>  <em>data="ori_por_multi"</em> is the same as previous, but the key for a
+line is not the iata_code, but the concatenation of iata_code and
+location_type. This feature makes every line unique, whereas
+<em>ori_por</em> may have several lines for one iata_code, and duplicates
+are dropped. __id__ is the special field containing the key.</li>
+<li>  <em>data="airports"</em> will use geonames as data source for airports</li>
+<li>  <em>data="airports_csv"</em> will use an airports data source</li>
+<li>  <em>data="stations"</em> will use RFF data, from <a href="http://www.data.gouv.fr">the open data
+website</a>, as data source for french train
+stations</li>
+<li>  <em>data="stations_nls"</em> will use NLS nomenclature as data source for
+french train stations</li>
+<li>  <em>data="stations_uic"</em> will use UIC nomenclature as data source for
+french train stations</li>
+<li>  <em>data="countries"</em> will load data on countries</li>
+<li>  <em>data="capitals"</em> will load data on countries capitals</li>
+<li>  <em>data="continents"</em> will load data on continents</li>
+<li>  <em>data="timezones"</em> will load data on timezones</li>
+<li>  <em>data="languages"</em> will load data on languages</li>
+<li>  <em>data="cities"</em> will load data on cities, extracted from geonames</li>
+<li>  <em>data="currencies"</em> will load data on currencies, extracted from
+wikipedia</li>
+<li>  <em>data="airlines"</em> will load data on airlines, extracted from
+this <a href="https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv">file</a>
+</li>
+<li>  <em>data="cabins"</em> will load data on cabins</li>
+<li>  <em>data="regions"</em> will load data on regions</li>
+<li>  <em>data="locales"</em> will load data on locales</li>
+<li>  <em>data="location_types"</em> will load data on location types</li>
+<li>  <em>data="feature_classes"</em> will load data on feature classes</li>
+<li>  <em>data="feature_codes"</em> will load data on feature codes</li>
+<li>  <em>data="ori_por_non_iata"</em> will load some non-iata data excluded
+from <em>ori_por</em>
+</li>
+<li>  <em>data="geonames_MC"</em> will load MC data of geonames</li>
+<li>  <em>data="geonames_FR"</em> will load FR data of geonames</li>
+<li>  <em>data="postal_codes_MC"</em> will load MC postal codes data</li>
+<li>  <em>data="postal_codes_FR"</em> will load FR postal codes data</li>
+<li>  <em>data="feed"</em> will create an empty instance</li>
+</ul><p>All features are then data independent, and are available as long as
+geocodes are included in the data sources (which is not the case for
+countries or NLS nomenclature).</p>
+
+<h2>Features</h2>
+
+<h3>Information access</h3>
+
+<pre><code>&gt;&gt;&gt; geo_a.get('CDG', 'city_code')
+'PAR'
+&gt;&gt;&gt; geo_a.get('BRU', 'name')
+'Bruxelles National'
+&gt;&gt;&gt; geo_t.get('frnic', 'name')
+'Nice-Ville'
+&gt;&gt;&gt;
+&gt;&gt;&gt; geo_t.get('frnic', 'not_a_field')
+Traceback (most recent call last):
+KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__par__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
+&gt;&gt;&gt; geo_t.get('fr_not_exist', 'name', default='NAME')
+'NAME'
+</code></pre>
+
+<h3>Find airports with properties</h3>
+
+<pre><code>&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('location_type', 'H')]
+&gt;&gt;&gt; list(geo_o.getKeysWhere(conditions, mode='and'))
+['JDP', 'JPU']
+&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
+&gt;&gt;&gt; len(list(geo_o.getKeysWhere(conditions, mode='or')))
+36
+</code></pre>
+
+<h3>Distance calculation</h3>
+
+<pre><code>&gt;&gt;&gt; geo_a.distance('CDG', 'NCE')
+694.5162...
+</code></pre>
+
+<h3>Find airports near a point</h3>
+
+<pre><code>&gt;&gt;&gt; # Paris, airports &lt;= 50km
+&gt;&gt;&gt; [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
+['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Nice, stations &lt;= 5km
+&gt;&gt;&gt; [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
+['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+</code></pre>
+
+<h3>Find airports near a key</h3>
+
+<pre><code>&gt;&gt;&gt; sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports &lt;= 50km
+[(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
+&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations &lt;= 5km
+[(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+</code></pre>
+
+<h3>Find closest airports from a point</h3>
+
+<pre><code>&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
+[(5.82..., 'NCE')]
+&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
+[(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
+&gt;&gt;&gt; list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
+[(0.56..., 'frnic')]
+&gt;&gt;&gt; list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=('frpaz', 'frply', 'frbve'))) # Nice
+[(482.84..., 'frbve'), (683.89..., 'frpaz')]
+</code></pre>
+
+<h3>Approximate name matching</h3>
+
+<pre><code>&gt;&gt;&gt; geo_t.fuzzyGet('Marseille Charles', 'name')[0]
+(0.8..., 'frmsc')
+&gt;&gt;&gt; geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+(0.78..., 'CDG')
+&gt;&gt;&gt; geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3)
+[(0.78..., 'CDG')]
+&gt;&gt;&gt; geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls
+(0.8..., 'frmsc')
+</code></pre>
+
+<h3>Map display</h3>
+
+<pre><code>&gt;&gt;&gt; geo_t.visualize()
+* Added lines for duplicates linking, total 0
+&gt; Affecting category None     to color blue    | volume 3190
+&lt;BLANKLINE&gt;
+* Now you may use your browser to visualize:
+example_map.html example_table.html
+&lt;BLANKLINE&gt;
+* If you want to clean the temporary files:
+rm example.json ...
+&lt;BLANKLINE&gt;
+(['example_map.html', 'example_table.html'], 2)
+</code></pre>
+
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png" alt="image"></p>
+
+<h2>Standalone script</h2>
+
+<p>Installation of the package will also deploy a standalone script under
+the name GeoBase.</p>
+
+<p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
+your <code>~/.zshrc</code>:</p>
+
+<pre><code># Add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
+</code></pre>
+
+<p>Then you may use:</p>
+
+<pre><code>% GeoBase ORY CDG
+% GeoBase --closest CDG
+% GeoBase --near LIG
+% GeoBase --fuzzy marseille
+% GeoBase --help
+</code></pre>
+
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image"></p>
+
+<p>French riviera entries:</p>
+
+<pre><code>% GeoBase -E adm1_code -e B8
+</code></pre>
+
+<p>Same with programmer-friendly output (csv-like):</p>
+
+<pre><code>% GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+</code></pre>
+
+<p>Add a fuzzy name search:</p>
+
+<pre><code>% GeoBase -E adm1_code -e B8 --fuzzy sur mer
+</code></pre>
+
+<p>All heliports under 200 km from Paris:</p>
+
+<pre><code>% GeoBase --near PAR -N 200 -E location_type -e 'H'
+</code></pre>
+
+<p>50 train stations closest to Paris:</p>
+
+<pre><code>% GeoBase -E location_type -e R --closest PAR -C 50  --quiet --show iata_code name
+</code></pre>
+
+<p>Countries with non-empty postal code regex:</p>
+
+<pre><code>% GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
+</code></pre>
+
+<p>Reading data input on stdin:</p>
+
+<pre><code>% echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
+</code></pre>
+
+<p>Display on map:</p>
+
+<pre><code>% GeoBase -b stations --map
+</code></pre>
+
+<p>Europe marker-less map:</p>
+
+<pre><code>% GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
+</code></pre>
+
+<p>If the previous commands fail, it might be because you PATH does not
+include the local bin directory, and you installed the package in user
+space:</p>
+
+<pre><code>% export PATH=$PATH:$HOME/.local/bin
+% export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
+</code></pre>
+
+<h2>Packaging</h2>
+
+<p>To create source distribution (pip-installable):</p>
+
+<pre><code>% python setup.py sdist --format=zip
+</code></pre>
+
+<p>To create rpm packages:</p>
+
+<pre><code>% rm -rf build dist *.egg-info
+% python setup.py bdist_rpm
+</code></pre>
+
+<p>The <code>MANIFEST.in</code> file is used to determine which files will be included
+in a source distribution.</p>
+
+<p><code>package_data</code> directive in <code>setup.py</code> file is about which file will be
+exported in site-package after installation.</p>
+
+<p>So you really need both if you want to produce installable packages like
+rpms or zip which can be installed afterwards.</p>
+
+<p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the
+root of the project. This may be used to build and deploy the packages.
+The Rakefile</p>
+
+<p>Deployment is done using webdav, and the Rakefile expects <code>nd</code> to be
+installed (this is a webdav client).</p>
+
+<p>To install nd, fetch the sources from
+<a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd/">http://www.gohome.org/nd/</a>. Then compile
+and install them. On 64 bits Fedora, you need to install libxml2 before:</p>
+
+<pre><code># yum install libxml2.x86_64 libxml2-devel.x86_64
+</code></pre>
+
+<p>After nd and rake installation, you may try:</p>
+
+<pre><code>% rake
+</code></pre>
+
+<p>Virtualenv has bugs on 64 bits systems, if you are using such a system,
+you absolutely need to upgrade to the very last unreleased version of
+virtualenv, before executing rake:</p>
+
+<pre><code>% pip uninstall virtualenv
+% pip install --user https://github.com/pypa/virtualenv/tarball/develop
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">GeoBases maintained by <a href="https://github.com/opentraveldata">opentraveldata</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
