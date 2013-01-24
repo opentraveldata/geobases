@@ -117,7 +117,7 @@ You may provide other values than *data="ori\_por"*,
 -  *data="currencies"* will load data on currencies, extracted from
    wikipedia
 -  *data="airlines"* will load data on airlines, extracted from
-   CRB\_Airline
+   this `file <https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv>`__
 -  *data="cabins"* will load data on cabins
 -  *data="regions"* will load data on regions
 -  *data="locales"* will load data on locales
