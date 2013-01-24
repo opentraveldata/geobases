@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GeoBases.LevenshteinUtils &mdash; GeoBases 4 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="GeoBases 4 documentation" href="../../index.html" />
+    <link rel="up" title="GeoBases" href="../GeoBases.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">GeoBases 4 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../GeoBases.html" accesskey="U">GeoBases</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for GeoBases.LevenshteinUtils</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is composed of several functions useful</span>
+<span class="sd">for performing string comparisons. It is oriented for data like names of</span>
+<span class="sd">cities, airports, train stations, because the string comparisons</span>
+<span class="sd">will not count standard words like &#39;ville&#39; or &#39;sncf&#39;.</span>
+
+
+<span class="sd">Functions frequently used by other modules:</span>
+
+<span class="sd">    - mod_leven: a function to compute the distance between two</span>
+<span class="sd">      strings. It is based on the Levenshtein ratio.</span>
+<span class="sd">    - clean: a function to clean string before comparisons</span>
+
+
+<span class="sd">This module strongly relies on one other module:</span>
+
+<span class="sd">    - Levenshtein: this module implements some standard algorithms</span>
+<span class="sd">      to compare strings, such as the Levenshtein distance</span>
+
+
+<span class="sd">Simple examples::</span>
+
+<span class="sd">    &gt;&gt;&gt; clean(&#39;St-Etienne&quot; &quot; \t&#39;)</span>
+<span class="sd">    [&#39;saint&#39;, &#39;etienne&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; clean(&#39;antibes sncf 2 (centre)&#39;)</span>
+<span class="sd">    [&#39;antibes&#39;, &#39;centre&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;antibes&#39;, &#39;antibs&#39;)</span>
+<span class="sd">    0.92...</span>
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;Aéroport CDG  2&#39;, &#39;aeroport-cdg&#39;)</span>
+<span class="sd">    1.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">Levenshtein</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">LevenRatio</span>
+<span class="c">#from Levenshtein import distance as LevenDist</span>
+
+
+<span class="n">PARENTHESIS_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;^(?P&lt;before&gt;[^()]*?)\((?P&lt;in&gt;[^()]*?)\)(?P&lt;after&gt;[^()]*?)$&#39;</span><span class="p">)</span>
+
+<span class="n">PARTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;before&#39;</span><span class="p">,</span>
+         <span class="s">&#39;in&#39;</span><span class="p">,</span>
+         <span class="s">&#39;after&#39;</span><span class="p">)</span>
+
+<span class="c"># These are letters replaced</span>
+<span class="n">ACCENTS</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s">&#39;é&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;è&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ê&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ë&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;à&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;â&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ù&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;û&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ç&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ô&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;î&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;ï&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;í&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">))</span>
+
+<span class="c"># These are separators</span>
+<span class="n">SEPARATORS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span>
+              <span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="s">&#39;;&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">,</span>
+              <span class="s">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;?&#39;</span><span class="p">,</span> <span class="s">&#39;!&#39;</span><span class="p">,</span>
+              <span class="s">&quot;#&quot;</span><span class="p">,</span> <span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="c"># These are words replaced</span>
+<span class="n">ALIASES</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s">&#39;st&#39;</span><span class="p">,</span> <span class="s">&#39;saint&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;hb&#39;</span><span class="p">,</span> <span class="s">&#39;hbf&#39;</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="c"># These are removed</span>
+<span class="n">TRANSPARENTS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># French ones</span>
+    <span class="s">&#39;le&#39;</span><span class="p">,</span>     <span class="s">&#39;la&#39;</span><span class="p">,</span>    <span class="s">&#39;les&#39;</span><span class="p">,</span>
+    <span class="s">&#39;ville&#39;</span><span class="p">,</span>  <span class="s">&#39;sncf&#39;</span><span class="p">,</span>  <span class="s">&#39;hbf&#39;</span><span class="p">,</span>
+    <span class="s">&#39;bains&#39;</span><span class="p">,</span>  <span class="s">&#39;eaux&#39;</span><span class="p">,</span>  <span class="s">&#39;rive&#39;</span><span class="p">,</span>
+    <span class="s">&#39;droite&#39;</span><span class="p">,</span> <span class="s">&#39;gauche&#39;</span><span class="p">,</span>
+    <span class="c"># English ones</span>
+    <span class="s">&#39;a&#39;</span><span class="p">,</span>      <span class="s">&#39;an&#39;</span><span class="p">,</span>    <span class="s">&#39;the&#39;</span><span class="p">,</span>
+    <span class="s">&#39;and&#39;</span><span class="p">,</span>    <span class="s">&#39;or&#39;</span>
+<span class="p">)</span>
+
+<span class="c"># Toggle inclusion heuristic</span>
+<span class="n">HEURISTIC_INCLUSION</span>       <span class="o">=</span> <span class="bp">True</span>
+<span class="n">HEURISTIC_INCLUSION_VALUE</span> <span class="o">=</span> <span class="mf">0.99</span>
+
+
+<div class="viewcode-block" id="str_lowercase"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.str_lowercase">[docs]</a><span class="k">def</span> <span class="nf">str_lowercase</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lower case adapted for str type.</span>
+
+<span class="sd">    &gt;&gt;&gt; print(&#39;Étaples&#39;.lower()) # Fail!</span>
+<span class="sd">    Étaples</span>
+<span class="sd">    &gt;&gt;&gt; print(str_lowercase(&#39;Étaples&#39;)) # Win!</span>
+<span class="sd">    étaples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Input </span><span class="si">%s</span><span class="s"> is not instance of &lt;str&gt; or &lt;unicode&gt;&#39;</span> <span class="o">%</span> <span class="n">string</span><span class="p">)</span>
+
+
+</div>
+<div class="viewcode-block" id="handle_accents"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.handle_accents">[docs]</a><span class="k">def</span> <span class="nf">handle_accents</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove accentuated characters in a word, and</span>
+<span class="sd">    replace them with non-accentuated ones.</span>
+
+<span class="sd">    :param string: the string to be processed</span>
+<span class="sd">    :returns:      the unaccentuad string</span>
+
+<span class="sd">    &gt;&gt;&gt; handle_accents(&#39;être&#39;)</span>
+<span class="sd">    &#39;etre&#39;</span>
+<span class="sd">    &gt;&gt;&gt; handle_accents(&#39;St-Etienne SNCF (Châteaucreux)&#39;)</span>
+<span class="sd">    &#39;St-Etienne SNCF (Chateaucreux)&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">ACCENTS</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">string</span>
+
+</div>
+<div class="viewcode-block" id="handle_parenthesis_info"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.handle_parenthesis_info">[docs]</a><span class="k">def</span> <span class="nf">handle_parenthesis_info</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">parts</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When a word contains parenthesis, this function picks</span>
+<span class="sd">    only the part *before* the parenthesis.</span>
+
+<span class="sd">    :param string: the string to be processed</span>
+<span class="sd">    :returns:      the parenthesis-free string</span>
+
+<span class="sd">    &gt;&gt;&gt; handle_parenthesis_info(&#39;Lyon Part-Dieu (TGV)&#39;)</span>
+<span class="sd">    &#39;Lyon Part-Dieu TGV&#39;</span>
+<span class="sd">    &gt;&gt;&gt; handle_parenthesis_info(&#39;Lyon Part-Dieu (TGV)&#39;, parts=[&#39;before&#39;])</span>
+<span class="sd">    &#39;Lyon Part-Dieu&#39;</span>
+<span class="sd">    &gt;&gt;&gt; handle_parenthesis_info(&#39;(Sncf) City&#39;)</span>
+<span class="sd">    &#39;Sncf City&#39;</span>
+<span class="sd">    &gt;&gt;&gt; handle_parenthesis_info(&#39;Lyon (Sncf) City&#39;, parts=[&#39;in&#39;, &#39;after&#39;])</span>
+<span class="sd">    &#39;Sncf City&#39;</span>
+<span class="sd">    &gt;&gt;&gt; handle_parenthesis_info(&#39;St-Etienne SNCF (Chateaucreux)&#39;)</span>
+<span class="sd">    &#39;St-Etienne SNCF Chateaucreux&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parts</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">PARTS</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="n">PARENTHESIS_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+    <span class="k">return</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+</div>
+<div class="viewcode-block" id="split_separators"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.split_separators">[docs]</a><span class="k">def</span> <span class="nf">split_separators</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When a word contains different separators, this function</span>
+<span class="sd">    split the word using all separators.</span>
+
+<span class="sd">    :param string:     the string to be processed</span>
+<span class="sd">    :returns:          the list of words after splitting</span>
+
+<span class="sd">    &gt;&gt;&gt; split_separators(&#39;Lyon Part-Dieu&#39;)</span>
+<span class="sd">    [&#39;Lyon&#39;, &#39;Part&#39;, &#39;Dieu&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; split_separators(&#39;St-Etienne SNCF &#39;)</span>
+<span class="sd">    [&#39;St&#39;, &#39;Etienne&#39;, &#39;SNCF&#39;, &#39;&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">sep</span> <span class="ow">in</span> <span class="n">SEPARATORS</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">SEPARATORS</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">SEPARATORS</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="handle_alias"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.handle_alias">[docs]</a><span class="k">def</span> <span class="nf">handle_alias</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Some common words have different ways to be used.</span>
+<span class="sd">    This function normalize those, to have a better</span>
+<span class="sd">    comparison tool later.</span>
+<span class="sd">    For example, we can replace &#39;st&#39; by &#39;saint&#39;.</span>
+
+<span class="sd">    :param strings: the list of words to be processed</span>
+<span class="sd">    :returns:       the list of words after normalization</span>
+
+<span class="sd">    &gt;&gt;&gt; handle_alias([&#39;st&#39;, &#39;etienne&#39;, &#39;SNCF&#39;, &#39;&#39;])</span>
+<span class="sd">    [&#39;saint&#39;, &#39;etienne&#39;, &#39;SNCF&#39;, &#39;&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ALIASES</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span> <span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="handle_transparent"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.handle_transparent">[docs]</a><span class="k">def</span> <span class="nf">handle_transparent</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Some words are often parts irrelevant to string comparison.</span>
+<span class="sd">    This function remove those, to have a better</span>
+<span class="sd">    comparison tool later.</span>
+<span class="sd">    For example, we can remove &#39;ville&#39; or &#39;sncf&#39;.</span>
+
+<span class="sd">    :param strings:      the list of words to be processed</span>
+<span class="sd">    :returns:            the list of words after normalization</span>
+
+<span class="sd">    &gt;&gt;&gt; handle_transparent([&#39;saint&#39;, &#39;etienne&#39;, &#39;sncf&#39;, &#39;&#39;])</span>
+<span class="sd">    [&#39;saint&#39;, &#39;etienne&#39;, &#39;&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; handle_transparent([&#39;aix&#39;, &#39;ville&#39;])</span>
+<span class="sd">    [&#39;aix&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TRANSPARENTS</span> <span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="handle_numbers_spaces"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.handle_numbers_spaces">[docs]</a><span class="k">def</span> <span class="nf">handle_numbers_spaces</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Some words contains numbers irrelevant to string comparison.</span>
+<span class="sd">    This function remove those, to have a better</span>
+<span class="sd">    comparison tool later.</span>
+<span class="sd">    It also removes blanks which could have been left</span>
+<span class="sd">    during earlier removals.</span>
+
+<span class="sd">    :param strings: the list of words to be processed</span>
+<span class="sd">    :returns:       the list of words number-free</span>
+
+<span class="sd">    &gt;&gt;&gt; handle_numbers_spaces([&#39;saint&#39;, &#39;etienne&#39;, &#39;2&#39;, &#39;&#39;])</span>
+<span class="sd">    [&#39;saint&#39;, &#39;etienne&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># We remove blanks or tabulation, and number</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="p">]</span>
+
+
+</div>
+<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.clean">[docs]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Global cleaning function which put</span>
+<span class="sd">    all previous ones together.</span>
+
+<span class="sd">    This function cleans the string to have a better comparison.</span>
+<span class="sd">    Different steps:</span>
+
+<span class="sd">        - lower and strip (remove leading and trailing spaces/tabulations)</span>
+<span class="sd">        - manage accentuated characters, parenthesis</span>
+<span class="sd">        - properly split the string</span>
+<span class="sd">        - handle common aliases, irrelevant words, numbers and spaces</span>
+
+<span class="sd">    :param string: the string to be processed</span>
+<span class="sd">    :returns:      the clean string</span>
+
+<span class="sd">    &gt;&gt;&gt; clean(&#39;Paris&#39;)</span>
+<span class="sd">    [&#39;paris&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; clean(&#39;Paris ville&#39;)</span>
+<span class="sd">    [&#39;paris&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; clean(&#39;St-Etienne&#39;)</span>
+<span class="sd">    [&#39;saint&#39;, &#39;etienne&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; clean(&#39;Aix-Les   Bains&#39;)</span>
+<span class="sd">    [&#39;aix&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; clean(&#39;antibes sncf 2 (centre)&#39;)</span>
+<span class="sd">    [&#39;antibes&#39;, &#39;centre&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Basic cleaning</span>
+    <span class="c"># We remove blanks or tabulation, and number</span>
+    <span class="k">return</span> <span class="n">handle_numbers_spaces</span><span class="p">(</span>
+           <span class="n">handle_transparent</span><span class="p">(</span>
+           <span class="n">handle_alias</span><span class="p">(</span>
+           <span class="n">split_separators</span><span class="p">(</span>
+           <span class="n">handle_parenthesis_info</span><span class="p">(</span>
+           <span class="n">handle_accents</span><span class="p">(</span>
+           <span class="n">str_lowercase</span><span class="p">(</span>
+               <span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+           <span class="p">)))))))</span>
+
+</div>
+<div class="viewcode-block" id="is_sublist"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.is_sublist">[docs]</a><span class="k">def</span> <span class="nf">is_sublist</span><span class="p">(</span><span class="n">subL</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function tests the inclusion of a list in another one.</span>
+
+<span class="sd">    :param sublst:  the tested sub-list</span>
+<span class="sd">    :param lst:     the tested list</span>
+<span class="sd">    :returns:       a boolean</span>
+
+<span class="sd">    &gt;&gt;&gt; is_sublist([2], [2,3])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([2,3], [2,3])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([], [2,3])  # [] is a sub-list of everyone</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([2,3], [])</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([4], [2,3])</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([2,3], [3,2]) # Order matter</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([2,3,4], [2,3])</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_sublist([2,3], [2,3,4])</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">ns</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">subL</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span> <span class="p">(</span><span class="n">subL</span> <span class="o">==</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">ns</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">ns</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+
+
+</div>
+<div class="viewcode-block" id="mod_leven"><a class="viewcode-back" href="../../GeoBases.html#GeoBases.LevenshteinUtils.mod_leven">[docs]</a><span class="k">def</span> <span class="nf">mod_leven</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">,</span> <span class="n">heuristic_inclusion</span><span class="o">=</span><span class="n">HEURISTIC_INCLUSION</span><span class="p">,</span> <span class="n">heuristic_inclusion_value</span><span class="o">=</span><span class="n">HEURISTIC_INCLUSION_VALUE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The main comparison function.</span>
+<span class="sd">    In fact, the real work has already been done previously,</span>
+<span class="sd">    with the cleaning function.</span>
+
+<span class="sd">    This function uses Levenshtein ratio to evaluate the</span>
+<span class="sd">    distance between the two strings. It is up to the user to</span>
+<span class="sd">    define which distance is acceptable for classic mispelling, but</span>
+<span class="sd">    from my point of view, 90% is fairly acceptable.</span>
+
+<span class="sd">    When we have a inclusion of one string in the other (list inclusion,</span>
+<span class="sd">    not possible to include partial words such as toul for toulon),</span>
+<span class="sd">    we put the ratio of similarity to 99%, this is heuristic.</span>
+<span class="sd">    Why not 100%? Because, if another entry in the base really match 100%,</span>
+<span class="sd">    this will probably be an even better match, such as:</span>
+<span class="sd">    orleans+gervais matches orleans with inclusion heuristic (so 99%),</span>
+<span class="sd">    but we also have the real orleans+gervais station in the base,</span>
+<span class="sd">    and this one is a 100% match, so this will take over as the best match.</span>
+
+<span class="sd">    Sometimes rare cases of high ratio are not relevant.</span>
+<span class="sd">    For example, Toul match Toulon with 80%, but this</span>
+<span class="sd">    is wrong, and may be handled with a cache to manage exceptional</span>
+<span class="sd">    failing by the graph module, or by upping the acceptance limit.</span>
+
+<span class="sd">    :param str1: the first string to compare</span>
+<span class="sd">    :param str2: the second string to compare</span>
+<span class="sd">    :returns:    the distance, which is a ratio (0% to 100%)</span>
+
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;antibes&#39;, &#39;antibs&#39;)</span>
+<span class="sd">    0.92...</span>
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;toul&#39;, &#39;toulon&#39;)</span>
+<span class="sd">    0.8...</span>
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;Aéroport CDG  2 TGV&#39;, &#39;aeroport-cdg&#39;) # Inclusion</span>
+<span class="sd">    0.9...</span>
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;Bains les bains&#39;, &#39;Tulle&#39;)</span>
+<span class="sd">    0.0</span>
+
+<span class="sd">    Tweaking behavior.</span>
+
+<span class="sd">    &gt;&gt;&gt; mod_leven(&#39;Aéroport CDG  2 TGV&#39;, &#39;aeroport-cdg&#39;, False) # No inclusion</span>
+<span class="sd">    0.85...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">str1</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">str1</span><span class="p">)</span>
+    <span class="n">str2</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">str2</span><span class="p">)</span>
+
+    <span class="c"># Cleaning reduced one to empty string</span>
+    <span class="c"># We do not want mismatch so...</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">str1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">str2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">LevenRatio</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">str1</span><span class="p">),</span> <span class="s">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">str2</span><span class="p">))</span>
+
+    <span class="c"># Perfect match, finished</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r</span>
+
+    <span class="c"># Heuristic of strict inclusion</span>
+    <span class="k">if</span> <span class="n">heuristic_inclusion</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_sublist</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_sublist</span><span class="p">(</span><span class="n">str2</span><span class="p">,</span> <span class="n">str1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">heuristic_inclusion_value</span>
+
+    <span class="k">return</span> <span class="n">r</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When called directly, launching doctests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">opt</span> <span class="o">=</span>  <span class="p">(</span><span class="n">doctest</span><span class="o">.</span><span class="n">ELLIPSIS</span> <span class="o">|</span>
+            <span class="n">doctest</span><span class="o">.</span><span class="n">NORMALIZE_WHITESPACE</span> <span class="o">|</span>
+            <span class="n">doctest</span><span class="o">.</span><span class="n">REPORT_ONLY_FIRST_FAILURE</span><span class="p">)</span>
+
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">optionflags</span><span class="o">=</span><span class="n">opt</span><span class="p">)</span>
+
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">_test</span><span class="p">()</span>
+
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+
+        <span class="n">str_1</span><span class="p">,</span> <span class="n">str_2</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">print</span> <span class="s">&#39;1) </span><span class="si">%-30s</span><span class="s"> ---&gt; </span><span class="si">%-30s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">str_1</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean</span><span class="p">(</span><span class="n">str_1</span><span class="p">)))</span>
+        <span class="k">print</span> <span class="s">&#39;2) </span><span class="si">%-30s</span><span class="s"> ---&gt; </span><span class="si">%-30s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">str_2</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean</span><span class="p">(</span><span class="n">str_2</span><span class="p">)))</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;Similiarity: </span><span class="si">%.2f%%</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">mod_leven</span><span class="p">(</span><span class="n">str_1</span><span class="p">,</span> <span class="n">str_2</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">GeoBases 4 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../GeoBases.html" >GeoBases</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alex Prengere.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
