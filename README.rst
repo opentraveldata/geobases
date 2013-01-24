@@ -321,10 +321,8 @@ To create rpm packages::
 
 The ``MANIFEST.in`` file is used to determine which files will be
 included in a source distribution.
-
 ``package_data`` directive in ``setup.py`` file is about which file will
 be exported in site-package after installation.
-
 So you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 

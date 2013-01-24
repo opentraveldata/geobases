@@ -296,12 +296,9 @@ To create rpm packages:
     % python setup.py bdist_rpm
 
 The `MANIFEST.in` file is used to determine which files will be included
-in a source distribution.
-
-`package_data` directive in `setup.py` file is about which file will be
-exported in site-package after installation.
-
-So you really need both if you want to produce installable packages like
+in a source distribution. `package_data` directive in `setup.py` file is
+about which file will be exported in site-package after installation. So
+you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 
 You will also find a [Rakefile](http://rake.rubyforge.org/) at the
