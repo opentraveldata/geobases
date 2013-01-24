@@ -148,8 +148,8 @@ french train stations</li>
 <li>  <em>data="cities"</em> will load data on cities, extracted from geonames</li>
 <li>  <em>data="currencies"</em> will load data on currencies, extracted from
 wikipedia</li>
-<li>  <em>data="airlines"</em> will load data on airlines, extracted from
-this <a href="https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv">file</a>
+<li>  <em>data="airlines"</em> will load data on airlines, extracted from this
+<a href="https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv">file</a>
 </li>
 <li>  <em>data="cabins"</em> will load data on cabins</li>
 <li>  <em>data="regions"</em> will load data on regions</li>
@@ -365,14 +365,11 @@ rpms or zip which can be installed afterwards.</p>
 
 <p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the
 root of the project. This may be used to build and deploy the packages.
-The Rakefile</p>
-
-<p>Deployment is done using webdav, and the Rakefile expects <code>nd</code> to be
-installed (this is a webdav client).</p>
-
-<p>To install nd, fetch the sources from
-<a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd/">http://www.gohome.org/nd/</a>. Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before:</p>
+Deployment may be done using webdav, and the Rakefile expects <code>nd</code> to be
+installed (this is a webdav client). To install nd, fetch the sources
+from <a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd/">http://www.gohome.org/nd/</a>. Then
+compile and install them. On 64 bits Fedora, you need to install libxml2
+before:</p>
 
 <pre><code># yum install libxml2.x86_64 libxml2-devel.x86_64
 </code></pre>
