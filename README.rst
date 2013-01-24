@@ -329,14 +329,11 @@ So you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 
 You will also find a `Rakefile <http://rake.rubyforge.org/>`__ at the
-root of the project. This may be used to build and deploy the packages. The Rakefile
-
-Deployment is done using webdav, and the Rakefile expects ``nd`` to be
+root of the project. This may be used to build and deploy the packages.
+Deployment may be done using webdav, and the Rakefile expects ``nd`` to be
 installed (this is a webdav client).
-
-To install nd, fetch the sources from
-`http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__. Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before::
+To install nd, fetch the sources from `http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__.
+Then compile and install them. On 64 bits Fedora, you need to install libxml2 before::
 
     # yum install libxml2.x86_64 libxml2-devel.x86_64
 
