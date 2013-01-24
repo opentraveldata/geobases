@@ -70,53 +70,6 @@ your ``~/.zshrc``::
     autoload -U compinit
     compinit
 
-OpenTrep wrapper
-^^^^^^^^^^^^^^^^
-
-You may also export this variable before installation to install the
-*OpenTrepWrapper* as a dependency::
-
-    % git checkout trunk
-    % export WITH_OPENTREP=1
-    % python setup.py install --user
-
-Note that this will only install the wrapper, not OpenTrep itself.
-
-Packaging
-~~~~~~~~~
-
-The ``MANIFEST.in`` file is used to determine which files will be
-included in a source distribution.
-
-``package_data`` directive in ``setup.py`` file is about which file will
-be exported in site-package after installation.
-
-So you really need both if you want to produce installable packages like
-rpms or zip which can be installed afterwards.
-
-You will also find a `Rakefile <http://rake.rubyforge.org/>`__ at the
-root of the project. This may be used to build and deploy the packages. The Rakefile
-is configured by the local ``release.yaml`` file.
-
-Deployment is done using webdav, and the Rakefile expects ``nd`` to be
-installed (this is a webdav client).
-
-To install nd, fetch the sources from
-`http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__. Then compile
-and install them. On 64 bits Fedora, you need to install libxml2 before::
-
-    # yum install libxml2.x86_64 libxml2-devel.x86_64
-
-After nd and rake installation, you may try::
-
-    % rake
-
-Virtualenv has bugs on 64 bits systems, if you are using such a system,
-you absolutely need to upgrade to the very last unreleased version of
-virtualenv, before executing rake::
-
-    % pip uninstall virtualenv
-    % pip install --user https://github.com/pypa/virtualenv/tarball/develop
 
 Tests
 -----
@@ -269,12 +222,6 @@ Approximate name matching
     >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0] # Cached for further calls
     (0.8..., 'frmsc')
 
-OpenTrep binding
-~~~~~~~~~~~~~~~~
-::
-
-    >>> geo_t.trepGet('sna francisco los agneles')
-    [(31.5192, 'SFO'), (46.284, 'LAX')]
 
 Map display
 ~~~~~~~~~~~
@@ -329,10 +276,6 @@ Countries with non-empty postal code regex::
 
  % GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
 
-OpenTrep binding::
-
- % GeoBase -t sna francisco los agneles
-
 Reading data input on stdin::
 
  % echo -e 'ORY^Orly\nCDG^Charles' |GeoBase
@@ -364,8 +307,8 @@ space::
     % export BACKGROUND_COLOR=black # or 'white', depending on your terminal configuration
 
 
-Further packaging
------------------
+Packaging
+---------
 
 To create source distribution (pip-installable)::
 
@@ -375,4 +318,37 @@ To create rpm packages::
 
     % rm -rf build dist *.egg-info
     % python setup.py bdist_rpm
+
+
+The ``MANIFEST.in`` file is used to determine which files will be
+included in a source distribution.
+
+``package_data`` directive in ``setup.py`` file is about which file will
+be exported in site-package after installation.
+
+So you really need both if you want to produce installable packages like
+rpms or zip which can be installed afterwards.
+
+You will also find a `Rakefile <http://rake.rubyforge.org/>`__ at the
+root of the project. This may be used to build and deploy the packages. The Rakefile
+
+Deployment is done using webdav, and the Rakefile expects ``nd`` to be
+installed (this is a webdav client).
+
+To install nd, fetch the sources from
+`http://www.gohome.org/nd/ <http://www.gohome.org/nd/>`__. Then compile
+and install them. On 64 bits Fedora, you need to install libxml2 before::
+
+    # yum install libxml2.x86_64 libxml2-devel.x86_64
+
+After nd and rake installation, you may try::
+
+    % rake
+
+Virtualenv has bugs on 64 bits systems, if you are using such a system,
+you absolutely need to upgrade to the very last unreleased version of
+virtualenv, before executing rake::
+
+    % pip uninstall virtualenv
+    % pip install --user https://github.com/pypa/virtualenv/tarball/develop
 
