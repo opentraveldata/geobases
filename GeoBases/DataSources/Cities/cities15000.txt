@@ -4784,7 +4784,7 @@
 2902559	Hofgeismar	Hofgeismar	Hofgeismar	51.49607	9.385	P	PPL	DE		05	066			16444		152	Europe/Berlin	2013-01-11
 2902768	Hof	Hof	Hof,Khof,Хоф	50.31622	11.91833	P	PPL	DE		02				49239		482	Europe/Berlin	2012-09-06
 2902852	Hockenheim	Hockenheim	Hockenheim	49.32334	8.55194	P	PPL	DE		01	082			20614		102	Europe/Berlin	2012-12-03
-2903175	Hochheim am Main	Hochheim am Main	Hochheim,Hochheim am Main	50.01436	8.35218	P	PPL	DE		05				17027		127	Europe/Berlin	2012-09-06
+2903175	Hochheim am Main	Hochheim am Main	Hochheim,Hochheim am Main	50.01436	8.35218	P	PPL	DE		05	064			17027		127	Europe/Berlin	2013-01-21
 2904725	Hille	Hille	Hille	52.33333	8.75	P	PPLA4	DE		07	057	05770	05770012	16567		58	Europe/Berlin	2011-07-31
 2904789	Hildesheim	Hildesheim	Hildesheim,Hilmessen,Khil'deskhajm,ZNO,Хильдесхайм	52.15077	9.95112	P	PPL	DE		06				103052	93	92	Europe/Berlin	2011-03-09
 2904795	Hilden	Hilden	Hilden,ZNN	51.16818	6.93093	P	PPL	DE		07	051			56565		51	Europe/Berlin	2012-08-04
@@ -5036,7 +5036,7 @@
 2940383	Calw	Calw	Calw,Kalv,karufu,Калв,カルフ	48.71419	8.74031	P	PPL	DE		01	082			23740		339	Europe/Berlin	2012-11-27
 2940451	Buxtehude	Buxtehude	Buxtehude	53.46716	9.68636	P	PPL	DE		06				38192		10	Europe/Berlin	2012-07-04
 2940512	Butzbach	Butzbach		50.43395	8.67122	P	PPL	DE		05	064			25156		206	Europe/Berlin	2010-11-15
-2940938	Bürstadt	Burstadt	Burstadt,Bürstadt	49.64266	8.45936	P	PPL	DE		05				15348		90	Europe/Berlin	2012-09-06
+2940938	Bürstadt	Burstadt	Burstadt,Bürstadt	49.64266	8.45936	P	PPL	DE		05	064			15348		90	Europe/Berlin	2013-01-21
 2940942	Burscheid	Burscheid	Burscheid,Burshajd,Буршайд	51.1	7.11667	P	PPL	DE		07				19215		192	Europe/Berlin	2012-01-18
 2941279	Burghausen	Burghausen	Burghausen,Burkhausen	48.16925	12.83139	P	PPL	DE		02				18263		411	Europe/Berlin	2012-09-06
 2941405	Burgdorf	Burgdorf	Borchdoerp,Borchdörp,Bortaerpe,Bortoerp,Bortärpe,Bortörp	52.44628	10.0064	P	PPL	DE		06	00	03241	03241003	30218		55	Europe/Berlin	2011-02-16
@@ -13357,7 +13357,7 @@
 596128	Panevėžys	Panevezys	PANEVEZHIS,Paneveza,Panevezhi,Panevezhis,Panevezio,Panevezys,Panevēža,Panevėžio,Panevėžys,Panjavezhis,Ponewesch,Poniewesch,Poniewiesh,Poniewiez,Poniewież,pnbz'ys,ПАНЕВЕЖИС,Паневежис,Панявежис,פנבז'יס	55.73333	24.35	P	PPLA	LT		60	596130			117395		52	Europe/Vilnius	2012-12-10
 596238	Palanga	Palanga	PALANGA,Palanga,Palangos,Polaga,Polanga,Polangen,Połąga,palanga,ПАЛАНГА,Паланга	55.9175	21.06861	P	PPL	LT		58	598099			17796		5	Europe/Vilnius	2012-11-27
 597188	Mažeikiai	Mazeikiai	Mazeiki,Mazeikiai,Mazeikiu,Mazhejkjaj,Mazheykyay,Mažeikiai,Mažeikių,Mažeiķi,Mozejki,Możejki,Muravjovo,Murawlewo,Μαζεϊκιάι,Мажейкяй	56.31667	22.33333	P	PPL	LT		63				41309		70	Europe/Vilnius	2013-01-11
-597231	Marijampolė	Marijampole	Kapsukas,MARIJAMPOLE,Mariampol,Mariampol',Mariampole,Mariampoles,Mariampolė,Mariampolės,Mariampol’,Marigiampole,Marijampole,Marijampolė,Mariyampol',Mariyampole,Mariyampol’,Marjampol,Pasesupiai,Pašešupiai,Starapole,Starapolė,Μαριγιαμπολέ,МАРИЯМПОЛЕ,Мариямполе	54.56667	23.35	P	PPLA	LT		59				47613		66	Europe/Vilnius	2012-01-17
+597231	Marijampolė	Marijampole	Kapsukas,MARIJAMPOLE,Mariampol,Mariampol',Mariampole,Mariampoles,Mariampolė,Mariampolės,Mariampol’,Marigiampole,Marijampole,Marijampolė,Mariyampol',Mariyampole,Mariyampol’,Marjampol,Pasesupiai,Pašešupiai,Starapole,Starapolė,Μαριγιαμπολέ,МАРИЯМПОЛЕ,Мариямполе	54.56667	23.35	P	PPLA	LT		59	597233			47613		66	Europe/Vilnius	2013-01-21
 597989	Kretinga	Kretinga	Kratinga,Kretin'nka,Kretinga,Kretingos,Kretynga,Krottingen,Myasto Kretinga,keuleting-ga,Κρετίνγκα,Кретинга,크레팅가	55.87583	21.25083	P	PPL	LT		00				22236		28	Europe/Vilnius	2012-01-17
 598098	Klaipėda	Klaipeda	Klaipada,Klaipeda,Klaipenta,Klaipéda,Klaipēda,Klaipėda,Klajpeda,Klaypeda,Kłajpeda,Lungsod ng Klaipeda,Lungsod ng Klaipėda,Memel,Memela,ke lai pei da,keullaipeda,khil pheda,klaipedas,kuraipeda,qlypdh,qlyypdh,Κλαϊπέντα,Клаипеда,Клайпеда,Клајпеда,קלייפדה,קליפדה,ไคลเพดา,クライペダ,克莱佩达,클라이페다	55.71722	21.1175	P	PPLA	LT		58	598099			192307		3	Europe/Vilnius	2012-11-27
 598272	Kėdainiai	Kedainiai	KEDAJNJAJ,Kedaini,Kedainiai,Kedainiu,Kedainių,Kedajnaj,Kedayny,Kedaynyai,Kedaynyay,Keidany,Kentainiai,Keydany,Kiejdany,Kēdaiņi,Kėdainiai,kedajnjaj,Κενταϊνιάι,КЕДАЙНЯЙ,Кедаjњај,Кедайняй	55.28833	23.97472	P	PPL	LT		57				31980		32	Europe/Vilnius	2013-01-11
@@ -17147,7 +17147,7 @@
 540103	Kstovo	Kstovo	KSTOVO,Kostova,Kstovo,КСТОВО,Кстово	56.14733	44.19787	P	PPL	RU		51				67242		127	Europe/Moscow	2012-01-17
 540251	Krymsk	Krymsk	Krimskaja,Krimskaya,Krymasko,Krymsk,Krymskaja,Krymskaya,Крымск	44.92934	37.99117	P	PPL	RU		38				57555		22	Europe/Moscow	2012-01-17
 540761	Kropotkin	Kropotkin	KROPOTKIN,Krapotkin,Kropotkin,Romanovskiy Khutor,КРОПОТКИН,Кропоткин	45.4375	40.57556	P	PPL	RU		38				79599		80	Europe/Moscow	2012-01-17
-540771	Kronshtadt	Kronshtadt	Cronstadt,KRONSHTADT,Kronshtadt,Kronsjtadt,Kronstadt,Kroonlinn,КРОНШТАДТ,Кронштадт	59.99541	29.76668	P	PPL	RU		66				42987		3	Europe/Moscow	2012-02-28
+540771	Kronshtadt	Kronshtadt	Cronstadt,KRONSHTADT,Kronshtadt,Kronsjtadt,Kronstadt,Kronstatti,Kroonlinn,КРОНШТАДТ,Кронштадт	59.99541	29.76668	P	PPL	RU		66				42987		3	Europe/Moscow	2013-01-22
 541404	Krasnyy Sulin	Krasnyy Sulin	KRASNYJ SULIN,Krasny-Sulin,Krasnyj Sulin,Krasnyy Sulin,Krassnyj Ssulin,КРАСНЫЙ СУЛИН,Красный Сулин	47.89221	40.07037	P	PPL	RU		61				44133		146	Europe/Moscow	2012-01-17
 542000	Krasnoye Selo	Krasnoye Selo	KRASNOE SELO,Krasnoe Selo,Krasnoje Selo,Krasnoye Selo,Krasnyy,КРАСНОЕ СЕЛО,Красное Село	59.73833	30.08944	P	PPLX	RU		66				43134		108	Europe/Moscow	2012-01-17
 542184	Krasnovishersk	Krasnovishersk	KRASNOVISHERSK,Krasnovishersk,Krasnovisjersk,КРАСНОВИШЕРСК,Красновишерск	60.40783	57.08199	P	PPL	RU		90				18185		132	Asia/Yekaterinburg	2012-01-17
@@ -19317,7 +19317,7 @@
 709540	Dubno	Dubno	Dubno,Дубно	50.41694	25.73432	P	PPL	UA		19				37690		199	Europe/Kiev	2013-01-10
 709611	Drohobych	Drohobych	Drogobich,Drogobych,Drogobycz,Drohobic,Drohobico,Drohobiĉ,Drohobiĉo,Drohobych,Drohobycz,Drohobytsch,Drohobytsj,dorohobichi,drwhwbyz',Дрогобич,Дрогобыч,דרוהוביץ',ドロホビチ	49.34991	23.50561	P	PPL	UA		15				79406		301	Europe/Kiev	2013-01-10
 709717	Donets’k	Donets'k	Donec'k,Doneck,Donets'k,Donetsk,Donets’k,Hughesovka,Jusowka,Juzovka,Stalin,Staline,Stalino,Uzivka,Yuzovka,Yuzovo,Донецк,Донецьк,Сталино,Сталіне,Сталіно,Юзовка,Юзівка	48.023	37.80224	P	PPLA	UA		05				1024700		223	Europe/Kiev	2012-08-19
-709755	Dolyna	Dolyna	Dolina,Dolyna,Долина	48.9733	24.00944	P	PPL	UA		06				20696		404	Europe/Kiev	2012-06-06
+709755	Dolyna	Dolyna	Dolina,Dolyna,Долина	48.9733	24.00944	P	PPL	UA		06	709779			20696		404	Europe/Kiev	2013-01-21
 709782	Dolyns'ka	Dolyns'ka	Dolinskaja,Dolinskaya,Dolinskoye,Dolyns'ka,Schewtschenkowo,Shevchenkovo,Долинская	48.11041	32.76449	P	PPL	UA	UA	10				34267		193	Europe/Kiev	2010-06-07
 709835	Dokuchayevsk	Dokuchayevsk	Dokuchaevsk,Dokuchayevsk,Yelenovskiy Kar'yer,Yelenovskiy Kar’yer,Yelenovskiye Kar'yery,Yelenovskiye Kar’yery,Докучаевск	47.74773	37.67384	P	PPL	UA		05				23900		156	Europe/Kiev	2012-01-18
 709900	Dobropol’ye	Dobropol'ye	Dobropol'e,Dobropol'ye,Dobropol’ye,Krasnoarmeyskiy Rudnik,Доброполье	48.46147	37.08524	P	PPL	UA		05				35977		183	Europe/Kiev	2012-01-18
