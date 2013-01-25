@@ -35,12 +35,26 @@
 
 <h2>Introduction</h2>
 
-<p>This module is a general class <em>GeoBase</em> to manipulate geographical
-data. It loads static csv files containing data about airports or train
-stations, and then provides tools to play with it. This is entirely
-written in Python.</p>
+<p>This project provides tools to play with geographical data. It also
+works with non-geographical data, except for map visualizations :).</p>
 
-<p>It relies on three other modules:</p>
+<p>There are embedded data sources in the project, but you may easily play
+with your own data in addition to the available ones. Csv files
+containing data about airports, train stations, countries, ... are
+loaded, then you may:</p>
+
+<ul>
+<li>  performs various types of queries ( <em>find this key</em>, or <em>find keys
+with this property</em>)</li>
+<li>  <em>fuzzy searches</em> based on string distance ( <em>find things roughly
+named like this</em>)</li>
+<li>  <em>geographical searches</em> ( <em>find things next to this place</em>)</li>
+<li>  get results on a map, or export it as csv data, or as a Python
+object</li>
+</ul><p>This is entirely written in Python. The core part is a Python package,
+but there is a command line tool as well.</p>
+
+<p>It relies on three modules:</p>
 
 <ul>
 <li>  <em>GeoUtils</em>: to compute haversine distances between points</li>
@@ -79,7 +93,7 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 <p>Then install the package:</p>
 
 <pre><code>% cd geobases
-% python setup.py install --user
+% python setup.py install --user # for user space
 </code></pre>
 
 <p>This should install some dependencies.</p>
@@ -102,15 +116,14 @@ compinit
 
 <h2>Tests</h2>
 
-<p>You may try to run the tests with:</p>
+<p>Run the tests with:</p>
 
-<pre><code>% find ./ -name '*.pyc' -exec rm {} \;
-% python test/test_GeoBases.py -v
+<pre><code>% python test/test_GeoBases.py -v
 </code></pre>
 
 <h2>Quickstart</h2>
 
-<p>To load the class, just import the main class with:</p>
+<p>To load the class, just do:</p>
 
 <pre><code>% python
 &gt;&gt;&gt; from GeoBases import GeoBase
@@ -119,18 +132,19 @@ compinit
 &gt;&gt;&gt; geo_t = GeoBase(data='stations', verbose=False)
 </code></pre>
 
-<p>You may provide other values than <em>data="ori_por"</em>, <em>data="airports"</em>
-or <em>data="stations"</em>. Here is an overview:</p>
+<p>You may provide other values for the <em>data</em> parameter. All data sources
+are documented in a single <em>yaml</em> file.</p>
+
+<p>Here is an overview:</p>
 
 <ul>
-<li>  <em>data="ori_por"</em> will load a local version of this
-<a href="https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv">file</a>
-</li>
+<li>  <em>data="ori_por"</em> will load a local version of <a href="https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv">this
+file</a>,
+this is the most complete source for airports, use it!</li>
 <li>  <em>data="ori_por_multi"</em> is the same as previous, but the key for a
 line is not the iata_code, but the concatenation of iata_code and
 location_type. This feature makes every line unique, whereas
-<em>ori_por</em> may have several lines for one iata_code, and duplicates
-are dropped. __id__ is the special field containing the key.</li>
+<em>ori_por</em> may have several lines for one iata_code</li>
 <li>  <em>data="airports"</em> will use geonames as data source for airports</li>
 <li>  <em>data="stations"</em> will use RFF data, from <a href="http://www.data.gouv.fr">the open data
 website</a>, as data source for french train
@@ -147,8 +161,8 @@ french train stations</li>
 <li>  <em>data="cities"</em> will load data on cities, extracted from geonames</li>
 <li>  <em>data="currencies"</em> will load data on currencies, extracted from
 wikipedia</li>
-<li>  <em>data="airlines"</em> will load data on airlines, extracted from this
-<a href="https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv">file</a>
+<li>  <em>data="airlines"</em> will load data on airlines, extracted from <a href="https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv">that
+file</a>
 </li>
 <li>  <em>data="cabins"</em> will load data on cabins</li>
 <li>  <em>data="locales"</em> will load data on locales</li>
@@ -163,17 +177,20 @@ from <em>ori_por</em>
 <li>  <em>data="postal_codes_MC"</em> will load MC postal codes data</li>
 <li>  <em>data="postal_codes_FR"</em> will load FR postal codes data</li>
 <li>  <em>data="feed"</em> will create an empty instance</li>
-</ul><p>All features are then data independent, and are available as long as
-geocodes are included in the data sources (which is not the case for
-countries or NLS nomenclature).</p>
+</ul><p>All features are unaware of the underlying data, and are available as
+long as the headers are properly set in the configuration file, or from
+the <a href="http://opentraveldata.github.com/geobases/api/index.html">Python
+API</a>. For
+geographical features, you have to name the latitude field <code>lat</code>, and
+the longitude field <code>lng</code>.</p>
 
 <h2>Features</h2>
 
 <h3>Information access</h3>
 
-<pre><code>&gt;&gt;&gt; geo_a.get('CDG', 'city_code')
+<pre><code>&gt;&gt;&gt; geo_o.get('CDG', 'city_code')
 'PAR'
-&gt;&gt;&gt; geo_a.get('BRU', 'name')
+&gt;&gt;&gt; geo_o.get('BRU', 'name')
 'Bruxelles National'
 &gt;&gt;&gt; geo_t.get('frnic', 'name')
 'Nice-Ville'
@@ -181,7 +198,11 @@ countries or NLS nomenclature).</p>
 'NAME'
 </code></pre>
 
-<h3>Find airports with properties</h3>
+<p>You can put your own data in a <code>GeoBase</code> class, either by loading your
+own file when creating the instance, or by creating an empty instance
+and using the <code>set</code> method.</p>
+
+<h3>Find things with properties</h3>
 
 <pre><code>&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('location_type', 'H')]
 &gt;&gt;&gt; list(geo_o.getKeysWhere(conditions, mode='and'))
@@ -191,33 +212,34 @@ countries or NLS nomenclature).</p>
 36
 </code></pre>
 
-<h3>Distance calculation</h3>
+<h3>Distance computation</h3>
 
-<pre><code>&gt;&gt;&gt; geo_a.distance('CDG', 'NCE')
+<pre><code>&gt;&gt;&gt; geo_o.distance('CDG', 'NCE')
 694.5162...
 </code></pre>
 
-<h3>Find airports near a point</h3>
+<h3>Find things near a geocode</h3>
 
-<pre><code>&gt;&gt;&gt; # Paris, airports &lt;= 50km
+<pre><code>&gt;&gt;&gt; # Paris, airports &lt;= 40km
 &gt;&gt;&gt; [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
 ['ORY', 'LBG', 'TNF', 'CDG']
 &gt;&gt;&gt;
-&gt;&gt;&gt; # Nice, stations &lt;= 5km
-&gt;&gt;&gt; [geo_t.get(k, 'name') for _, k in geo_t.findNearPoint((43.70, 7.26), 4)]
+&gt;&gt;&gt; # Nice, stations &lt;= 4km
+&gt;&gt;&gt; iterable = geo_t.findNearPoint((43.70, 7.26), 4)
+&gt;&gt;&gt; [geo_t.get(k, 'name') for _, k in iterable]
 ['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
 </code></pre>
 
-<h3>Find airports near a key</h3>
+<h3>Find things near another thing</h3>
 
 <pre><code>&gt;&gt;&gt; sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports &lt;= 50km
 [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
 &gt;&gt;&gt;
-&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations &lt;= 3km
+&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 3)) # Nice station, &lt;= 3km
 [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
 </code></pre>
 
-<h3>Find closest airports from a point</h3>
+<h3>Find closest things from a geocode</h3>
 
 <pre><code>&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
 [(5.82..., 'NCE')]
@@ -252,7 +274,9 @@ rm example.json ...
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png" alt="image"></p>
 
 <h2>API documentation</h2>
-You may find the Sphinx API documentation <a href="api/index.html">here</a>.
+
+<p>You may find here the Sphinx <a href="http://opentraveldata.github.com/geobases/api/index.html">API
+documentation</a>.</p>
 
 <h2>Standalone script</h2>
 
@@ -265,23 +289,48 @@ You may find the Sphinx API documentation <a href="api/index.html">here</a>.
 % GeoBase --closest CDG        # closest from CDG
 % GeoBase --near LIG           # near LIG
 % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
-% GeoBase --help
+% GeoBase --help               # your best friend
 </code></pre>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image">
-More examples here, for example how to do a search on a field, like
-admin code (french riviera here):</p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image"></p>
+
+<p>In the previous picture, you have an overview of the command line
+verbose display. Three displays are available for the command line tool:</p>
+
+<ul>
+<li>  the verbose display</li>
+<li>  the csv display with <code>--quiet</code>
+</li>
+<li>  the map display with <code>--map</code>
+</li>
+</ul><p>With the verbose display, entries are displayed on each column, and the
+available fields on each line. Fields starting with <code>__</code> like
+<code>__field__</code> are special. This means they were added during data loading:</p>
+
+<ul>
+<li>  <code>__key__</code> is the field containing the <em>id</em> of the entry. Ids are
+defined with a list of fields in the configuration file.</li>
+<li>  <code>__dup__</code> is the field containing a list of duplicated keys. Indeed
+there is mechanism handling duplicated keys by default, which
+creates new keys if the key already exists in the <code>GeoBase</code>.</li>
+<li>  <code>__par__</code> is the field containing the parent key if the key is
+duplicated.</li>
+<li>  <code>__lno__</code> is the field containing the line number during loading.</li>
+<li>  <code>__gar__</code> is the field containing the data which was not loaded on
+the line (this can be because the line was not well formatted, or
+because there were missing headers).</li>
+</ul><p>More examples here, for example how to do a search on a field, like
+admin_code (<code>B8</code> is french riviera):</p>
 
 <pre><code>% GeoBase -E adm1_code -e B8
 </code></pre>
 
-<p>Same with programmer-friendly output (csv-like, controlled with
-<code>--show</code>):</p>
+<p>Same with csv output (customized with <code>--show</code>):</p>
 
 <pre><code>% GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 </code></pre>
 
-<p>Add a fuzzy name search:</p>
+<p>Add a fuzzy search:</p>
 
 <pre><code>% GeoBase -E adm1_code -e B8 --fuzzy sur mer
 </code></pre>
@@ -298,7 +347,7 @@ admin code (french riviera here):</p>
 
 <p>Countries with non-empty postal code regex:</p>
 
-<pre><code>% GeoBase -b countries -E postal_code_regex -e "" --reverse --quiet
+<pre><code>% GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
 </code></pre>
 
 <p>Reading data input on stdin:</p>
@@ -313,21 +362,10 @@ admin code (french riviera here):</p>
 
 <p>Europe marker-less map:</p>
 
-<pre><code>% GeoBase -E region_code -e EUROP -m -M _ _ country_code  __none__
+<pre><code>% GeoBase -E region_code -e EUROP --map -M _ _ country_code  __none__
 </code></pre>
 
 <h2>Packaging</h2>
-
-<p>To create source distribution (pip-installable):</p>
-
-<pre><code>% python setup.py sdist --format=zip
-</code></pre>
-
-<p>To create rpm packages:</p>
-
-<pre><code>% rm -rf build dist *.egg-info
-% python setup.py bdist_rpm
-</code></pre>
 
 <p>The <code>MANIFEST.in</code> file is used to determine which files will be included
 in a source distribution. <code>package_data</code> directive in <code>setup.py</code> file is
@@ -335,29 +373,18 @@ about which file will be exported in site-package after installation. So
 you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.</p>
 
-<p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the
-root of the project. This may be used to build and deploy the packages.
+<p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the root
+of the project. This may be used to build and deploy the packages.
 Deployment may be done using webdav, and the Rakefile expects <code>nd</code> to be
-installed (this is a webdav client). To install nd, fetch the sources
-from
-<a href="http://www.gohome.org/nd/"></a><a href="http://www.gohome.org/nd">http://www.gohome.org/nd</a>/.
-Then compile and install them. On 64 bits Fedora, you need to install
-libxml2 before:</p>
+installed (this is a webdav client). To install <code>nd</code>, fetch the
+<a href="http://www.gohome.org/nd/">sources</a> and compile them.</p>
 
-<pre><code># yum install libxml2.x86_64 libxml2-devel.x86_64
-</code></pre>
-
-<p>After nd and rake installation, you may try:</p>
-
-<pre><code>% rake
-</code></pre>
-
-<p>Virtualenv has bugs on 64 bits systems, if you are using such a system,
-you absolutely need to upgrade to the very last unreleased version of
-virtualenv, before executing rake:</p>
+<p>Virtualenv still has some bugs on 64 bits systems, if you are using such
+a system, you absolutely need to upgrade to the very last unreleased
+version of virtualenv, before executing rake:</p>
 
 <pre><code>% pip uninstall virtualenv
-% pip install --user https://github.com/pypa/virtualenv/tarball/develop
+% pip install https://github.com/pypa/virtualenv/tarball/develop
 </code></pre>
       </section>
     </div>
