@@ -16,3 +16,4 @@ Also check the ``conf.py`` for the extension::
 
     extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
 
+``__init__`` methods are not documented by default, so you may have to customize the ``conf.py``.
