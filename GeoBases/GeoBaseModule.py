@@ -8,11 +8,11 @@ airports or train stations, and then provides tools to browse it.
 
 It relies on three other modules:
 
-- GeoUtils: to compute haversine distances between points
-- LevenshteinUtils: to calculate distances between strings. Indeed, we need
+- *GeoUtils*: to compute haversine distances between points
+- *LevenshteinUtils*: to calculate distances between strings. Indeed, we need
   a good tool to do it, in order to recognize things like station names
   in schedule files where we do not have the station id
-- GeoGridModule: to handle geographical indexation
+- *GeoGridModule*: to handle geographical indexation
 
 Examples for airports::
 

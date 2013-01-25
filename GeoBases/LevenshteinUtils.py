@@ -10,16 +10,15 @@ will not count standard words like 'ville' or 'sncf'.
 
 Functions frequently used by other modules:
 
-- mod_leven: a function to compute the distance between two
+- *mod_leven*: a function to compute the distance between two
   strings. It is based on the Levenshtein ratio.
-- clean: a function to clean string before comparisons
+- *clean*: a function to clean string before comparisons
 
 
 This module strongly relies on one other module:
 
-- Levenshtein: this module implements some standard algorithms
+- *Levenshtein*: this module implements some standard algorithms
   to compare strings, such as the Levenshtein distance
-
 
 Simple examples::
 

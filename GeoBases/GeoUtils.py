@@ -9,13 +9,13 @@ http://www.movable-type.co.uk/scripts/latlong.html
 
 Functions frequently used by other modules:
 
-- haversine: a function to compute the shortest path distance
+- *haversine*: a function to compute the shortest path distance
   between two points on a sphere
-- prog_point: a function to compute the localization of a point
+- *prog_point*: a function to compute the localization of a point
   traveling on the shortest path between two points on a sphere,
   given a progression ratio (like 0%, 50% or 100%). This one uses
   a dichotomy, because so far I have an exact formula only for 50%
-  (implemented in function mid_point)
+  (implemented in function *mid_point*)
 
 Simple examples::
 
