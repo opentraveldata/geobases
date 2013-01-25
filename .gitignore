@@ -12,3 +12,4 @@ bin/
 lib/
 lib64
 include/
+doc/_build

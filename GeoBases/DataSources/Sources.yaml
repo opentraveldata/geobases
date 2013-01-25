@@ -16,29 +16,6 @@ airports:
         - lng
 
 
-airports_csv:
-    source    : Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv
-    indexes   : iata_code
-    delimiter : ^
-    headers   :
-        - iata_code
-        - ref_name
-        - ref_name_2
-        - name
-        - city_code
-        - is_an_airport
-        - state_code
-        - country_code
-        - region_code       # REL_REGION_CODE in Amadeus RFD: AFRICCARIBEUROPPACIFSAMER...
-        - pricing_zone      # REL_CONTINENT_CODE in Amadeus RFD: ITC1 ITC2 ITC3
-        - time_zone_group   # REL_TIME_ZONE_GRP
-        - lng
-        - lat
-        -                   # numeric code? -> converted to None => not loaded
-        - is_commercial
-        - location_type     # C city A airport H heliport O train station R rail
-
-
 countries:
     source    : Countries/countryInfo.txt
     indexes   : code
