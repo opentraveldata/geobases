@@ -8,11 +8,11 @@ airports or train stations, and then provides tools to browse it.
 
 It relies on three other modules:
 
-    - GeoUtils: to compute haversine distances between points
-    - LevenshteinUtils: to calculate distances between strings. Indeed, we need
-      a good tool to do it, in order to recognize things like station names
-      in schedule files where we do not have the station id
-    - GeoGridModule: to handle geographical indexation
+- GeoUtils: to compute haversine distances between points
+- LevenshteinUtils: to calculate distances between strings. Indeed, we need
+  a good tool to do it, in order to recognize things like station names
+  in schedule files where we do not have the station id
+- GeoGridModule: to handle geographical indexation
 
 Examples for airports::
 
@@ -169,21 +169,22 @@ class GeoBase(object):
     def __init__(self, data, **kwargs):
         """Initialization
 
-        :param data: the type of data wanted, 'airports', 'stations' \
-            and 'feed' currently available. 'feed' will let you define your \
-            own parameters.
-        :param kwargs: can contain the following: \
-                                                    \
-            - local         : True by default, is the source local or not \
-            - source        : None by default, file-like to the source \
-            - headers       : [] by default, list of fields in the data \
-            - indexes       : None by default, list of fields defining the key for a line \
-            - delimiter     : '^' by default, delimiter for each field,
-            - subdelimiters : {} by default, a { field : delimiter } dict to define subdelimiters \
-            - quotechar     : '"' by default, this is the string defined for quoting \
-            - limit         : None by default, put an int if you want to load only the first lines \
-            - discard_dups  : False by default, boolean to discard key duplicates of handle them \
-            - verbose       : True by default, toggle verbosity
+        The ``kwargs`` parameters given when creating the object may be:
+
+        - local         : ``True`` by default, is the source local or not
+        - source        : ``None`` by default, file-like to the source
+        - headers       : ``[]`` by default, list of fields in the data
+        - indexes       : ``None`` by default, list of fields defining the key for a line
+        - delimiter     : ``'^'`` by default, delimiter for each field,
+        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
+        - quotechar     : ``'"'`` by default, this is the string defined for quoting
+        - limit         : ``None`` by default, put an int if you want to load only the first lines
+        - discard_dups  : ``False`` by default, boolean to discard key duplicates of handle them
+        - verbose       : ``True`` by default, toggle verbosity
+
+        :param data: the type of data wanted, 'airports', 'stations', and many more available. \
+            'feed' will create an empty instance.
+        :param kwargs: additional parameters
         :raises:  ValueError, if data parameters is not recognized
         :returns: None
 
