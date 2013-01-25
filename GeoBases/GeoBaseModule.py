@@ -172,8 +172,20 @@ class GeoBase(object):
         :param data: the type of data wanted, 'airports', 'stations' \
             and 'feed' currently available. 'feed' will let you define your \
             own parameters.
-
-        :raises: ValueError, if data parameters is not recognized
+        :param kwargs: can contain the following: \
+                                                    \
+            - local         : True by default, is the source local or not \
+            - source        : None by default, file-like to the source \
+            - headers       : [] by default, list of fields in the data \
+            - indexes       : None by default, list of fields defining the key for a line \
+            - delimiter     : '^' by default, delimiter for each field,
+            - subdelimiters : {} by default, a { field : delimiter } dict to define subdelimiters \
+            - quotechar     : '"' by default, this is the string defined for quoting \
+            - limit         : None by default, put an int if you want to load only the first lines \
+            - discard_dups  : False by default, boolean to discard key duplicates of handle them \
+            - verbose       : True by default, toggle verbosity
+        :raises:  ValueError, if data parameters is not recognized
+        :returns: None
 
         >>> geo_a = GeoBase(data='airports')
         Import successful from ...
