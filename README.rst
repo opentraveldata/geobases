@@ -12,9 +12,9 @@ but you may easily play with your own data in addition to the available ones.
 Csv files containing data about airports, train
 stations, countries, ... are loaded, then you may:
 
--  performs various types of queries (*find this key*, or *find keys with this property*)
--  *fuzzy searches* based on string distance (*find things roughly named like this*)
--  *geographical searches* (*find things next to this place*)
+-  performs various types of queries ( *find this key*, or *find keys with this property*)
+-  *fuzzy searches* based on string distance ( *find things roughly named like this*)
+-  *geographical searches* ( *find things next to this place*)
 -  get results on a map, or export it as csv data, or as a Python object
 
 This is entirely written in Python. The core part is a Python package,
@@ -188,22 +188,23 @@ Find things near a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> # Paris, airports <= 50km
+    >>> # Paris, airports <= 40km
     >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
     ['ORY', 'LBG', 'TNF', 'CDG']
     >>>
-    >>> # Nice, stations <= 5km
-    >>> [geo_t.get(k, 'name') for _, k in geo_t.findNearPoint((43.70, 7.26), 4)]
+    >>> # Nice, stations <= 4km
+    >>> iterable = geo_t.findNearPoint((43.70, 7.26), 4)
+    >>> [geo_t.get(k, 'name') for _, k in iterable]
     ['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
 
-Find things near another things
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Find things near another thing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
     >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
     [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
     >>>
-    >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations <= 3km
+    >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, <= 3km
     [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
 
 Find closest things from a geocode
@@ -342,5 +343,5 @@ you absolutely need to upgrade to the very last unreleased version of
 virtualenv, before executing rake::
 
     % pip uninstall virtualenv
-    % pip install --user https://github.com/pypa/virtualenv/tarball/develop
+    % pip install https://github.com/pypa/virtualenv/tarball/develop
 
