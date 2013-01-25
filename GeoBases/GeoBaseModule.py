@@ -6,14 +6,13 @@ This module is a general class *GeoBase* to manipulate geographical
 data. It loads static csv files containing data about
 airports or train stations, and then provides tools to browse it.
 
+It relies on three other modules:
 
-It relies on two other modules:
-
-    - GeoUtils: to compute haversine distances between points
-    - LevenshteinUtils: to calculate distances between strings. Indeed, we need
-      a good tool to do it, in order to recognize things like station names
-      in schedule files where we do not have the station id
-
+- *GeoUtils*: to compute haversine distances between points
+- *LevenshteinUtils*: to calculate distances between strings. Indeed, we need
+  a good tool to do it, in order to recognize things like station names
+  in schedule files where we do not have the station id
+- *GeoGridModule*: to handle geographical indexation
 
 Examples for airports::
 
@@ -192,12 +191,24 @@ class GeoBase(object):
     def __init__(self, data, **kwargs):
         """Initialization
 
-        :param data: the type of data wanted, 'airports', 'stations' \
-            and 'feed' currently available. 'feed' will let you define your \
-            own parameters.
-        :param verbose: display informations or not during runtime
+        The ``kwargs`` parameters given when creating the object may be:
 
-        :raises: ValueError, if data parameters is not recognized
+        - local         : ``True`` by default, is the source local or not
+        - source        : ``None`` by default, file-like to the source
+        - headers       : ``[]`` by default, list of fields in the data
+        - indexes       : ``None`` by default, list of fields defining the key for a line
+        - delimiter     : ``'^'`` by default, delimiter for each field,
+        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
+        - quotechar     : ``'"'`` by default, this is the string defined for quoting
+        - limit         : ``None`` by default, put an int if you want to load only the first lines
+        - discard_dups  : ``False`` by default, boolean to discard key duplicates of handle them
+        - verbose       : ``True`` by default, toggle verbosity
+
+        :param data: the type of data wanted, 'airports', 'stations', and many more available. \
+            'feed' will create an empty instance.
+        :param kwargs: additional parameters
+        :raises:  ValueError, if data parameters is not recognized
+        :returns: None
 
         >>> geo_a = GeoBase(data='airports')
         Import successful from ...
@@ -211,19 +222,19 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
         >>> 
-        >>> fl = open(relative('DataSources/Airports/AirportsDotCsv/ORI_Simple_Airports_Database_Table.csv'))
+        >>> fl = open(relative('DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'))
         >>> GeoBase(data='feed',
         ...         source=fl,
-        ...         headers=['code', 'ref_name', 'ref_name_2', 'name'],
-        ...         indexes='code',
+        ...         headers=['iata_code', 'name', 'city'],
+        ...         indexes='iata_code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
-        {'code': 'ORY', 'name': 'PARIS/FR:ORLY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
         >>> fl.close()
-        >>> GeoBase(data='airports_csv',
-        ...         headers=['iata_code', 'ref_name', 'ref_name_2', 'name'],
+        >>> GeoBase(data='airports',
+        ...         headers=['iata_code', 'name', 'city'],
         ...         verbose=False).get('ORY')
-        {'name': 'PARIS/FR:ORLY', 'iata_code': 'ORY', '__gar__': 'PAR^Y^^FR^EUROP^ITC2^FR052^2.35944^48.7253^3745^Y^A', '__par__': [], '__dup__': [], '__key__': 'ORY', 'ref_name_2': 'PARIS ORLY', '__lno__': 6014, 'ref_name': 'PARIS ORLY'}
+        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -515,6 +526,8 @@ class GeoBase(object):
     def hasGeoSupport(self):
         """Check if data type has geocoding support.
 
+        :returns: boolean for geocoding support
+
         >>> geo_t.hasGeoSupport()
         True
         >>> geo_f.hasGeoSupport()
@@ -535,10 +548,11 @@ class GeoBase(object):
 
         This get function raises an exception when input is not correct.
 
-        :param key:   the key of the thing (like 'SFO')
-        :param field: the field (like 'name' or 'iata_code')
-        :raises:      KeyError, if the key is not in the base
-        :returns:     the needed information
+        :param key:     the key of the thing (like 'SFO')
+        :param field:   the field (like 'name' or 'iata_code')
+        :param default: if key is missing, returns default if given
+        :raises:        KeyError, if the key is not in the base
+        :returns:       the needed information
 
         >>> geo_a.get('CDG', 'city_code')
         'PAR'
@@ -587,6 +601,9 @@ class GeoBase(object):
     def getLocation(self, key):
         """Returns geocode as (float, float) or None.
 
+        :param key:     the key of the thing (like 'SFO')
+        :returns:       the location, a tuple of floats (lat, lng), or None
+
         >>> geo_a.getLocation('AGN')
         (57.50..., -134.585...)
         """
@@ -611,6 +628,9 @@ class GeoBase(object):
     def hasParents(self, key):
         """Tell if a key has parents.
 
+        :param key:     the key of the thing (like 'SFO')
+        :returns:       the number of parents
+
         >>> geo_o.hasParents('MRS')
         0
         >>> geo_o.hasParents('MRS@1')
@@ -623,6 +643,9 @@ class GeoBase(object):
 
     def hasDuplicates(self, key):
         """Tell if a key has duplicates.
+
+        :param key:     the key of the thing (like 'SFO')
+        :returns:       the number of duplicates
 
         >>> geo_o.hasDuplicates('MRS')
         1
@@ -637,6 +660,11 @@ class GeoBase(object):
 
     def getAllDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
+
+        :param key:     the key of the thing (like 'SFO')
+        :param field:   the field (like 'name' or 'iata_code')
+        :returns:       the list of values for the given field iterated \
+                on all duplicates for the key, including the key itself
 
         >>> geo_o.getAllDuplicates('ORY', 'name')
         ['Paris-Orly']
@@ -685,6 +713,7 @@ class GeoBase(object):
         :param reverse:    we look keys where the field is *not* the particular value
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
+        :param from_keys:  if given, we will look for results from this iterable of keys
         :returns:          an iterator of matching keys
 
         >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
@@ -851,13 +880,15 @@ class GeoBase(object):
         at the surface of a sphere, here returns kilometers,
         so the radius should be in kms.
 
-        :param lat_lng: the lat_lng of the point
+        :param lat_lng: the lat_lng of the point (a tuple of (lat, lng))
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
         :param grid:    boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results distance
-        :returns:       an iterable of keys of things (like ['ORY', 'CDG'])
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
 
         >>> # Paris, airports <= 50km
         >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
@@ -892,7 +923,6 @@ class GeoBase(object):
 
 
 
-
     def findNearKey(self, key, radius=50, from_keys=None, grid=True, double_check=True):
         """
         Same as findNearPoint, except the point is given
@@ -900,13 +930,15 @@ class GeoBase(object):
         We just look up in the base to retrieve lat/lng, and
         call findNearPoint.
 
-        :param key:     the key of the point
+        :param key:     the key
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
         :param grid:    boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results distance
-        :returns:       a list of keys of things (like ['ORY', 'CDG'])
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
 
         >>> sorted(geo_o.findNearKey('ORY', 10)) # Orly, por <= 10km
         [(0.0, 'ORY'), (1.82..., 'JDP'), (8.06..., 'XJY'), (9.95..., 'QFC')]
@@ -932,7 +964,6 @@ class GeoBase(object):
             from_keys = iter(self)
 
         for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
-
             yield (dist, thing)
 
 
@@ -948,14 +979,16 @@ class GeoBase(object):
         the LocalHelper, to find efficiently N closest point
         in a graph, from a point (using heaps).
 
-        :param lat_lng:   the lat_lng of the point
+        :param lat_lng:   the lat_lng of the point (a tuple of (lat, lng))
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
             and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
         :param grid:    boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results distance
-        :returns:   one key (like 'SFO'), or a list if approximate is not None
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
 
         >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
         [(5.82..., 'NCE')]
@@ -1008,14 +1041,11 @@ class GeoBase(object):
             r = mod_leven(fuzzy_value, self.get(key, field))
 
             if r >= min_match:
-
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field, approximate=None, min_match=0.50, from_keys=None):
+    def fuzzyGet(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None):
         """
-        We get to the cool stuff.
-
         Fuzzy searches are retrieving an information
         on a thing when we do not know the code.
         We compare the value fuzzy_value which is supposed to be a field
@@ -1030,25 +1060,25 @@ class GeoBase(object):
 
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
-        :param approximate: max number of results, None means all results
+        :param max_results: max number of results, None means all results
         :param min_match:   filter out matches under this threshold
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+        :param from_keys:   if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform fuzzyGet. This is useful when we have geocodes \
             and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
-        :returns:           a couple with the best match and the distance found
+        :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
         (0.91..., 'frmsc')
         >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=3, min_match=0.55)
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=3, min_match=0.55)
         [(0.78..., 'CDG'), (0.64..., 'LBG'), (0.60..., 'HUX')]
 
         Some corner cases.
 
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=None)[0]
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=None)[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', approximate=1, from_keys=[])
+        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=1, from_keys=[])
         []
         """
         if from_keys is None:
@@ -1060,26 +1090,31 @@ class GeoBase(object):
         # module just here. All we do is minimize this distance
         iterable = self._buildRatios(fuzzy_value, field, from_keys, min_match)
 
-        if approximate is None:
+        if max_results is None:
             return sorted(iterable, reverse=True)
         else:
-            return heapq.nlargest(approximate, iterable)
+            return heapq.nlargest(max_results, iterable)
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, approximate=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         """
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
 
-        :param lat_lng: the lat_lng of the point
-        :param radius:  the radius of the search (kilometers)
+        :param lat_lng:     the lat_lng of the point (a tuple of (lat, lng))
+        :param radius:      the radius of the search (kilometers)
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
-        :param approximate: if None, returns the best, if an int, returns a list of \
-            n best matches
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+        :param max_results: if None, returns all, if an int, only returns the first ones
+        :param min_match:   filter out matches under this threshold
+        :param from_keys:   if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
+        :param grid:        boolean, use grid or not
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_a.fuzzyGet('Brussels', 'name', min_match=0.50)[0]
         (0.58..., 'EFC')
@@ -1093,7 +1128,7 @@ class GeoBase(object):
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', approximate=1, min_match=0.30, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         """
         if from_keys is None:
@@ -1101,7 +1136,7 @@ class GeoBase(object):
 
         nearest = ( key for dist, key in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check) )
 
-        return self.fuzzyGet(fuzzy_value, field, approximate, min_match, from_keys=nearest)
+        return self.fuzzyGet(fuzzy_value, field, max_results, min_match, from_keys=nearest)
 
 
     def _fuzzyGetBiased(self, entry, verbose=True):
@@ -1124,7 +1159,7 @@ class GeoBase(object):
     def fuzzyGetCached(self,
                        fuzzy_value,
                        field,
-                       approximate=None,
+                       max_results=None,
                        min_match=0.75,
                        verbose=True,
                        show_bad=(1, 1)):
@@ -1133,18 +1168,18 @@ class GeoBase(object):
 
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
-        :param approximate: if None, returns the best, if an int, returns a list of \
-            n best matches
-        :param verbose:     display a certain range of similarity
+        :param max_results: if None, returns all, if an int, only returns the first ones
+        :param min_match:   filter out matches under this threshold
+        :param verbose:     display information on a certain range of similarity
         :param show_bad:    the range of similarity
-        :returns:           the best match
+        :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0]
         (0.76..., 'frmsc')
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', min_match=0.60, approximate=2, show_bad=(0, 1))
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', min_match=0.60, max_results=2, show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.65]           paris+de+gaulle ->          paris+le+bourget (  LBG)
         [(0.78..., 'CDG'), (0.64..., 'LBG')]
@@ -1152,15 +1187,15 @@ class GeoBase(object):
         Some biasing:
 
         >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, [(0.5, 'Biased result')])
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, show_bad=(0, 1))[0] # Cache there
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', approximate=None, min_match=0.75)
+        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         [(0.5, 'Biased result')]
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
 
         if entry not in self._cache_fuzzy:
 
@@ -1176,14 +1211,22 @@ class GeoBase(object):
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, approximate, min_match, biased_result):
+    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, biased_result):
         """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
         the research and force the result.
+
+        :param fuzzy_value:   the value, like 'Marseille'
+        :param field:         the field we look into, like 'name'
+        :param max_results:   if None, returns all, if an int, only returns the first ones
+        :param min_match:     filter out matches under this threshold
+        :param biased_result: the expected result
+        :returns:             None
+
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, approximate, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
 
         self._bias_cache_fuzzy[entry] = biased_result
 
@@ -1201,15 +1244,15 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildCacheKey(fuzzy_value, field, approximate, min_match):
+    def _buildCacheKey(fuzzy_value, field, max_results, min_match):
         """Key for the cache of fuzzyGet, based on parameters.
 
-        >>> geo_a._buildCacheKey('paris de gaulle', 'name', approximate=None, min_match=0)
+        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0)
         ('paris+de+gaulle', 'name', None, 0)
-        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', approximate=3, min_match=0)
+        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0)
         ('antibes+sncf+2', 'name', 3, 0)
         """
-        return '+'.join(clean(fuzzy_value)), field, approximate, min_match
+        return '+'.join(clean(fuzzy_value)), field, max_results, min_match
 
 
     def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
@@ -1248,6 +1291,7 @@ class GeoBase(object):
         :param key:   the key we want to change a value of
         :param field: the concerned field, like 'name'
         :param value: the new value
+        :returns:     None
 
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
@@ -1282,6 +1326,7 @@ class GeoBase(object):
 
         :param key:         the key we want to change a value of
         :param dictionary:  the dict containing the new data
+        :returns:           None
 
         >>> geo_f.keys()
         []
@@ -1296,8 +1341,7 @@ class GeoBase(object):
     def delete(self, key):
         """Method to manually remove a value in the base.
 
-        :param key:   the key we want to change a value of
-        :param field: the concerned field, like 'name'
+        :param key:   the key we want to delete
         :returns:     None
 
         >>> data = geo_t.get('frxrn') # Output all data in one dict
@@ -1329,6 +1373,13 @@ class GeoBase(object):
         If not hasTrepSupport(), main_trep is not defined
         and trepGet will raise an exception if called.
 
+        :param fuzzy_value:   the fuzzy value
+        :param trep_format:   the format given to OpenTrep
+        :param from_keys:     if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
+        :param verbose:       toggle verbosity
+        :returns:             an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
+
         >>> if geo_t.hasTrepSupport():
         ...     print geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
         [(31.5192, 'SFO'), (46.284, 'LAX')]
@@ -1356,10 +1407,30 @@ class GeoBase(object):
         return []
 
 
-    def visualize(self, output='example', label='__key__', point_size=None, point_color=None, icon_type='auto', from_keys=None, catalog=None, add_lines=None, link_duplicates=True, verbose=True):
+    def visualize(self,
+                  output='example',
+                  label='__key__',
+                  point_size=None,
+                  point_color=None,
+                  icon_type='auto',
+                  from_keys=None,
+                  catalog=None,
+                  add_lines=None,
+                  link_duplicates=True,
+                  verbose=True):
         """Creates map and other visualizations.
 
-        Returns list of templates successfully rendered.
+        :param output:          set the name of the rendered files
+        :param label:           set the field which will appear as map icons title
+        :param point_size:      set the field defining the map icons circle size
+        :param point_color:     set the field defining the map icons colors
+        :icon_type:             set the global icon size, either 'B', 'S' or 'auto'
+        :from_keys:             only display this iterable of keys if not None
+        :param catalog:         optional color catalog to have specific colors for certain field values
+        :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
+        :param link_duplicates: boolean toggling lines between duplicated keys feature
+        :param verbose:         toggle verbosity
+        :returns:               (list of templates successfully rendered, total number of templates available).
         """
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
@@ -1644,6 +1715,17 @@ class GeoBase(object):
 
 def ext_split(value, split):
     """Extended split function handling None and '' splitter.
+
+    :param value:  the value to be split
+    :param split:  the splitter
+    :returns:      the split value
+
+    >>> ext_split('PAR', 'A')
+    ('P', 'R')
+    >>> ext_split('PAR', '')
+    ('P', 'A', 'R')
+    >>> ext_split('PAR', None)
+    'PAR'
     """
     if split is None:
         return value
@@ -1656,6 +1738,13 @@ def ext_split(value, split):
 
 def recursive_split(value, splits):
     """Recursive extended split.
+
+    :param value:  the value to be split
+    :param splits: the list of splitters
+    :returns:      the split value
+
+    >>> recursive_split('PAR^Paris/Parys', ['^', '/'])
+    (('PAR',), ('Paris', 'Parys'))
     """
     # Case where no subdelimiters
     if not splits:
