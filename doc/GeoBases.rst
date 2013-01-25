@@ -1,14 +1,6 @@
 GeoBases Package
 ================
 
-:mod:`GeoBases` Package
------------------------
-
-.. automodule:: GeoBases
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`GeoBaseModule` Module
 ---------------------------
 
