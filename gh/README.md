@@ -4,9 +4,8 @@ GeoBases
 Introduction
 ------------
 
-This project provides tools to play with geographical data. It works
-with non-geographical data as well, except for the map visualizations
-:).
+This project provides tools to play with geographical data. It also
+works with non-geographical data, except for map visualizations :).
 
 There are embedded data sources in the project, but you may easily play
 with your own data in addition to the available ones. Csv files
@@ -84,7 +83,6 @@ Tests
 
 Run the tests with:
 
-    % find ./ -name '*.pyc' -exec rm {} \;
     % python test/test_GeoBases.py -v
 
 Quickstart
