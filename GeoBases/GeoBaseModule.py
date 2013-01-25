@@ -1451,7 +1451,17 @@ class GeoBase(object):
                   verbose=True):
         """Creates map and other visualizations.
 
-        Returns list of templates successfully rendered.
+        :param output:          set the name of the rendered files
+        :param label:           set the field which will appear as map icons title
+        :param point_size:      set the field defining the map icons circle size
+        :param point_color:     set the field defining the map icons colors
+        :icon_type:             set the global icon size, either 'B', 'S' or 'auto'
+        :from_keys:             only display this iterable of keys if not None
+        :param catalog:         optional color catalog to have specific colors for certain field values
+        :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
+        :param link_duplicates: boolean toggling lines between duplicated keys feature
+        :param verbose:         toggle verbosity
+        :returns:               (list of templates successfully rendered, total number of templates available).
         """
         # We take the maximum verbosity between the local and global
         verbose = self._verbose or verbose
