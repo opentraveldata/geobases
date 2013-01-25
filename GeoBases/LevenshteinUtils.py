@@ -10,15 +10,15 @@ will not count standard words like 'ville' or 'sncf'.
 
 Functions frequently used by other modules:
 
-    - mod_leven: a function to compute the distance between two
-      strings. It is based on the Levenshtein ratio.
-    - clean: a function to clean string before comparisons
+- mod_leven: a function to compute the distance between two
+  strings. It is based on the Levenshtein ratio.
+- clean: a function to clean string before comparisons
 
 
 This module strongly relies on one other module:
 
-    - Levenshtein: this module implements some standard algorithms
-      to compare strings, such as the Levenshtein distance
+- Levenshtein: this module implements some standard algorithms
+  to compare strings, such as the Levenshtein distance
 
 
 Simple examples::
@@ -130,6 +130,7 @@ def handle_parenthesis_info(string, parts=None):
     only the part *before* the parenthesis.
 
     :param string: the string to be processed
+    :param parts:  whichi part to keep, either 'before', 'in', or 'after'
     :returns:      the parenthesis-free string
 
     >>> handle_parenthesis_info('Lyon Part-Dieu (TGV)')
@@ -235,10 +236,10 @@ def clean(string):
     This function cleans the string to have a better comparison.
     Different steps:
 
-        - lower and strip (remove leading and trailing spaces/tabulations)
-        - manage accentuated characters, parenthesis
-        - properly split the string
-        - handle common aliases, irrelevant words, numbers and spaces
+    - lower and strip (remove leading and trailing spaces/tabulations)
+    - manage accentuated characters, parenthesis
+    - properly split the string
+    - handle common aliases, irrelevant words, numbers and spaces
 
     :param string: the string to be processed
     :returns:      the clean string
@@ -271,9 +272,9 @@ def is_sublist(subL, L):
     """
     This function tests the inclusion of a list in another one.
 
-    :param sublst:  the tested sub-list
-    :param lst:     the tested list
-    :returns:       a boolean
+    :param subL:  the tested sub-list
+    :param L:     the tested list
+    :returns:     a boolean
 
     >>> is_sublist([2], [2,3])
     True
@@ -325,6 +326,8 @@ def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inc
 
     :param str1: the first string to compare
     :param str2: the second string to compare
+    :param heuristic_inclusion: boolean to toggle the heuristic inclusion
+    :param heuristic_inclusion_value: for heuristic inclusion, the value considered
     :returns:    the distance, which is a ratio (0% to 100%)
 
     >>> mod_leven('antibes', 'antibs')
