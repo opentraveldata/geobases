@@ -512,6 +512,8 @@ class GeoBase(object):
     def hasGeoSupport(self):
         """Check if data type has geocoding support.
 
+        :returns: boolean for geocoding support
+
         >>> geo_t.hasGeoSupport()
         True
         >>> geo_f.hasGeoSupport()
@@ -936,7 +938,6 @@ class GeoBase(object):
 
 
 
-
     def findNearKey(self, key, radius=50, from_keys=None, grid=True, double_check=True):
         """
         Same as findNearPoint, except the point is given
@@ -984,13 +985,10 @@ class GeoBase(object):
             for dist, thing in self._ggrid.findNearKey(key, radius, double_check):
 
                 if thing in from_keys:
-
                     yield (dist, thing)
 
         else:
-
             for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
-
                 yield (dist, thing)
 
 
@@ -1049,17 +1047,13 @@ class GeoBase(object):
             from_keys = iter(self)
 
         if grid:
-
             for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
-
                 yield (dist, thing)
 
         else:
-
             iterable = self._buildDistances(lat_lng, from_keys)
 
             for dist, thing in heapq.nsmallest(N, iterable):
-
                 yield (dist, thing)
 
 
@@ -1076,7 +1070,6 @@ class GeoBase(object):
             r = mod_leven(fuzzy_value, self.get(key, field))
 
             if r >= min_match:
-
                 yield r, key
 
 
@@ -1743,6 +1736,17 @@ class GeoBase(object):
 
 def ext_split(value, split):
     """Extended split function handling None and '' splitter.
+
+    :param value:  the value to be split
+    :param split:  the splitter
+    :returns:      the split value
+
+    >>> ext_split('PAR', 'A')
+    ('P', 'R')
+    >>> ext_split('PAR', '')
+    ('P', 'A', 'R')
+    >>> ext_split('PAR', None)
+    'PAR'
     """
     if split is None:
         return value
@@ -1755,6 +1759,13 @@ def ext_split(value, split):
 
 def recursive_split(value, splits):
     """Recursive extended split.
+
+    :param value:  the value to be split
+    :param splits: the list of splitters
+    :returns:      the split value
+
+    >>> recursive_split('PAR^Paris/Parys', ['^', '/'])
+    (('PAR',), ('Paris', 'Parys'))
     """
     # Case where no subdelimiters
     if not splits:
