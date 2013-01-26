@@ -73,7 +73,7 @@ def local(rel_path, root_file=__file__):
 with open(local('VERSION')) as fl:
     VERSION = fl.read().rstrip()
 
-with open(local('README')) as fl:
+with open(local('README.rst')) as fl:
     LONG_DESCRIPTION = fl.read()
 
 setup(
