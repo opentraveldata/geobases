@@ -81,7 +81,7 @@ setup(
     version = VERSION,
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
-    url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
+    url = 'http://opentraveldata.github.com/geobases',
     description = 'Provides data services.',
     long_description = LONG_DESCRIPTION,
     #
