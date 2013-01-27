@@ -167,6 +167,7 @@ ori_por:
         # split every char 'AB' -> ['A', 'B']
         #location_type    : ''
         alt_name_section : ['=', '|']
+        tvl_por_list     : ','
     headers : &ori_por_headers
         - iata_code
         - icao_code
@@ -206,6 +207,7 @@ ori_por:
         - city_code
         - city_name_utf
         - city_name_ascii
+        - tvl_por_list
         - state_code
         - location_type
         - wiki_link
