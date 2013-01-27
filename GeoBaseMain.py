@@ -1321,6 +1321,15 @@ def main():
         last = 'exact'
 
 
+    if args['fuzzy'] is not None:
+        args['fuzzy'] = ' '.join(args['fuzzy'])
+        if verbose:
+            print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
+
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        last = 'fuzzy'
+
+
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
@@ -1339,15 +1348,6 @@ def main():
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
         last = 'closest'
-
-
-    if args['fuzzy'] is not None:
-        args['fuzzy'] = ' '.join(args['fuzzy'])
-        if verbose:
-            print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
-
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
-        last = 'fuzzy'
 
 
     if verbose:
