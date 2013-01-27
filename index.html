@@ -340,9 +340,9 @@ admin_code (<code>B8</code> is french riviera):</p>
 <pre><code>% GeoBase --near PAR -N 200 -E location_type -e 'H'
 </code></pre>
 
-<p>50 train stations closest to Paris:</p>
+<p>50 train stations closest to a specific geocode:</p>
 
-<pre><code>% GeoBase -E location_type -e R --closest PAR -C 50
+<pre><code>% GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 </code></pre>
 
 <p>Countries with non-empty postal code regex:</p>
