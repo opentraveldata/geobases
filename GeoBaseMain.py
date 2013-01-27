@@ -1333,7 +1333,7 @@ def main():
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
-            print 'Applying near %s km from "%s"' % (args['near_limit'], args['near'])
+            print 'Applying near %s km from "%s" (%s grid)' % (args['near_limit'], args['near'], 'with' if with_grid else 'without')
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -1343,7 +1343,7 @@ def main():
     if args['closest'] is not None:
         args['closest'] = ' '.join(args['closest'])
         if verbose:
-            print 'Applying closest %s from "%s"' % (args['closest_limit'], args['closest'])
+            print 'Applying closest %s from "%s" (%s grid)' % (args['closest_limit'], args['closest'], 'with' if with_grid else 'without')
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
