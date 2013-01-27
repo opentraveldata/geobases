@@ -387,7 +387,7 @@ def scan_coords(u_input, geob, verbose):
 
     # Then we try input as geocode
     try:
-        coords = tuple(float(l) for l in u_input.strip('()').split(','))
+        coords = tuple(float(l) for l in u_input.strip('()').replace('\\', '').split(','))
 
     except ValueError:
         pass
