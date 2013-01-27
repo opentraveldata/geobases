@@ -301,9 +301,9 @@ All heliports under 200 km from Paris::
 
     % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
-50 train stations closest to Paris::
+50 train stations closest to a specific geocode::
 
-    % GeoBase -E location_type -e R --closest PAR -C 50
+    % GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 
 Countries with non-empty postal code regex::
 
