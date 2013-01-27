@@ -424,6 +424,7 @@ def guess_delimiter(row):
         '_', # this is for spaces
         ' ', # spaces are not usually delimiter, unless we find no other
         '"', # this is for quoting
+        '.', # this is for decimal numbers
     ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
