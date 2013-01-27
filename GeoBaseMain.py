@@ -387,7 +387,11 @@ def scan_coords(u_input, geob, verbose):
 
     # Then we try input as geocode
     try:
-        free_geo = u_input.strip('()').replace('\\', '')
+        free_geo = u_input.strip('()')
+
+        for char in '\\', '"', "'":
+            free_geo = free_geo.replace(char, '')
+
         for sep in '^', ';', ',':
             free_geo = free_geo.replace(sep, ' ')
 
