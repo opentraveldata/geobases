@@ -278,7 +278,7 @@
 3855244	Gálvez	Galvez	Galvez,Gálvez	-32.02927	-61.22103	P	PPL	AR		21				18374		57	America/Argentina/Cordoba	2012-02-02
 3855554	Firmat	Firmat	Firmat	-33.45937	-61.4832	P	PPL	AR		21				18294		109	America/Argentina/Cordoba	2012-02-02
 3855666	Famaillá	Famailla	Famailla,Famaillá	-27.05413	-65.40329	P	PPL	AR		24	3855665			30951		368	America/Argentina/Tucuman	2012-01-18
-3855974	Esquel	Esquel	EQS,Esquel	-42.9	-71.31667	P	PPL	AR		04				28486		624	America/Argentina/Catamarca	2010-08-10
+3855974	Esquel	Esquel	EQS,Ehskel',Esquel,Эскель	-42.9	-71.31667	P	PPL	AR		04				28486		624	America/Argentina/Catamarca	2013-01-26
 3856022	Esperanza	Esperanza	Esperanza	-31.4488	-60.93173	P	PPL	AR		21				35885		40	America/Argentina/Cordoba	2012-02-02
 3856231	Embarcación	Embarcacion	Embarcacion,Embarcación	-23.20898	-64.09605	P	PPL	AR		17				23961		291	America/Argentina/Salta	2012-02-02
 3856235	Embalse	Embalse	Embalse	-32.18	-64.41809	P	PPL	AR		05	3863430			15900	623	561	America/Argentina/Cordoba	2012-01-18
@@ -1060,7 +1060,7 @@
 3388270	São Miguel do Guamá	Sao Miguel do Guama	Guama,Guamá	-1.62667	-47.48333	P	PPL	BR		16	1507607			28265		9	America/Belem	2012-08-03
 3388318	São Mateus do Maranhão	Sao Mateus do Maranhao		-4.04167	-44.475	P	PPL	BR		13	2111508			28233		47	America/Fortaleza	2012-08-03
 3388341	São Luís do Quitunde	Sao Luis do Quitunde	Sao Luiz de Quitunde,Sao Luiz do Quitunde,São Luiz de Quitunde,São Luiz do Quitunde	-9.31833	-35.56111	P	PPL	BR		02	2708501			20563		7	America/Maceio	2012-08-03
-3388368	São Luís	Sao Luis	Maranhao,Maranhão,San-Luis,Sao Luis,Sao Luis do Maranhao,Sao Luiz,Sao Luiz de Maranhao,Sao Luiz do Maranhao,São Luis,São Luiz,São Luiz de Maranhão,São Luiz do Maranhão,São Luís,São Luís do Maranhão,Сан-Луис,סאו לואיס	-2.52972	-44.30278	P	PPLA	BR		13	2111300			917237		29	America/Fortaleza	2012-08-03
+3388368	São Luís	Sao Luis	Maranhao,Maranhão,SLZ,San-Luis,Sao Luis,Sao Luis do Maranhao,Sao Luiz,Sao Luiz de Maranhao,Sao Luiz do Maranhao,São Luis,São Luiz,São Luiz de Maranhão,São Luiz do Maranhão,São Luís,São Luís do Maranhão,Сан-Луис,סאו לואיס	-2.52972	-44.30278	P	PPLA	BR		13	2111300			917237		29	America/Fortaleza	2013-01-26
 3388376	São Lourenço da Mata	Sao Lourenco da Mata	San-Lorensu-da-Mata,Sao Lourenco,Sao Lourenco da Matta,São Lourenço,São Lourenço da Matta,Сан-Лоренсу-да-Мата	-8.00222	-35.01833	P	PPL	BR		30	2613701			88416		48	America/Recife	2012-08-03
 3388435	São José do Egito	Sao Jose do Egito	Queimadas,Sao Jose da Ingazeira,Sao Jose das Queimadas,Sao Jose do Egypto,São José da Ingàzeira,São José das Queimadas,São José do Egypto	-7.47889	-37.27444	P	PPL	BR		30	2613602			18218		594	America/Recife	2012-08-03
 3388441	São José de Ribamar	Sao Jose de Ribamar	Ribamar,Sao-Jose-do-Ribamar,São-José-do-Ribamar	-2.56194	-44.05417	P	PPL	BR		13	2111201			27777		-9999	America/Fortaleza	2012-08-03
@@ -2762,7 +2762,7 @@
 3870294	Talca	Talca	TLX,Tal'ka,Talca,Талька	-35.4264	-71.65542	P	PPLA	CL		11	71	07101		197479		109	America/Santiago	2013-01-11
 3870306	Talagante	Talagante	Talagante	-33.66386	-70.92734	P	PPL	CL		12	136	13601		51764		327	America/Santiago	2013-01-11
 3871286	San Vicente	San Vicente		-34.43333	-71.08333	P	PPL	CL		08	61	06117		22572		210	America/Santiago	2012-05-03
-3871336	Santiago	Santiago	Ciles Santjagas,CiudadSantiago,SCL,Sanctiacobi,Sant'jago,Santiago,Santiago de Chile,Santiago de Xile,Santiago del Cile,Santiago do Chile,Santiago du Chili,Santiago du Ch·ili,Santjago,Santjago de Chile,Santjago de Chili,Stgo.,santiago,santixako,santyaghw,santyagw,santyyagw,sheng de ya ge,Čilės Santjagas,Σαντιάγο,Сантьяго,Сантяго де Чиле,Сантяго де Чили,סנטיאגו דה צ'ילה,سانتىياگو,سانتياغو,سانتیاگو,ซันติอาโก,სანტიაგო დე ჩილე,ሳንቲያጎ,サンティアゴ,圣地亚哥,산티아고	-33.45694	-70.64827	P	PPLC	CL		12	131	13101		4837295		556	America/Santiago	2012-05-03
+3871336	Santiago	Santiago	Ciles Santjagas,CiudadSantiago,SCL,Sanctiacobi,Sant'jago,Santiago,Santiago de Chile,Santiago de Xile,Santiago del Cile,Santiago do Chile,Santiago du Chili,Santiago du Ch·ili,Santjago,Santjago de Chile,Santjago de Chili,Stgo.,santiago,santixako,santyaghw,santyagw,santyyagw,sheng de ya ge,Čilės Santjagas,Σαντιάγο,Сантьяго,Сантяго де Чиле,Сантяго де Чили,סנטיאגו דה צ'ילה,سانتىياگو,سانتياغو,سانتیاگو,ซันติอาโก,სანტიაგო დე ჩილე,ሳንቲያጎ,サンティアゴ,圣地亚哥,산티아고	-33.45694	-70.64827	P	PPLC	CL		12	131	13101		4837295		556	America/Santiago	2013-01-26
 3871616	Santa Cruz	Santa Cruz	Santa Cruz,Santa-Krus,Санта-Крус	-34.63881	-71.36576	P	PPL	CL		08	63	06310		33283		166	America/Santiago	2013-01-11
 3872154	San Javier	San Javier	San Javier	-35.5952	-71.72924	P	PPL	CL		11	74	07406		22427		59	America/Santiago	2013-01-11
 3872255	San Felipe	San Felipe	San Felipe	-32.74976	-70.72584	P	PPL	CL		01	57	05701		59294		638	America/Santiago	2013-01-11
@@ -2775,7 +2775,7 @@
 3874096	Quilpué	Quilpue	Quilpue,Quilpué	-33.04752	-71.44249	P	PPL	CL		01	58	05801		130263		129	America/Santiago	2013-01-11
 3874119	Quillota	Quillota	Quillota	-32.8834	-71.24882	P	PPL	CL		01	55	05501		67779		170	America/Santiago	2013-01-11
 3874787	Punta Arenas	Punta Arenas	Magallanes,PUQ,Punta Arehnas,Punta Arenas,Punta Arenasas,peng ta a lei na si,puntaarenasu,Пунта Аренас,Пунта Арэнас,プンタアレナス,蓬塔阿雷纳斯	-53.15483	-70.91129	P	PPLA	CL		10	121	12101		117430		35	America/Santiago	2013-01-11
-3874930	Puerto Varas	Puerto Varas	PUX,Puerto Varas	-41.31946	-72.98538	P	PPL	CL		14	101	10109		24958		60	America/Santiago	2012-05-03
+3874930	Puerto Varas	Puerto Varas	PUX,Puehrto Varas,Puerto Varas,Пуэрто Варас	-41.31946	-72.98538	P	PPL	CL		14	101	10109		24958		60	America/Santiago	2013-01-26
 3874943	Puerto Quellón	Puerto Quellon		-43.11819	-73.61661	P	PPL	CL		14	102	10208		21823		-9999	America/Santiago	2013-01-11
 3874958	Puerto Natales	Puerto Natales	Natales,PNT,Puehrto-Natales,Puerto Natales,Пуэрто-Наталес	-51.72363	-72.48745	P	PPL	CL	CL	10				20000		28	America/Santiago	2009-02-24
 3874960	Puerto Montt	Puerto Montt	Ciudad de Puerto Montt,PMC,Puehrto-Mont,Puerto Mont,Puerto Montt,Пуерто Монт,Пуэрто-Монт	-41.46574	-72.94289	P	PPLA	CL		14	101	10101		160054		103	America/Santiago	2013-01-11
@@ -15071,7 +15071,7 @@
 2185964	North Shore	North Shore	Boreia Akte,Nort-Shor,North Shore,bei an shi,Βόρεια Ακτή,Норт-Шор,北岸市	-36.8	174.75	P	PPLX	NZ		E7	076			207865		30	Pacific/Auckland	2011-08-01
 2186239	New Plymouth	New Plymouth	Aberplymm Nowydh,N'ju-Plimut,NPL,New Plymouth,New Plymouth City,New Plymouth Ngamotu,New Plymouth Ngāmotu,Nueva Plymouth,nyupeullimeoseu,Нью-Плимут,뉴플리머스	-39.06667	174.08333	P	PPLA	NZ		F9	033			49168		64	Pacific/Auckland	2011-08-01
 2186280	Nelson	Nelson	NSN,Nel'son,Nelson City,Whakatu,Нельсон	-41.27078	173.28404	P	PPLA	NZ	NZ	F5	052			59200		1	Pacific/Auckland	2012-11-12
-2186313	Napier	Napier	Napier City,Nejpir,Нейпир	-39.48333	176.91667	P	PPLA	NZ		F2	031			56787		57	Pacific/Auckland	2011-08-01
+2186313	Napier	Napier	NPE,Napier City,Nejpir,Нейпир	-39.48333	176.91667	P	PPLA	NZ		F2	031			56787		57	Pacific/Auckland	2013-01-26
 2187404	Manukau City	Manukau City	Manukau	-36.99282	174.87986	P	PPL	NZ		E7	076			362000		43	Pacific/Auckland	2011-08-01
 2187454	Mangere	Mangere		-36.96807	174.79875	P	PPL	NZ		E7	076			55266		15	Pacific/Auckland	2011-08-01
 2188164	Lower Hutt	Lower Hutt	Lower Hutt,Lower Hutt City	-41.21667	174.91667	P	PPL	NZ		G2	046			101194		9	Pacific/Auckland	2011-08-01
