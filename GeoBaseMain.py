@@ -825,7 +825,7 @@ def handle_args():
         from a geocode or a key. Number of results is limited by --closest-limit
         option, and geocode is given as main argument. If you wish to give
         a geocode as input, use the 'lat, lng' format, with quotes.
-        Example: -c '65, -14'
+        Example: -c '48.853, 2.348'
         '''),
         default = None,
         nargs = '+')
