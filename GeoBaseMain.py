@@ -381,7 +381,15 @@ def scan_coords(u_input, geob, verbose):
 
     # Then we try input as geocode
     try:
-        coords = tuple(float(l) for l in u_input.strip('()').split(','))
+        free_geo = u_input.strip('()')
+
+        for char in '\\', '"', "'":
+            free_geo = free_geo.replace(char, '')
+
+        for sep in '^', ';', ',':
+            free_geo = free_geo.replace(sep, ' ')
+
+        coords = tuple(float(l) for l in free_geo.split())
 
     except ValueError:
         pass
@@ -410,6 +418,7 @@ def guess_delimiter(row):
         '_', # this is for spaces
         ' ', # spaces are not usually delimiter, unless we find no other
         '"', # this is for quoting
+        '.', # this is for decimal numbers
     ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
@@ -788,9 +797,10 @@ def handle_args():
     parser.add_argument('-n', '--near',
         help = dedent('''\
         Rather than looking up a key, this mode will search the entries
-        in a radius from a geocode or a key. Radius is given by --near-limit
-        option, and geocode is passed as argument. If you wish to give a geocode
-        as input, just pass it as argument with "lat, lng" format.
+        close to a geocode or a key. Radius is given by --near-limit
+        option, and geocode is given as main argument. If you wish to give
+        a geocode as input, use the 'lat, lng' format, with quotes.
+        Example: -n CDG
         '''),
         default = None,
         nargs = '+')
@@ -807,8 +817,9 @@ def handle_args():
         help = dedent('''\
         Rather than looking up a key, this mode will search the closest entries
         from a geocode or a key. Number of results is limited by --closest-limit
-        option, and geocode is passed as argument. If you wish to give a geocode
-        as input, just pass it as argument with "lat, lng" format.
+        option, and geocode is given as main argument. If you wish to give
+        a geocode as input, use the 'lat, lng' format, with quotes.
+        Example: -c '48.853, 2.348'
         '''),
         default = None,
         nargs = '+')
@@ -892,7 +903,7 @@ def handle_args():
 
     parser.add_argument('-I', '--interactive-query',
         help = dedent('''\
-        If passed, this option will consider stdin
+        If given, this option will consider stdin
         input as key for query, not data for loading.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
@@ -1309,10 +1320,19 @@ def main():
         last = 'exact'
 
 
+    if args['fuzzy'] is not None:
+        args['fuzzy'] = ' '.join(args['fuzzy'])
+        if verbose:
+            print('Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy']))
+
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        last = 'fuzzy'
+
+
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
-            print('Applying near %s km from "%s"' % (args['near_limit'], args['near']))
+            print('Applying near %s km from "%s" (%s grid)' % (args['near_limit'], args['near'], 'with' if with_grid else 'without'))
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -1322,20 +1342,11 @@ def main():
     if args['closest'] is not None:
         args['closest'] = ' '.join(args['closest'])
         if verbose:
-            print('Applying closest %s from "%s"' % (args['closest_limit'], args['closest']))
+            print('Applying closest %s from "%s" (%s grid)' % (args['closest_limit'], args['closest'], 'with' if with_grid else 'without'))
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
         last = 'closest'
-
-
-    if args['fuzzy'] is not None:
-        args['fuzzy'] = ' '.join(args['fuzzy'])
-        if verbose:
-            print('Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy']))
-
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
-        last = 'fuzzy'
 
 
     if verbose:

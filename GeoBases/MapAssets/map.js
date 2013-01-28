@@ -161,6 +161,7 @@ function initialize(jsonData) {
     var link_duplicates = jsonData.meta.link_duplicates;
 
     var with_markers = icon_type   !== null;
+    var with_circles = point_size  !== null;
     var with_colors  = point_color !== null;
 
     var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
@@ -349,7 +350,7 @@ function initialize(jsonData) {
 
     // If no markers, we avoid a big
     // drift to the pacific ocean :)
-    if (n >= 2) {
+    if (n >= 2 && (with_markers || with_circles)) {
         map.fitBounds(bounds);
     }
 

@@ -726,9 +726,9 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7025
+        7024
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7025
+        7024
         >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
         4431
 
@@ -1599,7 +1599,12 @@ class GeoBase(object):
             # c > 0 makes sure we do not create a category
             # for stuff that will not be displayed
             nb_non_empty_cat = len([c for c in categories.values() if c > 0])
-            step = max(1, len(colors) // nb_non_empty_cat)
+
+            if nb_non_empty_cat > 0:
+                step = max(1, len(colors) // nb_non_empty_cat)
+            else:
+                # All categories may be empty if not icons + not circles
+                step = 1
 
         for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
             categories[cat] = {
@@ -1618,9 +1623,15 @@ class GeoBase(object):
                 categories[cat]['color'] = 'black'
 
             if verbose:
+                if icon_type is not None:
+                    field_vol = 'volume'
+                elif point_size is not None:
+                    field_vol = point_size
+                else:
+                    field_vol = '(not used)'
+
                 print('> Affecting category %-8s to color %-7s | %s %s' % \
-                        (cat, categories[cat]['color'],
-                         point_size if icon_type is None else 'volume', vol))
+                        (cat, categories[cat]['color'], field_vol, vol))
 
 
         # catalog is a user defined color scheme

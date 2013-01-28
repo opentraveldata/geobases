@@ -77,17 +77,21 @@ def local(rel_path, root_file=__file__):
 with open(local('VERSION')) as fl:
     VERSION = fl.read().rstrip()
 
-with open(local('README')) as fl:
+with open(local('README.rst')) as fl:
     LONG_DESCRIPTION = fl.read()
+
+with open(local('LICENSE')) as fl:
+    LICENSE = fl.read()
 
 setup(
     name = 'GeoBases3K',
     version = VERSION,
     author = 'Alex Prengere',
     author_email = 'alex.prengere@amadeus.com',
-    url = 'http://mediawiki.orinet.nce.amadeus.net/index.php/GeoBases',
+    url = 'http://opentraveldata.github.com/geobases',
     description = 'Provides data services.',
     long_description = LONG_DESCRIPTION,
+    license = LICENSE,
     #
     # Manage standalone scripts
     entry_points = {
