@@ -222,60 +222,6 @@ ori_por_multi:
     headers       : *ori_por_headers
 
 
-ori_por_private:
-    source    : Por/Ori/ori_por.csv
-    indexes   : iata_code
-    delimiter : ^
-    subdelimiters :
-        alt_name_section : ['=', '|']
-        alternatenames   : ','
-    headers   : &ori_por_private_headers
-        - iata_code
-        - icao_code
-        - is_geonames
-        - geoname_id
-        - name
-        - asciiname
-        - alternatenames
-        - lat
-        - lng
-        - fclass
-        - fcode
-        - country_code
-        - cc2
-        - admin1
-        - admin2
-        - admin3
-        - admin4
-        - population
-        - elevation
-        - gtopo30
-        - timezone
-        - gmt_offset
-        - dst_offset
-        - raw_offset
-        - moddate
-        - is_airport
-        - is_commercial
-        - continent_code
-        - tz_group
-        - numeric_code
-        - city_full_name
-        - city_code
-        - state_code
-        - region_code
-        - location_type
-        - wiki_link
-        - alt_name_section
-
-
-ori_por_private_multi:
-    source    : Por/Ori/ori_por.csv
-    indexes   : [iata_code, location_type]
-    delimiter : ^
-    headers   : *ori_por_private_headers
-
-
 ori_por_non_iata:
     source        : Por/Ori/ori_por_non_iata.csv
     indexes       : iata_code
@@ -317,15 +263,6 @@ cabins:
     source    : Cabins/cabins.csv
     indexes   : code
     delimiter : ^
-    headers   :
-        - code
-        - name
-
-
-regions:
-    source    : Regions/regions.csv
-    indexes   : code
-    delimiter : ;
     headers   :
         - code
         - name
@@ -374,9 +311,8 @@ feature_codes:
         - description
 
 
-geonames_all:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/Por/GeoNames/allCountries.txt
+geonames_FR:
+    source    : Por/GeoNames/FR.txt
     indexes   : geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -403,15 +339,6 @@ geonames_all:
         - moddate
 
 
-geonames_FR:
-    source    : Por/GeoNames/FR.txt
-    indexes   : geoname_id
-    delimiter : "\t"
-    subdelimiters :
-        alternatenames : ','
-    headers   : *geonames_headers
-
-
 geonames_MC:
     source    : Por/GeoNames/MC.txt
     indexes   : geoname_id
@@ -421,9 +348,8 @@ geonames_MC:
     headers   : *geonames_headers
 
 
-postal_codes_all:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/PostalCodes/GeoNames/allCountries.txt
+postal_codes_FR:
+    source    : PostalCodes/GeoNames/FR.txt
     indexes   : &postal_codes_ind postal_code
     delimiter : "\t"
     headers   : &postal_codes_headers
@@ -441,40 +367,9 @@ postal_codes_all:
         - accuracy
 
 
-postal_codes_FR:
-    source    : PostalCodes/GeoNames/FR.txt
-    indexes   : *postal_codes_ind
-    delimiter : "\t"
-    headers   : *postal_codes_headers
-
-
 postal_codes_MC:
     source    : PostalCodes/GeoNames/MC.txt
     indexes   : *postal_codes_ind
     delimiter : "\t"
     headers   : *postal_codes_headers
-
-
-office_ids_midt:
-    local     : false
-    source    : /remote/orihome/aprengere/public/data/Office_IDs/SfPrdJsDSSCBIExtOfficesAirCbiMonthlyOffice01020121101.sf.csv
-    indexes   : office_id
-    delimiter : ^
-    headers   :
-        - office_id
-        - other_code
-        - country_code
-        - name
-        - address
-        - country_code_2
-
-
-office_ids:
-    source    : Office_IDs/OfficeIDs_and_names.csv
-    indexes   : office_id
-    delimiter : ","
-    #quotechar : '"' # that is the default
-    headers   :
-        - office_id
-        - name
 
