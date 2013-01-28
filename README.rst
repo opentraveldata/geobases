@@ -96,18 +96,6 @@ your ``~/.zshrc``::
  autoload -U compinit
  compinit
 
-OpenTrep wrapper
-^^^^^^^^^^^^^^^^
-
-You may also export this variable before installation to install the
-*OpenTrepWrapper* as a dependency::
-
-    % git checkout trunk
-    % export WITH_OPENTREP=1
-    % python setup.py install --user
-
-Note that this will only install the wrapper, not OpenTrep itself.
-
 Tests
 ~~~~~
 
@@ -255,14 +243,6 @@ Approximate name matching
  >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
  (0.78..., 'CDG')
 
-OpenTrep binding
-~~~~~~~~~~~~~~~~
-::
-
-    >>> geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
-    [(0.31..., 'SFO'), (0.46..., 'LAX')]
-
-
 Map display
 ~~~~~~~~~~~
 ::
@@ -345,10 +325,6 @@ All heliports under 200 km from Paris::
 Countries with non-empty postal code regex::
 
  % GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
-
-OpenTrep binding::
-
- % GeoBase -t sna francisco los agneles
 
 Reading data input on stdin::
 
