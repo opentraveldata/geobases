@@ -133,8 +133,6 @@ You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisite
 
 <h2>Quickstart</h2>
 
-<p>To load the class, just do:</p>
-
 <pre><code>% python
 &gt;&gt;&gt; from GeoBases import GeoBase
 &gt;&gt;&gt; geo_o = GeoBase(data='ori_por', verbose=False)
@@ -143,9 +141,7 @@ You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisite
 </code></pre>
 
 <p>You can provide other values for the <em>data</em> parameter. All data sources
-are documented in a single <em>yaml</em> file.</p>
-
-<p>Here is an overview:</p>
+are documented in a single <em>yaml</em> file:</p>
 
 <ul>
 <li>  <em>data="ori_por"</em> will load a local version of <a href="https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv">this
@@ -291,9 +287,7 @@ documentation</a>.</p>
 <h2>Standalone script</h2>
 
 <p>Installation of the package will also deploy a standalone script named
-<code>GeoBase</code>.</p>
-
-<p>Then you can use:</p>
+<code>GeoBase</code>:</p>
 
 <pre><code>% GeoBase ORY CDG              # query on the keys ORY and CDG
 % GeoBase --closest CDG        # closest from CDG
