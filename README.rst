@@ -35,7 +35,7 @@ Once you have installed the project, you will be able to know where are airports
 
  % GeoBase --fuzzy international --map
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
 
 Project
 -------
@@ -286,6 +286,7 @@ Then you may use::
  % GeoBase --help               # your best friend
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
+   :align: center
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
