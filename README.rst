@@ -28,8 +28,6 @@ then you can see where are airports with *international* in their name::
    :width: 100%
    :align: center
 
-   Map display
-
 Project
 -------
 
@@ -265,8 +263,6 @@ Map display
    :width: 100%
    :align: center
 
-   Map display: circle size is airport pagerank
-
 API documentation
 -----------------
 
@@ -287,8 +283,6 @@ Installation of the package will also deploy a standalone script named ``GeoBase
    :figwidth: 100%
    :width: 100%
    :align: center
-
-   Terminal display
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
