@@ -51,21 +51,8 @@ named like this</em>)</li>
 <li>  <em>geographical searches</em> ( <em>find things next to this place</em>)</li>
 <li>  get results on a map, or export it as csv data, or as a Python
 object</li>
-</ul><p>This is entirely written in Python. The core part is a Python package,
-but there is a command line tool as well.</p>
-
-<p>It relies on three modules:</p>
-
-<ul>
-<li>  <em>GeoUtils</em>: to compute haversine distances between points</li>
-<li>  <em>LevenshteinUtils</em>: to calculate distances between strings. Indeed,
-we need a good tool to do it, in order to recognize things like
-station names in schedule files where we do not have the station id</li>
-<li>  <em>GeoGridModule</em>: a class implementing a geographical index based on
-geohashing</li>
 </ul>
-
-<p>Once you have installed the project, you will be able to know where are airports with <em>international</em> in their name:</p>
+<p>This is entirely written in Python. The core part is a Python package, but there is a command line tool as well! Get it with <em>easy_install</em>, then you can see where are airports with <em>international</em> in their name:</p>
 
 <pre><code>% GeoBase --fuzzy international --map
 </code></pre>
@@ -93,7 +80,12 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 
 <h3>Installation</h3>
 
-<p>To clone the project from
+<p>You can install it from <a href="http://pypi.python.org/pypi">PyPI</a> with:</p>
+
+<pre><code>% easy_install --user GeoBases
+</code></pre>
+
+<p>If you want the development version, clone the project from
 <a href="https://github.com/opentraveldata/geobases.git">github</a>:</p>
 
 <pre><code>% git clone https://github.com/opentraveldata/geobases.git
