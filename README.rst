@@ -24,6 +24,8 @@ then you can see where are airports with *international* in their name::
  % GeoBase --fuzzy international --map
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
+   :align: center
+   :width: 100%
 
 Project
 -------
@@ -258,6 +260,8 @@ Map display
  (['example_map.html', 'example_table.html'], 2)
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
+   :align: center
+   :width: 100%
 
 API documentation
 -----------------
@@ -278,6 +282,8 @@ Then you can use::
  % GeoBase --help               # your best friend
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
+   :align: center
+   :width: 100%
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
