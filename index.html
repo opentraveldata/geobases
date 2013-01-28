@@ -63,7 +63,16 @@ we need a good tool to do it, in order to recognize things like
 station names in schedule files where we do not have the station id</li>
 <li>  <em>GeoGridModule</em>: a class implementing a geographical index based on
 geohashing</li>
-</ul><h2>Project</h2>
+</ul>
+
+<p>Once you have installed the project, you will be able to know where are airports with <em>international</em> in their name:</p>
+
+<pre><code>% GeoBase --fuzzy international --map
+</code></pre>
+
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png" alt="image"></p>
+
+<h2>Project</h2>
 
 <h3>Prerequisites</h3>
 
@@ -280,7 +289,7 @@ rm example.json ...
 (['example_map.html', 'example_table.html'], 2)
 </code></pre>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png" alt="image"></p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png" alt="image"></p>
 
 <h2>API documentation</h2>
 
@@ -301,7 +310,7 @@ documentation</a>.</p>
 % GeoBase --help               # your best friend
 </code></pre>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png" alt="image"></p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png" alt="image"></p>
 
 <p>In the previous picture, you have an overview of the command line
 verbose display. Three displays are available for the command line tool:</p>
