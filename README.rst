@@ -42,13 +42,13 @@ by default on Linux distributions. But make sure you have them anyway.
 
 First you need to install *setuptools*::
 
-    # apt-get install python-setuptools    # for debian
-    # yum install python-setuptools.noarch # for fedora
+ # apt-get install python-setuptools    # for debian
+ # yum install python-setuptools.noarch # for fedora
 
 Then you need some basics compilation stuff to compile dependencies::
 
-    # apt-get install python-dev g++    # for debian
-    # yum install python-devel gcc-c++  # for fedora
+ # apt-get install python-dev g++    # for debian
+ # yum install python-devel gcc-c++  # for fedora
 
 Installation
 ~~~~~~~~~~~~
@@ -56,28 +56,45 @@ Installation
 To clone the project from
 `github <https://github.com/opentraveldata/geobases.git>`_::
 
-    % git clone https://github.com/opentraveldata/geobases.git
+ % git clone https://github.com/opentraveldata/geobases.git
 
-Then install the package::
+Then install the package and its dependencies::
 
-    % cd geobases
-    % python setup.py install --user # for user space
-
-This should install some dependencies.
+ % cd geobases
+ % python setup.py install --user # for user space
 
 A standalone script is put in ``~/.local/bin``, to benefit from it, put
 that in your ``~/.bashrc`` or ``~/.zshrc``::
 
-    export PATH=$PATH:$HOME/.local/bin
-    export BACKGROUND_COLOR=black # or 'white', your call
+ export PATH=$PATH:$HOME/.local/bin
+ export BACKGROUND_COLOR=black # or 'white', your call
+
+Python 3 and Pypy support
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There is *Python 3* and *Pypy* (not so) experimental support, you may try it
+by *changing branch* before installation.
+
+For Python 3, you have to install setuptools and python3-dev as prerequisites, then::
+
+ % git checkout 3000
+ % python3 setup.py install --user
+
+For Pypy, after pypy and pypy-dev installation::
+
+ % git checkout pypy
+ % sudo pypy setup.py install
+
+Autocomplete
+~~~~~~~~~~~~
 
 If you use zsh and want to benefit from the *autocomplete*, add this to
 your ``~/.zshrc``::
 
-    # Add custom completion scripts
-    fpath=(~/.zsh/completion $fpath)
-    autoload -U compinit
-    compinit
+ # Add custom completion scripts
+ fpath=(~/.zsh/completion $fpath)
+ autoload -U compinit
+ compinit
 
 OpenTrep wrapper
 ^^^^^^^^^^^^^^^^
@@ -92,22 +109,22 @@ You may also export this variable before installation to install the
 Note that this will only install the wrapper, not OpenTrep itself.
 
 Tests
------
+~~~~~
 
 Run the tests with::
 
-    % python test/test_GeoBases.py -v
+ % python test/test_GeoBases.py -v
 
 Quickstart
 ----------
 
 To load the class, just do::
 
-    % python
-    >>> from GeoBases import GeoBase
-    >>> geo_o = GeoBase(data='ori_por', verbose=False)
-    >>> geo_a = GeoBase(data='airports', verbose=False)
-    >>> geo_t = GeoBase(data='stations', verbose=False)
+ % python
+ >>> from GeoBases import GeoBase
+ >>> geo_o = GeoBase(data='ori_por', verbose=False)
+ >>> geo_a = GeoBase(data='airports', verbose=False)
+ >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You may provide other values for the *data* parameter.
 All data sources are documented in a single *yaml* file.
@@ -165,14 +182,14 @@ Information access
 ~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> geo_o.get('CDG', 'city_code')
-    'PAR'
-    >>> geo_o.get('BRU', 'name')
-    'Bruxelles National'
-    >>> geo_t.get('frnic', 'name')
-    'Nice-Ville'
-    >>> geo_t.get('fr_not_exist', 'name', default='NAME')
-    'NAME'
+ >>> geo_o.get('CDG', 'city_code')
+ 'PAR'
+ >>> geo_o.get('BRU', 'name')
+ 'Bruxelles National'
+ >>> geo_t.get('frnic', 'name')
+ 'Nice-Ville'
+ >>> geo_t.get('fr_not_exist', 'name', default='NAME')
+ 'NAME'
 
 You can put your own data in a ``GeoBase`` class, either by loading
 your own file when creating the instance, or by creating an empty instance
@@ -182,61 +199,61 @@ Find things with properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
-    >>> list(geo_o.getKeysWhere(conditions, mode='and'))
-    ['JDP', 'JPU']
-    >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
-    >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
-    36
+ >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
+ >>> list(geo_o.getKeysWhere(conditions, mode='and'))
+ ['JDP', 'JPU']
+ >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
+ >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
+ 36
 
 Distance computation
 ~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> geo_o.distance('CDG', 'NCE')
-    694.5162...
+ >>> geo_o.distance('CDG', 'NCE')
+ 694.5162...
 
 Find things near a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> # Paris, airports <= 40km
-    >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
-    ['ORY', 'LBG', 'TNF', 'CDG']
-    >>>
-    >>> # Nice, stations <= 4km
-    >>> iterable = geo_t.findNearPoint((43.70, 7.26), 4)
-    >>> [geo_t.get(k, 'name') for _, k in iterable]
-    ['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
+ >>> # Paris, airports <= 40km
+ >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
+ ['ORY', 'LBG', 'TNF', 'CDG']
+ >>>
+ >>> # Nice, stations <= 4km
+ >>> iterable = geo_t.findNearPoint((43.70, 7.26), 4)
+ >>> [geo_t.get(k, 'name') for _, k in iterable]
+ ['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
 
 Find things near another thing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
-    [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-    >>>
-    >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, <= 3km
-    [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
+ >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
+ [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
+ >>>
+ >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, <= 3km
+ [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
 
 Find closest things from a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
-    [(5.82..., 'NCE')]
-    >>>
-    >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
-    [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
+ >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
+ [(5.82..., 'NCE')]
+ >>>
+ >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
+ [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
 
 Approximate name matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
-    (0.8..., 'frmsc')
-    >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
-    (0.78..., 'CDG')
+ >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
+ (0.8..., 'frmsc')
+ >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+ (0.78..., 'CDG')
 
 OpenTrep binding
 ~~~~~~~~~~~~~~~~
@@ -250,17 +267,17 @@ Map display
 ~~~~~~~~~~~
 ::
 
-    >>> geo_t.visualize()
-    * Added lines for duplicates linking, total 0
-    > Affecting category None     to color blue    | volume 3190
-    <BLANKLINE>
-    * Now you may use your browser to visualize:
-    example_map.html example_table.html
-    <BLANKLINE>
-    * If you want to clean the temporary files:
-    rm example.json ...
-    <BLANKLINE>
-    (['example_map.html', 'example_table.html'], 2)
+ >>> geo_t.visualize()
+ * Added lines for duplicates linking, total 0
+ > Affecting category None     to color blue    | volume 3190
+ <BLANKLINE>
+ * Now you may use your browser to visualize:
+ example_map.html example_table.html
+ <BLANKLINE>
+ * If you want to clean the temporary files:
+ rm example.json ...
+ <BLANKLINE>
+ (['example_map.html', 'example_table.html'], 2)
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png
 
@@ -276,11 +293,11 @@ Installation of the package will also deploy a standalone script named ``GeoBase
 
 Then you may use::
 
-    % GeoBase ORY CDG              # query on the keys ORY and CDG
-    % GeoBase --closest CDG        # closest from CDG
-    % GeoBase --near LIG           # near LIG
-    % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
-    % GeoBase --help               # your best friend
+ % GeoBase ORY CDG              # query on the keys ORY and CDG
+ % GeoBase --closest CDG        # closest from CDG
+ % GeoBase --near LIG           # near LIG
+ % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
+ % GeoBase --help               # your best friend
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
 
@@ -307,27 +324,27 @@ special. This means they were added during data loading:
 
 More examples here, for example how to do a search on a field, like admin\_code (``B8`` is french riviera)::
 
-    % GeoBase -E adm1_code -e B8
+ % GeoBase -E adm1_code -e B8
 
 Same with csv output (customized with ``--show``)::
 
-    % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+ % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
 Add a fuzzy search::
 
-    % GeoBase -E adm1_code -e B8 --fuzzy sur mer
+ % GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
 All heliports under 200 km from Paris::
 
-    % GeoBase --near PAR -N 200 -E location_type -e 'H'
+ % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
 50 train stations closest to a specific geocode::
 
-    % GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
+ % GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 
 Countries with non-empty postal code regex::
 
-    % GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
+ % GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
 
 OpenTrep binding::
 
@@ -335,15 +352,15 @@ OpenTrep binding::
 
 Reading data input on stdin::
 
-    % echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
+ % echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
 
 Display on map::
 
-    % GeoBase -b stations --map
+ % GeoBase -b stations --map
 
 Europe marker-less map::
 
-    % GeoBase -E region_code -e EUROP --map -M _ _ country_code  __none__
+ % GeoBase -E region_code -e EUROP --map -M _ _ country_code  __none__
 
 
 Packaging
@@ -366,6 +383,6 @@ Virtualenv still has some bugs on 64 bits systems, if you are using such a syste
 you absolutely need to upgrade to the very last unreleased version of
 virtualenv, before executing rake::
 
-    % pip uninstall virtualenv
-    % pip install https://github.com/pypa/virtualenv/tarball/develop
+ % pip uninstall virtualenv
+ % pip install https://github.com/pypa/virtualenv/tarball/develop
 
