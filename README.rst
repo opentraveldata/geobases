@@ -23,9 +23,12 @@ then you can see where are airports with *international* in their name::
 
  % GeoBase --fuzzy international --map
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
-   :align: center
+.. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
+   :figwidth: 100%
    :width: 100%
+   :align: center
+
+   Map display
 
 Project
 -------
@@ -257,9 +260,12 @@ Map display
  <BLANKLINE>
  (['example_map.html', 'example_table.html'], 2)
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
-   :align: center
+.. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
+   :figwidth: 100%
    :width: 100%
+   :align: center
+
+   Map display: circle size is airport pagerank
 
 API documentation
 -----------------
@@ -277,9 +283,12 @@ Installation of the package will also deploy a standalone script named ``GeoBase
  % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
  % GeoBase --help               # your best friend
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
-   :align: center
+.. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
+   :figwidth: 100%
    :width: 100%
+   :align: center
+
+   Terminal display
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
