@@ -107,7 +107,7 @@ Run the tests with::
 Quickstart
 ----------
 
-To load the class, just do::
+::
 
  % python
  >>> from GeoBases import GeoBase
@@ -116,9 +116,7 @@ To load the class, just do::
  >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You can provide other values for the *data* parameter.
-All data sources are documented in a single *yaml* file.
-
-Here is an overview:
+All data sources are documented in a single *yaml* file:
 
 -  *data="ori\_por"* will load a local version of
    `this file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`_,
@@ -271,9 +269,7 @@ Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.htm
 Standalone script
 -----------------
 
-Installation of the package will also deploy a standalone script named ``GeoBase``.
-
-Then you can use::
+Installation of the package will also deploy a standalone script named ``GeoBase``::
 
  % GeoBase ORY CDG              # query on the keys ORY and CDG
  % GeoBase --closest CDG        # closest from CDG
