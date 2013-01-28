@@ -18,7 +18,7 @@ stations, countries, ... are loaded, then you can:
 -  get results on a map, or export it as csv data, or as a Python object
 
 This is entirely written in Python. The core part is a Python package,
-but there is a command line tool as well! Install it with ``easy_install --user GeoBases``,
+but there is a command line tool as well! Get it with *easy_install*,
 then you can see where are airports with *international* in their name::
 
  % GeoBase --fuzzy international --map
