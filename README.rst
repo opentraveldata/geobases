@@ -8,9 +8,9 @@ This project provides tools to play with geographical
 data. It also works with non-geographical data, except for map visualizations :).
 
 There are embedded data sources in the project,
-but you may easily play with your own data in addition to the available ones.
+but you can easily play with your own data in addition to the available ones.
 Csv files containing data about airports, train
-stations, countries, ... are loaded, then you may:
+stations, countries, ... are loaded, then you can:
 
 -  performs various types of queries ( *find this key*, or *find keys with this property*)
 -  *fuzzy searches* based on string distance ( *find things roughly named like this*)
@@ -20,18 +20,8 @@ stations, countries, ... are loaded, then you may:
 This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well.
 
-It relies on three modules:
-
--  *GeoUtils*:
-   to compute haversine distances between points
--  *LevenshteinUtils*:
-   to calculate distances between strings. Indeed, we need a good tool
-   to do it, in order to recognize things like station names in schedule
-   files where we do not have the station id
--  *GeoGridModule*:
-   a class implementing a geographical index based on geohashing
-
-Once you have installed the project, you will be able to know where are airports with *international* in their name::
+Once you have installed it with ``easy_install --user GeoBases``,
+you will be able to know where are airports with *international* in their name::
 
  % GeoBase --fuzzy international --map
 
@@ -59,7 +49,10 @@ Then you need some basics compilation stuff to compile dependencies::
 Installation
 ~~~~~~~~~~~~
 
-To clone the project from
+You can install from `PyPI <http://pypi.python.org/pypi>`_ with::
+ % easy_install --user GeoBases
+
+If you want the development version, clone the project from
 `github <https://github.com/opentraveldata/geobases.git>`_::
 
  % git clone https://github.com/opentraveldata/geobases.git
@@ -78,7 +71,7 @@ that in your ``~/.bashrc`` or ``~/.zshrc``::
 Python 3 and Pypy support
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There is *Python 3* and *Pypy* (not so) experimental support, you may try it
+There is *Python 3* and *Pypy* (not so) experimental support, you can try it
 by *changing branch* before installation.
 
 For Python 3, you have to install setuptools and python3-dev as prerequisites, then::
@@ -121,7 +114,7 @@ To load the class, just do::
  >>> geo_a = GeoBase(data='airports', verbose=False)
  >>> geo_t = GeoBase(data='stations', verbose=False)
 
-You may provide other values for the *data* parameter.
+You can provide other values for the *data* parameter.
 All data sources are documented in a single *yaml* file.
 
 Here is an overview:
@@ -132,7 +125,7 @@ Here is an overview:
 -  *data="ori\_por\_multi"* is the same as previous, but the key for a
    line is not the iata\_code, but the concatenation of iata\_code and
    location\_type. This feature makes every line unique, whereas
-   *ori\_por* may have several lines for one iata\_code
+   *ori\_por* can have several lines for one iata\_code
 -  *data="airports"* will use geonames as data source for airports
 -  *data="stations"* will use RFF data, from `the open data
    website <http://www.data.gouv.fr>`_, as data source for french train
@@ -270,14 +263,14 @@ Map display
 API documentation
 -----------------
 
-You may find here the Sphinx `API documentation <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
+Here is the `API documentation <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
 
 Standalone script
 -----------------
 
 Installation of the package will also deploy a standalone script named ``GeoBase``.
 
-Then you may use::
+Then you can use::
 
  % GeoBase ORY CDG              # query on the keys ORY and CDG
  % GeoBase --closest CDG        # closest from CDG
@@ -356,8 +349,8 @@ So you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.
 
 You will also find a `Rakefile <http://rake.rubyforge.org/>`_ at the
-root of the project. This may be used to build and deploy the packages.
-Deployment may be done using webdav, and the Rakefile expects ``nd`` to be
+root of the project. This can be used to build and deploy the packages.
+Deployment can be done using webdav, and the Rakefile expects ``nd`` to be
 installed (this is a webdav client).
 To install ``nd``, fetch the `sources <http://www.gohome.org/nd/>`_ and compile them.
 
