@@ -38,10 +38,10 @@
 <p>This project provides tools to play with geographical data. It also
 works with non-geographical data, except for map visualizations :).</p>
 
-<p>There are embedded data sources in the project, but you may easily play
+<p>There are embedded data sources in the project, but you can easily play
 with your own data in addition to the available ones. Csv files
 containing data about airports, train stations, countries, ... are
-loaded, then you may:</p>
+loaded, then you can:</p>
 
 <ul>
 <li>  performs various types of queries ( <em>find this key</em>, or <em>find keys
@@ -117,7 +117,7 @@ compinit
 
 <h3>Python 3 support</h3>
 
-<p>There is <em>Python 3</em> (not so) experimental support, you may try it by changing branch before installation.
+<p>There is <em>Python 3</em> (not so) experimental support, you can try it by changing branch before installation.
 You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisites, then:</p>
 
 <pre><code>% git checkout 3000
@@ -142,7 +142,7 @@ You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisite
 &gt;&gt;&gt; geo_t = GeoBase(data='stations', verbose=False)
 </code></pre>
 
-<p>You may provide other values for the <em>data</em> parameter. All data sources
+<p>You can provide other values for the <em>data</em> parameter. All data sources
 are documented in a single <em>yaml</em> file.</p>
 
 <p>Here is an overview:</p>
@@ -154,7 +154,7 @@ this is the most complete source for airports, use it!</li>
 <li>  <em>data="ori_por_multi"</em> is the same as previous, but the key for a
 line is not the iata_code, but the concatenation of iata_code and
 location_type. This feature makes every line unique, whereas
-<em>ori_por</em> may have several lines for one iata_code</li>
+<em>ori_por</em> can have several lines for one iata_code</li>
 <li>  <em>data="airports"</em> will use geonames as data source for airports</li>
 <li>  <em>data="stations"</em> will use RFF data, from <a href="http://www.data.gouv.fr">the open data
 website</a>, as data source for french train
@@ -293,7 +293,7 @@ documentation</a>.</p>
 <p>Installation of the package will also deploy a standalone script named
 <code>GeoBase</code>.</p>
 
-<p>Then you may use:</p>
+<p>Then you can use:</p>
 
 <pre><code>% GeoBase ORY CDG              # query on the keys ORY and CDG
 % GeoBase --closest CDG        # closest from CDG
@@ -384,8 +384,8 @@ you really need both if you want to produce installable packages like
 rpms or zip which can be installed afterwards.</p>
 
 <p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the root
-of the project. This may be used to build and deploy the packages.
-Deployment may be done using webdav, and the Rakefile expects <code>nd</code> to be
+of the project. This can be used to build and deploy the packages.
+Deployment can be done using webdav, and the Rakefile expects <code>nd</code> to be
 installed (this is a webdav client). To install <code>nd</code>, fetch the
 <a href="http://www.gohome.org/nd/">sources</a> and compile them.</p>
 
