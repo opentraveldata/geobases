@@ -228,7 +228,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'GeoBases', u'GeoBases Documentation',
-   u'OpenTravelData', 'GeoBases', 'One line description of project.',
+   u'OpenTravelData', 'GeoBases', 'Data services and visualization',
    'Miscellaneous'),
 ]
 
