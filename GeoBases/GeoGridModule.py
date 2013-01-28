@@ -312,6 +312,9 @@ class GeoGrid(object):
             if not from_keys:
                 return []
 
+            # We cannot give what we do not have
+            N = min(N, len(from_keys))
+
         # Some precaution for the number of wanted keys
         N = min(N, len(self._keys))
 
