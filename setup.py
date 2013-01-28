@@ -86,10 +86,10 @@ with open(local('LICENSE')) as fl:
 setup(
     name = 'GeoBases3K',
     version = VERSION,
-    author = 'Alex Prengere',
-    author_email = 'alex.prengere@amadeus.com',
+    author = 'Alex Prengère',
+    author_email = 'alexprengere@gmail.com',
     url = 'http://opentraveldata.github.com/geobases',
-    description = 'Provides data services.',
+    description = 'Data services and visualization',
     long_description = LONG_DESCRIPTION,
     license = LICENSE,
     #
