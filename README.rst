@@ -157,7 +157,7 @@ Here is an overview:
 -  *data="feed"* will create an empty instance
 
 All features are unaware of the underlying data, and are available as long as
-the headers are properly set in the configuration file, or from the `Python API <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
+the headers are properly set in the configuration file, or from the `Python API <http://packages.python.org/GeoBases/GeoBases.html>`_.
 For geographical features, you have to name the latitude field ``lat``, and the
 longitude field ``lng``.
 
@@ -262,7 +262,7 @@ Map display
 API documentation
 -----------------
 
-Here is the `API documentation <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
+Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_.
 
 Standalone script
 -----------------
