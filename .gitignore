@@ -1,19 +1,23 @@
-*pyc
+# Python / vim
+*py[co]
+*.sw[po]
+# Eclipse / Pydev
 .settings
 .project
 .pydevproject
-build
-dist
-*.egg-info/
-*.pid
-*.sw[po]
+# Ignoring build dir
+/build
+/dist
+/*.egg-info/
 # Ignoring virtualenv
-bin/
-lib/
-lib64
-include/
-doc/_build
-*.png
-*.html
-*.js
-*.json
+/bin/
+/lib/
+/lib64
+/include/
+# Ignoring api doc
+/doc/_build
+# Ignoring tmp map files
+/*.png
+/*.html
+/*.js
+/*.json
