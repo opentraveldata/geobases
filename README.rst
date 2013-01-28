@@ -265,7 +265,7 @@ Map display
  <BLANKLINE>
  (['example_map.html', 'example_table.html'], 2)
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
 
 API documentation
 -----------------
@@ -286,7 +286,6 @@ Then you may use::
  % GeoBase --help               # your best friend
 
 .. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
-   :align: center
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
