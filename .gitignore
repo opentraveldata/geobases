@@ -1,4 +1,19 @@
-/GeoBases.egg-info/
-/GeoBases/
-/build/
-/dist/
+*pyc
+.settings
+.project
+.pydevproject
+build
+dist
+*.egg-info/
+*.pid
+*.sw[po]
+# Ignoring virtualenv
+bin/
+lib/
+lib64
+include/
+doc/_build
+*.png
+*.html
+*.js
+*.json
