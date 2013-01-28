@@ -285,7 +285,7 @@ Then you may use::
  % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
  % GeoBase --help               # your best friend
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
