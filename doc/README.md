@@ -8,6 +8,7 @@ the questions:
     sphinx-apidoc  . -o doc -f
     cd doc/
     export PYTHONPATH=.:..:$PYTHONPATH
+    make clean
     make html
 
 In case of problems, check your PYTHONPATH which give Sphinx access to
