@@ -167,6 +167,7 @@ ori_por:
         # split every char 'AB' -> ['A', 'B']
         #location_type    : ''
         alt_name_section : ['=', '|']
+        tvl_por_list     : ','
     headers : &ori_por_headers
         - iata_code
         - icao_code
@@ -203,13 +204,11 @@ ori_por:
         - dst_offset
         - raw_offset
         - moddate
-        - is_airport
-        - is_commercial
         - city_code
         - city_name_utf
         - city_name_ascii
+        - tvl_por_list
         - state_code
-        - region_code
         - location_type
         - wiki_link
         - alt_name_section
@@ -278,26 +277,11 @@ ori_por_private_multi:
 
 
 ori_por_non_iata:
-    source    : Por/Ori/ori_por_non_iata.csv
-    indexes   : iata_code
-    delimiter : ^
-    headers   : &short_ori_por_headers
-        - iata_code
-        - icao_code
-        - faa_code
-        - is_geonames
-        - geoname_id
-        - valid_id
-        - name
-        - asciiname
-        - lat           # is latitude  in ori_por headers
-        - lng           # is longitude in ori_por headers
-        - fclass
-        - fcode
-        - page_rank
-        - date_from
-        - date_until
-        - comment
+    source        : Por/Ori/ori_por_non_iata.csv
+    indexes       : iata_code
+    delimiter     : ^
+    subdelimiters : *ori_por_subdel
+    headers       : *ori_por_headers
 
 
 currencies:

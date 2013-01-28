@@ -3,3 +3,4 @@ recursive-include completion *
 recursive-include examples *
 include *.rst
 include VERSION
+include LICENSE

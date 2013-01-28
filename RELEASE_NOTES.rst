@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.17 : ori_por has a new field tvl_por_list, linking cities to POR
 + 4.16 : --indexes has a fourth optional parameter to toggle duplicates discarding
 + 4.15 : new cabins data, -U option to force data updates
 + 4.14 : new airlines data, with alliances

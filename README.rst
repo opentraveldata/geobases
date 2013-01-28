@@ -154,7 +154,7 @@ Here is an overview:
 -  *data="feed"* will create an empty instance
 
 All features are unaware of the underlying data, and are available as long as
-the headers are properly set in the configuration file, or from the `Python API <http://opentraveldata.github.com/geobases/api/index.html>`_.
+the headers are properly set in the configuration file, or from the `Python API <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
 For geographical features, you have to name the latitude field ``lat``, and the
 longitude field ``lng``.
 
@@ -267,7 +267,7 @@ Map display
 API documentation
 -----------------
 
-You may find here the Sphinx `API documentation <http://opentraveldata.github.com/geobases/api/index.html>`_.
+You may find here the Sphinx `API documentation <http://opentraveldata.github.com/geobases/api/GeoBases.html>`_.
 
 Standalone script
 -----------------
@@ -321,9 +321,9 @@ All heliports under 200 km from Paris::
 
     % GeoBase --near PAR -N 200 -E location_type -e 'H'
 
-50 train stations closest to Paris::
+50 train stations closest to a specific geocode::
 
-    % GeoBase -E location_type -e R --closest PAR -C 50
+    % GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 
 Countries with non-empty postal code regex::
 

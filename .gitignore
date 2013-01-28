@@ -13,3 +13,7 @@ lib/
 lib64
 include/
 doc/_build
+*.png
+*.html
+*.js
+*.json
