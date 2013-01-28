@@ -96,18 +96,6 @@ your ``~/.zshrc``::
  autoload -U compinit
  compinit
 
-OpenTrep wrapper
-^^^^^^^^^^^^^^^^
-
-You may also export this variable before installation to install the
-*OpenTrepWrapper* as a dependency::
-
-    % git checkout trunk
-    % export WITH_OPENTREP=1
-    % python setup.py install --user
-
-Note that this will only install the wrapper, not OpenTrep itself.
-
 Tests
 ~~~~~
 
