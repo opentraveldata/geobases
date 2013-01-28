@@ -31,6 +31,12 @@ It relies on three modules:
 -  *GeoGridModule*:
    a class implementing a geographical index based on geohashing
 
+Once you have installed the project, you will be able to know where are airports with *international* in their name::
+
+ % GeoBase --fuzzy international --map
+
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
+
 Project
 -------
 
@@ -259,7 +265,7 @@ Map display
  <BLANKLINE>
  (['example_map.html', 'example_table.html'], 2)
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map.png
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
 
 API documentation
 -----------------

@@ -5561,7 +5561,7 @@
 3650273	Velasco Ibarra	Velasco Ibarra	El Empalme,Empalme,Velasco Ibarra	-1.04376	-79.63837	P	PPL	EC		10				48754		106	America/Guayaquil	2013-01-11
 3650721	Tena	Tena	Napo,San Juan de Tena,Tena	-0.9938	-77.81286	P	PPL	EC		23				17172		610	America/Guayaquil	2013-01-11
 3650960	Sucre	Sucre	Sucre	-1.27974	-80.41885	P	PPL	EC		14				15286		152	America/Guayaquil	2013-01-11
-3651297	Santo Domingo de los Colorados	Santo Domingo de los Colorados	Santo Domingo,Santo Domingo de los Colorados,Santo-Domingo-de-los-Kolorados,Санто-Доминго-де-лос-Колорадос	-0.25302	-79.17509	P	PPL	EC		18	3651296			200421		555	America/Guayaquil	2013-01-11
+3651297	Santo Domingo de los Colorados	Santo Domingo de los Colorados	Santo Domingo,Santo Domingo de los Colorados,Santo-Domingo-de-los-Kolorados,Санто-Доминго-де-лос-Колорадос	-0.25302	-79.17509	P	PPLA	EC		26	3651296			200421		555	America/Guayaquil	2013-01-27
 3651356	Santa Rosa	Santa Rosa	Santa Rosa	-3.45	-79.96667	P	PPL	EC		08				41816		6	America/Guayaquil	2012-02-02
 3651438	Santa Elena	Santa Elena	Santa Elena	-2.22778	-80.85694	P	PPLA	EC		25	3651436			42214		18	America/Guayaquil	2012-12-05
 3651694	San Lorenzo de Esmeraldas	San Lorenzo de Esmeraldas	Puerto San Lorenzo,San Lorenzo,San Lorenzo de Esmeraldas	1.28626	-78.83514	P	PPL	EC		09				20209		1	America/Guayaquil	2013-01-11
@@ -5603,7 +5603,7 @@
 3657670	Gualaceo	Gualaceo	Gualaceo	-2.89264	-78.77814	P	PPL	EC		02				17122		2429	America/Guayaquil	2013-01-11
 3658053	El Triunfo	El Triunfo		-1.93333	-79.96667	P	PPL	EC		10				32282		6	America/Guayaquil	2006-01-17
 3658192	Eloy Alfaro	Eloy Alfaro	Alfaro,Duran,Durán,Eloy Alfaro	-2.17513	-79.85562	P	PPL	EC		10				167784		1	America/Guayaquil	2013-01-11
-3658666	Cuenca	Cuenca	CUE,Cuenca,Kuehnka,Куэнка	-2.90054	-79.00453	P	PPL	EC		02				276964		2517	America/Guayaquil	2013-01-11
+3658666	Cuenca	Cuenca	CUE,Cuenca,Kuehnka,Santa Ana de los cuatro rios de Cuenca,Santa Ana de los cuatro ríos de Cuenca,Куэнка	-2.90054	-79.00453	P	PPLA	EC		02				276964		2517	America/Guayaquil	2013-01-27
 3659139	Chone	Chone	Chone	-0.69819	-80.09361	P	PPL	EC		14				44751		102	America/Guayaquil	2013-01-11
 3659578	Cayambe	Cayambe	Cayambe,Kajambe,Каямбе	0.04084	-78.14524	P	PPL	EC		18				26582		2911	America/Guayaquil	2013-01-11
 3659599	Catamayo	Catamayo	Catamayo,La Toma	-3.98333	-79.35	P	PPL	EC		12				18565		1373	America/Guayaquil	2012-01-18
@@ -15040,7 +15040,7 @@
 1283323	Jaleswar	Jaleswar	Jaleshwar,Jaleswar	26.64711	85.80081	P	PPL	NP		00				23573		67	Asia/Kathmandu	2012-01-18
 1283329	Ithari	Ithari	Itahari,Ithari,Titahari	26.66667	87.28333	P	PPL	NP		00				47984		117	Asia/Kathmandu	2012-01-18
 1283333	Ilām	Ilam	Ilam,Ilām	26.90943	87.92824	P	PPLA3	NP		ER	10	3		17491		1218	Asia/Kathmandu	2011-07-31
-1283339	Hitura	Hitura	Hetauda,Hetauda Bazar,Hetaunda,Hetaura,Heṭauḍā,Hithaura,Hitura	27.42839	85.03219	P	PPL	NP		00				84775		467	Asia/Kathmandu	2012-01-18
+1283339	Hitura	Hitura	Hetauda,Hetauda Bazar,Hetaunda,Hetaura,Heṭauḍā,Hithaura,Hitura	27.42839	85.03219	P	PPL	NP		CR	11			84775		467	Asia/Kathmandu	2013-01-27
 1283368	Gulariyā	Gulariya	Gularia,Gulariya,Gulariyā	28.23333	81.33333	P	PPL	NP		00				53107		146	Asia/Kathmandu	2012-01-18
 1283401	Gaur	Gaur	Gaur,Gaura,Gour,Гаура	26.76667	85.26667	P	PPL	NP		00				27325		77	Asia/Kathmandu	2012-01-18
 1283460	Dharān Bāzār	Dharan Bazar	Dharan,Dharan Bazar,Dharān Bāzār	26.81248	87.28355	P	PPL	NP		00				108600		371	Asia/Kathmandu	2012-01-18
@@ -15466,7 +15466,7 @@
 1701124	Maramag	Maramag	Maramag	7.76333	125.00528	P	PPLA3	PH		10	12	1701125		33844		276	Asia/Manila	2011-07-31
 1701149	Maragondon	Maragondon	Maragandon,Maragondon	14.2733	120.7377	P	PPLA3	PH		40	20	1701150		22973		21	Asia/Manila	2011-07-31
 1701472	Mantampay	Mantampay		8.16667	124.21667	P	PPL	PH		00	C8			265032		172	Asia/Manila	2010-08-14
-1701500	Mansilingan	Mansilingan		10.63111	122.97889	P	PPL	PH		00	A2			454150		45	Asia/Manila	2010-08-14
+1701500	Mansilingan	Mansilingan		10.63111	122.97889	P	PPL	PH		06	H3			454150		45	Asia/Manila	2013-01-27
 1701516	Mansalay	Mansalay	Bulalacao,Mansalay	12.52044	121.43851	P	PPLA3	PH		41	41	1701517		23044		18	Asia/Manila	2011-07-31
 1701537	Manolo Fortich	Manolo Fortich	Manolo Fortich	8.36972	124.86444	P	PPLA3	PH		10	12	1701538		27064		515	Asia/Manila	2011-07-31
 1701668	Manila	Manila	Dakbayan sa Manila,Gorad Manila,Mainile,Manila,Manilae,Manilla,Manillah,Manille,Manilo,Manyl,Maníla,Maynila,Menila,ma ni la,manila,manilla,manira,manyl,manyla,mnila,mnylh,myanila,Μανίλα,Горад Маніла,Манилæ,Манила,Маніла,מנילה,مانىلا,مانيلا,مانیل,مانیلا,मनिला,मनीला,ম্যানিলা,மணிலா,ಮನಿಲ,මැනිලා,มนิลา,มะนิลา,མ་ནི་ལ།,မနီလာမြို့,მანილა,ማኒላ,マニラ,马尼拉,마닐라	14.6042	120.9822	P	PPLC	PH		NCR	D9			10444527		13	Asia/Manila	2012-01-17
@@ -16265,7 +16265,7 @@
 3094170	Kutno	Kutno	KUTNO,Kutno,КУТНО,Кутно	52.23064	19.36409	P	PPLA2	PL		74	1002	100201		48323		112	Europe/Warsaw	2010-10-15
 3094625	Krotoszyn	Krotoszyn	Krotoshin,Krotoszyn,Кротошин	51.69868	17.43738	P	PPLA3	PL		86	3012	301204		29231		132	Europe/Warsaw	2011-07-31
 3094788	Krapkowice	Krapkowice	Chrapkowice,Krapkowice,Krappitz	50.47515	17.96539	P	PPLA2	PL		79	1605	160502		18275		176	Europe/Warsaw	2010-09-25
-3094802	Kraków	Krakow	Cracau,Cracaû,Cracovia,Cracovie,Cracow,Cracòvia,Cracóvia,Kraka,Krakau,Krakiv,Krakko,Krakkó,Krakobia,Krakov,Krakova,Krakovija,Krakovja,Krakovo,Krakow,Kraká,Kraków,Krokuva,ke la ke fu,keulakupeu,kurakufu,qrqwb,Κρακοβία,Кракаў,Краков,Краковия,Краків,קרקוב,კრაკოვი,クラクフ,克拉科夫,크라쿠프	50.05753	19.98022	P	PPLA	PL		77	1261			755050		210	Europe/Warsaw	2013-01-11
+3094802	Kraków	Krakow	Cracau,Cracaû,Cracovia,Cracovie,Cracow,Cracòvia,Cracóvia,Kraka,Krakau,Krakiv,Krakko,Krakkó,Krakobia,Krakov,Krakova,Krakovija,Krakovja,Krakovo,Krakow,Kraká,Kraków,Krokuva,ke la ke fu,keulakupeu,kurakufu,qrqwb,Κρακοβία,Кракаў,Краков,Краковия,Краків,קרקוב,კრაკოვი,クラクフ,克拉科夫,크라쿠프	50.06143	19.93658	P	PPLA	PL		77	1261	126101		755050		226	Europe/Warsaw	2013-01-27
 3095049	Koszalin	Koszalin	Kezlin,Koeslin,Kosalina,Koshalin,Koslin,Koszalin,Košalina,Köslin,OSZ,Scurgum,Кошалин	54.19438	16.17222	P	PPLA2	PL		87	3261	326101		107450		30	Europe/Warsaw	2010-10-21
 3095057	Kostrzyn nad Odrą	Kostrzyn nad Odra	Cuestrin,Cüstrin,Kistrzyn,Kostrzyn,Kuestrin,Küstrin	52.58713	14.64953	P	PPL	PL		76	0801	080101		18099		16	Europe/Warsaw	2010-09-14
 3095126	Kościerzyna	Koscierzyna	Koscierzyna,Kościerzyna	54.12226	17.98119	P	PPL	PL		82	2206	220601		23361		162	Europe/Warsaw	2010-09-13
@@ -17714,7 +17714,7 @@
 103369	Qal‘at Bīshah	Qal`at Bishah	Bisha,Qal`at Bishah,Qal‘at Bīshah	20.00054	42.6052	P	PPL	SA		00				81828		1168	Asia/Riyadh	2012-01-16
 103630	Najrān	Najran	Najran,Najrān	17.4924	44.12766	P	PPL	SA		16				258573		1310	Asia/Riyadh	2012-10-17
 104515	Mecca	Mecca	A Meca,A Meca - mkt,A Meca - مكة,La Meca,La Mecca,La Mecque,Lamecha,Macoraba,Maekkae,Makka,Makkah,Makkah al Mukarramah,Makkah al Mukarraman,Makkah al-Mukarramah,Meca,Mecca,Meice,Meka,Mekao,Mekka,Mekkah,Mekke,Mekko,Mäkkä,mai jia,makka,meka,mkh,mkt,Μέκκα,Мека,Мекка,מכה,مكة,مکه,مکہ,มักกะหฺ,མ་ཁ,მექა,マッカ,麥加,메카	21.42667	39.82611	P	PPL	SA		14				1323624		333	Asia/Riyadh	2012-08-08
-105072	Khamīs Mushayt	Khamis Mushayt	Khamis Mushait,Khamis Mushayt,Khamīs Mushayt,khmys mshyt,خميس مشيط	18.30639	42.72917	P	PPL	SA		00				387553		2005	Asia/Riyadh	2012-01-16
+105072	Khamīs Mushayt	Khamis Mushayt	Khamis Mushait,Khamis Mushayt,Khamīs Mushayt,khmys mshyt,خميس مشيط	18.30639	42.72917	P	PPL	SA		11				387553		2005	Asia/Riyadh	2013-01-27
 105299	Jīzān	Jizan	Djayzan,Djayzān,Djazan,Djāzān,Dzhizan,Gizan,Gizán,Jaizan,Jazan,Jezan,Jizan,Jāzān,Jīzān,Qizan,Qīzān,Джизан	16.88917	42.55111	P	PPLA	SA		17				105198		19	Asia/Riyadh	2012-01-14
 105343	Jeddah	Jeddah	Ciddae,Cidde,Ciddä,Djedda,Djeddah,Djidda,Dschidda,Dzedda,Dzhidda,Dzida,Dzudda,Dżudda,Džedda,Džida,Gedda,Gidda,Gido,JED,Jaddah,Jedda,Jeddah,Jida,Jidda,Jiddah,Jidá,Juddah,Yida,Yidda,g'dh,jdh,jdt,ji da,jidda,Ĝido,Джидда,ג'דה,جدة,جده,ジッダ,吉达	21.51694	39.21917	P	PPLA	SA		14				2867446		21	Asia/Riyadh	2012-02-03
 106281	Hayil	Hayil	Ha'il,Hael,Hajel,Hayil,Ḥâjel,Ḩā’il	27.52188	41.69073	P	PPLA	SA		13				267005		1002	Asia/Riyadh	2012-01-14
@@ -19134,10 +19134,10 @@
 687432	Zdolbuniv	Zdolbuniv	Zdolbuniv,Zdolbunov,Zdolbunovo,Zdolbunow,Zdolbunuv,Zdołbunów,Здолбунов,Здолбунів	50.5206	26.24251	P	PPL	UA		19				23697		195	Europe/Kiev	2013-01-10
 687700	Zaporizhzhya	Zaporizhzhya	Aleksandrovsk,Saporoshje,Zaborozha,Zaporizhzhya,Zaporizza,Zaporozh'e,Zaporozh'ye,Zaporozhye,Zaporozh’e,Zaporozh’ye,Запорожье,Запоріжжя	47.82289	35.19031	P	PPLA	UA		26				796217		84	Europe/Zaporozhye	2012-01-29
 687997	Yuzhne	Yuzhne	Juzhne,Juzhnyj,Южне,Южный	46.62211	31.10131	P	PPL	UA		17				25000		32	Europe/Kiev	2012-12-01
-688105	Yevpatoriya	Yevpatoriya	Eupatoria,Eupatorio,Evpatoria,Evpatorija,Eŭpatorio,Gazlevi,Jevpatorija,Jewpatorija,Kezlev,Kozlov,Yevpatoriya,ywwptwryh,Євпаторія,Евпатория,Эвпаторія,יוופטוריה	45.20091	33.36655	P	PPL	UA		11				105223		11	Europe/Simferopol	2012-01-18
+688105	Yevpatoriya	Yevpatoriya	Eupatoria,Eupatorio,Evpatoria,Evpatorija,Eŭpatorio,Gazlevi,Jevpatorija,Jewpatorija,Kezlev,Kozlov,Yevpatoriya,ywwptwryh,Євпаторія,Евпатория,Эвпаторія,יוופטוריה	45.20091	33.36655	P	PPL	UA		11	8449691			105223		11	Europe/Simferopol	2013-01-27
 688148	Yenakiyeve	Yenakiyeve	ENAKIEVO,Ordshonikidse,Ordzhonikidze,Rykovo,Yenakiyeve,Yenakiyevo,ЕНАКИЕВО	48.23331	38.21137	P	PPL	UA		05				104101		208	Europe/Kiev	2012-01-18
 688373	Yasinovataya	Yasinovataya	IAsinovataia,Jasinovataja,Yasinovatara,Yasinovataya,Ясиноватая	48.1298	37.8594	P	PPL	UA		05				37600		263	Europe/Kiev	2012-01-18
-688533	Yalta	Yalta	Ialta,Jalta,Jalto,Jałta,Yalta,ya er ta,yalta,yaruta,Ялта,يالطا,იალტა,ヤルタ,雅尔塔,얄타	44.50013	34.16148	P	PPL	UA		11				79509		122	Europe/Simferopol	2012-01-18
+688533	Yalta	Yalta	Ialta,Jalta,Jalto,Jałta,Yalta,ya er ta,yalta,yaruta,Ялта,يالطا,იალტა,ヤルタ,雅尔塔,얄타	44.50013	34.16148	P	PPL	UA		11	8449687			79509		122	Europe/Simferopol	2013-01-27
 688587	Yahotyn	Yahotyn	JAGOTIN,Yagotin,Yahotyn,ЯГОТИН	50.27975	31.76246	P	PPL	UA		13				22779		130	Europe/Kiev	2012-01-18
 688723	Vyshhorod	Vyshhorod	VYSHGOROD,Vishgorod,Vyshgorod,Vyshhorod,ВЫШГОРОД,Вишгород	50.58476	30.4898	P	PPL	UA		13				22080		112	Europe/Kiev	2012-01-18
 688746	Vynohradiv	Vynohradiv	Horvinogradovo,Nagyszollos,Nagyszöllös,Nagyszőllős,Sevljus,Sevlus,Sevluš,Sevlyush,Vel'ky Sevl'yush,Vel’ky Sevl’yush,Vinogradiv,Vinogradov,Vynohradiv,Виноградов,Виноградів	48.14135	23.02666	P	PPL	UA	UA	25				27600		133	Europe/Uzhgorod	2012-03-26
@@ -19176,7 +19176,7 @@
 693615	Skvyra	Skvyra	Skvira,Skvyra,Сквира	49.73177	29.66569	P	PPL	UA		13				17452		201	Europe/Kiev	2012-01-18
 693709	Skadovsk	Skadovsk	Skadovsk,Skadowsk,Скадовск	46.1161	32.91124	P	PPL	UA		08				19404		6	Europe/Kiev	2012-02-02
 693796	Synel’nykove	Synel'nykove	Sinel'nikovo,Sinel’nikovo,Synel'nykove,Synel’nykove,Синельниково	48.32044	35.51792	P	PPL	UA		04				31900		171	Europe/Kiev	2012-01-18
-693805	Simferopol’	Simferopol'	Ak-Mechet,Akmescit,Aqmescit,Simferopol,Simferopol',Simferopoli,Simferopolo,Simferopol’,Ssimferopol,Symferopol,shinferopori,smfrwbl,symprwpwl,xin fei luo bo er,Симферопол,Симферополь,Сімферополь,סימפרופול,سمفروبل,シンフェロポリ,辛菲罗波尔	44.95719	34.11079	P	PPLA	UA		11				358108		247	Europe/Simferopol	2012-01-18
+693805	Simferopol’	Simferopol'	Ak-Mechet,Akmescit,Aqmescit,Simferopol,Simferopol',Simferopoli,Simferopolo,Simferopol’,Ssimferopol,Symferopol,shinferopori,smfrwbl,symprwpwl,xin fei luo bo er,Симферопол,Симферополь,Сімферополь,סימפרופול,سمفروبل,シンフェロポリ,辛菲罗波尔	44.95719	34.11079	P	PPLA	UA		11	8449684			358108		247	Europe/Simferopol	2013-01-27
 693920	Shpola	Shpola	Shpola,Шпола	49.00687	31.39471	P	PPL	UA		01				18689		150	Europe/Kiev	2012-01-18
 693942	Shostka	Shostka	SHOSTKA,Schostka,Shostka,ШОСТКА,Шостка	51.86296	33.4698	P	PPL	UA		21				85432		154	Europe/Kiev	2012-02-28
 694216	Shepetivka	Shepetivka	Schepetowka,Sepetivka,Shepetivka,Shepetovka,Шепетовка,Шепетівка	50.18545	27.06365	P	PPL	UA		09				46419		252	Europe/Kiev	2012-01-18
@@ -19184,7 +19184,7 @@
 694423	Sevastopol’	Sevastopol'	Akhiar,Akhtyar,Akyar,Aqyar,Sebastopol,Sebastopoli,Sebastopolis,Sebastopolo,Sebastòpol,Sevastopol,Sevastopol',Sevastopolis,Sevastopolo,Sevastopol’,Sevastopoľ,Sewastopol,Sivastopol,Sébastopol,sai wa si tuo bo er,sbstwpwl,sebaseutopol,sevu~asutopori,Севастопол,Севастополь,סבסטופול,セヴァストポリ,塞瓦斯托波爾,세바스토폴	44.58883	33.5224	P	PPLA	UA		20				379200		72	Europe/Simferopol	2012-01-18
 694792	Sarny	Sarny	Sarni,Sarnv,Sarny,Сарни	51.33795	26.60191	P	PPL	UA		19				27097		158	Europe/Kiev	2012-07-04
 694864	Sambir	Sambir	Sambir,Sambor,Самбор,Самбір	49.5183	23.19752	P	PPL	UA		15				35197		308	Europe/Kiev	2013-01-10
-694910	Saky	Saky	Saki,Saky,Ssaki,Саки	45.13424	33.59996	P	PPL	UA		11				28322		17	Europe/Simferopol	2012-01-18
+694910	Saky	Saky	Saki,Saky,Ssaki,Саки	45.13424	33.59996	P	PPL	UA		11	8449685			28322		17	Europe/Simferopol	2013-01-27
 695274	Rubizhne	Rubizhne	Rubezhnaya,Rubezhnoe,Rubezhnoye,Rubizhne,Rubizne,Рубежное,Рубіжне	49.01229	38.37967	P	PPL	UA		14				62993		73	Europe/Zaporozhye	2012-01-18
 695344	Rozdil’na	Rozdil'na	Posad Pazdelnaya,Razdel'naja,Razdel'naya,Razdel’naya,Раздельная	46.84334	30.07919	P	PPL	UA		17				17615		146	Europe/Kiev	2010-06-15
 695379	Roven’ki	Roven'ki	Roven'ki,Rovenki,Roven’ki,Rowenki,Ровеньки	48.08332	39.37764	P	PPL	UA		14				53600		265	Europe/Zaporozhye	2012-01-18
@@ -19256,7 +19256,7 @@
 704147	Kremenchuk	Kremenchuk	Kremenchug,Kremenchuk,Kremencuk,Krementschug,Krementschuk,Krementsuk,Krementšuk,Kremenčuk,Krenenchur,Krzemienczuk,Krzemieńczuk,keulemenchukeu,kuremenchuku,Кременчуг,Кременчук,クレメンチュク,크레멘추크	49.09725	33.41972	P	PPL	UA		18				227494		84	Europe/Kiev	2010-07-29
 704202	Krasnyy Luch	Krasnyy Luch	KR.LUCH,Krasnij Luch,Krasniluch,Krasny Luch,Krasnyy Luch,Krassntjlutsch,КР.ЛУЧ,Красний Луч	48.13954	38.93715	P	PPL	UA		14				90005		266	Europe/Zaporozhye	2012-01-18
 704204	Krasnyy Liman	Krasnyy Liman	Krasniy Liman,Krasny Liman,Krasnyj Liman,Krasnyy Liman,Liman,Красный Лиман	48.98836	37.80225	P	PPL	UA		05				28200		101	Europe/Kiev	2012-01-18
-704362	Krasnoperekops’k	Krasnoperekops'k	Krasnoperekops'k,Krasnoperekopsk,Krasnoperekops’k,Or qapu,Красноперекопск,Красноперекопськ	45.95716	33.7965	P	PPL	UA		11				30700		9	Europe/Simferopol	2012-01-18
+704362	Krasnoperekops’k	Krasnoperekops'k	Krasnoperekops'k,Krasnoperekopsk,Krasnoperekops’k,Or qapu,Красноперекопск,Красноперекопськ	45.95716	33.7965	P	PPL	UA		11	8449693			30700		9	Europe/Simferopol	2013-01-27
 704388	Krasnohrad	Krasnohrad	KRASNOGRAD,Konstantinograd,Krasnograd,Krasnohrad,КРАСНОГРАД	49.3814	35.44021	P	PPL	UA		07				21426		156	Europe/Kiev	2012-01-18
 704403	Krasnodon	Krasnodon	KRASNODON,Krasnodon,Krassnodon,Sorokin,Sorokino,КРАСНОДОН	48.29229	39.73729	P	PPL	UA		14				49352		141	Europe/Zaporozhye	2012-01-18
 704422	Krasnoarmiys’k	Krasnoarmiys'k	Grishino,KRASNOARMEJSK,Krasnoarmeysk,Krasnoarmeyskoye,Krasnoarmijs'k,Krasnoarmiys'k,Krasnoarmiys’k,Krassnoarmeiskoje,КРАСНОАРМЕЙСК,Красноармійськ	48.28198	37.17585	P	PPL	UA		05				68263		199	Europe/Kiev	2012-01-18
@@ -19282,7 +19282,7 @@
 706448	Kherson	Kherson	Cherson,Chersonas,Chersoń,H'erson,Herson,KHE,Kherson,he er song,heleuson,hrswn,Ĥerson,Херсон,חרסון,赫尔松,헤르손	46.65581	32.6178	P	PPLA	UA		08				320477		51	Europe/Kiev	2012-01-18
 706466	Khartsyzsk	Khartsyzsk	Kharcyzsk,Khartsysk,Khartsyzsk,Харцызск	48.04243	38.14728	P	PPL	UA		05				64000		241	Europe/Kiev	2012-01-18
 706483	Kharkiv	Kharkiv	Carcovia,Carcóvia,Charcovia,Charkiv,Charkiw,Charkov,Charkovas,Charkow,Charków,HRK,Harkiv,Harkiva,Harkivo,Harkov,Harkova,Jarkov,KHAR'KOV,Khar'kov,Kharkiv,Kharkov,Khar’kov,ha er ke fu,haleukiu,harikofu,hrqwb,kharkwf,Ĥarkivo,Ĥarkov,ХАРЬКОВ,Харков,Харків,Харьков,חרקוב,خاركوف,ხარკოვი,ハリコフ,哈爾科夫,하르키우	49.98081	36.25272	P	PPLA	UA		07				1430885		113	Europe/Kiev	2012-01-18
-706524	Kerch	Kerch	Bospor,Bospora,KERCH',KHC,Kerc,Kerch,Kerch',Kerch’,Kerco,Kercz,Kertch,Kertj,Kerts,Kertsch,Kertsj,Kertš,Kerç,Kerĉo,Panticapaeum,Pantikapea,krch,КЕРЧЬ,Керч,Керчь,کرچ	45.3607	36.4706	P	PPL	UA		11				152195		3	Europe/Simferopol	2012-01-18
+706524	Kerch	Kerch	Bospor,Bospora,KERCH',KHC,Kerc,Kerch,Kerch',Kerch’,Kerco,Kercz,Kertch,Kertj,Kerts,Kertsch,Kertsj,Kertš,Kerç,Kerĉo,Panticapaeum,Pantikapea,krch,КЕРЧЬ,Керч,Керчь,کرچ	45.3607	36.4706	P	PPL	UA		11	8449692			152195		3	Europe/Simferopol	2013-01-27
 706571	Kozyatyn	Kozyatyn	Kasatin,Kazatin,Kozjatin,Kozyatyn,Козятин	49.71431	28.83385	P	PPL	UA		23				25645		293	Europe/Kiev	2012-01-18
 706749	Karlivka	Karlivka	KARLOVKA,Karlivka,Karlovka,Karlowka,КАРЛОВКА,Карлівка	49.45668	35.12947	P	PPL	UA		18				17226		152	Europe/Kiev	2012-01-18
 706900	Kaniv	Kaniv	KANEV,Kanev,Kanew,Kaniv,Kanëv,КАНЕВ,Канів	49.75182	31.46004	P	PPL	UA		01				25666		126	Europe/Kiev	2012-01-18
@@ -19308,7 +19308,7 @@
 708898	Hayvoron	Hayvoron	Gaivoron,Gajvoron,Gayvoron,Hayvoron,Гайворон	48.33958	29.86791	P	PPL	UA		10				15526		151	Europe/Kiev	2012-01-18
 708901	Haysyn	Haysyn	Gaisin,Gaissin,Gajsin,Gaysin,Haysyn,Гайсин	48.81143	29.38977	P	PPL	UA		23				24687		210	Europe/Kiev	2012-01-18
 709054	Hadyach	Hadyach	Gadjach,Gadyach,Hadyach,Гадяч	50.37112	33.99099	P	PPL	UA		18				22667		154	Europe/Kiev	2012-01-18
-709161	Feodosiya	Feodosiya	Caffa,Feodosia,Feodosija,Feodosiya,Feodossia,Feodossija,Fyeodosiya,Kaffa,Kefe,Teodosia,Teodozio,Teodozja,Teodòsia,Teodósia,Theodosia,Theodosie,Théodosie,feodoshiya,pe-odosiya,Феодосия,Феодосія,フェオドシヤ,페오도시야	45.03677	35.37789	P	PPL	UA		11				72052		23	Europe/Simferopol	2012-01-18
+709161	Feodosiya	Feodosiya	Caffa,Feodosia,Feodosija,Feodosiya,Feodossia,Feodossija,Fyeodosiya,Kaffa,Kefe,Teodosia,Teodozio,Teodozja,Teodòsia,Teodósia,Theodosia,Theodosie,Théodosie,feodoshiya,pe-odosiya,Феодосия,Феодосія,フェオドシヤ,페오도시야	45.03677	35.37789	P	PPLA2	UA		11	8449683			72052		23	Europe/Simferopol	2013-01-27
 709248	Fastiv	Fastiv	Fastiv,Fastov,Fastow,Фастов,Фастів	50.0767	29.9177	P	PPL	UA		13				51143		208	Europe/Kiev	2012-01-18
 709276	Energodar	Energodar	Ehnergodar,Energodar,Енергодар,Энергодар	47.49865	34.6574	P	PPL	UA		26				55800		29	Europe/Zaporozhye	2010-08-16
 709334	Dzhankoy	Dzhankoy	Dshankoi,Dzhanhoi,Dzhankoi,Dzhankoj,Dzhankoy,Джанкой	45.71168	34.39274	P	PPL	UA		11				41731		16	Europe/Simferopol	2012-01-18
@@ -19360,7 +19360,7 @@
 713122	Avdeyevka	Avdeyevka	AVDEEVKA,Avdeyevka,Avdiivka,Avdiyivka,Awdejewka,АВДЕЕВКА,Авдіївка	48.13989	37.74255	P	PPL	UA		05				35826		212	Europe/Kiev	2012-01-18
 713163	Artsyz	Artsyz	Archiz,Arcis,Arciz,Arsis,Arsiz,Artsis,Artsiz,Artsyz,Арциз	45.99194	29.41824	P	PPL	UA		17				15761		17	Europe/Kiev	2012-01-18
 713174	Artemivs’k	Artemivs'k	Artemivs'k,Artemivs’k,Artemovsk,Artemovskiy,Artemowsk,Artëmovsk,Bakhmut,Артемовск	48.59559	37.99987	P	PPL	UA		05				80500		102	Europe/Kiev	2012-01-18
-713203	Armyans’k	Armyans'k	Armjans'k,Armjansk,Armyans'k,Armyansk,Armyans’k,Армянск,Армянськ	46.10919	33.69206	P	PPL	UA		11				26000		16	Europe/Simferopol	2012-01-18
+713203	Armyans’k	Armyans'k	Armjans'k,Armjansk,Armyans'k,Armyansk,Armyans’k,Армянск,Армянськ	46.10919	33.69206	P	PPL	UA		11	8449689			26000		16	Europe/Simferopol	2013-01-27
 713245	Apostolove	Apostolove	Apostolove,Apostolovo,Apostolowo,Апостолове	47.66003	33.71369	P	PPL	UA		04				15828		87	Europe/Kiev	2012-01-18
 713259	Antratsit	Antratsit	Antracit,Antratsit,Bokovo-Antratsit,Антрацит	48.11503	39.09128	P	PPL	UA		14				61600		235	Europe/Zaporozhye	2012-01-18
 713504	Amvrosiyivka	Amvrosiyivka	AMVROSIEVKA,Amvrosiivka,Amvrosiyevka,Amvrosiyivka,Donetsko Amerskevka,Donetsko-Amvrosiyevka,Donezko-Amwrossijewka,АМВРОСИЕВКА,Амвросіївка	47.79348	38.47768	P	PPL	UA		05				21307		141	Europe/Kiev	2012-01-18
