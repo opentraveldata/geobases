@@ -363,6 +363,9 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">from_keys</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[]</span>
 
+            <span class="c"># We cannot give what we do not have</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">from_keys</span><span class="p">))</span>
+
         <span class="c"># Some precaution for the number of wanted keys</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">))</span>
 
@@ -455,7 +458,7 @@
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Alex Prengere.
+        &copy; Copyright 2013, OpenTravelData.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

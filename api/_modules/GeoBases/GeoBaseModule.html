@@ -777,9 +777,9 @@
 <span class="sd">        &gt;&gt;&gt; list(geo_o.getKeysWhere([(&#39;__dup__&#39;, &#39;[]&#39;)]))</span>
 <span class="sd">        []</span>
 <span class="sd">        &gt;&gt;&gt; len(list(geo_o.getKeysWhere([(&#39;__dup__&#39;, [])])))</span>
-<span class="sd">        7025</span>
+<span class="sd">        7024</span>
 <span class="sd">        &gt;&gt;&gt; len(list(geo_o.getKeysWhere([(&#39;__dup__&#39;, &#39;[]&#39;)], force_str=True)))</span>
-<span class="sd">        7025</span>
+<span class="sd">        7024</span>
 <span class="sd">        &gt;&gt;&gt; len(list(geo_o.getKeysWhere([(&#39;__par__&#39;, [])], reverse=True))) # Counting duplicated keys</span>
 <span class="sd">        4431</span>
 
@@ -1650,7 +1650,12 @@
             <span class="c"># c &gt; 0 makes sure we do not create a category</span>
             <span class="c"># for stuff that will not be displayed</span>
             <span class="n">nb_non_empty_cat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">categories</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">/</span> <span class="n">nb_non_empty_cat</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">nb_non_empty_cat</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">/</span> <span class="n">nb_non_empty_cat</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># All categories may be empty if not icons + not circles</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="k">for</span> <span class="n">cat</span><span class="p">,</span> <span class="n">vol</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">categories</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
             <span class="n">categories</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -1669,9 +1674,15 @@
                 <span class="n">categories</span><span class="p">[</span><span class="n">cat</span><span class="p">][</span><span class="s">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span>
 
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">icon_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">field_vol</span> <span class="o">=</span> <span class="s">&#39;volume&#39;</span>
+                <span class="k">elif</span> <span class="n">point_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">field_vol</span> <span class="o">=</span> <span class="n">point_size</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">field_vol</span> <span class="o">=</span> <span class="s">&#39;(not used)&#39;</span>
+
                 <span class="k">print</span> <span class="s">&#39;&gt; Affecting category </span><span class="si">%-8s</span><span class="s"> to color </span><span class="si">%-7s</span><span class="s"> | </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> \
-                        <span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">categories</span><span class="p">[</span><span class="n">cat</span><span class="p">][</span><span class="s">&#39;color&#39;</span><span class="p">],</span>
-                         <span class="n">point_size</span> <span class="k">if</span> <span class="n">icon_type</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="s">&#39;volume&#39;</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span>
+                        <span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">categories</span><span class="p">[</span><span class="n">cat</span><span class="p">][</span><span class="s">&#39;color&#39;</span><span class="p">],</span> <span class="n">field_vol</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span>
 
 
         <span class="c"># catalog is a user defined color scheme</span>
@@ -1909,7 +1920,7 @@
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Alex Prengere.
+        &copy; Copyright 2013, OpenTravelData.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
