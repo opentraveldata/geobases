@@ -71,6 +71,25 @@ that in your ``~/.bashrc`` or ``~/.zshrc``::
     export PATH=$PATH:$HOME/.local/bin
     export BACKGROUND_COLOR=black # or 'white', your call
 
+Python 3 and Pypy support
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There is *Python 3* and *Pypy* (not so) experimental support, you may try it
+by *changing branch* before installation.
+
+For Python 3, you have to install setuptools and python3-dev as prerequisites, then::
+
+ % git checkout 3000
+ % python3 setup.py install --user
+
+For Pypy, after pypy and pypy-dev installation::
+
+ % git checkout pypy
+ % sudo pypy setup.py install
+
+Autocomplete
+~~~~~~~~~~~~
+
 If you use zsh and want to benefit from the *autocomplete*, add this to
 your ``~/.zshrc``::
 
@@ -81,7 +100,7 @@ your ``~/.zshrc``::
 
 
 Tests
------
+~~~~~
 
 Run the tests with::
 
