@@ -90,13 +90,11 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 <pre><code>% git clone https://github.com/opentraveldata/geobases.git
 </code></pre>
 
-<p>Then install the package:</p>
+<p>Then install the package and its dependencies</p>
 
 <pre><code>% cd geobases
 % python setup.py install --user # for user space
 </code></pre>
-
-<p>This should install some dependencies.</p>
 
 <p>A standalone script is put in <code>~/.local/bin</code>, to benefit from it, put
 that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
@@ -104,6 +102,8 @@ that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 <pre><code>export PATH=$PATH:$HOME/.local/bin
 export BACKGROUND_COLOR=black # or 'white', your call
 </code></pre>
+
+<h3>Autocomplete</h3>
 
 <p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
 your <code>~/.zshrc</code>:</p>
@@ -114,7 +114,16 @@ autoload -U compinit
 compinit
 </code></pre>
 
-<h2>Tests</h2>
+<h3>Python 3 support</h3>
+
+There is <em>Python 3</em> (not so) experimental support, you may try it by changing branch before installation.
+You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisites, then:
+
+<pre><code>% git checkout 3000
+% python3 setup.py install --user
+</code></pre>
+
+<h3>Tests</h3>
 
 <p>Run the tests with:</p>
 
