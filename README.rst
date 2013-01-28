@@ -31,6 +31,12 @@ It relies on three modules:
 -  *GeoGridModule*:
    a class implementing a geographical index based on geohashing
 
+Once you have installed the project, you will be able to know where are airports with *international* in their name::
+
+ % GeoBase --fuzzy international --map
+
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
+
 Project
 -------
 
@@ -279,7 +285,7 @@ Then you may use::
  % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
  % GeoBase --help               # your best friend
 
-.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
+.. image:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png
 
 In the previous picture, you have an overview of the command line verbose display.
 Three displays are available for the command line tool:
