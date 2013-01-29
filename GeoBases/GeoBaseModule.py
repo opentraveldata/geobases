@@ -322,6 +322,9 @@ class GeoBase(object):
             if self._verbose:
                 print 'Source was None, skipping loading...'
 
+            # We add those default fields if user adds data with self.set
+            self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+
 
 
     def _configSubDelimiters(self):
@@ -1309,7 +1312,13 @@ class GeoBase(object):
         # If the key is not in the base,
         # we simply add it
         if key not in self._things:
-            self._things[key] = {}
+            self._things[key] = {
+                '__key__' : key,      # special field for key
+                '__lno__' : 0,        # special field for line number
+                '__gar__' : [],       # special field for garbage
+                '__dup__' : [],       # special field for duplicates
+                '__par__' : [],       # special field for parent
+            }
 
         self._things[key][field] = value
 

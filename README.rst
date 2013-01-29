@@ -24,8 +24,6 @@ then you can see where are airports with *international* in their name::
  % GeoBase --fuzzy international --map
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
-   :figwidth: 100%
-   :width: 100%
    :align: center
 
 Project
@@ -259,14 +257,13 @@ Map display
  (['example_map.html', 'example_table.html'], 2)
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
-   :figwidth: 100%
-   :width: 100%
    :align: center
 
-API documentation
------------------
+Documentation
+-------------
 
-Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_.
+Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_ for the Python package.
+Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Standalone script
 -----------------
@@ -280,8 +277,6 @@ Installation of the package will also deploy a standalone script named ``GeoBase
  % GeoBase --help               # your best friend
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
-   :figwidth: 100%
-   :width: 100%
    :align: center
 
 In the previous picture, you have an overview of the command line verbose display.
@@ -337,9 +332,9 @@ Display on map::
 
  % GeoBase -b stations --map
 
-Europe marker-less map::
+Marker-less map for a specific GMT offset::
 
- % GeoBase -E region_code -e EUROP --map -M _ _ country_code  __none__
+ % GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
 
 
 Packaging
