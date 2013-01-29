@@ -123,14 +123,37 @@ function initialize(jsonData) {
     // Set map options
     var parisLocation = new google.maps.LatLng(48.8, 2.33);
 
+    var mapTypeIds = [];
+
+    // Creating list of available map types, adding OSM
+    for(var type in google.maps.MapTypeId) {
+        if (google.maps.MapTypeId.hasOwnProperty(type)) {
+            mapTypeIds.push(google.maps.MapTypeId[type]);
+        }
+    }
+    mapTypeIds.push("OSM");
+
     var mapOptions = {
         zoom      : 2,
         center    : parisLocation,
-        mapTypeId : google.maps.MapTypeId.ROADMAP
+        mapTypeId : "OSM",
+        mapTypeControlOptions: {
+            mapTypeIds: mapTypeIds
+        }
     };
 
     // Create the map
     var map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
+
+    // Setting OSM tiles
+    map.mapTypes.set("OSM", new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+            return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+        },
+        tileSize: new google.maps.Size(256, 256),
+        name: "OpenStreetMap",
+        maxZoom: 18
+    }));
 
     if (jsonData.points.length === 0){
         return;
