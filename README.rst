@@ -259,10 +259,11 @@ Map display
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
 
-API documentation
------------------
+Documentation
+-------------
 
-Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_.
+Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_ for the Python package.
+Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Standalone script
 -----------------
