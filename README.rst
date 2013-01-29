@@ -331,9 +331,9 @@ Display on map::
 
  % GeoBase -b stations --map
 
-Europe marker-less map::
+Marker-less map for a specific GMT offset::
 
- % GeoBase -E region_code -e EUROP --map -M _ _ country_code  __none__
+ % GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
 
 
 Packaging
