@@ -904,6 +904,10 @@ class GeoBase(object):
         >>> # Nice, stations <= 5km
         >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        >>>
+        >>> # Wrong geocode
+        >>> sorted(geo_t.findNearPoint(None, 5))
+        []
 
         No grid mode.
 
@@ -1028,7 +1032,8 @@ class GeoBase(object):
         >>> # Corner case, from_keys empty is not used
         >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=()))
         []
-        >>> 
+        >>> list(geo_t.findClosestFromPoint(None, N=2))
+        []
         >>> #from datetime import datetime
         >>> #before = datetime.now()
         >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
