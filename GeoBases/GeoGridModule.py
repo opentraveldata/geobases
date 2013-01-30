@@ -303,6 +303,10 @@ class GeoGrid(object):
         :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
 
         """
+        if lat_lng is None:
+            # Case where the lat_lng was missing from base
+            return iter([])
+
         if from_keys is not None:
             # We convert to set before testing to nullity
             # because of empty iterators
