@@ -281,6 +281,35 @@ class GeoGrid(object):
 
 
 
+    def _findClosestFromCase(self, case_id, N=1, from_keys=None):
+        """
+        Find closest keys from a case.
+        """
+        found = set()
+
+        for frontier in self._recursiveFrontier(case_id, stop=False):
+
+            found = found | set(self._allKeysInCases(frontier))
+
+            if from_keys is not None:
+                # If from_keys is empty this will turn
+                # into an infinite loop
+                # stopped by MAX_RECURSIVE_FRONTIER
+                # This should not happen since we treated that case
+                # at the beginning
+                found = found & from_keys
+
+            # Heuristic
+            # We have to compare the distance of the farthest found
+            # against the distance really covered by the search
+            #print frontier
+            if len(found) >= N and len(frontier) > 1:
+                break
+
+        return found
+
+
+
     def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
         """
         Concept close to findNearPoint, but here we do not
@@ -321,35 +350,63 @@ class GeoGrid(object):
         # Some precaution for the number of wanted keys
         N = min(N, len(self._keys))
 
-        # The case of the point
-        case_id = self._computeCaseId(lat_lng)
-
-        found = set()
-
-        for frontier in self._recursiveFrontier(case_id, stop=False):
-
-            found = found | set(self._allKeysInCases(frontier))
-
-            if from_keys is not None:
-                # If from_keys is empty this will turn
-                # into an infinite loop
-                # stopped by MAX_RECURSIVE_FRONTIER
-                # This should not happen since we treated that case
-                # at the beginning
-                found = found & from_keys
-
-            # Heuristic
-            # We have to compare the distance of the farthest found
-            # against the distance really covered by the search
-            #print frontier
-            if len(found) >= N and len(frontier) > 1:
-                break
+        # The case of the point is computed by _computeCaseId
+        candidate = self._findClosestFromCase(self._computeCaseId(lat_lng), N, from_keys)
 
         if double_check:
-            return sorted(self._check_distance(found, lat_lng, radius=float('inf')))[:N]
+            return sorted(self._check_distance(candidate, lat_lng, radius=float('inf')))[:N]
         else:
-            return ((0, f) for f in found)
+            return ((0, f) for f in candidate)
 
+
+    def findClosestFromKey(self, key, N=1, double_check=False, from_keys=None):
+        """
+        Concept close to findNearPoint, but here we do not
+        look for the things radius-close to a point,
+        we look for the closest thing from this point, given by
+        latitude/longitude.
+
+        Note that a similar implementation is done in
+        the LocalHelper, to find efficiently N closest point
+        in a graph, from a point (using heaps).
+
+        :param key:       the key
+        :param N:         the N closest results wanted
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
+            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        """
+        if key not in self._keys:
+            # Case where the key probably did not have a proper geocode
+            # and as such was never indexed
+            return iter([])
+
+        if from_keys is not None:
+            # We convert to set before testing to nullity
+            # because of empty iterators
+            from_keys = set(from_keys)
+
+            # If from_keys is empty, the result is obvious
+            if not from_keys:
+                return []
+
+            # We cannot give what we do not have
+            N = min(N, len(from_keys))
+
+        # Some precaution for the number of wanted keys
+        N = min(N, len(self._keys))
+
+        # The case of the point is just retrieved
+        candidate = self._findClosestFromCase(self._keys[key]['case'], N, from_keys)
+
+        if double_check:
+            return sorted(self._check_distance(candidate, self._keys[key]['lat_lng'], radius=float('inf')))[:N]
+        else:
+            return ((0, f) for f in candidate)
 
 
 
