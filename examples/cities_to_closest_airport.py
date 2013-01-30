@@ -24,14 +24,12 @@ def main():
         # Associated por for the city
         tvl_list = g.get(city_key, 'tvl_por_list')
 
-        # Sorting by page_ranks
-        sorted_pr = sorted([
-            (to_float(g.get(k, 'page_rank')), k)
-            for k in tvl_list
-        ], reverse=True)
+        # (page_rank, code)
+        pr = [(to_float(g.get(k, 'page_rank')), k) for k in tvl_list]
+        pr.sort(reverse=True)
 
         print '%s^%s' % (g.get(city_key, 'iata_code'),
-                         '/'.join('%.2f:%s' % t for t in sorted_pr))
+                         '/'.join('%.2f:%s' % t for t in pr))
 
 if __name__ == '__main__':
     main()
