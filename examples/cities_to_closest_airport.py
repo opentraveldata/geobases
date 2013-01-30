@@ -27,7 +27,7 @@ def main():
 
     for city_key in g.getKeysWhere(conditions_city, mode='or'):
 
-        res = list(g.findClosestFromPoint(g.getLocation(city_key), from_keys=airports))
+        res = list(g.findClosestFromKey(city_key, from_keys=airports))
 
         if not res:
             # If geocoding problem for example
