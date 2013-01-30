@@ -268,7 +268,7 @@ class GeoGrid(object):
         :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
         """
         if key not in self._keys:
-            # Case where the key probably did not have a proper geocode 
+            # Case where the key probably did not have a proper geocode
             # and as such was never indexed
             return iter([])
 
@@ -301,7 +301,6 @@ class GeoGrid(object):
             this is useful because the grid is approximate, so the results are only as accurate \
             as the grid size
         :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
-
         """
         if lat_lng is None:
             # Case where the lat_lng was missing from base

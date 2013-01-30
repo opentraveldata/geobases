@@ -953,7 +953,7 @@ class GeoBase(object):
         We just look up in the base to retrieve lat/lng, and
         call findNearPoint.
 
-        :param key:     the key
+        :param key:     the key of the thing (like 'SFO')
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
@@ -1007,10 +1007,6 @@ class GeoBase(object):
         look for the things radius-close to a point,
         we look for the closest thing from this point, given by
         latitude/longitude.
-
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
 
         :param lat_lng:   the lat_lng of the point (a tuple of (lat, lng))
         :param N:         the N closest results wanted
