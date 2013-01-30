@@ -1829,6 +1829,8 @@ def ext_split(value, split):
     :param split:  the splitter
     :returns:      the split value
 
+    >>> ext_split('', ',')
+    ()
     >>> ext_split('PAR', 'A')
     ('P', 'R')
     >>> ext_split('PAR', '')
@@ -1841,6 +1843,11 @@ def ext_split(value, split):
     if split == '':
         # Here we convert a string like 'CA' into ('C', 'A')
         return tuple(value)
+
+    # Python split function has ''.split(';') -> ['']
+    # But in this case we prefer having [] as a result
+    if not value:
+        return ()
 
     return tuple(value.split(split))
 
