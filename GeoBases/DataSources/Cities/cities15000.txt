@@ -4084,8 +4084,7 @@
 146617	Famagusta	Famagusta	Ammochostos,Ammochostus,Ammokhostos,Ammóchostos,Famagosta,Famagouste,Famagusta,Gazi Magosa,Gazimagusa,Gazimağusa,Magosa,Magusa,Mağusa,Αμμόχωστος,Фамагуста	35.125	33.95	P	PPLA	CY		01				42526		1	Asia/Nicosia	2012-12-05
 3061284	Dvůr Králové nad Labem	Dvur Kralove nad Labem	Dvur Kralove,Dvŭr Králové,Koniginhof an der Elbe,Königinhof an der Elbe	50.43172	15.81402	P	PPL	CZ		82				16150		300	Europe/Prague	2008-10-17
 3061344	Znojmo	Znojmo	Znaim,Znain,Znaym,Znoimium,Znojmo,Зноймо	48.8555	16.0488	P	PPL	CZ		78	0627			35280		294	Europe/Prague	2012-11-23
-3061369	Zlín	Zlin	Sillein,Z'lin,Zlin,Zlín,Ζλιν,Злин,Зьлін	49.22665	17.66633	P	PPLX	CZ		90	0724			79177		225	Europe/Prague	2012-12-19
-3061370	Zlín	Zlin	Gottvoldov,Gottwald,Gottwaldov,Zlin,Zlín,Злин	49.23215	17.67122	P	PPLA	CZ		90	0724			78759		247	Europe/Prague	2013-01-11
+3061370	Zlín	Zlin	Gottvoldov,Gottwald,Gottwaldov,Sillein,Z'lin,Zlin,Zlín,Ζλιν,Злин,Зьлін	49.22645	17.67065	P	PPLA	CZ		90	0724			78759		247	Europe/Prague	2013-01-29
 3061692	Žďár nad Sázavou Druhy	Zd'ar nad Sazavou Druhy	Saar Schloss,Zd'ar nad Sazavou Druhy,Žďár nad Sázavou Druhy	49.58726	15.93216	P	PPLX	CZ		80				23996		578	Europe/Prague	2012-01-19
 3061695	Žďár nad Sázavou	Zd'ar nad Sazavou	Mesto Zd'ar,Mesto Zd'ar a Zamek Zd'ar,Město Žďar,Město Žďár,Město Žďár a Zámek Žďár,Saar,Zd'ar,Žďár	49.56263	15.93924	P	PPL	CZ	CZ	80	0615			24030		580	Europe/Prague	2012-11-27
 3061822	Žatec	Zatec	Saaz,Zatec,Zhatec,jatetsu,Žatec,Жатец,ジャテツ	50.32717	13.54577	P	PPL	CZ		89				19607		243	Europe/Prague	2008-11-28
@@ -10064,7 +10063,7 @@
 1267862	Karamsad	Karamsad	Karamsad	22.54243	72.90392	P	PPL	IN		09				32380		35	Asia/Kolkata	2013-01-10
 1267869	Kāramadai	Karamadai	Karamadai,Kāramadai	11.24058	76.96009	P	PPL	IN		25				31188		367	Asia/Kolkata	2011-02-07
 1267885	Kāraikkudi	Karaikkudi	Karaikkudi,Karaikudi,Kāraikkudi	10.06667	78.78333	P	PPL	IN		25				91908		87	Asia/Kolkata	2012-01-17
-1267887	kāraikāl	karaikal	Karikal,Kārikāl,karaikal,kāraikāl	10.91667	79.83333	P	PPL	IN		22				79653		8	Asia/Kolkata	2012-01-17
+1267887	Kāraikāl	Karaikal	Karaikal,Karikal,Kārikāl,karaikal,kāraikāl	10.91667	79.83333	P	PPL	IN		22				79653		8	Asia/Kolkata	2013-01-28
 1267904	Karād	Karad	Karad,Karād	17.28333	74.2	P	PPL	IN		16				55663		568	Asia/Kolkata	2012-01-17
 1267911	Kapūrthala	Kapurthala	Kapurtala,Kapurthala,Kapurthala Town,Kapūrthala	31.38011	75.38105	P	PPL	IN		23				92667		225	Asia/Kolkata	2012-09-06
 1267923	Kāpren	Kapren		25.40529	76.07431	P	PPL	IN		24				19671		233	Asia/Kolkata	2012-03-24

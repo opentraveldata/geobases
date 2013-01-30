@@ -131,6 +131,7 @@ function initialize(jsonData) {
             mapTypeIds.push(google.maps.MapTypeId[type]);
         }
     }
+    mapTypeIds.push("MQ");
     mapTypeIds.push("OSM");
 
     var mapOptions = {
@@ -145,14 +146,23 @@ function initialize(jsonData) {
     // Create the map
     var map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
 
-    // Setting OSM tiles
+    // Setting tiles
+    map.mapTypes.set("MQ", new google.maps.ImageMapType({
+        getTileUrl  : function(coord, zoom) {
+            return "http://otile3.mqcdn.com/tiles/1.0.0/osm/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+        },
+        tileSize    : new google.maps.Size(256, 256),
+        name        : "MapQuest",
+        maxZoom     : 18
+    }));
+
     map.mapTypes.set("OSM", new google.maps.ImageMapType({
-        getTileUrl: function(coord, zoom) {
+        getTileUrl  : function(coord, zoom) {
             return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
         },
-        tileSize: new google.maps.Size(256, 256),
-        name: "OpenStreetMap",
-        maxZoom: 18
+        tileSize    : new google.maps.Size(256, 256),
+        name        : "OpenStreetMap",
+        maxZoom     : 18
     }));
 
     if (jsonData.points.length === 0){
