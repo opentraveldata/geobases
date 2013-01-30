@@ -900,6 +900,10 @@ class GeoBase(object):
         >>> # Nice, stations <= 5km
         >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
         ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        >>>
+        >>> # Wrong geocode
+        >>> sorted(geo_t.findNearPoint(None, 5))
+        []
 
         No grid mode.
 
@@ -933,7 +937,7 @@ class GeoBase(object):
         We just look up in the base to retrieve lat/lng, and
         call findNearPoint.
 
-        :param key:     the key
+        :param key:     the key of the thing (like 'SFO')
         :param radius:  the radius of the search (kilometers)
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
@@ -978,10 +982,6 @@ class GeoBase(object):
         we look for the closest thing from this point, given by
         latitude/longitude.
 
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
-
         :param lat_lng:   the lat_lng of the point (a tuple of (lat, lng))
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
@@ -1002,7 +1002,8 @@ class GeoBase(object):
         >>> # Corner case, from_keys empty is not used
         >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=()))
         []
-        >>> 
+        >>> list(geo_t.findClosestFromPoint(None, N=2))
+        []
         >>> #from datetime import datetime
         >>> #before = datetime.now()
         >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
@@ -1028,6 +1029,57 @@ class GeoBase(object):
 
         for dist, thing in heapq.nsmallest(N, iterable):
 
+            yield (dist, thing)
+
+
+
+    def findClosestFromKey(self, key, N=1, from_keys=None, grid=True, double_check=True):
+        """
+        Same as findClosestFromPoint, except the point is given
+        not by a lat/lng, but with its key, like ORY or SFO.
+        We just look up in the base to retrieve lat/lng, and
+        call findClosestFromPoint.
+
+        :param key:       the key of the thing (like 'SFO')
+        :param N:         the N closest results wanted
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
+            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+        :param grid:    boolean, use grid or not
+        :param double_check: when using grid, perform an additional check on results distance, \
+            this is useful because the grid is approximate, so the results are only as accurate \
+            as the grid size
+        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+
+        >>> list(geo_a.findClosestFromKey('ORY')) # Orly
+        [(0.0, 'ORY')]
+        >>> list(geo_a.findClosestFromKey('ORY', N=3))
+        [(0.0, 'ORY'), (18.80..., 'TNF'), (27.80..., 'LBG')]
+        >>> # Corner case, from_keys empty is not used
+        >>> list(geo_t.findClosestFromKey('ORY', N=2, from_keys=()))
+        []
+        >>> list(geo_t.findClosestFromKey(None, N=2))
+        []
+        >>> #from datetime import datetime
+        >>> #before = datetime.now()
+        >>> #for _ in range(100): s = geo_a.findClosestFromKey('NCE', N=3)
+        >>> #print(datetime.now() - before)
+
+        No grid.
+
+        >>> list(geo_o.findClosestFromKey('ORY', grid=False)) # Nice
+        [(0.0, 'ORY')]
+        >>> list(geo_a.findClosestFromKey('ORY', N=3, grid=False)) # Nice
+        [(0.0, 'ORY'), (18.80..., 'TNF'), (27.80..., 'LBG')]
+        >>> list(geo_t.findClosestFromKey('frnic', N=1, grid=False)) # Nice
+        [(0.0, 'frnic')]
+        >>> list(geo_t.findClosestFromKey('frnic', N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
+        [(482.79..., 'frbve'), (683.52..., 'frpaz')]
+        """
+        if from_keys is None:
+            from_keys = iter(self)
+
+        for dist, thing in self.findClosestFromPoint(self.getLocation(key), N, from_keys, grid, double_check):
             yield (dist, thing)
 
 

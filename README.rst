@@ -50,7 +50,7 @@ Installation
 
 You can install it from `PyPI <http://pypi.python.org/pypi>`_ with::
 
- % easy_install --user GeoBases
+ % easy_install --user -U GeoBases
 
 If you want the development version, clone the project from
 `github <https://github.com/opentraveldata/geobases.git>`_::
