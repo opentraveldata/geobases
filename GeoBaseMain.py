@@ -636,6 +636,7 @@ DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
+DEF_EXACT_FIELDS  = ('__key__',)
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
@@ -780,17 +781,17 @@ def handle_args():
         help = dedent('''\
         Rather than looking up a key, this mode will search all keys
         whose specific property given by --exact-property match the
-        argument. By default, the "__key__" property is used for the search.
-        '''),
+        argument. By default, the %s property is used for the search.
+        ''' % fmt_or(DEF_EXACT_FIELDS)),
         default = None,
         nargs = '+')
 
     parser.add_argument('-E', '--exact-property',
         help = dedent('''\
         When performing an exact search, specify the property to be chosen.
-        Default is "__key__". Give unadmissible property and available
+        Default is %s. Give unadmissible property and available
         values will be displayed.
-        '''),
+        ''' % fmt_or(DEF_EXACT_FIELDS)),
         default = None)
 
     parser.add_argument('-r', '--reverse',
@@ -1167,7 +1168,7 @@ def main():
 
     # Tuning parameters
     if args['exact_property'] is None:
-        args['exact_property'] = '__key__'
+        args['exact_property'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
