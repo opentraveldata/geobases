@@ -724,7 +724,8 @@ class GeoBase(object):
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
         :param from_keys:  if given, we will look for results from this iterable of keys
-        :returns:          an iterator of matching keys
+        :returns:          an iterable of (v, key) where v is the number of matched \
+                condition
 
         >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
         [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
