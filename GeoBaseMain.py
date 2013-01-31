@@ -1298,7 +1298,7 @@ def main():
     elif args['keys']:
         res = enumerate(args['keys'])
     else:
-        res = enumerate(iter(g))
+        res = enumerate(g)
 
     # We are going to chain conditions
     # res will hold intermediate results
