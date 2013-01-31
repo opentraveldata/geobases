@@ -916,7 +916,8 @@ def handle_args():
     parser.add_argument('-I', '--interactive-query',
         help = dedent('''\
         If given, this option will consider stdin
-        input as key for query, not data for loading.
+        input as query material, not data for loading.
+        It will read values line by line, and perform a search on them.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
             2) type is the type of matching, either %s.
