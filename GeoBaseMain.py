@@ -782,7 +782,10 @@ def handle_args():
         Rather than looking up a key, this mode will search all keys
         whose specific property given by --exact-property match the
         argument. By default, the %s property is used for the search.
-        ''' % fmt_or(DEF_EXACT_FIELDS)),
+        You can have several property matching by giving multiple values
+        separated by "%s" for --exact-property. Make sure you give the
+        same number of values separated also by "%s" then.
+        ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None,
         nargs = '+')
 
@@ -791,7 +794,9 @@ def handle_args():
         When performing an exact search, specify the property to be chosen.
         Default is %s. Give unadmissible property and available
         values will be displayed.
-        ''' % fmt_or(DEF_EXACT_FIELDS)),
+        You can give multiple properties separated by "%s". Make sure
+        you give the same number of values separated also by "%s" for -e then.
+        ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None)
 
     parser.add_argument('-r', '--reverse',
