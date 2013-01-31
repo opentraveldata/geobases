@@ -806,6 +806,13 @@ def handle_args():
         '''),
         action = 'store_true')
 
+    parser.add_argument('-a', '--any',
+        help = dedent('''\
+        By default, --exact multiple searches are combined with *and*,
+        passing this option will change that to a *or*.
+        '''),
+        action = 'store_true')
+
     parser.add_argument('-n', '--near',
         help = dedent('''\
         Rather than looking up a key, this mode will search the entries
@@ -1325,18 +1332,15 @@ def main():
 
         exact_values = args['exact'].split(SPLIT, len(exact_properties) - 1)
         conditions = list(izip_longest(exact_properties, exact_values, fillvalue=''))
+        mode = 'or' if args['any'] else 'and'
 
         if verbose:
             if args['reverse']:
-                print 'Applying property %s' % ' and '.join('%s != "%s"' % c for c in conditions)
+                print 'Applying property %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
             else:
-                print 'Applying property %s' % ' and '.join('%s == "%s"' % c for c in conditions)
+                print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.getKeysWhere(conditions,
-                                  from_keys=ex_keys(res),
-                                  reverse=args['reverse'],
-                                  mode='and',
-                                  force_str=True))
+        res = list(g.getKeysWhere(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
         last = 'exact'
 
 

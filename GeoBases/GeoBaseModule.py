@@ -780,7 +780,7 @@ class GeoBase(object):
         elif mode == 'or':
             pass_all = any
         else:
-            raise ValueError('"mode" argument must be in %s' % str(['and', 'or']))
+            raise ValueError('"mode" argument must be in %s, was %s' % (str(['and', 'or']), mode))
 
 
         for key in from_keys:
