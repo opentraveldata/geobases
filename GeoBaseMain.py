@@ -1286,7 +1286,7 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = enumerate(g.getKeysWhere(conditions, force_str=True, mode='or'))
+                res = g.getKeysWhere(conditions, force_str=True, mode='or')
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
@@ -1319,10 +1319,11 @@ def main():
             else:
                 print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
 
-        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])],
-                                            from_keys=ex_keys(res),
-                                            reverse=args['reverse'],
-                                            force_str=True)))
+        res = list(g.getKeysWhere([(args['exact_property'], args['exact'])],
+                                  from_keys=ex_keys(res),
+                                  reverse=args['reverse'],
+                                  mode='and',
+                                  force_str=True))
         last = 'exact'
 
 
