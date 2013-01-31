@@ -717,14 +717,17 @@ class GeoBase(object):
         For example, if you want to know all airports in Paris.
 
         :param conditions: a list of (field, value) conditions
-        :param reverse:    we look keys where the field is *not* the particular value
+        :param reverse:    we look keys where the field is *not* the particular value. \
+                Note that this negation is done at the lower level, before combining \
+                conditions. So if you have two conditions with mode='and', expect \
+                results matching not condition 1 *and* not condition 2.
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
         :param from_keys:  if given, we will look for results from this iterable of keys
         :returns:          an iterator of matching keys
 
         >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
-        ['ORY', 'TNF', 'CDG', 'BVA']
+        [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
         >>> list(geo_o.getKeysWhere([('comment', '')], reverse=True))
         []
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
@@ -781,8 +784,9 @@ class GeoBase(object):
 
         for key in from_keys:
             try:
-                if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
-                    yield key
+                matches = [pass_one(self.get(key, f), v) for f, v in conditions]
+                if pass_all(matches):
+                    yield sum(matches), key
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if self._verbose:

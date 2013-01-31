@@ -19,7 +19,7 @@ def main():
         ('location_type', 'C')
     ]
 
-    for city_key in g.getKeysWhere(conditions_city, mode='or'):
+    for _, city_key in g.getKeysWhere(conditions_city, mode='or'):
 
         # Associated por for the city
         tvl_list = g.get(city_key, 'tvl_por_list')
