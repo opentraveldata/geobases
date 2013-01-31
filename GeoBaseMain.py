@@ -1232,8 +1232,10 @@ def main():
 
     # Failing on wrong headers
     if args['exact'] is not None:
-        if args['exact_property'] not in g.fields:
-            error('property', args['exact_property'], g._data, g.fields)
+        exact_properties = args['exact_property'].split(SPLIT)
+        for field in exact_properties:
+            if field not in g.fields:
+                error('property', field, g._data, g.fields)
 
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
@@ -1313,13 +1315,17 @@ def main():
 
     if args['exact'] is not None:
         args['exact'] = ' '.join(args['exact'])
+
+        exact_values = args['exact'].split(SPLIT, len(exact_properties) - 1)
+        conditions = list(izip_longest(exact_properties, exact_values, fillvalue=''))
+
         if verbose:
             if args['reverse']:
-                print 'Applying property %s != "%s"' % (args['exact_property'], args['exact'])
+                print 'Applying property %s' % ' and '.join('%s != "%s"' % c for c in conditions)
             else:
-                print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
+                print 'Applying property %s' % ' and '.join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.getKeysWhere([(args['exact_property'], args['exact'])],
+        res = list(g.getKeysWhere(conditions,
                                   from_keys=ex_keys(res),
                                   reverse=args['reverse'],
                                   mode='and',
@@ -1393,7 +1399,8 @@ def main():
     important = set(['__key__'])
 
     if args['exact'] is not None:
-        important.add(args['exact_property'])
+        for prop in exact_properties:
+            important.add(prop)
 
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
