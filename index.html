@@ -211,7 +211,8 @@ and using the <code>set</code> method.</p>
 
 <pre><code>&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('location_type', 'H')]
 &gt;&gt;&gt; list(geo_o.getKeysWhere(conditions, mode='and'))
-['JDP', 'JPU']
+[(2, 'JDP'), (2, 'JPU')]
+&gt;&gt;&gt;
 &gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
 &gt;&gt;&gt; len(list(geo_o.getKeysWhere(conditions, mode='or')))
 36
