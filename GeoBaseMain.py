@@ -1183,6 +1183,8 @@ def main():
     if args['exact_property'] is None:
         args['exact_property'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
+    exact_properties = args['exact_property'].split(SPLIT)
+
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
@@ -1246,7 +1248,6 @@ def main():
 
     # Failing on wrong headers
     if args['exact'] is not None:
-        exact_properties = args['exact_property'].split(SPLIT)
         for field in exact_properties:
             if field not in g.fields:
                 error('property', field, g.data, g.fields)
