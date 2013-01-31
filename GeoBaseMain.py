@@ -412,7 +412,7 @@ def scan_coords(u_input, geob, verbose):
         error('geocode_format', u_input)
 
     # All cases failed
-    warn('key', u_input, geob._data, geob._source)
+    warn('key', u_input, geob.data, geob._source)
     exit(1)
 
 
@@ -1234,18 +1234,18 @@ def main():
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
         if not g.hasGeoSupport():
-            error('geocode_support', g._data)
+            error('geocode_support', g.data)
 
     # Failing on wrong headers
     if args['exact'] is not None:
         exact_properties = args['exact_property'].split(SPLIT)
         for field in exact_properties:
             if field not in g.fields:
-                error('property', field, g._data, g.fields)
+                error('property', field, g.data, g.fields)
 
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
-            error('property', args['fuzzy_property'], g._data, g.fields)
+            error('property', args['fuzzy_property'], g.data, g.fields)
 
     # Failing on unknown fields
     fields_to_test = [
@@ -1255,7 +1255,7 @@ def main():
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in [REF] + g.fields:
-            error('field', field, g._data, [REF] + g.fields)
+            error('field', field, g.data, [REF] + g.fields)
 
     # Testing icon_type from -M
     if icon_type not in ALLOWED_ICON_TYPES:
@@ -1384,7 +1384,7 @@ def main():
     # Removing unknown keys
     for h, k in res:
         if k not in g:
-            warn('key', k, g._data, g._source)
+            warn('key', k, g.data, g._source)
 
     res = [(h, k) for h, k in res if k in g]
 
@@ -1424,7 +1424,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        templates, max_t = g.visualize(output=g._data,
+        templates, max_t = g.visualize(output=g.data,
                                        label=label,
                                        point_size=point_size,
                                        point_color=point_color,

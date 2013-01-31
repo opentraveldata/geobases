@@ -216,7 +216,6 @@ class GeoBase(object):
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
-        self._data   = data
         self._things = {}
         self._ggrid  = None
 
@@ -229,6 +228,7 @@ class GeoBase(object):
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
         self.fields = []
+        self.data   = data
 
         # Defaults
         props = {
@@ -800,7 +800,7 @@ class GeoBase(object):
         >>> str(geo_t)
         '<GeoBases.GeoBaseModule.GeoBase(stations) object at 0x...>'
         """
-        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self._data
+        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self.data
 
 
     def __iter__(self):
