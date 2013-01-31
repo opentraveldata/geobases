@@ -806,10 +806,10 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-a', '--and',
+    parser.add_argument('-a', '--any',
         help = dedent('''\
-        By default, --exact multiple searches are combined with *or*,
-        passing this option will change that to a *and*.
+        By default, --exact multiple searches are combined with *and*,
+        passing this option will change that to a *or*.
         '''),
         action = 'store_true')
 
@@ -1332,7 +1332,7 @@ def main():
 
         exact_values = args['exact'].split(SPLIT, len(exact_properties) - 1)
         conditions = list(izip_longest(exact_properties, exact_values, fillvalue=''))
-        mode = 'and' if args['and'] else 'or'
+        mode = 'or' if args['any'] else 'and'
 
         if verbose:
             if args['reverse']:
