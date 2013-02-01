@@ -157,7 +157,7 @@ class GeoBase(object):
     """
 
     @staticmethod
-    def update(force=False):
+    def checkDataUpdates(force=False):
         """Launch update script on data files.
         """
         script_path  = relative('DataSources/CheckDataUpdates.sh')

@@ -1095,11 +1095,11 @@ def main():
 
     # Updating file
     if args['update']:
-        GeoBase.update()
+        GeoBase.checkDataUpdates()
         exit(0)
 
     if args['update_forced']:
-        GeoBase.update(force=True)
+        GeoBase.checkDataUpdates(force=True)
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
