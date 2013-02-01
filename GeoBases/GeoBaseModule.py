@@ -1382,7 +1382,7 @@ class GeoBase(object):
         return haversine(self.getLocation(key0), self.getLocation(key1))
 
 
-    def set(self, key, field, value):
+    def set(self, key, field=None, value=None):
         """Method to manually change a value in the base.
 
         :param key:   the key we want to change a value of
@@ -1402,6 +1402,12 @@ class GeoBase(object):
         >>> geo_t.set('frnic', 'new_field', 'some_value')
         >>> geo_t.get('frnic', 'new_field')
         'some_value'
+
+        We can create just the key.
+
+        >>> geo_t.set('frnewkey')
+        >>> geo_t.get('frnewkey')
+        {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'frnewkey'}
         """
         # If the key is not in the base,
         # we simply add it
@@ -1414,12 +1420,13 @@ class GeoBase(object):
                 '__par__' : [],       # special field for parent
             }
 
-        self._things[key][field] = value
+        if field is not None:
+            self._things[key][field] = value
 
-        # If the field was not referenced in the headers
-        # we add it to the headers
-        if field not in self.fields:
-            self.fields.append(field)
+            # If the field was not referenced in the headers
+            # we add it to the headers
+            if field not in self.fields:
+                self.fields.append(field)
 
 
     def setWithDict(self, key, dictionary):
