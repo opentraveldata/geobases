@@ -1448,7 +1448,7 @@ class GeoBase(object):
             self.set(key, field, val)
 
 
-    def delete(self, key):
+    def delete(self, key, field=None):
         """Method to manually remove a value in the base.
 
         :param key:   the key we want to delete
@@ -1465,8 +1465,26 @@ class GeoBase(object):
         >>> geo_t.setWithDict('frxrn', data)
         >>> geo_t.get('frxrn', 'name')
         'Redon'
+
+        We can delete just a field.
+
+        >>> geo_t.delete('frxrn', 'lat')
+        >>> geo_t.get('frxrn', 'lat')
+        Traceback (most recent call last):
+        KeyError: "Field 'lat' [for key 'frxrn'] not in ...
+        >>> geo_t.get('frxrn', 'name')
+        'Redon'
+
+        And put it back again.
+
+        >>> geo_t.set('frxrn', 'lat', '47.65179')
+        >>> geo_t.get('frxrn', 'lat')
+        '47.65179'
         """
-        del self._things[key]
+        if field is None:
+            del self._things[key]
+        else:
+            del self._things[key][field]
 
 
     @staticmethod
