@@ -191,7 +191,8 @@ function initialize(jsonData) {
     var point_size      = jsonData.meta.point_size;
     var base_icon       = jsonData.meta.base_icon;
     var icon_type       = jsonData.meta.icon_type;
-    var link_duplicates = jsonData.meta.link_duplicates;
+    //var link_duplicates = jsonData.meta.link_duplicates;
+    var nb_user_lines   = jsonData.meta.nb_user_lines;
 
     var with_markers = icon_type   !== null;
     var with_circles = point_size  !== null;
@@ -447,6 +448,12 @@ function initialize(jsonData) {
     }
 
     $('#lines').click(toggleLines);
+
+    if (nb_user_lines !== 0) {
+        // If the user defined some lines in input
+        // We do not wait for him to click on the button
+        toggleLines();
+    }
 
     if (jsonData.lines.length === 0) {
         // If not duplicates, we disable the button

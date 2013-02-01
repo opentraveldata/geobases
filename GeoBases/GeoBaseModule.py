@@ -1619,8 +1619,10 @@ class GeoBase(object):
         if add_lines is None:
             add_lines = []
 
+        dup_lines = []
+
         if link_duplicates:
-            # We add to add_lines all list of duplicates
+            # We add to dup_lines all list of duplicates
             # We keep a set of already processed "master" keys to avoid
             # putting several identical lists in the json
             done_keys = set()
@@ -1635,11 +1637,11 @@ class GeoBase(object):
 
                 if self.hasDuplicates(key) and not mkey.issubset(done_keys):
                     # mkey have some keys which are not in done_keys
-                    add_lines.append(self.getAllDuplicates(key, '__key__'))
+                    dup_lines.append(self.getAllDuplicates(key, '__key__'))
                     done_keys = done_keys | mkey
 
             if verbose:
-                print '* Added lines for duplicates linking, total %s' % len(add_lines)
+                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
 
         # Count the categories for coloring
         categories = {}
@@ -1750,7 +1752,7 @@ class GeoBase(object):
         # Gathering data for lines
         data_lines = []
 
-        for line in add_lines:
+        for line in add_lines + dup_lines:
             data_line = []
 
             for l_key in line:
@@ -1781,6 +1783,7 @@ class GeoBase(object):
                     'icon_type'       : icon_type,
                     'base_icon'       : base_icon,
                     'link_duplicates' : link_duplicates,
+                    'nb_user_lines'   : len(add_lines),
                 },
                 'points'     : data,
                 'lines'      : data_lines,
