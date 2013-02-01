@@ -1322,7 +1322,7 @@ def main():
     if args['trep'] is not None:
         args['trep'] = ' '.join(args['trep'])
         if verbose:
-            print 'Applying opentrep on "%s" [output %s]' % (args['trep'], args['trep_format'])
+            print 'Applying opentrep on "%s" (output %s)' % (args['trep'], args['trep_format'])
 
         res = g.trepGet(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
@@ -1348,7 +1348,7 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
+            print 'Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
