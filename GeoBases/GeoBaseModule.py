@@ -1869,6 +1869,17 @@ def recursive_split(value, splits):
 
     >>> recursive_split('PAR^Paris/Parys', ['^', '/'])
     (('PAR',), ('Paris', 'Parys'))
+    >>> recursive_split('|PAR|=', ['=', '|'])
+    (('', 'PAR', ''),)
+
+    Multiple splits on empty string should return empty tuple.
+
+    >>> recursive_split('', ['^'])
+    ()
+    >>> recursive_split('', ['^', '/'])
+    ()
+    >>> recursive_split('', ['^', '/', ':'])
+    ()
     """
     # Case where no subdelimiters
     if not splits:
@@ -1878,13 +1889,13 @@ def recursive_split(value, splits):
         return ext_split(value, splits[0])
 
     if len(splits) == 2:
-        return tuple(ext_split(v, splits[1]) for v in value.split(splits[0]))
+        return tuple(ext_split(v, splits[1])
+                     for v in value.split(splits[0]) if v)
 
     if len(splits) == 3:
-        return tuple(
-            tuple(ext_split(sv, splits[2]) for sv in ext_split(v, splits[1]))
-            for v in value.split(splits[0])
-        )
+        return tuple(tuple(ext_split(sv, splits[2])
+                           for sv in ext_split(v, splits[1]) if sv)
+                     for v in value.split(splits[0]) if v)
 
     raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
 
