@@ -1017,7 +1017,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1079,7 +1079,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1159,7 +1159,7 @@ class GeoBase(object):
         :param min_match:   filter out matches under this threshold
         :param from_keys:   if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform fuzzyGet. This is useful when we have geocodes \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
@@ -1194,7 +1194,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundLatLng(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyGetAroundPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         """
         Same as fuzzyGet but with we search only within a radius
         from a geocode.
@@ -1221,11 +1221,11 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
+        >>> geo_a.fuzzyGetAroundPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyGetAroundLatLng((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyGetAroundPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         """
         if from_keys is None:
