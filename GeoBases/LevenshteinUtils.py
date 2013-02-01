@@ -82,7 +82,7 @@ TRANSPARENTS = (
 
 # Toggle inclusion heuristic
 HEURISTIC_INCLUSION       = True
-HEURISTIC_INCLUSION_VALUE = 0.99
+HEURISTIC_INCLUSION_VALUE = 0.90
 
 
 def str_lowercase(string):
@@ -311,10 +311,10 @@ def mod_leven(str1, str2, heuristic_inclusion=HEURISTIC_INCLUSION, heuristic_inc
 
     When we have a inclusion of one string in the other (list inclusion,
     not possible to include partial words such as toul for toulon),
-    we put the ratio of similarity to 99%, this is heuristic.
+    we put the ratio of similarity to 90%, this is heuristic.
     Why not 100%? Because, if another entry in the base really match 100%,
     this will probably be an even better match, such as:
-    orleans+gervais matches orleans with inclusion heuristic (so 99%),
+    orleans+gervais matches orleans with inclusion heuristic (so 90%),
     but we also have the real orleans+gervais station in the base,
     and this one is a 100% match, so this will take over as the best match.
 
