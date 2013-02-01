@@ -307,7 +307,7 @@ class GeoBase(object):
 
         # Grid
         if self.hasGeoSupport():
-            self.createGrid()
+            self._createGrid()
         else:
             if self._verbose:
                 print 'No geocode support, skipping grid...'
@@ -533,7 +533,7 @@ class GeoBase(object):
 
 
 
-    def createGrid(self):
+    def _createGrid(self):
         """Create the grid for geographical indexation after loading the data.
         """
         self._ggrid = GeoGrid(radius=50, verbose=False)
