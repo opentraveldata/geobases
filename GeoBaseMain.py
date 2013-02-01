@@ -1303,13 +1303,13 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = g.getKeysWhere(conditions, force_str=True, mode='or')
+                res = g.findKeysWhere(conditions, force_str=True, mode='or')
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
+                res.extend(list(g.fuzzyFind(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
             last = 'fuzzy'
 
     elif args['keys']:
@@ -1341,7 +1341,7 @@ def main():
             else:
                 print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.getKeysWhere(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
+        res = list(g.findKeysWhere(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
         last = 'exact'
 
 
@@ -1350,7 +1350,7 @@ def main():
         if verbose:
             print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
 
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        res = list(g.fuzzyFind(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
 
 
