@@ -806,7 +806,7 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-a', '--any',
+    parser.add_argument('-A', '--any',
         help = dedent('''\
         By default, --exact multiple searches are combined with *and*,
         passing this option will change that to a *or*.
@@ -1077,7 +1077,7 @@ def main():
     #
     # CREATION
     #
-    if verbose:
+    if verbose and warnings:
         before_init = datetime.now()
 
     if args['version']:
@@ -1176,7 +1176,7 @@ def main():
 
         g = GeoBase(data=args['base'], verbose=warnings, **add_options)
 
-    if verbose:
+    if verbose and warnings:
         after_init = datetime.now()
 
     # Tuning parameters
@@ -1322,7 +1322,7 @@ def main():
     if args['trep'] is not None:
         args['trep'] = ' '.join(args['trep'])
         if verbose:
-            print 'Applying opentrep on "%s" [output %s]' % (args['trep'], args['trep_format'])
+            print 'Applying opentrep on "%s" (output %s)' % (args['trep'], args['trep_format'])
 
         res = g.trepGet(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
@@ -1348,7 +1348,7 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print 'Applying property %s ~= "%s"' % (args['fuzzy_property'], args['fuzzy'])
+            print 'Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
         res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
@@ -1374,7 +1374,7 @@ def main():
         last = 'closest'
 
 
-    if verbose:
+    if verbose and warnings:
         end = datetime.now()
         print 'Done in %s = (load) %s + (search) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
