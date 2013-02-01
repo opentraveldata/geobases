@@ -412,7 +412,7 @@ def scan_coords(u_input, geob, verbose):
         error('geocode_format', u_input)
 
     # All cases failed
-    warn('key', u_input, geob._data, geob._source)
+    warn('key', u_input, geob.data, geob._source)
     exit(1)
 
 
@@ -636,6 +636,7 @@ DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
 DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
+DEF_EXACT_FIELDS  = ('__key__',)
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
@@ -780,23 +781,35 @@ def handle_args():
         help = dedent('''\
         Rather than looking up a key, this mode will search all keys
         whose specific property given by --exact-property match the
-        argument. By default, the "__key__" property is used for the search.
-        '''),
+        argument. By default, the %s property is used for the search.
+        You can have several property matching by giving multiple values
+        separated by "%s" for --exact-property. Make sure you give the
+        same number of values separated also by "%s" then.
+        ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None,
         nargs = '+')
 
     parser.add_argument('-E', '--exact-property',
         help = dedent('''\
         When performing an exact search, specify the property to be chosen.
-        Default is "__key__". Give unadmissible property and available
+        Default is %s. Give unadmissible property and available
         values will be displayed.
-        '''),
+        You can give multiple properties separated by "%s". Make sure
+        you give the same number of values separated also by "%s" for -e then.
+        ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None)
 
     parser.add_argument('-r', '--reverse',
         help = dedent('''\
         When possible, reverse the logic of the filter. Currently
         only --exact supports that.
+        '''),
+        action = 'store_true')
+
+    parser.add_argument('-a', '--any',
+        help = dedent('''\
+        By default, --exact multiple searches are combined with *and*,
+        passing this option will change that to a *or*.
         '''),
         action = 'store_true')
 
@@ -910,7 +923,8 @@ def handle_args():
     parser.add_argument('-I', '--interactive-query',
         help = dedent('''\
         If given, this option will consider stdin
-        input as key for query, not data for loading.
+        input as query material, not data for loading.
+        It will read values line by line, and perform a search on them.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
             2) type is the type of matching, either %s.
@@ -1167,7 +1181,9 @@ def main():
 
     # Tuning parameters
     if args['exact_property'] is None:
-        args['exact_property'] = '__key__'
+        args['exact_property'] = best_field(DEF_EXACT_FIELDS, g.fields)
+
+    exact_properties = args['exact_property'].split(SPLIT)
 
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
@@ -1228,16 +1244,17 @@ def main():
     # Failing on lack of geocode support if necessary
     if args['near'] is not None or args['closest'] is not None:
         if not g.hasGeoSupport():
-            error('geocode_support', g._data)
+            error('geocode_support', g.data)
 
     # Failing on wrong headers
     if args['exact'] is not None:
-        if args['exact_property'] not in g.fields:
-            error('property', args['exact_property'], g._data, g.fields)
+        for field in exact_properties:
+            if field not in g.fields:
+                error('property', field, g.data, g.fields)
 
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
-            error('property', args['fuzzy_property'], g._data, g.fields)
+            error('property', args['fuzzy_property'], g.data, g.fields)
 
     # Failing on unknown fields
     fields_to_test = [
@@ -1247,7 +1264,7 @@ def main():
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in [REF] + g.fields:
-            error('field', field, g._data, [REF] + g.fields)
+            error('field', field, g.data, [REF] + g.fields)
 
     # Testing icon_type from -M
     if icon_type not in ALLOWED_ICON_TYPES:
@@ -1286,7 +1303,7 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = enumerate(g.getKeysWhere(conditions, force_str=True, mode='or'))
+                res = g.getKeysWhere(conditions, force_str=True, mode='or')
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
@@ -1298,7 +1315,7 @@ def main():
     elif args['keys']:
         res = enumerate(args['keys'])
     else:
-        res = enumerate(iter(g))
+        res = enumerate(g)
 
     # We are going to chain conditions
     # res will hold intermediate results
@@ -1313,16 +1330,18 @@ def main():
 
     if args['exact'] is not None:
         args['exact'] = ' '.join(args['exact'])
+
+        exact_values = args['exact'].split(SPLIT, len(exact_properties) - 1)
+        conditions = list(izip_longest(exact_properties, exact_values, fillvalue=''))
+        mode = 'or' if args['any'] else 'and'
+
         if verbose:
             if args['reverse']:
-                print 'Applying property %s != "%s"' % (args['exact_property'], args['exact'])
+                print 'Applying property %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
             else:
-                print 'Applying property %s == "%s"' % (args['exact_property'], args['exact'])
+                print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(enumerate(g.getKeysWhere([(args['exact_property'], args['exact'])],
-                                            from_keys=ex_keys(res),
-                                            reverse=args['reverse'],
-                                            force_str=True)))
+        res = list(g.getKeysWhere(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
         last = 'exact'
 
 
@@ -1371,7 +1390,7 @@ def main():
     # Removing unknown keys
     for h, k in res:
         if k not in g:
-            warn('key', k, g._data, g._source)
+            warn('key', k, g.data, g._source)
 
     res = [(h, k) for h, k in res if k in g]
 
@@ -1392,7 +1411,8 @@ def main():
     important = set(['__key__'])
 
     if args['exact'] is not None:
-        important.add(args['exact_property'])
+        for prop in exact_properties:
+            important.add(prop)
 
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
@@ -1410,7 +1430,7 @@ def main():
 
     # Display
     if frontend == 'map':
-        templates, max_t = g.visualize(output=g._data,
+        templates, max_t = g.visualize(output=g.data,
                                        label=label,
                                        point_size=point_size,
                                        point_color=point_color,
