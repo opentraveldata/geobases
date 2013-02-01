@@ -6,6 +6,7 @@ Release notes
 V4
 ==
 
++ 4.22 : UI fixes, all lines are not due to duplicates, draw by default if user defined lines
 + 4.21 : multiple --exact searches with '/' separation, new --any option for and/or behavior
 + 4.20 : getKeysWhere now returns an iterable of (index, key) like any other search method
 + 4.19 : new findClosestFromKey method
