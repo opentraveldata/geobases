@@ -186,7 +186,8 @@ Find things with properties
 
  >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
  >>> list(geo_o.getKeysWhere(conditions, mode='and'))
- ['JDP', 'JPU']
+ [(2, 'JDP'), (2, 'JPU')]
+ >>>
  >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
  >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
  36

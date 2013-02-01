@@ -216,7 +216,6 @@ class GeoBase(object):
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
-        self._data   = data
         self._things = {}
         self._ggrid  = None
 
@@ -229,6 +228,7 @@ class GeoBase(object):
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
         self.fields = []
+        self.data   = data
 
         # Defaults
         props = {
@@ -717,14 +717,18 @@ class GeoBase(object):
         For example, if you want to know all airports in Paris.
 
         :param conditions: a list of (field, value) conditions
-        :param reverse:    we look keys where the field is *not* the particular value
+        :param reverse:    we look keys where the field is *not* the particular value. \
+                Note that this negation is done at the lower level, before combining \
+                conditions. So if you have two conditions with mode='and', expect \
+                results matching not condition 1 *and* not condition 2.
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
         :param from_keys:  if given, we will look for results from this iterable of keys
-        :returns:          an iterator of matching keys
+        :returns:          an iterable of (v, key) where v is the number of matched \
+                condition
 
         >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
-        ['ORY', 'TNF', 'CDG', 'BVA']
+        [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
         >>> list(geo_o.getKeysWhere([('comment', '')], reverse=True))
         []
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
@@ -776,13 +780,14 @@ class GeoBase(object):
         elif mode == 'or':
             pass_all = any
         else:
-            raise ValueError('"mode" argument must be in %s' % str(['and', 'or']))
+            raise ValueError('"mode" argument must be in %s, was %s' % (str(['and', 'or']), mode))
 
 
         for key in from_keys:
             try:
-                if pass_all(pass_one(self.get(key, f), v) for f, v in conditions):
-                    yield key
+                matches = [pass_one(self.get(key, f), v) for f, v in conditions]
+                if pass_all(matches):
+                    yield sum(matches), key
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if self._verbose:
@@ -795,7 +800,7 @@ class GeoBase(object):
         >>> str(geo_t)
         '<GeoBases.GeoBaseModule.GeoBase(stations) object at 0x...>'
         """
-        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self._data
+        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self.data
 
 
     def __iter__(self):
@@ -1829,6 +1834,8 @@ def ext_split(value, split):
     :param split:  the splitter
     :returns:      the split value
 
+    >>> ext_split('', ',')
+    ()
     >>> ext_split('PAR', 'A')
     ('P', 'R')
     >>> ext_split('PAR', '')
@@ -1841,6 +1848,11 @@ def ext_split(value, split):
     if split == '':
         # Here we convert a string like 'CA' into ('C', 'A')
         return tuple(value)
+
+    # Python split function has ''.split(';') -> ['']
+    # But in this case we prefer having [] as a result
+    if not value:
+        return ()
 
     return tuple(value.split(split))
 

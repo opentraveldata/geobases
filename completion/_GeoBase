@@ -13,17 +13,18 @@ Q_QUIET="()"
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \
  "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]:base:$B_BASES" \
- "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:fuzzy value:()" \
+ "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:*:fuzzy value:()" \
  "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]:fuzzy property:$F_FIELDS" \
  "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
- "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:exact value:()" \
- "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:exact property:$F_FIELDS" \
+ "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*:exact value:()" \
+ "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*:exact property:$F_FIELDS" \
  "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
- "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]:near point:()" \
+ "(-a --any)"{-a,--any}"[Change *and* behavior to *or* behavior for multiple --exact]" \
+ "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]:*:near point:()" \
  "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]:near limit (km):$N_RADIUS" \
- "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:from point:()" \
+ "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:*:from point:()" \
  "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit (nb):$C_CLOSEST" \
- "(-t --trep)"{-t,--trep}"[OpenTrep mode]:value:()" \
+ "(-t --trep)"{-t,--trep}"[OpenTrep mode]:*:value:()" \
  "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
  "(-g --gridless)"{-g,--gridless}"[Disabling grid for nearby searches]" \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
@@ -31,7 +32,7 @@ _arguments \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
  "(-i --indexes)"{-i,--indexes}"[Specify metadata for stdin data input.]:*:delimiter headers indexes discard_dups:$I_INT" \
  "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]:*:field __exact__/__fuzzy__:$F_FIELDS" \
- "(-q --quiet)"{-q,--quiet}"[Programmatic output]" \
+ "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
  "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header:$Q_QUIET" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
  "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color icon duplicates:$F_FIELDS" \

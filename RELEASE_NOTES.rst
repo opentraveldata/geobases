@@ -6,6 +6,8 @@ Release notes
 V4
 ==
 
++ 4.21 : multiple --exact searches with '/' separation, new --any option for and/or behavior
++ 4.20 : getKeysWhere now returns an iterable of (index, key) like any other search method
 + 4.19 : new findClosestFromKey method
 + 4.18 : adding default OSM tiles for maps
 + 4.17 : ori_por has a new field tvl_por_list, linking cities to POR
