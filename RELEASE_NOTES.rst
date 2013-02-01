@@ -1,4 +1,3 @@
-
 =============
 Release notes
 =============
@@ -31,7 +30,7 @@ V4
 + 4.5  : big icons system, legend and lines buttons
 + 4.4  : map coloring system with third option of -M
 + 4.3  : SimpleHTTPServer is now used to serve html files
-+ 4.2  : -I option now accepts arguments to support different fields on input, and exact or fuzzy
++ 4.2  : -I (uppercase i)option now accepts arguments to support different fields on input, and exact or fuzzy
 + 4.1  : map update with circle drawings from any field with -M, new -Q header control
 + 4.0  : ori_por major update with correct city_names and full deduplication
 
@@ -41,29 +40,29 @@ V3
 + 3.40 : for --map option, we add a template with datatables
 + 3.39 : new -m option to draw points on a map
 + 3.38 : new -Q option to customize --quiet mode
-+ 3.37 : new interactive with data reading from stdin (kind of awesome)
++ 3.37 : new interactive mode with data reading from stdin (kind of awesome)
 + 3.36 : source keyword argument is now a file-like
 + 3.35 : Adding quoting feature to have csv from excel support (escaping delimiter when "")
-+ 3.34 : Pypy partiall support on separate branch
++ 3.34 : Pypy partial support on separate branch
 + 3.33 : Python 3 full support on separate branch
 + 3.32 : improve CLI with warnings on poor configuration, truncated symbol and white term mode
 + 3.31 : init options now overrides configuration file
 + 3.30 : ``from GeoBases import GeoBase`` works as import mechanism
 + 3.29 : changed some property names in configuration file, add discard_dups boolean
-+ 3.28 : new duplicate mechanism: keep them and add @nb at the end of key
-+ 3.27 : adding two office_IDs data source
++ 3.28 : new duplicates mechanism: keep them and add @nb at the end of key
++ 3.27 : adding two new data source
 + 3.26 : autocomplete file is generated with Rake and reading YAML conf
 + 3.25 : added sub delimiters options; some refactoring
-+ 3.24 : added --version for CLI; new option limit in conf to load partially the file
-+ 3.23 : added autocomplete partial support for CLI
-+ 3.22 : added new base for geonames_head and geonames_full, lines tracking
-+ 3.21 : added new base for ori_por_private (and multi version)
++ 3.24 : added --version for CLI; new option *limit* in conf to partially load the file
++ 3.23 : added partial autocomplete support for CLI
++ 3.22 : added new base for geonames_head and geonames_full, and lines tracking when loading
++ 3.21 : added new base for ori_por (and multi version)
 + 3.20 : outsource all airports/geonames code in separate project
 + 3.19 : outsource all webservices code in separate project
 + 3.18 : outsource all train stations generation script in separate project
 + 3.17 : added new base for locales
 + 3.16 : added new base for regions
-+ 3.15 : added new base for airlines from CRB_Airline
++ 3.15 : added new base for airlines
 + 3.14 : handle multiple conditions in getKeysWhere, and/or cases
 + 3.13 : added __dup__ special field to count duplicates
 + 3.12 : new data source for currencies (wikipedia based)
