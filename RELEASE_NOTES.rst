@@ -3,6 +3,11 @@
 Release notes
 =============
 
+V5
+==
+
++ 5.0 : changes in methods names for better consistency: find vs get
+
 V4
 ==
 
