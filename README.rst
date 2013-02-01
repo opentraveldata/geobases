@@ -185,11 +185,11 @@ Find things with properties
 ::
 
  >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
- >>> list(geo_o.getKeysWhere(conditions, mode='and'))
+ >>> list(geo_o.findKeysWhere(conditions, mode='and'))
  [(2, 'JDP'), (2, 'JPU')]
  >>>
  >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
- >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
+ >>> len(list(geo_o.findKeysWhere(conditions, mode='or')))
  36
 
 Distance computation
@@ -236,9 +236,9 @@ Approximate name matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
- >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
+ >>> geo_t.fuzzyFind('Marseille Charles', 'name')[0]
  (0.8..., 'frmsc')
- >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+ >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
  (0.78..., 'CDG')
 
 Map display

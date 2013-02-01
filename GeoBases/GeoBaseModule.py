@@ -711,7 +711,7 @@ class GeoBase(object):
 
 
 
-    def getKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
+    def findKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -727,37 +727,37 @@ class GeoBase(object):
         :returns:          an iterable of (v, key) where v is the number of matched \
                 condition
 
-        >>> list(geo_a.getKeysWhere([('city_code', 'PAR')]))
+        >>> list(geo_a.findKeysWhere([('city_code', 'PAR')]))
         [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
-        >>> list(geo_o.getKeysWhere([('comment', '')], reverse=True))
+        >>> list(geo_o.findKeysWhere([('comment', '')], reverse=True))
         []
-        >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
+        >>> list(geo_o.findKeysWhere([('__dup__', '[]')]))
         []
-        >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
+        >>> len(list(geo_o.findKeysWhere([('__dup__', [])])))
         7024
-        >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
+        >>> len(list(geo_o.findKeysWhere([('__dup__', '[]')], force_str=True)))
         7024
-        >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.findKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
         4431
 
         Testing several conditions.
 
         >>> c_1 = [('city_code'    , 'PAR')]
         >>> c_2 = [('location_type', 'H'  )]
-        >>> len(list(geo_o.getKeysWhere(c_1)))
+        >>> len(list(geo_o.findKeysWhere(c_1)))
         18
-        >>> len(list(geo_o.getKeysWhere(c_2)))
+        >>> len(list(geo_o.findKeysWhere(c_2)))
         91
-        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
+        >>> len(list(geo_o.findKeysWhere(c_1 + c_2, mode='and')))
         2
-        >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
+        >>> len(list(geo_o.findKeysWhere(c_1 + c_2, mode='or')))
         107
 
         This works too \o/.
 
-        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
+        >>> len(list(geo_o.findKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
         0
-        >>> len(list(geo_o.getKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
+        >>> len(list(geo_o.findKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
         20
         """
         if from_keys is None:
@@ -791,7 +791,7 @@ class GeoBase(object):
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if self._verbose:
-                    print 'Key %-10s raised KeyError in getKeysWhere, moving on...' % key
+                    print 'Key %-10s raised KeyError in findKeysWhere, moving on...' % key
 
 
     def __str__(self):
@@ -1017,7 +1017,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
+            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1079,7 +1079,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
+            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1139,7 +1139,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyGet(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None):
+    def fuzzyFind(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None):
         """
         Fuzzy searches are retrieving an information
         on a thing when we do not know the code.
@@ -1158,24 +1158,24 @@ class GeoBase(object):
         :param max_results: max number of results, None means all results
         :param min_match:   filter out matches under this threshold
         :param from_keys:   if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform fuzzyGet. This is useful when we have geocodes \
-            and have to perform a matching based on name and location (see fuzzyGetAroundPoint).
+            iterable of keys to perform fuzzyFind. This is useful when we have geocodes \
+            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
-        >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
+        >>> geo_t.fuzzyFind('Marseille Charles', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=3, min_match=0.55)
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=3, min_match=0.55)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=3, min_match=0.75)
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=3, min_match=0.75)
         [(0.78..., 'CDG')]
 
         Some corner cases.
 
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=None)[0]
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=None)[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGet('paris de gaulle', 'name', max_results=1, from_keys=[])
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=1, from_keys=[])
         []
         """
         if from_keys is None:
@@ -1194,9 +1194,9 @@ class GeoBase(object):
 
 
 
-    def fuzzyGetAroundPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyFindAroundPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         """
-        Same as fuzzyGet but with we search only within a radius
+        Same as fuzzyFind but with we search only within a radius
         from a geocode.
 
         :param lat_lng:     the lat_lng of the point (a tuple of (lat, lng))
@@ -1213,7 +1213,7 @@ class GeoBase(object):
             as the grid size
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
-        >>> geo_a.fuzzyGet('Brussels', 'name', min_match=0.60)[0]
+        >>> geo_a.fuzzyFind('Brussels', 'name', min_match=0.60)[0]
         (0.61..., 'BQT')
         >>> geo_a.get('BQT', 'name')  # Brussels just matched on Brest!!
         'Brest'
@@ -1221,11 +1221,11 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyGetAroundPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
+        >>> geo_a.fuzzyFindAroundPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyGetAroundPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyFindAroundPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         """
         if from_keys is None:
@@ -1233,12 +1233,12 @@ class GeoBase(object):
 
         nearest = ( key for dist, key in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check) )
 
-        return self.fuzzyGet(fuzzy_value, field, max_results, min_match, from_keys=nearest)
+        return self.fuzzyFind(fuzzy_value, field, max_results, min_match, from_keys=nearest)
 
 
-    def _fuzzyGetBiased(self, entry, verbose=True):
+    def _fuzzyFindBiased(self, entry, verbose=True):
         """
-        Same as fuzzyGet but with bias system.
+        Same as fuzzyFind but with bias system.
         """
         if entry in self._bias_cache_fuzzy:
             # If the entry is stored is our bias
@@ -1250,10 +1250,10 @@ class GeoBase(object):
             return self._bias_cache_fuzzy[entry]
 
         # If not we process and store it in the cache
-        return self.fuzzyGet(*entry)
+        return self.fuzzyFind(*entry)
 
 
-    def fuzzyGetCached(self,
+    def fuzzyFindCached(self,
                        fuzzy_value,
                        field,
                        max_results=None,
@@ -1261,7 +1261,7 @@ class GeoBase(object):
                        verbose=True,
                        show_bad=(1, 1)):
         """
-        Same as fuzzyGet but with a caching and bias system.
+        Same as fuzzyFind but with a caching and bias system.
 
         :param fuzzy_value: the value, like 'Marseille'
         :param field:       the field we look into, like 'name'
@@ -1271,12 +1271,12 @@ class GeoBase(object):
         :param show_bad:    the range of similarity
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
-        >>> geo_t.fuzzyGetCached('Marseille Saint Ch.', 'name')[0]
+        >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', show_bad=(0, 1))[0]
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', show_bad=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', min_match=0.60, max_results=2, show_bad=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', min_match=0.60, max_results=2, show_bad=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
@@ -1284,10 +1284,10 @@ class GeoBase(object):
         Some biasing:
 
         >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, [(0.5, 'Biased result')])
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, show_bad=(0, 1))[0] # Cache there
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
-        >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
         Using bias: ('paris+de+gaulle', 'name', None, 0.75)
         [(0.5, 'Biased result')]
         """
@@ -1296,7 +1296,7 @@ class GeoBase(object):
 
         if entry not in self._cache_fuzzy:
 
-            match = self._fuzzyGetBiased(entry, verbose=verbose)
+            match = self._fuzzyFindBiased(entry, verbose=verbose)
 
             self._cache_fuzzy[entry] = match
 
@@ -1342,7 +1342,7 @@ class GeoBase(object):
 
     @staticmethod
     def _buildCacheKey(fuzzy_value, field, max_results, min_match):
-        """Key for the cache of fuzzyGet, based on parameters.
+        """Key for the cache of fuzzyFind, based on parameters.
 
         >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0)
         ('paris+de+gaulle', 'name', None, 0)
