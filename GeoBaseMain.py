@@ -806,7 +806,7 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-a', '--any',
+    parser.add_argument('-A', '--any',
         help = dedent('''\
         By default, --exact multiple searches are combined with *and*,
         passing this option will change that to a *or*.
