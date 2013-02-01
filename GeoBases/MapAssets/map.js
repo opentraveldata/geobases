@@ -397,7 +397,7 @@ function initialize(jsonData) {
 
         coords = [];
         help   = '<div class="infowindow large">' +
-                     '<h3>Duplicates</h3><table>';
+                     '<h3>Line</h3><table>';
 
         for (j=0, d=od.length; j<d; j++) {
 
@@ -443,16 +443,16 @@ function initialize(jsonData) {
             }
         }
         toggled = ! toggled;
-        $('#dups').text('Duplicates ({0})'.fmt(toggled ? '1' : '0'));
+        $('#lines').text('Lines ({0})'.fmt(toggled ? '1' : '0'));
     }
 
-    $('#dups').click(toggleLines);
+    $('#lines').click(toggleLines);
 
-    if (! link_duplicates) {
+    if (jsonData.lines.length === 0) {
         // If not duplicates, we disable the button
-        $('#dups').text('Duplicates');
-        $('#dups').attr('disabled', 'true');
-        $('#dups').css({'color': 'grey'});
+        $('#lines').text('Lines');
+        $('#lines').attr('disabled', 'true');
+        $('#lines').css({'color': 'grey'});
     }
 
     // Draw hull
@@ -472,7 +472,7 @@ function initialize(jsonData) {
     var state = 0;
     var sortedCenters;
 
-    function connectMarkers() {
+    function linkMarkers() {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
@@ -495,13 +495,13 @@ function initialize(jsonData) {
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $('#connect').text('Connect ({0})'.fmt(state));
+        $('#link').text('Link all ({0})'.fmt(state));
     }
 
-    $('#connect').click(connectMarkers);
+    $('#link').click(linkMarkers);
 
     google.maps.event.addListener(map, 'rightclick', function () {
-        connectMarkers();
+        linkMarkers();
         // If the rightclick shall go through
         //$(this).trigger();
     });
@@ -534,7 +534,7 @@ function initialize(jsonData) {
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} <i>points on map</i> (out of {1}), {2} <i>duplicates</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>point(s) on map</i> (out of {1}), {2} <i>line(s)</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
@@ -585,8 +585,8 @@ $(document).ready(function() {
     });
 
     $('#legend').attr('title', 'Display legend.');
-    $('#connect').attr('title', 'Draw lines between points. Click again to change sorting.');
-    $('#dups').attr('title', 'Toggle lines between duplicates.');
+    $('#link').attr('title', 'Draw lines between points. Click again to change sorting.');
+    $('#lines').attr('title', 'Toggle lines.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
 
