@@ -329,7 +329,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _configKeyer(indexes, headers):
+    def _buildKeyer(indexes, headers):
         """Define the function that build a line key.
         """
         # It is possible to have a indexes which is a list
@@ -393,7 +393,7 @@ class GeoBase(object):
         return data
 
 
-    def _configReader(self, **csv_opt):
+    def _buildReader(self, **csv_opt):
         """Manually configure the reader, to bypass the limitations of csv.reader.
         """
         #quotechar = csv_opt['quotechar']
@@ -432,7 +432,7 @@ class GeoBase(object):
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
-        pos, keyer = self._configKeyer(indexes, headers)
+        pos, keyer = self._buildKeyer(indexes, headers)
 
         # csv reader options
         csv_opt = {
@@ -440,7 +440,7 @@ class GeoBase(object):
             'quotechar' : quotechar
         }
 
-        _reader = self._configReader(**csv_opt)
+        _reader = self._buildReader(**csv_opt)
 
         for line_nb, row in enumerate(_reader(source_fl), start=1):
 
