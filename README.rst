@@ -185,11 +185,11 @@ Find things with properties
 ::
 
  >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
- >>> list(geo_o.findKeysWhere(conditions, mode='and'))
+ >>> list(geo_o.findWith(conditions, mode='and'))
  [(2, 'JDP'), (2, 'JPU')]
  >>>
  >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
- >>> len(list(geo_o.findKeysWhere(conditions, mode='or')))
+ >>> len(list(geo_o.findWith(conditions, mode='or')))
  36
 
 Distance computation

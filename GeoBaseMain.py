@@ -1303,7 +1303,7 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = g.findKeysWhere(conditions, force_str=True, mode='or')
+                res = g.findWith(conditions, force_str=True, mode='or')
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
@@ -1324,7 +1324,7 @@ def main():
         if verbose:
             print 'Applying opentrep on "%s" (output %s)' % (args['trep'], args['trep_format'])
 
-        res = g.trepGet(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
+        res = g.trepSearch(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
 
 
@@ -1341,7 +1341,7 @@ def main():
             else:
                 print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.findKeysWhere(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
+        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
         last = 'exact'
 
 

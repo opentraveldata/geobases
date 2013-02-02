@@ -711,7 +711,7 @@ class GeoBase(object):
 
 
 
-    def findKeysWhere(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
+    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -727,37 +727,37 @@ class GeoBase(object):
         :returns:          an iterable of (v, key) where v is the number of matched \
                 condition
 
-        >>> list(geo_a.findKeysWhere([('city_code', 'PAR')]))
+        >>> list(geo_a.findWith([('city_code', 'PAR')]))
         [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
-        >>> list(geo_o.findKeysWhere([('comment', '')], reverse=True))
+        >>> list(geo_o.findWith([('comment', '')], reverse=True))
         []
-        >>> list(geo_o.findKeysWhere([('__dup__', '[]')]))
+        >>> list(geo_o.findWith([('__dup__', '[]')]))
         []
-        >>> len(list(geo_o.findKeysWhere([('__dup__', [])])))
+        >>> len(list(geo_o.findWith([('__dup__', [])])))
         7024
-        >>> len(list(geo_o.findKeysWhere([('__dup__', '[]')], force_str=True)))
+        >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True)))
         7024
-        >>> len(list(geo_o.findKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
+        >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # Counting duplicated keys
         4431
 
         Testing several conditions.
 
         >>> c_1 = [('city_code'    , 'PAR')]
         >>> c_2 = [('location_type', 'H'  )]
-        >>> len(list(geo_o.findKeysWhere(c_1)))
+        >>> len(list(geo_o.findWith(c_1)))
         18
-        >>> len(list(geo_o.findKeysWhere(c_2)))
+        >>> len(list(geo_o.findWith(c_2)))
         91
-        >>> len(list(geo_o.findKeysWhere(c_1 + c_2, mode='and')))
+        >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
         2
-        >>> len(list(geo_o.findKeysWhere(c_1 + c_2, mode='or')))
+        >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
         107
 
         This works too \o/.
 
-        >>> len(list(geo_o.findKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
+        >>> len(list(geo_o.findWith([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
         0
-        >>> len(list(geo_o.findKeysWhere([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
+        >>> len(list(geo_o.findWith([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
         20
         """
         if from_keys is None:
@@ -791,7 +791,7 @@ class GeoBase(object):
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if self._verbose:
-                    print 'Key %-10s raised KeyError in findKeysWhere, moving on...' % key
+                    print 'Key %-10s raised KeyError in findWith, moving on...' % key
 
 
     def __str__(self):
@@ -1017,7 +1017,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
+            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1079,7 +1079,7 @@ class GeoBase(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
+            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
@@ -1159,7 +1159,7 @@ class GeoBase(object):
         :param min_match:   filter out matches under this threshold
         :param from_keys:   if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform fuzzyFind. This is useful when we have geocodes \
-            and have to perform a matching based on name and location (see fuzzyFindAroundPoint).
+            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_t.fuzzyFind('Marseille Charles', 'name')[0]
@@ -1194,7 +1194,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyFindAroundPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyFindNearPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
         """
         Same as fuzzyFind but with we search only within a radius
         from a geocode.
@@ -1221,11 +1221,11 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyFindAroundPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
+        >>> geo_a.fuzzyFindNearPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyFindAroundPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyFindNearPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
         [(0.33..., 'ORY')]
         """
         if from_keys is None:
@@ -1495,11 +1495,11 @@ class GeoBase(object):
 
 
     @staticmethod
-    def trepGet(fuzzy_value, trep_format='S', from_keys=None, verbose=False):
+    def trepSearch(fuzzy_value, trep_format='S', from_keys=None, verbose=False):
         """OpenTrep integration.
 
         If not hasTrepSupport(), main_trep is not defined
-        and trepGet will raise an exception if called.
+        and trepSearch will raise an exception if called.
 
         :param fuzzy_value:   the fuzzy value
         :param trep_format:   the format given to OpenTrep
@@ -1509,11 +1509,11 @@ class GeoBase(object):
         :returns:             an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> if geo_t.hasTrepSupport():
-        ...     print geo_t.trepGet('sna francisco los agneles') # doctest: +SKIP
+        ...     print geo_t.trepSearch('sna francisco los agneles') # doctest: +SKIP
         [(31.5192, 'SFO'), (46.284, 'LAX')]
 
         >>> if geo_t.hasTrepSupport():
-        ...     print geo_t.trepGet('sna francisco', verbose=True) # doctest: +SKIP
+        ...     print geo_t.trepSearch('sna francisco', verbose=True) # doctest: +SKIP
          -> Raw result: SFO/31.5192
          -> Fmt result: ([(31.5192, 'SFO')], '')
         [(31.5192, 'SFO')]
