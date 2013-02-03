@@ -318,6 +318,10 @@ class GeoBase(object):
         """Some precomputation on subdelimiters.
         """
         for h in self._headers:
+
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+
             # If not in conf, do not sub split
             if h not in self._subdelimiters:
                 self._subdelimiters[h] = None
