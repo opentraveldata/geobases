@@ -188,6 +188,7 @@ ori_por:
         - country_code
         - cc2
         - country_name
+        - continent_name
         - adm1_code
         - adm1_name_utf
         - adm1_name_ascii
