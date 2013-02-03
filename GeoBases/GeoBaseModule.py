@@ -286,6 +286,11 @@ class GeoBase(object):
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
 
+        # Some headers are not accepted
+        for h in self._headers:
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+
         # Loading data
         self._configSubDelimiters()
 
@@ -318,9 +323,6 @@ class GeoBase(object):
         """Some precomputation on subdelimiters.
         """
         for h in self._headers:
-
-            if str(h).endswith('@raw') or str(h).startswith('__'):
-                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
 
             # If not in conf, do not sub split
             if h not in self._subdelimiters:
