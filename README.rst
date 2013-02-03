@@ -409,6 +409,6 @@ virtualenv, before executing rake:
 
 .. code-block:: bash
 
- $ pip uninstall virtualenv
- $ pip install https://github.com/pypa/virtualenv/tarball/develop
+ $ pip uninstall virtualenv
+ $ pip install https://github.com/pypa/virtualenv/tarball/develop
 
