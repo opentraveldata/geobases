@@ -493,24 +493,24 @@ def guess_headers(s_row):
     return headers
 
 
-def score_key(f):
-    """Eval likelihood of being an index.
+def score_key(v):
+    """Eval likelihood of being a good field for generating keys.
 
     The shorter the better, and int get a len() of 1.
     0, 1 and floats are weird for key_fields, as well as 1-letter strings.
     """
-    if str(f).endswith('__key__') or str(f).lower().endswith('id'):
+    if str(v).endswith('__key__') or str(v).lower().endswith('id'):
         return 0
 
-    if isinstance(f, float):
+    if isinstance(v, float):
         return 1000
 
-    if isinstance(f, int):
-        if f <= 1: # we avoid a domain error on next case
+    if isinstance(v, int):
+        if v <= 1: # we avoid a domain error on next case
             return 10
-        return max(2, 25 / log(f))
+        return max(2, 25 / log(v))
 
-    return len(f) if len(f) >= 2 else 10
+    return len(v) if len(v) >= 2 else 10
 
 
 def guess_key_fields(headers, s_row):
