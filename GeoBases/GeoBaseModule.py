@@ -330,7 +330,7 @@ class GeoBase(object):
 
             # Handling sub delimiter not list-embedded
             if isinstance(self._subdelimiters[h], str):
-                self._subdelimiters[h] = [self._subdelimiters[h]]
+                self._subdelimiters[h] = (self._subdelimiters[h], )
 
 
 
