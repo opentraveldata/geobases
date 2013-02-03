@@ -53,7 +53,7 @@ from __future__ import with_statement
 import os
 import os.path as op
 import heapq
-from itertools import izip_longest
+from itertools import izip_longest, count
 import csv
 import json
 from shutil import copy
@@ -415,6 +415,20 @@ class GeoBase(object):
         return _reader
 
 
+    def _buildDuplicatedKey(self, key, nb_dups):
+        """
+        When the key is already in base and we do not want to discard the row,
+        we have to compute a new key for this row.
+        We iterate until we find an available key
+        """
+        for n in count(nb_dups):
+            d_key = '%s@%s' % (key, n)
+
+            if d_key not in self._things:
+                return d_key
+
+
+
     def _loadFile(self, source_fl):
         """Load the file and feed the self._things.
 
@@ -474,7 +488,8 @@ class GeoBase(object):
             else:
                 if discard_dups is False:
                     # We compute a new key for the duplicate
-                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
+                    nb_dups = 1 + len(self._things[key]['__dup__'])
+                    d_key   = self._buildDuplicatedKey(key, nb_dups)
 
                     # We update the data with this info
                     row_data['__key__'] = d_key
@@ -487,7 +502,7 @@ class GeoBase(object):
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
-                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'], d_key)
+                                (line_nb, key, nb_dups, self._things[key]['__lno__'], d_key)
                 else:
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
