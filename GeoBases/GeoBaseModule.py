@@ -174,7 +174,7 @@ class GeoBase(object):
         - local         : ``True`` by default, is the source local or not
         - source        : ``None`` by default, file-like to the source
         - headers       : ``[]`` by default, list of fields in the data
-        - indexes       : ``None`` by default, list of fields defining the key for a line
+        - key_fields    : ``None`` by default, list of fields defining the key for a line
         - delimiter     : ``'^'`` by default, delimiter for each field,
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
         - quotechar     : ``'"'`` by default, this is the string defined for quoting
@@ -204,7 +204,7 @@ class GeoBase(object):
         >>> GeoBase(data='feed',
         ...         source=fl,
         ...         headers=['iata_code', 'name', 'city'],
-        ...         indexes='iata_code',
+        ...         key_fields='iata_code',
         ...         delimiter='^',
         ...         verbose=False).get('ORY')
         {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
@@ -235,7 +235,7 @@ class GeoBase(object):
             'local'         : True,
             'source'        : None,
             'headers'       : [],
-            'indexes'       : None,
+            'key_fields'    : None,
             'delimiter'     : '^',
             'subdelimiters' : {},
             'quotechar'     : '"',
@@ -278,7 +278,7 @@ class GeoBase(object):
         self._local         = props['local']
         self._source        = props['source']
         self._headers       = props['headers']
-        self._indexes       = props['indexes']
+        self._key_fields    = props['key_fields']
         self._delimiter     = props['delimiter']
         self._subdelimiters = props['subdelimiters']
         self._quotechar     = props['quotechar']
@@ -335,25 +335,25 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildKeyer(indexes, headers):
+    def _buildKeyer(key_fields, headers):
         """Define the function that build a line key.
         """
-        # It is possible to have a indexes which is a list
+        # It is possible to have a key_fields which is a list
         # In this case we build the key as the concatenation between
         # the different fields
         try:
-            if isinstance(indexes, str):
-                pos = (headers.index(indexes), )
+            if isinstance(key_fields, str):
+                pos = (headers.index(key_fields), )
 
-            elif isinstance(indexes, list):
-                pos = tuple(headers.index(k) for k in indexes)
+            elif isinstance(key_fields, list):
+                pos = tuple(headers.index(k) for k in key_fields)
 
             else:
                 raise ValueError()
 
         except ValueError:
-            raise ValueError("Inconsistent: headers = %s with indexes = %s" % \
-                             (headers, indexes))
+            raise ValueError("Inconsistent: headers = %s with key_fields = %s" % \
+                             (headers, key_fields))
         else:
             keyer = lambda row, pos: '+'.join(row[p] for p in pos)
 
@@ -444,6 +444,7 @@ class GeoBase(object):
         """
         # We cache all variables used in the main loop
         headers       = self._headers
+        key_fields    = self._key_fields
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
         quotechar     = self._quotechar
@@ -451,7 +452,7 @@ class GeoBase(object):
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
-        pos, keyer = self._buildKeyer(self._indexes, headers)
+        pos, keyer = self._buildKeyer(key_fields, headers)
 
         # csv reader options
         csv_opt = {
@@ -480,8 +481,8 @@ class GeoBase(object):
                 key = keyer(row, pos)
             except IndexError:
                 if verbose:
-                    print '/!\ Could not compute key with headers %s, indexes %s for line %s: %s' % \
-                            (headers, self._indexes, line_nb, row)
+                    print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
+                            (headers, key_fields, line_nb, row)
                 continue
 
             row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
