@@ -349,7 +349,7 @@ class GeoBase(object):
             compute_val = lambda k, fields : tuple(self.get(k, f) for f in fields)
 
         else:
-            raise ValueError('Wrong fields %s for index' % str(fields))
+            raise ValueError('Wrong fields "%s" for index' % str(fields))
 
         # Mapping for every possible value to matching keys
         values_to_matches = {}
