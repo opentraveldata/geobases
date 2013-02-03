@@ -266,7 +266,7 @@ class GeoBase(object):
             if name in props:
                 props[name] = kwargs[name]
             else:
-                raise ValueError('Option "%s" not understood.' % name)
+                raise ValueError('Option "%s" not understood in arguments.' % name)
 
         if 'source' not in kwargs:
             # "local" is only used for sources from configuration

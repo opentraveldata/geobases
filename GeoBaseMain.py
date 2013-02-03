@@ -493,11 +493,11 @@ def guess_headers(s_row):
     return headers
 
 
-def score_index(f):
+def score_key(f):
     """Eval likelihood of being an index.
 
     The shorter the better, and int get a len() of 1.
-    0, 1 and floats are weird for indexes, as well as 1-letter strings.
+    0, 1 and floats are weird for key_fields, as well as 1-letter strings.
     """
     if str(f).endswith('__key__') or str(f).lower().endswith('id'):
         return 0
@@ -513,8 +513,8 @@ def score_index(f):
     return len(f) if len(f) >= 2 else 10
 
 
-def guess_indexes(headers, s_row):
-    """Heuristic to guess indexes from headers and first row.
+def guess_key_fields(headers, s_row):
+    """Heuristic to guess key_fields from headers and first row.
     """
     discarded  = set(['lat', 'lng'])
     candidates = []
@@ -526,13 +526,13 @@ def guess_indexes(headers, s_row):
                 val = float(v)
             except ValueError:
                 # is *not* a number
-                candidates.append((h, score_index(v)))
+                candidates.append((h, score_key(v)))
             else:
                 # is a number
                 if val == int(val):
-                    candidates.append((h, score_index(int(val))))
+                    candidates.append((h, score_key(int(val))))
                 else:
-                    candidates.append((h, score_index(val)))
+                    candidates.append((h, score_key(val)))
 
     if not candidates:
         return [headers[0]]
@@ -900,16 +900,16 @@ def handle_args():
         ''' % DEF_NUM_COL),
         default = None)
 
-    parser.add_argument('-i', '--indexes',
+    parser.add_argument('-i', '--indexation',
         help = dedent('''\
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
-        4 optional arguments: delimiter, headers, indexes, discard_dups.
+        4 optional arguments: delimiter, headers, key_fields, discard_dups.
             1) default delimiter is smart :).
             2) default headers will use numbers, and try to sniff lat/lng.
                Use __head__ as header value to
                burn the first line to define the headers.
-            3) default indexes will take the first plausible field.
+            3) default key_fields will take the first plausible field.
             4) discard_dups is a boolean to toggle duplicated keys dropping.
                Default is %s. Put %s as a truthy value,
                any other value will be falsy.
@@ -1112,61 +1112,61 @@ def main():
         source  = chain([first_l], stdin)
         first_l = first_l.rstrip() # For sniffers, we rstrip
 
-        delimiter = guess_delimiter(first_l)
-        headers   = guess_headers(first_l.split(delimiter))
-        indexes   = guess_indexes(headers, first_l.split(delimiter))
+        delimiter  = guess_delimiter(first_l)
+        headers    = guess_headers(first_l.split(delimiter))
+        key_fields = guess_key_fields(headers, first_l.split(delimiter))
 
         discard_dups_r = DEF_DISCARD_RAW
         discard_dups   = DEF_DISCARD
 
-        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
-            delimiter = args['indexes'][0]
+        if len(args['indexation']) >= 1 and args['indexation'][0] != SKIP:
+            delimiter = args['indexation'][0]
 
-        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
-            if args['indexes'][1] == '__head__':
+        if len(args['indexation']) >= 2 and args['indexation'][1] != SKIP:
+            if args['indexation'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['indexes'][1].split(SPLIT)
+                headers = args['indexation'][1].split(SPLIT)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
 
-        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            indexes = args['indexes'][2].split(SPLIT)
+        if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
+            key_fields = args['indexation'][2].split(SPLIT)
         else:
-            # Reprocessing the indexes with custom headers
-            indexes = guess_indexes(headers, first_l.split(delimiter))
+            # Reprocessing the key_fields with custom headers
+            key_fields = guess_key_fields(headers, first_l.split(delimiter))
 
-        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
-            discard_dups_r = args['indexes'][3]
+        if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
+            discard_dups_r = args['indexation'][3]
             discard_dups   = discard_dups_r in TRUTHY
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
-                    (delimiter, SPLIT.join(headers), SPLIT.join(indexes), discard_dups_r)
+                    (delimiter, SPLIT.join(headers), SPLIT.join(key_fields), discard_dups_r)
 
         g = GeoBase(data='feed',
                     source=source,
                     delimiter=delimiter,
                     headers=headers,
-                    indexes=indexes,
+                    key_fields=key_fields,
                     discard_dups=discard_dups,
                     verbose=warnings)
     else:
         # -i options overrides default
         add_options = {}
 
-        if len(args['indexes']) >= 1 and args['indexes'][0] != SKIP:
-            add_options['delimiter'] = args['indexes'][0]
+        if len(args['indexation']) >= 1 and args['indexation'][0] != SKIP:
+            add_options['delimiter'] = args['indexation'][0]
 
-        if len(args['indexes']) >= 2 and args['indexes'][1] != SKIP:
-            add_options['headers'] = args['indexes'][1].split(SPLIT)
+        if len(args['indexation']) >= 2 and args['indexation'][1] != SKIP:
+            add_options['headers'] = args['indexation'][1].split(SPLIT)
 
-        if len(args['indexes']) >= 3 and args['indexes'][2] != SKIP:
-            add_options['indexes'] = args['indexes'][2].split(SPLIT)
+        if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
+            add_options['key_fields'] = args['indexation'][2].split(SPLIT)
 
-        if len(args['indexes']) >= 4 and args['indexes'][3] != SKIP:
-            add_options['discard_dups'] = args['indexes'][3] in TRUTHY
+        if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
+            add_options['discard_dups'] = args['indexation'][3] in TRUTHY
 
         if verbose:
             if not add_options:

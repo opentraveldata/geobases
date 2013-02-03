@@ -4,7 +4,7 @@
 
 airports:
     source    : Airports/GeoNames/airports_geonames_only_clean.csv
-    indexes   : iata_code
+    key_fields: iata_code
     delimiter : ^
     headers   :
         - iata_code
@@ -18,7 +18,7 @@ airports:
 
 countries:
     source    : Countries/countryInfo.txt
-    indexes   : code
+    key_fields: code
     delimiter : "\t"
     subdelimiters :
         languages : ','
@@ -46,7 +46,7 @@ countries:
 
 capitals:
     source    : Countries/capitals.csv
-    indexes   : country_code
+    key_fields: country_code
     delimiter : ^
     headers   :
         - country_code
@@ -60,7 +60,7 @@ capitals:
 
 continents:
     source    : Continents/continentCodes.txt
-    indexes   : code
+    key_fields: code
     delimiter : "\t"
     headers   :
         - code
@@ -70,7 +70,7 @@ continents:
 
 stations:
     source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
-    indexes   : code
+    key_fields: code
     delimiter : ^
     subdelimiters :
         lines: ','
@@ -85,7 +85,7 @@ stations:
 
 stations_nls:
     source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
-    indexes   : nls_code
+    key_fields: nls_code
     delimiter : ','
     headers   :
         - uic_code
@@ -96,7 +96,7 @@ stations_nls:
 
 stations_uic:
     source    : TrainStations/UIC/sncfExtract_v1.0.csv
-    indexes   : uic_code
+    key_fields: uic_code
     delimiter : ','
     headers   :
         - uic_code
@@ -107,7 +107,7 @@ stations_uic:
 
 languages:
     source    : Languages/iso-languagecodes.txt
-    indexes   : code
+    key_fields: code
     delimiter : "\t"
     headers   :
         - code
@@ -118,7 +118,7 @@ languages:
 
 timezones:
     source    : TimeZones/timeZones.txt
-    indexes   : code
+    key_fields: code
     delimiter : "\t"
     headers   :
         - country_code
@@ -130,7 +130,7 @@ timezones:
 
 cities:
     source    : Cities/cities15000.txt
-    indexes   : code
+    key_fields: code
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -158,7 +158,7 @@ cities:
 
 ori_por:
     source        : Por/Ori/ori_por_public.csv
-    indexes       : iata_code
+    key_fields    : iata_code
     limit         : # put a number to load only the first lines
     discard_dups  : false # This is the default behavior anyway
     delimiter     : ^
@@ -217,7 +217,7 @@ ori_por:
 
 ori_por_multi:
     source        : Por/Ori/ori_por_public.csv
-    indexes       : [iata_code, location_type]
+    key_fields    : [iata_code, location_type]
     delimiter     : ^
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
@@ -225,7 +225,7 @@ ori_por_multi:
 
 ori_por_non_iata:
     source        : Por/Ori/ori_por_non_iata.csv
-    indexes       : iata_code
+    key_fields    : iata_code
     delimiter     : ^
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
@@ -233,7 +233,7 @@ ori_por_non_iata:
 
 currencies:
     source    : Currencies/wiki_source_ISO_4217.csv
-    indexes   : currency_code
+    key_fields: currency_code
     delimiter : ;
     subdelimiters :
         countries : ','
@@ -247,7 +247,7 @@ currencies:
 
 airlines:
     source    : Airlines/ori_airlines.csv
-    indexes   : unified_code
+    key_fields: unified_code
     delimiter : ^
     headers   :
         - unified_code
@@ -262,7 +262,7 @@ airlines:
 
 cabins:
     source    : Cabins/cabins.csv
-    indexes   : code
+    key_fields: code
     delimiter : ^
     headers   :
         - code
@@ -271,7 +271,7 @@ cabins:
 
 locales:
     source    : Locales/locales.csv
-    indexes   : locale
+    key_fields: locale
     delimiter : ;
     headers   :
         - locale
@@ -285,7 +285,7 @@ locales:
 
 location_types:
     source    : LocationTypes/location_types.csv
-    indexes   : location_type
+    key_fields: location_type
     delimiter : ^
     headers   :
         - location_type
@@ -294,7 +294,7 @@ location_types:
 
 feature_classes:
     source    : FeatureClasses/feature_classes.csv
-    indexes   : fclass
+    key_fields: fclass
     delimiter : ^
     headers   :
         - fclass
@@ -303,7 +303,7 @@ feature_classes:
 
 feature_codes:
     source    : FeatureCodes/featureCodes_en.txt
-    indexes   : fcode
+    key_fields: fcode
     delimiter : "\t"
     headers   :
         - fclass
@@ -314,7 +314,7 @@ feature_codes:
 
 geonames_FR:
     source    : Por/GeoNames/FR.txt
-    indexes   : geoname_id
+    key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -342,7 +342,7 @@ geonames_FR:
 
 geonames_MC:
     source    : Por/GeoNames/MC.txt
-    indexes   : geoname_id
+    key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -351,7 +351,7 @@ geonames_MC:
 
 postal_codes_FR:
     source    : PostalCodes/GeoNames/FR.txt
-    indexes   : &postal_codes_ind postal_code
+    key_fields: &postal_codes_key postal_code
     delimiter : "\t"
     headers   : &postal_codes_headers
         - country_code
@@ -370,7 +370,7 @@ postal_codes_FR:
 
 postal_codes_MC:
     source    : PostalCodes/GeoNames/MC.txt
-    indexes   : *postal_codes_ind
+    key_fields: *postal_codes_key
     delimiter : "\t"
     headers   : *postal_codes_headers
 
