@@ -31,8 +31,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-
-<h2>Introduction</h2>
+        <h2>Introduction</h2>
 
 <p>This project provides tools to play with geographical data. It also
 works with non-geographical data, except for map visualizations :).</p>
@@ -50,13 +49,14 @@ named like this</em>)</li>
 <li>  <em>geographical searches</em> ( <em>find things next to this place</em>)</li>
 <li>  get results on a map, or export it as csv data, or as a Python
 object</li>
-</ul>
-<p>This is entirely written in Python. The core part is a Python package, but there is a command line tool as well! Get it with <em>easy_install</em>, then you can see where are airports with <em>international</em> in their name:</p>
+</ul><p>This is entirely written in Python. The core part is a Python package,
+but there is a command line tool as well! Get it with <em>easy_install</em>,
+then you can see where are airports with <em>international</em> in their name:</p>
 
-<pre><code>% GeoBase --fuzzy international --map
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --fuzzy international --map
+</pre></div>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png" alt="image"></p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png" alt=""></p>
 
 <h2>Project</h2>
 
@@ -65,79 +65,73 @@ object</li>
 <p>These prerequisites are very standard packages which are often installed
 by default on Linux distributions. But make sure you have them anyway.</p>
 
-<p>First you need to install <em>setuptools</em>:</p>
+<p>First you need to install <em>setuptools</em> (as <em>root</em>):</p>
 
-<pre><code># apt-get install python-setuptools    # for debian
-# yum install python-setuptools.noarch # for fedora
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>apt-get install python-setuptools    <span class="c"># for debian</span>
+<span class="nv">$ </span>yum install python-setuptools.noarch <span class="c"># for fedora</span>
+</pre></div>
 
-<p>Then you need some basics compilation stuff to compile dependencies:</p>
+<p>Then you need some basics compilation stuff to compile dependencies
+(also as <em>root</em>):</p>
 
-<pre><code># apt-get install python-dev g++    # for debian
-# yum install python-devel gcc-c++  # for fedora
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>apt-get install python-dev g++    <span class="c"># for debian</span>
+<span class="nv">$ </span>yum install python-devel gcc-c++  <span class="c"># for fedora</span>
+</pre></div>
 
 <h3>Installation</h3>
 
 <p>You can install it from <a href="http://pypi.python.org/pypi">PyPI</a> with:</p>
 
-<pre><code>% easy_install --user -U GeoBases
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>easy_install --user -U GeoBases
+</pre></div>
 
 <p>If you want the development version, clone the project from
 <a href="https://github.com/opentraveldata/geobases.git">github</a>:</p>
 
-<pre><code>% git clone https://github.com/opentraveldata/geobases.git
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/opentraveldata/geobases.git
+</pre></div>
 
 <p>Then install the package and its dependencies:</p>
 
-<pre><code>% cd geobases
-% python setup.py install --user # for user space
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>geobases
+<span class="nv">$ </span>python setup.py install --user <span class="c"># for user space</span>
+</pre></div>
 
 <p>A standalone script is put in <code>~/.local/bin</code>, to benefit from it, put
 that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 
-<pre><code>export PATH=$PATH:$HOME/.local/bin
-export BACKGROUND_COLOR=black # or 'white', your call
-</code></pre>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
+<span class="nb">export </span><span class="nv">BACKGROUND_COLOR</span><span class="o">=</span>black <span class="c"># or 'white', your call</span>
+</pre></div>
+
+<h3>Python 3 support</h3>
+
+<p>There is <em>Python 3</em> (not so) experimental support, you can
+try it by <em>changing branch</em> before installation. You have to install setuptools and python3-dev as
+prerequisites, then:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>git checkout 3000
+<span class="nv">$ </span>python3 setup.py install --user
+</pre></div>
 
 <h3>Autocomplete</h3>
 
 <p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
 your <code>~/.zshrc</code>:</p>
 
-<pre><code># Add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
+<div class="highlight"><pre><span class="c"># Add custom completion scripts</span>
+<span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
 autoload -U compinit
 compinit
-</code></pre>
-
-<h3>Python 3 support</h3>
-
-<p>There is <em>Python 3</em> (not so) experimental support, you can try it by changing branch before installation.
-You have to install <em>setuptools</em> and <em>python3-dev</em> as prerequisites, then:</p>
-
-<pre><code>% git checkout 3000
-% python3 setup.py install --user
-</code></pre>
-
-<h3>Tests</h3>
-
-<p>Run the tests with:</p>
-
-<pre><code>% python test/test_GeoBases.py -v
-</code></pre>
+</pre></div>
 
 <h2>Quickstart</h2>
 
-<pre><code>% python
-&gt;&gt;&gt; from GeoBases import GeoBase
-&gt;&gt;&gt; geo_o = GeoBase(data='ori_por', verbose=False)
-&gt;&gt;&gt; geo_a = GeoBase(data='airports', verbose=False)
-&gt;&gt;&gt; geo_t = GeoBase(data='stations', verbose=False)
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">GeoBases</span> <span class="kn">import</span> <span class="n">GeoBase</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_o</span> <span class="o">=</span> <span class="n">GeoBase</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s">'ori_por'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_a</span> <span class="o">=</span> <span class="n">GeoBase</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s">'airports'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span> <span class="o">=</span> <span class="n">GeoBase</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s">'stations'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
 
 <p>You can provide other values for the <em>data</em> parameter. All data sources
 are documented in a single <em>yaml</em> file:</p>
@@ -184,8 +178,7 @@ from <em>ori_por</em>
 <li>  <em>data="feed"</em> will create an empty instance</li>
 </ul><p>All features are unaware of the underlying data, and are available as
 long as the headers are properly set in the configuration file, or from
-the <a href="http://packages.python.org/GeoBases/GeoBases.html">Python
-API</a>. For
+the <a href="http://packages.python.org/GeoBases/GeoBases.html">Python API</a>. For
 geographical features, you have to name the latitude field <code>lat</code>, and
 the longitude field <code>lng</code>.</p>
 
@@ -193,15 +186,15 @@ the longitude field <code>lng</code>.</p>
 
 <h3>Information access</h3>
 
-<pre><code>&gt;&gt;&gt; geo_o.get('CDG', 'city_code')
-'PAR'
-&gt;&gt;&gt; geo_o.get('BRU', 'name')
-'Bruxelles National'
-&gt;&gt;&gt; geo_t.get('frnic', 'name')
-'Nice-Ville'
-&gt;&gt;&gt; geo_t.get('fr_not_exist', 'name', default='NAME')
-'NAME'
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'CDG'</span><span class="p">,</span> <span class="s">'city_code'</span><span class="p">)</span>
+<span class="s">'PAR'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'BRU'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)</span>
+<span class="s">'Bruxelles National'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'frnic'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)</span>
+<span class="s">'Nice-Ville'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'fr_not_exist'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'NAME'</span><span class="p">)</span>
+<span class="s">'NAME'</span>
+</pre></div>
 
 <p>You can put your own data in a <code>GeoBase</code> class, either by loading your
 own file when creating the instance, or by creating an empty instance
@@ -209,93 +202,97 @@ and using the <code>set</code> method.</p>
 
 <h3>Find things with properties</h3>
 
-<pre><code>&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('location_type', 'H')]
-&gt;&gt;&gt; list(geo_o.getKeysWhere(conditions, mode='and'))
-[(2, 'JDP'), (2, 'JPU')]
-&gt;&gt;&gt;
-&gt;&gt;&gt; conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
-&gt;&gt;&gt; len(list(geo_o.getKeysWhere(conditions, mode='or')))
-36
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'location_type'</span><span class="p">,</span> <span class="s">'H'</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">getKeysWhere</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'and'</span><span class="p">))</span>
+<span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JDP'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JPU'</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'LON'</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">getKeysWhere</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'or'</span><span class="p">)))</span>
+<span class="mi">36</span>
+</pre></div>
 
 <h3>Distance computation</h3>
 
-<pre><code>&gt;&gt;&gt; geo_o.distance('CDG', 'NCE')
-694.5162...
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_o</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s">'CDG'</span><span class="p">,</span> <span class="s">'NCE'</span><span class="p">)</span>
+<span class="mf">694.5162</span><span class="o">...</span>
+</pre></div>
 
 <h3>Find things near a geocode</h3>
 
-<pre><code>&gt;&gt;&gt; # Paris, airports &lt;= 40km
-&gt;&gt;&gt; [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
-['ORY', 'LBG', 'TNF', 'CDG']
-&gt;&gt;&gt;
-&gt;&gt;&gt; # Nice, stations &lt;= 4km
-&gt;&gt;&gt; iterable = geo_t.findNearPoint((43.70, 7.26), 4)
-&gt;&gt;&gt; [geo_t.get(k, 'name') for _, k in iterable]
-['Nice-Ville', 'Nice-St-Roch', 'Nice-Riquier']
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="c"># Paris, airports &lt;= 40km</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">geo_a</span><span class="o">.</span><span class="n">findNearPoint</span><span class="p">((</span><span class="mf">48.84</span><span class="p">,</span> <span class="mf">2.367</span><span class="p">),</span> <span class="mi">40</span><span class="p">))]</span>
+<span class="p">[</span><span class="s">'ORY'</span><span class="p">,</span> <span class="s">'LBG'</span><span class="p">,</span> <span class="s">'TNF'</span><span class="p">,</span> <span class="s">'CDG'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Nice, stations &lt;= 4km</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">iterable</span> <span class="o">=</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">findNearPoint</span><span class="p">((</span><span class="mf">43.70</span><span class="p">,</span> <span class="mf">7.26</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">geo_t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'Nice-Ville'</span><span class="p">,</span> <span class="s">'Nice-St-Roch'</span><span class="p">,</span> <span class="s">'Nice-Riquier'</span><span class="p">]</span>
+</pre></div>
 
 <h3>Find things near another thing</h3>
 
-<pre><code>&gt;&gt;&gt; sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports &lt;= 50km
-[(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-&gt;&gt;&gt;
-&gt;&gt;&gt; sorted(geo_t.findNearKey('frnic', 3)) # Nice station, &lt;= 3km
-[(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">geo_a</span><span class="o">.</span><span class="n">findNearKey</span><span class="p">(</span><span class="s">'ORY'</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span> <span class="c"># Orly, airports &lt;= 50km</span>
+<span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s">'ORY'</span><span class="p">),</span> <span class="p">(</span><span class="mf">18.8</span><span class="o">...</span><span class="p">,</span> <span class="s">'TNF'</span><span class="p">),</span> <span class="p">(</span><span class="mf">27.8</span><span class="o">...</span><span class="p">,</span> <span class="s">'LBG'</span><span class="p">),</span> <span class="p">(</span><span class="mf">34.8</span><span class="o">...</span><span class="p">,</span> <span class="s">'CDG'</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">geo_t</span><span class="o">.</span><span class="n">findNearKey</span><span class="p">(</span><span class="s">'frnic'</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c"># Nice station, &lt;= 3km</span>
+<span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s">'frnic'</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.2</span><span class="o">...</span><span class="p">,</span> <span class="s">'fr4342'</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.3</span><span class="o">...</span><span class="p">,</span> <span class="s">'fr5737'</span><span class="p">)]</span>
+</pre></div>
 
 <h3>Find closest things from a geocode</h3>
 
-<pre><code>&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
-[(5.82..., 'NCE')]
-&gt;&gt;&gt;
-&gt;&gt;&gt; list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
-[(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_a</span><span class="o">.</span><span class="n">findClosestFromPoint</span><span class="p">((</span><span class="mf">43.70</span><span class="p">,</span> <span class="mf">7.26</span><span class="p">)))</span> <span class="c"># Nice</span>
+<span class="p">[(</span><span class="mf">5.82</span><span class="o">...</span><span class="p">,</span> <span class="s">'NCE'</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_a</span><span class="o">.</span><span class="n">findClosestFromPoint</span><span class="p">((</span><span class="mf">43.70</span><span class="p">,</span> <span class="mf">7.26</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span> <span class="c"># Nice</span>
+<span class="p">[(</span><span class="mf">5.82</span><span class="o">...</span><span class="p">,</span> <span class="s">'NCE'</span><span class="p">),</span> <span class="p">(</span><span class="mf">30.28</span><span class="o">...</span><span class="p">,</span> <span class="s">'CEQ'</span><span class="p">),</span> <span class="p">(</span><span class="mf">79.71</span><span class="o">...</span><span class="p">,</span> <span class="s">'ALL'</span><span class="p">)]</span>
+</pre></div>
 
 <h3>Approximate name matching</h3>
 
-<pre><code>&gt;&gt;&gt; geo_t.fuzzyGet('Marseille Charles', 'name')[0]
-(0.8..., 'frmsc')
-&gt;&gt;&gt; geo_a.fuzzyGet('paris de gaulle', 'name')[0]
-(0.78..., 'CDG')
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">fuzzyGet</span><span class="p">(</span><span class="s">'Marseille Charles'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">(</span><span class="mf">0.8</span><span class="o">...</span><span class="p">,</span> <span class="s">'frmsc'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_a</span><span class="o">.</span><span class="n">fuzzyGet</span><span class="p">(</span><span class="s">'paris de gaulle'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">(</span><span class="mf">0.78</span><span class="o">...</span><span class="p">,</span> <span class="s">'CDG'</span><span class="p">)</span>
+</pre></div>
 
 <h3>Map display</h3>
 
-<pre><code>&gt;&gt;&gt; geo_t.visualize()
-* Added lines for duplicates linking, total 0
-&gt; Affecting category None     to color blue    | volume 3190
-&lt;BLANKLINE&gt;
-* Now you may use your browser to visualize:
-example_map.html example_table.html
-&lt;BLANKLINE&gt;
-* If you want to clean the temporary files:
-rm example.json ...
-&lt;BLANKLINE&gt;
-(['example_map.html', 'example_table.html'], 2)
-</code></pre>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">visualize</span><span class="p">()</span>
+<span class="o">*</span> <span class="n">Added</span> <span class="n">lines</span> <span class="k">for</span> <span class="n">duplicates</span> <span class="n">linking</span><span class="p">,</span> <span class="n">total</span> <span class="mi">0</span>
+<span class="o">&gt;</span> <span class="n">Affecting</span> <span class="n">category</span> <span class="bp">None</span>     <span class="n">to</span> <span class="n">color</span> <span class="n">blue</span>    <span class="o">|</span> <span class="n">volume</span> <span class="mi">3190</span>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png" alt="image"></p>
+<span class="o">*</span> <span class="n">Now</span> <span class="n">you</span> <span class="n">may</span> <span class="n">use</span> <span class="n">your</span> <span class="n">browser</span> <span class="n">to</span> <span class="n">visualize</span><span class="p">:</span>
+<span class="n">example_map</span><span class="o">.</span><span class="n">html</span> <span class="n">example_table</span><span class="o">.</span><span class="n">html</span>
+
+<span class="o">*</span> <span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">clean</span> <span class="n">the</span> <span class="n">temporary</span> <span class="n">files</span><span class="p">:</span>
+<span class="n">rm</span> <span class="n">example</span><span class="o">.</span><span class="n">json</span> <span class="o">...</span>
+
+<span class="p">([</span><span class="s">'example_map.html'</span><span class="p">,</span> <span class="s">'example_table.html'</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png" alt=""></p>
 
 <h2>Documentation</h2>
 
-<p>Here is the <a href="http://packages.python.org/GeoBases/GeoBases.html">API documentation</a> for the Python package. Check out the <a href="https://github.com/opentraveldata/geobases/wiki">wiki</a> for any question!</p>
+<p>Here is the <a href="http://packages.python.org/GeoBases/GeoBases.html">API
+documentation</a> for
+the Python package. Check out the
+<a href="https://github.com/opentraveldata/geobases/wiki">wiki</a> for any
+question!</p>
 
 <h2>Standalone script</h2>
 
 <p>Installation of the package will also deploy a standalone script named
 <code>GeoBase</code>:</p>
 
-<pre><code>% GeoBase ORY CDG              # query on the keys ORY and CDG
-% GeoBase --closest CDG        # closest from CDG
-% GeoBase --near LIG           # near LIG
-% GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
-% GeoBase --help               # your best friend
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase ORY CDG              <span class="c"># query on the keys ORY and CDG</span>
+<span class="nv">$ </span>GeoBase --closest CDG        <span class="c"># closest from CDG</span>
+<span class="nv">$ </span>GeoBase --near LIG           <span class="c"># near LIG</span>
+<span class="nv">$ </span>GeoBase --fuzzy marseille    <span class="c"># fuzzy search on 'marseille'</span>
+<span class="nv">$ </span>GeoBase --help               <span class="c"># your best friend</span>
+</pre></div>
 
-<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png" alt="image"></p>
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png" alt=""></p>
 
 <p>In the previous picture, you have an overview of the command line
 verbose display. Three displays are available for the command line tool:</p>
@@ -325,48 +322,48 @@ because there were missing headers).</li>
 </ul><p>More examples here, for example how to do a search on a field, like
 admin_code (<code>B8</code> is french riviera):</p>
 
-<pre><code>% GeoBase -E adm1_code -e B8
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8
+</pre></div>
 
 <p>Same with csv output (customized with <code>--show</code>):</p>
 
-<pre><code>% GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+</pre></div>
 
 <p>Add a fuzzy search:</p>
 
-<pre><code>% GeoBase -E adm1_code -e B8 --fuzzy sur mer
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --fuzzy sur mer
+</pre></div>
 
 <p>All heliports under 200 km from Paris:</p>
 
-<pre><code>% GeoBase --near PAR -N 200 -E location_type -e 'H'
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --near PAR -N 200 -E location_type -e <span class="s1">'H'</span>
+</pre></div>
 
 <p>50 train stations closest to a specific geocode:</p>
 
-<pre><code>% GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E location_type -e R --closest <span class="s1">'48.853, 2.348'</span> -C 50
+</pre></div>
 
 <p>Countries with non-empty postal code regex:</p>
 
-<pre><code>% GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -b countries -E postal_code_regex -e <span class="s1">''</span> --reverse --quiet
+</pre></div>
 
 <p>Reading data input on stdin:</p>
 
-<pre><code>% echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> -e <span class="s1">'ORY^Orly\nCDG^Charles'</span> | GeoBase
+</pre></div>
 
 <p>Display on map:</p>
 
-<pre><code>% GeoBase -b stations --map
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -b stations --map
+</pre></div>
 
 <p>Marker-less map for a specific GMT offset:</p>
 
-<pre><code>% GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
+</pre></div>
 
 <h2>Packaging</h2>
 
@@ -386,9 +383,9 @@ installed (this is a webdav client). To install <code>nd</code>, fetch the
 a system, you absolutely need to upgrade to the very last unreleased
 version of virtualenv, before executing rake:</p>
 
-<pre><code>% pip uninstall virtualenv
-% pip install https://github.com/pypa/virtualenv/tarball/develop
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>pip uninstall virtualenv
+<span class="nv">$ </span>pip install https://github.com/pypa/virtualenv/tarball/develop
+</pre></div>
       </section>
     </div>
 
