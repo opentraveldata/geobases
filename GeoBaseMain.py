@@ -1310,7 +1310,7 @@ def main():
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
+                res.extend(list(g.fuzzyGetCached(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
             last = 'fuzzy'
 
     elif args['keys']:
@@ -1351,7 +1351,7 @@ def main():
         if verbose:
             print 'Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        res = list(g.fuzzyGetCached(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
 
 
