@@ -19,9 +19,11 @@ stations, countries, ... are loaded, then you can:
 
 This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with *easy_install*,
-then you can see where are airports with *international* in their name::
+then you can see where are airports with *international* in their name:
 
- % GeoBase --fuzzy international --map
+.. code-block:: bash
+
+ $ GeoBase --fuzzy international --map
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
    :align: center
@@ -35,35 +37,47 @@ Prerequisites
 These prerequisites are very standard packages which are often installed
 by default on Linux distributions. But make sure you have them anyway.
 
-First you need to install *setuptools*::
+First you need to install *setuptools* (as *root*):
 
- # apt-get install python-setuptools    # for debian
- # yum install python-setuptools.noarch # for fedora
+.. code-block:: bash
 
-Then you need some basics compilation stuff to compile dependencies::
+ $ apt-get install python-setuptools    # for debian
+ $ yum install python-setuptools.noarch # for fedora
 
- # apt-get install python-dev g++    # for debian
- # yum install python-devel gcc-c++  # for fedora
+Then you need some basics compilation stuff to compile dependencies (also as *root*):
+
+.. code-block:: bash
+
+ $ apt-get install python-dev g++    # for debian
+ $ yum install python-devel gcc-c++  # for fedora
 
 Installation
 ~~~~~~~~~~~~
 
-You can install it from `PyPI <http://pypi.python.org/pypi>`_ with::
+You can install it from `PyPI <http://pypi.python.org/pypi>`_ with:
 
- % easy_install --user -U GeoBases
+.. code-block:: bash
+
+ $ easy_install --user -U GeoBases
 
 If you want the development version, clone the project from
-`github <https://github.com/opentraveldata/geobases.git>`_::
+`github <https://github.com/opentraveldata/geobases.git>`_:
 
- % git clone https://github.com/opentraveldata/geobases.git
+.. code-block:: bash
 
-Then install the package and its dependencies::
+ $ git clone https://github.com/opentraveldata/geobases.git
 
- % cd geobases
- % python setup.py install --user # for user space
+Then install the package and its dependencies:
+
+.. code-block:: bash
+
+ $ cd geobases
+ $ python setup.py install --user # for user space
 
 A standalone script is put in ``~/.local/bin``, to benefit from it, put
-that in your ``~/.bashrc`` or ``~/.zshrc``::
+that in your ``~/.bashrc`` or ``~/.zshrc``:
+
+.. code-block:: bash
 
  export PATH=$PATH:$HOME/.local/bin
  export BACKGROUND_COLOR=black # or 'white', your call
@@ -74,21 +88,27 @@ Python 3 and Pypy support
 There is *Python 3* and *Pypy* (not so) experimental support, you can try it
 by *changing branch* before installation.
 
-For Python 3, you have to install setuptools and python3-dev as prerequisites, then::
+For Python 3, you have to install setuptools and python3-dev as prerequisites, then:
 
- % git checkout 3000
- % python3 setup.py install --user
+.. code-block:: bash
 
-For Pypy, after pypy and pypy-dev installation::
+ $ git checkout 3000
+ $ python3 setup.py install --user
 
- % git checkout pypy
- % sudo pypy setup.py install
+For Pypy, after pypy and pypy-dev installation:
+
+.. code-block:: bash
+
+ $ git checkout pypy
+ $ sudo pypy setup.py install
 
 Autocomplete
 ~~~~~~~~~~~~
 
 If you use zsh and want to benefit from the *autocomplete*, add this to
-your ``~/.zshrc``::
+your ``~/.zshrc``:
+
+.. code-block:: bash
 
  # Add custom completion scripts
  fpath=(~/.zsh/completion $fpath)
@@ -98,16 +118,17 @@ your ``~/.zshrc``::
 Tests
 ~~~~~
 
-Run the tests with::
+Run the tests with:
 
- % python test/test_GeoBases.py -v
+.. code-block:: bash
+
+ $ python test/test_GeoBases.py -v
 
 Quickstart
 ----------
 
-::
+.. code-block:: python
 
- % python
  >>> from GeoBases import GeoBase
  >>> geo_o = GeoBase(data='ori_por', verbose=False)
  >>> geo_a = GeoBase(data='airports', verbose=False)
@@ -165,7 +186,8 @@ Features
 
 Information access
 ~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> geo_o.get('CDG', 'city_code')
  'PAR'
@@ -182,7 +204,8 @@ and using the ``set`` method.
 
 Find things with properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
  >>> list(geo_o.getKeysWhere(conditions, mode='and'))
@@ -194,14 +217,16 @@ Find things with properties
 
 Distance computation
 ~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> geo_o.distance('CDG', 'NCE')
  694.5162...
 
 Find things near a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> # Paris, airports <= 40km
  >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
@@ -214,7 +239,8 @@ Find things near a geocode
 
 Find things near another thing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
  [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
@@ -224,7 +250,8 @@ Find things near another thing
 
 Find closest things from a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
  [(5.82..., 'NCE')]
@@ -234,7 +261,8 @@ Find closest things from a geocode
 
 Approximate name matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
  (0.91..., 'frmsc')
@@ -243,7 +271,8 @@ Approximate name matching
 
 Map display
 ~~~~~~~~~~~
-::
+
+.. code-block:: python
 
  >>> geo_t.visualize()
  * Added lines for duplicates linking, total 0
@@ -269,13 +298,15 @@ Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any 
 Standalone script
 -----------------
 
-Installation of the package will also deploy a standalone script named ``GeoBase``::
+Installation of the package will also deploy a standalone script named ``GeoBase``:
 
- % GeoBase ORY CDG              # query on the keys ORY and CDG
- % GeoBase --closest CDG        # closest from CDG
- % GeoBase --near LIG           # near LIG
- % GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
- % GeoBase --help               # your best friend
+.. code-block:: bash
+
+ $ GeoBase ORY CDG              # query on the keys ORY and CDG
+ $ GeoBase --closest CDG        # closest from CDG
+ $ GeoBase --near LIG           # near LIG
+ $ GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
+ $ GeoBase --help               # your best friend
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
    :align: center
@@ -301,41 +332,59 @@ special. This means they were added during data loading:
 -  ``__gar__`` is the field containing the data which was not loaded on the line (this can be because
    the line was not well formatted, or because there were missing headers).
 
-More examples here, for example how to do a search on a field, like admin\_code (``B8`` is french riviera)::
+More examples here, for example how to do a search on a field, like admin\_code (``B8`` is french riviera):
 
- % GeoBase -E adm1_code -e B8
+.. code-block:: bash
 
-Same with csv output (customized with ``--show``)::
+ $ GeoBase -E adm1_code -e B8
 
- % GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+Same with csv output (customized with ``--show``):
 
-Add a fuzzy search::
+.. code-block:: bash
 
- % GeoBase -E adm1_code -e B8 --fuzzy sur mer
+ $ GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
 
-All heliports under 200 km from Paris::
+Add a fuzzy search:
 
- % GeoBase --near PAR -N 200 -E location_type -e 'H'
+.. code-block:: bash
 
-50 train stations closest to a specific geocode::
+ $ GeoBase -E adm1_code -e B8 --fuzzy sur mer
 
- % GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
+All heliports under 200 km from Paris:
 
-Countries with non-empty postal code regex::
+.. code-block:: bash
 
- % GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
+ $ GeoBase --near PAR -N 200 -E location_type -e 'H'
 
-Reading data input on stdin::
+50 train stations closest to a specific geocode:
 
- % echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
+.. code-block:: bash
 
-Display on map::
+ $ GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 
- % GeoBase -b stations --map
+Countries with non-empty postal code regex:
 
-Marker-less map for a specific GMT offset::
+.. code-block:: bash
 
- % GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
+ $ GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
+
+Reading data input on stdin:
+
+.. code-block:: bash
+
+ $ echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
+
+Display on map:
+
+.. code-block:: bash
+
+ $ GeoBase -b stations --map
+
+Marker-less map for a specific GMT offset:
+
+.. code-block:: bash
+
+ $ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
 
 
 Packaging
@@ -356,8 +405,10 @@ To install ``nd``, fetch the `sources <http://www.gohome.org/nd/>`_ and compile 
 
 Virtualenv still has some bugs on 64 bits systems, if you are using such a system,
 you absolutely need to upgrade to the very last unreleased version of
-virtualenv, before executing rake::
+virtualenv, before executing rake:
 
- % pip uninstall virtualenv
- % pip install https://github.com/pypa/virtualenv/tarball/develop
+.. code-block:: bash
+
+ $ pip uninstall virtualenv
+ $ pip install https://github.com/pypa/virtualenv/tarball/develop
 
