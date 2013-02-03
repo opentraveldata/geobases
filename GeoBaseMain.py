@@ -419,6 +419,7 @@ def guess_delimiter(row):
         ' ', # spaces are not usually delimiter, unless we find no other
         '"', # this is for quoting
         '.', # this is for decimal numbers
+        '@', # this is for duplicated keys
     ])
     candidates = set([l for l in row.rstrip() if not l.isalnum() and l not in discarded])
     counters   = dict((c, row.count(c)) for c in candidates)
@@ -1303,7 +1304,7 @@ def main():
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyGet(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
+                res.extend(list(g.fuzzyGetCached(val, interactive_field, min_match=DEF_INTER_FUZZY_L)))
             last = 'fuzzy'
 
     elif args['keys']:
@@ -1344,7 +1345,7 @@ def main():
         if verbose:
             print('Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit']))
 
-        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        res = list(g.fuzzyGetCached(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
 
 

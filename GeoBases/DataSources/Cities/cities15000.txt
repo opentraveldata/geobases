@@ -59,7 +59,7 @@
 1469706	Markaz-e Woluswalī-ye Āchīn	Markaz-e Woluswali-ye Achin	Achin,Achin-Ulusvali,Acin Oluswali,Markaz-e Woluswali-ye Achin,Markaz-e Woluswalī-ye Āchīn,achyn,Āchīn,Āčīn Oluswāli,آچين	34.12583	70.70778	P	PPL	AF		18				15098		972	Asia/Kabul	2010-08-10
 6692413	Cool űrhajó	Cool urhajo		34.26545	67.34516	P	PPL	AF		05				58525		2884	Asia/Kabul	2008-05-19
 3576022	Saint John’s	Saint John's	Saint John,Saint John's,Saint John’s,Sent Dzonsas,Sent Džonsas,Sent Tzons,Sent-Dzhons,St Johns,St. John's,St.John.s,seinteujonseu,sentojonzu,sheng yue han,sheng yue han shi,snt g'wns,Σεντ Τζονς,Сент-Джонс,סנט ג'ונס,ሴንት ጆንስ፥ አንቲጋ እና ባርቡዳ,セントジョンズ,圣约翰,圣约翰市,세인트존스	17.11667	-61.85	P	PPLC	AG		04				24226		6	America/Antigua	2012-01-18
-3573374	The Valley	The Valley	De Balei,The Valley,Valley,Valli,bare,deobaelli,Δε Βάλεϊ,Валли,ואלי,バレー,더밸리	18.21704	-63.05783	P	PPLC	AI		00				1169	7	19	America/Anguilla	2011-01-21
+3573374	The Valley	The Valley	De Balei,The Valley,Valley,Valli,bare,deobaelli,Δε Βάλεϊ,Валли,ואלי,バレー,더밸리	18.21704	-63.05783	P	PPLC	AI		00				2035	7	19	America/Anguilla	2013-02-02
 363243	Sarandë	Sarande	Agioi,Agioi Saranta,Ayii Saranda,Hagios Saranta,Porto Edda,Santa Quaranta,Santi Quaranta,Saranda,Sarande,Sarandë,Saranta,Zogaj,Άγιοι Σαράντα,Саранда	39.87556	20.00528	P	PPLA2	AL		51	20			15147		32	Europe/Tirane	2012-06-14
 782661	Kukës	Kukes	Cucus,Kukes,Kukesi,Kuks,Kuksi,Kukuch,Kukus,Kukës,Kukësi,Кукес,Кукъс	42.07694	20.42194	P	PPLA	AL		47				17832		351	Europe/Tirane	2012-01-19
 782756	Korçë	Korce	Corce,Corcë,Coritsa,Coritza,Coriza,Corizza,Corriza,Ghiortsa Corcia,Gorica,Goritsa,Korca,Korce,Korcha,Korche,Korcza,Korica,Korice,Koritsa,Koritza,Korrca,Korrce,Korrça,Korrçë,Korytsa,Korça,Korçë,Körice,Корча	40.61861	20.78083	P	PPLA	AL		46	09			58259		869	Europe/Tirane	2012-11-26
@@ -3691,7 +3691,6 @@
 2038665	Oroqen Zizhiqi	Oroqen Zizhiqi	A-li,A-li-ho,ALIKHEH,Alihe,Alihe Zhen,Ari,Elunchun Zizhiqi,O-lun-ch'un-tsu-tzu-chih-ch'i,O-lun-ch'un-tzu-chih-ch'i,O-lun-ch’un-tsu-tzu-chih-ch’i,O-lun-ch’un-tzu-chih-ch’i,Oroqen Zizhiqi,a li he,a li he zhen,e lun chun zi zhi qi,АЛИХЭ,鄂伦春自治旗,阿里河,阿里河镇	50.56667	123.71667	P	PPLA3	CN		20				61582		419	Asia/Shanghai	2013-01-10
 2038679	Acheng	Acheng	A-ch'eng-chen,A-ch'eng-hsien,A-ch’eng-chen,A-ch’eng-hsien,A-shih-ho,A-shih-ko,Acheng,Acheng Shi,Akheng,Asche-ho,Ashiho,a cheng,a cheng shi,Ахенг,阿城,阿城市	45.54545	126.97703	P	PPLA3	CN		08				144665		139	Asia/Harbin	2012-01-18
 2047837	Songling	Songling	Songling,Sung-ling	40.30806	118.27056	P	PPL	CN	CN	10				52277		140	Asia/Shanghai	2013-01-05
-7158935	东海岛	dong hai dao		21.02448	110.39613	P	PPLA3	CN	CN	30				200000	20	10	Asia/Urumqi	2010-02-02
 7283386	Changshu City	Changshu City		31.64615	120.74221	P	PPL	CN		04				1047700		9	Asia/Shanghai	2010-03-23
 7290013	Shixing	Shixing		24.94824	114.06572	P	PPL	CN		30				72996		106	Asia/Shanghai	2010-05-07
 7303248	Jiashan	Jiashan		30.84918	120.92583	P	PPLX	CN		02				137112		7	Asia/Shanghai	2010-06-27
@@ -4810,7 +4809,7 @@
 2906676	Helmstedt	Helmstedt	Helmestee,Helmestidde,Helmonstede [a. 952],Helmstadium,Helmstedt,Helmstidde,Khel'mshtedt,Khelmshhet,Khelmshtet,Stadt Helmstedt,hlmstdt,ˈhɛlmˌʃtɛt,Хелмштет,Хелмщет,Хельмштедт,הלמשטדט	52.2279	11.00985	P	PPLA3	DE		06	00	03154	03154010	25515		136	Europe/Berlin	2011-05-03
 2907201	Heinsberg	Heinsberg	Heinsberg,Heinsburg,Khajnsberg,Хайнсберг	51.06358	6.0998	P	PPL	DE		07				41505		46	Europe/Berlin	2012-08-04
 2907545	Heilbad Heiligenstadt	Heilbad Heiligenstadt	Heilbad Heiligenstadt,Heiligenstadt	51.37819	10.13744	P	PPL	DE		15				17230		256	Europe/Berlin	2012-08-04
-2907551	Heiligensee	Heiligensee	Kolonie Neu-Heiligensee	52.61449	13.24501	P	PPLX	DE	DE	16	00	11000	11000000	17587		39	Europe/Berlin	2012-06-09
+2907551	Heiligensee	Heiligensee	Kolonie Neu-Heiligensee	52.61449	13.24501	P	PPLX	DE	DE	16	00	11000	11000000	17587		39	Europe/Berlin	2013-02-01
 2907585	Heiligenhaus	Heiligenhaus	Heiligenhaus,Stadt Heiligenhaus	51.32662	6.97106	P	PPL	DE		07	051	05158		27700		180	Europe/Berlin	2012-09-02
 2907669	Heilbronn	Heilbronn	Chailmpron,Hajlbrono,Heilbronn,Heilbronn Neckar,Khajl'bronn,Khajlbron,hairuburon,haylbrwn,Χαϊλμπρόν,Хайльбронн,Хајлброн,هايلبرون,هایلبرون,ハイルブロン	49.13995	9.22054	P	PPL	DE		01	081			120733		170	Europe/Berlin	2013-01-03
 2907851	Heidenheim an der Brenz	Heidenheim an der Brenz	Heidenheim,Heidenheim an der Brenz,Heidenheim in Wurttemberg,Heidenheim in Württemberg,Hoana	48.67798	10.15162	P	PPL	DE		01	081			50067		494	Europe/Berlin	2010-11-15
@@ -8019,6 +8018,7 @@
 6639653	Alimos	Alimos	Alimos,Алимос	37.91667	23.71667	P	PPL	GR		ESYE31	445408	9195		38047		29	Europe/Athens	2012-01-17
 6693122	Μεσολόγγι	Mesolongi		38.37019	21.42952	P	PPL	GR		ESYE23	31	9127		18121		5	Europe/Athens	2012-01-17
 7522530	Marousi	Marousi	Amarousion,Amaroussio,Amaroussion,Marousi,Maroussi,Μαρούσι	38.05404	23.806	P	PPL	GR		ESYE31	445408	9168		69470	230	237	Europe/Athens	2012-01-17
+8449752	Patra-Ketx	Patra-Ketx		38.23775	21.75292	P	PPL	GR		ESYE23	38	9134		300000	56	98	Europe/Athens	2013-02-01
 3426466	Grytviken	Grytviken	Grjutviken,Grytviken,Грютвикен	-54.28111	-36.5092	P	PPLC	GS		00				2		4	Atlantic/South_Georgia	2010-12-11
 3587587	Zacapa	Zacapa	Sakapa,Zacapa,Сакапа	14.97222	-89.53056	P	PPLA	GT		22				36088		232	America/Guatemala	2012-12-05
 3587902	Villa Nueva	Villa Nueva	Vil'ja-Nuehva,Villa Nueva,Вилья-Нуэва	14.52694	-90.5875	P	PPL	GT		07				406830		1334	America/Guatemala	2012-01-18
@@ -9909,7 +9909,7 @@
 1265852	Krishnarājpet	Krishnarajpet	Krishnarajpet,Krishnarājpet	12.655	76.48833	P	PPL	IN		19				24289		802	Asia/Kolkata	2012-01-17
 1265859	Krishnanagar	Krishnanagar	Krishnagar,Krishnagar City,Krishnanagar,Krishnigar	23.40576	88.49073	P	PPL	IN		28				145926		13	Asia/Kolkata	2012-10-06
 1265863	Krishnagiri	Krishnagiri	Krishnagiri	12.51921	78.21382	P	PPL	IN		25				66419		617	Asia/Kolkata	2012-03-27
-1265873	Calicut	Calicut	Calecute,Calicut,Kal'kutta,Kalicut,Kolikod,Kozhikkot,Kozhikode,karikatto,ke ze ke de,kealikkeat,kealikkeat jilla,kolikkotu,Калькутта,கோழிக்கோடு,കോഴിക്കോട്,കോഴിക്കോട് ജില്ല,കോഴിക്കോട്‌,カリカット,科泽科德	11.24802	75.7804	P	PPLA2	IN		13	1265874			439922		1	Asia/Kolkata	2013-01-10
+1265873	Kozhikode	Kozhikode	Calecute,Calicut,Kal'kutta,Kalicut,Kolikod,Kozhikkot,Kozhikode,karikatto,ke ze ke de,kealikkeat,kealikkeat jilla,kolikkotu,Калькутта,கோழிக்கோடு,കോഴിക്കോട്,കോഴിക്കോട് ജില്ല,കോഴിക്കോട്‌,カリカット,科泽科德	11.24802	75.7804	P	PPLA2	IN		13	1265874			439922		1	Asia/Kolkata	2013-02-02
 1265886	Kovvūr	Kovvur	Kovur,Kovvur,Kovvūr	17.01667	81.73333	P	PPL	IN		02				40379		24	Asia/Kolkata	2012-01-17
 1265888	Kovūr	Kovur	Kovur,Kovūr	14.48333	79.98333	P	PPL	IN		02				35600		20	Asia/Kolkata	2012-01-17
 1265891	Kovilpatti	Kovilpatti	Koilpatti,Kovilpatti	9.17167	77.86989	P	PPL	IN		25				90296		102	Asia/Kolkata	2012-03-01
@@ -17088,7 +17088,7 @@
 527579	Mendeleyevsk	Mendeleyevsk	Bondyushskiy Zavod,Bondyuzhski Zavod,Bondyuzhskiy,Bondyuzhskiy Zavod,MENDELEEVSK,Mendeleevsk,Mendelejevsk,Mendeleyevsk,МЕНДЕЛЕЕВСК,Менделеевск	55.90818	52.29047	P	PPL	RU		73				22969		101	Europe/Moscow	2012-01-17
 527717	Meleuz	Meleuz	MELEUZ,Meleuz,МЕЛЕУЗ,Мелеуз	52.96667	55.91667	P	PPL	RU		08				65362		178	Asia/Yekaterinburg	2012-01-17
 527740	Melenki	Melenki	MELENKI,Melenki,МЕЛЕНКИ,Меленки	55.3343	41.6295	P	PPL	RU		83				15902		120	Europe/Moscow	2012-01-17
-527888	Medvezh’yegorsk	Medvezh'yegorsk	Karhumaegi,Karhumägi,Medvesh'va Gora,Medvesh’va Gora,Medvezh'egorsk,Medvezh'yegorsk,Medvezhegorsk,Medvezhogorsk,Medvezhya Gora,Medvezh’yegorsk,Medvezjegorsk,Medweshegorsk,Медвежьегорск	62.91713	34.45689	P	PPL	RU		28				16551		43	Europe/Moscow	2012-01-17
+527888	Medvezh’yegorsk	Medvezh'yegorsk	Karhumaegi,Karhumaeki,Karhumägi,Karhumäki,Medvesh'va Gora,Medvesh’va Gora,Medvezh'egorsk,Medvezh'yegorsk,Medvezhegorsk,Medvezhogorsk,Medvezhya Gora,Medvezh’yegorsk,Medvezjegorsk,Medweshegorsk,Медвежьегорск	62.91713	34.45689	P	PPL	RU		28				16551		43	Europe/Moscow	2013-01-30
 527968	Medvedovskaya	Medvedovskaya	Medvedevskaya,Medvedovskaja,Medvedovskaya,Medvyedovskaya,Медведовская	45.45151	39.02485	P	PPL	RU		38				16941		15	Europe/Moscow	2012-01-17
 528056	Medvedevo	Medvedevo	MEDVEDEVO,Medvedevo,МЕДВЕДЕВО,Медведево	56.63388	47.80405	P	PPL	RU		45				16407		114	Europe/Moscow	2012-01-17
 528109	Mednogorsk	Mednogorsk	MEDNOGORSK,Mednogorsk,МЕДНОГОРСК,Медногорск	51.4128	57.595	P	PPL	RU		55				30676		316	Asia/Yekaterinburg	2012-01-17

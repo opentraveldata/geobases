@@ -53,7 +53,7 @@ From any point of reference:
 import os
 import os.path as op
 import heapq
-from itertools import zip_longest
+from itertools import zip_longest, count
 import csv
 import json
 from shutil import copy
@@ -318,6 +318,10 @@ class GeoBase(object):
         """Some precomputation on subdelimiters.
         """
         for h in self._headers:
+
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+
             # If not in conf, do not sub split
             if h not in self._subdelimiters:
                 self._subdelimiters[h] = None
@@ -415,10 +419,24 @@ class GeoBase(object):
         return _reader
 
 
+    def _buildDuplicatedKey(self, key, nb_dups):
+        """
+        When the key is already in base and we do not want to discard the row,
+        we have to compute a new key for this row.
+        We iterate until we find an available key
+        """
+        for n in count(nb_dups):
+            d_key = '%s@%s' % (key, n)
+
+            if d_key not in self._things:
+                return d_key
+
+
+
     def _loadFile(self, source_fl):
         """Load the file and feed the self._things.
 
-        :param verbose: display informations or not during runtime
+        :param source_fl: file-like input
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
         """
@@ -474,7 +492,8 @@ class GeoBase(object):
             else:
                 if discard_dups is False:
                     # We compute a new key for the duplicate
-                    d_key = '%s@%s' % (key, 1 + len(self._things[key]['__dup__']))
+                    nb_dups = 1 + len(self._things[key]['__dup__'])
+                    d_key   = self._buildDuplicatedKey(key, nb_dups)
 
                     # We update the data with this info
                     row_data['__key__'] = d_key
@@ -487,7 +506,7 @@ class GeoBase(object):
 
                     if verbose:
                         print("/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
-                                (line_nb, key, len(self._things[key]['__dup__']), self._things[key]['__lno__'], d_key))
+                                (line_nb, key, nb_dups, self._things[key]['__lno__'], d_key))
                 else:
                     if verbose:
                         print("/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
@@ -734,11 +753,11 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7024
+        7019
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7024
+        7019
         >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
-        4431
+        4435
 
         Testing several conditions.
 
@@ -1258,6 +1277,7 @@ class GeoBase(object):
                        field,
                        max_results=None,
                        min_match=0.75,
+                       from_keys=None,
                        verbose=True,
                        show_bad=(1, 1)):
         """
@@ -1267,6 +1287,8 @@ class GeoBase(object):
         :param field:       the field we look into, like 'name'
         :param max_results: if None, returns all, if an int, only returns the first ones
         :param min_match:   filter out matches under this threshold
+        :param from_keys:   if None, it takes all keys into consideration, else takes from_keys \
+            iterable of keys as search domain
         :param verbose:     display information on a certain range of similarity
         :param show_bad:    the range of similarity
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
@@ -1283,16 +1305,16 @@ class GeoBase(object):
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, [(0.5, 'Biased result')])
+        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, None, [(0.5, 'Biased result')])
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
-        Using bias: ('paris+de+gaulle', 'name', None, 0.75)
+        Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
         if entry not in self._cache_fuzzy:
 
@@ -1308,7 +1330,7 @@ class GeoBase(object):
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, biased_result):
+    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, from_keys, biased_result):
         """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
@@ -1318,12 +1340,14 @@ class GeoBase(object):
         :param field:         the field we look into, like 'name'
         :param max_results:   if None, returns all, if an int, only returns the first ones
         :param min_match:     filter out matches under this threshold
+        :param from_keys:     if None, it takes all keys into consideration, else takes from_keys \
+            iterable of keys as search domain
         :param biased_result: the expected result
         :returns:             None
 
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
         self._bias_cache_fuzzy[entry] = biased_result
 
@@ -1341,15 +1365,15 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildCacheKey(fuzzy_value, field, max_results, min_match):
+    def _buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys):
         """Key for the cache of fuzzyGet, based on parameters.
 
-        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0)
-        ('paris+de+gaulle', 'name', None, 0)
-        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0)
-        ('antibes', 'name', 3, 0)
+        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0, from_keys=None)
+        ('paris+de+gaulle', 'name', None, 0, None)
+        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0, from_keys=None)
+        ('antibes', 'name', 3, 0, None)
         """
-        return '+'.join(clean(fuzzy_value)), field, max_results, min_match
+        return '+'.join(clean(fuzzy_value)), field, max_results, min_match, from_keys
 
 
     def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
