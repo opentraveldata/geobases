@@ -432,7 +432,7 @@ class GeoBase(object):
     def _loadFile(self, source_fl):
         """Load the file and feed the self._things.
 
-        :param verbose: display informations or not during runtime
+        :param source_fl: file-like input
         :raises: IOError, if the source cannot be read
         :raises: ValueError, if duplicates are found in the source
         """
