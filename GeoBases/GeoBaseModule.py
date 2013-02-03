@@ -334,6 +334,39 @@ class GeoBase(object):
 
 
 
+    def _buildIndex(self, fields):
+        """Build index given an iterable of fields
+
+        >>> geo_o._buildIndex('iata_code')['MRS']
+        ['MRS', 'MRS@1']
+        >>> geo_o._buildIndex(['iata_code', 'country_code'])[('MRS', 'FR')]
+        ['MRS', 'MRS@1']
+        """
+        if isinstance(fields, str):
+            compute_val = self.get
+
+        elif isinstance(fields, list) or isinstance(fields, tuple):
+            compute_val = lambda k, fields : tuple(self.get(k, f) for f in fields)
+
+        else:
+            raise ValueError('Wrong fields %s for index' % str(fields))
+
+        # Mapping for every possible value to matching keys
+        values_to_matches = {}
+
+        for key in self:
+
+            val = compute_val(key, fields)
+
+            if val not in values_to_matches:
+                values_to_matches[val] = []
+
+            values_to_matches[val].append(key)
+
+        return values_to_matches
+
+
+
     @staticmethod
     def _buildKeyer(key_fields, headers):
         """Define the function that build a line key.
