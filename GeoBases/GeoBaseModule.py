@@ -345,10 +345,11 @@ class GeoBase(object):
             if isinstance(key_fields, str):
                 pos = (headers.index(key_fields), )
 
-            elif isinstance(key_fields, list):
+            elif isinstance(key_fields, list) or isinstance(key_fields, tuple):
                 pos = tuple(headers.index(k) for k in key_fields)
 
             else:
+                # All other cases will fall into the except clause below
                 raise ValueError()
 
         except ValueError:
