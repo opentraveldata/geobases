@@ -444,7 +444,6 @@ class GeoBase(object):
         """
         # We cache all variables used in the main loop
         headers       = self._headers
-        indexes       = self._indexes
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
         quotechar     = self._quotechar
@@ -452,7 +451,7 @@ class GeoBase(object):
         discard_dups  = self._discard_dups
         verbose       = self._verbose
 
-        pos, keyer = self._buildKeyer(indexes, headers)
+        pos, keyer = self._buildKeyer(self._indexes, headers)
 
         # csv reader options
         csv_opt = {
@@ -482,7 +481,7 @@ class GeoBase(object):
             except IndexError:
                 if verbose:
                     print '/!\ Could not compute key with headers %s, indexes %s for line %s: %s' % \
-                            (headers, indexes, line_nb, row)
+                            (headers, self._indexes, line_nb, row)
                 continue
 
             row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
