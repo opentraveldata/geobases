@@ -1258,6 +1258,7 @@ class GeoBase(object):
                        field,
                        max_results=None,
                        min_match=0.75,
+                       from_keys=None,
                        verbose=True,
                        show_bad=(1, 1)):
         """
@@ -1267,6 +1268,8 @@ class GeoBase(object):
         :param field:       the field we look into, like 'name'
         :param max_results: if None, returns all, if an int, only returns the first ones
         :param min_match:   filter out matches under this threshold
+        :param from_keys:   if None, it takes all keys into consideration, else takes from_keys \
+            iterable of keys as search domain
         :param verbose:     display information on a certain range of similarity
         :param show_bad:    the range of similarity
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
@@ -1283,16 +1286,16 @@ class GeoBase(object):
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, [(0.5, 'Biased result')])
+        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, None, [(0.5, 'Biased result')])
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, show_bad=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
         >>> geo_a.fuzzyGetCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
-        Using bias: ('paris+de+gaulle', 'name', None, 0.75)
+        Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
         if entry not in self._cache_fuzzy:
 
@@ -1308,7 +1311,7 @@ class GeoBase(object):
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, biased_result):
+    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, from_keys, biased_result):
         """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
@@ -1318,12 +1321,14 @@ class GeoBase(object):
         :param field:         the field we look into, like 'name'
         :param max_results:   if None, returns all, if an int, only returns the first ones
         :param min_match:     filter out matches under this threshold
+        :param from_keys:     if None, it takes all keys into consideration, else takes from_keys \
+            iterable of keys as search domain
         :param biased_result: the expected result
         :returns:             None
 
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match)
+        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
         self._bias_cache_fuzzy[entry] = biased_result
 
@@ -1341,15 +1346,15 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildCacheKey(fuzzy_value, field, max_results, min_match):
+    def _buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys):
         """Key for the cache of fuzzyGet, based on parameters.
 
-        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0)
-        ('paris+de+gaulle', 'name', None, 0)
-        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0)
-        ('antibes', 'name', 3, 0)
+        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0, from_keys=None)
+        ('paris+de+gaulle', 'name', None, 0, None)
+        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0, from_keys=None)
+        ('antibes', 'name', 3, 0, None)
         """
-        return '+'.join(clean(fuzzy_value)), field, max_results, min_match
+        return '+'.join(clean(fuzzy_value)), field, max_results, min_match, from_keys
 
 
     def _debugFuzzy(self, match, fuzzy_value, field, show_bad=(1, 1)):
