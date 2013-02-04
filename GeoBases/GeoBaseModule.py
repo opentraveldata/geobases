@@ -373,7 +373,7 @@ class GeoBase(object):
         """
         if not fields:
             if verbose:
-                print '/!\ fields %s were empty, index not added' % str(fields)
+                print '/!\ Fields %s were empty, index not added' % str(fields)
             return
 
         if isinstance(fields, str):
@@ -411,7 +411,7 @@ class GeoBase(object):
         >>> geo_o._buildIndex(('iata_code',), verbose=False)[('MRS',)]
         ['MRS', 'MRS@1']
         >>> geo_o._buildIndex(['iata_code', 'country_code'])[('MRS', 'FR')]
-        Built an index for fields ['iata_code', 'country_code']
+        Built index for fields ['iata_code', 'country_code']
         ['MRS', 'MRS@1']
         """
         if isinstance(fields, str):
@@ -436,7 +436,7 @@ class GeoBase(object):
             values_to_matches[val].append(key)
 
         if verbose:
-            print 'Built an index for fields %s' % str(fields)
+            print 'Built index for fields %s' % str(fields)
 
         return values_to_matches
 
@@ -896,14 +896,17 @@ class GeoBase(object):
         Using index for ('iata_code',)
         [(1, 'MRS'), (1, 'MRS@1')]
         >>> 
+        >>> geo_o.addIndex('iata_code')
+        /!\ Index on ('iata_code',) already built, overriding...
+        Built index for fields ('iata_code',)
         >>> geo_o.addIndex('location_type')
-        Built an index for fields ('location_type',)
+        Built index for fields ('location_type',)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code',) and ('location_type',)
         [(2, 'NCE')]
         >>> 
         >>> geo_o.addIndex(('iata_code', 'location_type'))
-        Built an index for fields ('iata_code', 'location_type')
+        Built index for fields ('iata_code', 'location_type')
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code', 'location_type')
         [(2, 'NCE')]
