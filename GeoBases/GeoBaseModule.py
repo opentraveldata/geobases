@@ -884,6 +884,17 @@ class GeoBase(object):
         >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # Counting duplicated keys
         4435
 
+        Testing indexes.
+
+        >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
+        Using index for ('iata_code',)
+        [(1, 'MRS'), (1, 'MRS@1')]
+        >>> geo_o.addIndex('city_code')
+        Built an index for fields ('city_code',)
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
+        Using index for iata_code and city_code
+        [(1, 'NCE'), (1, 'NCE@1'), (1, 'NCE'), (1, 'NCE@1')]
+
         Testing several conditions.
 
         >>> c_1 = [('city_code'    , 'PAR')]
