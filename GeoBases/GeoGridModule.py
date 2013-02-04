@@ -168,18 +168,21 @@ class GeoGrid(object):
 
 
 
-    def _check_distance(self, candidate, ref_lat_lng, radius):
+    def _check_distance(self, candidate, ref_lat_lng, radius=None):
         """
         Filter from a iterator of candidates, the ones 
         who are within a radius if a ref_lat_lng.
 
         Yields the good ones.
         """
-        for can in candidate:
-
-            dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
-
-            if dist <= radius:
+        if radius is not None:
+            for can in candidate:
+                dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
+                if dist <= radius:
+                    yield (dist, can)
+        else:
+            for can in candidate:
+                dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
                 yield (dist, can)
 
 
@@ -354,7 +357,7 @@ class GeoGrid(object):
         candidate = self._findClosestFromCase(self._computeCaseId(lat_lng), N, from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, lat_lng, radius=float('inf')))[:N]
+            return sorted(self._check_distance(candidate, lat_lng))[:N]
         else:
             return ((0, f) for f in candidate)
 
@@ -404,7 +407,7 @@ class GeoGrid(object):
         candidate = self._findClosestFromCase(self._keys[key]['case'], N, from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, self._keys[key]['lat_lng'], radius=float('inf')))[:N]
+            return sorted(self._check_distance(candidate, self._keys[key]['lat_lng']))[:N]
         else:
             return ((0, f) for f in candidate)
 
