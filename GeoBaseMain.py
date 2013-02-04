@@ -185,6 +185,12 @@ def fmt_ref(ref, ref_type, no_symb=False):
             return '%.3f' % ref
         return '%.1f %%' % (100 * ref)
 
+    if ref_type == 'sound':
+        if isinstance(ref, (list, tuple, set)):
+            return '+'.join(str(e) for e in ref)
+        else:
+            return str(ref)
+
     if ref_type == 'index':
         return '%s' % int(ref)
 
@@ -288,7 +294,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
                 if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
-                    l.append('/'.join(str(el) for el in v))
+                    l.append(SPLIT.join(str(el) for el in v))
                 else:
                     l.append(str(v))
 
