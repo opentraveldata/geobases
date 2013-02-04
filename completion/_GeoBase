@@ -18,6 +18,7 @@ _arguments \
  "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
  "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-property field. Default property is \"name\"]:*:phonetic value:()" \
  "(-P --phonetic-property)"{-P,--phonetic-property}"[Specify a property for phonetic searches]:phonetic property:$F_FIELDS" \
+ "(-y --nysiis)"{-y,--nysiis}"[Change sound matching method from dmetaphone to nysiis]" \
  "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*:exact value:()" \
  "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*:exact property:$F_FIELDS" \
  "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
@@ -32,7 +33,7 @@ _arguments \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
- "(-i --indexation)"{-i,--indexation}"[Specify metadata for stdin data input.]:*:delimiter headers key_fields discard_dups:$I_INT" \
+ "(-i --indexation)"{-i,--indexation}"[Specify metadata for stdin data input.]:*:delimiter headers key_fields discard_dups indices:$I_INT" \
  "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]:*:field __exact__/__fuzzy__:$F_FIELDS" \
  "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
  "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header:$Q_QUIET" \
