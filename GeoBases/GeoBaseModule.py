@@ -175,7 +175,7 @@ class GeoBase(object):
         - source        : ``None`` by default, file-like to the source
         - headers       : ``[]`` by default, list of fields in the data
         - key_fields    : ``None`` by default, list of fields defining the key for a line, \
-                None means line numbers will be used to generate keys
+                ``None`` means line numbers will be used to generate keys
         - delimiter     : ``'^'`` by default, delimiter for each field,
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
         - quotechar     : ``'"'`` by default, this is the string defined for quoting

@@ -910,13 +910,15 @@ def handle_args():
                Use __head__ as header value to
                burn the first line to define the headers.
             3) default key_fields will take the first plausible field.
+               Put %s to use None as key_fields, which will cause the keys
+               to be generated from the line numbers.
             4) discard_dups is a boolean to toggle duplicated keys dropping.
                Default is %s. Put %s as a truthy value,
                any other value will be falsy.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
-        ''' % (DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SKIP)),
+        ''' % (DISABLE, DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
@@ -1132,7 +1134,7 @@ def main():
             headers = guess_headers(first_l.split(delimiter))
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
-            key_fields = args['indexation'][2].split(SPLIT)
+            key_fields = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
         else:
             # Reprocessing the key_fields with custom headers
             key_fields = guess_key_fields(headers, first_l.split(delimiter))
@@ -1143,7 +1145,7 @@ def main():
 
         if verbose:
             print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
-                    (delimiter, SPLIT.join(headers), SPLIT.join(key_fields), discard_dups_r)
+                    (delimiter, SPLIT.join(headers), DISABLE if key_fields is None else SPLIT.join(key_fields), discard_dups_r)
 
         g = GeoBase(data='feed',
                     source=source,
@@ -1163,7 +1165,7 @@ def main():
             add_options['headers'] = args['indexation'][1].split(SPLIT)
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
-            add_options['key_fields'] = args['indexation'][2].split(SPLIT)
+            add_options['key_fields'] = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
 
         if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
             add_options['discard_dups'] = args['indexation'][3] in TRUTHY
