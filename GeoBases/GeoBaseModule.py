@@ -1412,7 +1412,7 @@ class GeoBase(object):
         return self.fuzzyFind(fuzzy_value, field, max_results, min_match, from_keys=nearest)
 
 
-    def _fuzzyFindBiased(self, entry, verbose=True):
+    def _fuzzyFindBiased(self, entry, verbose=False):
         """Same as fuzzyFind but with bias system.
         """
         if entry in self._bias_cache_fuzzy:
@@ -1434,8 +1434,8 @@ class GeoBase(object):
                        max_results=None,
                        min_match=0.75,
                        from_keys=None,
-                       verbose=True,
-                       d_range=(1, 1)):
+                       verbose=False,
+                       d_range=None):
         """
         Same as fuzzyFind but with a caching and bias system.
 
@@ -1446,15 +1446,15 @@ class GeoBase(object):
         :param from_keys:   if None, it takes all keys into consideration, else takes from_keys \
             iterable of keys as search domain
         :param verbose:     display information on caching for a certain range of similarity
-        :param d_range: the range of similarity
+        :param d_range:     the range of similarity
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', d_range=(0, 1))[0]
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', verbose=True, d_range=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', min_match=0.60, max_results=2, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', min_match=0.60, max_results=2, verbose=True, d_range=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
@@ -1465,10 +1465,13 @@ class GeoBase(object):
         >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, d_range=(0, 1))[0] # Cache there
         (0.78..., 'CDG')
         >>> geo_a.clearCache()
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75)
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75, verbose=True)
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         """
+        if d_range is None:
+            d_range = (min_match, 1.0)
+
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
