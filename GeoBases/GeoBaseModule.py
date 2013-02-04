@@ -298,11 +298,11 @@ class GeoBase(object):
         if self._source is not None:
             if 'source' in kwargs:
                 # As a keyword argument, source should be a file-like
-                self._loadFile(self._source)
+                self._loadFile(self._source, self._verbose)
             else:
                 # Here we read the source from the configuration file
                 with open(self._source) as source_fl:
-                    self._loadFile(source_fl)
+                    self._loadFile(source_fl, self._verbose)
         else:
             if self._verbose:
                 print 'Source was None, skipping loading...'
@@ -313,7 +313,7 @@ class GeoBase(object):
 
         # Grid
         if self.hasGeoSupport():
-            self._createGrid()
+            self._createGrid(self._verbose)
         else:
             if self._verbose:
                 print 'No geocode support, skipping grid...'
@@ -335,12 +335,15 @@ class GeoBase(object):
 
 
 
-    def _buildIndex(self, fields):
+    def _buildIndex(self, fields, verbose=True):
         """Build index given an iterable of fields
 
-        >>> geo_o._buildIndex('iata_code')['MRS']
+        >>> geo_o._buildIndex('iata_code', verbose=False)['MRS']
+        ['MRS', 'MRS@1']
+        >>> geo_o._buildIndex(('iata_code',), verbose=False)[('MRS',)]
         ['MRS', 'MRS@1']
         >>> geo_o._buildIndex(['iata_code', 'country_code'])[('MRS', 'FR')]
+        Built an index for fields ['iata_code', 'country_code']
         ['MRS', 'MRS@1']
         """
         if isinstance(fields, str):
@@ -364,16 +367,19 @@ class GeoBase(object):
 
             values_to_matches[val].append(key)
 
+        if verbose:
+            print 'Built an index for fields %s' % str(fields)
+
         return values_to_matches
 
 
-
-    def _buildKeyer(self, key_fields, headers):
+    @staticmethod
+    def _buildKeyer(key_fields, headers, verbose=True):
         """Define the function that build a line key.
         """
         # If key_fields is None we index with the line number
         if key_fields is None:
-            if self._verbose:
+            if verbose:
                 print '/!\ key_fields was None, keys will be created from line numbers.'
 
             return (), lambda row, pos, line_nb: line_nb
@@ -440,7 +446,8 @@ class GeoBase(object):
         return data
 
 
-    def _buildReader(self, **csv_opt):
+    @staticmethod
+    def _buildReader(verbose, **csv_opt):
         """Manually configure the reader, to bypass the limitations of csv.reader.
         """
         #quotechar = csv_opt['quotechar']
@@ -449,7 +456,7 @@ class GeoBase(object):
         if len(delimiter) == 1:
             return lambda source_fl : csv.reader(source_fl, **csv_opt)
 
-        if self._verbose:
+        if verbose:
             print '/!\ Delimiter "%s" was not 1-character.' % delimiter
             print '/!\ Fallback on custom reader, but quoting is disabled.'
 
@@ -476,12 +483,11 @@ class GeoBase(object):
 
 
 
-    def _loadFile(self, source_fl):
+    def _loadFile(self, source_fl, verbose=True):
         """Load the file and feed the self._things.
 
         :param source_fl: file-like input
-        :raises: IOError, if the source cannot be read
-        :raises: ValueError, if duplicates are found in the source
+        :param verbose:   toggle verbosity during data loading
         """
         # We cache all variables used in the main loop
         headers       = self._headers
@@ -491,9 +497,8 @@ class GeoBase(object):
         quotechar     = self._quotechar
         limit         = self._limit
         discard_dups  = self._discard_dups
-        verbose       = self._verbose
 
-        pos, keyer = self._buildKeyer(key_fields, headers)
+        pos, keyer = self._buildKeyer(key_fields, headers, verbose)
 
         # csv reader options
         csv_opt = {
@@ -501,7 +506,7 @@ class GeoBase(object):
             'quotechar' : quotechar
         }
 
-        _reader = self._buildReader(**csv_opt)
+        _reader = self._buildReader(verbose, **csv_opt)
 
         for line_nb, row in enumerate(_reader(source_fl), start=1):
 
@@ -595,7 +600,7 @@ class GeoBase(object):
 
 
 
-    def _createGrid(self):
+    def _createGrid(self, verbose=True):
         """Create the grid for geographical indexation after loading the data.
         """
         self._ggrid = GeoGrid(radius=50, verbose=False)
@@ -604,11 +609,11 @@ class GeoBase(object):
             lat_lng = self.getLocation(key)
 
             if lat_lng is None:
-                if self._verbose:
+                if verbose:
                     print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
                             (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
             else:
-                self._ggrid.add(key, lat_lng, self._verbose)
+                self._ggrid.add(key, lat_lng, verbose)
 
 
 
@@ -773,7 +778,7 @@ class GeoBase(object):
 
 
 
-    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and'):
+    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', verbose=True):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -786,6 +791,7 @@ class GeoBase(object):
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
         :param from_keys:  if given, we will look for results from this iterable of keys
+        :param verbose:    toggle verbosity during search
         :returns:          an iterable of (v, key) where v is the number of matched \
                 condition
 
@@ -852,7 +858,7 @@ class GeoBase(object):
                     yield sum(matches), key
             except KeyError:
                 # This means from_keys parameters contained unknown keys
-                if self._verbose:
+                if verbose:
                     print 'Key %-10s raised KeyError in findWith, moving on...' % key
 
 
@@ -1299,8 +1305,7 @@ class GeoBase(object):
 
 
     def _fuzzyFindBiased(self, entry, verbose=True):
-        """
-        Same as fuzzyFind but with bias system.
+        """Same as fuzzyFind but with bias system.
         """
         if entry in self._bias_cache_fuzzy:
             # If the entry is stored is our bias
@@ -1332,7 +1337,7 @@ class GeoBase(object):
         :param min_match:   filter out matches under this threshold
         :param from_keys:   if None, it takes all keys into consideration, else takes from_keys \
             iterable of keys as search domain
-        :param verbose:     display information on a certain range of similarity
+        :param verbose:     display information on caching for a certain range of similarity
         :param d_range: the range of similarity
         :returns:           an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
@@ -1627,9 +1632,6 @@ class GeoBase(object):
         :param verbose:         toggle verbosity
         :returns:               (list of templates successfully rendered, total number of templates available).
         """
-        # We take the maximum verbosity between the local and global
-        verbose = self._verbose or verbose
-
         if self.hasGeoSupport():
             geo_support = True
         else:
