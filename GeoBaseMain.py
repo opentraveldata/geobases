@@ -639,6 +639,9 @@ DEF_INTER_FUZZY_L = 0.99
 DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS  = ('__key__',)
 
+# For requests with findWith, force stringification before testing
+FORCE_STR = False
+
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
 
@@ -1306,7 +1309,7 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = g.findWith(conditions, force_str=True, mode='or')
+                res = g.findWith(conditions, force_str=FORCE_STR, mode='or')
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
@@ -1344,7 +1347,7 @@ def main():
             else:
                 print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=True))
+        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR))
         last = 'exact'
 
 
