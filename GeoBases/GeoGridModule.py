@@ -39,6 +39,7 @@ to provide geographical indexation features.
 from __future__ import with_statement
 
 import itertools
+import heapq
 from geohash import encode, neighbors
 
 from .GeoUtils import haversine
@@ -357,7 +358,7 @@ class GeoGrid(object):
         candidate = self._findClosestFromCase(self._computeCaseId(lat_lng), N, from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, lat_lng))[:N]
+            return heapq.nsmallest(N, self._check_distance(candidate, lat_lng))
         else:
             return ((0, f) for f in candidate)
 
@@ -407,7 +408,7 @@ class GeoGrid(object):
         candidate = self._findClosestFromCase(self._keys[key]['case'], N, from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, self._keys[key]['lat_lng']))[:N]
+            return heapq.nsmallest(N, self._check_distance(candidate, self._keys[key]['lat_lng']))
         else:
             return ((0, f) for f in candidate)
 
