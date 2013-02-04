@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + options: --warnings (-w) is --verbose (-v), --version (-v) short is -V, --gridless (-g) is --without-grid (-w)
  + more tests
  + consistent verbosity handling
  + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods
