@@ -16,6 +16,8 @@ _arguments \
  "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:*:fuzzy value:()" \
  "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]:fuzzy property:$F_FIELDS" \
  "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
+ "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-property field. Default property is \"name\"]:*:phonetic value:()" \
+ "(-P --phonetic-property)"{-P,--phonetic-property}"[Specify a property for phonetic searches]:phonetic property:$F_FIELDS" \
  "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*:exact value:()" \
  "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*:exact property:$F_FIELDS" \
  "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
