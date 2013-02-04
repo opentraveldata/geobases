@@ -635,7 +635,7 @@ DEF_CLOSEST_LIMIT = 10
 DEF_TREP_FORMAT   = 'S'
 DEF_QUIET_DELIM   = '^'
 DEF_QUIET_HEADER  = 'CH'
-DEF_INTER_FUZZY_L = 0.99
+DEF_INTER_FUZZY_L = 0.90
 DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS  = ('__key__',)
 
