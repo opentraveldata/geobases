@@ -1345,7 +1345,7 @@ def main():
         if verbose:
             print('Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit']))
 
-        res = list(g.fuzzyGetCached(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        res = list(g.fuzzyGet(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
 
 
