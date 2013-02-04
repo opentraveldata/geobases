@@ -867,7 +867,7 @@ def handle_args():
         ''' % DEF_TREP_FORMAT),
         default = DEF_TREP_FORMAT)
 
-    parser.add_argument('-g', '--gridless',
+    parser.add_argument('-w', '--without-grid',
         help = dedent('''\
         When performing a geographical search, a geographical index is used.
         This may lead to inaccurate results in some (rare) case when using
@@ -1004,9 +1004,10 @@ def handle_args():
         metavar = 'FIELDS',
         default = [])
 
-    parser.add_argument('-w', '--warnings',
+    parser.add_argument('-v', '--verbose',
         help = dedent('''\
-        Provides additional information from data loading.
+        Provides additional information during data loading
+        and queries.
         '''),
         action = 'store_true')
 
@@ -1026,7 +1027,7 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-v', '--version',
+    parser.add_argument('-V', '--version',
         help = dedent('''\
         Display version information.
         '''),
@@ -1051,9 +1052,9 @@ def main():
     #
     # ARGUMENTS
     #
-    with_grid = not args['gridless']
+    with_grid = not args['without_grid']
     verbose   = not args['quiet']
-    warnings  = args['warnings']
+    logorrhea = args['verbose']
 
     # Defining frontend
     if args['map']:
@@ -1083,7 +1084,7 @@ def main():
     #
     # CREATION
     #
-    if warnings:
+    if logorrhea:
         before_init = datetime.now()
 
     if args['version']:
@@ -1156,7 +1157,7 @@ def main():
                     headers=headers,
                     key_fields=key_fields,
                     discard_dups=discard_dups,
-                    verbose=warnings)
+                    verbose=logorrhea)
     else:
         # -i options overrides default
         add_options = {}
@@ -1180,9 +1181,9 @@ def main():
                 print 'Loading GeoBase "%s" with custom: %s ...' % \
                         (args['base'], ' and '.join('%s = %s' % kv for kv in add_options.items()))
 
-        g = GeoBase(data=args['base'], verbose=warnings, **add_options)
+        g = GeoBase(data=args['base'], verbose=logorrhea, **add_options)
 
-    if warnings:
+    if logorrhea:
         after_init = datetime.now()
 
     # Tuning parameters
@@ -1309,13 +1310,13 @@ def main():
                 res = enumerate(values)
             else:
                 conditions = [(interactive_field, val) for val in values]
-                res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=warnings)
+                res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyFindCached(val, interactive_field, min_match=DEF_INTER_FUZZY_L, verbose=warnings)))
+                res.extend(list(g.fuzzyFindCached(val, interactive_field, min_match=DEF_INTER_FUZZY_L, verbose=logorrhea)))
             last = 'fuzzy'
 
     elif args['keys']:
@@ -1347,7 +1348,7 @@ def main():
             else:
                 print 'Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR, verbose=warnings))
+        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR, verbose=logorrhea))
         last = 'exact'
 
 
@@ -1380,7 +1381,7 @@ def main():
         last = 'closest'
 
 
-    if warnings:
+    if logorrhea:
         end = datetime.now()
         print 'Done in %s = (load) %s + (search) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
