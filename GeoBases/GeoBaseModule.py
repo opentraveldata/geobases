@@ -919,7 +919,7 @@ class GeoBase(object):
         Built index for fields ('city_code',)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
         Using index for ('iata_code',) and ('city_code',)
-        [(1, 'NCE@1'), (1, 'NCE')]
+        [(2, 'NCE@1'), (2, 'NCE')]
 
         Testing several conditions.
 
@@ -986,7 +986,8 @@ class GeoBase(object):
                     candidates = candidates | set(k for _, k in self._findWithIndexed((f,), (v,)))
 
                 for key in candidates & set(from_keys):
-                    yield 1, key
+                    m = sum(self.get(key, f) == v for f, v in conditions)
+                    yield m, key
                 raise StopIteration
 
 
