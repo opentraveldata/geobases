@@ -176,6 +176,7 @@ class GeoBase(object):
         - headers       : ``[]`` by default, list of fields in the data
         - key_fields    : ``None`` by default, list of fields defining the key for a line, \
                 ``None`` means line numbers will be used to generate keys
+        - indices       : ``[]`` by default, an iterable of additional indexed fields
         - delimiter     : ``'^'`` by default, delimiter for each field,
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
         - quotechar     : ``'"'`` by default, this is the string defined for quoting
@@ -217,8 +218,9 @@ class GeoBase(object):
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
-        self._things = {}
-        self._ggrid  = None
+        self._things  = {}
+        self._indexed = {}
+        self._ggrid   = None
 
         # A cache for the fuzzy searches
         self._cache_fuzzy = {}
@@ -237,6 +239,7 @@ class GeoBase(object):
             'source'        : None,
             'headers'       : [],
             'key_fields'    : None,
+            'indices'       : [],
             'delimiter'     : '^',
             'subdelimiters' : {},
             'quotechar'     : '"',
@@ -280,6 +283,7 @@ class GeoBase(object):
         self._source        = props['source']
         self._headers       = props['headers']
         self._key_fields    = props['key_fields']
+        self._indices       = props['indices']
         self._delimiter     = props['delimiter']
         self._subdelimiters = props['subdelimiters']
         self._quotechar     = props['quotechar']
@@ -319,6 +323,16 @@ class GeoBase(object):
                 print 'No geocode support, skipping grid...'
 
 
+        # Indices, we convert every iterable into tuple
+        if isinstance(self._indices, str):
+            self._indices = (self._indices,)
+        else:
+            self._indices = tuple(self._indices)
+
+        for fields in self._indices:
+            self.addIndex(fields, self._verbose)
+
+
 
     def _configSubDelimiters(self):
         """Some precomputation on subdelimiters.
@@ -335,8 +349,56 @@ class GeoBase(object):
 
 
 
+    def hasIndexOn(self, fields):
+        """Tells if an iterable of fields is indexed.
+
+        :param fields:  the iterable of fields
+        :returns:       a boolean
+        """
+        if isinstance(fields, str):
+            fields = (fields,)
+        else:
+            fields = tuple(fields)
+
+        return fields in self._indexed
+
+
+
+    def addIndex(self, fields, verbose=True):
+        """Add an index on an iterable of fields.
+
+        :param fields:  the iterable of fields
+        :param verbose: toggle verbosity
+        """
+        if isinstance(fields, str):
+            fields = (fields,)
+        else:
+            fields = tuple(fields)
+
+        self._indexed[fields] = self._buildIndex(fields, verbose)
+
+
+
+    def dropIndex(self, fields):
+        """Drop an index on an iterable of fields.
+
+        :param fields:  the iterable of fields
+        """
+        if isinstance(fields, str):
+            fields = (fields,)
+        else:
+            fields = tuple(fields)
+
+        del self._indexed[fields]
+
+
+
     def _buildIndex(self, fields, verbose=True):
         """Build index given an iterable of fields
+
+        :param fields:  the iterable of fields
+        :param verbose: toggle verbosity
+        :returns:       the dictionary of { values : list of matching keys }
 
         >>> geo_o._buildIndex('iata_code', verbose=False)['MRS']
         ['MRS', 'MRS@1']
