@@ -840,7 +840,21 @@ class GeoBase(object):
 
 
 
-    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', verbose=True):
+    def _findWithIndexed(self, fields, values):
+        """Perform findWith using the index.
+        """
+        if values not in self._indexed[fields]:
+            # No key matched these values for the fields
+            raise StopIteration
+
+        m = len(fields)
+
+        for key in self._indexed[fields][values]:
+            yield m, key
+
+
+
+    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', verbose=False):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -893,6 +907,37 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        # If indexed
+        if not force_str and not reverse:
+            fields = tuple(f for f, _ in conditions)
+            values = tuple(v for _, v in conditions)
+
+            if mode == 'and' and self.hasIndexOn(fields):
+                if verbose:
+                    print 'Using index for %s' % str(fields)
+
+                from_keys = set(from_keys)
+
+                for m, key in self._findWithIndexed(fields, values):
+                    if key in from_keys:
+                        yield m, key
+
+                raise StopIteration
+
+            if mode == 'or' and all(self.hasIndexOn(f) for f in fields):
+                if verbose:
+                    print 'Using index for %s' % ' and '.join(set(fields))
+
+                from_keys = set(from_keys)
+
+                for f, v in conditions:
+                    for m, key in self._findWithIndexed((f,), (v,)):
+                        if key in from_keys:
+                            yield m, key
+
+                raise StopIteration
+
+
         # We set the lambda function now to avoid testing
         # force_str and reverse at each key later
         if not force_str and not reverse:
@@ -910,14 +955,15 @@ class GeoBase(object):
         elif mode == 'or':
             pass_all = any
         else:
-            raise ValueError('"mode" argument must be in %s, was %s' % (str(['and', 'or']), mode))
-
+            raise ValueError('"mode" argument must be in %s, was %s' % \
+                             (str(['and', 'or']), mode))
 
         for key in from_keys:
             try:
                 matches = [pass_one(self.get(key, f), v) for f, v in conditions]
                 if pass_all(matches):
                     yield sum(matches), key
+
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if verbose:
