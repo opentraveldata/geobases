@@ -806,6 +806,13 @@ def handle_args():
         ''' % fmt_or(DEF_PHONETIC_FIELDS)),
         default = None)
 
+    parser.add_argument('-y', '--nysiis',
+        help = dedent('''\
+        By default, --phonetic uses dmetaphone algorithm. With this flag,
+        it switches to nysiis.
+        '''),
+        action = 'store_true')
+
     parser.add_argument('-e', '--exact',
         help = dedent('''\
         Rather than looking up a key, this mode will search all keys
@@ -1395,10 +1402,12 @@ def main():
 
     if args['phonetic'] is not None:
         args['phonetic'] = ' '.join(args['phonetic'])
-        if verbose:
-            print '(*) Applying property %s sounds ~ "%s"' % (args['phonetic_property'], args['phonetic'])
+        method = 'dmetaphone' if not args['nysiis'] else 'nysiis'
 
-        res = list(g.phoneticFind(args['phonetic'], args['phonetic_property'], method='dmetaphone', from_keys=ex_keys(res)))
+        if verbose:
+            print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], method)
+
+        res = list(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res)))
         last = 'phonetic'
 
 
