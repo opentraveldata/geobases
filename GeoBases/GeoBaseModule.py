@@ -371,6 +371,11 @@ class GeoBase(object):
         :param fields:  the iterable of fields
         :param verbose: toggle verbosity
         """
+        if not fields:
+            if verbose:
+                print '/!\ fields %s were empty, index not added' % str(fields)
+            return
+
         if isinstance(fields, str):
             fields = (fields,)
         else:
