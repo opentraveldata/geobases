@@ -24,9 +24,9 @@ _arguments \
  "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]:near limit (km):$N_RADIUS" \
  "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:*:from point:()" \
  "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit (nb):$C_CLOSEST" \
+ "(-w --without-grid)"{-w,--without-grid}"[Disable grid for geographical searches]" \
  "(-t --trep)"{-t,--trep}"[OpenTrep mode]:*:value:()" \
  "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
- "(-g --gridless)"{-g,--gridless}"[Disabling grid for nearby searches]" \
  "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
  "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
  "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
@@ -36,10 +36,10 @@ _arguments \
  "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header:$Q_QUIET" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
  "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color icon duplicates:$F_FIELDS" \
- "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
+ "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
  "(-u --update)"{-u,--update}"[Try to update the data files]" \
  "(-U --update-forced)"{-U,--update-forced}"[Force the update of all data files]" \
- "(-v --version)"{-v,--version}"[Display version information]" \
+ "(-V --version)"{-V,--version}"[Display version information]" \
  "*:keys:()"
 
 # Magic modeline option lo use zsh coloration in vim
