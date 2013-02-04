@@ -7,11 +7,11 @@ V5
 
 + 5.0 :
 
- + phonetic searches with dmetaphone (-p/-P for CLI)
+ + phonetic searches with dmetaphone (-p/-P/-y for CLI)
  + options: --warnings (-w) is --verbose (-v), --version (-v) short is -V, --gridless (-g) is --without-grid (-w)
  + more tests
  + consistent verbosity handling
- + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods
+ + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods (access with -i for CLI)
  + line number indexation with key_fiels None
  + changes in methods names for better consistency: find vs get
 
