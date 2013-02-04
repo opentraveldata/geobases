@@ -1083,7 +1083,7 @@ def main():
     #
     # CREATION
     #
-    if verbose and warnings:
+    if warnings:
         before_init = datetime.now()
 
     if args['version']:
@@ -1182,7 +1182,7 @@ def main():
 
         g = GeoBase(data=args['base'], verbose=warnings, **add_options)
 
-    if verbose and warnings:
+    if warnings:
         after_init = datetime.now()
 
     # Tuning parameters
@@ -1380,7 +1380,7 @@ def main():
         last = 'closest'
 
 
-    if verbose and warnings:
+    if warnings:
         end = datetime.now()
         print 'Done in %s = (load) %s + (search) %s' % \
                 (end - before_init, after_init - before_init, end - after_init)
