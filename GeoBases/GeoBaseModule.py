@@ -895,11 +895,22 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
         Using index for ('iata_code',)
         [(1, 'MRS'), (1, 'MRS@1')]
-        >>> geo_o.addIndex('city_code')
-        Built an index for fields ('city_code',)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
-        Using index for iata_code and city_code
-        [(1, 'NCE'), (1, 'NCE@1'), (1, 'NCE'), (1, 'NCE@1')]
+        >>> 
+        >>> geo_o.addIndex('location_type')
+        Built an index for fields ('location_type',)
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
+        Using index for ('iata_code',) and ('location_type',)
+        [(2, 'NCE')]
+        >>> 
+        >>> geo_o.addIndex(('iata_code', 'location_type'))
+        Built an index for fields ('iata_code', 'location_type')
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
+        Using index for ('iata_code', 'location_type')
+        [(2, 'NCE')]
+        >>> 
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='or', verbose=True))
+        Using index for ('iata_code',) and ('location_type',)
+        [(1, 'NCE'), (1, 'NCE@1'), ...]
 
         Testing several conditions.
 
@@ -933,20 +944,36 @@ class GeoBase(object):
                 if verbose:
                     print 'Using index for %s' % str(fields)
 
+                # Here we use directly the multiple index to have the matching keys
                 from_keys = set(from_keys)
-
                 for m, key in self._findWithIndexed(fields, values):
                     if key in from_keys:
                         yield m, key
 
                 raise StopIteration
 
+            if mode == 'and' and all(self.hasIndexOn(f) for f in fields):
+                if verbose:
+                    print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
+
+                # Here we use each index to check the condition on one field
+                # and we keep only the keys matching *all* conditions
+                candidates = set(from_keys)
+                for f, v in conditions:
+                    candidates = candidates & set(k for _, k in self._findWithIndexed((f,), (v,)))
+
+                for key in candidates:
+                    yield len(fields), key
+
+                raise StopIteration
+
             if mode == 'or' and all(self.hasIndexOn(f) for f in fields):
                 if verbose:
-                    print 'Using index for %s' % ' and '.join(set(fields))
+                    print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
 
+                # Here we use each index to check the condition on one field
+                # and we return the keys matching *any* condition
                 from_keys = set(from_keys)
-
                 for f, v in conditions:
                     for m, key in self._findWithIndexed((f,), (v,)):
                         if key in from_keys:
