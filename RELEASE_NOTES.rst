@@ -7,8 +7,10 @@ V5
 
 + 5.0 :
 
- + multiple index possibility on every field
- + line number indexation
+ + more tests
+ + consistent verbosity handling
+ + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods
+ + line number indexation with key_fiels None
  + changes in methods names for better consistency: find vs get
 
 V4
