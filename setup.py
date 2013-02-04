@@ -17,6 +17,7 @@ INSTALL_REQUIRES = [
     'pyyaml',
     'python_geohash',
     'python_Levenshtein',
+    'fuzzy',
     # Public - CLI
     'argparse',
     'termcolor',
