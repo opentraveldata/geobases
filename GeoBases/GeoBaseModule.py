@@ -878,11 +878,11 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.findWith([('__dup__', [])])))
-        7019
+        7016
         >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True)))
-        7019
+        7016
         >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # Counting duplicated keys
-        4435
+        4438
 
         Testing indexes.
 
@@ -902,11 +902,11 @@ class GeoBase(object):
         >>> len(list(geo_o.findWith(c_1)))
         18
         >>> len(list(geo_o.findWith(c_2)))
-        91
+        92
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
-        107
+        108
 
         This works too \o/.
 
