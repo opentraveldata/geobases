@@ -174,7 +174,8 @@ class GeoBase(object):
         - local         : ``True`` by default, is the source local or not
         - source        : ``None`` by default, file-like to the source
         - headers       : ``[]`` by default, list of fields in the data
-        - key_fields    : ``None`` by default, list of fields defining the key for a line
+        - key_fields    : ``None`` by default, list of fields defining the key for a line, \
+                None means line numbers will be used to generate keys
         - delimiter     : ``'^'`` by default, delimiter for each field,
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
         - quotechar     : ``'"'`` by default, this is the string defined for quoting
@@ -367,10 +368,16 @@ class GeoBase(object):
 
 
 
-    @staticmethod
-    def _buildKeyer(key_fields, headers):
+    def _buildKeyer(self, key_fields, headers):
         """Define the function that build a line key.
         """
+        # If key_fields is None we index with the line number
+        if key_fields is None:
+            if self._verbose:
+                print '/!\ key_fields was None, keys will be created from line numbers.'
+
+            return (), lambda row, pos, line_nb: line_nb
+
         # It is possible to have a key_fields which is a list
         # In this case we build the key as the concatenation between
         # the different fields
@@ -389,7 +396,7 @@ class GeoBase(object):
             raise ValueError("Inconsistent: headers = %s with key_fields = %s" % \
                              (headers, key_fields))
         else:
-            keyer = lambda row, pos: '+'.join(row[p] for p in pos)
+            keyer = lambda row, pos, line_nb: '+'.join(row[p] for p in pos)
 
         return pos, keyer
 
@@ -512,7 +519,7 @@ class GeoBase(object):
                 continue
 
             try:
-                key = keyer(row, pos)
+                key = keyer(row, pos, line_nb)
             except IndexError:
                 if verbose:
                     print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
