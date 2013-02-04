@@ -915,9 +915,11 @@ class GeoBase(object):
         Using index for ('iata_code', 'location_type')
         [(2, 'NCE')]
         >>> 
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='or', verbose=True))
-        Using index for ('iata_code',) and ('location_type',)
-        [(1, 'NCE'), (1, 'NCE@1'), ...]
+        >>> geo_o.addIndex('city_code')
+        Built index for fields ('city_code',)
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
+        Using index for ('iata_code',) and ('city_code',)
+        [(1, 'NCE@1'), (1, 'NCE')]
 
         Testing several conditions.
 
@@ -956,7 +958,6 @@ class GeoBase(object):
                 for m, key in self._findWithIndexed(fields, values):
                     if key in from_keys:
                         yield m, key
-
                 raise StopIteration
 
             if mode == 'and' and all(self.hasIndexOn(f) for f in fields):
@@ -969,9 +970,9 @@ class GeoBase(object):
                 for f, v in conditions:
                     candidates = candidates & set(k for _, k in self._findWithIndexed((f,), (v,)))
 
+                m = len(fields)
                 for key in candidates:
-                    yield len(fields), key
-
+                    yield m, key
                 raise StopIteration
 
             if mode == 'or' and all(self.hasIndexOn(f) for f in fields):
@@ -980,12 +981,12 @@ class GeoBase(object):
 
                 # Here we use each index to check the condition on one field
                 # and we return the keys matching *any* condition
-                from_keys = set(from_keys)
+                candidates = set()
                 for f, v in conditions:
-                    for m, key in self._findWithIndexed((f,), (v,)):
-                        if key in from_keys:
-                            yield m, key
+                    candidates = candidates | set(k for _, k in self._findWithIndexed((f,), (v,)))
 
+                for key in candidates & set(from_keys):
+                    yield 1, key
                 raise StopIteration
 
 
