@@ -60,6 +60,7 @@ from shutil import copy
 
 # Not in standard library
 import yaml
+from fuzzy import DMetaphone, nysiis #, Soundex
 
 from .GeoUtils         import haversine
 from .LevenshteinUtils import mod_leven, clean
@@ -1558,6 +1559,51 @@ class GeoBase(object):
                      '+'.join(clean(fuzzy_value)),
                      '+'.join(clean(self.get(key, field))),
                      key)
+
+
+    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None):
+        """Phonetic search.
+
+        :param value:     the value for which we look for a match
+        :param field:     the field, like 'name'
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
+        :returns:         an iterable of (sound, key) matching
+
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
+        ['Chicago']
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        ['Chicago']
+
+        >>> list(geo_o.phoneticFind('chicago', 'name'))
+        [(['XKK', None], 'CHI')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        [('CACAG', 'CHI')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'soundex'))
+        Traceback (most recent call last):
+        ValueError: Accepted methods are ['dmetaphone', 'nysiis']
+        """
+        if method == 'dmetaphone':
+            soundify = DMetaphone()
+
+        elif method == 'nysiis':
+            soundify = nysiis
+
+        else:
+            raise ValueError('Accepted methods are %s' % \
+                             ['dmetaphone', 'nysiis'])
+
+        if from_keys is None:
+            from_keys = iter(self)
+
+        expected_sound = soundify(value)
+
+        for key in from_keys:
+            sound = soundify(self.get(key, field))
+
+            if sound == expected_sound:
+                yield sound, key
+
 
 
     def distance(self, key0, key1):
