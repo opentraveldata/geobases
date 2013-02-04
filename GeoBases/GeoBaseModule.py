@@ -307,6 +307,11 @@ class GeoBase(object):
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
 
+        # Some headers are not accepted
+        for h in self._headers:
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+
         # Loading data
         self._configSubDelimiters()
 
@@ -331,9 +336,6 @@ class GeoBase(object):
         """Some precomputation on subdelimiters.
         """
         for h in self._headers:
-
-            if str(h).endswith('@raw') or str(h).startswith('__'):
-                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
 
             # If not in conf, do not sub split
             if h not in self._subdelimiters:
@@ -749,11 +751,11 @@ class GeoBase(object):
         >>> list(geo_o.getKeysWhere([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.getKeysWhere([('__dup__', [])])))
-        7019
+        7016
         >>> len(list(geo_o.getKeysWhere([('__dup__', '[]')], force_str=True)))
-        7019
+        7016
         >>> len(list(geo_o.getKeysWhere([('__par__', [])], reverse=True))) # Counting duplicated keys
-        4435
+        4438
 
         Testing several conditions.
 
@@ -762,11 +764,11 @@ class GeoBase(object):
         >>> len(list(geo_o.getKeysWhere(c_1)))
         18
         >>> len(list(geo_o.getKeysWhere(c_2)))
-        91
+        92
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.getKeysWhere(c_1 + c_2, mode='or')))
-        107
+        108
 
         This works too \o/.
 
