@@ -793,7 +793,7 @@ def handle_args():
         help = dedent('''\
         Rather than looking up a key, this mode will search the best phonetic
         match for the property given by --phonetic-property option for
-        the argument.
+        the argument. This works well only for english.
         '''),
         default = None,
         nargs = '+')
@@ -940,7 +940,7 @@ def handle_args():
         help = dedent('''\
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
-        4 optional arguments: delimiter, headers, key_fields, discard_dups.
+        5 optional arguments: delimiter, headers, key_fields, discard_dups, indices.
             1) default delimiter is smart :).
             2) default headers will use numbers, and try to sniff lat/lng.
                Use __head__ as header value to
@@ -951,6 +951,8 @@ def handle_args():
             4) discard_dups is a boolean to toggle duplicated keys dropping.
                Default is %s. Put %s as a truthy value,
                any other value will be falsy.
+            5) indices is a field, if given, this will build an index on that field
+               to speed up findWith queries.
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
