@@ -661,6 +661,7 @@ TRUTHY = ('1', 'Y')
 # Duplicates handling in feed mode
 DEF_DISCARD_RAW = 'F'
 DEF_DISCARD     = False
+DEF_INDICES     = []
 
 # Magic value option to skip and leave default, or disable
 SKIP    = '_'
@@ -1156,6 +1157,7 @@ def main():
 
         discard_dups_r = DEF_DISCARD_RAW
         discard_dups   = DEF_DISCARD
+        indices        = DEF_INDICES
 
         if len(args['indexation']) >= 1 and args['indexation'][0] != SKIP:
             delimiter = args['indexation'][0]
@@ -1179,9 +1181,16 @@ def main():
             discard_dups_r = args['indexation'][3]
             discard_dups   = discard_dups_r in TRUTHY
 
+        if len(args['indexation']) >= 5 and args['indexation'][4] != SKIP:
+            indices = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
+
         if verbose:
-            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s"' % \
-                    (delimiter, SPLIT.join(headers), DISABLE if key_fields is None else SPLIT.join(key_fields), discard_dups_r)
+            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
+                    (delimiter,
+                     SPLIT.join(headers),
+                     SPLIT.join(key_fields) if key_fields is not None else DISABLE,
+                     discard_dups_r,
+                     SPLIT.join(indices[0]) if indices else DISABLE)
 
         g = GeoBase(data='feed',
                     source=source,
@@ -1189,6 +1198,7 @@ def main():
                     headers=headers,
                     key_fields=key_fields,
                     discard_dups=discard_dups,
+                    indices=indices,
                     verbose=logorrhea)
     else:
         # -i options overrides default
@@ -1205,6 +1215,9 @@ def main():
 
         if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
             add_options['discard_dups'] = args['indexation'][3] in TRUTHY
+
+        if len(args['indexation']) >= 5 and args['indexation'][4] != SKIP:
+            add_options['indices'] = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
 
         if verbose:
             if not add_options:
