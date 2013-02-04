@@ -381,6 +381,10 @@ class GeoBase(object):
         else:
             fields = tuple(fields)
 
+        if self.hasIndexOn(fields):
+            if verbose:
+                print '/!\ Index on %s already built, overriding...' % str(fields)
+
         self._indexed[fields] = self._buildIndex(fields, verbose)
 
 
