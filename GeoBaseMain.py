@@ -628,16 +628,17 @@ def error(name, *args):
 #######
 
 # Global defaults
-DEF_BASE          = 'ori_por'
-DEF_FUZZY_LIMIT   = 0.85
-DEF_NEAR_LIMIT    = 50.
-DEF_CLOSEST_LIMIT = 10
-DEF_TREP_FORMAT   = 'S'
-DEF_QUIET_DELIM   = '^'
-DEF_QUIET_HEADER  = 'CH'
-DEF_INTER_FUZZY_L = 0.90
-DEF_FUZZY_FIELDS  = ('name', 'country_name', 'currency_name', '__key__')
-DEF_EXACT_FIELDS  = ('__key__',)
+DEF_BASE            = 'ori_por'
+DEF_FUZZY_LIMIT     = 0.85
+DEF_NEAR_LIMIT      = 50.
+DEF_CLOSEST_LIMIT   = 10
+DEF_TREP_FORMAT     = 'S'
+DEF_QUIET_DELIM     = '^'
+DEF_QUIET_HEADER    = 'CH'
+DEF_INTER_FUZZY_L   = 0.90
+DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
+DEF_EXACT_FIELDS    = ('__key__',)
+DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
 
 # For requests with findWith, force stringification before testing
 FORCE_STR = False
@@ -758,7 +759,7 @@ def handle_args():
     parser.add_argument('-f', '--fuzzy',
         help = dedent('''\
         Rather than looking up a key, this mode will search the best
-        match from the property given by --fuzzy-property option for
+        match for the property given by --fuzzy-property option for
         the argument. Limit can be specified with --fuzzy-limit option.
         '''),
         default = None,
@@ -780,6 +781,24 @@ def handle_args():
         ''' % DEF_FUZZY_LIMIT),
         default = DEF_FUZZY_LIMIT,
         type = float)
+
+    parser.add_argument('-p', '--phonetic',
+        help = dedent('''\
+        Rather than looking up a key, this mode will search the best phonetic
+        match for the property given by --phonetic-property option for
+        the argument.
+        '''),
+        default = None,
+        nargs = '+')
+
+    parser.add_argument('-P', '--phonetic-property',
+        help = dedent('''\
+        When performing a phonetic search, specify the property to be chosen.
+        Default is %s
+        depending on fields.
+        Give unadmissible property and available values will be displayed.
+        ''' % fmt_or(DEF_PHONETIC_FIELDS)),
+        default = None)
 
     parser.add_argument('-e', '--exact',
         help = dedent('''\
@@ -1195,6 +1214,9 @@ def main():
     if args['fuzzy_property'] is None:
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
+    if args['phonetic_property'] is None:
+        args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
+
     # Reading map options
     label           = best_field(DEF_LABEL_FIELDS, g.fields)
     point_size      = best_field(DEF_SIZE_FIELDS,  g.fields)
@@ -1262,6 +1284,10 @@ def main():
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
             error('property', args['fuzzy_property'], g.data, g.fields)
+
+    if args['phonetic'] is not None:
+        if args['phonetic_property'] not in g.fields:
+            error('property', args['phonetic_property'], g.data, g.fields)
 
     # Failing on unknown fields
     fields_to_test = [
@@ -1361,6 +1387,15 @@ def main():
         last = 'fuzzy'
 
 
+    if args['phonetic'] is not None:
+        args['phonetic'] = ' '.join(args['phonetic'])
+        if verbose:
+            print 'Applying property %s sounds ~ "%s"' % (args['phonetic_property'], args['phonetic'])
+
+        res = list(g.phoneticFind(args['phonetic'], args['phonetic_property'], method='dmetaphone', from_keys=ex_keys(res)))
+        last = 'phonetic'
+
+
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
@@ -1424,6 +1459,9 @@ def main():
     if args['fuzzy'] is not None:
         important.add(args['fuzzy_property'])
 
+    if args['phonetic'] is not None:
+        important.add(args['phonetic_property'])
+
     if interactive_query_mode:
         important.add(interactive_field)
 
@@ -1432,6 +1470,8 @@ def main():
         ref_type = 'distance'
     elif last in ['trep', 'fuzzy']:
         ref_type = 'percentage'
+    elif last in ['phonetic']:
+        ref_type = 'sound'
     else:
         ref_type = 'index'
 
