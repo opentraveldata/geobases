@@ -141,4 +141,4 @@ namespace :build do
 
 end
 
-task :default => 'build:publish'
+task :default => 'build:package'
