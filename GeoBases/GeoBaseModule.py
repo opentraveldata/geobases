@@ -99,6 +99,9 @@ LAT_FIELD  = 'lat'
 LNG_FIELD  = 'lng'
 GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
+# Default min match for fuzzy searches
+MIN_MATCH = 0.75
+
 # Loading indicator
 NB_LINES_STEP = 100000
 
@@ -1392,7 +1395,7 @@ class GeoBase(object):
                 yield r, key
 
 
-    def fuzzyFind(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None):
+    def fuzzyFind(self, fuzzy_value, field, max_results=None, min_match=MIN_MATCH, from_keys=None):
         """
         Fuzzy searches are retrieving an information
         on a thing when we do not know the code.
@@ -1447,7 +1450,7 @@ class GeoBase(object):
 
 
 
-    def fuzzyFindNearPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, grid=True, double_check=True):
+    def fuzzyFindNearPoint(self, lat_lng, radius, fuzzy_value, field, max_results=None, min_match=MIN_MATCH, from_keys=None, grid=True, double_check=True):
         """
         Same as fuzzyFind but with we search only within a radius
         from a geocode.
@@ -1494,7 +1497,7 @@ class GeoBase(object):
                        fuzzy_value,
                        field,
                        max_results=None,
-                       min_match=0.75,
+                       min_match=MIN_MATCH,
                        from_keys=None,
                        verbose=False,
                        d_range=None):
@@ -1524,7 +1527,7 @@ class GeoBase(object):
         Some biasing:
 
         >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, None, [(0.5, 'Biased result')])
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, verbose=True, d_range=(0, 1)) # Cache there
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, verbose=True, d_range=(0, 1))
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         >>> geo_a.clearBiasCache()
@@ -1559,7 +1562,7 @@ class GeoBase(object):
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, biased_result=()):
+    def biasFuzzyCache(self, fuzzy_value, field, max_results=None, min_match=MIN_MATCH, from_keys=None, biased_result=()):
         """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
