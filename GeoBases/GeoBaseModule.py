@@ -1489,21 +1489,6 @@ class GeoBase(object):
         return self.fuzzyFind(fuzzy_value, field, max_results, min_match, from_keys=nearest)
 
 
-    def _fuzzyFindBiased(self, entry, verbose=False):
-        """Same as fuzzyFind but with bias system.
-        """
-        if entry in self._bias_cache_fuzzy:
-            # If the entry is stored is our bias
-            # cache, we do not perform the fuzzy search
-            # It avoids single failure on some rare examples
-            if verbose:
-                print 'Using bias: %s' % str(entry)
-
-            return self._bias_cache_fuzzy[entry]
-
-        # If not we process and store it in the cache
-        return self.fuzzyFind(*entry)
-
 
     def fuzzyFindCached(self,
                        fuzzy_value,
@@ -1539,12 +1524,12 @@ class GeoBase(object):
         Some biasing:
 
         >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, None, [(0.5, 'Biased result')])
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, d_range=(0, 1))[0] # Cache there
-        (0.78..., 'CDG')
-        >>> geo_a.clearCache()
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75, verbose=True)
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, verbose=True, d_range=(0, 1)) # Cache there
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
+        >>> geo_a.clearBiasCache()
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75, verbose=True)
+        [(0.78..., 'CDG')]
         """
         if d_range is None:
             d_range = (min_match, 1.0)
@@ -1552,9 +1537,17 @@ class GeoBase(object):
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
+        if entry in self._bias_cache_fuzzy:
+            # If the entry is stored is our bias
+            # cache, we do not perform the fuzzy search
+            if verbose:
+                print 'Using bias: %s' % str(entry)
+
+            return self._bias_cache_fuzzy[entry]
+
         if entry not in self._cache_fuzzy:
 
-            match = self._fuzzyFindBiased(entry, verbose=verbose)
+            match = self.fuzzyFind(*entry)
 
             self._cache_fuzzy[entry] = match
 
@@ -1581,7 +1574,7 @@ class GeoBase(object):
         :param biased_result: the expected result
         :returns:             None
 
-        >>> geo_t.fuzzyFind('Marseille Saint Ch.', 'name')[0]
+        >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
         >>> geo_t.biasFuzzyCache('Marseille Saint Ch.', 'name', biased_result=[(1.0, 'Me!')])
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
