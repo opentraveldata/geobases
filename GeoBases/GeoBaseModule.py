@@ -850,8 +850,8 @@ class GeoBase(object):
 
 
 
-    def _findWithIndexed(self, fields, values):
-        """Perform findWith using the index.
+    def _findWithUsingSingleIndex(self, fields, values):
+        """Perform findWith using one index.
         """
         if values not in self._indexed[fields]:
             # No key matched these values for the fields
@@ -861,6 +861,66 @@ class GeoBase(object):
 
         for key in self._indexed[fields][values]:
             yield m, key
+
+
+
+    def _checkIndexUsability(self, conditions, mode):
+        """Check if indexes are usable for a given iterable of fields.
+        """
+        fields = tuple(f for f, _ in conditions)
+
+        if self.hasIndexOn(fields) and mode == 'and':
+            return True
+
+        if all(self.hasIndexOn(f) for f in fields):
+            return True
+
+        return False
+
+
+
+    def _findWithUsingMultipleIndex(self, conditions, from_keys, mode, verbose=False):
+        """Perform findWith using several indexes.
+        """
+        fields = tuple(f for f, _ in conditions)
+        values = tuple(v for _, v in conditions)
+
+        if self.hasIndexOn(fields) and mode == 'and':
+            if verbose:
+                print 'Using index for %s' % str(fields)
+
+            # Here we use directly the multiple index to have the matching keys
+            from_keys = set(from_keys)
+            for m, key in self._findWithUsingSingleIndex(fields, values):
+                if key in from_keys:
+                    yield m, key
+
+
+        elif all(self.hasIndexOn(f) for f in fields):
+            if verbose:
+                print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
+
+            if mode == 'or':
+                # Here we use each index to check the condition on one field
+                # and we return the keys matching *any* condition
+                candidates = set()
+                for f, v in conditions:
+                    candidates = candidates | set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+
+                for key in candidates & set(from_keys):
+                    m = sum(self.get(key, f) == v for f, v in conditions)
+                    yield m, key
+
+            elif mode == 'and':
+                # Here we use each index to check the condition on one field
+                # and we keep only the keys matching *all* conditions
+                candidates = set(from_keys)
+                for f, v in conditions:
+                    candidates = candidates & set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+
+                m = len(fields)
+                for key in candidates:
+                    yield m, key
 
 
 
@@ -946,48 +1006,12 @@ class GeoBase(object):
 
         # If indexed
         if not force_str and not reverse:
-            fields = tuple(f for f, _ in conditions)
-            values = tuple(v for _, v in conditions)
+            # If this condition is not met, we do not raise StopIteration,
+            # we will proceed with non-indexed code after
+            if self._checkIndexUsability(conditions, mode):
 
-            if mode == 'and' and self.hasIndexOn(fields):
-                if verbose:
-                    print 'Using index for %s' % str(fields)
-
-                # Here we use directly the multiple index to have the matching keys
-                from_keys = set(from_keys)
-                for m, key in self._findWithIndexed(fields, values):
-                    if key in from_keys:
-                        yield m, key
-                raise StopIteration
-
-            if mode == 'and' and all(self.hasIndexOn(f) for f in fields):
-                if verbose:
-                    print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
-
-                # Here we use each index to check the condition on one field
-                # and we keep only the keys matching *all* conditions
-                candidates = set(from_keys)
-                for f, v in conditions:
-                    candidates = candidates & set(k for _, k in self._findWithIndexed((f,), (v,)))
-
-                m = len(fields)
-                for key in candidates:
-                    yield m, key
-                raise StopIteration
-
-            if mode == 'or' and all(self.hasIndexOn(f) for f in fields):
-                if verbose:
-                    print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
-
-                # Here we use each index to check the condition on one field
-                # and we return the keys matching *any* condition
-                candidates = set()
-                for f, v in conditions:
-                    candidates = candidates | set(k for _, k in self._findWithIndexed((f,), (v,)))
-
-                for key in candidates & set(from_keys):
-                    m = sum(self.get(key, f) == v for f, v in conditions)
-                    yield m, key
+                for t in self._findWithUsingMultipleIndex(conditions, from_keys=from_keys, mode=mode, verbose=verbose):
+                    yield t
                 raise StopIteration
 
 
