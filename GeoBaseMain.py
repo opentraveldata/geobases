@@ -649,7 +649,7 @@ DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
 FORCE_STR = False
 
 ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
-ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__')
+ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__', '__phonetic__')
 
 DEF_INTER_FIELD = '__key__'
 DEF_INTER_TYPE  = '__exact__'
@@ -1371,6 +1371,13 @@ def main():
             for val in values:
                 res.extend(list(g.fuzzyFindCached(val, interactive_field, min_match=args['fuzzy_limit'], verbose=logorrhea)))
             last = 'fuzzy'
+
+        elif interactive_type == '__phonetic__':
+            method = 'dmetaphone' if not args['nysiis'] else 'nysiis'
+            res = []
+            for val in values:
+                res.extend(list(g.phoneticFind(val, interactive_field, method=method)))
+            last = 'phonetic'
 
     elif args['keys']:
         res = enumerate(args['keys'])
