@@ -1435,7 +1435,7 @@ def main():
         if verbose:
             print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], method)
 
-        res = list(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res)))
+        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res)))
         last = 'phonetic'
 
 
