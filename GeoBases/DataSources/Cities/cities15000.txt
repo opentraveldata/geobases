@@ -2991,7 +2991,7 @@
 1786676	Yima	Yima	I-ma,Jimy,Yima,Йимы	34.73806	111.88389	P	PPL	CN		09				82509		484	Asia/Shanghai	2012-01-18
 1786720	Yigou	Yigou	I-kou,I-kou-chen,I-kou-i,Igoui,Yigou	35.81139	114.31667	P	PPL	CN		09				59073		90	Asia/Shanghai	2012-01-18
 1786731	Qingzhou	Qingzhou	Ch'ing-chou,Ch’ing-chou,Cinchzhou,I-tu,I-tu-hsien,Qingzhou,Tsingchow,Tsingchowfu,Yidu,Yitu,Цинчжоу	36.69667	118.47972	P	PPL	CN		25				117056		98	Asia/Shanghai	2012-01-18
-1786746	Yichun	Yichun	I-ch'un,I-ch'un-chen,I-ch'un-hsien,I-ch’un,I-ch’un-chen,I-ch’un-hsien,Ichun',Yichun,Yichun Shi,Yuan-chou,Yuanchow,Yuen-chow-fu,Yüan-chou,Yüanchow,yi chun,yi chun shi,Ичунь,宜春,宜春市	27.83333	114.4	P	PPLA2	CN		03				152169		99	Asia/Shanghai	2012-01-18
+1786746	Yichun	Yichun	I-ch'un,I-ch'un-chen,I-ch'un-hsien,I-ch’un,I-ch’un-chen,I-ch’un-hsien,Ichun',YIC,Yichun,Yichun Shi,Yuan-chou,Yuanchow,Yuen-chow-fu,Yüan-chou,Yüanchow,yi chun,yi chun shi,Ичунь,宜春,宜春市	27.83333	114.4	P	PPLA2	CN		03				152169		99	Asia/Shanghai	2013-02-03
 1786759	Yicheng	Yicheng	Hsuan-ch'eng,Hsüan-ch’eng,I-ch'eng,I-ch'eng-hsien,I-ch’eng,I-ch’eng-hsien,Tzu-chung,Tzu-chung-hsien,Yicheng,Yicheng Jiedao,yan cheng,yan cheng jie dao,鄢城,鄢城街道	31.70472	112.25611	P	PPLA3	CN		12				61027		63	Asia/Shanghai	2012-01-18
 1786760	Yicheng	Yicheng	I-ch'eng-chen,I-ch’eng-chen,I-hsing,I-hsing-ch'eng,I-hsing-ch’eng,I-hsing-hsien,Ihing,Yicheng,Yicheng Jiedao,Yixing,Yixing Shi,yi cheng,yi cheng jie dao,yi xing shi,宜兴市,宜城,宜城街道	31.36059	119.82016	P	PPLA3	CN		04				95530		3	Asia/Shanghai	2012-09-06
 1786764	Yichang	Yichang	I-ch'ang-hsien,I-ch'ang-shih,I-chang,I-ch’ang-hsien,I-ch’ang-shih,Ichan,Tung-hu,YIH,Yichang,yi chang shi,Ичан,يىچاڭ شەھىرى,宜昌市	30.71444	111.28472	P	PPL	CN		12				476725		63	Asia/Shanghai	2011-08-07
@@ -4736,7 +4736,7 @@
 2892518	Kassel	Kassel	Cassala,Cassel,Castellum,Chasalla,Gorad Kasel',KSF,Kasel,Kasele,Kaseli,Kaselis,Kaselo,Kassel,Kassel',ka sai er,kasel,kasl,kasseru,khas seil,kysl,Κάσσελ,Горад Касель,Касел,Кассель,קאסל,كاسل,کاسل,کیسل,คัสเซิล,カッセル,卡塞尔,卡塞爾,카셀	51.31667	9.5	P	PPLA2	DE		05	066	06611		194501		164	Europe/Berlin	2010-11-21
 2892705	Karow	Karow	Berlin-Karow	52.60904	13.48117	P	PPLX	DE	DE	16	00	11000	11000000	18817		55	Europe/Berlin	2012-06-09
 2892786	Karlstadt	Karlstadt	Karlstadt	49.96034	9.77239	P	PPL	DE		02				15272		172	Europe/Berlin	2012-09-06
-2892794	Karlsruhe	Karlsruhe	Carlsruhe,Carolsruha,Karlsroue,Karlsrue,Karlsrueh,Karlsruhe,ka er si lu e,kaleulseulue,karlsrwhh,karusurue,Καρλσρούη,Карлсруе,Карлсруэ,קארלסרוהה,كارلسروهه,کارلسروهه,კარლსრუე,カールスルーエ,卡尔斯鲁厄,카를스루에	49.00472	8.38583	P	PPLA2	DE		01	082			283799		115	Europe/Berlin	2010-11-21
+2892794	Karlsruhe	Karlsruhe	Carlsruhe,Carolsruha,FKB,Karlsroue,Karlsrue,Karlsrueh,Karlsruhe,ka er si lu e,kaleulseulue,karlsrwhh,karusurue,Καρλσρούη,Карлсруе,Карлсруэ,קארלסרוהה,كارلسروهه,کارلسروهه,კარლსრუე,カールスルーエ,卡尔斯鲁厄,카를스루에	49.00472	8.38583	P	PPLA2	DE		01	082			283799		115	Europe/Berlin	2013-02-03
 2892811	Karlshorst	Karlshorst	Berlin-Karlshorst	52.48419	13.53185	P	PPLX	DE	DE	16	00	11000	11000000	22285		36	Europe/Berlin	2012-06-09
 2892874	Karlsfeld	Karlsfeld	Karlsfeld	48.21667	11.46667	P	PPLA4	DE		02	091	09174	09174126	17920		498	Europe/Berlin	2011-07-31
 2892980	Karben	Karben		50.23019	8.77155	P	PPL	DE		05	064			21642		118	Europe/Berlin	2010-11-15
@@ -5935,7 +5935,7 @@
 2519110	Crevillente	Crevillente	Crevillent,Crevillente,Krevil'ente,Кревильенте	38.24994	-0.80975	P	PPL	ES		60	A	03059		28609		146	Europe/Madrid	2012-01-19
 2519233	Coria del Río	Coria del Rio	Coria del Rio,Coria del Río,Koria-del'-Rio,Кориа-дель-Рио,コリア・デル・リオ	37.28766	-6.0541	P	PPLA3	ES		51	SE	41034		28100		13	Europe/Madrid	2012-03-04
 2519240	Córdoba	Cordoba	Cardoue,Cordoba,Cordoue,Cordova,Corduba,Còrdova,Córdoba,Kordava,Kordoba,Kordova,Kordovo,Kordowa,korudoba,kwrdwba,kxr do ba,qrtbh,qrtbt,qwrdwbh,Кордава,Кордоба,Кордова,קורדובה,قرطبة,قرطبه,قرطبہ,کوردوبا,กอร์โดบา,コルドバ	37.88333	-4.76667	P	PPLA2	ES		51	CO	14021		328428		106	Europe/Madrid	2010-08-22
-2519289	Conil de la Frontera	Conil de la Frontera	Conil,Conil de la Frontera,Koni	36.27719	-6.0885	P	PPLA3	ES		51	CA	11014		20984		42	Europe/Madrid	2012-09-08
+2519289	Conil de la Frontera	Conil de la Frontera	Conil,Conil de la Frontera	36.27719	-6.0885	P	PPLA3	ES		51	CA	11014		20984		42	Europe/Madrid	2013-02-04
 2519367	Coín	Coin		36.65947	-4.75639	P	PPLA3	ES		51	MA	29042		21866		210	Europe/Madrid	2012-03-04
 2519402	Ciudad Real	Ciudad Real	CQM,Ciudad Real,S'judad-Real',Villa-Real,lei a er cheng,Сьюдад-Реаль,シウダー・レアル,雷阿爾城	38.98333	-3.93333	P	PPLA2	ES		54	CR	13034		74014		633	Europe/Madrid	2012-04-29
 2519425	Cieza	Cieza	Cieza,S'esa,Сьеса	38.23998	-1.41987	P	PPLA3	ES		31	MU	30019		35200		194	Europe/Madrid	2012-03-04
@@ -8018,7 +8018,6 @@
 6639653	Alimos	Alimos	Alimos,Алимос	37.91667	23.71667	P	PPL	GR		ESYE31	445408	9195		38047		29	Europe/Athens	2012-01-17
 6693122	Μεσολόγγι	Mesolongi		38.37019	21.42952	P	PPL	GR		ESYE23	31	9127		18121		5	Europe/Athens	2012-01-17
 7522530	Marousi	Marousi	Amarousion,Amaroussio,Amaroussion,Marousi,Maroussi,Μαρούσι	38.05404	23.806	P	PPL	GR		ESYE31	445408	9168		69470	230	237	Europe/Athens	2012-01-17
-8449752	Patra-Ketx	Patra-Ketx		38.23775	21.75292	P	PPL	GR		ESYE23	38	9134		300000	56	98	Europe/Athens	2013-02-01
 3426466	Grytviken	Grytviken	Grjutviken,Grytviken,Грютвикен	-54.28111	-36.5092	P	PPLC	GS		00				2		4	Atlantic/South_Georgia	2010-12-11
 3587587	Zacapa	Zacapa	Sakapa,Zacapa,Сакапа	14.97222	-89.53056	P	PPLA	GT		22				36088		232	America/Guatemala	2012-12-05
 3587902	Villa Nueva	Villa Nueva	Vil'ja-Nuehva,Villa Nueva,Вилья-Нуэва	14.52694	-90.5875	P	PPL	GT		07				406830		1334	America/Guatemala	2012-01-18
@@ -15213,7 +15212,7 @@
 3932145	Pisco	Pisco	PIO,Pisco,Pisko,Писко	-13.7	-76.21667	P	PPLA3	PE		11	1105	110501		61869		7	America/Lima	2012-07-19
 3933024	Paramonga	Paramonga	Hacienda Paramonga,Paramonga,Paramonga Hacienda,Parmonga,Парамонга	-10.66667	-77.83333	P	PPLA3	PE		15	1502	150202		27631		11	America/Lima	2012-07-19
 3934239	Nuevo Imperial	Nuevo Imperial		-13.07541	-76.31719	P	PPLA3	PE		15	1505	150510		32344		153	America/Lima	2012-07-19
-3934356	Nazca	Nazca	Nasca,Naska,Nazca,Placa de Nazca,Plaskowyz Nazca,Provincia de Nazca,Płaskowyż Nazca,Наска	-14.83333	-74.95	P	PPLA3	PE		11	1103	110301		23556		565	America/Lima	2012-07-19
+3934356	Nazca	Nazca	NZC,Nasca,Naska,Nazca,Placa de Nazca,Plaskowyz Nazca,Provincia de Nazca,Płaskowyż Nazca,Наска	-14.83098	-74.93895	P	PPLA3	PE		11	1103	110301		23556		610	America/Lima	2013-02-03
 3934608	Moquegua	Moquegua	Mokegua,Moquegua,Мокегуа	-17.19832	-70.93567	P	PPLA	PE		18	1801	180101		54517		1481	America/Lima	2012-11-08
 3934707	Mollendo	Mollendo	Mol'endo,Mollendo,Мольендо	-17.02306	-72.01472	P	PPLA3	PE		04	0407	040701		28953		70	America/Lima	2012-07-19
 3935288	Minas de Marcona	Minas de Marcona	Marcona,Mina Marcona,Minas de Marcona	-15.21194	-75.11028	P	PPL	PE		11	1103	110304		15478		776	America/Lima	2012-07-19
@@ -17713,7 +17712,7 @@
 103369	Qal‘at Bīshah	Qal`at Bishah	Bisha,Qal`at Bishah,Qal‘at Bīshah	20.00054	42.6052	P	PPL	SA		00				81828		1168	Asia/Riyadh	2012-01-16
 103630	Najrān	Najran	Najran,Najrān	17.4924	44.12766	P	PPL	SA		16				258573		1310	Asia/Riyadh	2012-10-17
 104515	Mecca	Mecca	A Meca,A Meca - mkt,A Meca - مكة,La Meca,La Mecca,La Mecque,Lamecha,Macoraba,Maekkae,Makka,Makkah,Makkah al Mukarramah,Makkah al Mukarraman,Makkah al-Mukarramah,Meca,Mecca,Meice,Meka,Mekao,Mekka,Mekkah,Mekke,Mekko,Mäkkä,mai jia,makka,meka,mkh,mkt,Μέκκα,Мека,Мекка,מכה,مكة,مکه,مکہ,มักกะหฺ,མ་ཁ,მექა,マッカ,麥加,메카	21.42667	39.82611	P	PPL	SA		14				1323624		333	Asia/Riyadh	2012-08-08
-105072	Khamīs Mushayt	Khamis Mushayt	Khamis Mushait,Khamis Mushayt,Khamīs Mushayt,khmys mshyt,خميس مشيط	18.30639	42.72917	P	PPL	SA		11				387553		2005	Asia/Riyadh	2013-01-27
+105072	Khamīs Mushayt	Khamis Mushayt	KMX,Khamis Mushait,Khamis Mushayt,Khamīs Mushayt,khmys mshyt,خميس مشيط	18.30639	42.72917	P	PPL	SA		11				387553		2005	Asia/Riyadh	2013-02-03
 105299	Jīzān	Jizan	Djayzan,Djayzān,Djazan,Djāzān,Dzhizan,Gizan,Gizán,Jaizan,Jazan,Jezan,Jizan,Jāzān,Jīzān,Qizan,Qīzān,Джизан	16.88917	42.55111	P	PPLA	SA		17				105198		19	Asia/Riyadh	2012-01-14
 105343	Jeddah	Jeddah	Ciddae,Cidde,Ciddä,Djedda,Djeddah,Djidda,Dschidda,Dzedda,Dzhidda,Dzida,Dzudda,Dżudda,Džedda,Džida,Gedda,Gidda,Gido,JED,Jaddah,Jedda,Jeddah,Jida,Jidda,Jiddah,Jidá,Juddah,Yida,Yidda,g'dh,jdh,jdt,ji da,jidda,Ĝido,Джидда,ג'דה,جدة,جده,ジッダ,吉达	21.51694	39.21917	P	PPLA	SA		14				2867446		21	Asia/Riyadh	2012-02-03
 106281	Hayil	Hayil	Ha'il,Hael,Hajel,Hayil,Ḥâjel,Ḩā’il	27.52188	41.69073	P	PPLA	SA		13				267005		1002	Asia/Riyadh	2012-01-14
