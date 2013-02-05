@@ -60,7 +60,8 @@ from shutil import copy
 
 # Not in standard library
 import yaml
-from fuzzy import DMetaphone, nysiis #, Soundex
+from fuzzy import DMetaphone, nysiis
+dmeta = DMetaphone()
 
 from .GeoUtils         import haversine
 from .LevenshteinUtils import mod_leven, clean
@@ -1673,10 +1674,9 @@ class GeoBase(object):
         [('CACAG', 'CHI')]
         """
         if method == 'dmetaphone':
-            soundify = DMetaphone()
+            soundify = dmeta
 
         elif method == 'metaphone':
-            dmeta = DMetaphone()
             soundify = lambda v : dmeta(v)[0]
 
         elif method == 'nysiis':
