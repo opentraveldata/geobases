@@ -1566,7 +1566,7 @@ class GeoBase(object):
 
 
 
-    def biasFuzzyCache(self, fuzzy_value, field, max_results, min_match, from_keys, biased_result):
+    def biasFuzzyCache(self, fuzzy_value, field, max_results=None, min_match=0.75, from_keys=None, biased_result=()):
         """
         If algorithms for fuzzy searches are failing on a single example,
         it is possible to use a first cache which will block
@@ -1581,6 +1581,11 @@ class GeoBase(object):
         :param biased_result: the expected result
         :returns:             None
 
+        >>> geo_t.fuzzyFind('Marseille Saint Ch.', 'name')[0]
+        (0.8..., 'frmsc')
+        >>> geo_t.biasFuzzyCache('Marseille Saint Ch.', 'name', biased_result=[(1.0, 'Me!')])
+        >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
+        (1.0, 'Me!')
         """
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
@@ -1590,12 +1595,16 @@ class GeoBase(object):
 
     def clearCache(self):
         """Clear cache for fuzzy searches.
+
+        >>> geo_t.clearCache()
         """
         self._cache_fuzzy = {}
 
 
     def clearBiasCache(self):
         """Clear biasing cache for fuzzy searches.
+
+        >>> geo_t.clearBiasCache()
         """
         self._bias_cache_fuzzy = {}
 
