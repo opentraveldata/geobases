@@ -1383,7 +1383,7 @@ def main():
             method = 'dmetaphone' if not args['nysiis'] else 'nysiis'
             res = []
             for val in values:
-                res.extend(list(g.phoneticFind(val, interactive_field, method=method)))
+                res.extend(list(g.phoneticFind(val, interactive_field, method=method, verbose=logorrhea)))
             last = 'phonetic'
 
     elif args['keys']:
@@ -1435,7 +1435,7 @@ def main():
         if verbose:
             print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], method)
 
-        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res)))
+        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res), verbose=logorrhea))
         last = 'phonetic'
 
 

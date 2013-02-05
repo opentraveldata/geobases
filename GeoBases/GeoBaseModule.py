@@ -1571,7 +1571,7 @@ class GeoBase(object):
 
             self._fuzzy_cache[entry] = match
 
-            # Debug purpose
+            # We display information everytime a value is added to the cache
             if verbose:
                 self._showFuzzyMatches(match, fuzzy_value, field, d_range)
 
@@ -1648,7 +1648,7 @@ class GeoBase(object):
                      key)
 
 
-    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None):
+    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
         """Phonetic search.
 
         :param value:     the value for which we look for a match
@@ -1686,6 +1686,9 @@ class GeoBase(object):
             from_keys = iter(self)
 
         expected_sound = soundify(value)
+
+        if verbose:
+            print 'Looking for sound %s' % str(expected_sound)
 
         for key in from_keys:
             sound = soundify(self.get(key, field))
