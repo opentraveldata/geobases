@@ -641,7 +641,6 @@ DEF_CLOSEST_LIMIT   = 10
 DEF_TREP_FORMAT     = 'S'
 DEF_QUIET_DELIM     = '^'
 DEF_QUIET_HEADER    = 'CH'
-DEF_INTER_FUZZY_L   = 0.90
 DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS    = ('__key__',)
 DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
@@ -1370,7 +1369,7 @@ def main():
         elif interactive_type == '__fuzzy__':
             res = []
             for val in values:
-                res.extend(list(g.fuzzyFindCached(val, interactive_field, min_match=DEF_INTER_FUZZY_L, verbose=logorrhea)))
+                res.extend(list(g.fuzzyFindCached(val, interactive_field, min_match=args['fuzzy_limit'], verbose=logorrhea)))
             last = 'fuzzy'
 
     elif args['keys']:
