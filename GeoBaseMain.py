@@ -967,11 +967,17 @@ def handle_args():
         It will read values line by line, and perform a search on them.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
-            2) type is the type of matching, either %s.
-               For fuzzy searches, the ratio is set to %s.
+               Default is %s.
+            2) type is the type of matching, either
+               %s.
+               Default is %s.
+               For fuzzy searches, default ratio is set to %s,
+               but can be changed with --fuzzy-limit.
+               For phonetic searches, default method is dmetaphone,
+               but can be changed with --nysiis.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
-        ''' % (fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_FUZZY_L, SKIP)),
+        ''' % (DEF_INTER_FIELD, fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_TYPE, DEF_FUZZY_LIMIT, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
@@ -1341,7 +1347,8 @@ def main():
     #
     if verbose:
         if not stdin.isatty() and interactive_query_mode:
-            print 'Looking for matches from stdin query...'
+            print 'Looking for matches from stdin query: %s search on %s...' % \
+                    (interactive_type, interactive_field)
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
         else:
