@@ -9,6 +9,7 @@ T_TREP="(F S I J)"
 L_LIMIT="(1 2 5)"
 I_INT="()"
 Q_QUIET="()"
+Y_FIELDS="(dmetaphone metaphone nysiis)"
 
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \
@@ -18,7 +19,7 @@ _arguments \
  "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
  "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-property field. Default property is \"name\"]:*:phonetic value:()" \
  "(-P --phonetic-property)"{-P,--phonetic-property}"[Specify a property for phonetic searches]:phonetic property:$F_FIELDS" \
- "(-y --nysiis)"{-y,--nysiis}"[Change sound matching method from dmetaphone to nysiis]" \
+ "(-y --phonetic-method)"{-y,--phonetic-method}"[Change sound matching method]:method:$Y_FIELDS" \
  "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*:exact value:()" \
  "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*:exact property:$F_FIELDS" \
  "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \

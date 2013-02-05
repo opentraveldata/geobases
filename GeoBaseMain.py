@@ -644,12 +644,14 @@ DEF_QUIET_HEADER    = 'CH'
 DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS    = ('__key__',)
 DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
+DEF_PHONETIC_METHOD = 'dmetaphone'
 
 # For requests with findWith, force stringification before testing
 FORCE_STR = False
 
-ALLOWED_ICON_TYPES  = (None, 'auto', 'S', 'B')
-ALLOWED_INTER_TYPES = ('__exact__', '__fuzzy__', '__phonetic__')
+ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
+ALLOWED_INTER_TYPES      = ('__exact__', '__fuzzy__', '__phonetic__')
+ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'metaphone', 'nysiis')
 
 DEF_INTER_FIELD = '__key__'
 DEF_INTER_TYPE  = '__exact__'
@@ -765,7 +767,7 @@ def handle_args():
     parser.add_argument('-f', '--fuzzy',
         help = dedent('''\
         Rather than looking up a key, this mode will search the best
-        match for the property given by --fuzzy-property option for
+        match for the property given by --fuzzy-property option, for
         the argument. Limit can be specified with --fuzzy-limit option.
         '''),
         default = None,
@@ -791,8 +793,9 @@ def handle_args():
     parser.add_argument('-p', '--phonetic',
         help = dedent('''\
         Rather than looking up a key, this mode will search the best phonetic
-        match for the property given by --phonetic-property option for
+        match for the property given by --phonetic-property option, for
         the argument. This works well only for english.
+        Use --phonetic-method to change the method used.
         '''),
         default = None,
         nargs = '+')
@@ -806,12 +809,12 @@ def handle_args():
         ''' % fmt_or(DEF_PHONETIC_FIELDS)),
         default = None)
 
-    parser.add_argument('-y', '--nysiis',
+    parser.add_argument('-y', '--phonetic-method',
         help = dedent('''\
-        By default, --phonetic uses dmetaphone algorithm. With this flag,
-        it switches to nysiis.
-        '''),
-        action = 'store_true')
+        By default, --phonetic uses "%s" method. With this option, you
+        can change this to %s.
+        ''' % (DEF_PHONETIC_METHOD, fmt_or(ALLOWED_PHONETIC_METHODS))),
+        default = DEF_PHONETIC_METHOD)
 
     parser.add_argument('-e', '--exact',
         help = dedent('''\
@@ -973,11 +976,12 @@ def handle_args():
                Default is %s.
                For fuzzy searches, default ratio is set to %s,
                but can be changed with --fuzzy-limit.
-               For phonetic searches, default method is dmetaphone,
-               but can be changed with --nysiis.
+               For phonetic searches, default method is %s,
+               but can be changed with --phonetic-method.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
-        ''' % (DEF_INTER_FIELD, fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_TYPE, DEF_FUZZY_LIMIT, SKIP)),
+        ''' % (DEF_INTER_FIELD, fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_TYPE,
+               DEF_FUZZY_LIMIT, DEF_PHONETIC_METHOD, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
@@ -1293,6 +1297,9 @@ def main():
         if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != SKIP:
             interactive_type = args['interactive_query'][1]
 
+    # Reading phonetic options
+    phonetic_method = args['phonetic_method']
+
 
 
     #
@@ -1340,6 +1347,9 @@ def main():
     if interactive_type not in ALLOWED_INTER_TYPES:
         error('wrong_value', interactive_type, ALLOWED_INTER_TYPES)
 
+    # Testing -y option
+    if phonetic_method not in ALLOWED_PHONETIC_METHODS:
+        error('wrong_value', phonetic_method, ALLOWED_PHONETIC_METHODS)
 
 
     #
@@ -1380,10 +1390,9 @@ def main():
             last = 'fuzzy'
 
         elif interactive_type == '__phonetic__':
-            method = 'dmetaphone' if not args['nysiis'] else 'nysiis'
             res = []
             for val in values:
-                res.extend(list(g.phoneticFind(val, interactive_field, method=method, verbose=logorrhea)))
+                res.extend(list(g.phoneticFind(val, interactive_field, method=phonetic_method, verbose=logorrhea)))
             last = 'phonetic'
 
     elif args['keys']:
@@ -1430,12 +1439,10 @@ def main():
 
     if args['phonetic'] is not None:
         args['phonetic'] = ' '.join(args['phonetic'])
-        method = 'dmetaphone' if not args['nysiis'] else 'nysiis'
-
         if verbose:
-            print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], method)
+            print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], phonetic_method)
 
-        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=method, from_keys=ex_keys(res), verbose=logorrhea))
+        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=phonetic_method, from_keys=ex_keys(res), verbose=logorrhea))
         last = 'phonetic'
 
 
