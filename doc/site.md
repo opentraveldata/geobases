@@ -124,7 +124,7 @@ $ python test/test_GeoBases.py -v
 Quickstart
 ----------
 
-``` {.sourceCode .python}
+```python
 >>> from GeoBases import GeoBase
 >>> geo_o = GeoBase(data='ori_por', verbose=False)
 >>> geo_a = GeoBase(data='airports', verbose=False)
@@ -183,7 +183,7 @@ Features
 
 ### Information access
 
-``` {.sourceCode .python}
+```python
 >>> geo_o.get('CDG', 'city_code')
 'PAR'
 >>> geo_o.get('BRU', 'name')
@@ -200,7 +200,7 @@ and using the `set` method.
 
 ### Find things with properties
 
-``` {.sourceCode .python}
+```python
 >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
 >>> list(geo_o.findWith(conditions, mode='and'))
 [(2, 'JDP'), (2, 'JPU')]
@@ -212,14 +212,14 @@ and using the `set` method.
 
 ### Distance computation
 
-``` {.sourceCode .python}
+```python
 >>> geo_o.distance('CDG', 'NCE')
 694.5162...
 ```
 
 ### Find things near a geocode
 
-``` {.sourceCode .python}
+```python
 >>> # Paris, airports <= 40km
 >>> [k for _, k in sorted(geo_a.findNearPoint((48.84, 2.367), 40))]
 ['ORY', 'LBG', 'TNF', 'CDG']
@@ -232,7 +232,7 @@ and using the `set` method.
 
 ### Find things near another thing
 
-``` {.sourceCode .python}
+```python
 >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
 [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
 >>>
@@ -242,7 +242,7 @@ and using the `set` method.
 
 ### Find closest things from a geocode
 
-``` {.sourceCode .python}
+```python
 >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
 [(5.82..., 'NCE')]
 >>>
@@ -252,7 +252,7 @@ and using the `set` method.
 
 ### Approximate name matching
 
-``` {.sourceCode .python}
+```python
 >>> geo_t.fuzzyFind('Marseille Charles', 'name')[0]
 (0.8..., 'frmsc')
 >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
@@ -261,7 +261,7 @@ and using the `set` method.
 
 ### Map display
 
-``` {.sourceCode .python}
+```python
 >>> geo_t.visualize()
 * Added lines for duplicates linking, total 0
 > Affecting category None     to color blue    | volume 3190
