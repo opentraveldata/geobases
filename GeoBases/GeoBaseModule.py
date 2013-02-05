@@ -1662,6 +1662,8 @@ class GeoBase(object):
         >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
         ['Chicago']
 
+        Alternate methods.
+
         >>> list(geo_o.phoneticFind('chicago', 'name'))
         [(['XKK', None], 'CHI')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
