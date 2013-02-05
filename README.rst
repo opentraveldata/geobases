@@ -95,6 +95,12 @@ For Python 3, you have to install setuptools and python3-dev as prerequisites, t
  $ git checkout 3000
  $ python3 setup.py install --user
 
+You can also install the package for Python 3:
+
+.. code-block:: bash
+
+ $ easy_install-3.2 --user -U GeoBases3K
+
 For Pypy, after pypy and pypy-dev installation:
 
 .. code-block:: bash
