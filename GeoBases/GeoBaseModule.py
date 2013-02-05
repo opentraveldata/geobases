@@ -224,10 +224,10 @@ class GeoBase(object):
         self._ggrid   = None
 
         # A cache for the fuzzy searches
-        self._cache_fuzzy = {}
+        self._fuzzy_cache = {}
         # An other cache if the algorithms are failing on a single
         # example, we first look in this cache
-        self._bias_cache_fuzzy = {}
+        self._bias_fuzzy_cache = {}
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -1537,25 +1537,25 @@ class GeoBase(object):
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
-        if entry in self._bias_cache_fuzzy:
+        if entry in self._bias_fuzzy_cache:
             # If the entry is stored is our bias
             # cache, we do not perform the fuzzy search
             if verbose:
                 print 'Using bias: %s' % str(entry)
 
-            return self._bias_cache_fuzzy[entry]
+            return self._bias_fuzzy_cache[entry]
 
-        if entry not in self._cache_fuzzy:
+        if entry not in self._fuzzy_cache:
 
             match = self.fuzzyFind(*entry)
 
-            self._cache_fuzzy[entry] = match
+            self._fuzzy_cache[entry] = match
 
             # Debug purpose
             if verbose:
                 self._showFuzzyMatches(match, fuzzy_value, field, d_range)
 
-        return self._cache_fuzzy[entry]
+        return self._fuzzy_cache[entry]
 
 
 
@@ -1583,7 +1583,7 @@ class GeoBase(object):
         # Cleaning is for keeping only useful data
         entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
 
-        self._bias_cache_fuzzy[entry] = biased_result
+        self._bias_fuzzy_cache[entry] = biased_result
 
 
     def clearCache(self):
@@ -1591,7 +1591,7 @@ class GeoBase(object):
 
         >>> geo_t.clearCache()
         """
-        self._cache_fuzzy = {}
+        self._fuzzy_cache = {}
 
 
     def clearBiasCache(self):
@@ -1599,7 +1599,7 @@ class GeoBase(object):
 
         >>> geo_t.clearBiasCache()
         """
-        self._bias_cache_fuzzy = {}
+        self._bias_fuzzy_cache = {}
 
 
     @staticmethod
