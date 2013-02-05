@@ -265,13 +265,13 @@ and using the `set` method.
 >>> geo_t.visualize()
 * Added lines for duplicates linking, total 0
 > Affecting category None     to color blue    | volume 3190
-<BLANKLINE>
+
 * Now you may use your browser to visualize:
 example_map.html example_table.html
-<BLANKLINE>
+
 * If you want to clean the temporary files:
 rm example.json ...
-<BLANKLINE>
+
 (['example_map.html', 'example_table.html'], 2)
 ```
 
@@ -300,7 +300,7 @@ $ GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
 $ GeoBase --help               # your best friend
 ```
 
-![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png)
+![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png)
 
 In the previous picture, you have an overview of the command line
 verbose display. Three displays are available for the command line tool:
