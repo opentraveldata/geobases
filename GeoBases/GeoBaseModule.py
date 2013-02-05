@@ -358,6 +358,11 @@ class GeoBase(object):
 
         :param fields:  the iterable of fields
         :returns:       a boolean
+
+        >>> geo_o.hasIndexOn('iata_code')
+        True
+        >>> geo_o.hasIndexOn(('iata_code', 'asciiname'))
+        False
         """
         if isinstance(fields, str):
             fields = (fields,)
@@ -373,6 +378,12 @@ class GeoBase(object):
 
         :param fields:  the iterable of fields
         :param verbose: toggle verbosity
+
+        >>> geo_o.addIndex('iata_code', verbose=True)
+        /!\ Index on ('iata_code',) already built, overriding...
+        Built index for fields ('iata_code',)
+        >>> geo_o.addIndex(('icao_code', 'location_type'), verbose=True)
+        Built index for fields ('icao_code', 'location_type')
         """
         if not fields:
             if verbose:
@@ -396,6 +407,12 @@ class GeoBase(object):
         """Drop an index on an iterable of fields.
 
         :param fields:  the iterable of fields
+
+        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        True
+        >>> geo_o.dropIndex(('icao_code', 'location_type'))
+        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        False
         """
         if isinstance(fields, str):
             fields = (fields,)
