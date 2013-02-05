@@ -1664,23 +1664,27 @@ class GeoBase(object):
 
         Alternate methods.
 
-        >>> list(geo_o.phoneticFind('chicago', 'name'))
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        Looking for sounds like ['XKK', None]
         [(['XKK', None], 'CHI')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
+        [('XKK', 'CHI')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
         [('CACAG', 'CHI')]
-        >>> list(geo_o.phoneticFind('chicago', 'name', 'soundex'))
-        Traceback (most recent call last):
-        ValueError: Accepted methods are ['dmetaphone', 'nysiis']
         """
         if method == 'dmetaphone':
             soundify = DMetaphone()
+
+        elif method == 'metaphone':
+            dmeta = DMetaphone()
+            soundify = lambda v : dmeta(v)[0]
 
         elif method == 'nysiis':
             soundify = nysiis
 
         else:
             raise ValueError('Accepted methods are %s' % \
-                             ['dmetaphone', 'nysiis'])
+                             ['metaphone', 'dmetaphone', 'nysiis'])
 
         if from_keys is None:
             from_keys = iter(self)
@@ -1688,7 +1692,7 @@ class GeoBase(object):
         expected_sound = soundify(value)
 
         if verbose:
-            print 'Looking for sound %s' % str(expected_sound)
+            print 'Looking for sounds like %s' % str(expected_sound)
 
         for key in from_keys:
             sound = soundify(self.get(key, field))
