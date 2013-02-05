@@ -1010,7 +1010,10 @@ class GeoBase(object):
             # we will proceed with non-indexed code after
             if self._checkIndexUsability(conditions, mode):
 
-                for t in self._findWithUsingMultipleIndex(conditions, from_keys=from_keys, mode=mode, verbose=verbose):
+                for t in self._findWithUsingMultipleIndex(conditions,
+                                                          from_keys=from_keys,
+                                                          mode=mode,
+                                                          verbose=verbose):
                     yield t
                 raise StopIteration
 
@@ -1133,7 +1136,6 @@ class GeoBase(object):
             lat_lng = self.getLocation(key)
 
             if lat_lng is not None:
-
                 yield haversine(lat_lng_ref, lat_lng), key
 
 
@@ -1189,18 +1191,13 @@ class GeoBase(object):
             from_keys = set(from_keys)
 
             for dist, thing in self._ggrid.findNearPoint(lat_lng, radius, double_check):
-
                 if thing in from_keys:
-
-                    yield (dist, thing)
+                    yield dist, thing
 
         else:
-
             for dist, thing in self._buildDistances(lat_lng, from_keys):
-
                 if dist <= radius:
-
-                    yield (dist, thing)
+                    yield dist, thing
 
 
 
@@ -1249,13 +1246,16 @@ class GeoBase(object):
             from_keys = set(from_keys)
 
             for dist, thing in self._ggrid.findNearKey(key, radius, double_check):
-
                 if thing in from_keys:
-                    yield (dist, thing)
+                    yield dist, thing
 
         else:
-            for dist, thing in self.findNearPoint(self.getLocation(key), radius, from_keys, grid, double_check):
-                yield (dist, thing)
+            for dist, thing in self.findNearPoint(self.getLocation(key),
+                                                  radius=radius,
+                                                  from_keys=from_keys,
+                                                  grid=grid,
+                                                  double_check=double_check):
+                yield dist, thing
 
 
 
@@ -1311,13 +1311,13 @@ class GeoBase(object):
 
         if grid:
             for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
-                yield (dist, thing)
+                yield dist, thing
 
         else:
             iterable = self._buildDistances(lat_lng, from_keys)
 
             for dist, thing in heapq.nsmallest(N, iterable):
-                yield (dist, thing)
+                yield dist, thing
 
 
 
@@ -1369,11 +1369,11 @@ class GeoBase(object):
 
         if grid:
             for dist, thing in self._ggrid.findClosestFromKey(key, N, double_check, from_keys):
-                yield (dist, thing)
+                yield dist, thing
 
         else:
             for dist, thing in self.findClosestFromPoint(self.getLocation(key), N, from_keys, grid, double_check):
-                yield (dist, thing)
+                yield dist, thing
 
 
     def _buildRatios(self, fuzzy_value, field, keys, min_match=0):
@@ -1484,7 +1484,7 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        nearest = ( key for dist, key in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check) )
+        nearest = (k for _, k in self.findNearPoint(lat_lng, radius, from_keys, grid, double_check))
 
         return self.fuzzyFind(fuzzy_value, field, max_results, min_match, from_keys=nearest)
 
