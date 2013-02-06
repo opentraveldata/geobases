@@ -250,12 +250,12 @@ class GeoBase(object):
             'limit'         : None,
             'discard_dups'  : False,
             'verbose'       : True,
-            'path'          : None,  # only for configuration file
+            'paths'         : None,  # only for configuration file
             'local'         : True,  # only for configuration file
         }
 
         allowed_conf = set(props.keys()) - set(['source'])
-        allowed_args = set(props.keys()) - set(['path', 'local'])
+        allowed_args = set(props.keys()) - set(['paths', 'local'])
 
         if data in BASES:
             conf = BASES[data]
@@ -281,11 +281,6 @@ class GeoBase(object):
             else:
                 raise ValueError('Option "%s" not understood in arguments.' % option)
 
-        # "local" is only used for sources from configuration
-        # to have a relative path from the configuration file
-        if props['path'] is not None and props['local'] is True:
-            props['path'] = relative(props['path'], root_file=PATH_CONF)
-
         # Final parameters affectation
         self._source        = props['source']
         self._headers       = props['headers']
@@ -297,31 +292,47 @@ class GeoBase(object):
         self._limit         = props['limit']
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
-        self._path          = props['path']
+        self._paths         = props['paths']
         self._local         = props['local']
 
-        # Some headers are not accepted
-        for h in self._headers:
-            if str(h).endswith('@raw') or str(h).startswith('__'):
-                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+        # Tweaks on types, fail on wrong values
+        self._checkProperties()
 
         # Loading data
-        self._configSubDelimiters()
-
         if self._source is not None:
             # As a keyword argument, source should be a file-like
             self._loadFile(self._source, self._verbose)
 
-        elif self._path is not None:
-            # Here we read the source from the configuration file
-            with open(self._path) as source_fl:
-                self._loadFile(source_fl, self._verbose)
-        else:
             if self._verbose:
-                print 'No source specified, skipping loading...'
+                print "Import successful from *file-like*"
+                print "Available fields for things: %s" % self.fields
 
+        elif self._paths is not None:
+            # Here we read the source from the configuration file
+            for path in self._paths:
+                try:
+                    with open(path) as source_fl:
+                        self._loadFile(source_fl, self._verbose)
+                except IOError:
+                    if self._verbose:
+                        print '/!\ Failed to open %s, failing over...' % path
+                else:
+                    if self._verbose:
+                        print "Import successful from %s" % path
+                        print "Available fields for things: %s" % self.fields
+
+                    break
+            else:
+                # Here the loop did not break, meaning nothing was loaded
+                # We will go here even if self._paths was []
+                raise IOError('Nothing was loaded from:\n - %s' % '\n - '.join(self._paths))
+
+        else:
             # We add those default fields if user adds data with self.set
             self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+
+            if self._verbose:
+                print 'No source specified, skipping loading...'
 
 
         # Grid
@@ -331,30 +342,48 @@ class GeoBase(object):
             if self._verbose:
                 print 'No geocode support, skipping grid...'
 
-
         # Indices, we convert every iterable into tuple
-        if isinstance(self._indices, str):
-            self._indices = (self._indices,)
-        else:
-            self._indices = tuple(self._indices)
-
         for fields in self._indices:
             self.addIndex(fields, self._verbose)
 
 
 
-    def _configSubDelimiters(self):
-        """Some precomputation on subdelimiters.
+    def _checkProperties(self):
+        """Some check on parameters.
         """
-        for h in self._headers:
+        # Tuplification
+        if isinstance(self._indices, str):
+            self._indices = (self._indices,)
+        else:
+            self._indices = tuple(self._indices)
 
-            # If not in conf, do not sub split
+        for h in self._subdelimiters:
+            if self._subdelimiters[h] is not None:
+                if isinstance(self._subdelimiters[h], str):
+                    self._subdelimiters[h] = (self._subdelimiters[h],)
+                else:
+                    self._subdelimiters[h] = tuple(self._subdelimiters[h])
+
+        # "local" is only used for sources from configuration
+        # to have a relative path from the configuration file
+        if self._paths is not None:
+            if isinstance(self._paths, str):
+                self._paths = (self._paths,)
+            else:
+                self._paths = tuple(self._paths)
+
+            if self._local is True:
+                self._paths = tuple(relative(p, root_file=PATH_CONF) for p in self._paths)
+
+        # Some headers are not accepted
+        for h in self._headers:
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
+
+        # Subdelimiters expansion: putting None where not set
+        for h in self._headers:
             if h not in self._subdelimiters:
                 self._subdelimiters[h] = None
-
-            # Handling sub delimiter not list-embedded
-            if isinstance(self._subdelimiters[h], str):
-                self._subdelimiters[h] = (self._subdelimiters[h], )
 
 
 
@@ -486,7 +515,7 @@ class GeoBase(object):
         # the different fields
         try:
             if isinstance(key_fields, str):
-                pos = (headers.index(key_fields), )
+                pos = (headers.index(key_fields),)
 
             elif isinstance(key_fields, list) or isinstance(key_fields, tuple):
                 pos = tuple(headers.index(k) for k in key_fields)
@@ -669,12 +698,6 @@ class GeoBase(object):
                 self.fields.append(h)
 
         self.fields.append('__gar__')
-
-
-        if verbose:
-            source_name = self._path if self._source is None else '*file-like*'
-            print "Import successful from %s" % source_name
-            print "Available fields for things: %s" % self.fields
 
 
 
