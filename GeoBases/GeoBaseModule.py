@@ -254,12 +254,15 @@ class GeoBase(object):
             'local'         : True,  # only for configuration file
         }
 
+        allowed_conf = set(props.keys()) - set(['source'])
+        allowed_args = set(props.keys()) - set(['path', 'local'])
+
         if data in BASES:
             conf = BASES[data]
 
             # File configuration overrides defaults
             for option in conf:
-                if option in props:
+                if option in allowed_conf:
                     props[option] = conf[option]
                 else:
                     raise ValueError('Option "%s" for data "%s" not understood in file.' % (option, data))
@@ -273,7 +276,7 @@ class GeoBase(object):
         # User input overrides default configuration
         # or file configuration
         for option in kwargs:
-            if option in props:
+            if option in allowed_args:
                 props[option] = kwargs[option]
             else:
                 raise ValueError('Option "%s" not understood in arguments.' % option)
