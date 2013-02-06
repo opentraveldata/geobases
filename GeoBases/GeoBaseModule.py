@@ -391,11 +391,10 @@ class GeoBase(object):
         if self._paths is not None:
             paths = []
             for path in self._paths:
-                if is_remote(path):
-                    paths.append(path)
+                if not is_remote(path) and self._local is True:
+                    paths.append(relative(path, root_file=PATH_CONF))
                 else:
-                    if self._local is True:
-                        paths.append(relative(path, root_file=PATH_CONF))
+                    paths.append(path)
 
             self._paths = tuple(paths)
 
