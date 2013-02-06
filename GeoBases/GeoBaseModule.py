@@ -491,7 +491,7 @@ class GeoBase(object):
             if verbose:
                 print '/!\ key_fields was None, keys will be created from line numbers.'
 
-            return lambda row, line_nb: line_nb
+            return lambda row, lno: lno
 
         # It is possible to have a key_fields which is a list
         # In this case we build the key as the concatenation between
@@ -503,22 +503,22 @@ class GeoBase(object):
             raise ValueError("Inconsistent: headers = %s with key_fields = %s" % \
                              (headers, key_fields))
         else:
-            keyer = lambda row, line_nb: '+'.join(row[p] for p in pos)
+            keyer = lambda row, lno: '+'.join(row[p] for p in pos)
 
         return keyer
 
 
     @staticmethod
-    def _buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb):
+    def _buildRowValues(row, headers, delimiter, subdelimiters, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
         data = {
-            '__key__' : key,      # special field for key
-            '__lno__' : line_nb,  # special field for line number
-            '__gar__' : [],       # special field for garbage
-            '__dup__' : [],       # special field for duplicates
-            '__par__' : [],       # special field for parent
+            '__key__' : key,  # special field for key
+            '__lno__' : lno,  # special field for line number
+            '__gar__' : [],   # special field for garbage
+            '__dup__' : [],   # special field for duplicates
+            '__par__' : [],   # special field for parent
         }
 
         # headers represents the meaning of each column.
@@ -609,12 +609,12 @@ class GeoBase(object):
 
         _reader = self._buildReader(verbose, **csv_opt)
 
-        for line_nb, row in enumerate(_reader(source_fl), start=1):
+        for lno, row in enumerate(_reader(source_fl), start=1):
 
-            if verbose and line_nb % NB_LINES_STEP == 0:
-                print '%-10s lines loaded so far' % line_nb
+            if verbose and lno % NB_LINES_STEP == 0:
+                print '%-10s lines loaded so far' % lno
 
-            if limit is not None and line_nb > limit:
+            if limit is not None and lno > limit:
                 if verbose:
                     print 'Beyond limit %s for lines loaded, stopping.' % limit
                 break
@@ -625,14 +625,14 @@ class GeoBase(object):
                 continue
 
             try:
-                key = keyer(row, line_nb)
+                key = keyer(row, lno)
             except IndexError:
                 if verbose:
                     print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
-                            (headers, key_fields, line_nb, row)
+                            (headers, key_fields, lno, row)
                 continue
 
-            row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, line_nb)
+            row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self._things:
@@ -655,11 +655,11 @@ class GeoBase(object):
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
-                                (line_nb, key, nb_dups, self._things[key]['__lno__'], d_key)
+                                (lno, key, nb_dups, self._things[key]['__lno__'], d_key)
                 else:
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
-                                (line_nb, key, self._things[key]['__lno__'])
+                                (lno, key, self._things[key]['__lno__'])
 
 
         # We remove None headers, which are not-loaded-columns
