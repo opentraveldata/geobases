@@ -1036,7 +1036,7 @@ class GeoBase(object):
         Using index for ('iata_code',) and ('city_code',)
         [(2, 'NCE@1'), (2, 'NCE')]
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', index=False, verbose=True))
-        [(2, 'NCE@1'), (2, 'NCE')]
+        [(2, 'NCE'), (2, 'NCE@1')]
 
         Testing several conditions.
 
