@@ -975,7 +975,7 @@ class GeoBase(object):
 
 
 
-    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', verbose=False):
+    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', index=True, verbose=False):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -988,6 +988,7 @@ class GeoBase(object):
         :param force_str:  for the str() method before every test
         :param mode:       either 'or' or 'and', how to handle several conditions
         :param from_keys:  if given, we will look for results from this iterable of keys
+        :param index:      boolean to disable index when searching
         :param verbose:    toggle verbosity during search
         :returns:          an iterable of (v, key) where v is the number of matched \
                 condition
@@ -1034,6 +1035,8 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
         Using index for ('iata_code',) and ('city_code',)
         [(2, 'NCE@1'), (2, 'NCE')]
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', index=False, verbose=True))
+        [(2, 'NCE@1'), (2, 'NCE')]
 
         Testing several conditions.
 
@@ -1059,7 +1062,7 @@ class GeoBase(object):
             from_keys = iter(self)
 
         # If indexed
-        if not force_str and not reverse:
+        if index and not force_str and not reverse:
             # If this condition is not met, we do not raise StopIteration,
             # we will proceed with non-indexed code after
             if self._checkIndexUsability(conditions, mode):
