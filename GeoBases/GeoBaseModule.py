@@ -101,7 +101,9 @@ LNG_FIELD  = 'lng'
 GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
 # Default min match for fuzzy searches
-MIN_MATCH = 0.75
+MIN_MATCH  = 0.75
+RADIUS     = 50
+NB_CLOSEST = 1
 
 # Loading indicator
 NB_LINES_STEP = 100000
@@ -1164,7 +1166,7 @@ class GeoBase(object):
                 yield haversine(lat_lng_ref, lat_lng), key
 
 
-    def findNearPoint(self, lat_lng, radius=50, from_keys=None, grid=True, double_check=True):
+    def findNearPoint(self, lat_lng, radius=RADIUS, from_keys=None, grid=True, double_check=True):
         """
         Returns a list of nearby things from a point (given
         latidude and longitude), and a radius for the search.
@@ -1214,7 +1216,6 @@ class GeoBase(object):
         if grid:
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
-
             for dist, thing in self._ggrid.findNearPoint(lat_lng, radius, double_check):
                 if thing in from_keys:
                     yield dist, thing
@@ -1226,7 +1227,7 @@ class GeoBase(object):
 
 
 
-    def findNearKey(self, key, radius=50, from_keys=None, grid=True, double_check=True):
+    def findNearKey(self, key, radius=RADIUS, from_keys=None, grid=True, double_check=True):
         """
         Same as findNearPoint, except the point is given
         not by a lat/lng, but with its key, like ORY or SFO.
@@ -1284,7 +1285,7 @@ class GeoBase(object):
 
 
 
-    def findClosestFromPoint(self, lat_lng, N=1, from_keys=None, grid=True, double_check=True):
+    def findClosestFromPoint(self, lat_lng, N=NB_CLOSEST, from_keys=None, grid=True, double_check=True):
         """
         Concept close to findNearPoint, but here we do not
         look for the things radius-close to a point,
@@ -1346,7 +1347,7 @@ class GeoBase(object):
 
 
 
-    def findClosestFromKey(self, key, N=1, from_keys=None, grid=True, double_check=True):
+    def findClosestFromKey(self, key, N=NB_CLOSEST, from_keys=None, grid=True, double_check=True):
         """
         Same as findClosestFromPoint, except the point is given
         not by a lat/lng, but with its key, like ORY or SFO.
@@ -1401,7 +1402,7 @@ class GeoBase(object):
                 yield dist, thing
 
 
-    def _buildRatios(self, fuzzy_value, field, keys, min_match=0):
+    def _buildRatios(self, fuzzy_value, field, keys, min_match=MIN_MATCH):
         """
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
