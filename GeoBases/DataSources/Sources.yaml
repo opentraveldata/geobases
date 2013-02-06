@@ -3,7 +3,7 @@
 #
 
 airports:
-    source    : Airports/GeoNames/airports_geonames_only_clean.csv
+    path      : Airports/GeoNames/airports_geonames_only_clean.csv
     key_fields: iata_code
     delimiter : ^
     headers   :
@@ -17,7 +17,7 @@ airports:
 
 
 countries:
-    source    : Countries/countryInfo.txt
+    path      : Countries/countryInfo.txt
     key_fields: code
     delimiter : "\t"
     subdelimiters :
@@ -45,7 +45,7 @@ countries:
 
 
 capitals:
-    source    : Countries/capitals.csv
+    path      : Countries/capitals.csv
     key_fields: country_code
     delimiter : ^
     headers   :
@@ -59,7 +59,7 @@ capitals:
 
 
 continents:
-    source    : Continents/continentCodes.txt
+    path      : Continents/continentCodes.txt
     key_fields: code
     delimiter : "\t"
     headers   :
@@ -69,7 +69,7 @@ continents:
 
 
 stations:
-    source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
+    path      : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     key_fields: code
     delimiter : ^
     subdelimiters :
@@ -84,7 +84,7 @@ stations:
 
 
 stations_nls:
-    source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
+    path      : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
     key_fields: nls_code
     delimiter : ','
     headers   :
@@ -95,7 +95,7 @@ stations_nls:
 
 
 stations_uic:
-    source    : TrainStations/UIC/sncfExtract_v1.0.csv
+    path      : TrainStations/UIC/sncfExtract_v1.0.csv
     key_fields: uic_code
     delimiter : ','
     headers   :
@@ -106,7 +106,7 @@ stations_uic:
 
 
 languages:
-    source    : Languages/iso-languagecodes.txt
+    path      : Languages/iso-languagecodes.txt
     key_fields: code
     delimiter : "\t"
     headers   :
@@ -117,7 +117,7 @@ languages:
 
 
 timezones:
-    source    : TimeZones/timeZones.txt
+    path      : TimeZones/timeZones.txt
     key_fields: code
     delimiter : "\t"
     headers   :
@@ -129,7 +129,7 @@ timezones:
 
 
 cities:
-    source    : Cities/cities15000.txt
+    path      : Cities/cities15000.txt
     key_fields: code
     delimiter : "\t"
     subdelimiters :
@@ -157,7 +157,7 @@ cities:
 
 
 ori_por:
-    source        : Por/Ori/ori_por_public.csv
+    path          : Por/Ori/ori_por_public.csv
     key_fields    : iata_code
     indices       : [iata_code, [iata_code, country_code]]
     limit         : # put a number to load only the first lines
@@ -217,7 +217,7 @@ ori_por:
 
 
 ori_por_multi:
-    source        : Por/Ori/ori_por_public.csv
+    path          : Por/Ori/ori_por_public.csv
     key_fields    : [iata_code, location_type]
     delimiter     : ^
     subdelimiters : *ori_por_subdel
@@ -225,7 +225,7 @@ ori_por_multi:
 
 
 ori_por_non_iata:
-    source        : Por/Ori/ori_por_non_iata.csv
+    path          : Por/Ori/ori_por_non_iata.csv
     key_fields    : iata_code
     delimiter     : ^
     subdelimiters : *ori_por_subdel
@@ -233,7 +233,7 @@ ori_por_non_iata:
 
 
 currencies:
-    source    : Currencies/wiki_source_ISO_4217.csv
+    path      : Currencies/wiki_source_ISO_4217.csv
     key_fields: currency_code
     delimiter : ;
     subdelimiters :
@@ -247,7 +247,7 @@ currencies:
 
 
 airlines:
-    source    : Airlines/ori_airlines.csv
+    path      : Airlines/ori_airlines.csv
     key_fields: unified_code
     delimiter : ^
     headers   :
@@ -262,7 +262,7 @@ airlines:
 
 
 cabins:
-    source    : Cabins/cabins.csv
+    path      : Cabins/cabins.csv
     key_fields: code
     delimiter : ^
     headers   :
@@ -271,7 +271,7 @@ cabins:
 
 
 locales:
-    source    : Locales/locales.csv
+    path      : Locales/locales.csv
     key_fields: locale
     delimiter : ;
     headers   :
@@ -285,7 +285,7 @@ locales:
 
 
 location_types:
-    source    : LocationTypes/location_types.csv
+    path      : LocationTypes/location_types.csv
     key_fields: location_type
     delimiter : ^
     headers   :
@@ -294,7 +294,7 @@ location_types:
 
 
 feature_classes:
-    source    : FeatureClasses/feature_classes.csv
+    path      : FeatureClasses/feature_classes.csv
     key_fields: fclass
     delimiter : ^
     headers   :
@@ -303,7 +303,7 @@ feature_classes:
 
 
 feature_codes:
-    source    : FeatureCodes/featureCodes_en.txt
+    path      : FeatureCodes/featureCodes_en.txt
     key_fields: fcode
     delimiter : "\t"
     headers   :
@@ -314,7 +314,7 @@ feature_codes:
 
 
 geonames_FR:
-    source    : Por/GeoNames/FR.txt
+    path      : Por/GeoNames/FR.txt
     key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -342,7 +342,7 @@ geonames_FR:
 
 
 geonames_MC:
-    source    : Por/GeoNames/MC.txt
+    path      : Por/GeoNames/MC.txt
     key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -351,7 +351,7 @@ geonames_MC:
 
 
 postal_codes_FR:
-    source    : PostalCodes/GeoNames/FR.txt
+    path      : PostalCodes/GeoNames/FR.txt
     key_fields: &postal_codes_key postal_code
     delimiter : "\t"
     headers   : &postal_codes_headers
@@ -370,7 +370,7 @@ postal_codes_FR:
 
 
 postal_codes_MC:
-    source    : PostalCodes/GeoNames/MC.txt
+    path      : PostalCodes/GeoNames/MC.txt
     key_fields: *postal_codes_key
     delimiter : "\t"
     headers   : *postal_codes_headers

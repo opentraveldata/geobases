@@ -176,7 +176,6 @@ class GeoBase(object):
 
         The ``kwargs`` parameters given when creating the object may be:
 
-        - local         : ``True`` by default, is the source local or not
         - source        : ``None`` by default, file-like to the source
         - headers       : ``[]`` by default, list of fields in the data
         - key_fields    : ``None`` by default, list of fields defining the key for a line, \
@@ -202,7 +201,8 @@ class GeoBase(object):
         Import successful from ...
         Available fields for things: ...
         >>> geo_f = GeoBase(data='feed')
-        Source was None, skipping loading...
+        No source specified, skipping loading...
+        No geocode support, skipping grid...
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
@@ -240,8 +240,7 @@ class GeoBase(object):
 
         # Defaults
         props = {
-            'local'         : True,
-            'source'        : None,
+            'source'        : None,  # not for configuration file, use path/local
             'headers'       : [],
             'key_fields'    : None,
             'indices'       : [],
@@ -251,6 +250,8 @@ class GeoBase(object):
             'limit'         : None,
             'discard_dups'  : False,
             'verbose'       : True,
+            'path'          : None,  # only for configuration file
+            'local'         : True,  # only for configuration file
         }
 
         if data in BASES:
@@ -277,14 +278,12 @@ class GeoBase(object):
             else:
                 raise ValueError('Option "%s" not understood in arguments.' % name)
 
-        if 'source' not in kwargs:
-            # "local" is only used for sources from configuration
-            # to have a relative path from the configuration file
-            if props['source'] is not None and props['local'] is True:
-                props['source'] = relative(props['source'], root_file=PATH_CONF)
+        # "local" is only used for sources from configuration
+        # to have a relative path from the configuration file
+        if props['path'] is not None and props['local'] is True:
+            props['path'] = relative(props['path'], root_file=PATH_CONF)
 
         # Final parameters affectation
-        self._local         = props['local']
         self._source        = props['source']
         self._headers       = props['headers']
         self._key_fields    = props['key_fields']
@@ -295,6 +294,8 @@ class GeoBase(object):
         self._limit         = props['limit']
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
+        self._path          = props['path']
+        self._local         = props['local']
 
         # Some headers are not accepted
         for h in self._headers:
@@ -305,16 +306,16 @@ class GeoBase(object):
         self._configSubDelimiters()
 
         if self._source is not None:
-            if 'source' in kwargs:
-                # As a keyword argument, source should be a file-like
-                self._loadFile(self._source, self._verbose)
-            else:
-                # Here we read the source from the configuration file
-                with open(self._source) as source_fl:
-                    self._loadFile(source_fl, self._verbose)
+            # As a keyword argument, source should be a file-like
+            self._loadFile(self._source, self._verbose)
+
+        elif self._path is not None:
+            # Here we read the source from the configuration file
+            with open(self._path) as source_fl:
+                self._loadFile(source_fl, self._verbose)
         else:
             if self._verbose:
-                print 'Source was None, skipping loading...'
+                print 'No source specified, skipping loading...'
 
             # We add those default fields if user adds data with self.set
             self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
@@ -668,7 +669,8 @@ class GeoBase(object):
 
 
         if verbose:
-            print "Import successful from %s" % self._source
+            source_name = self._path if self._source is None else 'file-like'
+            print "Import successful from %s" % source_name
             print "Available fields for things: %s" % self.fields
 
 
