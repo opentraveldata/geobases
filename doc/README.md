@@ -10,6 +10,9 @@ $ cd doc/
 $ export PYTHONPATH=.:..:$PYTHONPATH
 $ make clean
 $ make html
+$ cd _build/html
+$ zip -r api.zip *
+$ cp api.zip /what/ever
 ```
 
 In case of problems, check your PYTHONPATH which give Sphinx access to
