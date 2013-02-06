@@ -184,14 +184,17 @@ class GeoBase(object):
                 ``None`` means line numbers will be used to generate keys
         - indices       : ``[]`` by default, an iterable of additional indexed fields
         - delimiter     : ``'^'`` by default, delimiter for each field,
-        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to define subdelimiters
+        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to \
+                define subdelimiters
         - quotechar     : ``'"'`` by default, this is the string defined for quoting
-        - limit         : ``None`` by default, put an int if you want to load only the first lines
-        - discard_dups  : ``False`` by default, boolean to discard key duplicates of handle them
+        - limit         : ``None`` by default, put an int if you want to load only the \
+                first lines
+        - discard_dups  : ``False`` by default, boolean to discard key duplicates or \
+                handle them
         - verbose       : ``True`` by default, toggle verbosity
 
-        :param data: the type of data wanted, 'airports', 'stations', and many more available. \
-            'feed' will create an empty instance.
+        :param data: the type of data wanted, 'airports', 'stations', and many more \
+                available. 'feed' will create an empty instance.
         :param kwargs: additional parameters
         :raises:  ValueError, if data parameters is not recognized
         :returns: None
