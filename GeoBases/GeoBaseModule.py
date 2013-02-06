@@ -306,7 +306,6 @@ class GeoBase(object):
 
             if self._verbose:
                 print "Import successful from *file-like*"
-                print "Available fields for things: %s" % self.fields
 
         elif self._paths is not None:
             # Here we read the source from the configuration file
@@ -320,7 +319,6 @@ class GeoBase(object):
                 else:
                     if self._verbose:
                         print "Import successful from %s" % path
-                        print "Available fields for things: %s" % self.fields
 
                     break
             else:
@@ -335,6 +333,8 @@ class GeoBase(object):
             if self._verbose:
                 print 'No source specified, skipping loading...'
 
+        if self._verbose:
+            print "Available fields for things: %s" % self.fields
 
         # Grid
         if self.hasGeoSupport():
