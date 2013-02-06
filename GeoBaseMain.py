@@ -418,7 +418,7 @@ def scan_coords(u_input, geob, verbose):
         error('geocode_format', u_input)
 
     # All cases failed
-    warn('key', u_input, geob.data, geob._source)
+    warn('key', u_input, geob.data, geob.loaded)
     exit(1)
 
 
@@ -1482,7 +1482,7 @@ def main():
     # Removing unknown keys
     for h, k in res:
         if k not in g:
-            warn('key', k, g.data, g._source)
+            warn('key', k, g.data, g.loaded)
 
     res = [(h, k) for h, k in res if k in g]
 

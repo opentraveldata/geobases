@@ -243,6 +243,7 @@ class GeoBase(object):
         # _headers is just for data loading
         self.fields = []
         self.data   = data
+        self.loaded = None # loaded stuff information, depends on sources and paths
 
         # Defaults
         props = {
@@ -308,9 +309,7 @@ class GeoBase(object):
         if self._source is not None:
             # As a keyword argument, source should be a file-like
             self._loadFile(self._source, self._verbose)
-
-            if self._verbose:
-                print "Import successful from *file-like*"
+            self.loaded = '*file-like*'
 
         elif self._paths is not None:
             # Here we read the source from the configuration file
@@ -322,9 +321,7 @@ class GeoBase(object):
                     if self._verbose:
                         print '/!\ Failed to open %s, failing over...' % path
                 else:
-                    if self._verbose:
-                        print "Import successful from %s" % path
-
+                    self.loaded = path
                     break
             else:
                 # Here the loop did not break, meaning nothing was loaded
@@ -335,10 +332,12 @@ class GeoBase(object):
             # We add those default fields if user adds data with self.set
             self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
 
-            if self._verbose:
+        if self._verbose:
+            if self.loaded is not None:
+                print "Import successful from %s" % self.loaded
+            else:
                 print 'No source specified, skipping loading...'
 
-        if self._verbose:
             print "Available fields for things: %s" % self.fields
 
         # Grid
