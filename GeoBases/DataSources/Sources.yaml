@@ -17,7 +17,11 @@ airports:
 
 
 countries:
-    paths     : Countries/countryInfo.txt
+    paths     : [
+        /thing/that/does/not/exist,
+        'http://download.geonames.org/export/dump/countryInfo.txt',
+        Countries/countryInfo.txt,
+    ]
     key_fields: code
     delimiter : "\t"
     subdelimiters :

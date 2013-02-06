@@ -57,6 +57,7 @@ from itertools import izip_longest, count
 import csv
 import json
 from shutil import copy
+from urllib import urlretrieve
 
 # Not in standard library
 import yaml
@@ -104,6 +105,10 @@ GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 MIN_MATCH  = 0.75
 RADIUS     = 50
 NB_CLOSEST = 1
+
+# Remoet prefix detection
+PREFIXES  = set(['http://', 'https://'])
+is_remote = lambda path: any(path.lower().startswith(p) for p in PREFIXES)
 
 # Loading indicator
 NB_LINES_STEP = 100000
@@ -316,12 +321,21 @@ class GeoBase(object):
         elif self._paths is not None:
             # Here we read the source from the configuration file
             for path in self._paths:
+
+                if is_remote(path):
+                    success, dl_file = download_if_not_here(path, op.basename(path), self._verbose)
+                    if not success:
+                        if self._verbose:
+                            print '/!\ Failed to download "%s", failing over...' % path
+                        continue
+                    path = dl_file
+
                 try:
                     with open(path) as source_fl:
                         self._loadFile(source_fl, self._verbose)
                 except IOError:
                     if self._verbose:
-                        print '/!\ Failed to open %s, failing over...' % path
+                        print '/!\ Failed to open "%s", failing over...' % path
                 else:
                     self.loaded = path
                     break
@@ -374,9 +388,16 @@ class GeoBase(object):
 
         # "local" is only used for sources from configuration
         # to have a relative path from the configuration file
-        if self._paths is not None and self._local:
-            if self._local is True:
-                self._paths = tuple(relative(p, root_file=PATH_CONF) for p in self._paths)
+        if self._paths is not None:
+            paths = []
+            for path in self._paths:
+                if is_remote(path):
+                    paths.append(path)
+                else:
+                    if self._local is True:
+                        paths.append(relative(path, root_file=PATH_CONF))
+
+            self._paths = tuple(paths)
 
         # Some headers are not accepted
         for h in self._headers:
@@ -2292,6 +2313,29 @@ def tuplify(s):
         return (s,)
     else:
         return tuple(s)
+
+
+def download_if_not_here(resource, filename, verbose=True):
+    """
+    Download a remote file only if target file is not already
+    in local directory.
+    Returns boolean for success or failure, and path
+    to downloaded file (may not be exactly the same as the one checked).
+    """
+    # If in local directory, we use it, otherwise we download it
+    if op.isfile(filename):
+        if verbose:
+            print '/!\ Using "%s" already in local directory for "%s"' % (filename, resource)
+        return True, filename
+
+    if verbose:
+        print '/!\ Downloading "%s" in local directory from "%s"' % (filename, resource)
+    try:
+        dl_filename, _ = urlretrieve(resource, filename)
+    except IOError:
+        return False, None
+    else:
+        return True, dl_filename
 
 
 
