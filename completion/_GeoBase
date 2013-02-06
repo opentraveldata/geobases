@@ -9,7 +9,7 @@ T_TREP="(F S I J)"
 L_LIMIT="(1 2 5)"
 I_INT="()"
 Q_QUIET="()"
-Y_FIELDS="(dmetaphone metaphone nysiis)"
+Y_FIELDS="(dmetaphone dmetaphone-strict metaphone nysiis)"
 
 _arguments \
  "(-h --help)"{-h,--help}"[Show this help message and exit]" \

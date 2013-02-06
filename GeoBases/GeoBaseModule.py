@@ -1678,18 +1678,25 @@ class GeoBase(object):
         >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
         [('CACAG', 'CHI')]
         """
-        if method == 'dmetaphone':
-            soundify = dmeta
+        if method == 'metaphone':
+            soundify = lambda s: dmeta(s)[0]
+            matches  = lambda s1, s2: s1 == s2
 
-        elif method == 'metaphone':
-            soundify = lambda v : dmeta(v)[0]
+        elif method == 'dmetaphone-strict':
+            soundify = dmeta
+            matches  = lambda s1, s2: s1 == s2
+
+        elif method == 'dmetaphone':
+            soundify = dmeta
+            matches  = lambda s1, s2: set(s1) & set(s2) - set([None])
 
         elif method == 'nysiis':
             soundify = nysiis
+            matches  = lambda s1, s2: s1 == s2
 
         else:
             raise ValueError('Accepted methods are %s' % \
-                             ['metaphone', 'dmetaphone', 'nysiis'])
+                             ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
 
         if from_keys is None:
             from_keys = iter(self)
@@ -1702,7 +1709,7 @@ class GeoBase(object):
         for key in from_keys:
             sound = soundify(self.get(key, field))
 
-            if sound == expected_sound:
+            if matches(sound, expected_sound):
                 yield sound, key
 
 

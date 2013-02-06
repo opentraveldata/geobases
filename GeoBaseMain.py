@@ -651,7 +651,7 @@ FORCE_STR = False
 
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__exact__', '__fuzzy__', '__phonetic__')
-ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'metaphone', 'nysiis')
+ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 
 DEF_INTER_FIELD = '__key__'
 DEF_INTER_TYPE  = '__exact__'
