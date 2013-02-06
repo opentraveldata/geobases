@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + urls input for YAML configuration
  + new loaded attribute to describe loaded data, depends on source and paths
  + accepts list of paths in configuration file, failover mechanism
  + make a difference between source at __init__ and path in YAML file
