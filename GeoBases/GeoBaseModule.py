@@ -491,7 +491,7 @@ class GeoBase(object):
             if verbose:
                 print '/!\ key_fields was None, keys will be created from line numbers.'
 
-            return (), lambda row, pos, line_nb: line_nb
+            return lambda row, line_nb: line_nb
 
         # It is possible to have a key_fields which is a list
         # In this case we build the key as the concatenation between
@@ -503,9 +503,9 @@ class GeoBase(object):
             raise ValueError("Inconsistent: headers = %s with key_fields = %s" % \
                              (headers, key_fields))
         else:
-            keyer = lambda row, pos, line_nb: '+'.join(row[p] for p in pos)
+            keyer = lambda row, line_nb: '+'.join(row[p] for p in pos)
 
-        return pos, keyer
+        return keyer
 
 
     @staticmethod
@@ -599,7 +599,7 @@ class GeoBase(object):
         limit         = self._limit
         discard_dups  = self._discard_dups
 
-        pos, keyer = self._buildKeyer(key_fields, headers, verbose)
+        keyer = self._buildKeyer(key_fields, headers, verbose)
 
         # csv reader options
         csv_opt = {
@@ -625,7 +625,7 @@ class GeoBase(object):
                 continue
 
             try:
-                key = keyer(row, pos, line_nb)
+                key = keyer(row, line_nb)
             except IndexError:
                 if verbose:
                     print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
