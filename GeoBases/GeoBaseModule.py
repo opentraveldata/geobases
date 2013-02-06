@@ -258,11 +258,11 @@ class GeoBase(object):
             conf = BASES[data]
 
             # File configuration overrides defaults
-            for name in conf:
-                if name in props:
-                    props[name] = conf[name]
+            for option in conf:
+                if option in props:
+                    props[option] = conf[option]
                 else:
-                    raise ValueError('Option "%s" for data "%s" not understood in file.' % (name, data))
+                    raise ValueError('Option "%s" for data "%s" not understood in file.' % (option, data))
 
         elif data == 'feed':
             # User input defining everything
@@ -272,11 +272,11 @@ class GeoBase(object):
 
         # User input overrides default configuration
         # or file configuration
-        for name in kwargs:
-            if name in props:
-                props[name] = kwargs[name]
+        for option in kwargs:
+            if option in props:
+                props[option] = kwargs[option]
             else:
-                raise ValueError('Option "%s" not understood in arguments.' % name)
+                raise ValueError('Option "%s" not understood in arguments.' % option)
 
         # "local" is only used for sources from configuration
         # to have a relative path from the configuration file
