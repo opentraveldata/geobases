@@ -212,7 +212,9 @@ class GeoBase(object):
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
         ValueError: Wrong data type. Not in ['airlines', ...]
-        >>> 
+
+        Import of local data.
+
         >>> fl = open(relative('DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'))
         >>> GeoBase(data='feed',
         ...         source=fl,
@@ -988,7 +990,6 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
         Using index for ('iata_code',)
         [(1, 'MRS'), (1, 'MRS@1')]
-        >>> 
         >>> geo_o.addIndex('iata_code')
         /!\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
@@ -997,13 +998,17 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code',) and ('location_type',)
         [(2, 'NCE')]
-        >>> 
+
+        Multiple index.
+
         >>> geo_o.addIndex(('iata_code', 'location_type'))
         Built index for fields ('iata_code', 'location_type')
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code', 'location_type')
         [(2, 'NCE')]
-        >>> 
+
+        Or mode with index.
+
         >>> geo_o.addIndex('city_code')
         Built index for fields ('city_code',)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
