@@ -595,7 +595,7 @@ def error(name, *args):
     elif name == 'geocode_support':
         print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
-    elif name == 'base':
+    elif name == 'data':
         print >> stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
         fmt_on_two_cols(args[1], stderr)
 
@@ -1142,7 +1142,7 @@ def main():
         exit(0)
 
     if args['base'] not in BASES:
-        error('base', args['base'], sorted(BASES.keys()))
+        error('data', args['base'], sorted(BASES.keys()))
 
     # Updating file
     if args['update']:
