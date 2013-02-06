@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + make a difference between source at __init__ and path in YAML file
  + phonetic searches with dmetaphone (-p/-P/-y for CLI)
  + options: --warnings (-w) is --verbose (-v), --version (-v) short is -V, --gridless (-g) is --without-grid (-w)
  + more tests
