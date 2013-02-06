@@ -1152,7 +1152,7 @@ class GeoBase(object):
         lat_lng and a list of keys. Keys which have not valid
         geocodes will not appear in the results.
 
-        >>> list(geo_a._buildDistances((0,0), ['ORY', 'CDG']))
+        >>> list(geo_a._buildDistances((0, 0), ['ORY', 'CDG']))
         [(5422.74..., 'ORY'), (5455.45..., 'CDG')]
         """
         if lat_lng_ref is None:
@@ -1402,12 +1402,12 @@ class GeoBase(object):
                 yield dist, thing
 
 
-    def _buildRatios(self, fuzzy_value, field, keys, min_match=MIN_MATCH):
+    def _buildRatios(self, fuzzy_value, field, min_match, keys):
         """
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._buildRatios('marseille', 'name', ['ORY', 'MRS', 'CDG'], 0.80))
+        >>> list(geo_a._buildRatios('marseille', 'name', 0.80, ['ORY', 'MRS', 'CDG']))
         [(0.9..., 'MRS')]
         """
         for key in keys:
@@ -1464,7 +1464,7 @@ class GeoBase(object):
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
-        iterable = self._buildRatios(fuzzy_value, field, from_keys, min_match)
+        iterable = self._buildRatios(fuzzy_value, field, min_match, from_keys)
 
         if max_results is None:
             return sorted(iterable, reverse=True)
