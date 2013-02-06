@@ -810,12 +810,12 @@ class GeoBase(object):
 
         except ValueError:
             # Decode geocode, if error, returns None
-            return None
+            return
 
         except KeyError:
             # Probably means that there is not geocode support
             # But could be that key is unkwown
-            return None
+            return
         # Note that TypeError would mean that the input
         # type was not even a string, probably NoneType
         else:
