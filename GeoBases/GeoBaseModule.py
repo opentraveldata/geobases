@@ -352,26 +352,22 @@ class GeoBase(object):
         """Some check on parameters.
         """
         # Tuplification
-        if isinstance(self._indices, str):
-            self._indices = (self._indices,)
-        else:
-            self._indices = tuple(self._indices)
+        self._indices = tuplify(self._indices)
+        self._headers = tuplify(self._headers)
+
+        if self._key_fields is not None:
+            self._key_fields = tuplify(self._key_fields)
+
+        if self._paths is not None:
+            self._paths = tuplify(self._paths)
 
         for h in self._subdelimiters:
             if self._subdelimiters[h] is not None:
-                if isinstance(self._subdelimiters[h], str):
-                    self._subdelimiters[h] = (self._subdelimiters[h],)
-                else:
-                    self._subdelimiters[h] = tuple(self._subdelimiters[h])
+                self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
         # "local" is only used for sources from configuration
         # to have a relative path from the configuration file
-        if self._paths is not None:
-            if isinstance(self._paths, str):
-                self._paths = (self._paths,)
-            else:
-                self._paths = tuple(self._paths)
-
+        if self._paths is not None and self._local:
             if self._local is True:
                 self._paths = tuple(relative(p, root_file=PATH_CONF) for p in self._paths)
 
@@ -398,12 +394,7 @@ class GeoBase(object):
         >>> geo_o.hasIndexOn(('iata_code', 'asciiname'))
         False
         """
-        if isinstance(fields, str):
-            fields = (fields,)
-        else:
-            fields = tuple(fields)
-
-        return fields in self._indexed
+        return tuplify(fields) in self._indexed
 
 
 
@@ -424,10 +415,7 @@ class GeoBase(object):
                 print '/!\ Fields %s were empty, index not added' % str(fields)
             return
 
-        if isinstance(fields, str):
-            fields = (fields,)
-        else:
-            fields = tuple(fields)
+        fields = tuplify(fields)
 
         if self.hasIndexOn(fields):
             if verbose:
@@ -448,12 +436,7 @@ class GeoBase(object):
         >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
         False
         """
-        if isinstance(fields, str):
-            fields = (fields,)
-        else:
-            fields = tuple(fields)
-
-        del self._indexed[fields]
+        del self._indexed[tuplify(fields)]
 
 
 
@@ -473,10 +456,10 @@ class GeoBase(object):
         ['MRS', 'MRS@1']
         """
         if isinstance(fields, str):
-            compute_val = self.get
+            compute_val = lambda k: self.get(k, fields)
 
-        elif isinstance(fields, list) or isinstance(fields, tuple):
-            compute_val = lambda k, fields : tuple(self.get(k, f) for f in fields)
+        elif isinstance(fields, (list, tuple, set)):
+            compute_val = lambda k: tuple(self.get(k, f) for f in fields)
 
         else:
             raise ValueError('Wrong fields "%s" for index' % str(fields))
@@ -486,7 +469,7 @@ class GeoBase(object):
 
         for key in self:
 
-            val = compute_val(key, fields)
+            val = compute_val(key)
 
             if val not in values_to_matches:
                 values_to_matches[val] = []
@@ -514,15 +497,7 @@ class GeoBase(object):
         # In this case we build the key as the concatenation between
         # the different fields
         try:
-            if isinstance(key_fields, str):
-                pos = (headers.index(key_fields),)
-
-            elif isinstance(key_fields, list) or isinstance(key_fields, tuple):
-                pos = tuple(headers.index(k) for k in key_fields)
-
-            else:
-                # All other cases will fall into the except clause below
-                raise ValueError()
+            pos = tuple(headers.index(k) for k in key_fields)
 
         except ValueError:
             raise ValueError("Inconsistent: headers = %s with key_fields = %s" % \
@@ -2241,6 +2216,7 @@ def ext_split(value, split):
     """
     if split is None:
         return value
+
     if split == '':
         # Here we convert a string like 'CA' into ('C', 'A')
         return tuple(value)
@@ -2291,6 +2267,22 @@ def recursive_split(value, splits):
                      for v in value.split(splits[0]) if v)
 
     raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
+
+
+def tuplify(s):
+    """
+    Convert iterable into tuple,
+    if string just put in in a tuple.
+
+    >>> tuplify('test')
+    ('test',)
+    >>> tuplify(['test', 'titi'])
+    ('test', 'titi')
+    """
+    if isinstance(s, str):
+        return (s,)
+    else:
+        return tuple(s)
 
 
 
