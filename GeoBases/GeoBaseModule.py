@@ -672,7 +672,7 @@ class GeoBase(object):
 
 
         if verbose:
-            source_name = self._path if self._source is None else 'file-like'
+            source_name = self._path if self._source is None else '*file-like*'
             print "Import successful from %s" % source_name
             print "Available fields for things: %s" % self.fields
 

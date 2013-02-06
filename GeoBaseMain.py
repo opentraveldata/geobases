@@ -822,8 +822,8 @@ def handle_args():
         whose specific property given by --exact-property match the
         argument. By default, the %s property is used for the search.
         You can have several property matching by giving multiple values
-        separated by "%s" for --exact-property. Make sure you give the
-        same number of values separated also by "%s" then.
+        delimited by "%s" for --exact-property. Make sure you give the
+        same number of values delimited also by "%s" then.
         ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None,
         nargs = '+')
@@ -833,8 +833,8 @@ def handle_args():
         When performing an exact search, specify the property to be chosen.
         Default is %s. Give unadmissible property and available
         values will be displayed.
-        You can give multiple properties separated by "%s". Make sure
-        you give the same number of values separated also by "%s" for -e then.
+        You can give multiple properties delimited by "%s". Make sure
+        you give the same number of values delimited also by "%s" for -e then.
         ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         default = None)
 
