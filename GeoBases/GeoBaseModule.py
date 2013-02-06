@@ -515,10 +515,10 @@ class GeoBase(object):
         # Erase everything, except duplicates counter
         data = {
             '__key__' : key,  # special field for key
-            '__lno__' : lno,  # special field for line number
-            '__gar__' : [],   # special field for garbage
             '__dup__' : [],   # special field for duplicates
             '__par__' : [],   # special field for parent
+            '__lno__' : lno,  # special field for line number
+            '__gar__' : [],   # special field for garbage
         }
 
         # headers represents the meaning of each column.
@@ -1760,10 +1760,10 @@ class GeoBase(object):
         if key not in self._things:
             self._things[key] = {
                 '__key__' : key,      # special field for key
-                '__lno__' : 0,        # special field for line number
-                '__gar__' : [],       # special field for garbage
                 '__dup__' : [],       # special field for duplicates
                 '__par__' : [],       # special field for parent
+                '__lno__' : 0,        # special field for line number
+                '__gar__' : [],       # special field for garbage
             }
 
         if field is not None:
