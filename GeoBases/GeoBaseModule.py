@@ -1913,9 +1913,11 @@ class GeoBase(object):
                   icon_weight=None,
                   icon_color=None,
                   icon_type='auto',
-                  from_keys=None,
                   catalog=None,
+                  from_keys=None,
                   add_lines=None,
+                  add_anonymous_icons=None,
+                  add_anonymous_lines=None,
                   link_duplicates=True,
                   verbose=True):
         """Creates map and other visualizations.
@@ -1924,10 +1926,14 @@ class GeoBase(object):
         :param label:           set the field which will appear as map icons title
         :param icon_weight:     set the field defining the map icons circle surface
         :param icon_color:      set the field defining the map icons colors
-        :param icon_type:       set the global icon size, either 'B', 'S' or 'auto'
-        :param from_keys:       only display this iterable of keys if not None
+        :param icon_type:       set the icon size, either 'B', 'S' or 'auto'
         :param catalog:         optional color catalog to have specific colors for certain field values
+        :param from_keys:       only display this iterable of keys if not None
         :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
+        :param add_anonymous_icons: optional list of (lat, lng) to draw additional icons from geocodes \
+                not in the data
+        :param add_anonymous_icons: optional list of ((lat1, lng1), (lat2, lng2), ..., (latN, lngN)) to \
+                draw additional lines from geocodes not in the data
         :param link_duplicates: boolean toggling lines between duplicated keys feature
         :param verbose:         toggle verbosity
         :returns:               this is the tuple (list of templates successfully rendered, \
@@ -1964,10 +1970,6 @@ class GeoBase(object):
         else:
             get_category = lambda key: self.get(key, icon_color)
 
-        # from_keys lets you have a set of keys to visualize
-        if from_keys is None:
-            from_keys = iter(self)
-
         # catalog is a user defined color scheme
         if catalog is None:
             # Default diff-friendly catalog
@@ -1979,14 +1981,27 @@ class GeoBase(object):
                 'N' : 'red',
             }
 
-        # Additional lines
+        # from_keys lets you have a set of keys to visualize
+        if from_keys is None:
+            from_keys = iter(self)
+
+        # Additional stuff
         if add_lines is None:
             add_lines = []
 
+        if add_anonymous_icons is None:
+            add_anonymous_icons = []
+
+        if add_anonymous_lines is None:
+            add_anonymous_lines = []
+
         # Storing json data
         data = [
-            self._buildPointData(key, label, get_weight, get_category)
+            self._buildIconData(key, label, get_weight, get_category)
             for key in from_keys
+        ] + [
+            self._buildAnonymousIconData(lat_lng)
+            for lat_lng in add_anonymous_icons
         ]
 
         # Icon type
@@ -2012,9 +2027,14 @@ class GeoBase(object):
 
         # Gathering data for lines
         data_lines = [
-            self._buildLineData(l, label, 'User defined line') for l in add_lines
+            self._buildLineData(l, label, 'Line')
+            for l in add_lines
         ] + [
-            self._buildLineData(l, label, 'Duplicates') for l in dup_lines
+            self._buildAnonymousLineData(l, 'Anonymous line')
+            for l in add_anonymous_lines
+        ] + [
+            self._buildLineData(l, label, 'Duplicates')
+            for l in dup_lines
         ]
 
         # Dump the json geocodes
@@ -2041,8 +2061,9 @@ class GeoBase(object):
         return render_templates(output, json_name, geo_support, verbose)
 
 
-    def _buildPointData(self, key, label, get_weight, get_category):
-        """Build data for point display.
+
+    def _buildIconData(self, key, label, get_weight, get_category):
+        """Build data for key display.
         """
         lat_lng = self.getLocation(key)
 
@@ -2069,6 +2090,22 @@ class GeoBase(object):
         return elem
 
 
+    @staticmethod
+    def _buildAnonymousIconData(lat_lng):
+        """Build data for anonymous point display.
+        """
+        if lat_lng is None:
+            lat_lng = '?', '?'
+
+        return {
+            '__key__' : '(%s, %s)' % lat_lng,
+            '__lab__' : 'Anonymous',
+            '__wei__' : 0,
+            '__cat__' : None,
+            'lat'     : lat_lng[0],
+            'lng'     : lat_lng[1]
+        }
+
 
     def _buildLineData(self, line, label, title):
         """Build data for line display.
@@ -2093,6 +2130,29 @@ class GeoBase(object):
             'path'    : data_line,
         }
 
+
+    @staticmethod
+    def _buildAnonymousLineData(line, title):
+        """Build data for anonymous line display.
+        """
+        data_line = []
+
+        for lat_lng in line:
+            print lat_lng
+            if lat_lng is None:
+                lat_lng = '?', '?'
+
+            data_line.append({
+                '__key__' : '(%s, %s)' % lat_lng,
+                '__lab__' : 'Anonymous',
+                'lat'     : lat_lng[0],
+                'lng'     : lat_lng[1],
+            })
+
+        return {
+            '__lab__' : title,
+            'path'    : data_line,
+        }
 
 
     def _buildLinksForDuplicates(self, data):
