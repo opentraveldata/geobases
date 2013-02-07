@@ -200,7 +200,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     nice color and everything.
     """
     if not list_of_things:
-        stdout.write('\nNo elements to display.\n')
+        print '\nNo elements to display.'
         return
 
     if not show:
@@ -362,7 +362,7 @@ def fixed_width(s, col, lim=25, truncate=None):
     # To truncate on the appropriate number of characters
     # We decode before truncating (so non-ascii characters
     # will be counted only once when using len())
-    # Then we encode again for stdout.write
+    # Then we encode again before display
     ds = str(s).decode('utf8')                      # decode
     es = (printer % ds[0:truncate]).encode('utf8')  # encode
 
@@ -1456,7 +1456,6 @@ def main():
                     (max_t - len(templates))
 
 
-    # We protect the stdout.write against the IOError
     if frontend == 'terminal':
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
