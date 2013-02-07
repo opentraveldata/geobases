@@ -1382,8 +1382,14 @@ def main():
             if interactive_field == '__key__':
                 res = enumerate(values)
             else:
-                conditions = [(interactive_field, val) for val in values]
-                res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
+                res = []
+                for val in values:
+                    res.extend(list(g.findWith([(interactive_field, val)], force_str=FORCE_STR, mode='or', verbose=logorrhea)))
+
+                # Other way to do it by putting all lines in one *or* condition
+                # But for over 1000 lines, this becomes slower than querying each line
+                #conditions = [(interactive_field, val) for val in values]
+                #res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
                 last = 'exact'
 
         elif interactive_type == '__fuzzy__':
