@@ -1919,6 +1919,7 @@ class GeoBase(object):
                   add_anonymous_lines=None,
                   link_duplicates=True,
                   catalog=None,
+                  line_colors=None,
                   verbose=True):
         """Creates map and other visualizations.
 
@@ -1935,6 +1936,10 @@ class GeoBase(object):
         :param add_anonymous_icons: optional list of ((lat1, lng1), (lat2, lng2), ..., (latN, lngN)) to \
                 draw additional lines from geocodes not in the data
         :param link_duplicates: boolean toggling lines between duplicated keys feature
+        :param line_colors:     optional tuple of 3 colors to change the default lines \
+                color, the three values are for the three line types: those computed \
+                with link_duplicates, those given with add_lines, those given with \
+                add_anonymous_lines
         :param verbose:         toggle verbosity
         :returns:               this is the tuple (list of templates successfully rendered, \
                                                    total number of templates available)
@@ -2001,6 +2006,13 @@ class GeoBase(object):
                 '@' : 'yellow',
             }
 
+        if line_colors is None:
+            line_colors = ('blue', 'orange', 'yellow')
+        else:
+            if len(line_colors) != 3:
+                raise ValueError('line_colors must a tuple of 3 colors, was %s.' % \
+                                 str(line_colors))
+
         # Storing json data
         data = [
             self._buildIconData(key, get_label, get_weight, get_category)
@@ -2033,13 +2045,13 @@ class GeoBase(object):
 
         # Gathering data for lines
         data_lines = [
-            self._buildLineData(l, get_label, 'Line', 'orange')
-            for l in add_lines
-        ] + [
-            self._buildLineData(l, get_label, 'Duplicates', 'blue')
+            self._buildLineData(l, get_label, 'Duplicates', line_colors[0])
             for l in dup_lines
         ] + [
-            self._buildAnonymousLineData(l, 'Anonymous line', 'yellow')
+            self._buildLineData(l, get_label, 'Line', line_colors[1])
+            for l in add_lines
+        ] + [
+            self._buildAnonymousLineData(l, 'Anonymous line', line_colors[2])
             for l in add_anonymous_lines
         ]
 
