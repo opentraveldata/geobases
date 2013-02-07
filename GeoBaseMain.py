@@ -1532,7 +1532,11 @@ def main():
                                        icon_weight=icon_weight,
                                        icon_color=icon_color,
                                        icon_type=icon_type,
+                                       catalog=None,
                                        from_keys=ex_keys(res),
+                                       add_lines=None,
+                                       add_anonymous_icons=None,
+                                       add_anonymous_lines=None,
                                        link_duplicates=link_duplicates,
                                        verbose=True)
 
