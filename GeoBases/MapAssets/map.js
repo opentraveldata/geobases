@@ -389,13 +389,14 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var ods, name, coords, line, d, help;
+    var ods, name, lcol, coords, line, d, help;
     var linesArray = [];
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         ods  = jsonData.lines[i].path;
         name = jsonData.lines[i].__lab__;
+        lcol = jsonData.lines[i].__col__;
 
         coords = [];
         help   = '<div class="infowindow large">' +
@@ -418,7 +419,7 @@ function initialize(jsonData) {
             geodesic        : true,
             clickable       : true,
             path            : coords,
-            strokeColor     : 'blue',
+            strokeColor     : lcol,
             strokeOpacity   : 0.5,
             strokeWeight    : 5
         });

@@ -2032,14 +2032,14 @@ class GeoBase(object):
 
         # Gathering data for lines
         data_lines = [
-            self._buildLineData(l, get_label, 'Line')
+            self._buildLineData(l, get_label, 'Line', 'orange')
             for l in add_lines
         ] + [
-            self._buildAnonymousLineData(l, 'Anonymous line')
-            for l in add_anonymous_lines
-        ] + [
-            self._buildLineData(l, get_label, 'Duplicates')
+            self._buildLineData(l, get_label, 'Duplicates', 'blue')
             for l in dup_lines
+        ] + [
+            self._buildAnonymousLineData(l, 'Anonymous line', 'yellow')
+            for l in add_anonymous_lines
         ]
 
         # Dump the json geocodes
@@ -2112,7 +2112,7 @@ class GeoBase(object):
         }
 
 
-    def _buildLineData(self, line, get_label, title):
+    def _buildLineData(self, line, get_label, title, color):
         """Build data for line display.
         """
         data_line = []
@@ -2132,12 +2132,13 @@ class GeoBase(object):
 
         return {
             '__lab__' : title,
+            '__col__' : color,
             'path'    : data_line,
         }
 
 
     @staticmethod
-    def _buildAnonymousLineData(line, title):
+    def _buildAnonymousLineData(line, title, color):
         """Build data for anonymous line display.
         """
         data_line = []
@@ -2155,6 +2156,7 @@ class GeoBase(object):
 
         return {
             '__lab__' : title,
+            '__col__' : color,
             'path'    : data_line,
         }
 
@@ -2170,6 +2172,10 @@ class GeoBase(object):
 
         for elem in data:
             key = elem['__key__']
+
+            if key not in self:
+                # Possible for anonymous keys added for display
+                continue
 
             if not self.hasParents(key):
                 mkey = set([key])
