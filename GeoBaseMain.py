@@ -1382,6 +1382,10 @@ def main():
             if interactive_field == '__key__':
                 res = enumerate(values)
             else:
+                if not g.hasIndexOn(interactive_field):
+                    print 'No index on %s, indexing now...' % interactive_field
+                    g.addIndex(interactive_field, verbose=logorrhea)
+
                 res = []
                 for val in values:
                     res.extend(list(g.findWith([(interactive_field, val)], force_str=FORCE_STR, mode='or', verbose=logorrhea)))
