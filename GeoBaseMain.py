@@ -676,7 +676,7 @@ PORT    = 8000
 
 # Defaults for map
 DEF_LABEL_FIELDS    = ('name',       'country_name', '__key__')
-DEF_SIZE_FIELDS     = ('page_rank',  'population',   None)
+DEF_WEIGHT_FIELDS   = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS    = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE       = 'auto' # icon type: small, big, auto, ...
 DEF_LINK_DUPLICATES = True
@@ -1021,10 +1021,10 @@ def handle_args():
 
     parser.add_argument('-M', '--map-data',
         help = dedent('''\
-        5 optional arguments: label, size, color, icon, duplicates.
+        5 optional arguments: label, weight, color, icon, duplicates.
             1) label is the field to display on map points.
                Default is %s depending on fields.
-            2) size is the field used to draw circles around points.
+            2) weight is the field used to draw circles around points.
                Default is %s depending on fields.
                Put "%s" to disable circles.
             3) color is the field use to color icons.
@@ -1041,7 +1041,7 @@ def handle_args():
                any other value will be falsy.
         For any field, you may put "%s" to leave the default value.
         Example: -M _ population _ __none__ _
-        ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_SIZE_FIELDS), DISABLE,
+        ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_WEIGHT_FIELDS), DISABLE,
                 fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
                 DEF_LINK_DUPLICATES, fmt_or(TRUTHY), SKIP))),
         nargs = '+',
@@ -1255,9 +1255,9 @@ def main():
         args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
     # Reading map options
-    label           = best_field(DEF_LABEL_FIELDS, g.fields)
-    point_size      = best_field(DEF_SIZE_FIELDS,  g.fields)
-    point_color     = best_field(DEF_COLOR_FIELDS, g.fields)
+    label           = best_field(DEF_LABEL_FIELDS,  g.fields)
+    icon_weight     = best_field(DEF_WEIGHT_FIELDS, g.fields)
+    icon_color      = best_field(DEF_COLOR_FIELDS,  g.fields)
     icon_type       = DEF_ICON_TYPE
     link_duplicates = DEF_LINK_DUPLICATES
 
@@ -1265,10 +1265,10 @@ def main():
         label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        point_size = None if args['map_data'][1] == DISABLE else args['map_data'][1]
+        icon_weight = None if args['map_data'][1] == DISABLE else args['map_data'][1]
 
     if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
-        point_color = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+        icon_color = None if args['map_data'][2] == DISABLE else args['map_data'][2]
 
     if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
         icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
@@ -1331,7 +1331,7 @@ def main():
 
     # Failing on unknown fields
     fields_to_test = [
-        f for f in (label, point_size, point_color, interactive_field)
+        f for f in (label, icon_weight, icon_color, interactive_field)
         if f is not None
     ]
 
@@ -1529,8 +1529,8 @@ def main():
     if frontend == 'map':
         templates, max_t = g.visualize(output=g.data,
                                        label=label,
-                                       point_size=point_size,
-                                       point_color=point_color,
+                                       icon_weight=icon_weight,
+                                       icon_color=icon_color,
                                        icon_type=icon_type,
                                        from_keys=ex_keys(res),
                                        link_duplicates=link_duplicates,

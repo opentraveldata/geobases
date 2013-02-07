@@ -1930,7 +1930,8 @@ class GeoBase(object):
         :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
         :param link_duplicates: boolean toggling lines between duplicated keys feature
         :param verbose:         toggle verbosity
-        :returns:               (list of templates successfully rendered, total number of templates available).
+        :returns:               this is the tuple (list of templates successfully rendered, \
+                                                   total number of templates available)
         """
         if self.hasGeoSupport():
             geo_support = True
@@ -2120,7 +2121,7 @@ class GeoBase(object):
 
 
 def compute_base_icon(icon_type, has_many):
-    """Compute icon marker.
+    """Compute icon.
     """
     if icon_type is None:
         return ''
