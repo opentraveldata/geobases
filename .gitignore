@@ -21,3 +21,5 @@
 /*.html
 /*.js
 /*.json
+# Ignoring coverage reports
+/.coverage
