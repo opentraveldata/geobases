@@ -187,21 +187,21 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.points.length;
 
-    var point_color     = jsonData.meta.point_color;
-    var point_size      = jsonData.meta.point_size;
-    var base_icon       = jsonData.meta.base_icon;
+    var icon_color      = jsonData.meta.icon_color;
+    var icon_weight     = jsonData.meta.icon_weight;
     var icon_type       = jsonData.meta.icon_type;
+    var base_icon       = jsonData.meta.base_icon;
     //var link_duplicates = jsonData.meta.link_duplicates;
     var nb_user_lines   = jsonData.meta.nb_user_lines;
 
-    var with_markers = icon_type   !== null;
-    var with_circles = point_size  !== null;
-    var with_colors  = point_color !== null;
+    var with_icons   = icon_type   !== null;
+    var with_circles = icon_weight !== null;
+    var with_colors  = icon_color  !== null;
 
     var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
     var getCircleColor;
 
-    if (with_markers || ! with_colors) {
+    if (with_icons || ! with_colors) {
         getCircleColor = function (color) { return 'black'; };
     } else {
         getCircleColor = function (color) { return color; };
@@ -240,7 +240,7 @@ function initialize(jsonData) {
         has_circle = (! isNaN(s)) && s > 0;
         circle_col = getCircleColor(e.__col__);
 
-        if (! with_markers && ! has_circle) {
+        if (! with_icons && ! has_circle) {
             // If no markers, only circles are displayed.
             // If no circle too, let's move on
             // Note that lines will not go through these
@@ -255,7 +255,7 @@ function initialize(jsonData) {
             draggable   : false
         });
 
-        if (with_markers) {
+        if (with_icons) {
             marker.setMap(map);
             marker.setIcon(getMarkerIcon(e.__col__));
         }
@@ -315,10 +315,10 @@ function initialize(jsonData) {
             circle.help = ' ' +
             '<div class="infowindow large">' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}<br/>'.fmt(point_size, s);
+                '<i>{0}</i> {1}<br/>'.fmt(icon_weight, s);
 
             if (with_colors) {
-                circle.help += '<i>{0}</i> {1} ({2})'.fmt(point_color, e.__cat__, e.__col__);
+                circle.help += '<i>{0}</i> {1} ({2})'.fmt(icon_color, e.__cat__, e.__col__);
             }
 
             circle.help += ' ' +
@@ -384,7 +384,7 @@ function initialize(jsonData) {
 
     // If no markers, we avoid a big
     // drift to the pacific ocean :)
-    if (n >= 2 && (with_markers || with_circles)) {
+    if (n >= 2 && (with_icons || with_circles)) {
         map.fitBounds(bounds);
     }
 
@@ -520,10 +520,10 @@ function initialize(jsonData) {
     '<table id="legendcontent" class="medium">' +
         '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Circle</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
-    if (with_markers) {
+    if (with_icons) {
         row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>{5} points</td></tr>';
     } else {
-        row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>' + point_size + ' {5}</td></tr>';
+        row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>' + icon_weight + ' {5}</td></tr>';
     }
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
@@ -531,18 +531,18 @@ function initialize(jsonData) {
         col  = jsonData.categories[i][1].color;
         vol  = jsonData.categories[i][1].volume;
 
-        if (with_markers) {
+        if (with_icons) {
             icon = '<img src="{0}" alt="icon"/>'.fmt(getMarkerIcon(col));
         } else {
             icon = '(none)';
         }
-        msg += row.fmt(icon, col, getCircleColor(col), point_color, cat, vol);
+        msg += row.fmt(icon, col, getCircleColor(col), icon_color, cat, vol);
     }
     msg += '</table>';
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} <i>point(s) on map</i> (out of {1}), {2} <i>line(s)</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>point(s) on map</i> (out of {1}), {2} <i>line(s)</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, icon_color, icon_weight, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers

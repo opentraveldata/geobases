@@ -1910,8 +1910,8 @@ class GeoBase(object):
     def visualize(self,
                   output='example',
                   label='__key__',
-                  point_size=None,
-                  point_color=None,
+                  icon_weight=None,
+                  icon_color=None,
                   icon_type='auto',
                   from_keys=None,
                   catalog=None,
@@ -1922,8 +1922,8 @@ class GeoBase(object):
 
         :param output:          set the name of the rendered files
         :param label:           set the field which will appear as map icons title
-        :param point_size:      set the field defining the map icons circle size
-        :param point_color:     set the field defining the map icons colors
+        :param icon_weight:     set the field defining the map icons circle size
+        :param icon_color:      set the field defining the map icons colors
         :param icon_type:       set the global icon size, either 'B', 'S' or 'auto'
         :param from_keys:       only display this iterable of keys if not None
         :param catalog:         optional color catalog to have specific colors for certain field values
@@ -1945,23 +1945,23 @@ class GeoBase(object):
         if label not in self.fields:
             raise ValueError('label "%s" not in fields %s.' % (label, self.fields))
 
-        if point_size is not None and point_size not in self.fields:
-            raise ValueError('point_size "%s" not in fields %s.' % (point_size, self.fields))
+        if icon_weight is not None and icon_weight not in self.fields:
+            raise ValueError('icon_weight "%s" not in fields %s.' % (icon_weight, self.fields))
 
-        if point_color is not None and point_color not in self.fields:
-            raise ValueError('point_color "%s" not in fields %s.' % (point_color, self.fields))
+        if icon_color is not None and icon_color not in self.fields:
+            raise ValueError('icon_color "%s" not in fields %s.' % (icon_color, self.fields))
 
         # Optional function which gives points size
-        if point_size is None:
-            get_size = lambda key: 0
+        if icon_weight is None:
+            get_weight = lambda key: 0
         else:
-            get_size = lambda key: self.get(key, point_size)
+            get_weight = lambda key: self.get(key, icon_weight)
 
         # Optional function which gives points size
-        if point_color is None:
+        if icon_color is None:
             get_category = lambda key: None
         else:
-            get_category = lambda key: self.get(key, point_color)
+            get_category = lambda key: self.get(key, icon_color)
 
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
@@ -1984,7 +1984,7 @@ class GeoBase(object):
 
         # Storing json data
         data = [
-            self._buildPointData(key, label, get_size, get_category)
+            self._buildPointData(key, label, get_weight, get_category)
             for key in from_keys
         ]
 
@@ -1994,7 +1994,7 @@ class GeoBase(object):
 
         # Building categories
         with_icons   = icon_type is not None
-        with_circles = point_size is not None
+        with_circles = icon_weight is not None
         categories   = build_categories(data, with_icons, with_circles, catalog, verbose)
 
         # Finally, we write the colors as an element attribute
@@ -2023,8 +2023,8 @@ class GeoBase(object):
             out.write(json.dumps({
                 'meta'       : {
                     'label'           : label,
-                    'point_size'      : point_size,
-                    'point_color'     : point_color,
+                    'icon_weight'     : icon_weight,
+                    'icon_color'      : icon_color,
                     'icon_type'       : icon_type,
                     'base_icon'       : base_icon,
                     'link_duplicates' : link_duplicates,
@@ -2040,7 +2040,7 @@ class GeoBase(object):
         return render_templates(output, json_name, geo_support, verbose)
 
 
-    def _buildPointData(self, key, label, get_size, get_category):
+    def _buildPointData(self, key, label, get_weight, get_category):
         """Build data for point display.
         """
         lat_lng = self.getLocation(key)
@@ -2051,7 +2051,7 @@ class GeoBase(object):
         elem = {
             '__key__' : key,
             '__lab__' : self.get(key, label),
-            '__siz__' : get_size(key),
+            '__siz__' : get_weight(key),
             '__cat__' : get_category(key),
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
@@ -2183,7 +2183,7 @@ def build_categories(data, with_icons, with_circles, catalog, verbose):
             'volume' : vol
         }
         if cat is None:
-            # None is also the default category, when point_color is None
+            # None is also the default category, when icon_color is None
             categories[cat]['color'] = 'blue'
 
         elif col_num < len(colors):
