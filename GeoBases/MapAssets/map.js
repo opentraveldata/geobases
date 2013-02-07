@@ -221,14 +221,14 @@ function initialize(jsonData) {
         }
     }
 
-    var i, j, c, e, s, latlng, marker, circle, circle_col, has_circle;
+    var i, j, c, e, w, latlng, marker, circle, circle_col, has_circle;
     var max_value = 0;
 
     // Load the data
     for (i=0 ; i<n ; i++) {
 
         e = jsonData.points[i];
-        s = parseFloat(e.__siz__);
+        w = parseFloat(e.__wei__);
 
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
@@ -237,7 +237,7 @@ function initialize(jsonData) {
             continue;
         }
 
-        has_circle = (! isNaN(s)) && s > 0;
+        has_circle = (! isNaN(w)) && w > 0;
         circle_col = getCircleColor(e.__col__);
 
         if (! with_icons && ! has_circle) {
@@ -294,9 +294,9 @@ function initialize(jsonData) {
         centersArray.push(latlng);
 
         if (has_circle) {
-            // We compute the biggest __siz__ value
-            if (s > max_value) {
-                max_value = s;
+            // We compute the biggest __wei__ value
+            if (w > max_value) {
+                max_value = w;
             }
             circle = new google.maps.Circle({
                 center          : latlng,
@@ -311,11 +311,11 @@ function initialize(jsonData) {
             });
 
             // Augmenting the marker type
-            circle.size = s;
+            circle.weight = w;
             circle.help = ' ' +
             '<div class="infowindow large">' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}<br/>'.fmt(icon_weight, s);
+                '<i>{0}</i> {1}<br/>'.fmt(icon_weight, w);
 
             if (with_colors) {
                 circle.help += '<i>{0}</i> {1} ({2})'.fmt(icon_color, e.__cat__, e.__col__);
@@ -335,7 +335,7 @@ function initialize(jsonData) {
         }
     }
 
-    // Ratio of map size for circles on the map
+    // Ratio for circles surface on the map
     //var R = 100;
     var r = 0.15;
 
@@ -345,7 +345,7 @@ function initialize(jsonData) {
     }
 
     function updateCircles(value) {
-        // We compute the top radius given the map size
+        // We compute the top radius given the map surface
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
         var ne = mapBounds.getNorthEast();
@@ -355,7 +355,7 @@ function initialize(jsonData) {
 
         for (i=0, c=circlesArray.length; i<c; i++) {
             circle = circlesArray[i];
-            circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
+            circle.setRadius(Math.sqrt(circle.weight / max_value) * biggest);
         }
     }
 

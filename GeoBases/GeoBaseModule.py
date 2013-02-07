@@ -1922,7 +1922,7 @@ class GeoBase(object):
 
         :param output:          set the name of the rendered files
         :param label:           set the field which will appear as map icons title
-        :param icon_weight:     set the field defining the map icons circle size
+        :param icon_weight:     set the field defining the map icons circle surface
         :param icon_color:      set the field defining the map icons colors
         :param icon_type:       set the global icon size, either 'B', 'S' or 'auto'
         :param from_keys:       only display this iterable of keys if not None
@@ -1952,13 +1952,13 @@ class GeoBase(object):
         if icon_color is not None and icon_color not in self.fields:
             raise ValueError('icon_color "%s" not in fields %s.' % (icon_color, self.fields))
 
-        # Optional function which gives points size
+        # Optional function which gives points weight
         if icon_weight is None:
             get_weight = lambda key: 0
         else:
             get_weight = lambda key: self.get(key, icon_weight)
 
-        # Optional function which gives points size
+        # Optional function which gives points category
         if icon_color is None:
             get_category = lambda key: None
         else:
@@ -2052,7 +2052,7 @@ class GeoBase(object):
         elem = {
             '__key__' : key,
             '__lab__' : self.get(key, label),
-            '__siz__' : get_weight(key),
+            '__wei__' : get_weight(key),
             '__cat__' : get_category(key),
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
@@ -2150,7 +2150,7 @@ def build_categories(data, with_icons, with_circles, catalog, verbose):
             # Here we are in no-icon mode, categories
             # will be based on the entries who will have a circle
             try:
-                c = float(elem['__siz__'])
+                c = float(elem['__wei__'])
             except ValueError:
                 c = 0
         else:
@@ -2199,7 +2199,7 @@ def build_categories(data, with_icons, with_circles, catalog, verbose):
             if with_icons:
                 field_vol = 'volume'
             elif with_circles:
-                field_vol = 'size'
+                field_vol = 'weight'
             else:
                 field_vol = '(not used)'
 
