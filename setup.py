@@ -129,7 +129,7 @@ setup(
         #    'test/test_GeoBases.py'
         #]),
         # Will create dir if needed
-        (op.join(getenv('HOME'), '.zsh/completion/'), [
+        (op.join(getenv('HOME'), '.zsh/completion'), [
             'completion/_GeoBase'
         ])
     ]
