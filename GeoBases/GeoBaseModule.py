@@ -2123,25 +2123,16 @@ class GeoBase(object):
         # Gathering data for lines
         data_lines = []
 
-        for line in add_lines + dup_lines:
-            data_line = []
-
-            for l_key in line:
-                lat_lng = self.getLocation(l_key)
-
-                if lat_lng is None:
-                    lat_lng = '?', '?'
-
-                data_line.append({
-                    '__key__' : l_key,
-                    '__lab__' : self.get(l_key, label),
-                    'lat'     : lat_lng[0],
-                    'lng'     : lat_lng[1],
-                })
-
+        for line in add_lines:
             data_lines.append({
-                '__lab__' : 'Line',
-                'path'    : data_line,
+                '__lab__' : 'User defined line',
+                'path'    : self._buildLineData(line, label),
+            })
+
+        for line in dup_lines:
+            data_lines.append({
+                '__lab__' : 'Duplicates',
+                'path'    : self._buildLineData(line, label),
             })
 
 
