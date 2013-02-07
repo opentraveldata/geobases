@@ -1913,12 +1913,12 @@ class GeoBase(object):
                   icon_weight=None,
                   icon_color=None,
                   icon_type='auto',
-                  catalog=None,
                   from_keys=None,
                   add_lines=None,
                   add_anonymous_icons=None,
                   add_anonymous_lines=None,
                   link_duplicates=True,
+                  catalog=None,
                   verbose=True):
         """Creates map and other visualizations.
 
