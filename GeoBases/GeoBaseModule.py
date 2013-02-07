@@ -2009,11 +2009,10 @@ class GeoBase(object):
             }
 
         if line_colors is None:
-            line_colors = ('blue', 'orange', 'yellow')
-        else:
-            if len(line_colors) != 3:
-                raise ValueError('line_colors must a tuple of 3 colors, was %s.' % \
-                                 str(line_colors))
+            line_colors = 'blue', 'orange', 'yellow'
+
+        if len(line_colors) != 3:
+            raise ValueError('line_colors must a tuple of 3 colors, was %s.' % str(line_colors))
 
         # Storing json data
         data = [
