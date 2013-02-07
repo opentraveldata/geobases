@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + possiblity to draw on the map things that are not in the GeoBase
  + urls input for YAML configuration
  + new loaded attribute to describe loaded data, depends on source and paths
  + accepts list of paths in configuration file, failover mechanism
