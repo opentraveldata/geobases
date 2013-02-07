@@ -520,7 +520,7 @@ class GeoBase(object):
             if verbose:
                 print '/!\ key_fields was None, keys will be created from line numbers.'
 
-            return lambda row, lno: lno
+            return lambda row, lno: str(lno)
 
         # It is possible to have a key_fields which is a list
         # In this case we build the key as the concatenation between
