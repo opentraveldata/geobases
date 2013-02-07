@@ -1063,6 +1063,12 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        # We check here the fields in conditions, because KeyError are catched next
+        for field, _ in conditions:
+            if field not in self.fields:
+                raise ValueError('Conditions %s include unknown field "%s"' % \
+                                 (conditions, field))
+
         # If indexed
         if index and not force_str and not reverse:
             # If this condition is not met, we do not raise StopIteration,
@@ -1106,7 +1112,8 @@ class GeoBase(object):
             except KeyError:
                 # This means from_keys parameters contained unknown keys
                 if verbose:
-                    print 'Key %-10s raised KeyError in findWith, moving on...' % key
+                    print 'Key %-10s and conditions %s failed in findWith, moving on...' % \
+                            (key, conditions)
 
 
 
