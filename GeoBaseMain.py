@@ -270,14 +270,14 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
 
-    # Displaying headers
-    if header == 'CH':
-        stdout.write('#' + delim.join(str(f) for f in show_wo_omit) + '\n')
-    elif header == 'RH':
-        stdout.write(delim.join(str(f) for f in show_wo_omit) + '\n')
-    else:
-        # Every other value will not display a header
-        pass
+    # Headers joined
+    j_headers = delim.join(str(f) for f in show_wo_omit)
+
+    # Displaying headers only for RH et CH
+    if header == 'RH':
+        print j_headers
+    elif header == 'CH':
+        print '#%s' % j_headers
 
     for h, k in list_of_things:
         l = []
@@ -294,7 +294,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 else:
                     l.append(str(v))
 
-        stdout.write(delim.join(l) + '\n')
+        print delim.join(l)
 
 
 def display_browser(templates, nb_res):
