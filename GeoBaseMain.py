@@ -12,7 +12,6 @@ import pkg_resources
 from datetime import datetime
 from math import ceil, log
 from itertools import izip_longest, chain
-import fcntl, termios, struct
 from textwrap import dedent
 import signal
 
@@ -48,8 +47,8 @@ def getObsoleteTermSize():
     """
     This gives terminal size information using external
     command stty.
-    This function is not great since where stdin is used, it
-    raises an error.
+    This function is not great since where stdin is used, stty
+    fails and we return the default case.
     """
     size = os.popen('stty size 2>/dev/null', 'r').read()
 
@@ -59,20 +58,23 @@ def getObsoleteTermSize():
     return tuple(int(d) for d in size.split())
 
 
-def ioctl_GWINSZ(fd):
-    """Read terminal size.
-    """
-    try:
-        cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
-    except IOError:
-        return
-    return cr
-
-
 def getTermSize():
     """
     This gives terminal size information.
     """
+    try:
+        import fcntl, termios, struct
+    except ImportError:
+        return getObsoleteTermSize()
+
+    def ioctl_GWINSZ(fd):
+        """Read terminal size."""
+        try:
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except IOError:
+            return
+        return cr
+
     env = os.environ
     cr  = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
 
