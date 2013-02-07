@@ -389,24 +389,25 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var od, coords, line, d, help;
+    var ods, name, coords, line, d, help;
     var linesArray = [];
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
-        od = jsonData.lines[i].path;
+        ods  = jsonData.lines[i].path;
+        name = jsonData.lines[i].__lab__;
 
         coords = [];
         help   = '<div class="infowindow large">' +
-                     '<h3>{0}</h3><table>'.fmt(jsonData.lines[i].__lab__);
+                     '<h3>{0}</h3><table>'.fmt(name);
 
-        for (j=0, d=od.length; j<d; j++) {
+        for (j=0, d=ods.length; j<d; j++) {
 
-            latlng = new google.maps.LatLng(od[j].lat, od[j].lng);
+            latlng = new google.maps.LatLng(ods[j].lat, ods[j].lng);
 
             if (! isNaN(latlng.lat()) && ! isNaN(latlng.lng())) {
                 coords.push(latlng);
-                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(od[j]['__key__'], od[j]['__lab__']);
+                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(ods[j].__key__, ods[j].__lab__);
             }
         }
 
