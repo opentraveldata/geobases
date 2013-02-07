@@ -1993,9 +1993,9 @@ class GeoBase(object):
         base_icon = compute_base_icon(icon_type, has_many)
 
         # Building categories
-        no_marker  = icon_type is None
-        no_circles = point_size is None
-        categories = build_categories(data, no_marker, no_circles, catalog, verbose)
+        with_icons   = icon_type is not None
+        with_circles = point_size is not None
+        categories   = build_categories(data, with_icons, with_circles, catalog, verbose)
 
         # Finally, we write the colors as an element attribute
         for elem in data:
@@ -2138,14 +2138,14 @@ def compute_base_icon(icon_type, has_many):
                      (icon_type, ('auto', 'S', 'B', None)))
 
 
-def build_categories(data, no_marker, no_circles, catalog, verbose):
+def build_categories(data, with_icons, with_circles, catalog, verbose):
     """Build categories from data and catalog
     """
     # Count the categories for coloring
     categories = {}
 
     for elem in data:
-        if no_marker:
+        if not with_icons:
             # Here we are in no-icon mode, categories
             # will be based on the entries who will have a circle
             try:
@@ -2195,9 +2195,9 @@ def build_categories(data, no_marker, no_circles, catalog, verbose):
             categories[cat]['color'] = 'black'
 
         if verbose:
-            if not no_marker:
+            if with_icons:
                 field_vol = 'volume'
-            elif not no_circles:
+            elif with_circles:
                 field_vol = 'size'
             else:
                 field_vol = '(not used)'
