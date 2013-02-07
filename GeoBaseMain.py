@@ -542,7 +542,7 @@ def guess_indexes(headers, s_row):
     return [ min(candidates, key=lambda x: x[1])[0] ]
 
 
-def fmt_on_two_cols(L, layout='v'):
+def build_pairs(L, layout='v'):
     """
     Some formatting for help.
     """
@@ -590,19 +590,19 @@ def error(name, *args):
 
     elif name == 'base':
         print >> stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
-        for p in fmt_on_two_cols(args[1]):
+        for p in build_pairs(args[1]):
             print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'property':
         print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
         print >> stderr, 'For data type "%s", you may select:' % args[1]
-        for p in fmt_on_two_cols(args[2]):
+        for p in build_pairs(args[2]):
             print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'field':
         print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
         print >> stderr, 'For data type "%s", you may select:' % args[1]
-        for p in fmt_on_two_cols(args[2]):
+        for p in build_pairs(args[2]):
             print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'geocode_format':
