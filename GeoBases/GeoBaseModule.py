@@ -1928,14 +1928,16 @@ class GeoBase(object):
         :param icon_weight:     set the field defining the map icons circle surface
         :param icon_color:      set the field defining the map icons colors
         :param icon_type:       set the icon size, either 'B', 'S' or 'auto'
-        :param catalog:         optional color catalog to have specific colors for certain field values
         :param from_keys:       only display this iterable of keys if not None
-        :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
-        :param add_anonymous_icons: optional list of (lat, lng) to draw additional icons from geocodes \
-                not in the data
-        :param add_anonymous_icons: optional list of ((lat1, lng1), (lat2, lng2), ..., (latN, lngN)) to \
-                draw additional lines from geocodes not in the data
+        :param add_lines:       optional list of (key1, key2, ..., keyN) to draw \
+                additional lines
+        :param add_anonymous_icons: optional list of (lat, lng) to draw additional \
+                icons from geocodes not in the data
+        :param add_anonymous_icons: optional list of ((lat1, lng1), (lat2, lng2), ..., \
+                (latN, lngN)) to draw additional lines from geocodes not in the data
         :param link_duplicates: boolean toggling lines between duplicated keys feature
+        :param catalog:         optional dictionary of {value: color} to have specific \
+                colors for some categories, which is computed with the icon_color field
         :param line_colors:     optional tuple of 3 colors to change the default lines \
                 color, the three values are for the three line types: those computed \
                 with link_duplicates, those given with add_lines, those given with \
