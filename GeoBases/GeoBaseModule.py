@@ -1109,14 +1109,6 @@ class GeoBase(object):
                     print 'Key %-10s raised KeyError in findWith, moving on...' % key
 
 
-    def __str__(self):
-        """Stringification.
-
-        >>> str(geo_t)
-        '<GeoBases.GeoBaseModule.GeoBase(stations) object at 0x...>'
-        """
-        return '<GeoBases.GeoBaseModule.GeoBase(%s) object at 0x...>' % self.data
-
 
     def __iter__(self):
         """Returns iterator of all keys in the base.
