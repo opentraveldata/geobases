@@ -1967,118 +1967,6 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        # Storing json data
-        data = [
-            self._buildPointData(key, label, get_size, get_category)
-            for key in from_keys
-        ]
-
-        # Icon type
-        if icon_type is None:
-            base_icon = ''
-        elif icon_type == 'auto':
-            base_icon = 'marker.png' if len(data) < 100 else 'point.png'
-        elif icon_type == 'S':
-            base_icon = 'point.png'
-        elif icon_type == 'B':
-            base_icon = 'marker.png'
-        else:
-            allowed = ('auto', 'S', 'B', None)
-            raise ValueError('icon_type "%s" not in %s.' % (icon_type, allowed))
-
-        # Additional lines
-        if add_lines is None:
-            add_lines = []
-
-        dup_lines = []
-
-        if link_duplicates:
-            # We add to dup_lines all list of duplicates
-            # We keep a set of already processed "master" keys to avoid
-            # putting several identical lists in the json
-            done_keys = set()
-
-            for elem in data:
-                key = elem['__key__']
-
-                if not self.hasParents(key):
-                    mkey = set([key])
-                else:
-                    mkey = set(self.get(key, '__par__'))
-
-                if self.hasDuplicates(key) and not mkey.issubset(done_keys):
-                    # mkey have some keys which are not in done_keys
-                    dup_lines.append(self.getAllDuplicates(key, '__key__'))
-                    done_keys = done_keys | mkey
-
-            if verbose:
-                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
-
-        # Count the categories for coloring
-        categories = {}
-
-        for elem in data:
-            if icon_type is None:
-                # Here we are in no-icon mode, categories
-                # will be based on the entries who will have a circle
-                try:
-                    c = float(elem['__siz__'])
-                except ValueError:
-                    c = 0
-            else:
-                c = 1
-
-            cat = elem['__cat__']
-            if cat not in categories:
-                categories[cat] = 0
-            if c > 0:
-                categories[cat] += c
-
-        # Color repartition given biggest categories
-        colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
-        col_num = 0
-
-        if not categories:
-            step = 1
-        else:
-            # c > 0 makes sure we do not create a category
-            # for stuff that will not be displayed
-            nb_non_empty_cat = len([c for c in categories.values() if c > 0])
-
-            if nb_non_empty_cat > 0:
-                step = max(1, len(colors) / nb_non_empty_cat)
-            else:
-                # All categories may be empty if not icons + not circles
-                step = 1
-
-        for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
-            categories[cat] = {
-                'volume' : vol
-            }
-            if cat is None:
-                # None is also the default category, when point_color is None
-                categories[cat]['color'] = 'blue'
-
-            elif col_num < len(colors):
-                # We affect the next color available
-                categories[cat]['color'] = colors[col_num]
-                col_num += step
-            else:
-                # After all colors are used, remaining categories are black
-                categories[cat]['color'] = 'black'
-
-            if verbose:
-                if icon_type is not None:
-                    field_vol = 'volume'
-                elif point_size is not None:
-                    field_vol = point_size
-                else:
-                    field_vol = '(not used)'
-
-                print '> Affecting category %-8s to color %-7s | %s %s' % \
-                        (cat, categories[cat]['color'], field_vol, vol)
-
-
         # catalog is a user defined color scheme
         if catalog is None:
             # Default diff-friendly catalog
@@ -2090,51 +1978,43 @@ class GeoBase(object):
                 'N' : 'red',
             }
 
-        for cat in catalog:
-            if cat in categories:
+        # Additional lines
+        if add_lines is None:
+            add_lines = []
 
-                old_color = categories[cat]['color']
-                new_color = catalog[cat]
-                categories[cat]['color'] = new_color
+        # Storing json data
+        data = [
+            self._buildPointData(key, label, get_size, get_category)
+            for key in from_keys
+        ]
 
-                if verbose:
-                    print '> Overrides category %-8s to color %-7s (from %-7s)' % \
-                            (cat, new_color, old_color)
+        # Icon type
+        has_many  = len(data) >= 100
+        base_icon = compute_base_icon(icon_type, has_many)
 
-                # We test other categories to avoid duplicates in coloring
-                for ocat in categories:
-                    if ocat == cat:
-                        continue
-                    ocat_color = categories[ocat]['color']
-
-                    if ocat_color == new_color:
-                        categories[ocat]['color'] = old_color
-
-                        if verbose:
-                            print '> Switching category %-8s to color %-7s (from %-7s)' % \
-                                    (ocat, old_color, ocat_color)
-
+        # Building categories
+        no_marker  = icon_type is None
+        no_circles = point_size is None
+        categories = build_categories(data, no_marker, no_circles, catalog, verbose)
 
         # Finally, we write the colors as an element attribute
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
+        # Duplicates data
+        if link_duplicates:
+            dup_lines = self._buildLinksForDuplicates(data)
+            if verbose:
+                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
+        else:
+            dup_lines = []
 
         # Gathering data for lines
-        data_lines = []
-
-        for line in add_lines:
-            data_lines.append({
-                '__lab__' : 'User defined line',
-                'path'    : self._buildLineData(line, label),
-            })
-
-        for line in dup_lines:
-            data_lines.append({
-                '__lab__' : 'Duplicates',
-                'path'    : self._buildLineData(line, label),
-            })
-
+        data_lines = [
+            self._buildLineData(l, label, 'User defined line') for l in add_lines
+        ] + [
+            self._buildLineData(l, label, 'Duplicates') for l in dup_lines
+        ]
 
         # Dump the json geocodes
         json_name = '%s.json' % output
@@ -2157,41 +2037,7 @@ class GeoBase(object):
                                       reverse=True)
             }))
 
-        tmp_template = []
-        tmp_static   = [json_name]
-
-        for name, assets in ASSETS.iteritems():
-            # We do not render the map template  if not geocodes
-            if name == 'map' and not geo_support:
-                continue
-
-            for template, v_target in assets['template'].iteritems():
-                target = v_target % output
-
-                with open(template) as temp:
-                    with open(target, 'w') as out:
-                        for row in temp:
-                            row = row.replace('{{file_name}}', output)
-                            row = row.replace('{{json_file}}', json_name)
-                            out.write(row)
-
-                tmp_template.append(target)
-
-            for source, target in assets['static'].iteritems():
-                copy(source, target)
-                tmp_static.append(target)
-
-        if verbose:
-            print
-            print '* Now you may use your browser to visualize:'
-            print ' '.join(tmp_template)
-            print
-            print '* If you want to clean the temporary files:'
-            print 'rm %s' % ' '.join(tmp_static + tmp_template)
-            print
-
-        # This is the numbered of templates rendered
-        return tmp_template, sum(len(a['template']) for a in ASSETS.values())
+        return render_templates(output, json_name, geo_support, verbose)
 
 
     def _buildPointData(self, key, label, get_size, get_category):
@@ -2222,7 +2068,8 @@ class GeoBase(object):
         return elem
 
 
-    def _buildLineData(self, line, label):
+
+    def _buildLineData(self, line, label, title):
         """Build data for line display.
         """
         data_line = []
@@ -2240,7 +2087,191 @@ class GeoBase(object):
                 'lng'     : lat_lng[1],
             })
 
-        return data_line
+        return {
+            '__lab__' : title,
+            'path'    : data_line,
+        }
+
+
+
+    def _buildLinksForDuplicates(self, data):
+        """Build lines data between duplicated keys.
+        """
+        dup_lines = []
+        # We add to dup_lines all list of duplicates
+        # We keep a set of already processed "master" keys to avoid
+        # putting several identical lists in the json
+        done_keys = set()
+
+        for elem in data:
+            key = elem['__key__']
+
+            if not self.hasParents(key):
+                mkey = set([key])
+            else:
+                mkey = set(self.get(key, '__par__'))
+
+            if self.hasDuplicates(key) and not mkey.issubset(done_keys):
+                # mkey have some keys which are not in done_keys
+                dup_lines.append(self.getAllDuplicates(key, '__key__'))
+                done_keys = done_keys | mkey
+
+        return dup_lines
+
+
+def compute_base_icon(icon_type, has_many):
+    """Compute icon marker.
+    """
+    if icon_type is None:
+        return ''
+
+    if icon_type == 'auto':
+        return 'point.png' if has_many else 'marker.png'
+
+    if icon_type == 'S':
+        return 'point.png'
+
+    if icon_type == 'B':
+        return 'marker.png'
+
+    raise ValueError('icon_type "%s" not in %s.' % \
+                     (icon_type, ('auto', 'S', 'B', None)))
+
+
+def build_categories(data, no_marker, no_circles, catalog, verbose):
+    """Build categories from data and catalog
+    """
+    # Count the categories for coloring
+    categories = {}
+
+    for elem in data:
+        if no_marker:
+            # Here we are in no-icon mode, categories
+            # will be based on the entries who will have a circle
+            try:
+                c = float(elem['__siz__'])
+            except ValueError:
+                c = 0
+        else:
+            c = 1
+
+        cat = elem['__cat__']
+        if cat not in categories:
+            categories[cat] = 0
+        if c > 0:
+            categories[cat] += c
+
+    # Color repartition given biggest categories
+    colors  = ('red', 'orange', 'yellow', 'green', 'cyan', 'purple')
+    col_num = 0
+
+    if not categories:
+        step = 1
+    else:
+        # c > 0 makes sure we do not create a category
+        # for stuff that will not be displayed
+        nb_non_empty_cat = len([c for c in categories.values() if c > 0])
+
+        if nb_non_empty_cat > 0:
+            step = max(1, len(colors) / nb_non_empty_cat)
+        else:
+            # All categories may be empty if not icons + not circles
+            step = 1
+
+    for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+        categories[cat] = {
+            'volume' : vol
+        }
+        if cat is None:
+            # None is also the default category, when point_color is None
+            categories[cat]['color'] = 'blue'
+
+        elif col_num < len(colors):
+            # We affect the next color available
+            categories[cat]['color'] = colors[col_num]
+            col_num += step
+        else:
+            # After all colors are used, remaining categories are black
+            categories[cat]['color'] = 'black'
+
+        if verbose:
+            if not no_marker:
+                field_vol = 'volume'
+            elif not no_circles:
+                field_vol = 'size'
+            else:
+                field_vol = '(not used)'
+
+            print '> Affecting category %-8s to color %-7s | %s %s' % \
+                    (cat, categories[cat]['color'], field_vol, vol)
+
+
+    for cat in catalog:
+        if cat in categories:
+
+            old_color = categories[cat]['color']
+            new_color = catalog[cat]
+            categories[cat]['color'] = new_color
+
+            if verbose:
+                print '> Overrides category %-8s to color %-7s (from %-7s)' % \
+                        (cat, new_color, old_color)
+
+            # We test other categories to avoid duplicates in coloring
+            for ocat in categories:
+                if ocat == cat:
+                    continue
+                ocat_color = categories[ocat]['color']
+
+                if ocat_color == new_color:
+                    categories[ocat]['color'] = old_color
+
+                    if verbose:
+                        print '> Switching category %-8s to color %-7s (from %-7s)' % \
+                                (ocat, old_color, ocat_color)
+
+    return categories
+
+
+
+def render_templates(output, json_name, geo_support, verbose):
+    """Render HTML templates.
+    """
+    tmp_template = []
+    tmp_static   = [json_name]
+
+    for name, assets in ASSETS.iteritems():
+        # We do not render the map template  if not geocodes
+        if name == 'map' and not geo_support:
+            continue
+
+        for template, v_target in assets['template'].iteritems():
+            target = v_target % output
+
+            with open(template) as temp:
+                with open(target, 'w') as out:
+                    for row in temp:
+                        row = row.replace('{{file_name}}', output)
+                        row = row.replace('{{json_file}}', json_name)
+                        out.write(row)
+
+            tmp_template.append(target)
+
+        for source, target in assets['static'].iteritems():
+            copy(source, target)
+            tmp_static.append(target)
+
+    if verbose:
+        print
+        print '* Now you may use your browser to visualize:'
+        print ' '.join(tmp_template)
+        print
+        print '* If you want to clean the temporary files:'
+        print 'rm %s' % ' '.join(tmp_static + tmp_template)
+        print
+
+    # This is the numbered of templates rendered
+    return tmp_template, sum(len(a['template']) for a in ASSETS.values())
 
 
 
