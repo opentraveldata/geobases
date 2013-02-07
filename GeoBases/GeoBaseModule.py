@@ -1968,33 +1968,10 @@ class GeoBase(object):
             from_keys = iter(self)
 
         # Storing json data
-        data = []
-
-        for key in from_keys:
-
-            lat_lng = self.getLocation(key)
-
-            if lat_lng is None:
-                lat_lng = '?', '?'
-
-            elem = {
-                '__key__' : key,
-                '__lab__' : self.get(key, label),
-                '__siz__' : get_size(key),
-                '__cat__' : get_category(key),
-                'lat'     : lat_lng[0],
-                'lng'     : lat_lng[1]
-            }
-
-            for field in self.fields:
-                # Keeping only important fields
-                if not str(field).startswith('__') and \
-                   not str(field).endswith('@raw') and \
-                   field not in elem:
-
-                    elem[field] = str(self.get(key, field))
-
-            data.append(elem)
+        data = [
+            self._buildPointData(key, label, get_size, get_category)
+            for key in from_keys
+        ]
 
         # Icon type
         if icon_type is None:
@@ -2224,6 +2201,55 @@ class GeoBase(object):
 
         # This is the numbered of templates rendered
         return tmp_template, sum(len(a['template']) for a in ASSETS.values())
+
+
+    def _buildPointData(self, key, label, get_size, get_category):
+        """Build data for point display.
+        """
+        lat_lng = self.getLocation(key)
+
+        if lat_lng is None:
+            lat_lng = '?', '?'
+
+        elem = {
+            '__key__' : key,
+            '__lab__' : self.get(key, label),
+            '__siz__' : get_size(key),
+            '__cat__' : get_category(key),
+            'lat'     : lat_lng[0],
+            'lng'     : lat_lng[1]
+        }
+
+        for field in self.fields:
+            # Keeping only important fields
+            if not str(field).startswith('__') and \
+               not str(field).endswith('@raw') and \
+               field not in elem:
+
+                elem[field] = str(self.get(key, field))
+
+        return elem
+
+
+    def _buildLineData(self, line, label):
+        """Build data for line display.
+        """
+        data_line = []
+
+        for l_key in line:
+            lat_lng = self.getLocation(l_key)
+
+            if lat_lng is None:
+                lat_lng = '?', '?'
+
+            data_line.append({
+                '__key__' : l_key,
+                '__lab__' : self.get(l_key, label),
+                'lat'     : lat_lng[0],
+                'lng'     : lat_lng[1],
+            })
+
+        return data_line
 
 
 
