@@ -1984,6 +1984,7 @@ class GeoBase(object):
                 'Y' : 'green',
                 '-' : 'red',
                 'N' : 'red',
+                '@' : 'yellow',
             }
 
         # from_keys lets you have a set of keys to visualize
@@ -2106,7 +2107,7 @@ class GeoBase(object):
             '__key__' : '(%s, %s)' % lat_lng,
             '__lab__' : 'Anonymous',
             '__wei__' : 0,
-            '__cat__' : None,
+            '__cat__' : '@',
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
         }
