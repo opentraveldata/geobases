@@ -1975,18 +1975,6 @@ class GeoBase(object):
         else:
             get_category = lambda key: self.get(key, icon_color)
 
-        # catalog is a user defined color scheme
-        if catalog is None:
-            # Default diff-friendly catalog
-            catalog = {
-                ' ' : 'blue',
-                '+' : 'green',
-                'Y' : 'green',
-                '-' : 'red',
-                'N' : 'red',
-                '@' : 'yellow',
-            }
-
         # from_keys lets you have a set of keys to visualize
         if from_keys is None:
             from_keys = iter(self)
@@ -2000,6 +1988,18 @@ class GeoBase(object):
 
         if add_anonymous_lines is None:
             add_anonymous_lines = []
+
+        # catalog is a user defined color scheme
+        if catalog is None:
+            # Default diff-friendly catalog
+            catalog = {
+                ' ' : 'blue',
+                '+' : 'green',
+                'Y' : 'green',
+                '-' : 'red',
+                'N' : 'red',
+                '@' : 'yellow',
+            }
 
         # Storing json data
         data = [
