@@ -2168,7 +2168,10 @@ class GeoBase(object):
                     'lng'     : lat_lng[1],
                 })
 
-            data_lines.append(data_line)
+            data_lines.append({
+                '__lab__' : 'Line',
+                'path'    : data_line,
+            })
 
 
         # Dump the json geocodes

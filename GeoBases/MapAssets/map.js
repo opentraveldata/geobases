@@ -394,11 +394,11 @@ function initialize(jsonData) {
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
-        od = jsonData.lines[i];
+        od = jsonData.lines[i].path;
 
         coords = [];
         help   = '<div class="infowindow large">' +
-                     '<h3>Line</h3><table>';
+                     '<h3>{0}</h3><table>'.fmt(jsonData.lines[i].__lab__);
 
         for (j=0, d=od.length; j<d; j++) {
 
