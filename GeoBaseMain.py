@@ -12,7 +12,6 @@ import pkg_resources
 from datetime import datetime
 from math import ceil, log
 from itertools import izip_longest, chain
-import fcntl, termios, struct
 from textwrap import dedent
 import signal
 
@@ -32,7 +31,7 @@ signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 
-def checkPath(command):
+def is_in_path(command):
     """
     This checks if a command is in the PATH.
     """
@@ -44,12 +43,12 @@ def checkPath(command):
         return False
 
 
-def getObsoleteTermSize():
+def get_stty_size():
     """
     This gives terminal size information using external
     command stty.
-    This function is not great since where stdin is used, it
-    raises an error.
+    This function is not great since where stdin is used, stty
+    fails and we return the default case.
     """
     size = os.popen('stty size 2>/dev/null', 'r').read()
 
@@ -59,20 +58,23 @@ def getObsoleteTermSize():
     return tuple(int(d) for d in size.split())
 
 
-def ioctl_GWINSZ(fd):
-    """Read terminal size.
-    """
-    try:
-        cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
-    except IOError:
-        return
-    return cr
-
-
-def getTermSize():
+def get_term_size():
     """
     This gives terminal size information.
     """
+    try:
+        import fcntl, termios, struct
+    except ImportError:
+        return get_stty_size()
+
+    def ioctl_GWINSZ(fd):
+        """Read terminal size."""
+        try:
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except IOError:
+            return
+        return cr
+
     env = os.environ
     cr  = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
 
@@ -217,7 +219,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     # We adapt the width between MIN_CHAR_COL and MAX_CHAR_COL
     # given number of columns and term width
     n   = len(list_of_things)
-    lim = int(getTermSize()[1] / float(n + 1))
+    lim = int(get_term_size()[1] / float(n + 1))
     lim = min(MAX_CHAR_COL, max(MIN_CHAR_COL, lim))
 
     if n == 1:
@@ -688,7 +690,7 @@ TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 DEF_CHAR_COL = 25
 MIN_CHAR_COL = 3
 MAX_CHAR_COL = 40
-DEF_NUM_COL  = int(getTermSize()[1] / float(DEF_CHAR_COL)) - 1
+DEF_NUM_COL  = int(get_term_size()[1] / float(DEF_CHAR_COL)) - 1
 
 ENV_WARNINGS = []
 
@@ -709,7 +711,7 @@ if BACKGROUND_COLOR not in ['black', 'white']:
     BACKGROUND_COLOR = 'black'
 
 
-if not checkPath('GeoBase'):
+if not is_in_path('GeoBase'):
     ENV_WARNINGS.append('''
     **********************************************************************
     "GeoBase" does not seem to be in your $PATH.                         *
