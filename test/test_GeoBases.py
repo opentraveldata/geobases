@@ -65,17 +65,17 @@ class GeoBaseFeedTest(unittest.TestCase):
         pass
 
     def test_get(self):
-        self.assertEqual(self.g.get(1),
+        self.assertEqual(self.g.get('1'),
                          {'name': 'A',
                           'vol': '2',
                           '__gar__': '',
                           '__par__': [],
                           '__dup__': [],
-                          '__key__': 1,
+                          '__key__': '1',
                           '__lno__': 1})
 
     def test_keys(self):
-        self.assertEqual(self.g.keys(), [1, 2])
+        self.assertEqual(self.g.keys(), ['1', '2'])
 
 
 def test_suite():
