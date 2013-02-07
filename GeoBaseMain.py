@@ -542,7 +542,7 @@ def guess_indexes(headers, s_row):
     return [ min(candidates, key=lambda x: x[1])[0] ]
 
 
-def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
+def fmt_on_two_cols(L, layout='v'):
     """
     Some formatting for help.
     """
@@ -550,16 +550,13 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
     h = int(ceil(n / 2)) # half+
 
     if layout == 'h':
-        pairs = izip_longest(L[::2], L[1::2], fillvalue='')
+        return izip_longest(L[::2], L[1::2], fillvalue='')
 
-    elif layout == 'v':
-        pairs = izip_longest(L[:h], L[h:], fillvalue='')
+    if layout == 'v':
+        return izip_longest(L[:h], L[h:], fillvalue='')
 
-    else:
-        raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
+    raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
-    for p in pairs:
-        print >> descriptor, '\t%-20s\t%-20s' % p
 
 
 def best_field(candidates, possibilities, default=None):
@@ -593,17 +590,20 @@ def error(name, *args):
 
     elif name == 'base':
         print >> stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
-        fmt_on_two_cols(args[1], stderr)
+        for p in fmt_on_two_cols(args[1]):
+            print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'property':
         print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
         print >> stderr, 'For data type "%s", you may select:' % args[1]
-        fmt_on_two_cols(args[2], stderr)
+        for p in fmt_on_two_cols(args[2]):
+            print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'field':
         print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
         print >> stderr, 'For data type "%s", you may select:' % args[1]
-        fmt_on_two_cols(args[2], stderr)
+        for p in fmt_on_two_cols(args[2]):
+            print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'geocode_format':
         print >> stderr, '\n/!\ Bad geocode format: %s' % args[0]
