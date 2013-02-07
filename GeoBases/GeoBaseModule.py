@@ -1516,8 +1516,8 @@ class GeoBase(object):
         :param label:           set the field which will appear as map icons title
         :param point_size:      set the field defining the map icons circle size
         :param point_color:     set the field defining the map icons colors
-        :icon_type:             set the global icon size, either 'B', 'S' or 'auto'
-        :from_keys:             only display this iterable of keys if not None
+        :param icon_type:       set the global icon size, either 'B', 'S' or 'auto'
+        :param from_keys:       only display this iterable of keys if not None
         :param catalog:         optional color catalog to have specific colors for certain field values
         :param add_lines:       optional list of (key1, key2, ..., keyN) to draw additional lines
         :param link_duplicates: boolean toggling lines between duplicated keys feature
