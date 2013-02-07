@@ -1080,6 +1080,9 @@ def handle_args():
     return vars(parser.parse_args())
 
 
+# How to profile: execute this and uncomment @profile
+# $ kernprof.py --line-by-line --view GeoBaseMain.py ORY
+#@profile
 def main():
     """
     Arguments handling.
