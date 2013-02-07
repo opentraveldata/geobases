@@ -1377,11 +1377,6 @@ def main():
         last = 'closest'
 
 
-    if verbose and warnings:
-        end = datetime.now()
-        print 'Done in %s = (load) %s + (search) %s' % \
-                (end - before_init, after_init - before_init, end - after_init)
-
 
     #
     # DISPLAY
@@ -1389,6 +1384,12 @@ def main():
 
     # Saving to list
     res = list(res)
+
+    # We check timing *after* res iterator reading
+    if verbose and warnings:
+        end = datetime.now()
+        print 'Done in %s = (load) %s + (search) %s' % \
+                (end - before_init, after_init - before_init, end - after_init)
 
     # Removing unknown keys
     for h, k in res:
