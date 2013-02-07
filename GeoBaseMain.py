@@ -1255,14 +1255,14 @@ def main():
         args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
     # Reading map options
-    label           = best_field(DEF_LABEL_FIELDS,  g.fields)
+    icon_label      = best_field(DEF_LABEL_FIELDS,  g.fields)
     icon_weight     = best_field(DEF_WEIGHT_FIELDS, g.fields)
     icon_color      = best_field(DEF_COLOR_FIELDS,  g.fields)
     icon_type       = DEF_ICON_TYPE
     link_duplicates = DEF_LINK_DUPLICATES
 
     if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
-        label = args['map_data'][0]
+        icon_label = args['map_data'][0]
 
     if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
         icon_weight = None if args['map_data'][1] == DISABLE else args['map_data'][1]
@@ -1331,7 +1331,7 @@ def main():
 
     # Failing on unknown fields
     fields_to_test = [
-        f for f in (label, icon_weight, icon_color, interactive_field)
+        f for f in (icon_label, icon_weight, icon_color, interactive_field)
         if f is not None
     ]
 
@@ -1528,7 +1528,7 @@ def main():
     # Display
     if frontend == 'map':
         templates, max_t = g.visualize(output=g.data,
-                                       label=label,
+                                       icon_label=icon_label,
                                        icon_weight=icon_weight,
                                        icon_color=icon_color,
                                        icon_type=icon_type,

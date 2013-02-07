@@ -1909,7 +1909,7 @@ class GeoBase(object):
 
     def visualize(self,
                   output='example',
-                  label='__key__',
+                  icon_label=None,
                   icon_weight=None,
                   icon_color=None,
                   icon_type='auto',
@@ -1923,7 +1923,7 @@ class GeoBase(object):
         """Creates map and other visualizations.
 
         :param output:          set the name of the rendered files
-        :param label:           set the field which will appear as map icons title
+        :param icon_label:      set the field which will appear as map icons title
         :param icon_weight:     set the field defining the map icons circle surface
         :param icon_color:      set the field defining the map icons colors
         :param icon_type:       set the icon size, either 'B', 'S' or 'auto'
@@ -1948,15 +1948,20 @@ class GeoBase(object):
                 print '\n/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GEO_FIELDS), self.fields)
 
-        # Label is the field which labels the points
-        if label not in self.fields:
-            raise ValueError('label "%s" not in fields %s.' % (label, self.fields))
+        if icon_label is not None and icon_label not in self.fields:
+            raise ValueError('icon_label "%s" not in fields %s.' % (icon_label, self.fields))
 
         if icon_weight is not None and icon_weight not in self.fields:
             raise ValueError('icon_weight "%s" not in fields %s.' % (icon_weight, self.fields))
 
         if icon_color is not None and icon_color not in self.fields:
             raise ValueError('icon_color "%s" not in fields %s.' % (icon_color, self.fields))
+
+        # Optional function which gives points weight
+        if icon_label is None:
+            get_label = lambda key: key
+        else:
+            get_label = lambda key: self.get(key, icon_label)
 
         # Optional function which gives points weight
         if icon_weight is None:
@@ -1997,7 +2002,7 @@ class GeoBase(object):
 
         # Storing json data
         data = [
-            self._buildIconData(key, label, get_weight, get_category)
+            self._buildIconData(key, get_label, get_weight, get_category)
             for key in from_keys
         ] + [
             self._buildAnonymousIconData(lat_lng)
@@ -2027,13 +2032,13 @@ class GeoBase(object):
 
         # Gathering data for lines
         data_lines = [
-            self._buildLineData(l, label, 'Line')
+            self._buildLineData(l, get_label, 'Line')
             for l in add_lines
         ] + [
             self._buildAnonymousLineData(l, 'Anonymous line')
             for l in add_anonymous_lines
         ] + [
-            self._buildLineData(l, label, 'Duplicates')
+            self._buildLineData(l, get_label, 'Duplicates')
             for l in dup_lines
         ]
 
@@ -2043,7 +2048,7 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'meta'       : {
-                    'label'           : label,
+                    'icon_label'      : icon_label,
                     'icon_weight'     : icon_weight,
                     'icon_color'      : icon_color,
                     'icon_type'       : icon_type,
@@ -2062,7 +2067,7 @@ class GeoBase(object):
 
 
 
-    def _buildIconData(self, key, label, get_weight, get_category):
+    def _buildIconData(self, key, get_label, get_weight, get_category):
         """Build data for key display.
         """
         lat_lng = self.getLocation(key)
@@ -2072,7 +2077,7 @@ class GeoBase(object):
 
         elem = {
             '__key__' : key,
-            '__lab__' : self.get(key, label),
+            '__lab__' : get_label(key),
             '__wei__' : get_weight(key),
             '__cat__' : get_category(key),
             'lat'     : lat_lng[0],
@@ -2107,7 +2112,7 @@ class GeoBase(object):
         }
 
 
-    def _buildLineData(self, line, label, title):
+    def _buildLineData(self, line, get_label, title):
         """Build data for line display.
         """
         data_line = []
@@ -2120,7 +2125,7 @@ class GeoBase(object):
 
             data_line.append({
                 '__key__' : l_key,
-                '__lab__' : self.get(l_key, label),
+                '__lab__' : get_label(l_key),
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1],
             })
@@ -2138,7 +2143,6 @@ class GeoBase(object):
         data_line = []
 
         for lat_lng in line:
-            print lat_lng
             if lat_lng is None:
                 lat_lng = '?', '?'
 
