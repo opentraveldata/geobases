@@ -1015,11 +1015,11 @@ def handle_args():
     parser.add_argument('-m', '--map',
         help = dedent('''\
         This is the map output.
-        Configure with --map-data.
+        Configure with --map-options.
         '''),
         action = 'store_true')
 
-    parser.add_argument('-M', '--map-data',
+    parser.add_argument('-M', '--map-options',
         help = dedent('''\
         5 optional arguments: label, weight, color, icon, duplicates.
             1) label is the field to display on map points.
@@ -1261,20 +1261,20 @@ def main():
     icon_type       = DEF_ICON_TYPE
     link_duplicates = DEF_LINK_DUPLICATES
 
-    if len(args['map_data']) >= 1 and args['map_data'][0] != SKIP:
-        icon_label = args['map_data'][0]
+    if len(args['map_options']) >= 1 and args['map_options'][0] != SKIP:
+        icon_label = args['map_options'][0]
 
-    if len(args['map_data']) >= 2 and args['map_data'][1] != SKIP:
-        icon_weight = None if args['map_data'][1] == DISABLE else args['map_data'][1]
+    if len(args['map_options']) >= 2 and args['map_options'][1] != SKIP:
+        icon_weight = None if args['map_options'][1] == DISABLE else args['map_options'][1]
 
-    if len(args['map_data']) >= 3 and args['map_data'][2] != SKIP:
-        icon_color = None if args['map_data'][2] == DISABLE else args['map_data'][2]
+    if len(args['map_options']) >= 3 and args['map_options'][2] != SKIP:
+        icon_color = None if args['map_options'][2] == DISABLE else args['map_options'][2]
 
-    if len(args['map_data']) >= 4 and args['map_data'][3] != SKIP:
-        icon_type = None if args['map_data'][3] == DISABLE else args['map_data'][3]
+    if len(args['map_options']) >= 4 and args['map_options'][3] != SKIP:
+        icon_type = None if args['map_options'][3] == DISABLE else args['map_options'][3]
 
-    if len(args['map_data']) >= 5 and args['map_data'][4] != SKIP:
-        link_duplicates = args['map_data'][4] in TRUTHY
+    if len(args['map_options']) >= 5 and args['map_options'][4] != SKIP:
+        link_duplicates = args['map_options'][4] in TRUTHY
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM

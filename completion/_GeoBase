@@ -39,7 +39,7 @@ _arguments \
  "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
  "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header:$Q_QUIET" \
  "(-m --map)"{-m,--map}"[Display points on a map]" \
- "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color icon duplicates:$F_FIELDS" \
+ "(-M --map-options)"{-M,--map-options}"[Custom map display]:*:label weight color icon duplicates:$F_FIELDS" \
  "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
  "(-u --update)"{-u,--update}"[Try to update the data files]" \
  "(-U --update-forced)"{-U,--update-forced}"[Force the update of all data files]" \
