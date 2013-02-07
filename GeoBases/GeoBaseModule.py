@@ -316,7 +316,7 @@ class GeoBase(object):
         if self._source is not None:
             # As a keyword argument, source should be a file-like
             self._loadFile(self._source, self._verbose)
-            self.loaded = '*file-like*'
+            self.loaded = self._source
 
         elif self._paths is not None:
             # Here we read the source from the configuration file
@@ -349,8 +349,10 @@ class GeoBase(object):
             self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
 
         if self._verbose:
-            if self.loaded is not None:
+            if isinstance(self.loaded, str):
                 print "Import successful from %s" % self.loaded
+            elif self.loaded is not None:
+                print "Import successful from *file-like*"
             else:
                 print 'No source specified, skipping loading...'
 
