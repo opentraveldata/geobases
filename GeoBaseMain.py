@@ -1469,11 +1469,6 @@ def main():
         last = 'closest'
 
 
-    if logorrhea:
-        end = datetime.now()
-        print 'Done in %s = (load) %s + (search) %s' % \
-                (end - before_init, after_init - before_init, end - after_init)
-
 
     #
     # DISPLAY
@@ -1481,6 +1476,12 @@ def main():
 
     # Saving to list
     res = list(res)
+
+    # We clock the time here because now the res iterator has been used
+    if logorrhea:
+        end = datetime.now()
+        print 'Done in %s = (load) %s + (search) %s' % \
+                (end - before_init, after_init - before_init, end - after_init)
 
     # Removing unknown keys
     for h, k in res:
