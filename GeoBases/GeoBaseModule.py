@@ -1681,8 +1681,8 @@ class GeoBase(object):
 
                 print "[%.2f] %25s -> %25s (%5s)" % \
                     (d,
-                     '+'.join(clean(fuzzy_value)),
-                     '+'.join(clean(self.get(key, field))),
+                     self.clean(fuzzy_value),
+                     self.clean(self.get(key, field)),
                      key)
 
 
