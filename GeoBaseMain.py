@@ -26,8 +26,13 @@ import argparse # in standard libraray for Python >= 2.7
 # Private
 from GeoBases import GeoBase, BASES
 
-# Do not produce broken pipes when head and tail are used
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+try:
+    # Do not produce broken pipes when head and tail are used
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+except AttributeError:
+    # On windows, SIGPIPE does not exist
+    pass
 
 
 
