@@ -1604,7 +1604,7 @@ class GeoBase(object):
             d_range = (min_match, 1.0)
 
         # Cleaning is for keeping only useful data
-        entry = build_cache_key(fuzzy_value, field, max_results, min_match, from_keys)
+        entry = build_cache_key(self.clean(fuzzy_value), field, max_results, min_match, from_keys)
 
         if entry in self._bias_fuzzy_cache:
             # If the entry is stored is our bias
@@ -1650,7 +1650,7 @@ class GeoBase(object):
         (1.0, 'Me!')
         """
         # Cleaning is for keeping only useful data
-        entry = build_cache_key(fuzzy_value, field, max_results, min_match, from_keys)
+        entry = build_cache_key(self.clean(fuzzy_value), field, max_results, min_match, from_keys)
 
         self._bias_fuzzy_cache[entry] = biased_result
 
@@ -2508,15 +2508,17 @@ def build_soundify(method):
 
 
 
-def build_cache_key(fuzzy_value, field, max_results, min_match, from_keys):
-    """Key for the cache of fuzzyFind, based on parameters.
+def build_cache_key(*args, **kwargs):
+    """Build key for the cache of fuzzyFind, based on parameters.
 
-    >>> build_cache_key('paris de gaulle', 'name', max_results=None, min_match=0, from_keys=None)
-    ('paris+de+gaulle', 'name', None, 0, None)
-    >>> build_cache_key('Antibes SNCF 2', 'name', max_results=3, min_match=0, from_keys=None)
-    ('antibes', 'name', 3, 0, None)
+    >>> build_cache_key(GeoBase.clean('paris de gaulle'), 'name', max_results=None, min_match=0, from_keys=None)
+    ('paris+de+gaulle', 'name', None, None, 0)
+    >>> build_cache_key(GeoBase.clean('Antibes SNCF 2'), 'name', max_results=3, min_match=0, from_keys=None)
+    ('antibes', 'name', None, 3, 0)
     """
-    return '+'.join(clean(fuzzy_value)), field, max_results, min_match, from_keys
+    # We handle the fact that dictionary are not sorted, but this
+    # will build the smae key for parameters
+    return tuple(args) + tuple(kwargs[k] for k in sorted(kwargs))
 
 
 
