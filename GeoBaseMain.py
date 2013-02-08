@@ -14,6 +14,7 @@ from math import ceil, log
 from itertools import izip_longest, chain
 from textwrap import dedent
 import signal
+import platform
 
 import SimpleHTTPServer
 import SocketServer
@@ -26,13 +27,12 @@ import argparse # in standard libraray for Python >= 2.7
 # Private
 from GeoBases import GeoBase, BASES
 
-try:
+IS_WINDOWS = platform.system() in ('Windows',)
+
+if not IS_WINDOWS:
+    # On windows, SIGPIPE does not exist
     # Do not produce broken pipes when head and tail are used
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-
-except AttributeError:
-    # On windows, SIGPIPE does not exist
-    pass
 
 
 
@@ -1467,7 +1467,7 @@ def main():
     if frontend == 'quiet':
         display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-    if verbose:
+    if verbose and not IS_WINDOWS:
         for warn_msg in ENV_WARNINGS:
             print dedent(warn_msg),
 
