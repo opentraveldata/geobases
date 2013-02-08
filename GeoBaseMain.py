@@ -1425,7 +1425,7 @@ def main():
     if args['trep'] is not None:
         args['trep'] = ' '.join(args['trep'])
         if verbose:
-            print '(*) Applying opentrep on "%s" (output %s)' % (args['trep'], args['trep_format'])
+            print '(*) Applying: trep search on "%s" (output %s)' % (args['trep'], args['trep_format'])
 
         res = g.trepSearch(args['trep'], trep_format=args['trep_format'], from_keys=ex_keys(res), verbose=verbose)
         last = 'trep'
@@ -1440,9 +1440,9 @@ def main():
 
         if verbose:
             if args['reverse']:
-                print '(*) Applying property %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
+                print '(*) Applying: property %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
             else:
-                print '(*) Applying property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
+                print '(*) Applying: property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
         res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR, verbose=logorrhea))
         last = 'exact'
@@ -1451,7 +1451,7 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print '(*) Applying property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
+            print '(*) Applying: property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
         res = list(g.fuzzyFind(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
@@ -1460,7 +1460,7 @@ def main():
     if args['phonetic'] is not None:
         args['phonetic'] = ' '.join(args['phonetic'])
         if verbose:
-            print '(*) Applying property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], phonetic_method)
+            print '(*) Applying: property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], phonetic_method)
 
         res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=phonetic_method, from_keys=ex_keys(res), verbose=logorrhea))
         last = 'phonetic'
@@ -1469,7 +1469,7 @@ def main():
     if args['near'] is not None:
         args['near'] = ' '.join(args['near'])
         if verbose:
-            print '(*) Applying near %s km from "%s" (%s grid)' % (args['near_limit'], args['near'], 'with' if with_grid else 'without')
+            print '(*) Applying: near %s km from "%s" (%s grid)' % (args['near_limit'], args['near'], 'with' if with_grid else 'without')
 
         coords = scan_coords(args['near'], g, verbose)
         res = sorted(g.findNearPoint(coords, radius=args['near_limit'], grid=with_grid, from_keys=ex_keys(res)))
@@ -1479,7 +1479,7 @@ def main():
     if args['closest'] is not None:
         args['closest'] = ' '.join(args['closest'])
         if verbose:
-            print '(*) Applying closest %s from "%s" (%s grid)' % (args['closest_limit'], args['closest'], 'with' if with_grid else 'without')
+            print '(*) Applying: closest %s from "%s" (%s grid)' % (args['closest_limit'], args['closest'], 'with' if with_grid else 'without')
 
         coords = scan_coords(args['closest'], g, verbose)
         res = list(g.findClosestFromPoint(coords, N=args['closest_limit'], grid=with_grid, from_keys=ex_keys(res)))
