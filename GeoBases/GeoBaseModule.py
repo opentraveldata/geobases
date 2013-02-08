@@ -494,21 +494,21 @@ class GeoBase(object):
             raise ValueError('Wrong fields "%s" for index' % str(fields))
 
         # Mapping for every possible value to matching keys
-        values_to_matches = {}
+        val_to_keys = {}
 
         for key in self:
 
             val = compute_val(key)
 
-            if val not in values_to_matches:
-                values_to_matches[val] = []
+            if val not in val_to_keys:
+                val_to_keys[val] = []
 
-            values_to_matches[val].append(key)
+            val_to_keys[val].append(key)
 
         if verbose:
             print 'Built index for fields %s' % str(fields)
 
-        return values_to_matches
+        return val_to_keys
 
 
     @staticmethod
@@ -1616,13 +1616,13 @@ class GeoBase(object):
 
         if entry not in self._fuzzy_cache:
 
-            match = self.fuzzyFind(*entry)
+            matches = self.fuzzyFind(*entry)
 
-            self._fuzzy_cache[entry] = match
+            self._fuzzy_cache[entry] = matches
 
             # We display information everytime a value is added to the cache
             if verbose:
-                self._showFuzzyMatches(match, fuzzy_value, field, d_range)
+                self._showFuzzyMatches(matches, fuzzy_value, field, d_range)
 
         return self._fuzzy_cache[entry]
 
@@ -1672,10 +1672,10 @@ class GeoBase(object):
 
 
 
-    def _showFuzzyMatches(self, match, fuzzy_value, field, d_range=(1, 1)):
+    def _showFuzzyMatches(self, matches, fuzzy_value, field, d_range):
         """Some debugging.
         """
-        for d, key in match:
+        for d, key in matches:
 
             if d >= d_range[0] and d < d_range[1]:
 
@@ -1687,21 +1687,21 @@ class GeoBase(object):
 
 
     @staticmethod
-    def sound(value, method='dmetaphone'):
-        """Compute sound for any value.
+    def phonetic(value, method='dmetaphone'):
+        """Compute phonemes for any value.
 
         :param value:     the input value
         :param method:    change the phonetic method used
-        :returns:         the sound
+        :returns:         the phonemes
 
-        >>> GeoBase.sound('sheekago')
+        >>> GeoBase.phonetic('sheekago')
         ['XKK', None]
-        >>> GeoBase.sound('sheekago', 'nysiis')
+        >>> GeoBase.phonetic('sheekago', 'nysiis')
         'SACAG'
         """
-        soundify, _ = build_soundify(method)
+        get_phonemes, _ = build_get_phonemes(method)
 
-        return soundify(value)
+        return get_phonemes(value)
 
 
     def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
@@ -1713,7 +1713,7 @@ class GeoBase(object):
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform search.
         :param verbose:   toggle verbosity
-        :returns:         an iterable of (sound, key) matching
+        :returns:         an iterable of (phonemes, key) matching
 
         >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
         ['Chicago']
@@ -1723,7 +1723,7 @@ class GeoBase(object):
         Alternate methods.
 
         >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
-        Looking for sounds like ['XKK', None] (for "chicago")
+        Looking for phonemes like ['XKK', None] (for "chicago")
         [(['XKK', None], 'CHI')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
         [('XKK', 'CHI')]
@@ -1731,21 +1731,21 @@ class GeoBase(object):
         [('CACAG', 'CHI')]
         """
 
-        soundify, matches = build_soundify(method)
+        get_phonemes, matcher = build_get_phonemes(method)
 
         if from_keys is None:
             from_keys = iter(self)
 
-        expected_sound = soundify(value)
+        exp_phonemes = get_phonemes(value)
 
         if verbose:
-            print 'Looking for sounds like %s (for "%s")' % (str(expected_sound), value)
+            print 'Looking for phonemes like %s (for "%s")' % (str(exp_phonemes), value)
 
         for key in from_keys:
-            sound = soundify(self.get(key, field))
+            phonemes = get_phonemes(self.get(key, field))
 
-            if matches(sound, expected_sound):
-                yield sound, key
+            if matcher(phonemes, exp_phonemes):
+                yield phonemes, key
 
 
 
@@ -2481,30 +2481,30 @@ def download_if_not_here(resource, filename, verbose=True):
         return True, dl_filename
 
 
-def build_soundify(method):
-    """Compute sound method and matching sounds method.
+def build_get_phonemes(method):
+    """Compute phonemes method and matching phonemes method.
     """
     if method == 'metaphone':
-        soundify = lambda s: dmeta(s)[0]
-        matches  = lambda s1, s2: s1 == s2
+        get_phonemes = lambda s: dmeta(s)[0]
+        matcher = lambda s1, s2: s1 == s2
 
     elif method == 'dmetaphone-strict':
-        soundify = dmeta
-        matches  = lambda s1, s2: s1 == s2
+        get_phonemes = dmeta
+        matcher = lambda s1, s2: s1 == s2
 
     elif method == 'dmetaphone':
-        soundify = dmeta
-        matches  = lambda s1, s2: set(s1) & set(s2) - set([None])
+        get_phonemes = dmeta
+        matcher = lambda s1, s2: set(s1) & set(s2) - set([None])
 
     elif method == 'nysiis':
-        soundify = nysiis
-        matches  = lambda s1, s2: s1 == s2
+        get_phonemes = nysiis
+        matcher = lambda s1, s2: s1 == s2
 
     else:
         raise ValueError('Accepted methods are %s' % \
                          ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
 
-    return soundify, matches
+    return get_phonemes, matcher
 
 
 
