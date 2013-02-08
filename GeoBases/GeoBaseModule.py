@@ -940,7 +940,7 @@ class GeoBase(object):
 
         if self.hasIndexOn(fields) and mode == 'and':
             if verbose:
-                print 'Using index for %s' % str(fields)
+                print 'Using index for %s: value(s) %s' % (str(fields), str(values))
 
             # Here we use directly the multiple index to have the matching keys
             from_keys = set(from_keys)
@@ -951,7 +951,8 @@ class GeoBase(object):
 
         elif all(self.hasIndexOn(f) for f in fields):
             if verbose:
-                print 'Using index for %s' % ' and '.join(str((f,)) for f in set(fields))
+                print 'Using index for %s: value(s) %s' % (' and '.join(str((f,)) for f in set(fields)),
+                                                           '; '.join(str((v,)) for v in values))
 
             if mode == 'or':
                 # Here we use each index to check the condition on one field
@@ -1011,7 +1012,7 @@ class GeoBase(object):
         Testing indexes.
 
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
-        Using index for ('iata_code',)
+        Using index for ('iata_code',): value(s) ('MRS',)
         [(1, 'MRS'), (1, 'MRS@1')]
         >>> geo_o.addIndex('iata_code')
         /!\ Index on ('iata_code',) already built, overriding...
@@ -1019,7 +1020,7 @@ class GeoBase(object):
         >>> geo_o.addIndex('location_type')
         Built index for fields ('location_type',)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
-        Using index for ('iata_code',) and ('location_type',)
+        Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); ('A',)
         [(2, 'NCE')]
 
         Multiple index.
@@ -1027,7 +1028,7 @@ class GeoBase(object):
         >>> geo_o.addIndex(('iata_code', 'location_type'))
         Built index for fields ('iata_code', 'location_type')
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
-        Using index for ('iata_code', 'location_type')
+        Using index for ('iata_code', 'location_type'): value(s) ('NCE', 'A')
         [(2, 'NCE')]
 
         Or mode with index.
@@ -1035,7 +1036,7 @@ class GeoBase(object):
         >>> geo_o.addIndex('city_code')
         Built index for fields ('city_code',)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
-        Using index for ('iata_code',) and ('city_code',)
+        Using index for ('iata_code',) and ('city_code',): value(s) ('NCE',); ('NCE',)
         [(2, 'NCE@1'), (2, 'NCE')]
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', index=False, verbose=True))
         [(2, 'NCE'), (2, 'NCE@1')]
@@ -1751,7 +1752,7 @@ class GeoBase(object):
         Alternate methods.
 
         >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
-        Looking for sounds like ['XKK', None]
+        Looking for sounds like ['XKK', None] (for "chicago")
         [(['XKK', None], 'CHI')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
         [('XKK', 'CHI')]
@@ -1767,7 +1768,7 @@ class GeoBase(object):
         expected_sound = soundify(value)
 
         if verbose:
-            print 'Looking for sounds like %s' % str(expected_sound)
+            print 'Looking for sounds like %s (for "%s")' % (str(expected_sound), value)
 
         for key in from_keys:
             sound = soundify(self.get(key, field))
