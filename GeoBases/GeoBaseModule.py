@@ -1891,11 +1891,11 @@ class GeoBase(object):
         :param verbose:       toggle verbosity
         :returns:             an iterable of (distance, key) like [(0.97, 'SFO'), (0.55, 'LAX')]
 
-        >>> if geo_t.hasTrepSupport():
+        >>> if GeoBase.hasTrepSupport():
         ...     print geo_t.trepSearch('sna francisco los agneles') # doctest: +SKIP
         [(31.5192, 'SFO'), (46.284, 'LAX')]
 
-        >>> if geo_t.hasTrepSupport():
+        >>> if GeoBase.hasTrepSupport():
         ...     print geo_t.trepSearch('sna francisco', verbose=True) # doctest: +SKIP
          -> Raw result: SFO/31.5192
          -> Fmt result: ([(31.5192, 'SFO')], '')
