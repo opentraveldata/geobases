@@ -205,7 +205,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     nice color and everything.
     """
     if not list_of_things:
-        print '\nNo elements to display.'
+        print 'No elements to display.'
         return
 
     if not show:
