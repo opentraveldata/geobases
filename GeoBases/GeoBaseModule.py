@@ -1434,6 +1434,17 @@ class GeoBase(object):
                 yield dist, thing
 
 
+
+    @staticmethod
+    def clean(value):
+        """Cleaning from LevenshteinUtils.
+
+        >>> GeoBase.clean('antibes ville 2')
+        'antibes'
+        """
+        return '+'.join(clean(value))
+
+
     def _buildRatios(self, fuzzy_value, field, min_match, keys):
         """
         Compute the iterable of (dist, keys) of a reference
