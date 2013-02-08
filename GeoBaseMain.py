@@ -1141,7 +1141,7 @@ def main():
         before_init = datetime.now()
 
     if args['version']:
-        r = pkg_resources.require("GeoBases")[0]
+        r = pkg_resources.require("GeoBasesDev")[0]
         print 'Project  : %s' % r.project_name
         print 'Version  : %s' % r.version
         print 'Egg name : %s' % r.egg_name()
