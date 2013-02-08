@@ -23,6 +23,7 @@ V5
 V4
 ==
 
++ 4.23 : add windows support
 + 4.22 : UI fixes, all lines are not due to duplicates, draw by default if user defined lines
 + 4.21 : multiple --exact searches with '/' separation, new --any option for and/or behavior
 + 4.20 : getKeysWhere now returns an iterable of (index, key) like any other search method
