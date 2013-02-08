@@ -1687,31 +1687,6 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildSoundify(method):
-        """Compute sound method and matching sounds method.
-        """
-        if method == 'metaphone':
-            soundify = lambda s: dmeta(s)[0]
-            matches  = lambda s1, s2: s1 == s2
-
-        elif method == 'dmetaphone-strict':
-            soundify = dmeta
-            matches  = lambda s1, s2: s1 == s2
-
-        elif method == 'dmetaphone':
-            soundify = dmeta
-            matches  = lambda s1, s2: set(s1) & set(s2) - set([None])
-
-        elif method == 'nysiis':
-            soundify = nysiis
-            matches  = lambda s1, s2: s1 == s2
-
-        else:
-            raise ValueError('Accepted methods are %s' % \
-                             ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
-
-        return soundify, matches
-
 
 
     def getSound(self, key, field, method='dmetaphone'):
@@ -1727,9 +1702,9 @@ class GeoBase(object):
         >>> geo_o.getSound('CHI', 'name', 'nysiis')
         'CACAG'
         """
-        soundify, _ = self._buildSoundify(method)
 
         return soundify(self.get(key, field))
+        soundify, _ = build_soundify(method)
 
 
 
@@ -1760,7 +1735,7 @@ class GeoBase(object):
         [('CACAG', 'CHI')]
         """
 
-        soundify, matches = self._buildSoundify(method)
+        soundify, matches = build_soundify(method)
 
         if from_keys is None:
             from_keys = iter(self)
@@ -2509,6 +2484,31 @@ def download_if_not_here(resource, filename, verbose=True):
     else:
         return True, dl_filename
 
+
+def build_soundify(method):
+    """Compute sound method and matching sounds method.
+    """
+    if method == 'metaphone':
+        soundify = lambda s: dmeta(s)[0]
+        matches  = lambda s1, s2: s1 == s2
+
+    elif method == 'dmetaphone-strict':
+        soundify = dmeta
+        matches  = lambda s1, s2: s1 == s2
+
+    elif method == 'dmetaphone':
+        soundify = dmeta
+        matches  = lambda s1, s2: set(s1) & set(s2) - set([None])
+
+    elif method == 'nysiis':
+        soundify = nysiis
+        matches  = lambda s1, s2: s1 == s2
+
+    else:
+        raise ValueError('Accepted methods are %s' % \
+                         ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
+
+    return soundify, matches
 
 
 
