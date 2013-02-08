@@ -89,7 +89,7 @@ setup(
     author = 'Alex Prengère',
     author_email = 'alexprengere@gmail.com',
     url = 'http://opentraveldata.github.com/geobases',
-    description = 'Data services and visualization',
+    description = 'Data services and visualization - Python 3 version',
     long_description = LONG_DESCRIPTION,
     license = LICENSE,
     #
