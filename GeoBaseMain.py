@@ -192,7 +192,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
             return '%.3f' % ref
         return '%.1f %%' % (100 * ref)
 
-    if ref_type == 'sound':
+    if ref_type == 'phonemes':
         if isinstance(ref, (list, tuple, set)):
             return '+'.join(str(e) for e in ref)
         else:
@@ -1542,7 +1542,7 @@ def main():
     elif last in ['trep', 'fuzzy']:
         ref_type = 'percentage'
     elif last in ['phonetic']:
-        ref_type = 'sound'
+        ref_type = 'phonemes'
     else:
         ref_type = 'index'
 
