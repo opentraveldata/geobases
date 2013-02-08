@@ -244,7 +244,7 @@ class GeoBase(object):
         self._fuzzy_cache = {}
         # An other cache if the algorithms are failing on a single
         # example, we first look in this cache
-        self._bias_fuzzy_cache = {}
+        self._fuzzy_bias_cache = {}
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
@@ -315,7 +315,7 @@ class GeoBase(object):
         # Loading data
         if self._source is not None:
             # As a keyword argument, source should be a file-like
-            self._loadFile(self._source, self._verbose)
+            self._load(self._source, self._verbose)
             self.loaded = self._source
 
         elif self._paths is not None:
@@ -332,7 +332,7 @@ class GeoBase(object):
 
                 try:
                     with open(path) as source_fl:
-                        self._loadFile(source_fl, self._verbose)
+                        self._load(source_fl, self._verbose)
                 except IOError:
                     if self._verbose:
                         print '/!\ Failed to open "%s", failing over...' % path
@@ -538,7 +538,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowValues(row, headers, delimiter, subdelimiters, key, lno):
+    def _buildRowData(row, headers, delimiter, subdelimiters, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
@@ -613,7 +613,7 @@ class GeoBase(object):
 
 
 
-    def _loadFile(self, source_fl, verbose=True):
+    def _load(self, source_fl, verbose=True):
         """Load the file and feed the self._things.
 
         :param source_fl: file-like input
@@ -661,7 +661,7 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            row_data = self._buildRowValues(row, headers, delimiter, subdelimiters, key, lno)
+            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self._things:
@@ -749,7 +749,8 @@ class GeoBase(object):
 
         :param key:     the key of the thing (like 'SFO')
         :param field:   the field (like 'name' or 'iata_code')
-        :param default: if key is missing, returns default if given
+        :param kwargs:  other named arguments, use 'default' to avoid \
+                key failure
         :raises:        KeyError, if the key is not in the base
         :returns:       the needed information
 
@@ -857,24 +858,42 @@ class GeoBase(object):
 
 
 
-    def getAllDuplicates(self, key, field=None, **kwargs):
+    def getFromAllDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
         :param key:     the key of the thing (like 'SFO')
         :param field:   the field (like 'name' or 'iata_code')
+        :param kwargs:  other named arguments, use 'default' to avoid \
+                key failure
         :returns:       the list of values for the given field iterated \
                 on all duplicates for the key, including the key itself
 
-        >>> geo_o.getAllDuplicates('ORY', 'name')
+        >>> geo_o.getFromAllDuplicates('ORY', 'name')
         ['Paris-Orly']
-        >>> geo_o.getAllDuplicates('THA', 'name')
+        >>> geo_o.getFromAllDuplicates('THA', 'name')
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
-        >>> geo_o.getAllDuplicates('THA', '__key__')
-        ['THA', 'THA@1']
-        >>> geo_o.getAllDuplicates('THA@1', '__key__')
-        ['THA@1', 'THA']
+
+        One parent, one duplicate example.
+
+        >>> geo_o.get('THA@1', '__par__')
+        ['THA']
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
+
+        Use getFromAllDuplicates on master or duplicates gives the same results.
+
+        >>> geo_o.getFromAllDuplicates('THA', '__key__')
+        ['THA', 'THA@1']
+        >>> geo_o.getFromAllDuplicates('THA@1', '__key__')
+        ['THA@1', 'THA']
+
+        Corner cases are handled in the same way as ``get`` method.
+
+        >>> geo_o.getFromAllDuplicates('nnnnnnoooo', default='that')
+        'that'
+        >>> it = geo_o.getFromAllDuplicates('THA', field=None)
+        >>> [e['__key__'] for e in it]
+        ['THA', 'THA@1']
         """
         if key not in self._things:
             # Unless default is set, we raise an Exception
@@ -1436,21 +1455,21 @@ class GeoBase(object):
 
 
     @staticmethod
-    def clean(value):
+    def fuzzyClean(value):
         """Cleaning from LevenshteinUtils.
 
-        >>> GeoBase.clean('antibes ville 2')
+        >>> GeoBase.fuzzyClean('antibes ville 2')
         'antibes'
         """
         return '+'.join(clean(value))
 
 
-    def _buildRatios(self, fuzzy_value, field, min_match, keys):
+    def _buildFuzzyRatios(self, fuzzy_value, field, min_match, keys):
         """
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._buildRatios('marseille', 'name', 0.80, ['ORY', 'MRS', 'CDG']))
+        >>> list(geo_a._buildFuzzyRatios('marseille', 'name', 0.80, ['ORY', 'MRS', 'CDG']))
         [(0.9..., 'MRS')]
         """
         for key in keys:
@@ -1507,7 +1526,7 @@ class GeoBase(object):
 
         # All 'intelligence' is performed in the Levenshtein
         # module just here. All we do is minimize this distance
-        iterable = self._buildRatios(fuzzy_value, field, min_match, from_keys)
+        iterable = self._buildFuzzyRatios(fuzzy_value, field, min_match, from_keys)
 
         if max_results is None:
             return sorted(iterable, reverse=True)
@@ -1596,7 +1615,7 @@ class GeoBase(object):
         >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, verbose=True, d_range=(0, 1))
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
-        >>> geo_a.clearBiasCache()
+        >>> geo_a.clearFuzzyBiasCache()
         >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75, verbose=True)
         [(0.78..., 'CDG')]
         """
@@ -1604,15 +1623,15 @@ class GeoBase(object):
             d_range = (min_match, 1.0)
 
         # Cleaning is for keeping only useful data
-        entry = build_cache_key(self.clean(fuzzy_value), field, max_results, min_match, from_keys)
+        entry = build_cache_key(self.fuzzyClean(fuzzy_value), field, max_results, min_match, from_keys)
 
-        if entry in self._bias_fuzzy_cache:
+        if entry in self._fuzzy_bias_cache:
             # If the entry is stored is our bias
             # cache, we do not perform the fuzzy search
             if verbose:
                 print 'Using bias: %s' % str(entry)
 
-            return self._bias_fuzzy_cache[entry]
+            return self._fuzzy_bias_cache[entry]
 
         if entry not in self._fuzzy_cache:
 
@@ -1650,25 +1669,25 @@ class GeoBase(object):
         (1.0, 'Me!')
         """
         # Cleaning is for keeping only useful data
-        entry = build_cache_key(self.clean(fuzzy_value), field, max_results, min_match, from_keys)
+        entry = build_cache_key(self.fuzzyClean(fuzzy_value), field, max_results, min_match, from_keys)
 
-        self._bias_fuzzy_cache[entry] = biased_result
+        self._fuzzy_bias_cache[entry] = biased_result
 
 
-    def clearCache(self):
+    def clearFuzzyCache(self):
         """Clear cache for fuzzy searches.
 
-        >>> geo_t.clearCache()
+        >>> geo_t.clearFuzzyCache()
         """
         self._fuzzy_cache = {}
 
 
-    def clearBiasCache(self):
+    def clearFuzzyBiasCache(self):
         """Clear biasing cache for fuzzy searches.
 
-        >>> geo_t.clearBiasCache()
+        >>> geo_t.clearFuzzyBiasCache()
         """
-        self._bias_fuzzy_cache = {}
+        self._fuzzy_bias_cache = {}
 
 
 
@@ -1681,22 +1700,22 @@ class GeoBase(object):
 
                 print "[%.2f] %25s -> %25s (%5s)" % \
                     (d,
-                     self.clean(fuzzy_value),
-                     self.clean(self.get(key, field)),
+                     self.fuzzyClean(fuzzy_value),
+                     self.fuzzyClean(self.get(key, field)),
                      key)
 
 
     @staticmethod
-    def phonetic(value, method='dmetaphone'):
+    def phonemes(value, method='dmetaphone'):
         """Compute phonemes for any value.
 
         :param value:     the input value
         :param method:    change the phonetic method used
         :returns:         the phonemes
 
-        >>> GeoBase.phonetic('sheekago')
+        >>> GeoBase.phonemes('sheekago')
         ['XKK', None]
-        >>> GeoBase.phonetic('sheekago', 'nysiis')
+        >>> GeoBase.phonemes('sheekago', 'nysiis')
         'SACAG'
         """
         get_phonemes, _ = build_get_phonemes(method)
@@ -1812,7 +1831,7 @@ class GeoBase(object):
                 self.fields.append(field)
 
 
-    def setWithDict(self, key, dictionary):
+    def setFromDict(self, key, dictionary):
         """
         Same as set method, except we perform
         the input with a whole dictionary.
@@ -1823,7 +1842,7 @@ class GeoBase(object):
 
         >>> geo_f.keys()
         []
-        >>> geo_f.setWithDict('frnic', {'code' : 'frnic', 'name': 'Nice'})
+        >>> geo_f.setFromDict('frnic', {'code' : 'frnic', 'name': 'Nice'})
         >>> geo_f.keys()
         ['frnic']
         """
@@ -1845,7 +1864,7 @@ class GeoBase(object):
 
         How to reverse the delete if data has been stored:
 
-        >>> geo_t.setWithDict('frxrn', data)
+        >>> geo_t.setFromDict('frxrn', data)
         >>> geo_t.get('frxrn', 'name')
         'Redon'
 
@@ -2209,7 +2228,7 @@ class GeoBase(object):
 
             if self.hasDuplicates(key) and not mkey.issubset(done_keys):
                 # mkey have some keys which are not in done_keys
-                dup_lines.append(self.getAllDuplicates(key, '__key__'))
+                dup_lines.append(self.getFromAllDuplicates(key, '__key__'))
                 done_keys = done_keys | mkey
 
         return dup_lines
@@ -2511,9 +2530,9 @@ def build_get_phonemes(method):
 def build_cache_key(*args, **kwargs):
     """Build key for the cache of fuzzyFind, based on parameters.
 
-    >>> build_cache_key(GeoBase.clean('paris de gaulle'), 'name', max_results=None, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('paris de gaulle'), 'name', max_results=None, min_match=0, from_keys=None)
     ('paris+de+gaulle', 'name', None, None, 0)
-    >>> build_cache_key(GeoBase.clean('Antibes SNCF 2'), 'name', max_results=3, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('Antibes SNCF 2'), 'name', max_results=3, min_match=0, from_keys=None)
     ('antibes', 'name', None, 3, 0)
     """
     # We handle the fact that dictionary are not sorted, but this
