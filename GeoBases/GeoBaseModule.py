@@ -1687,25 +1687,21 @@ class GeoBase(object):
 
 
     @staticmethod
+    def sound(value, method='dmetaphone'):
+        """Compute sound for any value.
 
-
-    def getSound(self, key, field, method='dmetaphone'):
-        """Get sound for key and field.
-
-        :param key:       the input key
-        :param field:     the field, like 'name'
+        :param value:     the input value
         :param method:    change the phonetic method used
         :returns:         the sound
 
-        >>> geo_o.getSound('CHI', 'name')
+        >>> GeoBase.sound('sheekago')
         ['XKK', None]
-        >>> geo_o.getSound('CHI', 'name', 'nysiis')
-        'CACAG'
+        >>> GeoBase.sound('sheekago', 'nysiis')
+        'SACAG'
         """
-
-        return soundify(self.get(key, field))
         soundify, _ = build_soundify(method)
 
+        return soundify(value)
 
 
     def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
