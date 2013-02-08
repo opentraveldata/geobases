@@ -329,7 +329,7 @@ class GeoGrid(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
             as the grid size
@@ -378,7 +378,7 @@ class GeoGrid(object):
         :param N:         the N closest results wanted
         :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
             iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
+            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
         :param double_check: when using grid, perform an additional check on results distance, \
             this is useful because the grid is approximate, so the results are only as accurate \
             as the grid size
