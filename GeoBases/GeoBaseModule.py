@@ -1604,7 +1604,7 @@ class GeoBase(object):
             d_range = (min_match, 1.0)
 
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
+        entry = build_cache_key(fuzzy_value, field, max_results, min_match, from_keys)
 
         if entry in self._bias_fuzzy_cache:
             # If the entry is stored is our bias
@@ -1650,7 +1650,7 @@ class GeoBase(object):
         (1.0, 'Me!')
         """
         # Cleaning is for keeping only useful data
-        entry = self._buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys)
+        entry = build_cache_key(fuzzy_value, field, max_results, min_match, from_keys)
 
         self._bias_fuzzy_cache[entry] = biased_result
 
@@ -1670,17 +1670,6 @@ class GeoBase(object):
         """
         self._bias_fuzzy_cache = {}
 
-
-    @staticmethod
-    def _buildCacheKey(fuzzy_value, field, max_results, min_match, from_keys):
-        """Key for the cache of fuzzyFind, based on parameters.
-
-        >>> geo_a._buildCacheKey('paris de gaulle', 'name', max_results=None, min_match=0, from_keys=None)
-        ('paris+de+gaulle', 'name', None, 0, None)
-        >>> geo_a._buildCacheKey('Antibes SNCF 2', 'name', max_results=3, min_match=0, from_keys=None)
-        ('antibes', 'name', 3, 0, None)
-        """
-        return '+'.join(clean(fuzzy_value)), field, max_results, min_match, from_keys
 
 
     def _showFuzzyMatches(self, match, fuzzy_value, field, d_range=(1, 1)):
@@ -2519,6 +2508,19 @@ def download_if_not_here(resource, filename, verbose=True):
         return False, None
     else:
         return True, dl_filename
+
+
+
+
+def build_cache_key(fuzzy_value, field, max_results, min_match, from_keys):
+    """Key for the cache of fuzzyFind, based on parameters.
+
+    >>> build_cache_key('paris de gaulle', 'name', max_results=None, min_match=0, from_keys=None)
+    ('paris+de+gaulle', 'name', None, 0, None)
+    >>> build_cache_key('Antibes SNCF 2', 'name', max_results=3, min_match=0, from_keys=None)
+    ('antibes', 'name', 3, 0, None)
+    """
+    return '+'.join(clean(fuzzy_value)), field, max_results, min_match, from_keys
 
 
 
