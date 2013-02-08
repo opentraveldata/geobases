@@ -7,7 +7,7 @@ V5
 
 + 5.0 :
 
- + new GeoBase.clean and GeoBase.phonetic static methods
+ + new GeoBase.fuzzyClean and GeoBase.phonemes static methods
  + possiblity to draw on the map things that are not in the GeoBase
  + urls input for YAML configuration
  + new loaded attribute to describe loaded data, depends on source and paths
