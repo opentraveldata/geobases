@@ -1685,29 +1685,9 @@ class GeoBase(object):
                      key)
 
 
-    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
-        """Phonetic search.
-
-        :param value:     the value for which we look for a match
-        :param field:     the field, like 'name'
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform search.
-        :returns:         an iterable of (sound, key) matching
-
-        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
-        ['Chicago']
-        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
-        ['Chicago']
-
-        Alternate methods.
-
-        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
-        Looking for sounds like ['XKK', None]
-        [(['XKK', None], 'CHI')]
-        >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
-        [('XKK', 'CHI')]
-        >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
-        [('CACAG', 'CHI')]
+    @staticmethod
+    def _buildSoundify(method):
+        """Compute sound method and matching sounds method.
         """
         if method == 'metaphone':
             soundify = lambda s: dmeta(s)[0]
@@ -1728,6 +1708,58 @@ class GeoBase(object):
         else:
             raise ValueError('Accepted methods are %s' % \
                              ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
+
+        return soundify, matches
+
+
+
+    def getSound(self, key, field, method='dmetaphone'):
+        """Get sound for key and field.
+
+        :param key:       the input key
+        :param field:     the field, like 'name'
+        :param method:    change the phonetic method used
+        :returns:         the sound
+
+        >>> geo_o.getSound('CHI', 'name')
+        ['XKK', None]
+        >>> geo_o.getSound('CHI', 'name', 'nysiis')
+        'CACAG'
+        """
+        soundify, _ = self._buildSoundify(method)
+
+        return soundify(self.get(key, field))
+
+
+
+    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
+        """Phonetic search.
+
+        :param value:     the value for which we look for a match
+        :param field:     the field, like 'name'
+        :param method:    change the phonetic method used
+        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
+            iterable of keys to perform search.
+        :param verbose:   toggle verbosity
+        :returns:         an iterable of (sound, key) matching
+
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
+        ['Chicago']
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        ['Chicago']
+
+        Alternate methods.
+
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        Looking for sounds like ['XKK', None]
+        [(['XKK', None], 'CHI')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
+        [('XKK', 'CHI')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        [('CACAG', 'CHI')]
+        """
+
+        soundify, matches = self._buildSoundify(method)
 
         if from_keys is None:
             from_keys = iter(self)
