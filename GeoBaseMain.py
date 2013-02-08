@@ -5,7 +5,7 @@
 This module is a launcher for GeoBase.
 """
 
-from sys import stdin, stdout, stderr
+from sys import stdin, stderr
 import os
 
 import pkg_resources
@@ -26,8 +26,13 @@ import argparse # in standard libraray for Python >= 2.7
 # Private
 from GeoBases import GeoBase, BASES
 
-# Do not produce broken pipes when head and tail are used
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+try:
+    # Do not produce broken pipes when head and tail are used
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+except AttributeError:
+    # On windows, SIGPIPE does not exist
+    pass
 
 
 
@@ -239,18 +244,17 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.convertRaw(col)  # For @raw fields
 
         # Fields on the left
-        stdout.write('\n' + fixed_width(f, c.convertBold(col), lim, truncate))
+        l = [fixed_width(f, c.convertBold(col), lim, truncate)]
 
         if f == REF:
             for h, _ in list_of_things:
-                stdout.write(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
+                l.append(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
             for _, k in list_of_things:
-                stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+                l.append(fixed_width(geob.get(k, f), col, lim, truncate))
 
         next(c)
-
-    stdout.write('\n')
+        print ''.join(l)
 
 
 def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
@@ -1457,6 +1461,7 @@ def main():
 
 
     if frontend == 'terminal':
+        print
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
     if frontend == 'quiet':
