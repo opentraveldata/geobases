@@ -21,3 +21,8 @@
 /*.html
 /*.js
 /*.json
+# Ignoring coverage reports
+/.coverage
+# Ignoring profiling reports
+/*.prof
+/*.lprof

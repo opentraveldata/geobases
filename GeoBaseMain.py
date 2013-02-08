@@ -5,7 +5,7 @@
 This module is a launcher for GeoBase.
 """
 
-from sys import stdin, stdout, stderr
+from sys import stdin, stderr
 import os
 
 import pkg_resources
@@ -14,6 +14,7 @@ from math import ceil, log
 from itertools import zip_longest, chain
 from textwrap import dedent
 import signal
+import platform
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -25,8 +26,12 @@ import argparse # in standard libraray for Python >= 2.7
 # Private
 from GeoBases import GeoBase, BASES
 
-# Do not produce broken pipes when head and tail are used
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+IS_WINDOWS = platform.system() in ('Windows',)
+
+if not IS_WINDOWS:
+    # On windows, SIGPIPE does not exist
+    # Do not produce broken pipes when head and tail are used
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 
@@ -199,7 +204,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
     nice color and everything.
     """
     if not list_of_things:
-        stdout.write('\nNo elements to display.\n')
+        print('\nNo elements to display.')
         return
 
     if not show:
@@ -238,18 +243,17 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             col = c.convertRaw(col)  # For @raw fields
 
         # Fields on the left
-        stdout.write('\n' + fixed_width(f, c.convertBold(col), lim, truncate))
+        l = [fixed_width(f, c.convertBold(col), lim, truncate)]
 
         if f == REF:
             for h, _ in list_of_things:
-                stdout.write(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
+                l.append(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
             for _, k in list_of_things:
-                stdout.write(fixed_width(geob.get(k, f), col, lim, truncate))
+                l.append(fixed_width(geob.get(k, f), col, lim, truncate))
 
         next(c)
-
-    stdout.write('\n')
+        print(''.join(l))
 
 
 def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
@@ -269,14 +273,14 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     # Building final shown headers
     show_wo_omit = [f for f in show if f not in omit]
 
-    # Displaying headers
-    if header == 'CH':
-        stdout.write('#' + delim.join(str(f) for f in show_wo_omit) + '\n')
-    elif header == 'RH':
-        stdout.write(delim.join(str(f) for f in show_wo_omit) + '\n')
-    else:
-        # Every other value will not display a header
-        pass
+    # Headers joined
+    j_headers = delim.join(str(f) for f in show_wo_omit)
+
+    # Displaying headers only for RH et CH
+    if header == 'RH':
+        print(j_headers)
+    elif header == 'CH':
+        print('#%s' % j_headers)
 
     for h, k in list_of_things:
         l = []
@@ -293,7 +297,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 else:
                     l.append(str(v))
 
-        stdout.write(delim.join(l) + '\n')
+        print(delim.join(l))
 
 
 def display_browser(templates, nb_res):
@@ -356,7 +360,7 @@ def fixed_width(s, col, lim=25, truncate=None):
     # To truncate on the appropriate number of characters
     # We decode before truncating (so non-ascii characters
     # will be counted only once when using len())
-    # Then we encode again for stdout.write
+    # Then we encode again before display
     ds = str(s)
     es = printer % ds[0:truncate]
 
@@ -536,7 +540,7 @@ def guess_indexes(headers, s_row):
     return [ min(candidates, key=lambda x: x[1])[0] ]
 
 
-def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
+def build_pairs(L, layout='v'):
     """
     Some formatting for help.
     """
@@ -544,16 +548,13 @@ def fmt_on_two_cols(L, descriptor=stdout, layout='v'):
     h = int(ceil(n / 2)) # half+
 
     if layout == 'h':
-        pairs = zip_longest(L[::2], L[1::2], fillvalue='')
+        return zip_longest(L[::2], L[1::2], fillvalue='')
 
     elif layout == 'v':
-        pairs = zip_longest(L[:h], L[h:], fillvalue='')
+        return zip_longest(L[:h], L[h:], fillvalue='')
 
-    else:
-        raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
+    raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
-    for p in pairs:
-        print('\t%-20s\t%-20s' % p, file=descriptor)
 
 
 def best_field(candidates, possibilities, default=None):
@@ -587,17 +588,20 @@ def error(name, *args):
 
     elif name == 'base':
         print('\n/!\ Wrong data type "%s". You may select:' % args[0], file=stderr)
-        fmt_on_two_cols(args[1], stderr)
+        for p in build_pairs(args[1]):
+            print('\t%-20s\t%-20s' % p, file=stderr)
 
     elif name == 'property':
         print('\n/!\ Wrong property "%s".' % args[0], file=stderr)
         print('For data type "%s", you may select:' % args[1], file=stderr)
-        fmt_on_two_cols(args[2], stderr)
+        for p in build_pairs(args[2]):
+            print('\t%-20s\t%-20s' % p, file=stderr)
 
     elif name == 'field':
         print('\n/!\ Wrong field "%s".' % args[0], file=stderr)
         print('For data type "%s", you may select:' % args[1], file=stderr)
-        fmt_on_two_cols(args[2], stderr)
+        for p in build_pairs(args[2]):
+            print('\t%-20s\t%-20s' % p, file=stderr)
 
     elif name == 'geocode_format':
         print('\n/!\ Bad geocode format: %s' % args[0], file=stderr)
@@ -1450,14 +1454,14 @@ def main():
                     (max_t - len(templates)))
 
 
-    # We protect the stdout.write against the IOError
     if frontend == 'terminal':
+        print()
         display(g, res, set(args['omit']), args['show'], important, ref_type)
 
     if frontend == 'quiet':
         display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
 
-    if verbose:
+    if verbose and not IS_WINDOWS:
         for warn_msg in ENV_WARNINGS:
             print(dedent(warn_msg), end="")
 
