@@ -90,7 +90,7 @@ $ git checkout 3000
 $ python3 setup.py install --user
 ```
 
-You can also install the package from [Pypi](http://pypi.python.org/):
+You can also install the package from [PyPI](http://pypi.python.org/):
 ```shell
 $ easy_install-3.2 --user -U GeoBases3K
 ```
