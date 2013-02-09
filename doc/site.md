@@ -6,9 +6,8 @@ This project provides tools to play with geographical data. It also
 works with non-geographical data, except for map visualizations :).
 
 There are embedded data sources in the project, but you can easily play
-with your own data in addition to the available ones. Csv files
-containing data about airports, train stations, countries, ... are
-loaded, then you can:
+with your own data in addition to the available ones.
+After data loading, you can:
 
 -   performs various types of queries ( *find this key*, or *find keys
     with this property*)
@@ -179,7 +178,7 @@ are documented in a single *yaml* file:
 
 All features are unaware of the underlying data, and are available as
 long as the headers are properly set in the configuration file, or from
-the [Python API](http://packages.python.org/GeoBases/GeoBases.html). For
+the [Python API](https://geobases.readthedocs.org). For
 geographical features, you have to name the latitude field `lat`, and
 the longitude field `lng`.
 
@@ -286,7 +285,7 @@ Documentation
 -------------
 
 Here is the [API
-documentation](http://packages.python.org/GeoBases/GeoBases.html) for
+documentation](https://geobases.readthedocs.org) for
 the Python package. Check out the
 [wiki](https://github.com/opentraveldata/geobases/wiki) for any
 question!
