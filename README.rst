@@ -1,7 +1,9 @@
-GeoBases |travis|
-=================
+GeoBases |travis|_
+==================
 
+.. _travis : https://travis-ci.org/opentraveldata/geobases
 .. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=develop
+
 
 Introduction
 ------------
