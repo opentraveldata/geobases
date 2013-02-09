@@ -9,7 +9,7 @@ notifications:
 
 # command to install dependencies
 install:
-    - "python setup.py install --user"
+    - "python setup.py install"
 
 # command to run tests
 script: "python test/test_GeoBases.py -v"
