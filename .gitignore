@@ -1,0 +1,28 @@
+# Python / vim
+*py[co]
+*.sw[po]
+# Eclipse / Pydev
+.settings
+.project
+.pydevproject
+# Ignoring build dir
+/build
+/dist
+/*.egg-info/
+# Ignoring virtualenv
+/bin/
+/lib/
+/lib64
+/include/
+# Ignoring api doc
+/doc/_build
+# Ignoring tmp map files
+/*.png
+/*.html
+/*.js
+/*.json
+# Ignoring coverage reports
+/.coverage
+# Ignoring profiling reports
+/*.prof
+/*.lprof
