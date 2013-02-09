@@ -106,18 +106,17 @@ that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 <h3>Python 3 support</h3>
 
 <p>There is <em>Python 3</em> (not so) experimental support, you can
-try it by <em>changing branch</em> before installation. You have to install setuptools and python3-dev as
+try it by <em>changing branch</em> before installation. Install setuptools and python3-dev as
 prerequisites, then:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>git checkout 3000
 <span class="nv">$ </span>python3 setup.py install --user
 </pre></div>
 
-<p>You can also install it from <a href="http://pypi.python.org/pypi">PyPI</a> with:</p>
+<p>You can also install the package from <a href="http://pypi.python.org/">Pypi</a>:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>easy_install-3.2 --user -U GeoBases3K
 </pre></div>
-
 
 <h3>Autocomplete</h3>
 
@@ -254,9 +253,9 @@ and using the <code>set</code> method.</p>
 
 <h3>Approximate name matching</h3>
 
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">fuzzyGet</span><span class="p">(</span><span class="s">'Marseille Charles'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">fuzzyFind</span><span class="p">(</span><span class="s">'Marseille Charles'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="p">(</span><span class="mf">0.8</span><span class="o">...</span><span class="p">,</span> <span class="s">'frmsc'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_a</span><span class="o">.</span><span class="n">fuzzyGet</span><span class="p">(</span><span class="s">'paris de gaulle'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">geo_a</span><span class="o">.</span><span class="n">fuzzyFind</span><span class="p">(</span><span class="s">'paris de gaulle'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="p">(</span><span class="mf">0.78</span><span class="o">...</span><span class="p">,</span> <span class="s">'CDG'</span><span class="p">)</span>
 </pre></div>
 
@@ -402,7 +401,17 @@ version of virtualenv, before executing rake:</p>
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38361293-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
