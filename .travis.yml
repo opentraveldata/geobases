@@ -6,4 +6,5 @@ python:
 install:
 
 # command to run tests
+# this will install dependencies in a virtualenv
 script: rake
