@@ -183,7 +183,7 @@ All data sources are documented in a single *yaml* file:
 -  *data="feed"* will create an empty instance
 
 All features are unaware of the underlying data, and are available as long as
-the headers are properly set in the configuration file, or from the `Python API <http://packages.python.org/GeoBases/GeoBases.html>`_.
+the headers are properly set in the configuration file, or from the `Python API <https://geobases.readthedocs.org>`_.
 For geographical features, you have to name the latitude field ``lat``, and the
 longitude field ``lng``.
 
@@ -298,7 +298,7 @@ Map display
 Documentation
 -------------
 
-Here is the `API documentation <http://packages.python.org/GeoBases/GeoBases.html>`_ for the Python package.
+Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
 Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Standalone script
