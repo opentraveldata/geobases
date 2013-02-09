@@ -1,4 +1,3 @@
-
 Introduction
 ------------
 
@@ -80,12 +79,10 @@ export PATH=$PATH:$HOME/.local/bin
 export BACKGROUND_COLOR=black # or 'white', your call
 ```
 
-### Python 3 and Pypy support
+### Python 3 support
 
-There is *Python 3* and *Pypy* (not so) experimental support, you can
-try it by *changing branch* before installation.
-
-For Python 3, you have to install setuptools and python3-dev as
+There is *Python 3* (not so) experimental support, you can
+try it by *changing branch* before installation. Install setuptools and python3-dev as
 prerequisites, then:
 
 ```shell
@@ -93,16 +90,9 @@ $ git checkout 3000
 $ python3 setup.py install --user
 ```
 
-You can also install the package for Python 3:
+You can also install the package from [Pypi](http://pypi.python.org/):
 ```shell
 $ easy_install-3.2 --user -U GeoBases3K
-```
-
-For Pypy, after pypy and pypy-dev installation:
-
-```shell
-$ git checkout pypy
-$ sudo pypy setup.py install
 ```
 
 ### Autocomplete
@@ -115,14 +105,6 @@ your `~/.zshrc`:
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
 compinit
-```
-
-### Tests
-
-Run the tests with:
-
-```shell
-$ python test/test_GeoBases.py -v
 ```
 
 Quickstart
