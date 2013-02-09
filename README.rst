@@ -1,7 +1,7 @@
 GeoBases |travis|
 =================
 
-.. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=public
+.. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=develop
 
 Introduction
 ------------
