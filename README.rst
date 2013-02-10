@@ -13,12 +13,12 @@ data. It also works with non-geographical data, except for map visualizations :)
 
 There are embedded data sources in the project,
 but you can easily play with your own data in addition to the available ones.
-Csv files containing data about airports, train
-stations, countries, ... are loaded, then you can:
+After data loading, you can:
 
--  performs various types of queries ( *find this key*, or *find keys with this property*)
--  *fuzzy searches* based on string distance ( *find things roughly named like this*)
--  *geographical searches* ( *find things next to this place*)
+-  perform various types of queries (find *this key*, or find keys with *this property*)
+-  make *fuzzy searches* based on string distance (find things roughly *named like this*)
+-  make *phonetic searches* (find things *sounding like this*)
+-  make *geographical searches* (find things *next to this place*)
 -  get results on a map, or export it as csv data, or as a Python object
 
 This is entirely written in Python. The core part is a Python package,
@@ -31,6 +31,20 @@ then you can see where are airports with *international* in their name:
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png
    :align: center
+
+You can perform all types of queries:
+
+.. code-block:: bash
+
+ $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
+
+And of course, you can use your own data:
+
+.. code-block:: bash
+
+ $ cat data.csv | GeoBase --near London
+
+We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
 
 Project
 -------
