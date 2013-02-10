@@ -12,6 +12,7 @@ After data loading, you can:
     with *this property*)
 -   make *fuzzy searches* based on string distance (find things *roughly
     named like this*)
+-   make *phonetic searches* (find things *sounding like this*)
 -   make *geographical searches* (find things *next to this place*)
 -   get results on a map, or export it as csv data, or as a Python
     object
@@ -25,6 +26,20 @@ $ GeoBase --fuzzy international --map
 ```
 
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png)
+
+You can perform all types of queries:
+```shell
+$ GeoBase --base cities --fuzzy "san francisko" # typo here :)
+```
+
+And of course, you can use your own data:
+```shell
+$ cat data.csv | GeoBase --near London
+```
+
+We are currently gathering input from the community to define the next
+version features, so do not hesitate to open issues on the [github
+page](https://github.com/opentraveldata/geobases).
 
 Project
 -------
