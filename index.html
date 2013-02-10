@@ -41,12 +41,11 @@ with your own data in addition to the available ones.
 After data loading, you can:</p>
 
 <ul>
-<li>  performs various types of queries ( <em>find this key</em>, or <em>find keys
-with this property</em>)</li>
-<li>  <em>fuzzy searches</em> based on string distance ( <em>find things roughly
-named like this</em>)</li>
-<li>  <em>geographical searches</em> ( <em>find things next to this place</em>)</li>
-<li>  get results on a map, or export it as csv data, or as a Python
+<li>perform various types of queries (find <em>this key</em>, or find keys with <em>this property</em>)</li>
+<li>make <em>fuzzy searches</em> based on string distance (find things <em>roughly named like this</em>)</li>
+<li>make <em>phonetic searches</em> (find things <em>sounding like this</em>)</li>
+<li>make <em>geographical searches</em> (find things <em>next to this place</em>)</li>
+<li>get results on a map, or export it as csv data, or as a Python
 object</li>
 </ul><p>This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with <em>easy_install</em>,
@@ -56,6 +55,18 @@ then you can see where are airports with <em>international</em> in their name:</
 </pre></div>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png" alt=""></p>
+
+<p>You can perform all types of queries:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --base cities --fuzzy "san francisko" <span class="c"># typo here :)</span>
+</pre></div>
+
+<p>And of course, you can use your own data:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>cat data.csv | GeoBase --near London
+</pre></div>
+
+<p>We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the <a href="https://github.com/opentraveldata/geobases">github page</a>.</p>
 
 <h2>Project</h2>
 
