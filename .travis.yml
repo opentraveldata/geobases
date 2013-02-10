@@ -12,4 +12,4 @@ install:
     - "python setup.py install"
 
 # command to run tests
-script: "python test/test_GeoBases.py -v"
+script: "python test/test_GeoBases.py -vv"
