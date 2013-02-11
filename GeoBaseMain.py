@@ -194,7 +194,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
     if ref_type == 'phonemes':
         if isinstance(ref, (list, tuple, set)):
-            return '-'.join(str(e) for e in ref)
+            return SPLIT.join(str(e) for e in ref)
         else:
             return str(ref)
 
