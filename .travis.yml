@@ -4,15 +4,17 @@ python:
   - "2.6"
   - "2.7"
 
-matrix:
-  allow_failures:
-    - python: "2.5"
 
 env:
   global:
   matrix:
     - WITH_OPENTREP=0
     - WITH_OPENTREP=1
+
+
+matrix:
+  allow_failures:
+    - python: "2.5"
 
 
 notifications:
