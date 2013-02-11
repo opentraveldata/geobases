@@ -38,9 +38,10 @@ Examples for stations::
     >>> geo_t.distance('frnic', 'frpaz')
     683.526...
 
-From any point of reference:
+From any point of reference, we have a few duplicates
+even with ``('iata_code', 'location_type')`` key:
 
-    >>> geo = GeoBase(data='ori_por_multi') # we have a few duplicates even with (iata, loc_type) key
+    >>> geo = GeoBase(data='ori_por_multi')
     /!\ [lno ...] RDU+CA is duplicated #1, first found lno ...
     /!\ [lno ...] RDU+CA is duplicated #2, first found lno ...
     /!\ [lno ...] RDU+CA is duplicated #3, first found lno ...
@@ -185,21 +186,25 @@ class GeoBase(object):
 
         - source        : ``None`` by default, file-like to the source
         - headers       : ``[]`` by default, list of fields in the data
-        - key_fields    : ``None`` by default, list of fields defining the key for a \
-                line, ``None`` means line numbers will be used to generate keys
-        - indices       : ``[]`` by default, an iterable of additional indexed fields
+        - key_fields    : ``None`` by default, list of fields defining the \
+                key for a line, ``None`` means line numbers will be used \
+                to generate keys
+        - indices       : ``[]`` by default, an iterable of additional \
+                indexed fields
         - delimiter     : ``'^'`` by default, delimiter for each field,
-        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` dict to \
-                define subdelimiters
-        - quotechar     : ``'"'`` by default, this is the string defined for quoting
-        - limit         : ``None`` by default, put an int if you want to load only the \
-                first lines
-        - discard_dups  : ``False`` by default, boolean to discard key duplicates or \
-                handle them
+        - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` \
+                dict to define subdelimiters
+        - quotechar     : ``'"'`` by default, this is the string defined for \
+                quoting
+        - limit         : ``None`` by default, put an int if you want to \
+                load only the first lines
+        - discard_dups  : ``False`` by default, boolean to discard key \
+                duplicates or handle them
         - verbose       : ``True`` by default, toggle verbosity
 
-        :param data: the type of data wanted, ``'airports'``, ``'stations'``, and \
-                many more available. ``'feed'`` will create an empty instance.
+        :param data: the type of data, ``'airports'``, ``'stations'``, \
+                and many more available. ``'feed'`` will create an empty \
+                instance.
         :param kwargs: additional parameters
         :raises:  ValueError, if data parameters is not recognized
         :returns: None
@@ -881,7 +886,8 @@ class GeoBase(object):
         >>> geo_o.get('THA', '__dup__')
         ['THA@1']
 
-        Use getFromAllDuplicates on master or duplicates gives the same results.
+        Use getFromAllDuplicates on master or duplicates gives the same
+        results.
 
         >>> geo_o.getFromAllDuplicates('THA', '__key__')
         ['THA', 'THA@1']
@@ -1005,13 +1011,16 @@ class GeoBase(object):
         For example, if you want to know all airports in Paris.
 
         :param conditions: a list of ``('field', 'value')`` conditions
-        :param reverse:    we look keys where the field is *not* the particular value. \
-                Note that this negation is done at the lower level, before combining \
-                conditions. So if you have two conditions with ``mode='and'``, expect \
+        :param reverse:    we look keys where the field is *not* the \
+                particular value. Note that this negation is done at \
+                the lower level, before combining conditions. So if you \
+                have two conditions with ``mode='and'``, expect \
                 results matching not condition 1 *and* not condition 2.
         :param force_str:  for the ``str()`` method before every test
-        :param mode:       either ``'or'`` or ``'and'``, how to handle several conditions
-        :param from_keys:  if given, we will look for results from this iterable of keys
+        :param mode:       either ``'or'`` or ``'and'``, how to handle \
+                several conditions
+        :param from_keys:  if given, we will look for results from this \
+                iterable of keys
         :param index:      boolean to disable index when searching
         :param verbose:    toggle verbosity during search
         :returns:          an iterable of ``(v, key)`` where ``v`` is the \
@@ -1085,7 +1094,8 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        # We check here the fields in conditions, because KeyError are catched next
+        # We check here the fields in conditions
+        # because KeyError are catched next
         for field, _ in conditions:
             if field not in self.fields:
                 raise ValueError('Conditions %s include unknown field "%s"' % \
@@ -1229,12 +1239,12 @@ class GeoBase(object):
 
         :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
         :param radius:    the radius of the search (kilometers)
-        :param from_keys: if ``None``, it takes all keys in consideration, else takes \
-            from_keys iterable of keys to perform search.
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform search.
         :param grid:      boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results \
-            distance, this is useful because the grid is approximate, so the results \
-            are only as accurate as the grid size
+        :param double_check: when using grid, perform an additional check on \
+            results distance, this is useful because the grid is approximate, \
+            so the results are only as accurate as the grid size
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
@@ -1289,12 +1299,13 @@ class GeoBase(object):
         call ``findNearPoint``.
 
         :param key:       the key of the thing (like ``'SFO'``)
-        :param from_keys: if ``None``, it takes all keys in consideration, else takes \
-            from_keys iterable of keys to perform search.
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform search.
         :param grid:      boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results \
-            distance, this is useful because the grid is approximate, so the results \
-            are only as accurate as the grid size
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
@@ -1348,14 +1359,15 @@ class GeoBase(object):
 
         :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
         :param N:         the N closest results wanted
-        :param from_keys: if ``None``, it takes all keys in consideration, else takes \
-                from_keys iterable of keys to perform ``findClosestFromPoint``. \
-                This is useful when we have names and have to perform a matching \
-                based on name and location (see ``fuzzyFindNearPoint``).
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromPoint``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on \
-                results distance, this is useful because the grid is approximate, \
-                so the results are only as accurate as the grid size
+            results distance, this is useful because the grid is \
+            approximate, so the results are only as accurate as the grid size
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
@@ -1412,14 +1424,16 @@ class GeoBase(object):
 
         :param key:       the key of the thing (like ``'SFO'``)
         :param N:         the N closest results wanted
-        :param from_keys: if ``None``, it takes all keys in consideration, else takes \
-                from_keys iterable of keys to perform ``findClosestFromPoint``. \
-                This is useful when we have names and have to perform a matching \
-                based on name and location (see ``fuzzyFindNearPoint``).
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromKey``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
         :param grid:    boolean, use grid or not
         :param double_check: when using grid, perform an additional check on \
-                results distance, this is useful because the grid is approximate, \
-                so the results are only as accurate as the grid size
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
@@ -1505,10 +1519,11 @@ class GeoBase(object):
         :param field:       the field we look into, like ``'name'``
         :param max_results: max number of results, None means all results
         :param min_match:   filter out matches under this threshold
-        :param from_keys:   if ``None``, it takes all keys in consideration, else \
-                takes from_keys iterable of keys to perform fuzzyFind. This is \
-                useful when we have geocodes and have to perform a matching based \
-                on name and location (see fuzzyFindNearPoint).
+        :param from_keys:   if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``fuzzyFind``. This is useful when we have geocodes and have to \
+            perform a matching based on name and location (see \
+            ``fuzzyFindNearPoint``).
         :returns:           an iterable of ``(distance, key)`` like \
                 ``[(0.97, 'SFO'), (0.55, 'LAX')]``
 
@@ -1553,14 +1568,16 @@ class GeoBase(object):
         :param radius:      the radius of the search (kilometers)
         :param fuzzy_value: the value, like ``'Marseille'``
         :param field:       the field we look into, like ``'name'``
-        :param max_results: if ``None``, returns all, if an int, only returns the first ones
+        :param max_results: if ``None``, returns all, if an int, only \
+                returns the first ones
         :param min_match:   filter out matches under this threshold
-        :param from_keys:   if ``None``, it takes all keys in consideration, else takes \
-                from_keys iterable of keys to perform search.
+        :param from_keys:   if ``None``, it takes all keys in consideration, \
+                else takes a from_keys iterable of keys to perform search.
         :param grid:        boolean, use grid or not
-        :param double_check: when using grid, perform an additional check on results \
-                distance, this is useful because the grid is approximate, so the results \
-                are only as accurate as the grid size
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
         :returns:           an iterable of ``(distance, key)`` like \
                 ``[(0.97, 'SFO'), (0.55, 'LAX')]``
 
@@ -1603,12 +1620,12 @@ class GeoBase(object):
         :param field:       the field we look into, like ``'name'``
         :param max_results: max number of results, None means all results
         :param min_match:   filter out matches under this threshold
-        :param from_keys:   if ``None``, it takes all keys in consideration, else \
-                takes from_keys iterable of keys to perform fuzzyFind. This is \
-                useful when we have geocodes and have to perform a matching based \
-                on name and location (see fuzzyFindNearPoint).
-        :param verbose:     display information on caching for a certain range \
-                of similarity
+        :param from_keys:   if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform fuzzyFind. \
+            This is useful when we have geocodes and have to perform a \
+            matching based on name and location (see ``fuzzyFindNearPoint``).
+        :param verbose:     display information on caching for a certain \
+                range of similarity
         :param d_range:     the range of similarity
         :returns:           an iterable of ``(distance, key)`` like \
                 ``[(0.97, 'SFO'), (0.55, 'LAX')]``
@@ -1669,10 +1686,12 @@ class GeoBase(object):
 
         :param fuzzy_value:   the value, like ``'Marseille'``
         :param field:         the field we look into, like ``'name'``
-        :param max_results:   if ``None``, returns all, if an int, only returns the first ones
+        :param max_results:   if ``None``, returns all, if an int, only \
+                returns the first ones
         :param min_match:     filter out matches under this threshold
-        :param from_keys:     if ``None``, it takes all keys into consideration, else \
-                takes from_keys iterable of keys as search domain
+        :param from_keys:     if ``None``, it takes all keys into \
+                consideration, else takes ``from_keys`` iterable of keys \
+                as search domain
         :param biased_result: the expected result
         :returns:             ``None``
 
@@ -1743,8 +1762,8 @@ class GeoBase(object):
         :param value:     the value for which we look for a match
         :param field:     the field, like ``'name'``
         :param method:    change the phonetic method used
-        :param from_keys: if ``None``, it takes all keys in consideration, else takes \
-                from_keys iterable of keys to perform search.
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+                else takes ``from_keys`` iterable of keys to perform search.
         :param verbose:   toggle verbosity
         :returns:         an iterable of (phonemes, key) matching
 
@@ -1917,12 +1936,12 @@ class GeoBase(object):
         If not hasTrepSupport(), main_trep is not defined
         and trepSearch will raise an exception if called.
 
-        :param fuzzy_value:   the fuzzy value
-        :param trep_format:   the format given to OpenTrep
-        :param from_keys:     if ``None``, it takes all keys in consideration, else \
-                takes from_keys iterable of keys to perform search.
-        :param verbose:       toggle verbosity
-        :returns:             an iterable of ``(distance, key)`` like \
+        :param fuzzy_value: the fuzzy value
+        :param trep_format: the format given to OpenTrep
+        :param from_keys:   if ``None``, it takes all keys in consideration, \
+                else takes ``from_keys`` iterable of keys to perform search.
+        :param verbose:     toggle verbosity
+        :returns:           an iterable of ``(distance, key)`` like \
                 ``[(0.97, 'SFO'), (0.55, 'LAX')]``
 
         >>> if GeoBase.hasTrepSupport():
@@ -1968,30 +1987,34 @@ class GeoBase(object):
                   verbose=True):
         """Creates map and other visualizations.
 
-        :param output:          set the name of the rendered files
-        :param icon_label:      set the field which will appear as map icons title
-        :param icon_weight:     set the field defining the map icons circle surface
-        :param icon_color:      set the field defining the map icons colors
-        :param icon_type:       set the icon size, either ``'B'``, ``'S'``, ``'auto'`` or \
-                ``None`` for no-icons mode
-        :param from_keys:       only display this iterable of keys if not None
-        :param add_lines:       list of ``(key1, key2, ..., keyN)`` to draw \
+        :param output:      set the name of the rendered files
+        :param icon_label:  set the field which will appear as map icons title
+        :param icon_weight: set the field defining the map icons circle \
+                surface
+        :param icon_color:  set the field defining the map icons colors
+        :param icon_type:   set the icon size, either ``'B'``, ``'S'``, \
+                ``'auto'`` or ``None`` for no-icons mode
+        :param from_keys:   only display this iterable of keys if not None
+        :param add_lines:   list of ``(key1, key2, ..., keyN)`` to draw \
                 additional lines
-        :param add_anonymous_icons: list of ``(lat, lng)`` to draw additional \
-                icons from geocodes not in the data
-        :param add_anonymous_icons: list of ``((lat1, lng1), (lat2, lng2), ...)`` \
+        :param add_anonymous_icons: list of geocodes, like \
+                ``[(lat1, lng1), (lat2, lng2), ..., (latN, lngN)]``, \
+                to draw additional icons from geocodes not in the data
+        :param add_anonymous_icons: list of list of geocodes, like \
+                ``[[(lat1, lng1), (lat2, lng2), ..., (latN, lngN)], ...]``,  \
                 to draw additional lines from geocodes not in the data
-        :param link_duplicates: boolean toggling lines between duplicated keys feature
-        :param catalog:         dictionary of ``{'value': 'color'}`` to have \
-                specific colors for some categories, which is computed with the \
-                icon_color field
-        :param line_colors:     tuple of 3 colors to change the default lines \
-                color, the three values are for the three line types: those computed \
-                with link_duplicates, those given with add_lines, those given with \
-                add_anonymous_lines
-        :param verbose:         toggle verbosity
-        :returns:               this is the tuple (list of templates successfully \
-                rendered, total number of templates available)
+        :param link_duplicates: boolean toggling lines between duplicated \
+                keys
+        :param catalog:     dictionary of ``{'value': 'color'}`` to have \
+                specific colors for some categories, which is computed with \
+                the ``icon_color`` field
+        :param line_colors: tuple of 3 colors to change the default lines \
+                color, the three values are for the three line types: those \
+                computed with ``link_duplicates``, those given with \
+                ``add_lines``, those given with ``add_anonymous_lines``
+        :param verbose:     toggle verbosity
+        :returns:           this is the tuple of (list of templates \
+                successfully rendered, total number of templates available)
         """
         if self.hasGeoSupport():
             geo_support = True
