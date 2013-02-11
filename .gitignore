@@ -24,6 +24,7 @@
 /*.json
 # Ignoring coverage reports
 /.coverage
+/coverage/htmlcov
 # Ignoring profiling reports
 /*.prof
 /*.lprof
