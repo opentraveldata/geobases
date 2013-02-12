@@ -20,17 +20,23 @@ ASSET_FILES = {
   '_GeoBase.erb' => '_GeoBase'
 }
 
-BASES  = CONFIG.keys.sort
-
-FIELDS = ['__key__', '__dup__', '__dad__', '__lno__'] + CONFIG['ori_por']['headers']
-
-CONFIG['ori_por']['subdelimiters'].each do |key, val|
-    if not val.nil?
-        FIELDS << key + '@raw'
+# Config enhancements
+CONFIG.each do |base, config|
+    headers = ['__key__', '__dup__', '__dad__', '__lno__']
+    config['headers'].each do |h|
+        headers << h
+        if not config['subdelimiters'].nil?
+            if config['subdelimiters'].has_key?(h)
+                if not config['subdelimiters'][h].nil?
+                    headers << h + '@raw'
+                end
+            end
+        end
     end
-end
+    headers << '__gar__'
 
-FIELDS << '__gar__'
+    config['headers'] = headers
+end
 
 
 namespace :build do
