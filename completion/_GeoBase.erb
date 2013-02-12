@@ -57,7 +57,7 @@ get_opt_value() {
 }
 
 
-_complete() {
+_hello() {
 
     local curcontext="$curcontext" state line
     typeset -A opt_args
@@ -233,7 +233,7 @@ _complete() {
 }
 
 
-_complete "$@"
+_hello "$@"
 
 # Magic modeline option lo use zsh coloration in vim
 # <%= 'vim: ft=zsh' %>
