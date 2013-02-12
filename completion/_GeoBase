@@ -279,7 +279,7 @@ _hello() {
      "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
      "(* -)"{-V,--version}"[Display version information]" \
-     "*: :->key"
+     "*:list of keys"
 
     # Arguments value
     base=`get_opt_value "${opt_args[-b]}" "${opt_args[--base]}"`
@@ -290,10 +290,6 @@ _hello() {
 
 
     case $state in
-    key)
-        _arguments \
-            "*:list of keys"
-        ;;
     base)
         _arguments \
             "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"

@@ -95,7 +95,7 @@ _hello() {
      "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
      "(* -)"{-V,--version}"[Display version information]" \
-     "*: :->key"
+     "*:list of keys"
 
     # Arguments value
     base=`get_opt_value "${opt_args[-b]}" "${opt_args[--base]}"`
@@ -106,10 +106,6 @@ _hello() {
 
 
     case $state in
-    key)
-        _arguments \
-            "*:list of keys"
-        ;;
     base)
         _arguments \
             "*:base:(<%= CONFIG.keys.sort.join(' ') %>)"
