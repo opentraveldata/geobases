@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + clever autocomplete for zsh
  + new GeoBase.fuzzyClean and GeoBase.phonemes static methods
  + possiblity to draw on the map things that are not in the GeoBase
  + urls input for YAML configuration
