@@ -148,7 +148,7 @@ _hello() {
                 "*:delimiter:$DELIMITERS"
             ;;
         1)
-            _fields_extended "$base" "headers"
+            _fields "$base" "headers"
             ;;
         2)
             _fields_extended "$base" "key_fields"
@@ -169,7 +169,7 @@ _hello() {
     interactive)
         case `count_opt $interactive` in
         0)
-            _fields_extended "$base" "input field"
+            _fields "$base" "input field"
             ;;
         1)
             _arguments \
