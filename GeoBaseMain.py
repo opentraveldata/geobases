@@ -651,6 +651,8 @@ DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS    = ('__key__',)
 DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
 DEF_PHONETIC_METHOD = 'dmetaphone'
+DEF_SHOW_FIELDS     = []
+DEF_OMIT_FIELDS     = []
 
 # For requests with findWith, force stringification before testing
 FORCE_STR = False
@@ -925,7 +927,7 @@ def handle_args():
         "%s" is an available keyword as well as any other geobase fields.
         ''' % REF),
         nargs = '+',
-        default = [])
+        default = DEF_OMIT_FIELDS)
 
     parser.add_argument('-s', '--show',
         help = dedent('''\
@@ -934,7 +936,7 @@ def handle_args():
         "%s" is an available keyword as well as any other geobase fields.
         ''' % REF),
         nargs = '+',
-        default = [])
+        default = DEF_SHOW_FIELDS)
 
     parser.add_argument('-l', '--limit',
         help = dedent('''\
@@ -1308,6 +1310,13 @@ def main():
 
     # Reading phonetic options
     phonetic_method = args['phonetic_method']
+
+    # show / omit
+    if args['show'] == SKIP:
+        args['show'] = DEF_SHOW_FIELDS
+
+    if args['omit'] == SKIP:
+        args['omit'] = DEF_OMIT_FIELDS
 
 
 
