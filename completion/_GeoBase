@@ -593,7 +593,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:input type:(_ __exact__ __fuzzy__ __phonetic__)"
+                "*:input type:(_ __key__ __exact__ __fuzzy__ __phonetic__)"
             ;;
         *)
             _arguments \
