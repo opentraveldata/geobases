@@ -279,6 +279,10 @@ class GeoBase(object):
         if data in BASES:
             conf = BASES[data]
 
+            # The configuration may be empty
+            if conf is None:
+                conf = {}
+
             # File configuration overrides defaults
             for option in conf:
                 if option in allowed_conf:
