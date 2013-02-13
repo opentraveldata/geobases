@@ -12,11 +12,11 @@ _fields() {
     case "$base" in<% CONFIG.each do |source, config| %>
     <%= source %>)
         _arguments \
-            "*:$help for <%= source %>:(<%= config['headers'].join(' ') %>)"
+            "*:$help for <%= source %>:(<%= (['_'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= CONFIG['ori_por']['headers'].join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_'] + CONFIG['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
