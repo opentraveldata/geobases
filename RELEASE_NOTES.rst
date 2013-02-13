@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + -I is now slightly different: default is exact search on a default field (no longer key search, use __key__ for that)
  + clever autocomplete for zsh
  + new GeoBase.fuzzyClean and GeoBase.phonemes static methods
  + possiblity to draw on the map things that are not in the GeoBase
