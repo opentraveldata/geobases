@@ -12,11 +12,11 @@ _headers() {
     case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
-            "*:$help for <%= source %>:(<%= (['_'] + config['headers']).join(' ') %>)"
+            "*:$help for <%= source %>:(<%= (['_', '__head__'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_'] + SOURCES['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_', '__head__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
