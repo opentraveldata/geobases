@@ -28,7 +28,7 @@ SOURCES.each do |source, config|
 end
 
 SOURCES.each do |source, config|
-    headers = ['__key__', '__dup__', '__dad__', '__lno__']
+    headers = ['__key__', '__dup__', '__dad__', '__lno__', '__gar__']
 
     config['headers'].each do |h|
         headers << h
@@ -36,7 +36,6 @@ SOURCES.each do |source, config|
             headers << h + '@raw'
         end
     end
-    headers << '__gar__'
     config['headers'] = headers
 end
 
