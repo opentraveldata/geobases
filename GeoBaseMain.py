@@ -1254,15 +1254,15 @@ def main():
         after_init = datetime.now()
 
     # Tuning parameters
-    if args['exact_property'] is None:
+    if args['exact_property'] is None or args['exact_property'] == SKIP:
         args['exact_property'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
     exact_properties = args['exact_property'].split(SPLIT)
 
-    if args['fuzzy_property'] is None:
+    if args['fuzzy_property'] is None or args['fuzzy_property'] == SKIP:
         args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
-    if args['phonetic_property'] is None:
+    if args['phonetic_property'] is None or args['phonetic_property'] == SKIP:
         args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
     # Reading map options
