@@ -22,11 +22,13 @@ ASSET_FILES = {
 
 # Config enhancements
 SOURCES.each do |source, config|
-    headers = ['__key__', '__dup__', '__dad__', '__lno__']
-
     if config.nil? or config['headers'].nil?
-        config = { 'headers' => headers }
+        SOURCES[source] = { 'headers' => [] }
     end
+end
+
+SOURCES.each do |source, config|
+    headers = ['__key__', '__dup__', '__dad__', '__lno__']
 
     config['headers'].each do |h|
         headers << h
