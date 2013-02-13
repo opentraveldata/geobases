@@ -9,14 +9,14 @@ _fields() {
     local base="$1"
     local help="$2"
 
-    case "$base" in<% CONFIG.each do |source, config| %>
+    case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
             "*:$help for <%= source %>:(<%= (['_'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_'] + CONFIG['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
@@ -27,14 +27,14 @@ _fields_extended() {
     local base="$1"
     local help="$2"
 
-    case "$base" in<% CONFIG.each do |source, config| %>
+    case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
             "*:$help for <%= source %>:(<%= (['_', '__none__'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_', '__none__'] + CONFIG['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_', '__none__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
@@ -108,7 +108,7 @@ _hello() {
     case $state in
     base)
         _arguments \
-            "*:base:(<%= CONFIG.keys.sort.join(' ') %>)"
+            "*:base:(<%= SOURCES.keys.sort.join(' ') %>)"
         ;;
     fuzzy_value|exact_value|phonetic_value|trep_value|near_point|from_point)
         _arguments \

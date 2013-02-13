@@ -5,36 +5,36 @@ require 'pathname'
 
 ROOT_PATH = File.expand_path File.dirname(__FILE__)
 
-CONFIG_FILE_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
+SOURCES_FILE_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
 
 BUILD_PATH = File.join ROOT_PATH, '.'
 ASSETS_PATH = File.join ROOT_PATH, '.'
 
 # Read YAML configuration
-#File.open(CONFIG_FILE_PATH) { |f| YAML.load f }.each do |param, val|
+#File.open(SOURCES_FILE_PATH) { |f| YAML.load f }.each do |param, val|
 #  Object.const_set "CONF_#{param.upcase}", val
 #end
-CONFIG = YAML.load File.open(CONFIG_FILE_PATH)
+SOURCES = YAML.load File.open(SOURCES_FILE_PATH)
 
 ASSET_FILES = {
   '_GeoBase.erb' => '_GeoBase'
 }
 
 # Config enhancements
-CONFIG.each do |base, config|
+SOURCES.each do |source, config|
     headers = ['__key__', '__dup__', '__dad__', '__lno__']
+
+    if config.nil? or config['headers'].nil?
+        config = { 'headers' => headers }
+    end
+
     config['headers'].each do |h|
         headers << h
-        if not config['subdelimiters'].nil?
-            if config['subdelimiters'].has_key?(h)
-                if not config['subdelimiters'][h].nil?
-                    headers << h + '@raw'
-                end
-            end
+        if not config['subdelimiters'].nil? and not config['subdelimiters'][h].nil?
+            headers << h + '@raw'
         end
     end
     headers << '__gar__'
-
     config['headers'] = headers
 end
 
