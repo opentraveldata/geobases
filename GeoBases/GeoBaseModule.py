@@ -92,9 +92,9 @@ def relative(rel_path, root_file=__file__):
 
 
 # Path to global configuration
-PATH_CONF = relative('DataSources/Sources.yaml')
+SOURCES_PATH = relative('DataSources/Sources.yaml')
 
-with open(PATH_CONF) as fl:
+with open(SOURCES_PATH) as fl:
     SOURCES = yaml.load(fl)
 
 # Special fields for latitude and longitude recognition
@@ -400,7 +400,7 @@ class GeoBase(object):
             paths = []
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
-                    paths.append(relative(path, root_file=PATH_CONF))
+                    paths.append(relative(path, root_file=SOURCES_PATH))
                 else:
                     paths.append(path)
 
