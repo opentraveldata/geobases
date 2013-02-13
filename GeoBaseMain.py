@@ -23,6 +23,7 @@ import SocketServer
 from termcolor import colored
 import colorama
 import argparse # in standard libraray for Python >= 2.7
+import yaml
 
 # Private
 from GeoBases import GeoBase, SOURCES, SOURCES_PATH
@@ -576,6 +577,35 @@ def best_field(candidates, possibilities, default=None):
         if candidate in possibilities:
             return candidate
     return default
+
+
+
+def tip_permanent(file_path, options):
+    """Display help on how to make a data source permanent.
+    """
+    print '* You can make this data source permanent!'
+    print '* Add that to the file %s' % file_path
+
+    # Source is not allowed in configuration, replaced by paths/local
+    if 'source' in options:
+        del options['source']
+
+    # No need to bore
+    if 'verbose' in options:
+        del options['verbose']
+
+    # Make template for data source
+    options['paths'] = '<INSERT_ABSOLUTE_FILE_PATH>'
+    options['local'] = False
+
+    print
+    print '================ BEGIN ===============\n'
+
+    print yaml.dump({
+        '<INSERT_SOURCE_NAME>' : options
+    })
+    print '================  END  ===============\n'
+
 
 
 def warn(name, *args):
@@ -1226,6 +1256,9 @@ def main():
         }
 
         g = GeoBase(data='feed', **options)
+
+        if logorrhea:
+            tip_permanent(SOURCES_PATH, options)
 
     else:
         # -i options overrides default
