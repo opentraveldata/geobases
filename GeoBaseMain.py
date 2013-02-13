@@ -25,7 +25,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase, BASES
+from GeoBases import GeoBase, SOURCES
 
 IS_WINDOWS = platform.system() in ('Windows',)
 
@@ -1152,8 +1152,8 @@ def main():
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
         exit(0)
 
-    if args['base'] not in BASES:
-        error('data', args['base'], sorted(BASES.keys()))
+    if args['base'] not in SOURCES:
+        error('data', args['base'], sorted(SOURCES.keys()))
 
     # Updating file
     if args['update']:

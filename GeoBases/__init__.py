@@ -6,7 +6,7 @@ This is the GeoBase module.
 '''
 
 # Extracting from GeoBaseModule
-from .GeoBaseModule import GeoBase, BASES
+from .GeoBaseModule import GeoBase, SOURCES
 
 # We only export the main class
-__all__ = ['GeoBase', 'BASES']
+__all__ = ['GeoBase', 'SOURCES']

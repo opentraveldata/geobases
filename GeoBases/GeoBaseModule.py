@@ -95,7 +95,7 @@ def relative(rel_path, root_file=__file__):
 PATH_CONF = relative('DataSources/Sources.yaml')
 
 with open(PATH_CONF) as fl:
-    BASES = yaml.load(fl)
+    SOURCES = yaml.load(fl)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -159,7 +159,7 @@ ASSETS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase', 'BASES']
+__all__ = ['GeoBase', 'SOURCES']
 
 
 class GeoBase(object):
@@ -276,8 +276,8 @@ class GeoBase(object):
         allowed_conf = set(props.keys()) - set(['source'])
         allowed_args = set(props.keys()) - set(['paths', 'local'])
 
-        if data in BASES:
-            conf = BASES[data]
+        if data in SOURCES:
+            conf = SOURCES[data]
 
             # The configuration may be empty
             if conf is None:
@@ -291,7 +291,7 @@ class GeoBase(object):
                     raise ValueError('Option "%s" for data "%s" not understood in file.' % (option, data))
 
         else:
-            raise ValueError('Wrong data type. Not in %s' % sorted(BASES.keys()))
+            raise ValueError('Wrong data type. Not in %s' % sorted(SOURCES.keys()))
 
         # User input overrides default configuration
         # or file configuration
