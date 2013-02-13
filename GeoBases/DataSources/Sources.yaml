@@ -22,9 +22,9 @@ airports:
 
 countries:
     paths     : [
-        /thing/that/does/not/exist,
-        'http://download.geonames.org/export/dump/countryInfo.txt',
+        #/thing/that/does/not/exist,
         Countries/countryInfo.txt,
+        'http://download.geonames.org/export/dump/countryInfo.txt',
     ]
     key_fields: code
     delimiter : "\t"
