@@ -4,6 +4,42 @@
 DELIMITERS="(_ ',' '^' ';')"
 
 
+_headers() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in<% SOURCES.each do |source, config| %>
+    <%= source %>)
+        _arguments \
+            "*:$help for <%= source %>:(<%= (['_'] + config['headers']).join(' ') %>)"
+        ;;<% end %>
+    *)
+        _arguments \
+            "*:$help for ori_por:(<%= (['_'] + SOURCES['ori_por']['headers']).join(' ') %>)"
+        ;;
+    esac
+}
+
+
+_headers_extended() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in<% SOURCES.each do |source, config| %>
+    <%= source %>)
+        _arguments \
+            "*:$help for <%= source %>:(<%= (['_', '__none__'] + config['headers']).join(' ') %>)"
+        ;;<% end %>
+    *)
+        _arguments \
+            "*:$help for ori_por:(<%= (['_', '__none__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
+        ;;
+    esac
+}
+
+
 _fields() {
 
     local base="$1"
@@ -148,10 +184,10 @@ _hello() {
                 "*:delimiter:$DELIMITERS"
             ;;
         1)
-            _fields "$base" "headers"
+            _headers "$base" "headers"
             ;;
         2)
-            _fields_extended "$base" "key_fields"
+            _headers_extended "$base" "key_fields"
             ;;
         3)
             _arguments \
