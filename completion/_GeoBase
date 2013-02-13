@@ -1,7 +1,7 @@
 #compdef GeoBase
 
 # Examples for delimiters
-DELIMITERS="(',' '^' ';' _)"
+DELIMITERS="(_ ',' '^' ';')"
 
 
 _fields() {
@@ -347,7 +347,7 @@ _hello() {
             ;;
         3)
             _arguments \
-                "*:discard duplicates:(Y N _)"
+                "*:discard duplicates:(_ Y N)"
             ;;
         4)
             _fields_extended "$base" "indices"
@@ -365,7 +365,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:input type:(__exact__ __fuzzy__ __phonetic__ _)"
+                "*:input type:(_ __exact__ __fuzzy__ __phonetic__)"
             ;;
         *)
             _arguments \
@@ -381,7 +381,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:header type:(RH CH N _)"
+                "*:header type:(_ RH CH N)"
             ;;
         *)
             _arguments \
@@ -402,11 +402,11 @@ _hello() {
             ;;
         3)
             _arguments \
-                "*:icon:(B S auto __none__ _)"
+                "*:icon:(_ B S auto __none__)"
             ;;
         4)
             _arguments \
-                "*:link duplicates:(Y N _)"
+                "*:link duplicates:(_ Y N)"
             ;;
         *)
             _arguments \
