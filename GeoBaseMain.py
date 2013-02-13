@@ -1378,7 +1378,7 @@ def main():
         if not stdin.isatty() and interactive_query_mode:
             print 'Looking for matches from stdin query: %s search %s' % \
                     (interactive_type,
-                     'on %s...' % interactive_field if interactive_type != '__key__' else '')
+                     '' if interactive_type == '__key__' else 'on %s...' % interactive_field)
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
         else:
