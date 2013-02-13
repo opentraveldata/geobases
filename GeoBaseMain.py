@@ -25,7 +25,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase, SOURCES
+from GeoBases import GeoBase, SOURCES, SOURCES_PATH
 
 IS_WINDOWS = platform.system() in ('Windows',)
 

@@ -159,7 +159,7 @@ ASSETS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase', 'SOURCES']
+__all__ = ['GeoBase', 'SOURCES', 'SOURCES_PATH']
 
 
 class GeoBase(object):
