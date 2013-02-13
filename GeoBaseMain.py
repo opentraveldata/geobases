@@ -658,11 +658,11 @@ DEF_OMIT_FIELDS     = []
 FORCE_STR = False
 
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
-ALLOWED_INTER_TYPES      = ('__exact__', '__fuzzy__', '__phonetic__')
+ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 
-DEF_INTER_FIELD = '__key__'
-DEF_INTER_TYPE  = '__exact__'
+DEF_INTER_FIELDS = ('iata_code', '__key__')
+DEF_INTER_TYPE   = '__exact__'
 
 # Considered truthy values for command line option
 TRUTHY = ('1', 'Y')
@@ -978,18 +978,19 @@ def handle_args():
         It will read values line by line, and perform a search on them.
         2 optional arguments: field, type.
             1) field is the field from which the data is supposed to be.
-               Default is %s.
+               Default is %s depending on fields.
             2) type is the type of matching, either
                %s.
-               Default is %s.
+               Default is "%s".
+               __key__ type means we will perform a direct key access.
                For fuzzy searches, default ratio is set to %s,
                but can be changed with --fuzzy-limit.
                For phonetic searches, default method is %s,
                but can be changed with --phonetic-method.
         For any field, you may put "%s" to leave the default value.
         Example: -I icao_code __fuzzy__
-        ''' % (DEF_INTER_FIELD, fmt_or(ALLOWED_INTER_TYPES), DEF_INTER_TYPE,
-               DEF_FUZZY_LIMIT, DEF_PHONETIC_METHOD, SKIP)),
+        ''' % (fmt_or(DEF_INTER_FIELDS), fmt_or(ALLOWED_INTER_TYPES),
+               DEF_INTER_TYPE, DEF_FUZZY_LIMIT, DEF_PHONETIC_METHOD, SKIP)),
         nargs = '*',
         metavar = 'OPTION',
         default = None)
@@ -1298,7 +1299,7 @@ def main():
         header_display = args['quiet_options'][1]
 
     # Reading interactive query options
-    interactive_field = DEF_INTER_FIELD
+    interactive_field = best_field(DEF_INTER_FIELDS, g.fields)
     interactive_type  = DEF_INTER_TYPE
 
     if interactive_query_mode:
@@ -1375,8 +1376,9 @@ def main():
     #
     if verbose:
         if not stdin.isatty() and interactive_query_mode:
-            print 'Looking for matches from stdin query: %s search on %s...' % \
-                    (interactive_type, interactive_field)
+            print 'Looking for matches from stdin query: %s search %s' % \
+                    (interactive_type,
+                     'on %s...' % interactive_field if interactive_type != '__key__' else '')
         elif args['keys']:
             print 'Looking for matches from %s...' % ', '.join(args['keys'])
         else:
@@ -1393,24 +1395,25 @@ def main():
     if not stdin.isatty() and interactive_query_mode:
         values = [row.strip() for row in stdin]
         # Query type
-        if interactive_type == '__exact__':
-            if interactive_field == '__key__':
-                res = enumerate(values)
-            else:
-                if not g.hasIndexOn(interactive_field):
-                    print 'No index on %s, indexing now...' % interactive_field
-                    g.addIndex(interactive_field, verbose=logorrhea)
+        if interactive_type == '__key__':
+            res = enumerate(values)
+            last = None
 
-                res = []
-                for val in values:
-                    conditions = [(interactive_field, val)]
-                    res.extend(list(g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)))
+        elif interactive_type == '__exact__':
+            if not g.hasIndexOn(interactive_field):
+                print 'No index on %s, indexing now...' % interactive_field
+                g.addIndex(interactive_field, verbose=logorrhea)
 
-                # Other way to do it by putting all lines in one *or* condition
-                # But for over 1000 lines, this becomes slower than querying each line
-                #conditions = [(interactive_field, val) for val in values]
-                #res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
-                last = 'exact'
+            res = []
+            for val in values:
+                conditions = [(interactive_field, val)]
+                res.extend(list(g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)))
+
+            # Other way to do it by putting all lines in one *or* condition
+            # But for over 1000 lines, this becomes slower than querying each line
+            #conditions = [(interactive_field, val) for val in values]
+            #res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
+            last = 'exact'
 
         elif interactive_type == '__fuzzy__':
             res = []
