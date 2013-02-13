@@ -10,6 +10,10 @@ _fields() {
     local help="$2"
 
     case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __key__ __dup__ __dad__ __lno__ __gar__)"
+        ;;
     airports)
         _arguments \
             "*:$help for airports:(_ __key__ __dup__ __dad__ __lno__ iata_code name city_code country_code country_name lat lng __gar__)"
@@ -120,6 +124,10 @@ _fields_extended() {
     local help="$2"
 
     case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __none__ __key__ __dup__ __dad__ __lno__ __gar__)"
+        ;;
     airports)
         _arguments \
             "*:$help for airports:(_ __none__ __key__ __dup__ __dad__ __lno__ iata_code name city_code country_code country_name lat lng __gar__)"
@@ -292,7 +300,7 @@ _hello() {
     case $state in
     base)
         _arguments \
-            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
+            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
         ;;
     fuzzy_value|exact_value|phonetic_value|trep_value|near_point|from_point)
         _arguments \

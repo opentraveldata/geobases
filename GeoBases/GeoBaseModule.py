@@ -286,9 +286,6 @@ class GeoBase(object):
                 else:
                     raise ValueError('Option "%s" for data "%s" not understood in file.' % (option, data))
 
-        elif data == 'feed':
-            # User input defining everything
-            pass
         else:
             raise ValueError('Wrong data type. Not in %s' % sorted(BASES.keys()))
 

@@ -2,6 +2,10 @@
 # Sources description
 #
 
+# That one is completely empty on purpose
+feed:
+
+
 airports:
     paths     : Airports/GeoNames/airports_geonames_only_clean.csv
     key_fields: iata_code
