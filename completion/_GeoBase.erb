@@ -155,7 +155,7 @@ _hello() {
             ;;
         3)
             _arguments \
-                "*:discard duplicates:(_ Y N)"
+                "*:discard duplicates:(Y N _)"
             ;;
         4)
             _fields_extended "$base" "indices"
@@ -173,7 +173,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:input type:(_ __exact__ __fuzzy__ __phonetic__)"
+                "*:input type:(__exact__ __fuzzy__ __phonetic__ _)"
             ;;
         *)
             _arguments \
@@ -189,7 +189,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:header type:(_ RH CH N)"
+                "*:header type:(RH CH N _)"
             ;;
         *)
             _arguments \
