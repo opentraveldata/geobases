@@ -64,22 +64,22 @@ _hello() {
 
     _arguments \
      "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]: :->base" \
-     "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:*: :->fuzzy_value" \
+     "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]: :->fuzzy_value" \
      "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]: :->fuzzy_property" \
      "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.85" (this is a percentage)]: :->fuzzy_limit" \
-     "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-property field. Default property is \"name\"]:*: :->phonetic_value" \
+     "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-property field. Default property is \"name\"]: :->phonetic_value" \
      "(-P --phonetic-property)"{-P,--phonetic-property}"[Specify a property for phonetic searches]: :->phonetic_property" \
      "(-y --phonetic-method)"{-y,--phonetic-method}"[Change phonetic matching method]: :->phonetic_method" \
-     "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*: :->exact_value" \
+     "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]: :->exact_value" \
      "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*: :->exact_property" \
      "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
      "(-A --any)"{-A,--any}"[Change *and* behavior to *or* behavior for multiple --exact]" \
-     "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]:*: :->near_point" \
+     "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]: :->near_point" \
      "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]: :->near_limit_km" \
-     "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:*: :->from_point" \
+     "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]: :->from_point" \
      "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]: :->closest_limit_nb" \
      "(-w --without-grid)"{-w,--without-grid}"[Disable grid for geographical searches]" \
-     "(-t --trep)"{-t,--trep}"[OpenTrep mode]:*: :->trep_value" \
+     "(-t --trep)"{-t,--trep}"[OpenTrep mode]: :->trep_value" \
      "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]: :->trep_format" \
      "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
      "(-s --show)"{-s,--show}"[Only display some fields in output]:*: :->show" \
