@@ -1215,14 +1215,18 @@ def main():
                      discard_dups_r,
                      SPLIT.join(indices[0]) if indices else DISABLE)
 
-        g = GeoBase(data='feed',
-                    source=source,
-                    delimiter=delimiter,
-                    headers=headers,
-                    key_fields=key_fields,
-                    discard_dups=discard_dups,
-                    indices=indices,
-                    verbose=logorrhea)
+        options = {
+            'source'       : source,
+            'delimiter'    : delimiter,
+            'headers'      : headers,
+            'key_fields'   : key_fields,
+            'discard_dups' : discard_dups,
+            'indices'      : indices,
+            'verbose'      : logorrhea
+        }
+
+        g = GeoBase(data='feed', **options)
+
     else:
         # -i options overrides default
         add_options = {}
