@@ -28,7 +28,7 @@ SOURCES.each do |data, config|
 end
 
 SOURCES.each do |data, config|
-    headers = ['__key__', '__lno__']
+    headers = []
 
     config['headers'].each do |h|
         headers << h

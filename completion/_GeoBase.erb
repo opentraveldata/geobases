@@ -12,11 +12,11 @@ _fields() {
     case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
-            "*:$help for <%= source %>:(<%= (['_'] + config['headers']).join(' ') %>)"
+            "*:$help for <%= source %>:(<%= (['_', '__key__', '__lno__'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_'] + SOURCES['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_', '__key__', '__lno__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
@@ -30,11 +30,11 @@ _fields_extended() {
     case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
-            "*:$help for <%= source %>:(<%= (['_', '__none__'] + config['headers']).join(' ') %>)"
+            "*:$help for <%= source %>:(<%= (['_', '__none__', '__key__', '__lno__'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_', '__none__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_', '__none__', '__key__', '__lno__'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }
