@@ -22,7 +22,7 @@ _headers() {
 }
 
 
-_headers_extended() {
+_key_fields() {
 
     local base="$1"
     local help="$2"
@@ -187,7 +187,7 @@ _hello() {
             _headers "$base" "headers"
             ;;
         2)
-            _headers_extended "$base" "key_fields"
+            _key_fields "$base" "key_fields"
             ;;
         3)
             _arguments \
