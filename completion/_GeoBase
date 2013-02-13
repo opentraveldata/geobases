@@ -12,7 +12,7 @@ _headers() {
     case "$base" in
     feed)
         _arguments \
-            "*:$help for feed:(_)"
+            "*:$help for feed:(_ H0 H1 H2 H3)"
         ;;
     airports)
         _arguments \
@@ -126,7 +126,7 @@ _headers_extended() {
     case "$base" in
     feed)
         _arguments \
-            "*:$help for feed:(_ __none__)"
+            "*:$help for feed:(_ __none__ H0 H1 H2 H3)"
         ;;
     airports)
         _arguments \
@@ -240,7 +240,7 @@ _fields() {
     case "$base" in
     feed)
         _arguments \
-            "*:$help for feed:(_ __key__ __lno__)"
+            "*:$help for feed:(_ __key__ __lno__ H0 H1 H2 H3)"
         ;;
     airports)
         _arguments \
@@ -354,7 +354,7 @@ _fields_extended() {
     case "$base" in
     feed)
         _arguments \
-            "*:$help for feed:(_ __none__ __key__ __lno__)"
+            "*:$help for feed:(_ __none__ __key__ __lno__ H0 H1 H2 H3)"
         ;;
     airports)
         _arguments \

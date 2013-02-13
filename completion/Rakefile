@@ -40,6 +40,8 @@ SOURCES.each do |data, config|
     config['headers'] = headers
 end
 
+# Special autocomplete for feed
+SOURCES['feed']['headers'] = ['H0', 'H1', 'H2', 'H3']
 
 namespace :build do
 
