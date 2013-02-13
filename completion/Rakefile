@@ -32,7 +32,8 @@ SOURCES.each do |data, config|
 
     config['headers'].each do |h|
         headers << h
-        if not config['subdelimiters'].nil? and not config['subdelimiters'][h].nil?
+        if not config['subdelimiters'].nil? and
+           not config['subdelimiters'][h].nil?
             headers << h + '@raw'
         end
     end
