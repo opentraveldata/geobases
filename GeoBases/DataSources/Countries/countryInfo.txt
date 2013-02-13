@@ -57,7 +57,7 @@ AI	AIA	660	AV	Anguilla	The Valley	102	13254	NA	.ai	XCD	Dollar	+1-264			en-AI	357
 AL	ALB	008	AL	Albania	Tirana	28748	2986952	EU	.al	ALL	Lek	355			sq,el	783754	MK,GR,CS,ME,RS,XK	
 AM	ARM	051	AM	Armenia	Yerevan	29800	2968000	AS	.am	AMD	Dram	374	######	^(\d{6})$	hy	174982	GE,IR,AZ,TR	
 AO	AGO	024	AO	Angola	Luanda	1246700	13068161	AF	.ao	AOA	Kwanza	244			pt-AO	3351879	CD,NA,ZM,CG	
-AQ	ATA	010	AY	Antarctica		1.40E+007	0	AN	.aq							6697173		
+AQ	ATA	010	AY	Antarctica		14000000	0	AN	.aq							6697173		
 AR	ARG	032	AR	Argentina	Buenos Aires	2766890	41343201	SA	.ar	ARS	Peso	54	@####@@@	^([A-Z]\d{4}[A-Z]{3})$	es-AR,en,it,de,fr,gn	3865483	CL,BO,UY,PY,BR	
 AS	ASM	016	AQ	American Samoa	Pago Pago	199	57881	OC	.as	USD	Dollar	+1-684			en-AS,sm,to	5880801		
 AT	AUT	040	AU	Austria	Vienna	83858	8205000	EU	.at	EUR	Euro	43	####	^(\d{4})$	de-AT,hr,hu,sl	2782113	CH,DE,HU,SK,CZ,IT,SI,LI	
@@ -240,7 +240,7 @@ QA	QAT	634	QA	Qatar	Doha	11437	840926	AS	.qa	QAR	Rial	974			ar-QA,es	289688	SA
 RE	REU	638	RE	Reunion	Saint-Denis	2517	776948	AF	.re	EUR	Euro	262	#####	^((97|98)(4|7|8)\d{2})$	fr-RE	935317		
 RO	ROU	642	RO	Romania	Bucharest	237500	21959278	EU	.ro	RON	Leu	40	######	^(\d{6})$	ro,hu,rom	798549	MD,HU,UA,CS,BG,RS	
 RS	SRB	688	RI	Serbia	Belgrade	88361	7344847	EU	.rs	RSD	Dinar	381	######	^(\d{6})$	sr,hu,bs,rom	6290252	AL,HU,MK,RO,HR,BA,BG,ME,XK	
-RU	RUS	643	RS	Russia	Moscow	1.71E+007	140702000	EU	.ru	RUB	Ruble	7	######	^(\d{6})$	ru,tt,xal,cau,ady,kv,ce,tyv,cv,udm,tut,mns,bua,myv,mdf,chm,ba,inh,tut,kbd,krc,ava,sah,nog	2017370	GE,CN,BY,UA,KZ,LV,PL,EE,LT,FI,MN,NO,AZ,KP	
+RU	RUS	643	RS	Russia	Moscow	17100000	140702000	EU	.ru	RUB	Ruble	7	######	^(\d{6})$	ru,tt,xal,cau,ady,kv,ce,tyv,cv,udm,tut,mns,bua,myv,mdf,chm,ba,inh,tut,kbd,krc,ava,sah,nog	2017370	GE,CN,BY,UA,KZ,LV,PL,EE,LT,FI,MN,NO,AZ,KP	
 RW	RWA	646	RW	Rwanda	Kigali	26338	11055976	AF	.rw	RWF	Franc	250			rw,en-RW,fr-RW,sw	49518	TZ,CD,BI,UG	
 SA	SAU	682	SA	Saudi Arabia	Riyadh	1960582	25731776	AS	.sa	SAR	Rial	966	#####	^(\d{5})$	ar-SA	102358	QA,OM,IQ,YE,JO,AE,KW	
 SB	SLB	090	BP	Solomon Islands	Honiara	28450	559198	OC	.sb	SBD	Dollar	677			en-SB,tpi	2103350		
