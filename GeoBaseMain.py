@@ -583,28 +583,33 @@ def best_field(candidates, possibilities, default=None):
 def tip_permanent(file_path, options):
     """Display help on how to make a data source permanent.
     """
-    print '* You can make this data source permanent!'
-    print '* Add that to the file %s' % file_path
+    conf = {
+        'paths' : '<INSERT_ABSOLUTE_FILE_PATH>',
+        'local' : False
+    }
 
-    # Source is not allowed in configuration, replaced by paths/local
-    if 'source' in options:
-        del options['source']
-
-    # No need to bore
-    if 'verbose' in options:
-        del options['verbose']
-
-    # Make template for data source
-    options['paths'] = '<INSERT_ABSOLUTE_FILE_PATH>'
-    options['local'] = False
+    for option, value in options.iteritems():
+        # Source is not allowed in configuration, replaced by paths/local
+        if option not in ('source', 'verbose'):
+            conf[option] = value
 
     print
-    print '================ BEGIN ===============\n'
-
+    print '* You can make this data source permanent!'
+    print '* Just edit the file %s with:' % file_path
+    print
+    print '$ cat >> %s << EOF' % file_path
+    print '# ================ BEGIN ==============='
+    print
     print yaml.dump({
-        '<INSERT_SOURCE_NAME>' : options
-    })
-    print '================  END  ===============\n'
+        '<INSERT_ANY_NAME>' : conf
+    }, indent=4, default_flow_style=None)
+
+    print '# ================  END  ==============='
+    print 'EOF'
+    print
+    print '* Do not forget to replace the placeholders <INSERT_...>!'
+    print '$ vim %s' % file_path
+    print
 
 
 
@@ -1055,7 +1060,11 @@ def handle_args():
         help = dedent('''\
         This is the map output.
         Configure with --map-options.
-        '''),
+        HTML/Javascript/JSON files are generated.
+        Unless --quiet is also set, a browser will be launched
+        and a simple HTTP server will serve the HTML results
+        on %s:%s.
+        ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
     parser.add_argument('-M', '--map-options',
@@ -1089,8 +1098,11 @@ def handle_args():
 
     parser.add_argument('-v', '--verbose',
         help = dedent('''\
-        Provides additional information during data loading
-        and queries.
+        Provides additional informations:
+            * warnings during data loading and queries
+            * timing information for profiling
+            * hints on how to make a data source permanent
+            * probably other things
         '''),
         action = 'store_true')
 
