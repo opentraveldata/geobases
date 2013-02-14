@@ -824,7 +824,16 @@ def handle_args():
     parser = argparse.ArgumentParser(description='Provides data services.',
                                      formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.epilog = 'Example: %s ORY CDG' % parser.prog
+    parser.epilog = dedent('''Some command line examples:
+
+    $ GeoBase ORY CDG                    # query on the keys ORY and CDG
+    $ GeoBase --closest CDG              # find closest from CDG
+    $ GeoBase --near '48.853, 2.348'     # find near some geocode
+    $ GeoBase --fuzzy "san francisko"    # fuzzy search, with typo ;)
+    $ GeoBase --help                     # your best friend
+    $ cat data.csv | GeoBase             # with your data
+
+    %s''' % tip_sources(SOURCES_PATH, SOURCES))
 
     parser.add_argument('keys',
         help = dedent('''\
