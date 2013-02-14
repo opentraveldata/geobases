@@ -580,6 +580,37 @@ def best_field(candidates, possibilities, default=None):
 
 
 
+def tip_sources(sources_path, sources):
+    """Display informations on available sources.
+    """
+    fmt_keys  = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
+    fmt_paths = lambda l: str(l) if isinstance(l, str) else ' *failover on* '.join(l)
+
+    missing = '<none>'
+    tip = [dedent('''
+    ******* Available data sources from
+    *
+    * %s
+    *\
+    ''' % sources_path)]
+
+    tip.append('-' * 80)
+    tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS'))
+    tip.append('-' * 80)
+
+    for data in sorted(sources.keys()):
+        config = sources[data]
+
+        if config is not None:
+            keys  = config.get('key_fields', missing)
+            paths = config.get('paths', missing)
+        else:
+            keys, paths = missing, missing
+
+        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), fmt_paths(paths)))
+
+    return '\n'.join(tip)
+
 def tip_permanent(file_path, options):
     """Display help on how to make a data source permanent.
     """
