@@ -611,7 +611,8 @@ def tip_sources(sources_path, sources):
 
     return '\n'.join(tip)
 
-def tip_permanent(file_path, options):
+
+def tip_permanent_add(sources_path, options):
     """Display help on how to make a data source permanent.
     """
     conf = {
@@ -626,9 +627,9 @@ def tip_permanent(file_path, options):
 
     print
     print '* You can make this data source permanent!'
-    print '* Just edit the file %s with:' % file_path
+    print '* Edit %s with:' % sources_path
     print
-    print '$ cat >> %s << EOF' % file_path
+    print '$ cat >> %s << EOF' % sources_path
     print '# ================ BEGIN ==============='
     print
     print yaml.dump({
@@ -638,8 +639,8 @@ def tip_permanent(file_path, options):
     print '# ================  END  ==============='
     print 'EOF'
     print
-    print '* Do not forget to replace the placeholders <INSERT_...>!'
-    print '$ vim %s' % file_path
+    print '* Replace the placeholders <INSERT_...> with:'
+    print '$ vim %s' % sources_path
     print
 
 
@@ -1301,7 +1302,7 @@ def main():
         g = GeoBase(data='feed', **options)
 
         if logorrhea:
-            tip_permanent(SOURCES_PATH, options)
+            tip_permanent_add(SOURCES_PATH, options)
 
     else:
         # -i options overrides default
