@@ -588,8 +588,8 @@ def build_help_sources(sources, sources_conf_path, sources_dir):
 
     missing = '<none>'
     tip = [dedent('''
-    *** Data sources from %s [%s]
-    *\
+    * Data sources from %s
+    * Configured with %s
     ''' % (sources_dir, op.basename(sources_conf_path)))]
 
     tip.append('-' * 80)
@@ -716,14 +716,14 @@ def error(name, *args):
 PACKAGE_NAME = 'GeoBasesDev'
 DESCRIPTION  = 'Data services and visualization'
 CONTACT_INFO = '''
-Report bugs to     : geobases.dev@gmail.com'
-GeoBases home page : <http://opentraveldata.github.com/geobases/>'
-API documentation  : <https://geobases.readthedocs.org/>'
-Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>'
+Report bugs to     : geobases.dev@gmail.com
+GeoBases home page : <http://opentraveldata.github.com/geobases/>
+API documentation  : <https://geobases.readthedocs.org/>
+Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
 HELP_SOURCES = build_help_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR)
 CLI_EXAMPLES = '''
-*** Command line examples
+* Command line examples
 
  $ GeoBase ORY CDG                    # query on the keys ORY and CDG
  $ GeoBase --closest CDG              # find closest from CDG
