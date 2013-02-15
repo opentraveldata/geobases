@@ -699,7 +699,7 @@ class GeoBase(object):
 
             if is_over_limit(lno):
                 if verbose:
-                    print 'Over limit %s of lines loaded, stopping.' % limit
+                    print 'Over limit %s for loaded lines, stopping.' % limit
                 break
 
             try:
