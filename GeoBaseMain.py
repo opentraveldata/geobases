@@ -585,7 +585,6 @@ def tip_sources(sources, sources_conf_path, sources_dir):
     """Display informations on available sources.
     """
     fmt_keys  = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
-    fmt_paths = lambda l: str(l) if isinstance(l, str) else ' *failover on* '.join(l)
 
     missing = '<none>'
     tip = [dedent('''
@@ -594,7 +593,7 @@ def tip_sources(sources, sources_conf_path, sources_dir):
     ''' % (sources_dir, op.basename(sources_conf_path)))]
 
     tip.append('-' * 80)
-    tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS'))
+    tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT + FAILOVERS)'))
     tip.append('-' * 80)
 
     for data in sorted(sources.keys()):
@@ -606,7 +605,13 @@ def tip_sources(sources, sources_conf_path, sources_dir):
         else:
             keys, paths = missing, missing
 
-        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), fmt_paths(paths)))
+        if isinstance(paths, str):
+            paths = [paths]
+
+        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), '.) %s' % paths[0]))
+
+        for n_path in enumerate(paths[1:], start=1):
+            tip.append('%-20s | %-25s | %s' % ('-', '-', '%s) %s' % n_path))
 
     tip.append('-' * 80)
 
