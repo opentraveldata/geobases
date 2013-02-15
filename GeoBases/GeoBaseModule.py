@@ -681,7 +681,8 @@ class GeoBase(object):
 
             if in_skipped_zone(lno):
                 if verbose:
-                    print 'In skipped zone, dropping line %s.' % lno
+                    print 'In skipped zone, dropping line %s: "%s...".' % \
+                            (lno, row[0])
                 continue
 
             if over_limit(lno):
