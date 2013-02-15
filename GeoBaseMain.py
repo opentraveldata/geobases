@@ -613,17 +613,6 @@ def tip_sources(sources, sources_conf_path, sources_dir):
     return '\n'.join(tip)
 
 
-def tip_contact():
-    """Display contact information.
-    """
-    return dedent('''
-    Report bugs to     : geobases.dev@gmail.com'
-    GeoBases home page : <http://opentraveldata.github.com/geobases/>'
-    API documentation  : <https://geobases.readthedocs.org/>'
-    Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>'
-    ''')
-
-
 def help_permanent_add(sources_conf_path, options):
     """Display help on how to make a data source permanent.
     """
@@ -719,7 +708,25 @@ def error(name, *args):
 #######
 
 # Global defaults
-PACKAGE_NAME = "GeoBasesDev"
+PACKAGE_NAME = 'GeoBasesDev'
+DESCRIPTION  = 'Data services and visualization'
+CONTACT_INFO = '''
+Report bugs to     : geobases.dev@gmail.com'
+GeoBases home page : <http://opentraveldata.github.com/geobases/>'
+API documentation  : <https://geobases.readthedocs.org/>'
+Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>'
+'''
+
+EXAMPLES = '''
+*** Some command line examples:
+
+ $ GeoBase ORY CDG                    # query on the keys ORY and CDG
+ $ GeoBase --closest CDG              # find closest from CDG
+ $ GeoBase --near '48.853, 2.348'     # find near some geocode
+ $ GeoBase --fuzzy "san francisko"    # fuzzy search, with typo ;)
+ $ GeoBase --help                     # your best friend
+ $ cat data.csv | GeoBase             # with your data
+'''
 
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
@@ -833,20 +840,12 @@ def handle_args():
     # or list formatter
     fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
 
-    parser = argparse.ArgumentParser(description='Provides data services.',
+    parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.epilog = dedent('''Some command line examples:
-
-    $ GeoBase ORY CDG                    # query on the keys ORY and CDG
-    $ GeoBase --closest CDG              # find closest from CDG
-    $ GeoBase --near '48.853, 2.348'     # find near some geocode
-    $ GeoBase --fuzzy "san francisko"    # fuzzy search, with typo ;)
-    $ GeoBase --help                     # your best friend
-    $ cat data.csv | GeoBase             # with your data
-
-    %s
-    %s''' % (tip_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR), tip_contact()))
+    parser.epilog = '%s\n%s\n%s' % (EXAMPLES,
+                                    tip_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR),
+                                    CONTACT_INFO)
 
     parser.add_argument('keys',
         help = dedent('''\
