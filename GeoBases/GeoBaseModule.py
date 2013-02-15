@@ -110,7 +110,7 @@ MIN_MATCH  = 0.75
 RADIUS     = 50
 NB_CLOSEST = 1
 
-# Remoet prefix detection
+# Remote prefix detection
 PREFIXES  = set(['http://', 'https://'])
 is_remote = lambda path: any(path.lower().startswith(p) for p in PREFIXES)
 
@@ -801,7 +801,8 @@ class GeoBase(object):
         try:
             res = self._things[key][field]
         except KeyError:
-            raise KeyError("Field '%s' [for key '%s'] not in %s" % (field, key, self._things[key].keys()))
+            raise KeyError("Field '%s' [for key '%s'] not in %s" % \
+                           (field, key, self._things[key].keys()))
         else:
             return res
 
