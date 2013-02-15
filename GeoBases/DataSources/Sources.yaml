@@ -117,6 +117,7 @@ languages:
     paths     : Languages/iso-languagecodes.txt
     key_fields: code
     delimiter : "\t"
+    skip      : 1
     headers   :
         - code
         - code_iso_2
@@ -128,6 +129,7 @@ timezones:
     paths     : TimeZones/timeZones.txt
     key_fields: code
     delimiter : "\t"
+    skip      : 1
     headers   :
         - country_code
         - code
@@ -229,6 +231,7 @@ ori_por_multi:
     paths         : Por/Ori/ori_por_public.csv
     key_fields    : [iata_code, location_type]
     delimiter     : ^
+    skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
 
@@ -237,6 +240,7 @@ ori_por_non_iata:
     paths         : Por/Ori/ori_por_non_iata.csv
     key_fields    : iata_code
     delimiter     : ^
+    skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
 
@@ -259,6 +263,7 @@ airlines:
     paths     : Airlines/ori_airlines.csv
     key_fields: unified_code
     delimiter : ^
+    skip      : 1
     headers   :
         - unified_code
         - 3char_code

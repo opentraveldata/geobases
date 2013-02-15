@@ -1,4 +1,4 @@
-#CountryCode	TimeZoneId	GMT offset 1. Jan 2013	DST offset 1. Jul 2013	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2013	DST offset 1. Jul 2013	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0

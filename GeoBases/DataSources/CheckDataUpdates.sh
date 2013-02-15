@@ -137,10 +137,10 @@ LOC_CSV_13='PostalCodes/GeoNames/MC.txt'
 
 
 #do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
-do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
+do_a_file "$REF_URL_04" "$LOC_CSV_04" 0
 do_a_file "$REF_URL_05" "$LOC_CSV_05" 0
-do_a_file "$REF_URL_06" "$LOC_CSV_06" 1
-do_a_file "$REF_URL_07" "$LOC_CSV_07" 1
+do_a_file "$REF_URL_06" "$LOC_CSV_06" 0
+do_a_file "$REF_URL_07" "$LOC_CSV_07" 0
 do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 0 ""            1
 do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
 do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
@@ -149,6 +149,6 @@ do_a_file "$REF_URL_12" "$LOC_CSV_12" 0 1 "$CHOOSED_12"
 do_a_file "$REF_URL_13" "$LOC_CSV_13" 0 1 "$CHOOSED_13"
 
 # The longest at the end
-do_a_file "$REF_URL_02" "$LOC_CSV_02" 1
-do_a_file "$REF_URL_01" "$LOC_CSV_01" 1
+do_a_file "$REF_URL_02" "$LOC_CSV_02" 0
+do_a_file "$REF_URL_01" "$LOC_CSV_01" 0
 
