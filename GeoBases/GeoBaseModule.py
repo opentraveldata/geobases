@@ -625,6 +625,31 @@ class GeoBase(object):
                 return d_key
 
 
+    @staticmethod
+    def _buildLnoEvents(skip, limit, verbose):
+        """
+        Build lambda functions handling events
+        related to the line number count.
+        """
+        # Limit handling
+        if skip is None:
+            in_skipped_zone = lambda n : False
+        else:
+            in_skipped_zone = lambda n : n <= skip
+
+        if limit is None:
+            over_limit = lambda n : False
+        else:
+            over_limit = lambda n : n > limit
+
+        # Verbose counter
+        if verbose:
+            info_loaded = lambda n : n % NB_LINES_STEP == 0
+        else:
+            info_loaded = lambda n : False
+
+        return in_skipped_zone, over_limit, info_loaded
+
 
     def _load(self, source_fl, verbose=True):
         """Load the file and feed the self._things.
@@ -644,6 +669,9 @@ class GeoBase(object):
 
         keyer = self._buildKeyer(key_fields, headers, verbose)
 
+        # Line number events
+        in_skipped_zone, over_limit, info_loaded = self._buildLnoEvents(skip, limit, verbose)
+
         # csv reader options
         csv_opt = {
             'delimiter' : delimiter,
@@ -651,23 +679,6 @@ class GeoBase(object):
         }
 
         _reader = self._buildReader(verbose, **csv_opt)
-
-        # Limit handling
-        if skip is None:
-            in_skipped_zone = lambda n : False
-        else:
-            in_skipped_zone = lambda n : n <= skip
-
-        if limit is None:
-            over_limit = lambda n : False
-        else:
-            over_limit = lambda n : n > limit
-
-        # Verbose counter
-        if verbose:
-            info_loaded = lambda n : n % NB_LINES_STEP == 0
-        else:
-            info_loaded = lambda n : False
 
         for lno, row in enumerate(_reader(source_fl), start=1):
 
