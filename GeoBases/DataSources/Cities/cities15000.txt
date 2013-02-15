@@ -6457,7 +6457,7 @@
 659169	Hamina	Hamina	Fredrikshamn,Hamina,KHAMINA,Khamina,ХАМИНА,Хамина	60.56974	27.19794	P	PPLA3	FI		13	08	075		21712		3	Europe/Helsinki	2011-07-31
 659180	Hämeenlinna	Hameenlinna	Haemeenlinna,Hämeenlinna,Khamenlinna,Khjameenlinna,Tavastehus,hamenrin'na,Хямеенлинна,ハメーンリンナ	60.99596	24.46434	P	PPLA	FI		13	05	109		47261		83	Europe/Helsinki	2012-03-18
 659935	Forssa	Forssa	Forssa,QVE,Форсса	60.81462	23.62146	P	PPLA3	FI		13	05	061		17852		133	Europe/Helsinki	2011-07-31
-660158	Espoo	Espoo	Ehspoo,Esbo,Espo,Espoo,ai si bo,esupo,Έσποο,Еспо,Еспоо,Эспоо,ესპოო,エスポー,埃斯波	60.2052	24.6522	P	PPLA3	FI		13	01	049		229527		16	Europe/Helsinki	2011-07-31
+660158	Espoo	Espoo	Ehspoo,Esbo,Espo,Espoo,ai si bo,esupo,Έσποο,Еспо,Еспоо,Эспоо,ესპოო,エスポー,埃斯波	60.2052	24.6522	P	PPLA3	FI		13	01	049		256760		16	Europe/Helsinki	2013-02-13
 660561	Porvoo	Porvoo	Borga,Borgo,Borgå,PORVOO,Porvo,Porvoo,QXJ,ПОРВОО	60.39233	25.66507	P	PPLA3	FI		13	01	638		47192		29	Europe/Helsinki	2011-12-28
 661164	Anjala	Anjala	AN"JALA,Anjala,АНЪЯЛА	60.68333	26.83333	P	PPL	FI		13	08	286		16779		18	Europe/Helsinki	2012-01-18
 7911309	Länsi-Turunmaa	Laensi-Turunmaa	Vaestaboland,Väståboland	60.29972	22.3004	P	PPL	FI		15	02	445		15498		-9999	Europe/Helsinki	2011-12-31
@@ -19235,7 +19235,7 @@
 702116	Malyn	Malyn	Malin,Malyn,Малин	50.77233	29.23833	P	PPL	UA		27				27068		161	Europe/Kiev	2012-01-18
 702320	Makiyivka	Makiyivka	Dmitriyevsk,Makayevka,Makeevka,Makejewka,Makeyevka,Makiivka,Makiyivka,Makyeevka,Makyevka,Макеевка,Макіївка	48.04782	37.92576	P	PPL	UA		05				376610		223	Europe/Kiev	2012-01-18
 702417	Lyubotyn	Lyubotyn	LJUBOTIN,Lyobotin,Lyubotin,Lyubotyn,ЛЮБОТИН	49.94691	35.92907	P	PPL	UA		07				22545		182	Europe/Kiev	2011-01-23
-702550	L'viv	L'viv	L'viv,L'vov,Lavov,Lemberg,Leopoli,Leopolis,Liov,Lviv,Lvivo,Lvov,Lvova,Lvovas,Lwow,Lwów,l'vov,lbwb,li wo fu,libiu,lvov,rivu~iu,Ļvova,Ľvov,Лвов,Львов,Львів,לבוב,לעמבערג,リヴィウ,利沃夫,리비우	49.83826	24.02324	P	PPLA	UA		15				717803		284	Europe/Kiev	2012-12-01
+702550	L'viv	L'viv	L'viv,L'vov,Lavov,Lemberg,Leopoli,Leopolis,Liov,Lviv,Lvivo,Lvov,Lvova,Lvovas,Lwow,Lwów,l'vov,lbwb,li wo fu,libiu,lvov,rivu~iu,Ļvova,Ľvov,Лвов,Львов,Львів,לבוב,לעמבערג,リヴィウ,利沃夫,리비우	49.83826	24.02324	P	PPLA	UA		15				717803		284	Europe/Kiev	2013-02-14
 702563	Lutugino	Lutugino	Loutougino,Lutugino,Лутугино	48.40507	39.22675	P	PPL	UA		14				18830		119	Europe/Zaporozhye	2012-01-18
 702569	Luts’k	Luts'k	Loetsk,Loutsk,Luc'k,Luck,Luckas,Lucko,Luts'k,Lutsk,Luts’k,Luzk,lwzq,Łuck,Луцк,Луцьк,לוצק	50.75932	25.34244	P	PPLA	UA		24				213661		192	Europe/Kiev	2012-12-05
 702658	Luhans’k	Luhans'k	Lugans'k,Lugansk,Luhans'k,Luhans’k,Voroshilovgrad,Woroschilowgrad,Ворошиловград,Луганск,Луганськ	48.56705	39.31706	P	PPLA	UA		14				452000		103	Europe/Zaporozhye	2012-01-18
@@ -20965,7 +20965,7 @@
 4995664	Hazel Park	Hazel Park		42.46254	-83.10409	P	PPL	US		MI	125			16422	192	193	America/Detroit	2011-05-14
 4996248	Holland	Holland	Gollandija,HLM,Holland,Misi-pawastik,Misi-páwastik,Голландия	42.78752	-86.10893	P	PPL	US		MI	139			33051	186	189	America/Detroit	2011-05-14
 4996306	Holt	Holt		42.64059	-84.51525	P	PPL	US		MI	065			23973	269	270	America/Detroit	2011-05-14
-4997384	Jackson	Jackson	Dzhekson,Джексон	42.24587	-84.40135	P	PPLA2	US		MI	075			33534	284	281	America/Detroit	2011-05-14
+4997384	Jackson	Jackson	Dzhekson,Джексон	42.24587	-84.40135	P	PPLA2	US		MI	075			33534	284	281	America/Detroit	2013-02-14
 4997500	Jenison	Jenison		42.90725	-85.79198	P	PPL	US		MI	139			16538	184	186	America/Detroit	2011-05-14
 4997787	Kalamazoo	Kalamazoo	AZO,Kalamazoo,Kalamazu,ka la ma zu,Каламазу,卡拉马祖	42.29171	-85.58723	P	PPLA2	US		MI	077			74262	239	242	America/Detroit	2011-05-14
 4998018	Kentwood	Kentwood		42.86947	-85.64475	P	PPL	US		MI	081			48707	210	212	America/Detroit	2011-05-14
