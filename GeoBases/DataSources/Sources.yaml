@@ -21,11 +21,10 @@ airports:
 
 
 countries:
-    paths     : [
-        #/thing/that/does/not/exist,
-        Countries/countryInfo.txt,
-        'http://download.geonames.org/export/dump/countryInfo.txt',
-    ]
+    paths     :
+        #- /thing/that/does/not/exist
+        - Countries/countryInfo.txt
+        - 'http://download.geonames.org/export/dump/countryInfo.txt'
     key_fields: code
     delimiter : "\t"
     subdelimiters :
@@ -114,7 +113,9 @@ stations_uic:
 
 
 languages:
-    paths     : Languages/iso-languagecodes.txt
+    paths     :
+        - Languages/iso-languagecodes.txt
+        - 'http://download.geonames.org/export/dump/iso-languagecodes.txt'
     key_fields: code
     delimiter : "\t"
     skip      : 1
@@ -126,7 +127,9 @@ languages:
 
 
 timezones:
-    paths     : TimeZones/timeZones.txt
+    paths     :
+        - TimeZones/timeZones.txt
+        - 'http://download.geonames.org/export/dump/timeZones.txt'
     key_fields: code
     delimiter : "\t"
     skip      : 1
@@ -167,7 +170,9 @@ cities:
 
 
 ori_por:
-    paths         : Por/Ori/ori_por_public.csv
+    paths         : &ori_por_paths
+        - Por/Ori/ori_por_public.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
     key_fields    : iata_code
     indices       : [iata_code, [iata_code, country_code]]
     limit         : # put a number to load only the first lines
@@ -228,7 +233,7 @@ ori_por:
 
 
 ori_por_multi:
-    paths         : Por/Ori/ori_por_public.csv
+    paths         : *ori_por_paths
     key_fields    : [iata_code, location_type]
     delimiter     : ^
     skip          : 1
@@ -237,7 +242,9 @@ ori_por_multi:
 
 
 ori_por_non_iata:
-    paths         : Por/Ori/ori_por_non_iata.csv
+    paths         :
+        - Por/Ori/ori_por_non_iata.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
     key_fields    : iata_code
     delimiter     : ^
     skip          : 1
@@ -260,7 +267,9 @@ currencies:
 
 
 airlines:
-    paths     : Airlines/ori_airlines.csv
+    paths     :
+        - Airlines/ori_airlines.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
     key_fields: unified_code
     delimiter : ^
     skip      : 1
