@@ -42,10 +42,9 @@ do_a_file() {
 
     local REF_URL="$1"
     local LOC_CSV="$2"
-    local NO_HEAD="$3"
-    local UNZIP_F="$4"
-    local CHOOSED="$5"
-    local SPECIAL="$6"
+    local UNZIP_F="$3"
+    local CHOOSED="$4"
+    local SPECIAL="$5"
 
     echo -e "\n* Comparing local and source:"
     echo -e "1. $PWD/$LOC_CSV"
@@ -57,11 +56,6 @@ do_a_file() {
     # Unzip if necessary
     if [ "$UNZIP_F" = "1" ]; then
         extract_one $TMP_CSV $CHOOSED
-    fi
-
-    # Commenting header
-    if [ "$NO_HEAD" = "1" ]; then
-        comment_head $TMP_CSV
     fi
 
     # Special process
@@ -136,19 +130,19 @@ LOC_CSV_12='PostalCodes/GeoNames/FR.txt'
 LOC_CSV_13='PostalCodes/GeoNames/MC.txt'
 
 
-#do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
-do_a_file "$REF_URL_04" "$LOC_CSV_04" 0
-do_a_file "$REF_URL_05" "$LOC_CSV_05" 0
-do_a_file "$REF_URL_06" "$LOC_CSV_06" 0
-do_a_file "$REF_URL_07" "$LOC_CSV_07" 0
-do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 0 ""            1
-do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
-do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
-do_a_file "$REF_URL_11" "$LOC_CSV_11" 0 1 "$CHOOSED_11"
-do_a_file "$REF_URL_12" "$LOC_CSV_12" 0 1 "$CHOOSED_12"
-do_a_file "$REF_URL_13" "$LOC_CSV_13" 0 1 "$CHOOSED_13"
+#do_a_file REF_URL LOC_CSV UNZIP_F
+do_a_file "$REF_URL_04" "$LOC_CSV_04"
+do_a_file "$REF_URL_05" "$LOC_CSV_05"
+do_a_file "$REF_URL_06" "$LOC_CSV_06"
+do_a_file "$REF_URL_07" "$LOC_CSV_07"
+do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 ""            1
+do_a_file "$REF_URL_09" "$LOC_CSV_09" 1 "$CHOOSED_09"
+do_a_file "$REF_URL_10" "$LOC_CSV_10" 1 "$CHOOSED_10"
+do_a_file "$REF_URL_11" "$LOC_CSV_11" 1 "$CHOOSED_11"
+do_a_file "$REF_URL_12" "$LOC_CSV_12" 1 "$CHOOSED_12"
+do_a_file "$REF_URL_13" "$LOC_CSV_13" 1 "$CHOOSED_13"
 
 # The longest at the end
-do_a_file "$REF_URL_02" "$LOC_CSV_02" 0
-do_a_file "$REF_URL_01" "$LOC_CSV_01" 0
+do_a_file "$REF_URL_02" "$LOC_CSV_02"
+do_a_file "$REF_URL_01" "$LOC_CSV_01"
 
