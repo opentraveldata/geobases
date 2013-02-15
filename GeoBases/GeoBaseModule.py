@@ -674,6 +674,11 @@ class GeoBase(object):
             if info_loaded(lno):
                 print '%-10s lines loaded so far' % lno
 
+            # Skip comments and empty lines
+            # Comments must *start* with #, otherwise they will not be stripped
+            if not row or row[0].startswith('#'):
+                continue
+
             if in_skipped_zone(lno):
                 if verbose:
                     print 'In skipped zone, dropping line %s.' % lno
@@ -683,11 +688,6 @@ class GeoBase(object):
                 if verbose:
                     print 'Over limit %s of lines loaded, stopping.' % limit
                 break
-
-            # Skip comments and empty lines
-            # Comments must *start* with #, otherwise they will not be stripped
-            if not row or row[0].startswith('#'):
-                continue
 
             try:
                 key = keyer(row, lno)
