@@ -25,7 +25,7 @@ V5
  + more tests
  + consistent verbosity handling
  + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods (access with -i for CLI)
- + line number indexation with key_fiels None
+ + line number indexation when key_fields is None
  + changes in methods names for better consistency: find vs get
 
 V4
