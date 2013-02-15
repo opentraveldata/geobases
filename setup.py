@@ -83,7 +83,7 @@ setup(
     name = 'GeoBases',
     version = VERSION,
     author = 'Alex Prengère',
-    author_email = 'alexprengere@gmail.com',
+    author_email = 'geobases.dev@gmail.com',
     url = 'http://opentraveldata.github.com/geobases',
     description = 'Data services and visualization',
     long_description = LONG_DESCRIPTION,
