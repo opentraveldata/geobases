@@ -639,17 +639,17 @@ class GeoBase(object):
             in_skipped_zone = lambda n : n <= skip
 
         if limit is None:
-            over_limit = lambda n : False
+            is_over_limit = lambda n : False
         else:
-            over_limit = lambda n : n > limit
+            is_over_limit = lambda n : n > limit
 
         # Verbose counter
         if verbose:
-            info_loaded = lambda n : n % NB_LINES_STEP == 0
+            show_load_info = lambda n : n % NB_LINES_STEP == 0
         else:
-            info_loaded = lambda n : False
+            show_load_info = lambda n : False
 
-        return in_skipped_zone, over_limit, info_loaded
+        return in_skipped_zone, is_over_limit, show_load_info
 
 
     def _load(self, source_fl, verbose=True):
@@ -671,7 +671,7 @@ class GeoBase(object):
         keyer = self._buildKeyer(key_fields, headers, verbose)
 
         # Line number events
-        in_skipped_zone, over_limit, info_loaded = self._buildLnoEvents(skip, limit, verbose)
+        in_skipped_zone, is_over_limit, show_load_info = self._buildLnoEvents(skip, limit, verbose)
 
         # csv reader options
         csv_opt = {
@@ -683,7 +683,7 @@ class GeoBase(object):
 
         for lno, row in enumerate(_reader(source_fl), start=1):
 
-            if info_loaded(lno):
+            if show_load_info(lno):
                 print '%-10s lines loaded so far' % lno
 
             # Skip comments and empty lines
@@ -697,7 +697,7 @@ class GeoBase(object):
                             (lno, row[0])
                 continue
 
-            if over_limit(lno):
+            if is_over_limit(lno):
                 if verbose:
                     print 'Over limit %s of lines loaded, stopping.' % limit
                 break
