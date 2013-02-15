@@ -659,19 +659,19 @@ class GeoBase(object):
             in_skipped_zone = lambda n : n <= skip
 
         if limit is None:
-            break_limit = lambda n : False
+            over_limit = lambda n : False
         else:
-            break_limit = lambda n : n > limit
+            over_limit = lambda n : n > limit
 
         # Verbose counter
         if verbose:
-            load_info = lambda n : n % NB_LINES_STEP == 0
+            info_loaded = lambda n : n % NB_LINES_STEP == 0
         else:
-            load_info = lambda n : False
+            info_loaded = lambda n : False
 
         for lno, row in enumerate(_reader(source_fl), start=1):
 
-            if load_info(lno):
+            if info_loaded(lno):
                 print '%-10s lines loaded so far' % lno
 
             if in_skipped_zone(lno):
@@ -679,9 +679,9 @@ class GeoBase(object):
                     print 'In skipped zone, dropping line %s.' % lno
                 continue
 
-            if break_limit(lno):
+            if over_limit(lno):
                 if verbose:
-                    print 'Beyond limit %s for lines loaded, stopping.' % limit
+                    print 'Over limit %s of lines loaded, stopping.' % limit
                 break
 
             # Skip comments and empty lines
