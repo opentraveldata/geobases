@@ -169,6 +169,7 @@ ori_por:
     key_fields    : iata_code
     indices       : [iata_code, [iata_code, country_code]]
     limit         : # put a number to load only the first lines
+    skip          : # put a number to skip the first lines
     discard_dups  : false # This is the default behavior anyway
     delimiter     : ^
     subdelimiters : &ori_por_subdel

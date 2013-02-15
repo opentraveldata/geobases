@@ -201,6 +201,8 @@ class GeoBase(object):
                 quoting
         - limit         : ``None`` by default, put an int if you want to \
                 load only the first lines
+        - skip          : ``None`` by default, put an int if you want to \
+                skip the first lines during loading
         - discard_dups  : ``False`` by default, boolean to discard key \
                 duplicates or handle them
         - verbose       : ``True`` by default, toggle verbosity
@@ -270,6 +272,7 @@ class GeoBase(object):
             'subdelimiters' : {},
             'quotechar'     : '"',
             'limit'         : None,
+            'skip'          : None,
             'discard_dups'  : False,
             'verbose'       : True,
             'paths'         : None,  # only for configuration file
@@ -313,6 +316,7 @@ class GeoBase(object):
         self._subdelimiters = props['subdelimiters']
         self._quotechar     = props['quotechar']
         self._limit         = props['limit']
+        self._skip          = props['skip']
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
         self._paths         = props['paths']
@@ -635,6 +639,7 @@ class GeoBase(object):
         subdelimiters = self._subdelimiters
         quotechar     = self._quotechar
         limit         = self._limit
+        skip          = self._skip
         discard_dups  = self._discard_dups
 
         keyer = self._buildKeyer(key_fields, headers, verbose)
@@ -648,6 +653,11 @@ class GeoBase(object):
         _reader = self._buildReader(verbose, **csv_opt)
 
         # Limit handling
+        if skip is None:
+            in_skipped_zone = lambda n : False
+        else:
+            in_skipped_zone = lambda n : n <= skip
+
         if limit is None:
             break_limit = lambda n : False
         else:
@@ -663,6 +673,11 @@ class GeoBase(object):
 
             if load_info(lno):
                 print '%-10s lines loaded so far' % lno
+
+            if in_skipped_zone(lno):
+                if verbose:
+                    print 'In skipped zone, dropping line %s.' % lno
+                continue
 
             if break_limit(lno):
                 if verbose:
