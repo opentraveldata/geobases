@@ -647,12 +647,24 @@ class GeoBase(object):
 
         _reader = self._buildReader(verbose, **csv_opt)
 
+        # Limit handling
+        if limit is None:
+            break_limit = lambda n : False
+        else:
+            break_limit = lambda n : n > limit
+
+        # Verbose counter
+        if verbose:
+            load_info = lambda n : n % NB_LINES_STEP == 0
+        else:
+            load_info = lambda n : False
+
         for lno, row in enumerate(_reader(source_fl), start=1):
 
-            if verbose and lno % NB_LINES_STEP == 0:
+            if load_info(lno):
                 print '%-10s lines loaded so far' % lno
 
-            if limit is not None and lno > limit:
+            if break_limit(lno):
                 if verbose:
                     print 'Beyond limit %s for lines loaded, stopping.' % limit
                 break
