@@ -106,6 +106,9 @@ LAT_FIELD  = 'lat'
 LNG_FIELD  = 'lng'
 GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
+# Default grid size
+GRID_RADIUS = 50 #kms
+
 # Default min match for fuzzy searches
 MIN_MATCH  = 0.75
 RADIUS     = 50
@@ -374,7 +377,7 @@ class GeoBase(object):
 
         # Grid
         if self.hasGeoSupport():
-            self._createGrid(self._verbose)
+            self.addGrid(radius=GRID_RADIUS, verbose=self._verbose)
         else:
             if self._verbose:
                 print 'No geocode support, skipping grid...'
@@ -774,10 +777,24 @@ class GeoBase(object):
 
 
 
-    def _createGrid(self, verbose=True):
-        """Create the grid for geographical indexation after loading the data.
+    def addGrid(self, radius=GRID_RADIUS, precision=5, verbose=True):
+        """Create the grid for geographical indexation.
+
+        This operation is automatically performed an initialization if there
+        is geocode support in headers.
+
+        :param radius:    the grid accuracy, in kilometers
+                the ``precision`` parameter is used to define grid size
+        :param precision: the hash length. This is only used if ``radius`` \
+                is ``None``, otherwise this parameter (a hash length) is \
+                computed from the radius
+        :param verbose:   toggle verbosity
+        :returns:         None
+
+        >>> geo_o.addGrid(radius=50, verbose=True)
+        No usable geocode for ZZL: ("",""), skipping point...
         """
-        self._ggrid = GeoGrid(radius=50, verbose=False)
+        self._ggrid = GeoGrid(precision=precision, radius=radius, verbose=False)
 
         for key in self:
             lat_lng = self.getLocation(key)
@@ -788,6 +805,18 @@ class GeoBase(object):
                             (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
             else:
                 self._ggrid.add(key, lat_lng, verbose)
+
+
+    def dropGrid(self):
+        """Delete grid.
+
+        :returns: None
+
+        >>> geo_t.dropGrid()
+        >>> geo_t._ggrid # is None
+        >>> geo_t.addGrid(radius=50, verbose=True)
+        """
+        self._ggrid = None
 
 
 

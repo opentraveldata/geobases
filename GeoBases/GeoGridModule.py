@@ -66,15 +66,22 @@ class GeoGrid(object):
     """
     This is the main and only class.
     """
-    def __init__(self, precision=5, radius=None, verbose=True):
+    def __init__(self, radius=None, precision=5, verbose=True):
         """Creates grid.
 
-        :param radius:    the grid accuracy, in kilometers
-        :param precision: the hash length, if radius is given, this length is \
+        :param radius:    the grid accuracy, in kilometers. If ``None``, \
+                the ``precision`` parameter is used to define grid size
+        :param precision: the hash length. This is only used if ``radius`` \
+                is ``None``, otherwise this parameter (a hash length) is \
                 computed from the radius
         :param verbose:   toggle verbosity
         :returns:         None
         """
+        # True is considered an int but we do not want that
+        if radius is True or \
+           (radius is not None and not isinstance(radius, (float, int))):
+            raise ValueError('radius should be float, int or None, was "%s"' % str(radius))
+
         if radius is not None:
             get_error = lambda x: (x[1][4] < radius,  abs(radius - x[1][4]))
             # Tricky, min of values only positive here
@@ -88,7 +95,8 @@ class GeoGrid(object):
         self._grid = {}
 
         if verbose:
-            print 'Setting grid precision to %s, avg radius to %skm' % (precision, self._avg_radius)
+            print 'Setting grid precision to %s, avg radius to %skm' % \
+                    (precision, self._avg_radius)
 
 
     def _computeCaseId(self, lat_lng):
@@ -118,7 +126,8 @@ class GeoGrid(object):
             # TypeError for wrong type (NoneType, str)
             # Exception for invalid coordinates
             if verbose:
-                print 'Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key)
+                print 'Wrong coordinates %s for key %s, skipping point.' % \
+                        (str(lat_lng), key)
             return
 
         self._keys[key] = {
