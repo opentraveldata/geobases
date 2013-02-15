@@ -7,6 +7,9 @@ V5
 
 + 5.0 :
 
+ + HTTP failover in configuration file
+ + simpler bash maintenance script now that skip is handled during loading
+ + add skip directive to skip first lines
  + CLI: display sources and examples on --help
  + CLI: display tips on --verbose when stdin data
  + -I is now slightly different: default is exact search on a default field (no longer key search, use __key__ for that)
