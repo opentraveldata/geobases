@@ -92,10 +92,13 @@ def relative(rel_path, root=op.dirname(__file__)):
 
 
 # Path to global configuration
-SOURCES_PATH = relative('DataSources/Sources.yaml')
+SOURCES_CONF_PATH = relative('DataSources/Sources.yaml')
 
-with open(SOURCES_PATH) as fl:
+with open(SOURCES_CONF_PATH) as fl:
     SOURCES = yaml.load(fl)
+
+# Root folder where we find data
+SOURCES_DIR = op.dirname(SOURCES_CONF_PATH)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -159,7 +162,7 @@ ASSETS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase', 'SOURCES', 'SOURCES_PATH']
+__all__ = ['GeoBase', 'SOURCES', 'SOURCES_CONF_PATH', 'SOURCES_DIR']
 
 
 class GeoBase(object):
@@ -400,7 +403,7 @@ class GeoBase(object):
             paths = []
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
-                    paths.append(relative(path, root=op.dirname(SOURCES_PATH)))
+                    paths.append(relative(path, root=SOURCES_DIR))
                 else:
                     paths.append(path)
 

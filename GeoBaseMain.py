@@ -26,7 +26,7 @@ import argparse # in standard libraray for Python >= 2.7
 import yaml
 
 # Private
-from GeoBases import GeoBase, SOURCES, SOURCES_PATH
+from GeoBases import GeoBase, SOURCES, SOURCES_CONF_PATH
 
 IS_WINDOWS = platform.system() in ('Windows',)
 
@@ -580,7 +580,7 @@ def best_field(candidates, possibilities, default=None):
 
 
 
-def tip_sources(sources_path, sources):
+def tip_sources(sources_conf_path, sources):
     """Display informations on available sources.
     """
     fmt_keys  = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
@@ -592,7 +592,7 @@ def tip_sources(sources_path, sources):
     *
     * %s
     *\
-    ''' % sources_path)]
+    ''' % sources_conf_path)]
 
     tip.append('-' * 80)
     tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS'))
@@ -612,7 +612,7 @@ def tip_sources(sources_path, sources):
     return '\n'.join(tip)
 
 
-def tip_permanent_add(sources_path, options):
+def tip_permanent_add(sources_conf_path, options):
     """Display help on how to make a data source permanent.
     """
     conf = {
@@ -627,9 +627,9 @@ def tip_permanent_add(sources_path, options):
 
     print
     print '* You can make this data source permanent!'
-    print '* Edit %s with:' % sources_path
+    print '* Edit %s with:' % sources_conf_path
     print
-    print '$ cat >> %s << EOF' % sources_path
+    print '$ cat >> %s << EOF' % sources_conf_path
     print '# ================ BEGIN ==============='
     print
     print yaml.dump({
@@ -640,7 +640,7 @@ def tip_permanent_add(sources_path, options):
     print 'EOF'
     print
     print '* Replace the placeholders <INSERT_...> with:'
-    print '$ vim %s' % sources_path
+    print '$ vim %s' % sources_conf_path
     print
 
 
@@ -833,7 +833,7 @@ def handle_args():
     $ GeoBase --help                     # your best friend
     $ cat data.csv | GeoBase             # with your data
 
-    %s''' % tip_sources(SOURCES_PATH, SOURCES))
+    %s''' % tip_sources(SOURCES_CONF_PATH, SOURCES))
 
     parser.add_argument('keys',
         help = dedent('''\
@@ -1313,7 +1313,7 @@ def main():
         g = GeoBase(data='feed', **options)
 
         if logorrhea:
-            tip_permanent_add(SOURCES_PATH, options)
+            tip_permanent_add(SOURCES_CONF_PATH, options)
 
     else:
         # -i options overrides default
