@@ -581,7 +581,7 @@ def best_field(candidates, possibilities, default=None):
 
 
 
-def tip_sources(sources, sources_conf_path, sources_dir):
+def build_help_sources(sources, sources_conf_path, sources_dir):
     """Display informations on available sources.
     """
     fmt_keys  = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
@@ -721,8 +721,8 @@ GeoBases home page : <http://opentraveldata.github.com/geobases/>'
 API documentation  : <https://geobases.readthedocs.org/>'
 Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>'
 '''
-
-EXAMPLES = '''
+HELP_SOURCES = build_help_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR)
+CLI_EXAMPLES = '''
 *** Some command line examples:
 
  $ GeoBase ORY CDG                    # query on the keys ORY and CDG
@@ -848,9 +848,7 @@ def handle_args():
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.epilog = '%s\n%s\n%s' % (EXAMPLES,
-                                    tip_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR),
-                                    CONTACT_INFO)
+    parser.epilog = '%s\n%s\n%s' % (CLI_EXAMPLES, HELP_SOURCES, CONTACT_INFO)
 
     parser.add_argument('keys',
         help = dedent('''\
