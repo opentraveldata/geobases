@@ -588,8 +588,7 @@ def build_help_sources(sources, sources_conf_path, sources_dir):
 
     missing = '<none>'
     tip = [dedent('''
-    * Data sources from %s
-    * Configured with %s
+    * Data sources from %s [%s]
     ''' % (sources_dir, op.basename(sources_conf_path)))]
 
     tip.append('-' * 80)
