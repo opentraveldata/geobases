@@ -723,7 +723,7 @@ Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>'
 '''
 HELP_SOURCES = build_help_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR)
 CLI_EXAMPLES = '''
-*** Some command line examples:
+*** Command line examples
 
  $ GeoBase ORY CDG                    # query on the keys ORY and CDG
  $ GeoBase --closest CDG              # find closest from CDG
