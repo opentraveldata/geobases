@@ -85,10 +85,10 @@ else:
 
 
 # Relative paths handling
-def relative(rel_path, root_file=__file__):
+def relative(rel_path, root=op.dirname(__file__)):
     """Handle relative paths.
     """
-    return op.join(op.realpath(op.dirname(root_file)), rel_path)
+    return op.join(op.realpath(root), rel_path)
 
 
 # Path to global configuration
@@ -400,7 +400,7 @@ class GeoBase(object):
             paths = []
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
-                    paths.append(relative(path, root_file=SOURCES_PATH))
+                    paths.append(relative(path, root=op.dirname(SOURCES_PATH)))
                 else:
                     paths.append(path)
 
