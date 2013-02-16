@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + handle local and remote archives
  + make addGrid/dropGrid public method to allow geographical re-indexation
  + HTTP failover in configuration file
  + simpler bash maintenance script now that skip is handled during loading
