@@ -116,9 +116,11 @@ setup(
             "MapAssets/*",
             "TablesAssets/*",
             "DataSources/*/*.csv",
+            "DataSources/*/*.zip",
             "DataSources/*/*.txt",
             "DataSources/*/*/*.csv",
             "DataSources/*/*/*.txt",
+            "DataSources/*/*/*.zip",
         ]
     },
     #scripts = [
