@@ -366,9 +366,7 @@ class GeoBase(object):
                         continue
 
                 if is_archive(path):
-                    # We extract one file from the archive
-                    zipf = ZipFile(path['archive'])
-                    path = zipf.extract(path['file'])
+                    path = extract_if_not_here(path['archive'], path['file'], self._verbose)
 
                 try:
                     with open(path) as source_fl:
@@ -2638,6 +2636,23 @@ def download_if_not_here(resource, filename, verbose=True):
         return False, None
     else:
         return True, dl_filename
+
+
+def extract_if_not_here(archive, filename, verbose=True):
+    """
+    Extract a file from archive if file is not already in
+    the local directory.
+    """
+    if op.isfile(filename):
+        if verbose:
+            print '/!\ Skipping extraction for "%s", already in local directory' % filename
+        return filename
+
+    if verbose:
+        print '/!\ Extracting "%s" from "%s"' % (filename, archive)
+
+    # We extract one file from the archive
+    return ZipFile(archive).extract(filename)
 
 
 def build_get_phonemes(method):
