@@ -5,6 +5,7 @@ TODO:ACQ^UNKNOWN88^UNKNOWN88^UNKNOWN88/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^44.0733000^-93
 ADV^EGWA^^Y^7730476^1^Andover Airfield^Andover Airfield^51.22^-1.467^S^AIRQ^^^^^GB^^United Kingdom^ENG^England^England^F2^Hampshire^Hampshire^24UD^^0^13^13^Europe/London^0.0^1.0^0.0^2011-03-17^ADV^Andover^Andover^^^A^^
 AFP^KAFP^^Y^4452709^1^Anson County Airport^Anson County Airport^35.0240400^-80.0786700^S^AIRP^0.960592199674^^^^US^^United States^NY^New York^New York^^^^^^8175133^10^57^America/New_York^-5.0^-4.0^-5.0^2010-07-31^AFP^^^^NY^A^^
 AHA^ZZZZ^^Y^1847949^1^Naha Air Base^Naha Air Base^26.2^127.7^S^AIRB^^^2012-11-01^IATA Notification #39 (2012) - Same location as OKA^JP^JP^Japan^00^^^^^^^^0^^3^Asia/Tokyo^9.0^9.0^9.0^2012-01-27^OKA^Okinawa^Okinawa^^^A^http://en.wikipedia.org/wiki/Naha_Air_Base^|Oroku Airport|=|Naha Airfield|=|Oroku Hikōjō|=|Naha Air Force Base|=|Naha Kūkō|
+AIP^ZZZZ^^Y^7303646^1^Airuk Airfield^Airuk Airfield^7.27936^168.82562^S^AIRF^^^2013-02-16^Abandoned air strip^MH^MH^Marshall Islands^Oceania^010^Ailinglaplap Atoll^Ailinglaplap Atoll^^^^^^0^^2^Pacific/Kwajalein^12.0^12.0^12.0^2010-08-06^AIP^Airuk Airfield^Airuk Airfield^AIP^^CA^^|Ailinglaplap Airfield|
 TODO:AJO^ALJOUF^ALJOUF^ALJOUF/YE^AJO^Y^^YE^MEAST^ITC2^YE^29.785133^40.100006^0^N^CA
 TODO:AQO^UNKNOWN389^UNKNOWN389^UNKNOWN389/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^30.7851800^-98.6600400^0^N^CA
 TODO:AWH^AWAREH^AWAREH^AWAREH/ET^AWH^Y^^ET^AFRIC^ITC2^ET^8.267^44.18^0^N^CA
@@ -137,6 +138,7 @@ SSX^ZZZZ^^N^0^1^Samsun^Samsun^41.28^36.33^P^PPL^0.0131671386793^^2012-12-14^IATA
 SUY^ZZZZ^^N^0^1^Ingjaldssandur Airport^Ingjaldssandur Airport^66.02^-23.83^S^AIRP^^^^^IS^^Iceland^44^Westfjords^Westfjords^^^^^^0^^2^Atlantic/Reykjavik^0.0^0.0^0.0^2012-03-11^SUY^Ingjaldssandur^Ingjaldssandur^^44^CA^^
 TODO:SVR^UNKNOWN8404^UNKNOWN8404^UNKNOWN8404/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^11.08^105.8^0^N^CA
 SWZ^ZZZZ^^N^0^1^Sydney West Airport^Sydney West Airport^-33.88^150.7^S^AIRP^^^^Duplicate of BWU^AU^^Australia^02^New South Wales^New South Wales^10350^Bankstown^Bankstown^^^0^8^4^Australia/Sydney^11.0^10.0^10.0^2011-06-04^SYD^Sydney^Sydney^^NS^CA^^
+SYS^ZZZZ^^N^0^1^SUNCHEON/KR:YEOSU APT^SUNCHEON/KR:YEOSU APT^34.94808^127.48947^S^AIRP^^^2013-02-01^^KR^^KR^Asia^^^^^^^^^^^^Asia/Seoul^^^^-1^SYS^SUNCHEON/KR:YEOSU APT^SUNCHEON/KR:YEOSU APT^SYS^^CA^^
 SZD^ZZZZ^^N^0^^Sheffield Airport^Sheffield Airport^53.394256^-1.388486^S^BUSTN^^^2012-01-01^^GB^^United Kingdom^ENG^England^England^D5^Borough of Doncaster^Borough of Doncaster^00CE043^^0^^40^Europe/London^0.0^1.0^0.0^2012-07-16^SZD^Sheffield^Sheffield^^^CA^^
 SZH^ZZZZ^^Y^7731530^^Senipah Airport^Senipah Airport^-0.9667^117.1^S^AIRP^^^2012-10-12^^ID^^Indonesia^14^East Kalimantan^East Kalimantan^^^^^^0^^16^Asia/Makassar^8.0^8.0^8.0^2011-03-18^SZH^Senipah^Senipah^^^CA^^
 TODO:TBX^UNKNOWN8585^UNKNOWN8585^UNKNOWN8585/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5.833^-5.367^0^N^CA
