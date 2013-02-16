@@ -2655,7 +2655,10 @@ def extract_if_not_here(archive, filename, verbose=True):
     Extract a file from archive if file is not already in
     the local directory.
     """
-    if op.isfile(filename):
+    # Perhaps the file was already extracted here
+    filename_test = op.join(op.dirname(archive), filename)
+
+    if op.isfile(filename_test):
         if verbose:
             print '/!\ Skipping extraction for "%s", already at "%s"' % (filename, filename_test)
         return True, filename_test
