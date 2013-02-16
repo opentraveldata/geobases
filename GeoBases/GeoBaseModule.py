@@ -130,7 +130,16 @@ def is_remote(path):
 is_archive = lambda path: isinstance(path, dict) and 'archive' in path
 
 # Date comparisons
-is_older = lambda a, b: os.stat(a).st_mtime < os.stat(b).st_mtime
+def is_older(a, b):
+    """Test file last modifcation time.
+    """
+    try:
+        if os.stat(a).st_mtime < os.stat(b).st_mtime:
+            return True
+    except OSError:
+        # If this fails, we say it is not older
+        pass
+    return False
 
 # Loading indicator
 NB_LINES_STEP = 100000
