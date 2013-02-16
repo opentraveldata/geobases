@@ -87,7 +87,9 @@ else:
 
 
 # Relative paths handling
-def relative(rel_path, root=op.dirname(__file__)):
+DIRNAME = op.dirname(__file__)
+
+def relative(rel_path, root=DIRNAME):
     """Handle relative paths.
     """
     return op.join(op.realpath(root), rel_path)
