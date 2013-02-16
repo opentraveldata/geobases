@@ -420,7 +420,9 @@ class GeoBase(object):
             self._key_fields = tuplify(self._key_fields)
 
         if self._paths is not None:
-            self._paths = tuplify(self._paths)
+            if isinstance(self._paths, (str, dict)):
+                # If paths is just *one* archive or *one* file
+                self._paths = (self._paths,)
 
         for h in self._subdelimiters:
             if self._subdelimiters[h] is not None:

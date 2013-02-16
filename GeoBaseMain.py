@@ -604,7 +604,7 @@ def build_help_sources(sources, sources_conf_path, sources_dir):
         else:
             keys, paths = missing, missing
 
-        if isinstance(paths, str):
+        if isinstance(paths, (str, dict)):
             paths = [paths]
 
         tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), '.) %s' % paths[0]))
