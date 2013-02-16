@@ -60,6 +60,7 @@ import csv
 import json
 from shutil import copy
 from urllib import urlretrieve
+from zipfile import ZipFile
 
 # Not in standard library
 import yaml
@@ -115,8 +116,18 @@ RADIUS     = 50
 NB_CLOSEST = 1
 
 # Remote prefix detection
-PREFIXES  = set(['http://', 'https://'])
-is_remote = lambda path: any(path.lower().startswith(p) for p in PREFIXES)
+R_PREFIXES = set(['http://', 'https://'])
+
+def is_remote(path):
+    """Tells if a path is remote.
+    """
+    if is_archive(path):
+        return is_remote(path['archive'])
+
+    return any(path.lower().startswith(p) for p in R_PREFIXES)
+
+# Remote prefix detection
+is_archive = lambda path: isinstance(path, dict) and 'archive' in path
 
 # Loading indicator
 NB_LINES_STEP = 100000
@@ -340,12 +351,24 @@ class GeoBase(object):
             for path in self._paths:
 
                 if is_remote(path):
-                    success, dl_file = download_if_not_here(path, op.basename(path), self._verbose)
+                    if is_archive(path):
+                        resource = path['archive']
+                        success, dl_file = download_if_not_here(resource, op.basename(resource), self._verbose)
+                        path['archive'] = dl_file
+                    else:
+                        resource = path
+                        success, dl_file = download_if_not_here(resource, op.basename(resource), self._verbose)
+                        path = dl_file
+
                     if not success:
                         if self._verbose:
-                            print '/!\ Failed to download "%s", failing over...' % path
+                            print '/!\ Failed to download "%s", failing over...' % resource
                         continue
-                    path = dl_file
+
+                if is_archive(path):
+                    # We extract one file from the archive
+                    zipf = ZipFile(path['archive'])
+                    path = zipf.extract(path['file'])
 
                 try:
                     with open(path) as source_fl:
