@@ -42,9 +42,7 @@ do_a_file() {
 
     local REF_URL="$1"
     local LOC_CSV="$2"
-    local UNZIP_F="$3"
-    local CHOOSED="$4"
-    local SPECIAL="$5"
+    local SPECIAL="$3"
 
     echo -e "\n* Comparing local and source:"
     echo -e "1. $PWD/$LOC_CSV"
@@ -52,11 +50,6 @@ do_a_file() {
 
     # Downloading
     wget $REF_URL -O $TMP_CSV -o /dev/null
-
-    # Unzip if necessary
-    if [ "$UNZIP_F" = "1" ]; then
-        extract_one $TMP_CSV $CHOOSED
-    fi
 
     # Special process
     if [ "$SPECIAL" = "1" ]; then
@@ -106,15 +99,10 @@ REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_07='http://download.geonames.org/export/dump/iso-languagecodes.txt'
 REF_URL_08='http://download.geonames.org/export/dump/featureCodes_en.txt'
 REF_URL_09='http://download.geonames.org/export/dump/cities15000.zip'
-CHOOSED_09='cities15000.txt'
 REF_URL_10='http://download.geonames.org/export/dump/FR.zip'
-CHOOSED_10='FR.txt'
 REF_URL_11='http://download.geonames.org/export/dump/MC.zip'
-CHOOSED_11='MC.txt'
 REF_URL_12='http://download.geonames.org/export/zip/FR.zip'
-CHOOSED_12='FR.txt'
 REF_URL_13='http://download.geonames.org/export/zip/MC.zip'
-CHOOSED_13='MC.txt'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
@@ -123,24 +111,24 @@ LOC_CSV_05='Countries/countryInfo.txt'
 LOC_CSV_06='TimeZones/timeZones.txt'
 LOC_CSV_07='Languages/iso-languagecodes.txt'
 LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
-LOC_CSV_09='Cities/cities15000.txt'
-LOC_CSV_10='Por/GeoNames/FR.txt'
-LOC_CSV_11='Por/GeoNames/MC.txt'
-LOC_CSV_12='PostalCodes/GeoNames/FR.txt'
-LOC_CSV_13='PostalCodes/GeoNames/MC.txt'
+LOC_CSV_09='Cities/cities15000.zip'
+LOC_CSV_10='Por/GeoNames/FR.zip'
+LOC_CSV_11='Por/GeoNames/MC.zip'
+LOC_CSV_12='PostalCodes/GeoNames/FR.zip'
+LOC_CSV_13='PostalCodes/GeoNames/MC.zip'
 
 
-#do_a_file REF_URL LOC_CSV UNZIP_F
+#do_a_file REF_URL LOC_CSV
 do_a_file "$REF_URL_04" "$LOC_CSV_04"
 do_a_file "$REF_URL_05" "$LOC_CSV_05"
 do_a_file "$REF_URL_06" "$LOC_CSV_06"
 do_a_file "$REF_URL_07" "$LOC_CSV_07"
-do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 ""            1
-do_a_file "$REF_URL_09" "$LOC_CSV_09" 1 "$CHOOSED_09"
-do_a_file "$REF_URL_10" "$LOC_CSV_10" 1 "$CHOOSED_10"
-do_a_file "$REF_URL_11" "$LOC_CSV_11" 1 "$CHOOSED_11"
-do_a_file "$REF_URL_12" "$LOC_CSV_12" 1 "$CHOOSED_12"
-do_a_file "$REF_URL_13" "$LOC_CSV_13" 1 "$CHOOSED_13"
+do_a_file "$REF_URL_08" "$LOC_CSV_08" 1
+do_a_file "$REF_URL_09" "$LOC_CSV_09"
+do_a_file "$REF_URL_10" "$LOC_CSV_10"
+do_a_file "$REF_URL_11" "$LOC_CSV_11"
+do_a_file "$REF_URL_12" "$LOC_CSV_12"
+do_a_file "$REF_URL_13" "$LOC_CSV_13"
 
 # The longest at the end
 do_a_file "$REF_URL_02" "$LOC_CSV_02"
