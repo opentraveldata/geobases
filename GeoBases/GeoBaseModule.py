@@ -434,7 +434,11 @@ class GeoBase(object):
             paths = []
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
-                    paths.append(relative(path, root=SOURCES_DIR))
+                    if not is_archive(path):
+                        paths.append(relative(path, root=SOURCES_DIR))
+                    else:
+                        path['archive'] = relative(path['archive'], root=SOURCES_DIR)
+                        paths.append(path)
                 else:
                     paths.append(path)
 
