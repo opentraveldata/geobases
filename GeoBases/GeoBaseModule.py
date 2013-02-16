@@ -129,6 +129,9 @@ def is_remote(path):
 # Remote prefix detection
 is_archive = lambda path: isinstance(path, dict) and 'archive' in path
 
+# Date comparisons
+is_older = lambda a, b: os.stat(a).st_mtime < os.stat(b).st_mtime
+
 # Loading indicator
 NB_LINES_STEP = 100000
 
@@ -2656,12 +2659,19 @@ def extract_if_not_here(archive, filename, verbose=True):
     the local directory.
     """
     # Perhaps the file was already extracted here
+    # We also check the dates of modification in case
+    # the extracted file obsolete
     filename_test = op.join(op.dirname(archive), filename)
 
     if op.isfile(filename_test):
+        if is_older(archive, filename_test):
+            if verbose:
+                print '/!\ Skipping extraction for "%s", already at "%s"' % (filename, filename_test)
+            return True, filename_test
+
         if verbose:
-            print '/!\ Skipping extraction for "%s", already at "%s"' % (filename, filename_test)
-        return True, filename_test
+            print '/!\ File "%s" already at "%s", but archive "%s" is more recent, regenerating' % \
+                    (filename, filename_test, archive)
 
     if verbose:
         print '/!\ Extracting "%s" from "%s"' % (filename, archive)
