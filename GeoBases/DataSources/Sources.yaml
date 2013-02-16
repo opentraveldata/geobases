@@ -142,7 +142,11 @@ timezones:
 
 
 cities:
-    paths     : Cities/cities15000.txt
+    paths     :
+        - archive : Cities/cities15000.zip
+          file    : cities15000.txt
+        - archive : 'http://download.geonames.org/export/dump/cities15000.zip'
+          file    : cities15000.txt
     key_fields: code
     delimiter : "\t"
     subdelimiters :
@@ -337,7 +341,11 @@ feature_codes:
 
 
 geonames_FR:
-    paths     : Por/GeoNames/FR.txt
+    paths     :
+        - archive : Por/GeoNames/FR.zip
+          file    : FR.txt
+        - archive : 'http://download.geonames.org/export/dump/FR.zip'
+          file    : FR.txt
     key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -365,7 +373,11 @@ geonames_FR:
 
 
 geonames_MC:
-    paths     : Por/GeoNames/MC.txt
+    paths     :
+        - archive : Por/GeoNames/MC.zip
+          file    : MC.txt
+        - archive : 'http://download.geonames.org/export/dump/MC.zip'
+          file    : MC.txt
     key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
@@ -374,7 +386,11 @@ geonames_MC:
 
 
 postal_codes_FR:
-    paths     : PostalCodes/GeoNames/FR.txt
+    paths     :
+        - archive : PostalCodes/GeoNames/FR.zip
+          file    : FR.txt
+        - archive : 'http://download.geonames.org/export/zip/FR.zip'
+          file    : FR.txt
     key_fields: &postal_codes_key postal_code
     delimiter : "\t"
     headers   : &postal_codes_headers
@@ -393,7 +409,11 @@ postal_codes_FR:
 
 
 postal_codes_MC:
-    paths     : PostalCodes/GeoNames/MC.txt
+    paths     :
+        - archive : PostalCodes/GeoNames/MC.zip
+          file    : MC.txt
+        - archive : 'http://download.geonames.org/export/zip/MC.zip'
+          file    : MC.txt
     key_fields: *postal_codes_key
     delimiter : "\t"
     headers   : *postal_codes_headers
