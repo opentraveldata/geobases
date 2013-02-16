@@ -584,7 +584,8 @@ def best_field(candidates, possibilities, default=None):
 def build_help_sources(sources, sources_conf_path, sources_dir):
     """Display informations on available sources.
     """
-    fmt_keys  = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
+    fmt_keys = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
+    fmt_path = lambda p: str(p) if isinstance(p, str) else '%s -> %s' % (p['archive'], p['file'])
 
     missing = '<none>'
     tip = [dedent('''
@@ -607,10 +608,10 @@ def build_help_sources(sources, sources_conf_path, sources_dir):
         if isinstance(paths, (str, dict)):
             paths = [paths]
 
-        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), '.) %s' % paths[0]))
+        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), '.) %s' % fmt_path(paths[0])))
 
-        for n_path in enumerate(paths[1:], start=1):
-            tip.append('%-20s | %-25s | %s' % ('-', '-', '%s) %s' % n_path))
+        for n, path in enumerate(paths[1:], start=1):
+            tip.append('%-20s | %-25s | %s' % ('-', '-', '%s) %s' % (n, fmt_path(path))))
 
     tip.append('-' * 80)
 
