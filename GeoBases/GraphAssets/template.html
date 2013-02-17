@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="{{file_name}}" content="{{file_name}}" />
+
+        <title>Map of "{{file_name}}"</title>
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" />
+
+        <style type="text/css">
+            .ui-widget {
+                font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+                font-size: 0.8em/*{fsDefault}*/;
+            }
+            button {
+                color              : black;
+                border-color       : black;
+                background-color   : #CCFFCC;
+                border             : 1px solid;
+                width              : 100%;
+                -moz-border-radius : 5px 5px;
+                border-radius      : 5px 5px;
+                font               : bold 75% 'trebuchet ms',helvetica,sans-serif;
+            }
+            .width110 {
+                width : 110px;
+            }
+            .slider {
+                min-width     : 100px;
+                padding-left  : 10px;
+                padding-right : 10px;
+            }
+            .ratio {
+                width : 50px;
+            }
+            .info {
+                width      : 50%;
+                text-align : right;
+            }
+            .small  { font : 75%  'trebuchet ms',helvetica,sans-serif; }
+            .medium { font : 85%  'trebuchet ms',helvetica,sans-serif; }
+            .large  { font : 100% 'trebuchet ms',helvetica,sans-serif; }
+
+            .infowindow {
+                max-height : 300px;
+                overflow-y : auto;
+            }
+            #legendcontent {
+                width      : 100%;
+                align      : center;
+                text-align : left;
+            }
+            #canvas {
+                width  : 1000px;
+                height : 700px;
+            }
+            #header {
+                width         : 100%;
+                margin-bottom : 5px;
+                text-align    : center;
+            }
+            a[href], input[type='submit'], input[type='image'], label[for], select, button, #slider, #slider * {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table id="header" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="width110"><button id="legend">Legend</button></td>
+                <td class="width110"><button id="link"  >Link all (0)</button></td>
+                <td class="width110"><button id="lines" >Lines (0)</button></td>
+                <td class="slider"><div id="slider"></div></td>
+                <td class="ratio medium"><span id="ratio"></span></td>
+                <!-- This will take 50% of horizontal space -->
+                <td class="info medium"><span id="info"></span></td>
+            </tr>
+        </table>
+
+        <div id="canvas"></div>
+        <div id="legendPopup"></div>
+        <div id="backgroundPopup"></div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+        <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
+        <script type="text/javascript" src='map.js'></script>
+    </body>
+</html>
+
