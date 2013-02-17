@@ -5,6 +5,7 @@ TODO:ACQ^UNKNOWN88^UNKNOWN88^UNKNOWN88/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^44.0733000^-93
 ADV^EGWA^^Y^7730476^1^Andover Airfield^Andover Airfield^51.22^-1.467^S^AIRQ^^^^^GB^^United Kingdom^ENG^England^England^F2^Hampshire^Hampshire^24UD^^0^13^13^Europe/London^0.0^1.0^0.0^2011-03-17^ADV^Andover^Andover^^^A^^
 AFP^KAFP^^Y^4452709^1^Anson County Airport^Anson County Airport^35.0240400^-80.0786700^S^AIRP^0.960592199674^^^^US^^United States^NY^New York^New York^^^^^^8175133^10^57^America/New_York^-5.0^-4.0^-5.0^2010-07-31^AFP^^^^NY^A^^
 AHA^ZZZZ^^Y^1847949^1^Naha Air Base^Naha Air Base^26.2^127.7^S^AIRB^^^2012-11-01^IATA Notification #39 (2012) - Same location as OKA^JP^JP^Japan^00^^^^^^^^0^^3^Asia/Tokyo^9.0^9.0^9.0^2012-01-27^OKA^Okinawa^Okinawa^^^A^http://en.wikipedia.org/wiki/Naha_Air_Base^|Oroku Airport|=|Naha Airfield|=|Oroku Hikōjō|=|Naha Air Force Base|=|Naha Kūkō|
+AIP^ZZZZ^^Y^7303646^1^Airuk Airfield^Airuk Airfield^7.27936^168.82562^S^AIRF^^^2013-02-16^Abandoned air strip^MH^MH^Marshall Islands^Oceania^010^Ailinglaplap Atoll^Ailinglaplap Atoll^^^^^^0^^2^Pacific/Kwajalein^12.0^12.0^12.0^2010-08-06^AIP^Airuk Airfield^Airuk Airfield^AIP^^CA^^|Ailinglaplap Airfield|
 TODO:AJO^ALJOUF^ALJOUF^ALJOUF/YE^AJO^Y^^YE^MEAST^ITC2^YE^29.785133^40.100006^0^N^CA
 TODO:AQO^UNKNOWN389^UNKNOWN389^UNKNOWN389/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^30.7851800^-98.6600400^0^N^CA
 TODO:AWH^AWAREH^AWAREH^AWAREH/ET^AWH^Y^^ET^AFRIC^ITC2^ET^8.267^44.18^0^N^CA
@@ -32,6 +33,7 @@ TODO:DSL^DARU^DARU^DARU/SL^DSL^Y^^SL^AFRIC^ITC2^SL^8^-10.8^1296^N^CA
 TODO:DVA^UNKNOWN2097^UNKNOWN2097^UNKNOWN2097/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^45.88^22.92^0^N^CA
 TODO:DVX^UNKNOWN2105^UNKNOWN2105^UNKNOWN2105/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^39.13^-75.47^0^N^CA
 TODO:EHA^UNKNOWN2215^UNKNOWN2215^UNKNOWN2215/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^37.0008600^-101.8821100^0^N^CA
+EHD^ZZZZ^^N^0^1^Pseudo city code^Pseudo city code^34.98^-122^S^AIRP^^^^^ZZ^^ZZ^^^^^^^^^^^^^^^^^-1^EHD^Pseudo city^Pseudo city^EHD^^CA^^
 TODO:EWY^UNKNOWN2408^UNKNOWN2408^UNKNOWN2408/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.42^-0.2^0^N^CA
 FER^ZZZZ^^N^0^1^FERGUSONS GULF/KE^FERGUSONS GULF/KE^3.51667^35.91667^S^RSTN^^^2012-10-04^That place corresponds to a lagoon; there is no railway station here^KE^^Kenya^08^Rift Valley^Rift Valley^^^^^^0^^396^Africa/Nairobi^3.0^3.0^3.0^2012-09-22^FER^Fergusons Gulf^Fergusons Gulf^^^CA^^
 TODO:FKA^UNKNOWN2521^UNKNOWN2521^UNKNOWN2521/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^43.6763500^-92.1796100^0^N^CA
@@ -94,6 +96,7 @@ NBR^ZZZZ^^N^0^1^Nambour Airport^Nambour Airport^-26.603333^153.091111^S^AIRP^^^^
 NET^ZZZZ^^N^0^1^New Bight Airport^New Bight Airport^24.31425^-75.45882^S^AIRP^^^^Duplicate of TBI^BS^^Bahamas^06^Cat Island^Cat Island^^^^^^0^^7^America/Nassau^-5.0^-4.0^-5.0^2012-04-29^NET^New Bight^New Bight^^^CA^^
 NGM^ZZZZ^^N^0^1^GUAM/GU:AGANA NAS^GUAM/GU:AGANA NAS^13.49^144.7^S^AIRP^^^2012-06-01^IATA Notification #36 (2012) - Same location as GUM - Naval Air Station closed in 1993^GU^^Guam^BA^Barrigada Municipality^Barrigada Municipality^^^^^^0^82^84^Pacific/Guam^10.0^10.0^10.0^2011-06-25^GUM^Guam^Guam^^^A^^
 TODO:NGV^UNKNOWN5770^UNKNOWN5770^UNKNOWN5770/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^-17.043464^15.683822^0^N^CA
+NNN^ZZZZ^^N^0^1^Pseudo message departure^Pseudo message departure^0.00028^-0.00028^S^AIRP^^^^^ZZ^^ZZ^^^^^^^^^^^^^^^^^-1^NNN^Pseudo message^Pseudo message^NNN^^CA^^
 TODO:NOE^UNKNOWN5867^UNKNOWN5867^UNKNOWN5867/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^53.62^7.15^0^N^CA
 TODO:NRQ^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^42.52^1.517^0^N^CA
 NRV^ZZZZ^N^0^1^GUAM/GU:USCG SHORE STATION^GUAM/GU:USCG SHORE STATION^^13.48^144.7^S^AIRP^^^2012-06-01^IATA Notification #36 (2012) - Airport not found^GU^^Guam^BA^Barrigada Municipality^Barrigada Municipality^^^^^^0^82^84^Pacific/Guam^10.0^10.0^10.0^2011-06-25^GUM^Guam^Guam^^^A^^
@@ -102,6 +105,7 @@ TODO:OHP^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^56.58^-5
 OMN^ZZZZ^^Y^8298864^1^Osmanabad^Osmanabad^18.15^76.1^S^AIRP^^^2012-09-01^IATA Notification #37 (2012) - Airport not found^IN^^India^16^Mahārāshtra^Maharashtra^^^^^^0^^640^Asia/Kolkata^5.5^5.5^5.5^2012-05-18^OMN^Osmanabad^Osmanabad^^^CA^^
 TODO:OSP^UNKNOWN6248^UNKNOWN6248^UNKNOWN6248/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^54.478889^17.1075^0^N^CA
 OUI^VLHS^^Y^7668610^1^Ban Huoeisay Airport^Ban Huoeisay Airport^20.25^100.4^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Same location as HOE^LA^^Laos^22^Bokèo^Bokeo^^^^^^0^^389^Asia/Vientiane^7.0^7.0^7.0^2011-02-17^OUI^Ban Huoeisay Airport^Ban Huoeisay Airport^^^CA^http://en.wikipedia.org/wiki/Ban_Huoeisay_Airport^
+OWZ^ZZZZ^^N^0^1^Pseudo city code^Pseudo city code^44.42^-80.38^S^AIRP^^^^^CA^^Canada^North America^08^Ontario^Ontario^^^^^^0^301^299^America/Winnipeg^-6.0^-5.0^-6.0^-1^OWZ^Pseudo city^Pseudo city^OWZ^^CA^^
 TODO:PAI^UNKNOWN6248^UNKNOWN6248^UNKNOWN6248/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^12.85^102.60^0^N^CA
 PBW^ZZZZ^^Y^7057982^1^Palibelo^Palibelo^-0.8833^119.9^P^PPL^^^2012-10-12^^ID^^Indonesia^17^Nusa Tenggara Barat^Nusa Tenggara Barat^^^^^^0^^4^Asia/Makassar^8.0^8.0^8.0^2012-01-20^PBW^Palibelo^Palibelo^^^CA^^id|Palibelo|
 PEJ^ZZZZ^^Y^3171157^1^Peschici^Peschici^41.9460500^16.0158600^P^PPL^^^^^IT^^Italy^13^Apulia^Apulia^BR^Province of Brindisi^Province of Brindisi^071038^^4339^0^101^Europe/Rome^1.0^2.0^1.0^2012-03-31^PEJ^Peschici^Peschici^^^C^^
@@ -137,6 +141,7 @@ SSX^ZZZZ^^N^0^1^Samsun^Samsun^41.28^36.33^P^PPL^0.0131671386793^^2012-12-14^IATA
 SUY^ZZZZ^^N^0^1^Ingjaldssandur Airport^Ingjaldssandur Airport^66.02^-23.83^S^AIRP^^^^^IS^^Iceland^44^Westfjords^Westfjords^^^^^^0^^2^Atlantic/Reykjavik^0.0^0.0^0.0^2012-03-11^SUY^Ingjaldssandur^Ingjaldssandur^^44^CA^^
 TODO:SVR^UNKNOWN8404^UNKNOWN8404^UNKNOWN8404/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^11.08^105.8^0^N^CA
 SWZ^ZZZZ^^N^0^1^Sydney West Airport^Sydney West Airport^-33.88^150.7^S^AIRP^^^^Duplicate of BWU^AU^^Australia^02^New South Wales^New South Wales^10350^Bankstown^Bankstown^^^0^8^4^Australia/Sydney^11.0^10.0^10.0^2011-06-04^SYD^Sydney^Sydney^^NS^CA^^
+SYS^ZZZZ^^N^0^1^SUNCHEON/KR:YEOSU APT^SUNCHEON/KR:YEOSU APT^34.94808^127.48947^S^AIRP^^^2013-02-01^^KR^^KR^Asia^^^^^^^^^^^^Asia/Seoul^^^^-1^SYS^SUNCHEON/KR:YEOSU APT^SUNCHEON/KR:YEOSU APT^SYS^^CA^^
 SZD^ZZZZ^^N^0^^Sheffield Airport^Sheffield Airport^53.394256^-1.388486^S^BUSTN^^^2012-01-01^^GB^^United Kingdom^ENG^England^England^D5^Borough of Doncaster^Borough of Doncaster^00CE043^^0^^40^Europe/London^0.0^1.0^0.0^2012-07-16^SZD^Sheffield^Sheffield^^^CA^^
 SZH^ZZZZ^^Y^7731530^^Senipah Airport^Senipah Airport^-0.9667^117.1^S^AIRP^^^2012-10-12^^ID^^Indonesia^14^East Kalimantan^East Kalimantan^^^^^^0^^16^Asia/Makassar^8.0^8.0^8.0^2011-03-18^SZH^Senipah^Senipah^^^CA^^
 TODO:TBX^UNKNOWN8585^UNKNOWN8585^UNKNOWN8585/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5.833^-5.367^0^N^CA
@@ -152,6 +157,7 @@ TODO:VDD^UNKNOWN9312^UNKNOWN9312^UNKNOWN9312/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^48.13^16
 TODO:VEJ^UNKNOWN9325^UNKNOWN9325^UNKNOWN9325/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.75^9.333^0^N^CA
 VIF^ZZZZ^^Y^3164387^1^Vieste^Vieste^41.8824500^16.1749600^P^PPLA3^^^^^IT^^Italy^13^Apulia^Apulia^BR^Province of Brindisi^Province of Brindisi^071060^^13430^0^18^Europe/Rome^1.0^2.0^1.0^2012-02-15^VIF^Vieste^Vieste^^^C^^
 TODO:VIZ^UNKNOWN9367^UNKNOWN9367^UNKNOWN9367/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^23.18^75.77^0^N^CA
+VVV^ZZZZ^^N^0^1^Pseudo message arrival^Pseudo message arrival^0.00028^-0.00028^S^AIRP^^^^^ZZ^^ZZ^^^^^^^^^^^^^^^^^-1^VVV^Pseudo message^Pseudo message^VVV^^CA^^
 WEM^ZZZZ^^N^0^1^West Malling Airport^West Malling Airport^51.3^0.4167^S^AIRP^^^^^GB^^United Kingdom^ENG^England^England^GLA^Greater London^Greater London^B8^^0^182^171^Europe/London^0.0^1.0^0.0^2011-03-28^LON^London^London^^^CA^^
 WGL^ZZZZ^^N^0^1^Baltra Island^Baltra Island^-0.453758^-90.265914^S^AIRP^^^^^EC^^Ecuador^01^Galápagos^Galapagos^^^^^^0^63^54^Pacific/Galapagos^-6.0^-6.0^-6.0^2007-03-30^WGL^Baltra Island^Baltra Island^^^CA^^
 TODO:WID^UNKNOWN9562^UNKNOWN9562^UNKNOWN9562/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.1^6.217^0^N^CA
@@ -160,6 +166,7 @@ XDT^ZZZZ^^N^0^1^Paris CDG TGV^Paris CDG TGV^49.02^2.55^S^RSTN^^^^^FR^^France^A8^
 TODO:XNW^UNKNOWN10061^UNKNOWN10061^UNKNOWN10061/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.88^0.2333^0^N^CA
 XSA^ZZZZ^^N^0^1^SINOE/LR:AFC^SINOE/LR:AFC^5.036^-9.052^S^AIRP^^^2012-10-04^No airport can be found at that location^LR^^Liberia^10^Sinoe^Sinoe^^^^^^0^^9^Africa/Monrovia^0.0^0.0^0.0^2012-09-22^SNI^Greenville^Greenville^^^CA^^
 XSB^ZZZZ^^N^0^1^St Malo^St Malo^^^P^PPL^^^2012-12-01^IATA Monthly Amendment Bulletin November 2012 - XSB is needed for Sir Bani Yas Island/Airport^FR^^France^A2^Brittany^Brittany^29^Département du Finistère^Departement du Finistere^291^29075^0^99^90^Europe/Paris^1.0^2.0^1.0^2012-02-27^XSV^St Malo^St Malo^^^O^^
+XXX^ZZZZ^^N^0^1^Fictitious point^Fictitious point^50.018^10.5295^S^AIRP^^^^^DE^^Germany^Europe^02^Bavaria^Bavaria^^^^^^0^461^462^Europe/Berlin^1.0^2.0^1.0^-1^XXX^Hassfurt^Hassfurt^XXX^^CA^^
 TODO:XYV^UNKNOWN10321^UNKNOWN10321^UNKNOWN10321/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^45.73^4.933^0^N^CA
 YEH^OIBI^^Y^6904766^1^Asalouyeh Airport^Asalouyeh Airport^27.4812400^52.6150700^S^AIRP^^^^^IR^^Iran^00^^^^^^^^0^5^248^Asia/Tehran^3.5^4.5^3.5^2011-07-20^YEH^Asalouyeh^Asalouyeh^^^CA^^
 ZCU^ZZZZ^^N^0^1^SHE KOU/CN:SHE KOU FERRY^SHE KOU/CN:SHE KOU FERRY^22.48^113.9^S^BUSTN^^^2013-01-01^IATA Notification #36 (2012) - Same location as ZYK^CN^^China^30^Guangdong Province^Guangdong Province^^^^^^0^^24^Asia/Shanghai^8.0^8.0^8.0^2012-05-18^ZCU^She Kou^She Kou^^^CB^^
@@ -173,3 +180,4 @@ ZTX^ZZZZ^^N^0^1^TSUEN WAN/HK:TSUEN WAN^TSUEN WAN/HK:TSUEN WAN^^^P^PPL^^^2012-08-
 TODO:ZUE^UNKNOWN11391^UNKNOWN11391^UNKNOWN11391/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^7.433^-6.05^0^N^CA
 TODO:ZXF^UNKNOWN11467^UNKNOWN11467^UNKNOWN11467/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^59.93^10.75^0^N^CA
 TODO:ZZE^UNKNOWN11516^UNKNOWN11516^UNKNOWN11516/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^43.87^19.83^0^N^CA
+ZZZ^ZZZZ^^N^0^1^Greenwich mean TM^Greenwich mean TM^51.88^0.2333^S^AIRP^^^^^GB^^United Kingdom^Europe^ENG^England^England^E4^Essex^Essex^22UQ^^0^106^103^Europe/London^0.0^1.0^0.0^-1^ZZZ^London^London^ZZZ^^CA^^
