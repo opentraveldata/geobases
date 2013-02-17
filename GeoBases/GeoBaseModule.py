@@ -2370,7 +2370,7 @@ class GeoBase(object):
         ]
 
         # Dump the json geocodes
-        json_name = '%s.json' % output
+        json_name = '%s_map.json' % output
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
