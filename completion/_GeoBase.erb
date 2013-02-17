@@ -126,6 +126,8 @@ _hello() {
      "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*: :->quiet_options" \
      "(-m --map)"{-m,--map}"[Display points on a map]" \
      "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
+     "(-g --graph)"{-g,--graph}"[Display data on a directed graph]" \
+     "(-G --graph-options)"{-G,--graph-options}"[Select fields to build the graph display]:*: :->graph_options" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-u,--update}"[Try to update the data files]" \
      "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
@@ -139,6 +141,7 @@ _hello() {
     interactive=`get_opt_value "${opt_args[-I]}" "${opt_args[--interactive-query]}"`
     quiet_options=`get_opt_value "${opt_args[-Q]}" "${opt_args[--quiet-options]}"`
     map_options=`get_opt_value "${opt_args[-M]}" "${opt_args[--map-options]}"`
+    graph_options=`get_opt_value "${opt_args[-G]}" "${opt_args[--graph-options]}"`
 
 
     case $state in
@@ -257,6 +260,9 @@ _hello() {
                 "*:No more arguments for -M"
             ;;
         esac
+        ;;
+    graph_options)
+        _fields "$base" "graph field"
         ;;
     #*)
     #    _files
