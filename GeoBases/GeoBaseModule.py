@@ -2107,10 +2107,10 @@ class GeoBase(object):
     def buildGraphData(self, graph_fields, graph_weight=None, from_keys=None):
         """Build graph data.
 
-        :param graph_fields: iterable of fields used to define the nodes. Nodes are the \
-                values of these fields
-        :param graph_weight: field used to define the weight of nodes and edges. If ``None``, \
-                the weight is ``1`` for each key.
+        :param graph_fields: iterable of fields used to define the nodes. \
+                Nodes are the values of these fields
+        :param graph_weight: field used to define the weight of nodes and \
+                edges. If ``None``, the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
         """
@@ -2122,10 +2122,12 @@ class GeoBase(object):
 
         for field in graph_fields:
             if field not in self.fields:
-                raise ValueError('graph_fields "%s" not in fields %s.' % (field, self.fields))
+                raise ValueError('graph_fields "%s" not in fields %s.' % \
+                                 (field, self.fields))
 
         if graph_weight is not None and graph_weight not in self.fields:
-            raise ValueError('graph_weight "%s" not in fields %s.' % (graph_weight, self.fields))
+            raise ValueError('graph_weight "%s" not in fields %s.' % \
+                             (graph_weight, self.fields))
 
         if graph_weight is None:
             get_weight = lambda k: 1
@@ -2200,10 +2202,10 @@ class GeoBase(object):
                        verbose=True):
         """Graph display.
 
-        :param graph_fields: iterable of fields used to define the nodes. Nodes are the \
-                values of these fields
-        :param graph_weight: field used to define the weight of nodes and edges. If ``None``, \
-                the weight is ``1`` for each key.
+        :param graph_fields: iterable of fields used to define the nodes. \
+                Nodes are the values of these fields
+        :param graph_weight: field used to define the weight of nodes and \
+                edges. If ``None``, the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
         :param verbose:     toggle verbosity

@@ -19,7 +19,7 @@ After data loading, you can:
 -  make *fuzzy searches* based on string distance (find things roughly *named like this*)
 -  make *phonetic searches* (find things *sounding like this*)
 -  make *geographical searches* (find things *next to this place*)
--  get results on a map, or export it as csv data, or as a Python object
+-  get results on a map, or on a graph, or export it as csv data, or as a Python object
 
 This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with *easy_install*,
@@ -341,6 +341,7 @@ Three displays are available for the command line tool:
 -  the verbose display
 -  the csv display with ``--quiet``
 -  the map display with ``--map``
+-  the graph display with ``--graph``
 
 With the verbose display, entries are displayed on each column,
 and the available fields on each line. Fields starting with ``__`` like ``__field__`` are
