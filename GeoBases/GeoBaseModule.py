@@ -2269,7 +2269,13 @@ class GeoBase(object):
                                       reverse=True)
             }))
 
-        return render_templates(output, json_name, geo_support, verbose)
+        # We do not render the map template  if not geocodes
+        if geo_support:
+            rendered = ['map', 'table']
+        else:
+            rendered = ['table']
+
+        return rendered, render_templates(rendered, output, json_name, verbose)
 
 
 
@@ -2511,16 +2517,17 @@ def build_categories(data, with_icons, with_circles, catalog, verbose):
 
 
 
-def render_templates(output, json_name, geo_support, verbose):
+def render_templates(names, output, json_name, verbose):
     """Render HTML templates.
     """
     tmp_template = []
     tmp_static   = [json_name]
 
-    for name, assets in ASSETS.iteritems():
-        # We do not render the map template  if not geocodes
-        if name == 'map' and not geo_support:
-            continue
+    for name in names:
+        if name not in ASSETS:
+            raise ValueError('Unknown asset name %s' % name)
+
+        assets = ASSETS[name]
 
         for template, v_target in assets['template'].iteritems():
             target = v_target % output
@@ -2547,8 +2554,7 @@ def render_templates(output, json_name, geo_support, verbose):
         print 'rm %s' % ' '.join(tmp_static + tmp_template)
         print
 
-    # This is the numbered of templates rendered
-    return tmp_template, sum(len(a['template']) for a in ASSETS.values())
+    return tmp_template, tmp_static
 
 
 

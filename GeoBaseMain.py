@@ -1667,31 +1667,32 @@ def main():
 
     # Display
     if frontend == 'map':
-        templates, max_t = g.visualize(output=g.data,
-                                       icon_label=icon_label,
-                                       icon_weight=icon_weight,
-                                       icon_color=icon_color,
-                                       icon_type=icon_type,
-                                       from_keys=ex_keys(res),
-                                       add_lines=None,
-                                       add_anonymous_icons=None,
-                                       add_anonymous_lines=None,
-                                       link_duplicates=link_duplicates,
-                                       catalog=None,
-                                       line_colors=None,
-                                       verbose=True)
+        visu_info = g.visualize(output=g.data,
+                                icon_label=icon_label,
+                                icon_weight=icon_weight,
+                                icon_color=icon_color,
+                                icon_type=icon_type,
+                                from_keys=ex_keys(res),
+                                add_lines=None,
+                                add_anonymous_icons=None,
+                                add_anonymous_lines=None,
+                                link_duplicates=link_duplicates,
+                                catalog=None,
+                                line_colors=None,
+                                verbose=True)
+
+        rendered, (templates, _) = visu_info
 
         if templates and verbose:
             display_browser(templates, nb_res)
             launch_http_server(ADDRESS, PORT)
 
-        if len(templates) < max_t:
+        if 'map' not in rendered:
             # At least one html not rendered
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '/!\ %s template(s) not rendered. Switching to terminal frontend...' % \
-                    (max_t - len(templates))
+            print '/!\ Map template not rendered. Switching to terminal frontend...'
 
 
     if frontend == 'terminal':
