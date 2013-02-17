@@ -2110,8 +2110,8 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        node_fields  = tuplify(node_fields)
-        nb_edges_key = len(node_fields) - 1
+        node_fields = tuplify(node_fields)
+        nb_edges    = len(node_fields) - 1
 
         for field in node_fields:
             if field not in self.fields:
@@ -2125,7 +2125,24 @@ class GeoBase(object):
         else:
             get_weight = lambda k: self.get(k, weight)
 
-        edges = {}
+
+        def _empty_node():
+            """Make an empty node.
+            """
+            return {
+                "edges"  : {},
+                "weight" : 0
+            }
+
+        def _empty_edge(node_from, node_to):
+            """Make an empty edge.
+            """
+            return {
+                'from'   : node_from,
+                'to'     : node_to,
+                'weight' : 0
+            }
+
         nodes = {}
 
         for key in from_keys:
@@ -2135,18 +2152,37 @@ class GeoBase(object):
             except ValueError:
                 w = 0
 
-            for i in xrange(nb_edges_key):
-                edge = values[i], values[i + 1]
-                if edge not in edges:
-                    edges[edge] = 0
-                edges[edge] += w
 
-            for node in values:
+            for i in xrange(nb_edges):
+                node_from, node_to = values[i], values[i + 1]
+
+                if node_from not in nodes:
+                    nodes[node_from] = _empty_node()
+
+                if node_to not in nodes:
+                    nodes[node_to] = _empty_node()
+
+                nodes[node_from]["weight"] += w
+                nodes[node_to]["weight"]   += w
+
+                # Updating edges
+                edge = '%s-%s' % (node_from, node_to)
+
+                if edge not in nodes[node_from]["edges"]:
+                    nodes[node_from]["edges"][edge] = _empty_edge(node_from, node_to)
+
+                nodes[node_from]["edges"][edge]["weight"] += w
+
+            # In this case we did not iterate through the previous loop
+            if nb_edges == 0:
+                node = values[0]
+
                 if node not in nodes:
-                    nodes[node] = 0
-                nodes[node] += w
+                    nodes[node] = _empty_node()
 
-        return nodes, edges
+                nodes[node]["weight"] += w
+
+        return nodes
 
 
     def graphVisualize(self,
@@ -2157,17 +2193,20 @@ class GeoBase(object):
                        verbose=True):
         """Graph display.
         """
-        nodes, edges = self.buildGraphData(node_fields=node_fields,
-                                           weight=weight,
-                                           from_keys=from_keys)
+        nodes = self.buildGraphData(node_fields=node_fields,
+                                    weight=weight,
+                                    from_keys=from_keys)
 
         # Dump the json geocodes
-        json_name = '%s.json' % output
+        json_name = '%s_graph.json' % output
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'nodes'  : nodes,
-                'edges'  : edges.items(), # keys must be string, workaround
+                'meta'   : {
+                    'node_fields' : node_fields,
+                    'weight'      : weight,
+                },
             }))
 
         return render_templates(['graph'], output, json_name, verbose)
