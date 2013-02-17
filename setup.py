@@ -136,6 +136,29 @@ setup(
         (op.join(getenv('HOME'), '.zsh/completion'), [
             'completion/_GeoBase'
         ])
-    ]
+    ],
+    classifiers=[
+        'License :: Free for non-commercial use',
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: System Administrators',
+        'Environment :: Console',
+        'Environment :: Web Environment',
+        'Operating System :: POSIX',
+        'Operating System :: POSIX :: Linux',
+        'Operating System :: Unix',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: JavaScript',
+        'Topic :: Terminals',
+        'Topic :: Scientific/Engineering',
+        'Topic :: Scientific/Engineering :: Visualization',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
 )
 
