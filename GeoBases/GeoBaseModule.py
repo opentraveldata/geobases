@@ -146,7 +146,7 @@ def is_older(a, b):
 # Loading indicator
 NB_LINES_STEP = 100000
 
-# Assets for map and tables
+# Assets for map and table
 ASSETS = {
     'map' : {
         'template' : {
@@ -179,11 +179,11 @@ ASSETS = {
     'table' : {
         'template' : {
             # source : v_target
-            relative('TablesAssets/template.html') : '%s_table.html',
+            relative('TableAssets/template.html') : '%s_table.html',
         },
         'static' : {
             # source : target
-            relative('TablesAssets/table.js') : 'table.js',
+            relative('TableAssets/table.js') : 'table.js',
         }
     }
 }

@@ -114,7 +114,7 @@ setup(
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
             "MapAssets/*",
-            "TablesAssets/*",
+            "TableAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.zip",
             "DataSources/*/*.txt",
