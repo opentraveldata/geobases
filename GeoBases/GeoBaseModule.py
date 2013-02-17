@@ -185,6 +185,16 @@ ASSETS = {
             # source : target
             relative('TableAssets/table.js') : 'table.js',
         }
+    },
+    'graph' : {
+        'template' : {
+            # source : v_target
+            relative('GraphAssets/template.html') : '%s_graph.html',
+        },
+        'static' : {
+            # source : target
+            relative('GraphAssets/graph.js') : 'graph.js',
+        }
     }
 }
 
@@ -2092,6 +2102,76 @@ class GeoBase(object):
         return []
 
 
+    def buildGraphData(self, node_fields, weight=None, from_keys=None):
+        """Build graph data.
+        """
+        if from_keys is None:
+            from_keys = iter(self)
+
+        node_fields  = tuplify(node_fields)
+        nb_edges_key = len(node_fields) - 1
+
+        for field in node_fields:
+            if field not in self.fields:
+                raise ValueError('node_field(s) "%s" not in fields %s.' % (field, self.fields))
+
+        if weight is not None and weight not in self.fields:
+            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
+
+        if weight is None:
+            get_weight = lambda k: 1
+        else:
+            get_weight = lambda k: self.get(k, weight)
+
+        edges = {}
+        nodes = {}
+
+        for key in from_keys:
+            values = tuple(self.get(key, f) for f in node_fields)
+            try:
+                w = float(get_weight(key))
+            except ValueError:
+                w = 0
+
+            for i in xrange(nb_edges_key):
+                edge = values[i], values[i + 1]
+                if edge not in edges:
+                    edges[edge] = 0
+                edges[edge] += w
+
+            for node in values:
+                if node not in nodes:
+                    nodes[node] = 0
+                nodes[node] += w
+
+        return nodes, edges
+
+
+    def graphVisualize(self,
+                       node_fields,
+                       weight=None,
+                       from_keys=None,
+                       output='example',
+                       verbose=True):
+        """Graph display.
+        """
+        nodes, edges = self.buildGraphData(node_fields=node_fields,
+                                           weight=weight,
+                                           from_keys=from_keys)
+
+        # Dump the json geocodes
+        json_name = '%s.json' % output
+
+        with open(json_name, 'w') as out:
+            out.write(json.dumps({
+                'nodes'  : nodes,
+                'edges'  : edges.items(), # keys must be string, workaround
+            }))
+
+        return render_templates(['graph'], output, json_name, verbose)
+
+
+
     def visualize(self,
                   output='example',
                   icon_label=None,
@@ -2269,7 +2349,7 @@ class GeoBase(object):
                                       reverse=True)
             }))
 
-        # We do not render the map template  if not geocodes
+        # We do not render the map template if no geocode support
         if geo_support:
             rendered = ['map', 'table']
         else:
