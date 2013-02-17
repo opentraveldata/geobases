@@ -2106,6 +2106,13 @@ class GeoBase(object):
 
     def buildGraphData(self, node_fields, weight=None, from_keys=None):
         """Build graph data.
+
+        :param node_fields: iterable of fields used to define the nodes. Nodes are the \
+                values of these fields
+        :param weight: field used to define the weight of nodes and edges. If ``None``, \
+                the weight is ``1`` for each key.
+        :param from_keys:   only display this iterable of keys if not None
+        :returns:           the nodes data
         """
         if from_keys is None:
             from_keys = iter(self)
@@ -2192,6 +2199,16 @@ class GeoBase(object):
                        output='example',
                        verbose=True):
         """Graph display.
+
+        :param node_fields: iterable of fields used to define the nodes. Nodes are the \
+                values of these fields
+        :param weight: field used to define the weight of nodes and edges. If ``None``, \
+                the weight is ``1`` for each key.
+        :param from_keys:   only display this iterable of keys if not None
+        :param output:      set the name of the rendered files
+        :param verbose:     toggle verbosity
+        :returns:           this is the tuple of (names of templates \
+                rendered, (list of html templates, list of static files))
         """
         nodes = self.buildGraphData(node_fields=node_fields,
                                     weight=weight,
@@ -2209,7 +2226,7 @@ class GeoBase(object):
                 },
             }))
 
-        return render_templates(['graph'], output, json_name, verbose)
+        return ['graph'], render_templates(['graph'], output, json_name, verbose=verbose)
 
 
 
@@ -2255,8 +2272,8 @@ class GeoBase(object):
                 computed with ``link_duplicates``, those given with \
                 ``add_lines``, those given with ``add_anonymous_lines``
         :param verbose:     toggle verbosity
-        :returns:           this is the tuple of (list of templates \
-                successfully rendered, total number of templates available)
+        :returns:           this is the tuple of (names of templates \
+                rendered, (list of html templates, list of static files))
         """
         if self.hasGeoSupport():
             geo_support = True
@@ -2396,7 +2413,7 @@ class GeoBase(object):
         else:
             rendered = ['table']
 
-        return rendered, render_templates(rendered, output, json_name, verbose)
+        return rendered, render_templates(rendered, output, json_name, verbose=verbose)
 
 
 
