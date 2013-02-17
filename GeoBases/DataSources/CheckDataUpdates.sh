@@ -4,7 +4,10 @@
 # We could move to the installation directory if we knew it
 cd `dirname $0`
 
-TMP_CSV='/tmp/fsdlkghiueevlr_01.csv'
+TMP_DIR='/tmp'
+
+TMP_VIEW_1='/tmp/fsdlkghiueevlr_02.csv'
+TMP_VIEW_2='/tmp/fsdlkghiueevlr_03.csv'
 
 # By default, we will ask the user permission to replace
 # the old file, unless -f option is triggered
@@ -24,6 +27,27 @@ while getopts ":f" opt; do
 done
 
 
+view() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip -qca $1   ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           cat $1          ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
 extract_one() {
     unzip -q $1 $2
     mv $2 $1
@@ -40,6 +64,7 @@ split_fcodes() {
 
 do_a_file() {
 
+    local TMP_CSV
     local REF_URL="$1"
     local LOC_CSV="$2"
     local SPECIAL="$3"
@@ -49,6 +74,7 @@ do_a_file() {
     echo -e "2. $REF_URL"
 
     # Downloading
+    TMP_CSV="$TMP_DIR"/`basename $REF_URL`
     wget $REF_URL -O $TMP_CSV -o /dev/null
 
     # Special process
@@ -62,7 +88,9 @@ do_a_file() {
     fi
 
     # Computing diff
-    DIFF=`diff -u $LOC_CSV $TMP_CSV`
+    view $LOC_CSV > $TMP_VIEW_1
+    view $TMP_CSV > $TMP_VIEW_2
+    DIFF=`diff -u $TMP_VIEW_1 $TMP_VIEW_2`
 
     if [ "$DIFF" = "" ]; then
         echo "* Nothing to do."
@@ -71,7 +99,7 @@ do_a_file() {
     fi
 
     echo -e "\n* Unified diff:"
-    diff -u $LOC_CSV $TMP_CSV
+    diff -u $TMP_VIEW_1 $TMP_VIEW_2
 
     if [ "$FORCE" = "0" ]; then
         echo -n "Replace? [Y/N]: "
