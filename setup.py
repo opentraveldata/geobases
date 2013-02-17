@@ -115,6 +115,7 @@ setup(
             "DataSources/CheckDataUpdates.sh",
             "MapAssets/*",
             "TableAssets/*",
+            "GraphAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.zip",
             "DataSources/*/*.txt",
