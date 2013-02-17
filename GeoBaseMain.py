@@ -785,6 +785,10 @@ DEF_LINK_DUPLICATES = True
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
+# Graph defaults
+DEF_GRAPH_WEIGHT = None
+DEF_GRAPH_FIELDS = []
+
 # Terminal width defaults
 DEF_CHAR_COL = 25
 MIN_CHAR_COL = 3
@@ -1154,6 +1158,28 @@ def handle_args():
         metavar = 'FIELDS',
         default = [])
 
+    parser.add_argument('-g', '--graph',
+        help = dedent('''\
+        This is the graph output.
+        Configure with --graph-options.
+        HTML/Javascript/JSON files are generated.
+        Unless --quiet is also set, a browser will be launched
+        and a simple HTTP server will serve the HTML results
+        on %s:%s.
+        ''' % (ADDRESS, PORT)),
+        action = 'store_true')
+
+    parser.add_argument('-G', '--graph-options',
+        help = dedent('''\
+        This option has n arguments: fields used to build
+        the graph data. Nodes are the field values. Edges
+        represent the data.
+        Default is %s.
+        ''' % str(DEF_GRAPH_FIELDS)),
+        nargs = '+',
+        metavar = 'FIELDS',
+        default = [])
+
     parser.add_argument('-v', '--verbose',
         help = dedent('''\
         Provides additional informations:
@@ -1215,10 +1241,12 @@ def main():
     # Defining frontend
     if args['map']:
         frontend = 'map'
-    elif not args['quiet']:
-        frontend = 'terminal'
-    else:
+    elif args['graph']:
+        frontend = 'graph'
+    elif args['quiet']:
         frontend = 'quiet'
+    else:
+        frontend = 'terminal'
 
     if args['limit'] is None:
         # Limit was not set by user
@@ -1395,6 +1423,12 @@ def main():
     if len(args['map_options']) >= 5 and args['map_options'][4] != SKIP:
         link_duplicates = args['map_options'][4] in TRUTHY
 
+    # Reading graph options
+    graph_weight = DEF_GRAPH_WEIGHT
+    graph_fields = DEF_GRAPH_FIELDS
+
+    graph_fields = [f for f in args['graph_options'] if f != SKIP]
+
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
     header_display  = DEF_QUIET_HEADER
@@ -1456,8 +1490,8 @@ def main():
             error('property', args['phonetic_property'], g.data, g.fields)
 
     # Failing on unknown fields
-    fields_to_test = [
-        f for f in (icon_label, icon_weight, icon_color, interactive_field)
+    fields_to_test = graph_fields + [
+        f for f in (icon_label, icon_weight, icon_color, interactive_field, graph_weight)
         if f is not None
     ]
 
@@ -1688,11 +1722,26 @@ def main():
             launch_http_server(ADDRESS, PORT)
 
         if 'map' not in rendered:
-            # At least one html not rendered
+            # Happens if you try to use --map
+            # on non geographical data
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
             print '/!\ Map template not rendered. Switching to terminal frontend...'
+
+
+    if frontend == 'graph':
+        visu_info = g.graphVisualize(graph_fields=graph_fields,
+                                     graph_weight=graph_weight,
+                                     from_keys=ex_keys(res),
+                                     output=g.data,
+                                     verbose=True)
+
+        rendered, (templates, _) = visu_info
+
+        if templates and verbose:
+            display_browser(templates, nb_res)
+            launch_http_server(ADDRESS, PORT)
 
 
     if frontend == 'terminal':
