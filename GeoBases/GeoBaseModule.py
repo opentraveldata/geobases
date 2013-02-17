@@ -2104,12 +2104,12 @@ class GeoBase(object):
         return []
 
 
-    def buildGraphData(self, node_fields, weight=None, from_keys=None):
+    def buildGraphData(self, graph_fields, graph_weight=None, from_keys=None):
         """Build graph data.
 
-        :param node_fields: iterable of fields used to define the nodes. Nodes are the \
+        :param graph_fields: iterable of fields used to define the nodes. Nodes are the \
                 values of these fields
-        :param weight: field used to define the weight of nodes and edges. If ``None``, \
+        :param graph_weight: field used to define the weight of nodes and edges. If ``None``, \
                 the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
@@ -2117,20 +2117,20 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        node_fields = tuplify(node_fields)
-        nb_edges    = len(node_fields) - 1
+        graph_fields = tuplify(graph_fields)
+        nb_edges     = len(graph_fields) - 1
 
-        for field in node_fields:
+        for field in graph_fields:
             if field not in self.fields:
-                raise ValueError('node_field(s) "%s" not in fields %s.' % (field, self.fields))
+                raise ValueError('graph_fields "%s" not in fields %s.' % (field, self.fields))
 
-        if weight is not None and weight not in self.fields:
-            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
+        if graph_weight is not None and graph_weight not in self.fields:
+            raise ValueError('graph_weight "%s" not in fields %s.' % (graph_weight, self.fields))
 
-        if weight is None:
+        if graph_weight is None:
             get_weight = lambda k: 1
         else:
-            get_weight = lambda k: self.get(k, weight)
+            get_weight = lambda k: self.get(k, graph_weight)
 
 
         def _empty_node():
@@ -2153,11 +2153,11 @@ class GeoBase(object):
         nodes = {}
 
         for key in from_keys:
-            values = tuple(self.get(key, f) for f in node_fields)
+            values = tuple(self.get(key, f) for f in graph_fields)
             try:
-                w = float(get_weight(key))
+                weight = float(get_weight(key))
             except ValueError:
-                w = 0
+                weight = 0
 
 
             for i in xrange(nb_edges):
@@ -2169,8 +2169,8 @@ class GeoBase(object):
                 if node_to not in nodes:
                     nodes[node_to] = _empty_node()
 
-                nodes[node_from]["weight"] += w
-                nodes[node_to]["weight"]   += w
+                nodes[node_from]["weight"] += weight
+                nodes[node_to]["weight"]   += weight
 
                 # Updating edges
                 edge = '%s-%s' % (node_from, node_to)
@@ -2178,7 +2178,7 @@ class GeoBase(object):
                 if edge not in nodes[node_from]["edges"]:
                     nodes[node_from]["edges"][edge] = _empty_edge(node_from, node_to)
 
-                nodes[node_from]["edges"][edge]["weight"] += w
+                nodes[node_from]["edges"][edge]["weight"] += weight
 
             # In this case we did not iterate through the previous loop
             if nb_edges == 0:
@@ -2187,22 +2187,22 @@ class GeoBase(object):
                 if node not in nodes:
                     nodes[node] = _empty_node()
 
-                nodes[node]["weight"] += w
+                nodes[node]["weight"] += weight
 
         return nodes
 
 
     def graphVisualize(self,
-                       node_fields,
-                       weight=None,
+                       graph_fields,
+                       graph_weight=None,
                        from_keys=None,
                        output='example',
                        verbose=True):
         """Graph display.
 
-        :param node_fields: iterable of fields used to define the nodes. Nodes are the \
+        :param graph_fields: iterable of fields used to define the nodes. Nodes are the \
                 values of these fields
-        :param weight: field used to define the weight of nodes and edges. If ``None``, \
+        :param graph_weight: field used to define the weight of nodes and edges. If ``None``, \
                 the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
@@ -2210,8 +2210,8 @@ class GeoBase(object):
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
         """
-        nodes = self.buildGraphData(node_fields=node_fields,
-                                    weight=weight,
+        nodes = self.buildGraphData(graph_fields=graph_fields,
+                                    graph_weight=graph_weight,
                                     from_keys=from_keys)
 
         # Dump the json geocodes
@@ -2221,8 +2221,8 @@ class GeoBase(object):
             out.write(json.dumps({
                 'nodes'  : nodes,
                 'meta'   : {
-                    'node_fields' : node_fields,
-                    'weight'      : weight,
+                    'graph_fields' : graph_fields,
+                    'graph_weight' : graph_weight,
                 },
             }))
 
