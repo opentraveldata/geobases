@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + CLI: --graph and --graph-options to draw graphs
  + graph visualization in Python API
  + handle local and remote archives
  + make addGrid/dropGrid public method to allow geographical re-indexation
