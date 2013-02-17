@@ -32,8 +32,34 @@ function initialize(jsonData) {
     var weight      = jsonData.meta.weight;
     var node_fields = jsonData.meta.node_fields;
 
-    data = [];
+    var data = [];
     var node_id, node, node_data, edge_id, edge;
+
+    var max_edge_weight = 0;
+    var max_node_weight = 0;
+
+    for (node_id in jsonData.nodes) {
+        if (jsonData.nodes.hasOwnProperty(node_id)) {
+
+            node = jsonData.nodes[node_id];
+
+            if (node.weight > max_node_weight) {
+                max_node_weight = node.weight;
+            }
+
+            for (edge_id in node.edges) {
+                if (node.edges.hasOwnProperty(edge_id)) {
+
+                    edge = node.edges[edge_id];
+
+                    if (edge.weight > max_edge_weight) {
+                        max_edge_weight = edge.weight;
+                    }
+
+                }
+            }
+        }
+    }
 
     for (node_id in jsonData.nodes) {
         if (jsonData.nodes.hasOwnProperty(node_id)) {
@@ -47,7 +73,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     "$color" : "#70A35E",
                     "$type"  : "circle",
-                    "$dim"   : 11
+                    "$dim"   : 30 * Math.sqrt(node.weight / max_node_weight)
                 },
                 'adjacencies' : []
             };
@@ -61,8 +87,9 @@ function initialize(jsonData) {
                         'nodeFrom' : edge.from,
                         'nodeTo'   : edge.to,
                         'data'     : {
-                            'weight' : edge.weight,
-                            "$color" : "#F0F8FF",
+                            'weight'     : edge.weight,
+                            '$lineWidth' : 5 * edge.weight / max_edge_weight,
+                            "$color"     : "#F0F8FF",
                         }
                     });
 
@@ -203,11 +230,11 @@ function initialize(jsonData) {
 $(document).ready(function() {
 
     $("#infovis").css({
-        "height": $(window).height() * 0.90
+        "height": $(window).height() * 0.80
     });
 
     $("#infovis").css({
-        "width": $(window).width() * 0.99
+        "width": $(window).width() * 0.80
     });
 
     // JSON_FILE is defined in the template
