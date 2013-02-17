@@ -312,7 +312,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
 def display_browser(templates, nb_res):
     """Display templates in the browser.
     """
-    # We manually launch firefox, unless we risk a crash
+    # We manually launch browser, unless we risk a crash
     to_be_launched = []
 
     for template in templates:
@@ -320,21 +320,21 @@ def display_browser(templates, nb_res):
             if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
-                print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
-                        (PORT, template, nb_res)
+                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (BROWSER, ADDRESS, PORT, template, nb_res)
 
         elif template.endswith('_map.html'):
             if nb_res <= MAP_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
-                print '/!\ "firefox localhost:%s/%s" not launched automatically. %s results, may be slow.' % \
-                        (PORT, template, nb_res)
+                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (BROWSER, ADDRESS, PORT, template, nb_res)
         else:
             to_be_launched.append(template)
 
     if to_be_launched:
-        urls = ['localhost:%s/%s' % (PORT, tpl) for tpl in to_be_launched]
-        os.system('firefox %s &' % ' '.join(urls))
+        urls = ['%s:%s/%s' % (ADDRESS, PORT, tpl) for tpl in to_be_launched]
+        os.system('%s %s &' % (BROWSER, ' '.join(urls)))
 
 
 
@@ -350,7 +350,7 @@ def launch_http_server(address, port):
     httpd   = MyTCPServer((address, port), Handler)
 
     try:
-        print '* Serving on localhost:%s (hit ctrl+C to stop)' % port
+        print '* Serving on %s:%s (hit ctrl+C to stop)' % (address, port)
         httpd.serve_forever()
 
     except KeyboardInterrupt:
@@ -774,6 +774,10 @@ REF     = '__ref__'
 # Port for SimpleHTTPServer
 ADDRESS = '0.0.0.0'
 PORT    = 8000
+BROWSER = 'firefox'
+
+if is_in_path('google-chrome'):
+    BROWSER = 'google-chrome'
 
 # Defaults for map
 DEF_LABEL_FIELDS    = ('name',       'country_name', '__key__')
