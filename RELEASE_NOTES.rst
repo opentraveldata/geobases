@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + if available, launch google-chrome instead of firefox for HTML display
  + CLI: --graph and --graph-options to draw graphs
  + graph visualization in Python API
  + handle local and remote archives
