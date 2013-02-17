@@ -143,8 +143,6 @@ setup(
         'Intended Audience :: System Administrators',
         'Environment :: Console',
         'Environment :: Web Environment',
-        #'Operating System :: MacOS :: MacOS X',
-        #'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: Linux',
         'Operating System :: Unix',
