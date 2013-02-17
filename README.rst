@@ -306,9 +306,9 @@ Map display
  example_map.html example_table.html
  <BLANKLINE>
  * If you want to clean the temporary files:
- rm example.json ...
+ rm example_map.json ...
  <BLANKLINE>
- (['example_map.html', 'example_table.html'], 2)
+ (['map', 'table'], (['example_map.html', 'example_table.html'], ['example_map.json', ...]))
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
