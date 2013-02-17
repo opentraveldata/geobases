@@ -1120,7 +1120,7 @@ def handle_args():
 
     parser.add_argument('-m', '--map',
         help = dedent('''\
-        This is the map output.
+        This is the map display.
         Configure with --map-options.
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
@@ -1160,7 +1160,7 @@ def handle_args():
 
     parser.add_argument('-g', '--graph',
         help = dedent('''\
-        This is the graph output.
+        This is the graph display.
         Configure with --graph-options.
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
@@ -1172,7 +1172,7 @@ def handle_args():
     parser.add_argument('-G', '--graph-options',
         help = dedent('''\
         This option has n arguments: fields used to build
-        the graph data. Nodes are the field values. Edges
+        the graph display. Nodes are the field values. Edges
         represent the data.
         Default is %s.
         ''' % str(DEF_GRAPH_FIELDS)),
