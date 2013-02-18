@@ -16,6 +16,7 @@ from itertools import izip_longest, chain
 from textwrap import dedent
 import signal
 import platform
+import json
 
 import SimpleHTTPServer
 import SocketServer
@@ -1739,13 +1740,20 @@ def main():
                                      graph_weight=graph_weight,
                                      from_keys=ex_keys(res),
                                      output=g.data,
-                                     verbose=True)
+                                     verbose=verbose)
 
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
             display_browser(templates, nb_res)
             launch_http_server(ADDRESS, PORT)
+        else:
+            # In quiet mode we do not launch the server
+            # but we display the graph structure
+            print json.dumps(g.buildGraphData(graph_fields=graph_fields,
+                                              graph_weight=graph_weight,
+                                              from_keys=ex_keys(res)),
+                             indent=4)
 
 
     if frontend == 'terminal':
