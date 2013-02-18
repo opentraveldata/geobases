@@ -35,7 +35,12 @@ function initialize(jsonData) {
     var graph_weight = jsonData.meta.graph_weight;
     var with_types   = jsonData.meta.with_types;
 
-    $('#fields').html('for <i>{0}</i> (<i>{1}</i> weight)'.fmt(graph_fields.join(', '), graph_weight));
+    var msg_types  = with_types ? 'typed' : 'no types';
+    var msg_weight = graph_weight === null ? 'no weight' : '{0} weight'.fmt(graph_weight);
+
+    $('#fields').html('for <i>{0}</i> ({1}, {2})'.fmt(graph_fields.join(', '),
+                                                      msg_weight,
+                                                      msg_types));
 
     var data = [];
     var node_id, node, node_dim, node_data, edge_id, edge, edge_width;
