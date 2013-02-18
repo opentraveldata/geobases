@@ -159,12 +159,31 @@ function initialize(jsonData) {
 
                 node.eachAdjacency(function(adj) {
                     count += 1;
-                    list.push(adj.nodeTo.name);
+                    list.push([
+                        adj.data.weight,
+                        '[{0}] {1} (w. {2})'.fmt(adj.data.weight,
+                                                 adj.nodeTo.name,
+                                                 adj.nodeTo.data.weight)
+                    ]);
                 });
+
+                // Sort by edge weight
+                list.sort(function (a, b) {
+                    return b[0] - a[0];
+                });
+
+                var i, c;
+                var list_names = [];
+                for (i=0, c=list.length; i<c; i++) {
+                    list_names.push(list[i][1]);
+                }
 
                 // Build the right column relations list.
                 // This is done by traversing the clicked node connections.
-                var html = "<ul><li>" + list.join("</li><li>") + "</li></ul>";
+                var html = "";
+                if (list_names.length !== 0){
+                    html = "<ul><li>" + list_names.join("</li><li>") + "</li></ul>";
+                }
 
                 //display node info in tooltip
                 tip.innerHTML = "" +
