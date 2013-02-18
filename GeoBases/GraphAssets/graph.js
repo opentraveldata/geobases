@@ -115,6 +115,9 @@ function initialize(jsonData) {
     }
 
 
+    // Others
+    // $jit.RGraph
+    // $jit.Hypertree
     var fd = new $jit.ForceDirected({
         //id of the visualization container
         injectInto: 'infovis',
@@ -223,6 +226,7 @@ function initialize(jsonData) {
 
     // load JSON data.
     fd.loadJSON(data);
+
     // compute positions incrementally and animate.
     fd.computeIncremental({
         iter    : 40,
@@ -239,6 +243,9 @@ function initialize(jsonData) {
             });
         }
     });
+
+    // For other graphs
+    //fd.refresh();
 }
 
 
