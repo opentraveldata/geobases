@@ -2104,7 +2104,7 @@ class GeoBase(object):
         return []
 
 
-    def buildGraphData(self, graph_fields, graph_weight=None, from_keys=None):
+    def buildGraphData(self, graph_fields, graph_weight=None, is_typed=False, from_keys=None):
         """Build graph data.
 
         :param graph_fields: iterable of fields used to define the nodes. \
@@ -2112,6 +2112,9 @@ class GeoBase(object):
                 data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
+        :param is_typed:    boolean to consider values from different fields \
+                of the same "type" or not, meaning we will create only one \
+                node if the same value is found accross different fields.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
 
@@ -2146,17 +2149,17 @@ class GeoBase(object):
             """
             return {
                 "name"   : name,
-                "type"   : ftype,
+                "type"   : [ftype],
                 "edges"  : {},
                 "weight" : 0
             }
 
-        def _empty_edge(node_from, node_to):
+        def _empty_edge(node_fr_id, node_to_id):
             """Make an empty edge.
             """
             return {
-                'from'   : node_from,
-                'to'     : node_to,
+                'from'   : node_fr_id,
+                'to'     : node_to_id,
                 'weight' : 0
             }
 
@@ -2172,35 +2175,62 @@ class GeoBase(object):
 
 
             for i in xrange(nb_edges):
-                node_from, node_to = values[i], values[i + 1]
+                type_fr = graph_fields[i]
+                type_to = graph_fields[i + 1]
 
-                if node_from not in nodes:
-                    nodes[node_from] = _empty_node(node_from, graph_fields[i])
+                if is_typed:
+                    # We include the type in the key
+                    # We do not create tuples because json requires string as keys
+                    # A bit moisi here...
+                    node_fr_id = '%s/%s' % (type_fr, values[i])
+                    node_to_id = '%s/%s' % (type_to, values[i + 1])
+                else:
+                    # Here the key is just the value, no type
+                    node_fr_id, node_to_id = values[i], values[i + 1]
 
-                if node_to not in nodes:
-                    nodes[node_to] = _empty_node(node_to, graph_fields[i + 1])
+                # Adding nodes if do not exist already
+                if node_fr_id not in nodes:
+                    nodes[node_fr_id] = _empty_node(values[i], type_fr)
 
-                nodes[node_from]["weight"] += weight
-                nodes[node_to]["weight"]   += weight
+                if node_to_id not in nodes:
+                    nodes[node_to_id] = _empty_node(values[i + 1], type_to)
+
+                # Updating types
+                if type_fr not in nodes[node_fr_id]['type']:
+                    nodes[node_fr_id]['type'].append(type_fr)
+
+                if type_to not in nodes[node_to_id]['type']:
+                    nodes[node_to_id]['type'].append(type_to)
+
+                nodes[node_fr_id]["weight"] += weight
+                nodes[node_to_id]["weight"] += weight
 
                 # Updating edges
-                edge = '%s/%s' % (node_from, node_to)
+                edge = '%s/%s' % (node_fr_id, node_to_id)
 
-                if edge not in nodes[node_from]["edges"]:
-                    nodes[node_from]["edges"][edge] = _empty_edge(node_from, node_to)
+                if edge not in nodes[node_fr_id]["edges"]:
+                    nodes[node_fr_id]["edges"][edge] = _empty_edge(node_fr_id, node_to_id)
 
-                nodes[node_from]["edges"][edge]["weight"] += weight
+                nodes[node_fr_id]["edges"][edge]["weight"] += weight
 
             # In this case we did not iterate through the previous loop
             # Note that if graph_fields is [], nb_edges is -1 so
             # we do not go here either
             if nb_edges == 0:
-                node = values[0]
+                type_ = graph_fields[0]
 
-                if node not in nodes:
-                    nodes[node] = _empty_node(node, graph_fields[0])
+                if is_typed:
+                    node_id = '%s/%s' % (type_, values[0])
+                else:
+                    node_id = values[0]
 
-                nodes[node]["weight"] += weight
+                if node_id not in nodes:
+                    nodes[node_id] = _empty_node(values[0], type_)
+
+                if type_ not in nodes[node_id]['type']:
+                    nodes[node_id]['type'].append(type_)
+
+                nodes[node_id]["weight"] += weight
 
         return nodes
 
@@ -2208,6 +2238,7 @@ class GeoBase(object):
     def graphVisualize(self,
                        graph_fields,
                        graph_weight=None,
+                       is_typed=False,
                        from_keys=None,
                        output='example',
                        verbose=True):
@@ -2218,6 +2249,9 @@ class GeoBase(object):
                 data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
+        :param is_typed:    boolean to consider values from different fields \
+                of the same "type" or not, meaning we will create only one \
+                node if the same value is found accross different fields.
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
         :param verbose:     toggle verbosity
@@ -2228,6 +2262,7 @@ class GeoBase(object):
 
         nodes = self.buildGraphData(graph_fields=graph_fields,
                                     graph_weight=graph_weight,
+                                    is_typed=is_typed,
                                     from_keys=from_keys)
 
         # Dump the json geocodes
