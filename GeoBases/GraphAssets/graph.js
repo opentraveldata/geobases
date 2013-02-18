@@ -71,6 +71,23 @@ function initialize(jsonData) {
     var MIN_LINE_WIDTH = 0.2;
     var MAX_LINE_WIDTH = 7;
 
+    // Colors, catalog of types to colors
+    // blue, red, olive, darkblue
+    var colors = ["#006A80", "#801500", "#585800", "#000059"];
+    var color_id = colors.length - 1;
+    var catalog = {};
+
+    function type_to_color(type) {
+        if (! catalog.hasOwnProperty(type)) {
+            color_id += 1;
+            if (color_id >= colors.length){
+                color_id = 0;
+            }
+            catalog[type] = colors[color_id];
+        }
+        return catalog[type];
+    }
+
     for (node_id in jsonData.nodes) {
         if (jsonData.nodes.hasOwnProperty(node_id)) {
 
@@ -80,11 +97,12 @@ function initialize(jsonData) {
                 MAX_NODE_DIM * Math.sqrt(node.weight / max_node_weight));
 
             node_data = {
-                'name'        : node_id,
                 'id'          : node_id,
+                'name'        : node.name,
                 'data'        : {
                     'weight' : node.weight,
-                    "$color" : "#006A80",
+                    'type'   : node.type,
+                    "$color" : type_to_color(node.type),
                     "$type"  : "circle",
                     "$dim"   : node_dim
                 },
@@ -189,7 +207,9 @@ function initialize(jsonData) {
 
                 //display node info in tooltip
                 tip.innerHTML = "" +
-                    "<div class=\"tip-title\">{0} (weight {1})</div>".fmt(node.name, node.data.weight) +
+                    "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
+                    "<div class=\"tip-text\"><b>Weight {0}</b></div>".fmt(node.data.weight) +
+                    "<div class=\"tip-text\"><b>Type {0}</b></div>".fmt(node.data.type) +
                     "<div class=\"tip-text\"><b>{0} link(s):</b>{1}</div>".fmt(count, html);
             }
         },
