@@ -83,7 +83,9 @@ function initialize(jsonData) {
     var color_id = colors.length - 1;
     var catalog = {};
 
-    function type_to_color(type) {
+    function types_to_color(types) {
+        // We convert the types into a string
+        var type = '' + types;
         if (! catalog.hasOwnProperty(type)) {
             color_id += 1;
             if (color_id >= colors.length){
