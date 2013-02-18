@@ -2184,7 +2184,7 @@ class GeoBase(object):
                 nodes[node_to]["weight"]   += weight
 
                 # Updating edges
-                edge = '%s-%s' % (node_from, node_to)
+                edge = '%s/%s' % (node_from, node_to)
 
                 if edge not in nodes[node_from]["edges"]:
                     nodes[node_from]["edges"][edge] = _empty_edge(node_from, node_to)
