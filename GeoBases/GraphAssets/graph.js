@@ -34,7 +34,7 @@ function initialize(jsonData) {
     var graph_fields = jsonData.meta.graph_fields;
     var graph_weight = jsonData.meta.graph_weight;
 
-    $('#fields').html('for <i>{0}</i> (weight <i>{1}</i>)'.fmt(graph_fields.join(', '), graph_weight));
+    $('#fields').html('for <i>{0}</i> (<i>{1}</i> weight)'.fmt(graph_fields.join(', '), graph_weight));
 
     var data = [];
     var node_id, node, node_dim, node_data, edge_id, edge, edge_width;
@@ -210,7 +210,7 @@ function initialize(jsonData) {
                     "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
                     "<div class=\"tip-text\"><b>Weight {0}</b></div>".fmt(node.data.weight) +
                     "<div class=\"tip-text\"><b>Type {0}</b></div>".fmt(node.data.type) +
-                    "<div class=\"tip-text\"><b>{0} link(s):</b>{1}</div>".fmt(count, html);
+                    "<div class=\"tip-text\"><b>{0} link(s):</b> [link w.] node (node w.){1}</div>".fmt(count, html);
             }
         },
         // Add node events
