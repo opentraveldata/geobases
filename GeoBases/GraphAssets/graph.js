@@ -47,7 +47,7 @@ function initialize(jsonData) {
     $('#fields').html('for <i>{0}</i> (weight <i>{1}</i>)'.fmt(graph_fields.join(', '), graph_weight));
 
     var data = [];
-    var node_id, node, node_data, edge_id, edge;
+    var node_id, node, node_dim, node_data, edge_id, edge, edge_width;
 
     var max_edge_weight = 0;
     var max_node_weight = 0;
@@ -75,10 +75,19 @@ function initialize(jsonData) {
         }
     }
 
+    var MIN_NODE_DIM = 5;
+    var MAX_NODE_DIM = 20;
+
+    var MIN_LINE_WIDTH = 0.2;
+    var MAX_LINE_WIDTH = 5;
+
     for (node_id in jsonData.nodes) {
         if (jsonData.nodes.hasOwnProperty(node_id)) {
 
             node = jsonData.nodes[node_id];
+            node_dim = Math.max(
+                MIN_NODE_DIM,
+                MAX_NODE_DIM * Math.sqrt(node.weight / max_node_weight));
 
             node_data = {
                 'name'        : node_id,
@@ -87,7 +96,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     "$color" : "#70A35E",
                     "$type"  : "circle",
-                    "$dim"   : Math.max(5, 20 * Math.sqrt(node.weight / max_node_weight))
+                    "$dim"   : node_dim
                 },
                 'adjacencies' : []
             };
@@ -96,14 +105,17 @@ function initialize(jsonData) {
                 if (node.edges.hasOwnProperty(edge_id)) {
 
                     edge = node.edges[edge_id];
+                    edge_width = Math.max(
+                        MIN_LINE_WIDTH,
+                        MAX_LINE_WIDTH * edge.weight / max_edge_weight);
 
                     node_data.adjacencies.push({
                         'nodeFrom' : edge.from,
                         'nodeTo'   : edge.to,
                         'data'     : {
                             'weight'     : edge.weight,
-                            '$lineWidth' : Math.max(0.2, 5 * edge.weight / max_edge_weight),
-                            "$color"     : "#F0F8FF"
+                            "$color"     : "#F0F8FF",
+                            '$lineWidth' : edge_width
                         }
                     });
 
