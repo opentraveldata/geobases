@@ -122,10 +122,10 @@ function initialize(jsonData) {
         //by scrolling and DnD
         Navigation: {
             enable: true,
-        //Enable panning events only if we're dragging the empty
-        //canvas (and not a node).
-        panning: 'avoid nodes',
-        zooming: 10 //zoom speed. higher is more sensible
+            //Enable panning events only if we're dragging the empty
+            //canvas (and not a node).
+            panning: 'avoid nodes',
+            zooming: 10 //zoom speed. higher is more sensible
         },
         // Change node and edge styles such as
         // color and width.
@@ -136,15 +136,15 @@ function initialize(jsonData) {
             overridable: true
         },
         Edge: {
-            overridable: true,
-            color: '#23A4FF',
-            lineWidth: 0.4
+            overridable : true,
+            color       : '#23A4FF',
+            lineWidth   : 0.4
         },
         //Native canvas text styling
         Label: {
-            type: 'HTML', //Native or HTML
-            size: 10,
-            style: 'bold'
+            type    : 'HTML', //Native or HTML
+            size    : 10,
+            style   : 'bold'
         },
         //Add Tips
         Tips: {
@@ -155,14 +155,14 @@ function initialize(jsonData) {
                 node.eachAdjacency(function() { count++; });
                 //display node info in tooltip
                 tip.innerHTML = "<div class=\"tip-title\">" + node.name + "</div>" +
-                    "<div class=\"tip-text\"><b>connections:</b> " + count + "</div>" +
-                    "<div class=\"tip-text\"><b>weight:</b> " + node.data.weight + "</div>";
+                    "<div class=\"tip-text\"><b>Weight:</b> " + node.data.weight + "</div>" +
+                    "<div class=\"tip-text\"><b>Neighbors:</b> " + count + "</div>";
             }
         },
         // Add node events
         Events: {
-            enable: true,
-            type: 'Native',
+            enable  : true,
+            type    : 'Native',
             //Change cursor style when hovering a node
             onMouseEnter: function() {
                 fd.canvas.getElement().style.cursor = 'move';
@@ -192,8 +192,8 @@ function initialize(jsonData) {
                     list.push(adj.nodeTo.name);
                 });
                 //append connections information
-                console.log(html);
-                console.log(list);
+                //$jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
+
             }
         },
         //Number of iterations for the FD algorithm
@@ -220,11 +220,12 @@ function initialize(jsonData) {
             style.display = '';
         }
     });
+
     // load JSON data.
     fd.loadJSON(data);
     // compute positions incrementally and animate.
     fd.computeIncremental({
-        iter: 40,
+        iter    : 40,
         property: 'end',
         onStep  : function(perc){
             Log.write(perc + '% loaded...');
@@ -232,9 +233,9 @@ function initialize(jsonData) {
         onComplete: function(){
             Log.write('done');
             fd.animate({
-                modes: ['linear'],
-                transition: $jit.Trans.Elastic.easeOut,
-                duration: 2500
+                modes       : ['linear'],
+                transition  : $jit.Trans.Elastic.easeOut,
+                duration    : 2500
             });
         }
     });
