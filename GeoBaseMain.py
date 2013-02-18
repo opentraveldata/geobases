@@ -1431,8 +1431,9 @@ def main():
         link_duplicates = args['map_options'][4] in TRUTHY
 
     # Reading graph options
+    # Default graph_fields is first two available from DEF_GRAPH_FIELDS
     graph_weight = DEF_GRAPH_WEIGHT
-    graph_fields = [f for f in DEF_GRAPH_FIELDS if f in g.fields]
+    graph_fields = [f for f in DEF_GRAPH_FIELDS if f in g.fields][0:2]
 
     if len(args['graph_options']) >= 1:
         # If user gave something for forget the defaults
