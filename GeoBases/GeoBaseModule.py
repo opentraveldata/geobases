@@ -2108,11 +2108,20 @@ class GeoBase(object):
         """Build graph data.
 
         :param graph_fields: iterable of fields used to define the nodes. \
-                Nodes are the values of these fields
+                Nodes are the values of these fields. Edges represent the \
+                data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
+
+        >>> nodes = geo_o.buildGraphData(
+        ...     graph_fields=['continent_name', 'country_code'],
+        ...     graph_weight='page_rank'
+        ... )
+        >>> edges = nodes['Antarctica']['edges'].values()
+        >>> sorted(edges[0].items())
+        [('from', 'Antarctica'), ('to', 'AQ'), ('weight', 0)]
         """
         if from_keys is None:
             from_keys = iter(self)
@@ -2201,7 +2210,8 @@ class GeoBase(object):
         """Graph display.
 
         :param graph_fields: iterable of fields used to define the nodes. \
-                Nodes are the values of these fields
+                Nodes are the values of these fields. Edges represent the \
+                data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
         :param from_keys:   only display this iterable of keys if not None
