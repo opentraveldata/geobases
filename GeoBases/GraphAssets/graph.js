@@ -87,7 +87,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     "$color" : "#70A35E",
                     "$type"  : "circle",
-                    "$dim"   : Math.max(5, 30 * Math.sqrt(node.weight / max_node_weight))
+                    "$dim"   : Math.max(2, 20 * Math.sqrt(node.weight / max_node_weight))
                 },
                 'adjacencies' : []
             };
@@ -102,7 +102,7 @@ function initialize(jsonData) {
                         'nodeTo'   : edge.to,
                         'data'     : {
                             'weight'     : edge.weight,
-                            '$lineWidth' : 5 * edge.weight / max_edge_weight,
+                            '$lineWidth' : Math.max(0.2, 5 * edge.weight / max_edge_weight),
                             "$color"     : "#F0F8FF"
                         }
                     });
@@ -127,8 +127,8 @@ function initialize(jsonData) {
             enable: true,
             //Enable panning events only if we're dragging the empty
             //canvas (and not a node).
-            panning: 'avoid nodes',
-            zooming: 10 //zoom speed. higher is more sensible
+            panning: false, //'avoid nodes',
+            zooming: 40 //zoom speed. higher is more sensible
         },
         // Change node and edge styles such as
         // color and width.
@@ -158,7 +158,7 @@ function initialize(jsonData) {
                 var list = [];
 
                 node.eachAdjacency(function(adj) {
-                    count++;
+                    count += 1;
                     list.push(adj.nodeTo.name);
                 });
 
@@ -168,9 +168,8 @@ function initialize(jsonData) {
 
                 //display node info in tooltip
                 tip.innerHTML = "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
-                    "<div class=\"tip-text\"><b>Weight:</b>{0}</div>".fmt(node.data.weight) +
-                    "<div class=\"tip-text\"><b>Neighbors ({0}):</b></div>".fmt(count) +
-                    html;
+                    "<div class=\"tip-text\"><b>Weight:</b> {0}</div>".fmt(node.data.weight) +
+                    "<div class=\"tip-text\"><b>Neighbors ({0}):</b>{1}</div>".fmt(count, html);
             }
         },
         // Add node events
@@ -220,7 +219,7 @@ function initialize(jsonData) {
             var top = parseInt(style.top, 10);
             var w = domElement.offsetWidth;
             style.left = (left - w / 2) + 'px';
-            style.top = (top + 10) + 'px';
+            style.top = (top - 5) + 'px';
             style.display = '';
         }
     });
@@ -230,7 +229,7 @@ function initialize(jsonData) {
 
     // compute positions incrementally and animate.
     fd.computeIncremental({
-        iter    : 40,
+        iter    : 20,
         property: 'end',
         onStep  : function(perc){
             Log.write(perc + '% loaded...');
