@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + type system when graph building, --with-types/-z to toggle from CLI
  + if available, launch google-chrome instead of firefox for HTML display
  + CLI: --graph and --graph-options to draw graphs
  + graph visualization in Python API
