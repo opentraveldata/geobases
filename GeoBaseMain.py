@@ -794,7 +794,7 @@ TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 DEF_GRAPH_WEIGHT = None
 DEF_GRAPH_FIELDS = ('continent_name', 'raw_offset',
                     'alliance_code',  'unified_code',
-                    'H0', 'H1', # for stdin input
+                    'H0', 'H1', 'H2', 'H3', 'H4', # for stdin input
                     '__key__')
 
 # Terminal width defaults
