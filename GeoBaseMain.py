@@ -1189,6 +1189,17 @@ def handle_args():
         metavar = 'FIELDS',
         default = [])
 
+    parser.add_argument('-z', '--with-types',
+        help = dedent('''\
+        When drawing graphs, consider values from different
+        fields to be of different types. Concretely, if there
+        are no types, this means we will create only one node
+        if the same value is found accross different fields.
+        With this option turned on, we would create different
+        nodes.
+        '''),
+        action = 'store_true')
+
     parser.add_argument('-v', '--verbose',
         help = dedent('''\
         Provides additional informations:
@@ -1745,6 +1756,7 @@ def main():
     if frontend == 'graph':
         visu_info = g.graphVisualize(graph_fields=graph_fields,
                                      graph_weight=graph_weight,
+                                     with_types=args['with_types'],
                                      from_keys=ex_keys(res),
                                      output=g.data,
                                      verbose=verbose)
@@ -1759,6 +1771,7 @@ def main():
             # but we display the graph structure
             print json.dumps(g.buildGraphData(graph_fields=graph_fields,
                                               graph_weight=graph_weight,
+                                              with_types=args['with_types'],
                                               from_keys=ex_keys(res)),
                              indent=4)
 
