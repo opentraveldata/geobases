@@ -2141,10 +2141,12 @@ class GeoBase(object):
             get_weight = lambda k: self.get(k, graph_weight)
 
 
-        def _empty_node():
+        def _empty_node(name, ftype):
             """Make an empty node.
             """
             return {
+                "name"   : name,
+                "type"   : ftype,
                 "edges"  : {},
                 "weight" : 0
             }
@@ -2173,10 +2175,10 @@ class GeoBase(object):
                 node_from, node_to = values[i], values[i + 1]
 
                 if node_from not in nodes:
-                    nodes[node_from] = _empty_node()
+                    nodes[node_from] = _empty_node(node_from, graph_fields[i])
 
                 if node_to not in nodes:
-                    nodes[node_to] = _empty_node()
+                    nodes[node_to] = _empty_node(node_to, graph_fields[i + 1])
 
                 nodes[node_from]["weight"] += weight
                 nodes[node_to]["weight"]   += weight
@@ -2190,11 +2192,13 @@ class GeoBase(object):
                 nodes[node_from]["edges"][edge]["weight"] += weight
 
             # In this case we did not iterate through the previous loop
+            # Note that if graph_fields is [], nb_edges is -1 so
+            # we do not go here either
             if nb_edges == 0:
                 node = values[0]
 
                 if node not in nodes:
-                    nodes[node] = _empty_node()
+                    nodes[node] = _empty_node(node, graph_fields[0])
 
                 nodes[node]["weight"] += weight
 
