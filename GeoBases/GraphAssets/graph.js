@@ -75,7 +75,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     "$color" : "#70A35E",
                     "$type"  : "circle",
-                    "$dim"   : 30 * Math.sqrt(node.weight / max_node_weight)
+                    "$dim"   : Math.min(5, 30 * Math.sqrt(node.weight / max_node_weight))
                 },
                 'adjacencies' : []
             };
