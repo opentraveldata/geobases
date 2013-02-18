@@ -189,9 +189,9 @@ function initialize(jsonData) {
                     count += 1;
                     list.push([
                         adj.data.weight,
-                        '[{0}] {1} (w. {2})'.fmt(adj.data.weight,
-                                                 adj.nodeTo.name,
-                                                 adj.nodeTo.data.weight)
+                        '[{0}] {1} ({2})'.fmt(adj.data.weight,
+                                              adj.nodeTo.name,
+                                              adj.nodeTo.data.weight)
                     ]);
                 });
 
