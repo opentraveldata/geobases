@@ -91,7 +91,7 @@ function initialize(jsonData) {
                         'data'     : {
                             'weight'     : edge.weight,
                             '$lineWidth' : 5 * edge.weight / max_edge_weight,
-                            "$color"     : "#F0F8FF",
+                            "$color"     : "#F0F8FF"
                         }
                     });
 
@@ -142,9 +142,9 @@ function initialize(jsonData) {
                 var count = 0;
                 node.eachAdjacency(function() { count++; });
                 //display node info in tooltip
-                tip.innerHTML = "<div class=\"tip-title\">" + node.name + "</div>"
-                    + "<div class=\"tip-text\"><b>connections:</b> " + count + "</div>"
-                    + "<div class=\"tip-text\"><b>weight:</b> " + node.data.weight + "</div>";
+                tip.innerHTML = "<div class=\"tip-title\">" + node.name + "</div>" +
+                    "<div class=\"tip-text\"><b>connections:</b> " + count + "</div>" +
+                    "<div class=\"tip-text\"><b>weight:</b> " + node.data.weight + "</div>";
             }
         },
         // Add node events
@@ -171,7 +171,7 @@ function initialize(jsonData) {
             },
             //Add also a click handler to nodes
             onClick: function(node) {
-                if(!node) return;
+                if(!node) { return; }
                 // Build the right column relations list.
                 // This is done by traversing the clicked node connections.
                 var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
@@ -200,8 +200,8 @@ function initialize(jsonData) {
         // or moved.
         onPlaceLabel: function(domElement, node){
             var style = domElement.style;
-            var left = parseInt(style.left);
-            var top = parseInt(style.top);
+            var left = parseInt(style.left, 10);
+            var top = parseInt(style.top, 10);
             var w = domElement.offsetWidth;
             style.left = (left - w / 2) + 'px';
             style.top = (top + 10) + 'px';
