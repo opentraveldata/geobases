@@ -29,8 +29,10 @@ function overflow(text) {
 
 function initialize(jsonData) {
 
-    var weight      = jsonData.meta.weight;
-    var node_fields = jsonData.meta.node_fields;
+    var graph_fields = jsonData.meta.graph_fields;
+    var graph_weight = jsonData.meta.graph_weight;
+
+    $('#fields').html('for {0} [weight {1}]'.fmt(graph_fields.join(', '), graph_weight));
 
     var data = [];
     var node_id, node, node_data, edge_id, edge;
