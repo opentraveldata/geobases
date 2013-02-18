@@ -570,21 +570,21 @@ class GeoBase(object):
             raise ValueError('Wrong fields "%s" for index' % str(fields))
 
         # Mapping for every possible value to matching keys
-        val_to_keys = {}
+        index = {}
 
         for key in self:
 
             val = compute_val(key)
 
-            if val not in val_to_keys:
-                val_to_keys[val] = []
+            if val not in index:
+                index[val] = []
 
-            val_to_keys[val].append(key)
+            index[val].append(key)
 
         if verbose:
             print 'Built index for fields %s' % str(fields)
 
-        return val_to_keys
+        return index
 
 
     @staticmethod
