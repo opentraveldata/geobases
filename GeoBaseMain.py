@@ -792,8 +792,9 @@ TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Graph defaults
 DEF_GRAPH_WEIGHT = None
-DEF_GRAPH_FIELDS = ('continent_name', 'country_code', 'raw_offset',
-                    'alliance_code',  'unified_code', '__key__')
+DEF_GRAPH_FIELDS = ('continent_name', 'raw_offset',
+                    'alliance_code',  'unified_code',
+                    '__key__')
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
