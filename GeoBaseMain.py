@@ -792,7 +792,8 @@ TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Graph defaults
 DEF_GRAPH_WEIGHT = None
-DEF_GRAPH_FIELDS = []
+DEF_GRAPH_FIELDS = ('continent_name', 'country_code', 'raw_offset',
+                    'alliance_code',  'unified_code', '__key__')
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
@@ -1430,9 +1431,11 @@ def main():
 
     # Reading graph options
     graph_weight = DEF_GRAPH_WEIGHT
-    graph_fields = DEF_GRAPH_FIELDS
+    graph_fields = [f for f in DEF_GRAPH_FIELDS if f in g.fields]
 
-    graph_fields = [f for f in args['graph_options'] if f != SKIP]
+    if len(args['graph_options']) >= 1:
+        # If user gave something for forget the defaults
+        graph_fields = [f for f in args['graph_options'] if f != SKIP]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
