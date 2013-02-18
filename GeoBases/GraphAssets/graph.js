@@ -44,7 +44,7 @@ function initialize(jsonData) {
     var graph_fields = jsonData.meta.graph_fields;
     var graph_weight = jsonData.meta.graph_weight;
 
-    $('#fields').html('for {0} [weight {1}]'.fmt(graph_fields.join(', '), graph_weight));
+    $('#fields').html('for <i>{0}</i> (weight <i>{1}</i>)'.fmt(graph_fields.join(', '), graph_weight));
 
     var data = [];
     var node_id, node, node_data, edge_id, edge;
@@ -87,7 +87,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     "$color" : "#70A35E",
                     "$type"  : "circle",
-                    "$dim"   : Math.max(2, 20 * Math.sqrt(node.weight / max_node_weight))
+                    "$dim"   : Math.max(5, 20 * Math.sqrt(node.weight / max_node_weight))
                 },
                 'adjacencies' : []
             };
@@ -167,9 +167,9 @@ function initialize(jsonData) {
                 var html = "<ul><li>" + list.join("</li><li>") + "</li></ul>";
 
                 //display node info in tooltip
-                tip.innerHTML = "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
-                    "<div class=\"tip-text\"><b>Weight:</b> {0}</div>".fmt(node.data.weight) +
-                    "<div class=\"tip-text\"><b>Neighbors ({0}):</b>{1}</div>".fmt(count, html);
+                tip.innerHTML = "" +
+                    "<div class=\"tip-title\">{0} (weight {1})</div>".fmt(node.name, node.data.weight) +
+                    "<div class=\"tip-text\"><b>{0} link(s):</b>{1}</div>".fmt(count, html);
             }
         },
         // Add node events
@@ -252,7 +252,7 @@ function initialize(jsonData) {
 $(document).ready(function() {
 
     $("#infovis").css({
-        "height": $(window).height() * 0.80
+        "height": $(window).height() * 0.85
     });
 
     $("#infovis").css({
