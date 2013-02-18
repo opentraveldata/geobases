@@ -69,7 +69,7 @@ function initialize(jsonData) {
     var MAX_NODE_DIM = 20;
 
     var MIN_LINE_WIDTH = 0.2;
-    var MAX_LINE_WIDTH = 5;
+    var MAX_LINE_WIDTH = 7;
 
     for (node_id in jsonData.nodes) {
         if (jsonData.nodes.hasOwnProperty(node_id)) {
@@ -84,7 +84,7 @@ function initialize(jsonData) {
                 'id'          : node_id,
                 'data'        : {
                     'weight' : node.weight,
-                    "$color" : "#70A35E",
+                    "$color" : "#006A80",
                     "$type"  : "circle",
                     "$dim"   : node_dim
                 },
@@ -104,7 +104,7 @@ function initialize(jsonData) {
                         'nodeTo'   : edge.to,
                         'data'     : {
                             'weight'     : edge.weight,
-                            "$color"     : "#F0F8FF",
+                            "$color"     : "#585858",
                             '$lineWidth' : edge_width
                         }
                     });
@@ -229,7 +229,7 @@ function initialize(jsonData) {
         onCreateLabel: function(domElement, node){
             domElement.innerHTML = node.name;
             var style = domElement.style;
-            style.fontSize = "0.8em";
+            style.fontSize = "0.80em";
             style.color = "#ddd";
         },
         // Change node styles when DOM labels are placed
