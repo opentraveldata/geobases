@@ -155,11 +155,22 @@ function initialize(jsonData) {
             onShow: function(tip, node) {
                 //count connections
                 var count = 0;
-                node.eachAdjacency(function() { count++; });
+                var list = [];
+
+                node.eachAdjacency(function(adj) {
+                    count++;
+                    list.push(adj.nodeTo.name);
+                });
+
+                // Build the right column relations list.
+                // This is done by traversing the clicked node connections.
+                var html = "<ul><li>" + list.join("</li><li>") + "</li></ul>";
+
                 //display node info in tooltip
-                tip.innerHTML = "<div class=\"tip-title\">" + node.name + "</div>" +
-                    "<div class=\"tip-text\"><b>Weight:</b> " + node.data.weight + "</div>" +
-                    "<div class=\"tip-text\"><b>Neighbors:</b> " + count + "</div>";
+                tip.innerHTML = "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
+                    "<div class=\"tip-text\"><b>Weight:</b>{0}</div>".fmt(node.data.weight) +
+                    "<div class=\"tip-text\"><b>Neighbors ({0}):</b></div>".fmt(count) +
+                    html;
             }
         },
         // Add node events
@@ -187,16 +198,6 @@ function initialize(jsonData) {
             //Add also a click handler to nodes
             onClick: function(node) {
                 if(!node) { return; }
-                // Build the right column relations list.
-                // This is done by traversing the clicked node connections.
-                var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
-                    list = [];
-                node.eachAdjacency(function(adj){
-                    list.push(adj.nodeTo.name);
-                });
-                //append connections information
-                //$jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
-
             }
         },
         //Number of iterations for the FD algorithm
