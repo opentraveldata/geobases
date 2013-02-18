@@ -2117,9 +2117,6 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        graph_fields = tuplify(graph_fields)
-        nb_edges     = len(graph_fields) - 1
-
         for field in graph_fields:
             if field not in self.fields:
                 raise ValueError('graph_fields "%s" not in fields %s.' % \
@@ -2153,6 +2150,7 @@ class GeoBase(object):
             }
 
         nodes = {}
+        nb_edges = len(graph_fields) - 1
 
         for key in from_keys:
             values = tuple(self.get(key, f) for f in graph_fields)
@@ -2212,6 +2210,8 @@ class GeoBase(object):
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
         """
+        graph_fields = tuplify(graph_fields)
+
         nodes = self.buildGraphData(graph_fields=graph_fields,
                                     graph_weight=graph_weight,
                                     from_keys=from_keys)
