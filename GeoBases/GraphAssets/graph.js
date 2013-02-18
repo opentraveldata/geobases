@@ -78,8 +78,8 @@ function initialize(jsonData) {
     var MAX_LINE_WIDTH = 7;
 
     // Colors, catalog of types to colors
-    // blue, red, olive, darkblue
-    var colors = ["#006A80", "#801500", "#585800", "#000059"];
+    // blue, red, darkyellow, purple, green, grey
+    var colors = ["#006A80", "#801500", "#878700", "#4E004E", "#004f00", "#333333"];
     var color_id = colors.length - 1;
     var catalog = {};
 
