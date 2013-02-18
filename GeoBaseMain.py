@@ -1180,8 +1180,9 @@ def handle_args():
         This option has n arguments: fields used to build
         the graph display. Nodes are the field values. Edges
         represent the data.
-        Default is %s.
-        ''' % str(DEF_GRAPH_FIELDS)),
+        Default is, depending on fields, picked in
+        %s.
+        ''' % ', '.join(DEF_GRAPH_FIELDS)),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
