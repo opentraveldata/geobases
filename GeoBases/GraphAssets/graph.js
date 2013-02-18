@@ -33,6 +33,7 @@ function initialize(jsonData) {
 
     var graph_fields = jsonData.meta.graph_fields;
     var graph_weight = jsonData.meta.graph_weight;
+    var with_types   = jsonData.meta.with_types;
 
     $('#fields').html('for <i>{0}</i> (<i>{1}</i> weight)'.fmt(graph_fields.join(', '), graph_weight));
 

@@ -2104,7 +2104,7 @@ class GeoBase(object):
         return []
 
 
-    def buildGraphData(self, graph_fields, graph_weight=None, is_typed=False, from_keys=None):
+    def buildGraphData(self, graph_fields, graph_weight=None, with_types=False, from_keys=None):
         """Build graph data.
 
         :param graph_fields: iterable of fields used to define the nodes. \
@@ -2112,9 +2112,10 @@ class GeoBase(object):
                 data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
-        :param is_typed:    boolean to consider values from different fields \
+        :param with_types:  boolean to consider values from different fields \
                 of the same "type" or not, meaning we will create only one \
-                node if the same value is found accross different fields.
+                node if the same value is found accross different fields, if \
+                there are no types. Otherwise we will create different nodes.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
 
@@ -2144,22 +2145,22 @@ class GeoBase(object):
             get_weight = lambda k: self.get(k, graph_weight)
 
 
-        def _empty_node(name, ftype):
+        def _empty_node(type_, name):
             """Make an empty node.
             """
             return {
-                "name"   : name,
-                "type"   : [ftype],
-                "edges"  : {},
-                "weight" : 0
+                'types'  : set([type_]),
+                'name'   : name,
+                'edges'  : {},
+                'weight' : 0
             }
 
-        def _empty_edge(node_fr_id, node_to_id):
+        def _empty_edge(ori_id, des_id):
             """Make an empty edge.
             """
             return {
-                'from'   : node_fr_id,
-                'to'     : node_to_id,
+                'from'   : ori_id,
+                'to'     : des_id,
                 'weight' : 0
             }
 
@@ -2173,64 +2174,71 @@ class GeoBase(object):
             except ValueError:
                 weight = 0
 
-
             for i in xrange(nb_edges):
-                type_fr = graph_fields[i]
-                type_to = graph_fields[i + 1]
+                ori_type = graph_fields[i]
+                des_type = graph_fields[i + 1]
+                ori_val  = values[i]
+                des_val  = values[i + 1]
 
-                if is_typed:
+                if with_types:
                     # We include the type in the key
                     # We do not create tuples because json requires string as keys
-                    # A bit moisi here...
-                    node_fr_id = '%s/%s' % (type_fr, values[i])
-                    node_to_id = '%s/%s' % (type_to, values[i + 1])
+                    # A bit "moisi" here...
+                    ori_id = '%s/%s' % (ori_type, ori_val)
+                    des_id = '%s/%s' % (des_type, des_val)
                 else:
                     # Here the key is just the value, no type
-                    node_fr_id, node_to_id = values[i], values[i + 1]
+                    ori_id = ori_val
+                    des_id = des_val
 
                 # Adding nodes if do not exist already
-                if node_fr_id not in nodes:
-                    nodes[node_fr_id] = _empty_node(values[i], type_fr)
+                if ori_id not in nodes:
+                    nodes[ori_id] = _empty_node(ori_type, ori_val)
 
-                if node_to_id not in nodes:
-                    nodes[node_to_id] = _empty_node(values[i + 1], type_to)
+                if des_id not in nodes:
+                    nodes[des_id] = _empty_node(des_type, des_val)
 
-                # Updating types
-                if type_fr not in nodes[node_fr_id]['type']:
-                    nodes[node_fr_id]['type'].append(type_fr)
-
-                if type_to not in nodes[node_to_id]['type']:
-                    nodes[node_to_id]['type'].append(type_to)
-
-                nodes[node_fr_id]["weight"] += weight
-                nodes[node_to_id]["weight"] += weight
+                # Updating types and weight
+                ori_node = nodes[ori_id]
+                des_node = nodes[des_id]
+                ori_node['types'].add(ori_type)
+                des_node['types'].add(des_type)
+                ori_node['weight'] += weight
+                des_node['weight'] += weight
 
                 # Updating edges
-                edge = '%s/%s' % (node_fr_id, node_to_id)
+                edge_id = '%s/%s' % (ori_id, des_id)
 
-                if edge not in nodes[node_fr_id]["edges"]:
-                    nodes[node_fr_id]["edges"][edge] = _empty_edge(node_fr_id, node_to_id)
+                if edge_id not in ori_node['edges']:
+                    ori_node['edges'][edge_id] = _empty_edge(ori_id, des_id)
 
-                nodes[node_fr_id]["edges"][edge]["weight"] += weight
+                edge = ori_node['edges'][edge_id]
+                edge['weight'] += weight
 
             # In this case we did not iterate through the previous loop
             # Note that if graph_fields is [], nb_edges is -1 so
             # we do not go here either
             if nb_edges == 0:
-                type_ = graph_fields[0]
+                _type = graph_fields[0]
+                _val  = values[0]
 
-                if is_typed:
-                    node_id = '%s/%s' % (type_, values[0])
+                if with_types:
+                    _id = '%s/%s' % (_type, _val)
                 else:
-                    node_id = values[0]
+                    _id = _val
 
-                if node_id not in nodes:
-                    nodes[node_id] = _empty_node(values[0], type_)
+                if _id not in nodes:
+                    nodes[_id] = _empty_node(_type, _val)
 
-                if type_ not in nodes[node_id]['type']:
-                    nodes[node_id]['type'].append(type_)
+                _node = nodes[_id]
+                _node['types'].add(_type)
+                _node['weight'] += weight
 
-                nodes[node_id]["weight"] += weight
+        # Getting rid of sets because not JSON serializable
+        # And fixing order with sorted to make sure
+        # we do not get different colors in frontend
+        for node in nodes.itervalues():
+            node['types'] = sorted(node['types'])
 
         return nodes
 
@@ -2238,7 +2246,7 @@ class GeoBase(object):
     def graphVisualize(self,
                        graph_fields,
                        graph_weight=None,
-                       is_typed=False,
+                       with_types=False,
                        from_keys=None,
                        output='example',
                        verbose=True):
@@ -2249,9 +2257,10 @@ class GeoBase(object):
                 data.
         :param graph_weight: field used to define the weight of nodes and \
                 edges. If ``None``, the weight is ``1`` for each key.
-        :param is_typed:    boolean to consider values from different fields \
+        :param with_types:  boolean to consider values from different fields \
                 of the same "type" or not, meaning we will create only one \
-                node if the same value is found accross different fields.
+                node if the same value is found accross different fields, if \
+                there are no types. Otherwise we will create different nodes.
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
         :param verbose:     toggle verbosity
@@ -2262,7 +2271,7 @@ class GeoBase(object):
 
         nodes = self.buildGraphData(graph_fields=graph_fields,
                                     graph_weight=graph_weight,
-                                    is_typed=is_typed,
+                                    with_types=with_types,
                                     from_keys=from_keys)
 
         # Dump the json geocodes
@@ -2274,6 +2283,7 @@ class GeoBase(object):
                 'meta'   : {
                     'graph_fields' : graph_fields,
                     'graph_weight' : graph_weight,
+                    'with_types'   : with_types,
                 },
             }))
 
