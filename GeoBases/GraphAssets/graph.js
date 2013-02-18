@@ -27,6 +27,18 @@ function overflow(text) {
 }
 
 
+var Log = {
+    elem: false,
+    write: function(text){
+        if (!this.elem) {
+            this.elem = document.getElementById('log');
+        }
+        this.elem.innerHTML = text;
+        this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
+    }
+};
+
+
 function initialize(jsonData) {
 
     var graph_fields = jsonData.meta.graph_fields;
@@ -214,11 +226,11 @@ function initialize(jsonData) {
     fd.computeIncremental({
         iter: 40,
         property: 'end',
-        onStep: function(perc){
-            //console.log(perc + '% loaded...');
+        onStep  : function(perc){
+            Log.write(perc + '% loaded...');
         },
         onComplete: function(){
-            //console.log('done');
+            Log.write('done');
             fd.animate({
                 modes: ['linear'],
                 transition: $jit.Trans.Elastic.easeOut,
