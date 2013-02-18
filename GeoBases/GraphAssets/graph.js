@@ -109,8 +109,8 @@ function initialize(jsonData) {
                 'name'        : node.name,
                 'data'        : {
                     'weight' : node.weight,
-                    'type'   : node.type,
-                    "$color" : type_to_color(node.type),
+                    'types'  : node.types,
+                    "$color" : types_to_color(node.types),
                     "$type"  : "circle",
                     "$dim"   : node_dim
                 },
@@ -216,8 +216,8 @@ function initialize(jsonData) {
                 //display node info in tooltip
                 tip.innerHTML = "" +
                     "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
-                    "<div class=\"tip-text\"><b>Weight {0}</b></div>".fmt(node.data.weight) +
-                    "<div class=\"tip-text\"><b>Type {0}</b></div>".fmt(node.data.type) +
+                    "<div class=\"tip-text\"><b>Weight</b> {0}</div>".fmt(node.data.weight) +
+                    "<div class=\"tip-text\"><b>Types</b> {0}</div>".fmt(node.data.types) +
                     "<div class=\"tip-text\"><b>{0} link(s):</b> [link w.] node (node w.){1}</div>".fmt(count, html);
             }
         },
