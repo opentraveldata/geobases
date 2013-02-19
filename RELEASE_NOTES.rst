@@ -7,9 +7,10 @@ V5
 
 + 5.0 :
 
- + type system when graph building, --with-types/-z to toggle from CLI
+ + configure graph weight with -W/--graph-weight for CLI
+ + type system when graph building, -w/--with-types to toggle from CLI
  + if available, launch google-chrome instead of firefox for HTML display
- + CLI: --graph and --graph-options to draw graphs
+ + CLI: --graph and --graph-fields to draw graphs
  + graph visualization in Python API
  + handle local and remote archives
  + make addGrid/dropGrid public method to allow geographical re-indexation
@@ -27,7 +28,7 @@ V5
  + accepts list of paths in configuration file, failover mechanism
  + make a difference between source at __init__ and path in YAML file
  + phonetic searches with dmetaphone (-p/-P/-y for CLI)
- + options: --warnings (-w) is --verbose (-v), --version (-v) short is -V, --gridless (-g) is --without-grid (-w)
+ + options: -w/--warnings is now -v/--verbose, -v/--version is -V/--version, -g/--gridless is -d/--disable-grid
  + more tests
  + consistent verbosity handling
  + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods (access with -i for CLI)
