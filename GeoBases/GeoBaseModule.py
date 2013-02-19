@@ -2104,7 +2104,7 @@ class GeoBase(object):
         return []
 
 
-    def buildGraphData(self, graph_fields, graph_weight=None, with_types=False, directed=True, from_keys=None):
+    def buildGraphData(self, graph_fields, graph_weight=None, with_types=False, directed=False, from_keys=None):
         """Build graph data.
 
         :param graph_fields: iterable of fields used to define the nodes. \
@@ -2118,7 +2118,7 @@ class GeoBase(object):
                 there are no types. Otherwise we create different nodes. \
                 Default is ``False``, meaning untyped graphs.
         :param directed:    boolean, if the graph is directed or not, \
-                default is ``True``
+                default is ``False``.
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
 

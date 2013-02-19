@@ -1785,6 +1785,7 @@ def main():
             print json.dumps(g.buildGraphData(graph_fields=graph_fields,
                                               graph_weight=graph_weight,
                                               with_types=args['with_types'],
+                                              directed=False,
                                               from_keys=ex_keys(res)),
                              indent=4)
 
