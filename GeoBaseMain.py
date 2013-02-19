@@ -1189,7 +1189,7 @@ def handle_args():
         metavar = 'FIELDS',
         default = [])
 
-    parser.add_argument('-z', '--with-types',
+    parser.add_argument('-w', '--with-types',
         help = dedent('''\
         When drawing graphs, consider values from different
         fields to be of different types. Concretely, if there
