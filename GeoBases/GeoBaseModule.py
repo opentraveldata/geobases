@@ -2261,7 +2261,6 @@ class GeoBase(object):
                        graph_fields,
                        graph_weight=None,
                        with_types=False,
-                       directed=True,
                        from_keys=None,
                        output='example',
                        verbose=True):
@@ -2277,8 +2276,6 @@ class GeoBase(object):
                 node if the same value is found accross different fields, if \
                 there are no types. Otherwise we create different nodes. \
                 Default is ``False``, meaning untyped graphs.
-        :param directed:    boolean, if the graph is directed or not, \
-                default is ``True``
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
         :param verbose:     toggle verbosity
@@ -2290,7 +2287,7 @@ class GeoBase(object):
         nodes = self.buildGraphData(graph_fields=graph_fields,
                                     graph_weight=graph_weight,
                                     with_types=with_types,
-                                    directed=directed,
+                                    directed=False,
                                     from_keys=from_keys)
 
         # Dump the json geocodes
