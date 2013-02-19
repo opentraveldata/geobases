@@ -1169,7 +1169,7 @@ def handle_args():
     parser.add_argument('-g', '--graph',
         help = dedent('''\
         This is the graph display.
-        Configure with --graph-options.
+        Configure with --graph-fields.
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
         and a simple HTTP server will serve the HTML results
@@ -1177,7 +1177,7 @@ def handle_args():
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
-    parser.add_argument('-G', '--graph-options',
+    parser.add_argument('-G', '--graph-fields',
         help = dedent('''\
         This option has n arguments: fields used to build
         the graph display. Nodes are the field values. Edges
@@ -1448,9 +1448,9 @@ def main():
     graph_weight = DEF_GRAPH_WEIGHT
     graph_fields = [f for f in DEF_GRAPH_FIELDS if f in g.fields][0:2]
 
-    if len(args['graph_options']) >= 1:
+    if len(args['graph_fields']) >= 1:
         # If user gave something for forget the defaults
-        graph_fields = [f for f in args['graph_options'] if f != SKIP]
+        graph_fields = [f for f in args['graph_fields'] if f != SKIP]
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
