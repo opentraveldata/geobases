@@ -1002,6 +1002,16 @@ def handle_args():
         default = DEF_CLOSEST_LIMIT,
         type = int)
 
+    parser.add_argument('-d', '--disable-grid',
+        help = dedent('''\
+        When performing a geographical search, a geographical index is used.
+        This may lead to inaccurate results in some (rare) case when using
+        --closest searches (--near searches are never impacted).
+        Adding this option will disable the index, and browse the full
+        data set to look for the results.
+        '''),
+        action = 'store_true')
+
     parser.add_argument('-t', '--trep',
         help = dedent('''\
         Rather than looking up a key, this mode will use opentrep.
@@ -1014,16 +1024,6 @@ def handle_args():
         Specify a format for trep searches with --trep, default is "%s".
         ''' % DEF_TREP_FORMAT),
         default = DEF_TREP_FORMAT)
-
-    parser.add_argument('-d', '--disable-grid',
-        help = dedent('''\
-        When performing a geographical search, a geographical index is used.
-        This may lead to inaccurate results in some (rare) case when using
-        --closest searches (--near searches are never impacted).
-        Adding this option will disable the index, and browse the full
-        data set to look for the results.
-        '''),
-        action = 'store_true')
 
     parser.add_argument('-o', '--omit',
         help = dedent('''\
