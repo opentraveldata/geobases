@@ -1189,6 +1189,16 @@ def handle_args():
         metavar = 'FIELDS',
         default = [])
 
+    parser.add_argument('-W', '--graph-weight',
+        help = dedent('''\
+        This option defines the field used to compute weights
+        when drawing graphs. Put "%s" (which will be None) not
+        to use any fields, but just count the number of lines.
+        Default is "%s".
+        ''' % (DISABLE, DEF_GRAPH_WEIGHT)),
+        metavar = 'FIELD',
+        default = DEF_GRAPH_WEIGHT)
+
     parser.add_argument('-w', '--with-types',
         help = dedent('''\
         When drawing graphs, consider values from different
@@ -1445,12 +1455,15 @@ def main():
 
     # Reading graph options
     # Default graph_fields is first two available from DEF_GRAPH_FIELDS
-    graph_weight = DEF_GRAPH_WEIGHT
     graph_fields = [f for f in DEF_GRAPH_FIELDS if f in g.fields][0:2]
+    graph_weight = DEF_GRAPH_WEIGHT
 
     if len(args['graph_fields']) >= 1:
         # If user gave something for forget the defaults
         graph_fields = [f for f in args['graph_fields'] if f != SKIP]
+
+    if args['graph_weight'] != SKIP:
+        graph_weight = args['graph_weight']
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM
