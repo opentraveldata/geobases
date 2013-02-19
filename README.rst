@@ -42,7 +42,21 @@ And of course, you can use your own data:
 
 .. code-block:: bash
 
- $ cat data.csv | GeoBase --near London
+ $ cat coords.csv
+ p1,48.22,2.33
+ p2,49.33,2.24
+ $ cat coords.csv | GeoBase --map
+
+.. code-block:: bash
+
+ $ cat edges.csv
+ A,B
+ A,C
+ D,A
+ $ cat edges.csv | GeoBase --graph
+
+.. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png
+   :align: center
 
 We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
 
@@ -410,6 +424,25 @@ Marker-less map for a specific GMT offset:
 .. code-block:: bash
 
  $ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
+
+Display your data:
+
+.. code-block:: bash
+
+ $ cat coords.csv
+ p1,48.22,2.33
+ p2,49.33,2.24
+ $ cat coords.csv | GeoBase --map
+
+Display on graph:
+
+.. code-block:: bash
+
+ $ cat edges.csv
+ A,B
+ A,C
+ D,A
+ $ cat edges.csv | GeoBase --graph
 
 
 Packaging
