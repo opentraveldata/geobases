@@ -23,10 +23,6 @@
                 background-color : #000000;
             }
 
-            #log {
-                margin: 5px;
-            }
-
             ul, li {
                 margin  : 0px 5px 0px 5px;
                 padding : 0px 5px 0px 5px;
@@ -97,11 +93,10 @@
 
     <body>
         <div id="header">
-            <h2 class="large">Force Directed Graph <span id="fields"></span></h2>
+            <h2 class="large"><span id="log"></span> Graph for <span id="fields"></span></h2>
         </div>
 
-        <div id="infovis"></div> 
-        <div id="log"></div>
+        <div id="infovis"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="jit-yc.js"></script>

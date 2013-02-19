@@ -34,12 +34,12 @@ function initialize(jsonData) {
     var graph_weight = jsonData.meta.graph_weight;
     var with_types   = jsonData.meta.with_types;
 
-    var msg_types  = with_types ? 'with types' : 'no types';
+    var msg_types  = with_types ? ', typed' : '';
     var msg_weight = graph_weight === null ? 'no weight' : '<i>{0}</i> weight'.fmt(graph_weight);
 
-    $('#fields').html('for <i>{0}</i> ({1}, {2})'.fmt(graph_fields.join(', '),
-                                                      msg_weight,
-                                                      msg_types));
+    $('#fields').html('<i>{0}</i> ({1}{2})'.fmt(graph_fields.join(', '),
+                                                msg_weight,
+                                                msg_types));
 
     var data = [];
     var node_id, node, node_data, edge_id, edge;
@@ -307,13 +307,13 @@ function initialize(jsonData) {
         iter    : 20,
         property: 'end',
         onStep  : function(perc){
-            Log.write(perc + '% loaded...');
+            Log.write('[' + perc + '%]');
         },
         onComplete: function(){
-            Log.write('done');
+            Log.write('');
             fd.animate({
                 modes       : ['linear'],
-                transition  : $jit.Trans.Elastic.easeOut,
+                //transition  : $jit.Trans.Elastic.easeOut,
                 duration    : 2500
             });
         }
@@ -327,11 +327,11 @@ function initialize(jsonData) {
 $(document).ready(function() {
 
     $("#infovis").css({
-        "height": ($(window).height() - 40) * 0.90
+        "height": ($(window).height() - 50) * 0.95
     });
 
     $("#infovis").css({
-        "width": $(window).width() * 0.80
+        "width": $(window).width() * 0.90
     });
 
     // JSON_FILE is defined in the template
