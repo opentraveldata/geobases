@@ -126,6 +126,7 @@ function initialize(jsonData) {
                     'weight' : node.weight,
                     'types'  : node.types,
                     "$color" : types_to_color(node.types),
+                    '$alpha' : 1.0,
                     "$type"  : "circle",
                     "$dim"   : compute_node_dim(node.weight, max_node_weight)
                 },
@@ -142,7 +143,10 @@ function initialize(jsonData) {
                         'nodeTo'   : edge.to,
                         'data'     : {
                             'weight'     : edge.weight,
+                            '$direction' : [edge.from, edge.to],
                             "$color"     : "#585858",
+                            '$alpha'     : 1.0,
+                            '$type'      : "line", // "arrow"
                             '$lineWidth' : compute_edge_width(edge.weight, max_edge_weight)
                         }
                     });
@@ -324,7 +328,7 @@ function initialize(jsonData) {
 $(document).ready(function() {
 
     $("#infovis").css({
-        "height": $(window).height() * 0.85
+        "height": ($(window).height() - 40) * 0.90
     });
 
     $("#infovis").css({
