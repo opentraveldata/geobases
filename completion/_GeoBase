@@ -498,7 +498,7 @@ _hello() {
      "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]: :->near_limit_km" \
      "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]: :->from_point" \
      "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]: :->closest_limit_nb" \
-     "(-w --without-grid)"{-w,--without-grid}"[Disable grid for geographical searches]" \
+     "(-d --disable-grid)"{-d,--disable-grid}"[Disable grid for geographical searches]" \
      "(-t --trep)"{-t,--trep}"[OpenTrep mode]: :->trep_value" \
      "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]: :->trep_format" \
      "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
@@ -511,8 +511,9 @@ _hello() {
      "(-m --map)"{-m,--map}"[Display points on a map]" \
      "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
      "(-g --graph)"{-g,--graph}"[Display data on a directed graph]" \
-     "(-G --graph-options)"{-G,--graph-options}"[Select fields to build the graph display]:*: :->graph_options" \
-     "(-z --with-types)"{-z,--with-types}"[For graph display, consider values typed for each field]" \
+     "(-G --graph-fields)"{-G,--graph-fields}"[Select fields to build the graph display]:*: :->graph_fields" \
+     "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
+     "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-u,--update}"[Try to update the data files]" \
      "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
@@ -526,7 +527,7 @@ _hello() {
     interactive=`get_opt_value "${opt_args[-I]}" "${opt_args[--interactive-query]}"`
     quiet_options=`get_opt_value "${opt_args[-Q]}" "${opt_args[--quiet-options]}"`
     map_options=`get_opt_value "${opt_args[-M]}" "${opt_args[--map-options]}"`
-    graph_options=`get_opt_value "${opt_args[-G]}" "${opt_args[--graph-options]}"`
+    graph_fields=`get_opt_value "${opt_args[-G]}" "${opt_args[--graph-fields]}"`
 
 
     case $state in
@@ -646,8 +647,11 @@ _hello() {
             ;;
         esac
         ;;
-    graph_options)
+    graph_fields)
         _fields "$base" "graph field"
+        ;;
+    graph_weight)
+        _fields "$base" "graph weight"
         ;;
     #*)
     #    _files
