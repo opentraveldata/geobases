@@ -32,14 +32,37 @@ You can perform all types of queries:
 $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 ```
 
-And of course, you can use your own data:
+And of course, you can use your own data for map display:
 ```shell
-$ cat data.csv | GeoBase --near London
+$ cat coords.csv
+p1,48.22,2.33
+p2,49.33,2.24
+$ cat coords.csv | GeoBase --map
 ```
+
+And for every other thing as well:
+```shell
+$ cat edges.csv
+A,B
+A,C
+D,A
+$ cat edges.csv | GeoBase --graph
+```
+
+![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png)
 
 We are currently gathering input from the community to define the next
 version features, so do not hesitate to open issues on the [github
 page](https://github.com/opentraveldata/geobases).
+
+Documentation
+-------------
+
+Here is the [API
+documentation](https://geobases.readthedocs.org) for
+the Python package. Check out the
+[wiki](https://github.com/opentraveldata/geobases/wiki) for any
+question!
 
 Project
 -------
@@ -277,15 +300,6 @@ rm example.json ...
 ```
 
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png)
-
-Documentation
--------------
-
-Here is the [API
-documentation](https://geobases.readthedocs.org) for
-the Python package. Check out the
-[wiki](https://github.com/opentraveldata/geobases/wiki) for any
-question!
 
 Standalone script
 -----------------
