@@ -428,6 +428,25 @@ Marker-less map for a specific GMT offset:
 
  $ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
 
+Display your data on a map:
+
+.. code-block:: bash
+
+ $ cat coords.csv
+ p1,48.22,2.33
+ p2,49.33,2.24
+ $ cat coords.csv | GeoBase --map
+
+Display your data on a graph:
+
+.. code-block:: bash
+
+ $ cat edges.csv
+ A,B
+ A,C
+ D,A
+ $ cat edges.csv | GeoBase --graph
+
 
 Packaging
 ---------
