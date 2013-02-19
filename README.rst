@@ -18,7 +18,7 @@ After data loading, you can:
 -  make *fuzzy searches* based on string distance (find things roughly *named like this*)
 -  make *phonetic searches* (find things *sounding like this*)
 -  make *geographical searches* (find things *next to this place*)
--  get results on a map, or export it as csv data, or as a Python object
+-  get results on a map, or on a graph, or export it as csv data, or as a Python object
 
 This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with *easy_install*,
@@ -37,13 +37,35 @@ You can perform all types of queries:
 
  $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 
-And of course, you can use your own data:
+And of course, you can use your own data for map display:
 
 .. code-block:: bash
 
- $ cat data.csv | GeoBase --near London
+ $ cat coords.csv
+ p1,48.22,2.33
+ p2,49.33,2.24
+ $ cat coords.csv | GeoBase --map
+
+And for every other thing as well:
+
+.. code-block:: bash
+
+ $ cat edges.csv
+ A,B
+ A,C
+ D,A
+ $ cat edges.csv | GeoBase --graph
+
+.. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png
+   :align: center
 
 We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
+
+Documentation
+-------------
+
+Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
+Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Project
 -------
@@ -312,11 +334,6 @@ Map display
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
 
-Documentation
--------------
-
-Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
-Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Standalone script
 -----------------
@@ -340,6 +357,7 @@ Three displays are available for the command line tool:
 -  the verbose display
 -  the csv display with ``--quiet``
 -  the map display with ``--map``
+-  the graph display with ``--graph``
 
 With the verbose display, entries are displayed on each column,
 and the available fields on each line. Fields starting with ``__`` like ``__field__`` are
@@ -408,6 +426,25 @@ Marker-less map for a specific GMT offset:
 .. code-block:: bash
 
  $ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
+
+Display your data on a map:
+
+.. code-block:: bash
+
+ $ cat coords.csv
+ p1,48.22,2.33
+ p2,49.33,2.24
+ $ cat coords.csv | GeoBase --map
+
+Display your data on a graph:
+
+.. code-block:: bash
+
+ $ cat edges.csv
+ A,B
+ A,C
+ D,A
+ $ cat edges.csv | GeoBase --graph
 
 
 Packaging
