@@ -38,7 +38,7 @@ You can perform all types of queries:
 
  $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 
-And of course, you can use your own data:
+And of course, you can use your own data for map display:
 
 .. code-block:: bash
 
@@ -46,6 +46,8 @@ And of course, you can use your own data:
  p1,48.22,2.33
  p2,49.33,2.24
  $ cat coords.csv | GeoBase --map
+
+And for every other thing as well:
 
 .. code-block:: bash
 
@@ -59,6 +61,12 @@ And of course, you can use your own data:
    :align: center
 
 We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
+
+Documentation
+-------------
+
+Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
+Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Project
 -------
@@ -327,11 +335,6 @@ Map display
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
 
-Documentation
--------------
-
-Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
-Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
 
 Standalone script
 -----------------
@@ -425,7 +428,7 @@ Marker-less map for a specific GMT offset:
 
  $ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
 
-Display your data:
+Display your data on a map:
 
 .. code-block:: bash
 
@@ -434,7 +437,7 @@ Display your data:
  p2,49.33,2.24
  $ cat coords.csv | GeoBase --map
 
-Display on graph:
+Display your data on a graph:
 
 .. code-block:: bash
 
