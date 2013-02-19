@@ -14,6 +14,7 @@
 /lib/
 /lib64
 /include/
+/local
 # Ignoring api doc
 /doc/_build
 # Ignoring tmp map files
@@ -23,6 +24,7 @@
 /*.json
 # Ignoring coverage reports
 /.coverage
+/coverage/htmlcov
 # Ignoring profiling reports
 /*.prof
 /*.lprof
