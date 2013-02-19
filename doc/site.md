@@ -347,74 +347,32 @@ admin\_code (`B8` is french riviera):
 $ GeoBase -E adm1_code -e B8
 ```
 
-Same with csv output (customized with `--show`):
+Same with csv output (customize with `--show`):
 
 ```shell
-$ GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+$ GeoBase -E adm1_code -e B8 --quiet
 ```
 
-Add a fuzzy search:
+Make a fuzzy search:
 
 ```shell
-$ GeoBase -E adm1_code -e B8 --fuzzy sur mer
+$ GeoBase --fuzzy sur mer
 ```
 
-All heliports under 200 km from Paris:
+All data under 200 km from Paris:
 
 ```shell
-$ GeoBase --near PAR -N 200 -E location_type -e 'H'
+$ GeoBase --near PAR -N 200
 ```
 
-50 train stations closest to a specific geocode:
+Map display for a specific GMT offset:
 
 ```shell
-$ GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
+$ GeoBase -E gmt_offset -e 1.0 --map
 ```
 
-Countries with non-empty postal code regex:
-
-```shell
-$ GeoBase -b countries -E postal_code_regex -e '' --reverse --quiet
-```
-
-Reading data input on stdin:
+Reading data input directly on stdin:
 
 ```shell
 $ echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
-```
-
-Display on map:
-
-```shell
-$ GeoBase -b stations --map
-```
-
-Marker-less map for a specific GMT offset:
-
-```shell
-$ GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
-```
-
-Packaging
----------
-
-The `MANIFEST.in` file is used to determine which files will be included
-in a source distribution. `package_data` directive in `setup.py` file is
-about which file will be exported in site-package after installation. So
-you really need both if you want to produce installable packages like
-rpms or zip which can be installed afterwards.
-
-You will also find a [Rakefile](http://rake.rubyforge.org/) at the root
-of the project. This can be used to build and deploy the packages.
-Deployment can be done using webdav, and the Rakefile expects `nd` to be
-installed (this is a webdav client). To install `nd`, fetch the
-[sources](http://www.gohome.org/nd/) and compile them.
-
-Virtualenv still has some bugs on 64 bits systems, if you are using such
-a system, you absolutely need to upgrade to the very last unreleased
-version of virtualenv, before executing rake:
-
-```shell
-$ pip uninstall virtualenv
-$ pip install https://github.com/pypa/virtualenv/tarball/develop
 ```
