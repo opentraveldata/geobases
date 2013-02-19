@@ -1015,7 +1015,7 @@ def handle_args():
         ''' % DEF_TREP_FORMAT),
         default = DEF_TREP_FORMAT)
 
-    parser.add_argument('-w', '--without-grid',
+    parser.add_argument('-d', '--disable-grid',
         help = dedent('''\
         When performing a geographical search, a geographical index is used.
         This may lead to inaccurate results in some (rare) case when using
@@ -1254,7 +1254,7 @@ def main():
     #
     # ARGUMENTS
     #
-    with_grid = not args['without_grid']
+    with_grid = not args['disable_grid']
     verbose   = not args['quiet']
     logorrhea = args['verbose']
 
