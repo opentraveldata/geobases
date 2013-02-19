@@ -2104,7 +2104,7 @@ class GeoBase(object):
         return []
 
 
-    def buildGraphData(self, graph_fields, graph_weight=None, with_types=False, from_keys=None):
+    def buildGraphData(self, graph_fields, graph_weight=None, with_types=False, directed=True, from_keys=None):
         """Build graph data.
 
         :param graph_fields: iterable of fields used to define the nodes. \
@@ -2115,7 +2115,10 @@ class GeoBase(object):
         :param with_types:  boolean to consider values from different fields \
                 of the same "type" or not, meaning we will create only one \
                 node if the same value is found accross different fields, if \
-                there are no types. Otherwise we will create different nodes.
+                there are no types. Otherwise we create different nodes. \
+                Default is ``False``, meaning untyped graphs.
+        :param directed:    boolean, if the graph is directed or not, \
+                default is ``True``
         :param from_keys:   only display this iterable of keys if not None
         :returns:           the nodes data
 
@@ -2215,6 +2218,17 @@ class GeoBase(object):
                 edge = ori_node['edges'][edge_id]
                 edge['weight'] += weight
 
+                if not directed:
+                    # If not directed we create the "mirror" edge
+                    edge_id = '%s/%s' % (des_id, ori_id)
+
+                    if edge_id not in des_node['edges']:
+                        des_node['edges'][edge_id] = _empty_edge(des_id, ori_id)
+
+                    edge = des_node['edges'][edge_id]
+                    edge['weight'] += weight
+
+
             # In this case we did not iterate through the previous loop
             # Note that if graph_fields is [], nb_edges is -1 so
             # we do not go here either
@@ -2247,6 +2261,7 @@ class GeoBase(object):
                        graph_fields,
                        graph_weight=None,
                        with_types=False,
+                       directed=True,
                        from_keys=None,
                        output='example',
                        verbose=True):
@@ -2260,7 +2275,10 @@ class GeoBase(object):
         :param with_types:  boolean to consider values from different fields \
                 of the same "type" or not, meaning we will create only one \
                 node if the same value is found accross different fields, if \
-                there are no types. Otherwise we will create different nodes.
+                there are no types. Otherwise we create different nodes. \
+                Default is ``False``, meaning untyped graphs.
+        :param directed:    boolean, if the graph is directed or not, \
+                default is ``True``
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
         :param verbose:     toggle verbosity
@@ -2272,6 +2290,7 @@ class GeoBase(object):
         nodes = self.buildGraphData(graph_fields=graph_fields,
                                     graph_weight=graph_weight,
                                     with_types=with_types,
+                                    directed=directed,
                                     from_keys=from_keys)
 
         # Dump the json geocodes
