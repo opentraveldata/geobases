@@ -41,11 +41,13 @@ with your own data in addition to the available ones.
 After data loading, you can:</p>
 
 <ul>
-<li>perform various types of queries (find <em>this key</em>, or find keys with <em>this property</em>)</li>
-<li>make <em>fuzzy searches</em> based on string distance (find things <em>roughly named like this</em>)</li>
-<li>make <em>phonetic searches</em> (find things <em>sounding like this</em>)</li>
-<li>make <em>geographical searches</em> (find things <em>next to this place</em>)</li>
-<li>get results on a map, or export it as csv data, or as a Python
+<li>  perform various types of queries (find <em>this key</em>, or find keys
+with <em>this property</em>)</li>
+<li>  make <em>fuzzy searches</em> based on string distance (find things <em>roughly
+named like this</em>)</li>
+<li>  make <em>phonetic searches</em> (find things <em>sounding like this</em>)</li>
+<li>  make <em>geographical searches</em> (find things <em>next to this place</em>)</li>
+<li>  get results on a map, or export it as csv data, or as a Python
 object</li>
 </ul><p>This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with <em>easy_install</em>,
@@ -58,15 +60,39 @@ then you can see where are airports with <em>international</em> in their name:</
 
 <p>You can perform all types of queries:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase --base cities --fuzzy "san francisko" <span class="c"># typo here :)</span>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --base cities --fuzzy <span class="s2">"san francisko"</span> <span class="c"># typo here :)</span>
 </pre></div>
 
-<p>And of course, you can use your own data:</p>
+<p>And of course, you can use your own data for map display:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>cat data.csv | GeoBase --near London
+<div class="highlight"><pre><span class="nv">$ </span>cat coords.csv
+p1,48.22,2.33
+p2,49.33,2.24
+<span class="nv">$ </span>cat coords.csv | GeoBase --map
 </pre></div>
 
-<p>We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the <a href="https://github.com/opentraveldata/geobases">github page</a>.</p>
+<p>And for every other thing as well:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>cat edges.csv
+A,B
+A,C
+D,A
+<span class="nv">$ </span>cat edges.csv | GeoBase --graph
+</pre></div>
+
+<p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png" alt=""></p>
+
+<p>We are currently gathering input from the community to define the next
+version features, so do not hesitate to open issues on the <a href="https://github.com/opentraveldata/geobases">github
+page</a>.</p>
+
+<h2>Documentation</h2>
+
+<p>Here is the <a href="https://geobases.readthedocs.org">API
+documentation</a> for
+the Python package. Check out the
+<a href="https://github.com/opentraveldata/geobases/wiki">wiki</a> for any
+question!</p>
 
 <h2>Project</h2>
 
@@ -287,14 +313,6 @@ and using the <code>set</code> method.</p>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png" alt=""></p>
 
-<h2>Documentation</h2>
-
-<p>Here is the <a href="https://geobases.readthedocs.org">API
-documentation</a> for
-the Python package. Check out the
-<a href="https://github.com/opentraveldata/geobases/wiki">wiki</a> for any
-question!</p>
-
 <h2>Standalone script</h2>
 
 <p>Installation of the package will also deploy a standalone script named
@@ -340,66 +358,29 @@ admin_code (<code>B8</code> is french riviera):</p>
 <div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8
 </pre></div>
 
-<p>Same with csv output (customized with <code>--show</code>):</p>
+<p>Same with csv output (customize with <code>--show</code>):</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --quiet --show __ref__ iata_code  name
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --quiet
 </pre></div>
 
-<p>Add a fuzzy search:</p>
+<p>Make a fuzzy search:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --fuzzy sur mer
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --fuzzy sur mer
 </pre></div>
 
-<p>All heliports under 200 km from Paris:</p>
+<p>All data under 200 km from Paris:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase --near PAR -N 200 -E location_type -e <span class="s1">'H'</span>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --near PAR -N 200
 </pre></div>
 
-<p>50 train stations closest to a specific geocode:</p>
+<p>Map display for a specific GMT offset:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E location_type -e R --closest <span class="s1">'48.853, 2.348'</span> -C 50
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E gmt_offset -e 1.0 --map
 </pre></div>
 
-<p>Countries with non-empty postal code regex:</p>
-
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -b countries -E postal_code_regex -e <span class="s1">''</span> --reverse --quiet
-</pre></div>
-
-<p>Reading data input on stdin:</p>
+<p>Reading data input directly on stdin:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> -e <span class="s1">'ORY^Orly\nCDG^Charles'</span> | GeoBase
-</pre></div>
-
-<p>Display on map:</p>
-
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -b stations --map
-</pre></div>
-
-<p>Marker-less map for a specific GMT offset:</p>
-
-<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E gmt_offset -e 1.0 --map -M _ _ country_code  __none__
-</pre></div>
-
-<h2>Packaging</h2>
-
-<p>The <code>MANIFEST.in</code> file is used to determine which files will be included
-in a source distribution. <code>package_data</code> directive in <code>setup.py</code> file is
-about which file will be exported in site-package after installation. So
-you really need both if you want to produce installable packages like
-rpms or zip which can be installed afterwards.</p>
-
-<p>You will also find a <a href="http://rake.rubyforge.org/">Rakefile</a> at the root
-of the project. This can be used to build and deploy the packages.
-Deployment can be done using webdav, and the Rakefile expects <code>nd</code> to be
-installed (this is a webdav client). To install <code>nd</code>, fetch the
-<a href="http://www.gohome.org/nd/">sources</a> and compile them.</p>
-
-<p>Virtualenv still has some bugs on 64 bits systems, if you are using such
-a system, you absolutely need to upgrade to the very last unreleased
-version of virtualenv, before executing rake:</p>
-
-<div class="highlight"><pre><span class="nv">$ </span>pip uninstall virtualenv
-<span class="nv">$ </span>pip install https://github.com/pypa/virtualenv/tarball/develop
 </pre></div>
       </section>
     </div>
