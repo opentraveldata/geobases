@@ -1770,6 +1770,7 @@ def main():
         visu_info = g.graphVisualize(graph_fields=graph_fields,
                                      graph_weight=graph_weight,
                                      with_types=args['with_types'],
+                                     directed=False,
                                      from_keys=ex_keys(res),
                                      output=g.data,
                                      verbose=verbose)
@@ -1785,6 +1786,7 @@ def main():
             print json.dumps(g.buildGraphData(graph_fields=graph_fields,
                                               graph_weight=graph_weight,
                                               with_types=args['with_types'],
+                                              directed=False,
                                               from_keys=ex_keys(res)),
                              indent=4)
 
