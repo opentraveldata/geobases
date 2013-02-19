@@ -28,7 +28,6 @@ function overflow(text) {
 
 
 
-
 function initialize(jsonData) {
 
     var graph_fields = jsonData.meta.graph_fields;
@@ -146,7 +145,7 @@ function initialize(jsonData) {
                             '$direction' : [edge.from, edge.to],
                             "$color"     : "#585858",
                             '$alpha'     : 1.0,
-                            '$type'      : "line", // "arrow"
+                            '$type'      : "line", // or "arrow", but this one fails on double arrows
                             '$lineWidth' : compute_edge_width(edge.weight, max_edge_weight)
                         }
                     });
