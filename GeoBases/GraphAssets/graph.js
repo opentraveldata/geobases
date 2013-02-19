@@ -43,7 +43,7 @@ function initialize(jsonData) {
                                                       msg_types));
 
     var data = [];
-    var node_id, node, node_dim, node_data, edge_id, edge, edge_width;
+    var node_id, node, node_data, edge_id, edge;
 
     var max_edge_weight = 0;
     var max_node_weight = 0;
@@ -96,13 +96,28 @@ function initialize(jsonData) {
         return catalog[type];
     }
 
+    function compute_node_dim(weight, max_weight){
+        if (max_weight === 0){
+            return MIN_NODE_DIM;
+        }
+        return Math.max(
+            MIN_NODE_DIM,
+            MAX_NODE_DIM * Math.sqrt(weight / max_weight));
+    }
+
+    function compute_edge_width(weight, max_weight){
+        if (max_weight === 0){
+            return MIN_LINE_WIDTH;
+        }
+        return Math.max(
+            MIN_LINE_WIDTH,
+            MAX_LINE_WIDTH * Math.sqrt(weight / max_weight));
+    }
+
     for (node_id in jsonData.nodes) {
         if (jsonData.nodes.hasOwnProperty(node_id)) {
 
             node = jsonData.nodes[node_id];
-            node_dim = Math.max(
-                MIN_NODE_DIM,
-                MAX_NODE_DIM * Math.sqrt(node.weight / max_node_weight));
 
             node_data = {
                 'id'          : node_id,
@@ -112,7 +127,7 @@ function initialize(jsonData) {
                     'types'  : node.types,
                     "$color" : types_to_color(node.types),
                     "$type"  : "circle",
-                    "$dim"   : node_dim
+                    "$dim"   : compute_node_dim(node.weight, max_node_weight)
                 },
                 'adjacencies' : []
             };
@@ -121,9 +136,6 @@ function initialize(jsonData) {
                 if (node.edges.hasOwnProperty(edge_id)) {
 
                     edge = node.edges[edge_id];
-                    edge_width = Math.max(
-                        MIN_LINE_WIDTH,
-                        MAX_LINE_WIDTH * edge.weight / max_edge_weight);
 
                     node_data.adjacencies.push({
                         'nodeFrom' : edge.from,
@@ -131,7 +143,7 @@ function initialize(jsonData) {
                         'data'     : {
                             'weight'     : edge.weight,
                             "$color"     : "#585858",
-                            '$lineWidth' : edge_width
+                            '$lineWidth' : compute_edge_width(edge.weight, max_edge_weight)
                         }
                     });
 
