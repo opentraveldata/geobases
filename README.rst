@@ -66,7 +66,7 @@ Documentation
 -------------
 
 Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
-Check out the `wiki <https://github.com/opentraveldata/geobases/wiki>`_ for any question!
+Check out the `wiki pages <https://github.com/opentraveldata/geobases/wiki/_pages>`_ for any question!
 
 Project
 -------

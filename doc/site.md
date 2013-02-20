@@ -61,7 +61,7 @@ Documentation
 Here is the [API
 documentation](https://geobases.readthedocs.org) for
 the Python package. Check out the
-[wiki](https://github.com/opentraveldata/geobases/wiki) for any
+[wiki pages](https://github.com/opentraveldata/geobases/wiki/_pages) for any
 question!
 
 Project
@@ -323,6 +323,7 @@ verbose display. Three displays are available for the command line tool:
 -   the verbose display
 -   the csv display with `--quiet`
 -   the map display with `--map`
+-   the graph display with `--graph`
 
 With the verbose display, entries are displayed on each column, and the
 available fields on each line. Fields starting with `__` like
