@@ -473,7 +473,7 @@ class GeoBase(object):
         if self._paths is not None:
             if isinstance(self._paths, (str, dict)):
                 # If paths is just *one* archive or *one* file
-                self._paths = (self._paths,)
+                self._paths = [self._paths]
 
             # We normalize all path as a dict structure
             for i, path in enumerate(self._paths):
