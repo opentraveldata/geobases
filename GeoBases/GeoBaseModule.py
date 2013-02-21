@@ -482,9 +482,8 @@ class GeoBase(object):
                         'file' : path
                     }
 
-        # "local" is only used for sources from configuration
-        # to have a relative path from the configuration file
-        if self._paths is not None:
+            # "local" is only used for sources from configuration
+            # to have a relative path from the configuration file
             paths = []
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
