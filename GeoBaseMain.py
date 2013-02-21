@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-This module is a launcher for GeoBase.
+This module is a launcher for the GeoBases package.
 """
 
-from sys import stdin, stderr
+from sys import stdin, stderr, argv
 import os
 import os.path as op
 
@@ -657,7 +657,7 @@ def warn(name, *args):
     Display a warning on stderr.
     """
     if name == 'key':
-        print >> stderr, '/!\ Key %s was not in GeoBase, for data "%s" and source %s' % \
+        print >> stderr, '/!\ Key %s was not in base, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
 
@@ -715,24 +715,26 @@ def error(name, *args):
 
 # Global defaults
 PACKAGE_NAME = 'GeoBasesDev'
+SCRIPT_NAME  = 'GeoBase'
+
 DESCRIPTION  = 'Data services and visualization'
 CONTACT_INFO = '''
-Report bugs to     : geobases.dev@gmail.com
-GeoBases home page : <http://opentraveldata.github.com/geobases/>
-API documentation  : <https://geobases.readthedocs.org/>
-Wiki pages         : <https://github.com/opentraveldata/geobases/wiki/_pages>
+Report bugs to    : geobases.dev@gmail.com
+Home page         : <http://opentraveldata.github.com/geobases/>
+API documentation : <https://geobases.readthedocs.org/>
+Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
 HELP_SOURCES = build_help_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR)
 CLI_EXAMPLES = '''
 * Command line examples
 
- $ GeoBase ORY CDG                    # query on the keys ORY and CDG
- $ GeoBase --closest CDG              # find closest from CDG
- $ GeoBase --near '48.853, 2.348'     # find near some geocode
- $ GeoBase --fuzzy "san francisko"    # fuzzy search, with typo ;)
- $ GeoBase --help                     # your best friend
- $ cat data.csv | GeoBase             # with your data
-'''
+ $ %s ORY CDG                    # query on the keys ORY and CDG
+ $ %s --closest CDG              # find closest from CDG
+ $ %s --near '48.853, 2.348'     # find near some geocode
+ $ %s --fuzzy "san francisko"    # fuzzy search, with typo ;)
+ $ %s --help                     # your best friend
+ $ cat data.csv | %s             # with your data
+''' % ((op.basename(argv[0]),) * 6)
 
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
@@ -822,16 +824,16 @@ if BACKGROUND_COLOR not in ['black', 'white']:
     BACKGROUND_COLOR = 'black'
 
 
-if not is_in_path('GeoBase'):
+if not is_in_path(SCRIPT_NAME):
     ENV_WARNINGS.append('''
     **********************************************************************
-    "GeoBase" does not seem to be in your $PATH.                         *
+    "%s" does not seem to be in your $PATH.                         *
     To disable this message, add to your ~/.bashrc or ~/.zshrc:          *
                                                                          *
         export PATH=$PATH:$HOME/.local/bin
                                                                          *
     *************************************************************** README
-    ''')
+    ''' % SCRIPT_NAME)
 
 
 if ENV_WARNINGS:
@@ -1246,7 +1248,7 @@ def handle_args():
 
 
 # How to profile: execute this and uncomment @profile
-# $ kernprof.py --line-by-line --view GeoBaseMain.py ORY
+# $ kernprof.py --line-by-line --view file.py ORY
 #@profile
 def main():
     """
@@ -1366,7 +1368,7 @@ def main():
             indices = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
 
         if verbose:
-            print 'Loading GeoBase from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
+            print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
                     (delimiter,
                      SPLIT.join(headers),
                      SPLIT.join(key_fields) if key_fields is not None else DISABLE,
@@ -1409,9 +1411,9 @@ def main():
 
         if verbose:
             if not add_options:
-                print 'Loading GeoBase "%s"...' % args['base']
+                print 'Loading "%s"...' % args['base']
             else:
-                print 'Loading GeoBase "%s" with custom: %s ...' % \
+                print 'Loading "%s" with custom: %s ...' % \
                         (args['base'], ' and '.join('%s = %s' % kv for kv in add_options.items()))
 
         g = GeoBase(data=args['base'], verbose=logorrhea, **add_options)
