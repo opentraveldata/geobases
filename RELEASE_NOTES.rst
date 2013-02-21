@@ -7,6 +7,8 @@ V5
 
 + 5.0 :
 
+ + draft for join clauses in configuration
+ + allow ``paths`` as GeoBase init argument (same behavior as configuration file)
  + configure graph weight with -W/--graph-weight for CLI
  + type system when graph building, -w/--with-types to toggle from CLI
  + if available, launch google-chrome instead of firefox for HTML display
