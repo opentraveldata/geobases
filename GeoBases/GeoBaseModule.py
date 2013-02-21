@@ -119,18 +119,15 @@ NB_CLOSEST = 1
 
 # Remote prefix detection
 R_PREFIXES = set(['http://', 'https://'])
-has_prefix = lambda path: any(path.lower().startswith(p) for p in R_PREFIXES)
+has_prefix = lambda path, prefixes: any(path.lower().startswith(p) for p in prefixes)
 
 def is_remote(path):
     """Tells if a path is remote.
     """
-    if is_archive(path):
-        return has_prefix(path['archive'])
-    else:
-        return has_prefix(path['file'])
+    return has_prefix(path['file'], R_PREFIXES)
 
 # Remote prefix detection
-is_archive = lambda path: 'archive' in path
+is_archive = lambda path: 'extract' in path
 
 # Date comparisons
 def is_older(a, b):
@@ -391,42 +388,34 @@ class GeoBase(object):
             # Here we read the source from the configuration file
             for path in self._paths:
 
-                if is_remote(path):
-                    if is_archive(path):
-                        resource = path['archive']
-                        success, dl_file = download_lazy(resource, self._verbose)
-                        path['archive'] = dl_file
-                    else:
-                        resource = path['file']
-                        success, dl_file = download_lazy(resource, self._verbose)
-                        path['file'] = dl_file
+                if not is_remote(path):
+                    file_ = path['file']
+                else:
+                    file_, success = download_lazy(path['file'], self._verbose)
 
                     if not success:
                         if self._verbose:
-                            print '/!\ Failed to download "%s", failing over...' % resource
+                            print '/!\ Failed to download "%s", failing over...' % path['file']
                         continue
 
                 if is_archive(path):
-                    archive, filename = path['archive'], path['file']
-                    success, path = extract_lazy(archive, filename, self._verbose)
+                    archive = file_
+                    file_, success = extract_lazy(archive, path['extract'], self._verbose)
 
                     if not success:
                         if self._verbose:
                             print '/!\ Failed to extract "%s" from "%s", failing over...' % \
-                                    (filename, archive)
+                                    (path['extract'], archive)
                         continue
 
-                else:
-                    path = path['file']
-
                 try:
-                    with open(path) as source_fl:
+                    with open(file_) as source_fl:
                         self._load(source_fl, self._verbose)
                 except IOError:
                     if self._verbose:
-                        print '/!\ Failed to open "%s", failing over...' % path
+                        print '/!\ Failed to open "%s", failing over...' % file_
                 else:
-                    self.loaded = path
+                    self.loaded = file_
                     break
             else:
                 # Here the loop did not break, meaning nothing was loaded
@@ -475,28 +464,20 @@ class GeoBase(object):
                 # If paths is just *one* archive or *one* file
                 self._paths = [self._paths]
 
-            # We normalize all path as a dict structure
             for i, path in enumerate(self._paths):
+                # We normalize all path as a dict structure
                 if isinstance(path, str):
                     self._paths[i] = {
                         'file' : path
                     }
 
-            # "local" is only used for sources from configuration
-            # to have a relative path from the configuration file
-            paths = []
-            for path in self._paths:
+            for i, path in enumerate(self._paths):
+                # "local" is only used for sources from configuration
+                # to have a relative path from the configuration file
                 if not is_remote(path) and self._local is True:
-                    if not is_archive(path):
-                        path['file'] = relative(path['file'], root=SOURCES_DIR)
-                        paths.append(path)
-                    else:
-                        path['archive'] = relative(path['archive'], root=SOURCES_DIR)
-                        paths.append(path)
-                else:
-                    paths.append(path)
+                    path['file'] = relative(path['file'], root=SOURCES_DIR)
 
-            self._paths = tuple(paths)
+            self._paths = tuple(self._paths)
 
         for h in self._subdelimiters:
             if self._subdelimiters[h] is not None:
@@ -2900,7 +2881,7 @@ def download_lazy(resource, verbose=True):
         if verbose:
             print '/!\ Using "%s" already in cache directory for "%s"' % \
                     (filename_test, resource)
-        return True, filename_test
+        return filename_test, True
 
     if verbose:
         print '/!\ Downloading "%s" in cache directory from "%s"' % \
@@ -2908,9 +2889,9 @@ def download_lazy(resource, verbose=True):
     try:
         dl_filename, _ = urlretrieve(resource, filename_test)
     except IOError:
-        return False, None
+        return None, False
     else:
-        return True, dl_filename
+        return dl_filename, True
 
 
 def extract_lazy(archive, filename, verbose=True):
@@ -2928,7 +2909,7 @@ def extract_lazy(archive, filename, verbose=True):
             if verbose:
                 print '/!\ Skipping extraction for "%s", already at "%s"' % \
                         (filename, filename_test)
-            return True, filename_test
+            return filename_test, True
 
         if verbose:
             print '/!\ File "%s" already at "%s", but "%s" is newer, removing' % \
@@ -2942,9 +2923,9 @@ def extract_lazy(archive, filename, verbose=True):
     try:
         extracted = ZipFile(archive).extract(filename, op.dirname(filename_test))
     except IOError:
-        return False, None
+        return None, False
     else:
-        return True, extracted
+        return extracted, True
 
 
 def build_get_phonemes(method):

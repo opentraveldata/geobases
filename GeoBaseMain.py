@@ -585,8 +585,11 @@ def best_field(candidates, possibilities, default=None):
 def build_help_sources(sources, sources_conf_path, sources_dir):
     """Display informations on available sources.
     """
+    is_archive = lambda path: 'extract' in path
+
     fmt_keys = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
-    fmt_path = lambda p: str(p) if isinstance(p, str) else '%s -> %s' % (p['archive'], p['file'])
+    fmt_path = lambda p: str(p) if isinstance(p, str) else '%s %s' % \
+            (p['file'], '' if not is_archive(p) else  '-> %s' % p['extract'])
 
     missing = '<none>'
     tip = [dedent('''
