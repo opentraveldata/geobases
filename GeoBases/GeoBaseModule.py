@@ -420,7 +420,8 @@ class GeoBase(object):
             else:
                 # Here the loop did not break, meaning nothing was loaded
                 # We will go here even if self._paths was []
-                raise IOError('Nothing was loaded from:\n - %s' % '\n - '.join(self._paths))
+                raise IOError('Nothing was loaded from:%s' % \
+                              ''.join('\n(*) %s' % p['file'] for p in self._paths))
 
         else:
             # We add those default fields if user adds data with self.set
