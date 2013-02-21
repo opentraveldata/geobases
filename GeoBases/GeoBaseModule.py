@@ -234,6 +234,8 @@ class GeoBase(object):
         The ``kwargs`` parameters given when creating the object may be:
 
         - source        : ``None`` by default, file-like to the source
+        - paths         : ``None`` by default, path or list of paths to \
+                the source. This will only be used if source is ``None``.
         - headers       : ``[]`` by default, list of fields in the data
         - key_fields    : ``None`` by default, list of fields defining the \
                 key for a line, ``None`` means line numbers will be used \
@@ -311,6 +313,7 @@ class GeoBase(object):
         # Defaults
         props = {
             'source'        : None,  # not for configuration file, use path/local
+            'paths'         : None,
             'headers'       : [],
             'key_fields'    : None,
             'indices'       : [],
@@ -321,12 +324,17 @@ class GeoBase(object):
             'skip'          : None,
             'discard_dups'  : False,
             'verbose'       : True,
-            'paths'         : None,  # only for configuration file
             'local'         : True,  # only for configuration file
         }
 
+        # The default for "local" is True if paths are read
+        # from the configuration file, False if paths are read
+        # as a keyword argument
+        if 'paths' in kwargs:
+            props['local'] = False
+
         allowed_conf = set(props.keys()) - set(['source'])
-        allowed_args = set(props.keys()) - set(['paths', 'local'])
+        allowed_args = set(props.keys()) - set(['local'])
 
         if data in SOURCES:
             conf = SOURCES[data]
@@ -340,7 +348,8 @@ class GeoBase(object):
                 if option in allowed_conf:
                     props[option] = conf[option]
                 else:
-                    raise ValueError('Option "%s" for data "%s" not understood in file.' % (option, data))
+                    raise ValueError('Option "%s" for data "%s" not understood in file.' % \
+                                     (option, data))
 
         else:
             raise ValueError('Wrong data type. Not in %s' % sorted(SOURCES.keys()))
