@@ -379,11 +379,11 @@ class GeoBase(object):
                 if is_remote(path):
                     if is_archive(path):
                         resource = path['archive']
-                        success, dl_file = download_if_not_here(resource, op.basename(resource), self._verbose)
+                        success, dl_file = download_lazy(resource, self._verbose)
                         path['archive'] = dl_file
                     else:
                         resource = path
-                        success, dl_file = download_if_not_here(resource, op.basename(resource), self._verbose)
+                        success, dl_file = download_lazy(resource, self._verbose)
                         path = dl_file
 
                     if not success:
@@ -393,7 +393,7 @@ class GeoBase(object):
 
                 if is_archive(path):
                     archive, filename = path['archive'], path['file']
-                    success, path = extract_if_not_here(archive, filename, self._verbose)
+                    success, path = extract_lazy(archive, filename, self._verbose)
 
                     if not success:
                         if self._verbose:
@@ -2860,7 +2860,7 @@ def tuplify(s):
         return tuple(s)
 
 
-def download_if_not_here(resource, filename, verbose=True):
+def download_lazy(resource, verbose=True):
     """
     Download a remote file only if target file is not already
     in local directory.
@@ -2868,24 +2868,26 @@ def download_if_not_here(resource, filename, verbose=True):
     to downloaded file (may not be exactly the same as the one checked).
     """
     # If in local directory, we use it, otherwise we download it
-    if op.isfile(filename):
+    filename_test = op.basename(resource)
+
+    if op.isfile(filename_test):
         if verbose:
             print '/!\ Using "%s" already in local directory for "%s"' % \
-                    (filename, resource)
-        return True, filename
+                    (filename_test, resource)
+        return True, filename_test
 
     if verbose:
         print '/!\ Downloading "%s" in local directory from "%s"' % \
-                (filename, resource)
+                (filename_test, resource)
     try:
-        dl_filename, _ = urlretrieve(resource, filename)
+        dl_filename, _ = urlretrieve(resource, filename_test)
     except IOError:
         return False, None
     else:
         return True, dl_filename
 
 
-def extract_if_not_here(archive, filename, verbose=True):
+def extract_lazy(archive, filename, verbose=True):
     """
     Extract a file from archive if file is not already in
     the local directory.
