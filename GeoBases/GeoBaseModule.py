@@ -482,10 +482,6 @@ class GeoBase(object):
                         'file' : path
                     }
 
-        for h in self._subdelimiters:
-            if self._subdelimiters[h] is not None:
-                self._subdelimiters[h] = tuplify(self._subdelimiters[h])
-
         # "local" is only used for sources from configuration
         # to have a relative path from the configuration file
         if self._paths is not None:
@@ -502,6 +498,10 @@ class GeoBase(object):
                     paths.append(path)
 
             self._paths = tuple(paths)
+
+        for h in self._subdelimiters:
+            if self._subdelimiters[h] is not None:
+                self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
         # Some headers are not accepted
         for h in self._headers:
