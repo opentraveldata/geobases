@@ -119,17 +119,18 @@ NB_CLOSEST = 1
 
 # Remote prefix detection
 R_PREFIXES = set(['http://', 'https://'])
+has_prefix = lambda path: any(path.lower().startswith(p) for p in R_PREFIXES)
 
 def is_remote(path):
     """Tells if a path is remote.
     """
     if is_archive(path):
-        return is_remote(path['archive'])
-
-    return any(path.lower().startswith(p) for p in R_PREFIXES)
+        return has_prefix(path['archive'])
+    else:
+        return has_prefix(path['file'])
 
 # Remote prefix detection
-is_archive = lambda path: isinstance(path, dict) and 'archive' in path
+is_archive = lambda path: 'archive' in path
 
 # Date comparisons
 def is_older(a, b):
@@ -396,9 +397,9 @@ class GeoBase(object):
                         success, dl_file = download_lazy(resource, self._verbose)
                         path['archive'] = dl_file
                     else:
-                        resource = path
+                        resource = path['file']
                         success, dl_file = download_lazy(resource, self._verbose)
-                        path = dl_file
+                        path['file'] = dl_file
 
                     if not success:
                         if self._verbose:
@@ -414,6 +415,9 @@ class GeoBase(object):
                             print '/!\ Failed to extract "%s" from "%s", failing over...' % \
                                     (filename, archive)
                         continue
+
+                else:
+                    path = path['file']
 
                 try:
                     with open(path) as source_fl:
@@ -471,6 +475,13 @@ class GeoBase(object):
                 # If paths is just *one* archive or *one* file
                 self._paths = (self._paths,)
 
+            # We normalize all path as a dict structure
+            for i, path in enumerate(self._paths):
+                if isinstance(path, str):
+                    self._paths[i] = {
+                        'file' : path
+                    }
+
         for h in self._subdelimiters:
             if self._subdelimiters[h] is not None:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
@@ -482,7 +493,8 @@ class GeoBase(object):
             for path in self._paths:
                 if not is_remote(path) and self._local is True:
                     if not is_archive(path):
-                        paths.append(relative(path, root=SOURCES_DIR))
+                        path['file'] = relative(path['file'], root=SOURCES_DIR)
+                        paths.append(path)
                     else:
                         path['archive'] = relative(path['archive'], root=SOURCES_DIR)
                         paths.append(path)
