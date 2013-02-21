@@ -285,6 +285,9 @@ class GeoBase(object):
         self._indexed = {}
         self._ggrid   = None
 
+        # Other bases for join clauses
+        self._join_bases = {}
+
         # A cache for the fuzzy searches
         self._fuzzy_cache = {}
         # An other cache if the algorithms are failing on a single
@@ -306,6 +309,7 @@ class GeoBase(object):
             'indices'       : [],
             'delimiter'     : '^',
             'subdelimiters' : {},
+            'join_info'     : {},
             'quotechar'     : '"',
             'limit'         : None,
             'skip'          : None,
@@ -323,26 +327,24 @@ class GeoBase(object):
         allowed_conf = set(props.keys()) - set(['source'])
         allowed_args = set(props.keys()) - set(['local'])
 
-        if data in SOURCES:
-            conf = SOURCES[data]
+        if data not in SOURCES:
+            raise ValueError('Wrong data type "%s". Not in %s' % \
+                             (data, sorted(SOURCES.keys())))
 
-            # The configuration may be empty
-            if conf is None:
-                conf = {}
+        # The configuration may be empty
+        conf = SOURCES[data]
+        if conf is None:
+            conf = {}
 
-            # File configuration overrides defaults
-            for option in conf:
-                if option in allowed_conf:
-                    props[option] = conf[option]
-                else:
-                    raise ValueError('Option "%s" for data "%s" not understood in file.' % \
-                                     (option, data))
+        # File configuration overrides defaults
+        for option in conf:
+            if option in allowed_conf:
+                props[option] = conf[option]
+            else:
+                raise ValueError('Option "%s" for data "%s" not understood in file.' % \
+                                 (option, data))
 
-        else:
-            raise ValueError('Wrong data type. Not in %s' % sorted(SOURCES.keys()))
-
-        # User input overrides default configuration
-        # or file configuration
+        # User input overrides default configuration or file configuration
         for option in kwargs:
             if option in allowed_args:
                 props[option] = kwargs[option]
@@ -356,6 +358,7 @@ class GeoBase(object):
         self._indices       = props['indices']
         self._delimiter     = props['delimiter']
         self._subdelimiters = props['subdelimiters']
+        self._join_info     = props['join_info']
         self._quotechar     = props['quotechar']
         self._limit         = props['limit']
         self._skip          = props['skip']
@@ -449,6 +452,8 @@ class GeoBase(object):
         if self._key_fields is not None:
             self._key_fields = tuplify(self._key_fields)
 
+
+        # Paths conversion to dict, local paths handling
         if self._paths is not None:
             if isinstance(self._paths, (str, dict)):
                 # If paths is just *one* archive or *one* file
@@ -469,19 +474,71 @@ class GeoBase(object):
 
             self._paths = tuple(self._paths)
 
+
+        # Some headers are not accepted
+        for h in self._headers:
+            if str(h).endswith('@raw') or \
+               str(h).endswith('@join') or \
+               str(h).startswith('__'):
+                raise ValueError('Header %s not accepted, should not end with "@raw" or "@join" or start with "__".' % h)
+
+
+        # Join handling
+        for h in self._join_info:
+            if self._join_info[h] is None:
+                continue
+
+            join_value = tuplify(self._join_info[h])
+
+            if len(join_value) == 1:
+                # Here if the user did not specify the field
+                # of the join on the external base, we assume
+                # it has the same name
+                # join_value <=> join_data [, join_field]
+                self._join_info[h] = join_value[0], h
+            else:
+                self._join_info[h] = join_value[0], join_value[1]
+
+            # Creation of external bases
+            join_data, join_field = self._join_info[h]
+
+            if join_data not in SOURCES:
+                raise ValueError('Wrong join data type "%s". Not in %s' % \
+                                 (join_data, sorted(SOURCES.keys())))
+
+            if join_data not in self._join_bases:
+                # To avoid recursion, we force the join_info to be empty
+                self._join_bases[join_data] = GeoBase(join_data, join_info={}, verbose=False)
+
+            ext_g = self._join_bases[join_data]
+
+            if join_field not in ext_g.fields:
+                raise ValueError('Wrong join field "%s". Not in %s' % \
+                                 (join_field, ext_g.fields))
+
+            # We index the field to optimize further findWith
+            if not ext_g.hasIndexOn(join_field):
+                ext_g.addIndex(join_field, verbose=False)
+
+            if self._verbose:
+                print 'Load external base "%s" as join data for "%s" on "%s"' % \
+                        (join_data, join_field, h)
+
+
+        # Subdelimiters
         for h in self._subdelimiters:
             if self._subdelimiters[h] is not None:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # Some headers are not accepted
+        # Expansion: putting None where not set
         for h in self._headers:
-            if str(h).endswith('@raw') or str(h).startswith('__'):
-                raise ValueError('Header %s not accepted, should not end with "@raw" or start with "__".' % h)
 
-        # Subdelimiters expansion: putting None where not set
-        for h in self._headers:
             if h not in self._subdelimiters:
                 self._subdelimiters[h] = None
+
+            if h not in self._join_info:
+                self._join_info[h] = None
+
 
 
     @staticmethod
@@ -621,7 +678,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowData(row, headers, delimiter, subdelimiters, key, lno):
+    def _buildRowData(row, headers, delimiter, subdelimiters, join_info, join_bases, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
@@ -648,10 +705,22 @@ class GeoBase(object):
                 data['__gar__'].append(v)
             else:
                 if subdelimiters[h] is None:
-                    data[h] = v
+                    if join_info[h] is None:
+                        data[h] = v
+                    else:
+                        data['%s@join' % h] = v
+                        data[h] = tuple(k for _, k in
+                                        join_bases[join_info[h][0]].findWith([(join_info[h][1], v)]))
                 else:
                     data['%s@raw' % h] = v
-                    data[h] = recursive_split(v, subdelimiters[h])
+
+                    if join_info[h] is None:
+                        data[h] = recursive_split(v, subdelimiters[h])
+                    else:
+                        data['%s@join' % h] = v
+                        data[h] = tuple(tuple(k for _, k in
+                                              join_bases[join_info[h][0]].findWith([(join_info[h][1], t)]))
+                                        for t in recursive_split(v, subdelimiters[h]))
 
         # Flattening the __gar__ list
         data['__gar__'] = delimiter.join(data['__gar__'])
@@ -732,6 +801,8 @@ class GeoBase(object):
         key_fields    = self._key_fields
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
+        join_info     = self._join_info
+        join_bases    = self._join_bases
         quotechar     = self._quotechar
         limit         = self._limit
         skip          = self._skip
@@ -779,7 +850,7 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
+            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, join_info, join_bases, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self._things:
@@ -815,6 +886,9 @@ class GeoBase(object):
         for h in headers:
             if subdelimiters[h] is not None:
                 self.fields.append('%s@raw' % h)
+
+            if join_info[h] is not None:
+                self.fields.append('%s@join' % h)
 
             if h is not None:
                 self.fields.append(h)
@@ -2522,6 +2596,7 @@ class GeoBase(object):
             # Keeping only important fields
             if not str(field).startswith('__') and \
                not str(field).endswith('@raw') and \
+               not str(field).endswith('@join') and \
                field not in elem:
 
                 elem[field] = str(self.get(key, field))
