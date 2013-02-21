@@ -189,6 +189,8 @@ ori_por:
         #location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
+    #join_info:
+    #    country_code: [countries, code]
     headers : &ori_por_headers
         - iata_code
         - icao_code
