@@ -215,17 +215,6 @@ class GeoBase(object):
     a file is loaded in memory, and the user may use
     the instance to get information.
     """
-
-    @staticmethod
-    def checkDataUpdates(force=False):
-        """Launch update script on data files.
-        """
-        script_path  = relative('DataSources/CheckDataUpdates.sh')
-        force_option = '-f' if force else ''
-
-        os.system('bash %s %s' % (script_path, force_option))
-
-
     def __init__(self, data, **kwargs):
         """Initialization
 
@@ -493,6 +482,16 @@ class GeoBase(object):
         for h in self._headers:
             if h not in self._subdelimiters:
                 self._subdelimiters[h] = None
+
+
+    @staticmethod
+    def checkDataUpdates(force=False):
+        """Launch update script on data files.
+        """
+        script_path  = relative('DataSources/CheckDataUpdates.sh')
+        force_option = '-f' if force else ''
+
+        os.system('bash %s %s' % (script_path, force_option))
 
 
 
