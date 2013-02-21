@@ -143,6 +143,11 @@ def is_older(a, b):
         pass
     return False
 
+# Cache directory
+CACHE_DIR = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
+if not op.isdir(CACHE_DIR):
+    os.mkdir(CACHE_DIR)
+
 # Loading indicator
 NB_LINES_STEP = 100000
 
@@ -397,7 +402,8 @@ class GeoBase(object):
 
                     if not success:
                         if self._verbose:
-                            print '/!\ Failed to extract "%s" from "%s", failing over...' % (filename, archive)
+                            print '/!\ Failed to extract "%s" from "%s", failing over...' % \
+                                    (filename, archive)
                         continue
 
                 try:
@@ -2863,21 +2869,21 @@ def tuplify(s):
 def download_lazy(resource, verbose=True):
     """
     Download a remote file only if target file is not already
-    in local directory.
+    in cache directory.
     Returns boolean for success or failure, and path
     to downloaded file (may not be exactly the same as the one checked).
     """
-    # If in local directory, we use it, otherwise we download it
-    filename_test = op.basename(resource)
+    # If in cache directory, we use it, otherwise we download it
+    filename_test = op.join(CACHE_DIR, op.basename(resource))
 
     if op.isfile(filename_test):
         if verbose:
-            print '/!\ Using "%s" already in local directory for "%s"' % \
+            print '/!\ Using "%s" already in cache directory for "%s"' % \
                     (filename_test, resource)
         return True, filename_test
 
     if verbose:
-        print '/!\ Downloading "%s" in local directory from "%s"' % \
+        print '/!\ Downloading "%s" in cache directory from "%s"' % \
                 (filename_test, resource)
     try:
         dl_filename, _ = urlretrieve(resource, filename_test)
@@ -2890,29 +2896,31 @@ def download_lazy(resource, verbose=True):
 def extract_lazy(archive, filename, verbose=True):
     """
     Extract a file from archive if file is not already in
-    the local directory.
+    the cache directory.
     """
     # Perhaps the file was already extracted here
     # We also check the dates of modification in case
     # the extracted file obsolete
-    filename_test = op.join(op.dirname(archive), filename)
+    filename_test = op.join(CACHE_DIR, filename)
 
     if op.isfile(filename_test):
         if is_older(archive, filename_test):
             if verbose:
-                print '/!\ Skipping extraction for "%s", already at "%s"' % (filename, filename_test)
+                print '/!\ Skipping extraction for "%s", already at "%s"' % \
+                        (filename, filename_test)
             return True, filename_test
 
         if verbose:
-            print '/!\ File "%s" already at "%s", but archive "%s" is more recent, regenerating' % \
+            print '/!\ File "%s" already at "%s", but "%s" is newer, removing' % \
                     (filename, filename_test, archive)
 
     if verbose:
-        print '/!\ Extracting "%s" from "%s"' % (filename, archive)
+        print '/!\ Extracting "%s" from "%s" in "%s"' % \
+                (filename, archive, filename_test)
 
     # We extract one file from the archive
     try:
-        extracted = ZipFile(archive).extract(filename, op.dirname(archive))
+        extracted = ZipFile(archive).extract(filename, op.dirname(filename_test))
     except IOError:
         return False, None
     else:
