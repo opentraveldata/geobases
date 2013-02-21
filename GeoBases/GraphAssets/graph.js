@@ -74,7 +74,7 @@ function initialize(jsonData) {
     var MAX_NODE_DIM = 20;
 
     var MIN_LINE_WIDTH = 0.2;
-    var MAX_LINE_WIDTH = 7;
+    var MAX_LINE_WIDTH = 8;
 
     // Colors, catalog of types to colors
     // blue, red, darkyellow, purple, green, grey
@@ -266,7 +266,7 @@ function initialize(jsonData) {
         //Number of iterations for the FD algorithm
         iterations: 200,
         //Edge length
-        levelDistance: 130,
+        levelDistance: 110,
         // Add text to the labels. This method is only triggered
         // on label creation and only for DOM labels (not native canvas ones).
         onCreateLabel: function(domElement, node){
@@ -307,14 +307,14 @@ function initialize(jsonData) {
         iter    : 20,
         property: 'end',
         onStep  : function(perc){
-            Log.write('[' + perc + '%]');
+            Log.write('[{0}%]'.fmt(perc));
         },
         onComplete: function(){
             Log.write('');
             fd.animate({
-                modes       : ['linear'],
+                modes       : ['polar'], // 'linear', 'polar'
                 //transition  : $jit.Trans.Elastic.easeOut,
-                duration    : 2500
+                duration    : 2000
             });
         }
     });
