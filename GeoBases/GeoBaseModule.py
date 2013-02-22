@@ -497,23 +497,19 @@ class GeoBase(object):
 
 
         # Join handling
-        for h in self._join_info:
-            if self._join_info[h] is None:
-                continue
-
-            join_value = tuplify(self._join_info[h])
+        for h, join_value in self._join_info.iteritems():
 
             if len(join_value) == 1:
                 # Here if the user did not specify the field
                 # of the join on the external base, we assume
                 # it has the same name
                 # join_value <=> join_data [, join_field]
-                self._join_info[h] = join_value[0], h
+                join_data, join_field = join_value[0], h
             else:
-                self._join_info[h] = join_value[0], join_value[1]
+                join_data, join_field = join_value[0], join_value[1]
 
             # Creation of external bases
-            join_data, join_field = self._join_info[h]
+            self._join_info[h] = join_data, join_field
 
             if join_data not in SOURCES:
                 raise ValueError('Wrong join data type "%s". Not in %s' % \
