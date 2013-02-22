@@ -534,21 +534,6 @@ class GeoBase(object):
                         (join_data, join_field, h)
 
 
-        # Subdelimiters
-        for h in self._subdelimiters:
-            if self._subdelimiters[h] is not None:
-                self._subdelimiters[h] = tuplify(self._subdelimiters[h])
-
-        # Expansion: putting None where not set
-        for h in self._headers:
-
-            if h not in self._subdelimiters:
-                self._subdelimiters[h] = None
-
-            if h not in self._join_info:
-                self._join_info[h] = None
-
-
 
     @staticmethod
     def checkDataUpdates(force=False):
@@ -811,8 +796,8 @@ class GeoBase(object):
             if not h:
                 data['__gar__'].append(v)
             else:
-                if subdelimiters[h] is None:
-                    if join_info[h] is None:
+                if h not in subdelimiters:
+                    if h not in join_info:
                         data[h] = v
                     else:
                         data['%s@join' % h] = v
@@ -821,7 +806,7 @@ class GeoBase(object):
                 else:
                     data['%s@raw' % h] = v
 
-                    if join_info[h] is None:
+                    if h not in join_info:
                         data[h] = recursive_split(v, subdelimiters[h])
                     else:
                         data['%s@join' % h] = v
@@ -991,10 +976,10 @@ class GeoBase(object):
         self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
-            if subdelimiters[h] is not None:
+            if h in subdelimiters:
                 self.fields.append('%s@raw' % h)
 
-            if join_info[h] is not None:
+            if h in join_info:
                 self.fields.append('%s@join' % h)
 
             if h is not None:
@@ -3172,7 +3157,7 @@ def recursive_split(value, splits):
     >>> recursive_split('', ['^', '/', ':'])
     ()
     """
-    # Case where no subdelimiters
+    # Case where no splits
     if not splits:
         return value
 
