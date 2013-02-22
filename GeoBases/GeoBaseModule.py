@@ -438,7 +438,7 @@ class GeoBase(object):
 
         # Indices, we convert every iterable into tuple
         for fields in self._indices:
-            self.addIndex(fields, self._verbose)
+            self.addIndex(fields, verbose=self._verbose)
 
 
 
@@ -567,17 +567,27 @@ class GeoBase(object):
 
 
 
-    def addIndex(self, fields, verbose=True):
+    def addIndex(self, fields, force=True, verbose=True):
         """Add an index on an iterable of fields.
 
         :param fields:  the iterable of fields
+        :param force:   ``True`` by default, force index update \
+                if it already exists
         :param verbose: toggle verbosity
 
         >>> geo_o.addIndex('iata_code', verbose=True)
         /!\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
+
+        Index on multiple fields.
+
         >>> geo_o.addIndex(('icao_code', 'location_type'), verbose=True)
         Built index for fields ('icao_code', 'location_type')
+
+        Do not force.
+
+        >>> geo_o.addIndex('iata_code', force=False, verbose=True)
+        /!\ Index on ('iata_code',) already built, exiting...
         """
         if not fields:
             if verbose:
