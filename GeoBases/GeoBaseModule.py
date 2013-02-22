@@ -659,7 +659,7 @@ class GeoBase(object):
 
         Now we add a new key to the data.
 
-        >>> geo_o.setFromDict('NEW_KEY', {
+        >>> geo_o.setFromDict('NEW_KEY_2', {
         ...     'iata_code' : 'NCE',
         ... })
 
@@ -669,18 +669,24 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed, not up to date
         [(1, 'NCE'), (1, 'NCE@1')]
         >>> list(geo_o.findWith([('iata_code', 'NCE')], index=False)) # not indexed
-        [(1, 'NCE'), (1, 'NEW_KEY'), (1, 'NCE@1')]
+        [(1, 'NCE'), (1, 'NEW_KEY_2'), (1, 'NCE@1')]
 
-        Now we update all indexes, then the query works.
+        Now we update the index, then the query works.
 
         >>> geo_o.updateIndex('iata_code')
         Built index for fields ('iata_code',)
         >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed, up to date
-        [(1, 'NCE'), (1, 'NEW_KEY'), (1, 'NCE@1')]
+        [(1, 'NCE'), (1, 'NEW_KEY_2'), (1, 'NCE@1')]
+        >>> geo_o.delete('NEW_KEY_2') # avoid messing other tests
+
+        Note that ``updateIndex`` will not create indexes if it does not exist.
+
+        >>> geo_f.updateIndex('iata_code')
+        No index to update on "iata_code".
         """
         if fields is None:
             for fs in self._indexed:
-                self.dropIndex(fs)
+                self.dropIndex(fs, verbose=verbose)
                 self.addIndex(fs, verbose=verbose)
         else:
             self.dropIndex(fields)
