@@ -1119,6 +1119,62 @@ class GeoBase(object):
 
 
 
+    def updateGrid(self, verbose=True):
+        """Update the grid for geographical indexation.
+
+        :param radius:    the grid accuracy, in kilometers
+                the ``precision`` parameter is used to define grid size
+        :param precision: the hash length. This is only used if ``radius`` \
+                is ``None``, otherwise this parameter (a hash length) is \
+                computed from the radius
+        :param verbose:   toggle verbosity
+        :returns:         ``None``
+
+        We use the grid for a query.
+
+        >>> sorted(geo_t.findNearKey('frbve'))[0:3]
+        [(0.0, 'frbve'), (7.63..., 'fr2698'), (9.07..., 'fr3065')]
+
+        Now we add a new key to the data.
+
+        >>> geo_t.setFromDict('NEW_KEY_3', {
+        ...     'lat' : '45.152',
+        ...     'lng' : '1.528',
+        ... })
+
+        If we run the query again, the result is wrong when
+        using the grid, because it is not up-to-date.
+
+        >>> sorted(geo_t.findNearKey('frbve'))[0:3]
+        [(0.0, 'frbve'), (7.63..., 'fr2698'), (9.07..., 'fr3065')]
+        >>> sorted(geo_t.findNearKey('frbve', grid=False))[0:3]
+        [(0.0, 'frbve'), (0.07..., 'NEW_KEY_3'), (7.63..., 'fr2698')]
+
+        Now we update the grid, then the query works.
+
+        >>> geo_t.updateGrid()
+        >>> sorted(geo_t.findNearKey('frbve'))[0:3]
+        [(0.0, 'frbve'), (0.07..., 'NEW_KEY_3'), (7.63..., 'fr2698')]
+        >>> geo_t.delete('NEW_KEY_3') # avoid messing other tests
+
+        Note that ``updateGrid`` will not create the grid if it does not exist.
+
+        >>> geo_f.updateGrid()
+        No grid to update.
+        """
+        if self.hasGrid():
+            radius    = self._ggrid.radius
+            precision = self._ggrid.precision
+
+            self.dropGrid(verbose=verbose)
+            self.addGrid(radius=radius, precision=precision, verbose=verbose)
+
+        else:
+            if verbose:
+                print 'No grid to update.'
+
+
+
     def get(self, key, field=None, **kwargs):
         """Simple get on the base.
 
