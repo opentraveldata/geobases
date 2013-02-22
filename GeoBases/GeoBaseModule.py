@@ -713,7 +713,13 @@ class GeoBase(object):
 
         for key in self:
 
-            val = compute_val(key)
+            try:
+                val = compute_val(key)
+            except KeyError:
+                if verbose:
+                    print 'Could not compute values for key "%s" and fields %s' % \
+                            (key, str(fields))
+                continue
 
             if val not in index:
                 index[val] = []
@@ -1020,6 +1026,7 @@ class GeoBase(object):
                             (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
             else:
                 self._ggrid.add(key, lat_lng, verbose)
+
 
 
     def dropGrid(self):
