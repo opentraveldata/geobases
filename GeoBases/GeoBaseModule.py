@@ -1050,7 +1050,7 @@ class GeoBase(object):
 
 
 
-    def addGrid(self, radius=GRID_RADIUS, precision=5, verbose=True):
+    def addGrid(self, radius=GRID_RADIUS, precision=5, force=True, verbose=True):
         """Create the grid for geographical indexation.
 
         This operation is automatically performed an initialization if there
@@ -1061,12 +1061,24 @@ class GeoBase(object):
         :param precision: the hash length. This is only used if ``radius`` \
                 is ``None``, otherwise this parameter (a hash length) is \
                 computed from the radius
+        :param force:   ``True`` by default, force grid update \
+                if it already exists
         :param verbose:   toggle verbosity
         :returns:         ``None``
 
         >>> geo_o.addGrid(radius=50, verbose=True)
+        /!\ Grid already built, overriding...
         No usable geocode for ZZL: ("",""), skipping point...
         """
+        if self.hasGrid():
+            if not force:
+                if verbose:
+                    print '/!\ Grid already built, exiting...'
+                return
+
+            elif verbose:
+                print '/!\ Grid already built, overriding...'
+
         self._ggrid = GeoGrid(precision=precision, radius=radius, verbose=False)
 
         for key in self:
