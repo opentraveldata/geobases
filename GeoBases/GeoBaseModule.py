@@ -246,8 +246,8 @@ class GeoBase(object):
                 and many more available. ``'feed'`` will create an empty \
                 instance.
         :param kwargs: additional parameters
-        :raises:  ValueError, if data parameters is not recognized
-        :returns: None
+        :raises:  ``ValueError``, if data parameters is not recognized
+        :returns: ``None``
 
         >>> geo_a = GeoBase(data='airports')
         Import successful from ...
@@ -1058,13 +1058,18 @@ class GeoBase(object):
     def get(self, key, field=None, **kwargs):
         """Simple get on the base.
 
-        This get function raises an exception when input is not correct.
+        Get data on ``key`` for ``field`` information. For example
+        you can get data on ``CDG`` for its ``city_code``.
+        You can use the ``None`` as ``field`` value to get all information
+        in a dictionary.
+        You can give an additional keyword argument
+        ``default``, to avoid ``KeyError`` on the ``key`` parameter.
 
         :param key:     the key of the thing (like ``'SFO'``)
         :param field:   the field (like ``'name'`` or ``'iata_code'``)
         :param kwargs:  other named arguments, use 'default' to avoid \
-                key failure
-        :raises:        KeyError, if the key is not in the base
+                ``KeyError`` on ``key`` (not ``KeyError`` on ``field``)
+        :raises:        ``KeyError`` if the key is not in the base
         :returns:       the needed information
 
         >>> geo_a.get('CDG', 'city_code')
@@ -1611,6 +1616,7 @@ class GeoBase(object):
         call ``findNearPoint``.
 
         :param key:       the key of the thing (like ``'SFO'``)
+        :param radius:    the radius of the search (kilometers)
         :param from_keys: if ``None``, it takes all keys in consideration, \
             else takes ``from_keys`` iterable of keys to perform search.
         :param grid:      boolean, use grid or not
@@ -2144,7 +2150,7 @@ class GeoBase(object):
         :param key:   the key we want to change a value of
         :param field: the concerned field, like ``'name'``
         :param value: the new value
-        :returns:     None
+        :returns:     ``None``
 
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
@@ -2192,7 +2198,7 @@ class GeoBase(object):
 
         :param key:         the key we want to change a value of
         :param dictionary:  the dict containing the new data
-        :returns:           None
+        :returns:           ``None``
 
         >>> geo_f.keys()
         []
@@ -2208,7 +2214,7 @@ class GeoBase(object):
         """Method to manually remove a value in the base.
 
         :param key:   the key we want to delete
-        :returns:     None
+        :returns:     ``None``
 
         >>> data = geo_t.get('frxrn') # Output all data in one dict
         >>> geo_t.delete('frxrn')

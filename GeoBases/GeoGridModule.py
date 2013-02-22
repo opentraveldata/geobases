@@ -246,18 +246,20 @@ class GeoGrid(object):
         at the surface of a sphere, here returns kilometers,
         so the radius should be in kms.
 
-        :param lat_lng: the lat_lng of the point (a tuple of (lat, lng))
-        :param radius:  the radius of the search (kilometers)
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
+        :param radius:    the radius of the search (kilometers)
+        :param double_check: when using grid, perform an additional check on \
+            results distance, this is useful because the grid is approximate, \
+            so the results are only as accurate as the grid size
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if lat_lng is None:
             # Case where the lat_lng was missing from base
             return iter([])
 
-        candidate = self._findNearCase(self._computeCaseId(lat_lng), radius)
+        candidate = self._findNearCase(case_id=self._computeCaseId(lat_lng),
+                                       radius=radius)
 
         if double_check:
             return self._check_distance(candidate, lat_lng, radius)
@@ -268,24 +270,27 @@ class GeoGrid(object):
 
     def findNearKey(self, key, radius=20, double_check=False):
         """
-        Same as findNearPoint, except the point is given
-        not by a lat/lng, but with its key, like ORY or SFO.
-        We just look up in the base to retrieve lat/lng, and
-        call findNearPoint.
+        Same as ``findNearPoint``, except the point is given
+        not by a ``(lat, lng)``, but with its key, like ``'ORY'`` or ``'SFO'``.
+        We just look up in the base to retrieve latitude and longitude, then
+        call ``findNearPoint``.
 
-        :param key:     the key
-        :param radius:  the radius of the search (kilometers)
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param key:       the key of the thing (like ``'SFO'``)
+        :param radius:    the radius of the search (kilometers)
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode
             # and as such was never indexed
             return iter([])
 
-        candidate = self._findNearCase(self._keys[key]['case'], radius)
+        candidate = self._findNearCase(case_id=self._keys[key]['case'],
+                                       radius=radius)
 
         if double_check:
             return self._check_distance(candidate, self._keys[key]['lat_lng'], radius)
@@ -325,24 +330,23 @@ class GeoGrid(object):
 
     def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
         """
-        Concept close to findNearPoint, but here we do not
+        Concept close to ``findNearPoint``, but here we do not
         look for the things radius-close to a point,
         we look for the closest thing from this point, given by
         latitude/longitude.
 
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
-
-        :param lat_lng:   the lat_lng of the point (a tuple of (lat, lng))
+        :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
         :param N:         the N closest results wanted
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param double_check: when using grid, perform an additional check on \
+            results distance, this is useful because the grid is \
+            approximate, so the results are only as accurate as the grid size
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromPoint``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if lat_lng is None:
             # Case where the lat_lng was missing from base
@@ -374,24 +378,23 @@ class GeoGrid(object):
 
     def findClosestFromKey(self, key, N=1, double_check=False, from_keys=None):
         """
-        Concept close to findNearPoint, but here we do not
-        look for the things radius-close to a point,
-        we look for the closest thing from this point, given by
-        latitude/longitude.
+        Same as ``findClosestFromPoint``, except the point is given
+        not by a ``(lat, lng)``, but with its key, like ``'ORY'`` or ``'SFO'``.
+        We just look up in the base to retrieve latitude and longitude, then
+        call ``findClosestFromPoint``.
 
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
-
-        :param key:       the key
+        :param key:       the key of the thing (like ``'SFO'``)
         :param N:         the N closest results wanted
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyFindNearPoint).
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromKey``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
+        :returns:       an iterable of ``(distance, key)`` like \
         """
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode
