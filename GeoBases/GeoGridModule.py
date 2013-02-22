@@ -9,7 +9,7 @@ to provide geographical indexation features.
     Setting grid precision to 4, avg radius to 20km
     >>> a.add('ORY', (48.72, 2.359))
     >>> a.add('CDG', (48.75, 2.361))
-    >>> list(a._findInAdjacentCases(encode(48.72, 2.359, a._precision), N=2))
+    >>> list(a._findInAdjacentCases(encode(48.72, 2.359, a.precision), N=2))
     ['ORY', 'CDG']
     >>> a._keys['ORY']
     {'case': 'u09t', 'lat_lng': (48.7..., 2.359)}
@@ -368,7 +368,9 @@ class GeoGrid(object):
         N = min(N, len(self._keys))
 
         # The case of the point is computed by _computeCaseId
-        candidate = self._findClosestFromCase(self._computeCaseId(lat_lng), N, from_keys)
+        candidate = self._findClosestFromCase(case_id=self._computeCaseId(lat_lng),
+                                              N=N,
+                                              from_keys=from_keys)
 
         if double_check:
             return heapq.nsmallest(N, self._check_distance(candidate, lat_lng))
@@ -417,7 +419,9 @@ class GeoGrid(object):
         N = min(N, len(self._keys))
 
         # The case of the point is just retrieved
-        candidate = self._findClosestFromCase(self._keys[key]['case'], N, from_keys)
+        candidate = self._findClosestFromCase(case_id=self._keys[key]['case'],
+                                              N=N,
+                                              from_keys=from_keys)
 
         if double_check:
             return heapq.nsmallest(N, self._check_distance(candidate, self._keys[key]['lat_lng']))

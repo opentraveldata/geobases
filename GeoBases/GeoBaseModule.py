@@ -1711,13 +1711,15 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid and self._ggrid is None:
+        if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
-            for dist, thing in self._ggrid.findNearPoint(lat_lng, radius, double_check):
+            for dist, thing in self._ggrid.findNearPoint(lat_lng=lat_lng,
+                                                         radius=radius,
+                                                         double_check=double_check):
                 if thing in from_keys:
                     yield dist, thing
 
@@ -1770,19 +1772,21 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid and self._ggrid is None:
+        if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
 
-            for dist, thing in self._ggrid.findNearKey(key, radius, double_check):
+            for dist, thing in self._ggrid.findNearKey(key=key,
+                                                       radius=radius,
+                                                       double_check=double_check):
                 if thing in from_keys:
                     yield dist, thing
 
         else:
-            for dist, thing in self.findNearPoint(self.getLocation(key),
+            for dist, thing in self.findNearPoint(lat_lng=self.getLocation(key),
                                                   radius=radius,
                                                   from_keys=from_keys,
                                                   grid=grid,
@@ -1844,11 +1848,14 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid and self._ggrid is None:
+        if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
-            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
+            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng=lat_lng,
+                                                                N=N,
+                                                                double_check=double_check,
+                                                                from_keys=from_keys):
                 yield dist, thing
 
         else:
@@ -1909,15 +1916,22 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
-        if grid and self._ggrid is None:
+        if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
-            for dist, thing in self._ggrid.findClosestFromKey(key, N, double_check, from_keys):
+            for dist, thing in self._ggrid.findClosestFromKey(key=key,
+                                                              N=N,
+                                                              double_check=double_check,
+                                                              from_keys=from_keys):
                 yield dist, thing
 
         else:
-            for dist, thing in self.findClosestFromPoint(self.getLocation(key), N, from_keys, grid, double_check):
+            for dist, thing in self.findClosestFromPoint(lat_lng=self.getLocation(key),
+                                                         N=N,
+                                                         from_keys=from_keys,
+                                                         grid=grid,
+                                                         double_check=double_check):
                 yield dist, thing
 
 
@@ -2287,9 +2301,10 @@ class GeoBase(object):
 
         We can create just the key.
 
-        >>> geo_t.set('frnewkey')
-        >>> geo_t.get('frnewkey')
-        {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'frnewkey'}
+        >>> geo_t.set('NEW_KEY_1')
+        >>> geo_t.get('NEW_KEY_1')
+        {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'NEW_KEY_1'}
+        >>> geo_t.delete('NEW_KEY_1') # avoid messing other tests
         """
         # If the key is not in the base,
         # we simply add it
@@ -2672,7 +2687,7 @@ class GeoBase(object):
             geo_support = False
 
             if verbose:
-                print '\n/!\ Could not find fields %s in headers %s.' % \
+                print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GEO_FIELDS), self.fields)
 
         if icon_label is not None and icon_label not in self.fields:
