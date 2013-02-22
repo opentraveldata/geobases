@@ -1033,6 +1033,23 @@ class GeoBase(object):
 
 
 
+    def hasGrid(self):
+        """Tells if an iterable of fields is indexed.
+
+        :param fields:  the iterable of fields
+        :returns:       a boolean
+
+        >>> geo_t.hasGrid()
+        True
+        >>> geo_t.dropGrid()
+        >>> geo_t.hasGrid()
+        False
+        >>> geo_t.addGrid()
+        """
+        return self._ggrid is not None
+
+
+
     def addGrid(self, radius=GRID_RADIUS, precision=5, verbose=True):
         """Create the grid for geographical indexation.
 
@@ -1045,7 +1062,7 @@ class GeoBase(object):
                 is ``None``, otherwise this parameter (a hash length) is \
                 computed from the radius
         :param verbose:   toggle verbosity
-        :returns:         None
+        :returns:         ``None``
 
         >>> geo_o.addGrid(radius=50, verbose=True)
         No usable geocode for ZZL: ("",""), skipping point...
@@ -1057,20 +1074,28 @@ class GeoBase(object):
 
             if lat_lng is None:
                 if verbose:
-                    print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
-                            (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
+                    if self.hasGeoSupport(key):
+                        print 'No usable geocode for %s: ("%s","%s"), skipping point...' % \
+                                (key, self.get(key, LAT_FIELD), self.get(key, LNG_FIELD))
+                    else:
+                        # We could not even display the lat/lng
+                        # This can happen if incomplete key information
+                        # has been supplied after loading, with set or setFromDict
+                        print 'No geocode support for %s: "%s", skipping point...' % \
+                                (key, self.get(key))
             else:
                 self._ggrid.add(key, lat_lng, verbose)
 
 
 
-    def dropGrid(self):
+    def dropGrid(self, verbose=True):
         """Delete grid.
 
-        :returns: None
+        :returns: ``None``
 
         >>> geo_t.dropGrid()
-        >>> geo_t._ggrid # is None
+        >>> geo_t.hasGrid()
+        False
 
         Attempt to use the grid, failure.
 
@@ -1086,7 +1111,11 @@ class GeoBase(object):
         >>> sorted(geo_t.findNearKey('frbve'))[0:3]
         [(0.0, 'frbve'), (7.63..., 'fr2698'), (9.07..., 'fr3065')]
         """
-        self._ggrid = None
+        if self.hasGrid():
+            self._ggrid = None
+        else:
+            if verbose:
+                print 'No grid to drop.'
 
 
 
