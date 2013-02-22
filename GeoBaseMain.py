@@ -795,12 +795,12 @@ DEF_LINK_DUPLICATES = True
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
-# Graph defaults
+# Graph defaults, generate_headers is used for stdin input
 DEF_GRAPH_WEIGHT = None
 DEF_GRAPH_FIELDS = ('continent_name', 'raw_offset',
-                    'alliance_code',  'unified_code',
-                    'H0', 'H1', 'H2', 'H3', 'H4', # for stdin input
-                    '__key__')
+                    'alliance_code',  'unified_code') + \
+                   tuple(generate_headers(5)) + \
+                   ('__key__',)
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
