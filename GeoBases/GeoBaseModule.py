@@ -666,9 +666,9 @@ class GeoBase(object):
         If we run the query again, the result is wrong when
         using the index, because it is not up-to-date.
 
-        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed, not up to date
+        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed
         [(1, 'NCE'), (1, 'NCE@1')]
-        >>> list(geo_o.findWith([('iata_code', 'NCE')], index=False)) # not indexed
+        >>> list(geo_o.findWith([('iata_code', 'NCE')], index=False))
         [(1, 'NCE'), (1, 'NEW_KEY_2'), (1, 'NCE@1')]
 
         Now we update the index, then the query works.
@@ -1827,10 +1827,6 @@ class GeoBase(object):
         []
         >>> list(geo_t.findClosestFromPoint(None, N=2))
         []
-        >>> #from datetime import datetime
-        >>> #before = datetime.now()
-        >>> #for _ in range(100): s = geo_a.findClosestFromPoint((43.70, 7.26), N=3)
-        >>> #print(datetime.now() - before)
 
         No grid.
 
@@ -2291,7 +2287,7 @@ class GeoBase(object):
         >>> geo_t.set('frnic', 'name', 'Nice Gare SNCF')
         >>> geo_t.get('frnic', 'name')
         'Nice Gare SNCF'
-        >>> geo_t.set('frnic', 'name', 'Nice-Ville') # Not to mess with other tests :)
+        >>> geo_t.set('frnic', 'name', 'Nice-Ville') # tearDown
 
         We may even add new fields.
 
@@ -2304,7 +2300,7 @@ class GeoBase(object):
         >>> geo_t.set('NEW_KEY_1')
         >>> geo_t.get('NEW_KEY_1')
         {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'NEW_KEY_1'}
-        >>> geo_t.delete('NEW_KEY_1') # avoid messing other tests
+        >>> geo_t.delete('NEW_KEY_1') # tearDown
         """
         # If the key is not in the base,
         # we simply add it
