@@ -1018,7 +1018,20 @@ class GeoBase(object):
 
         >>> geo_t.dropGrid()
         >>> geo_t._ggrid # is None
+
+        Attempt to use the grid, failure.
+
+        >>> sorted(geo_t.findNearKey('frbve', grid=False))[0:3]
+        [(0.0, 'frbve'), (7.63..., 'fr2698'), (9.07..., 'fr3065')]
+        >>> sorted(geo_t.findNearKey('frbve'))[0:3]
+        Traceback (most recent call last):
+        ValueError: Attempting to use grid, but grid is None
+
+        Adding the grid again.
+
         >>> geo_t.addGrid(radius=50, verbose=True)
+        >>> sorted(geo_t.findNearKey('frbve'))[0:3]
+        [(0.0, 'frbve'), (7.63..., 'fr2698'), (9.07..., 'fr3065')]
         """
         self._ggrid = None
 
@@ -1555,6 +1568,9 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        if grid and self._ggrid is None:
+            raise ValueError('Attempting to use grid, but grid is None')
+
         if grid:
             # Using grid, from_keys if just a post-filter
             from_keys = set(from_keys)
@@ -1609,6 +1625,9 @@ class GeoBase(object):
         """
         if from_keys is None:
             from_keys = iter(self)
+
+        if grid and self._ggrid is None:
+            raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
             # Using grid, from_keys if just a post-filter
@@ -1681,6 +1700,9 @@ class GeoBase(object):
         if from_keys is None:
             from_keys = iter(self)
 
+        if grid and self._ggrid is None:
+            raise ValueError('Attempting to use grid, but grid is None')
+
         if grid:
             for dist, thing in self._ggrid.findClosestFromPoint(lat_lng, N, double_check, from_keys):
                 yield dist, thing
@@ -1742,6 +1764,9 @@ class GeoBase(object):
         """
         if from_keys is None:
             from_keys = iter(self)
+
+        if grid and self._ggrid is None:
+            raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
             for dist, thing in self._ggrid.findClosestFromKey(key, N, double_check, from_keys):
