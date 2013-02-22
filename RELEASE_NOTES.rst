@@ -8,6 +8,9 @@ V5
 + 5.0 :
 
  + draft for join clauses in configuration
+ + new updateIndex and updateGrid methods
+ + addIndex does not update index, addGrid does not update grid
+ + cache directory instead of local directory for download and extraction
  + allow ``paths`` as GeoBase init argument (same behavior as configuration file)
  + configure graph weight with -W/--graph-weight for CLI
  + type system when graph building, -w/--with-types to toggle from CLI
