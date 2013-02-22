@@ -65,8 +65,11 @@ We are currently gathering input from the community to define the next version f
 Documentation
 -------------
 
-Here is the `API documentation <https://geobases.readthedocs.org>`_ for the Python package.
-Check out the `wiki pages <https://github.com/opentraveldata/geobases/wiki/_pages>`_ for any question!
+Here are some useful links:
+
+- the `API documentation <https://geobases.readthedocs.org>`_ for the Python package
+- the `wiki pages <https://github.com/opentraveldata/geobases/wiki/_pages>`_ for any question!
+- the `twitter account <https://twitter.com/geobasesdev>`_ for the latest news
 
 Project
 -------
