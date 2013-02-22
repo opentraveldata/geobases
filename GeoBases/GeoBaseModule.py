@@ -730,8 +730,11 @@ class GeoBase(object):
             try:
                 val = compute_val(key)
             except KeyError:
+                # Here we have some fields that failed
+                # This can happen if incomplete key information
+                # has been supplied after loading, with set or setFromDict
                 if verbose:
-                    print 'Could not compute values for key "%s" and fields %s' % \
+                    print '/!\ Could not compute values for key "%s" and fields %s' % \
                             (key, str(fields))
                 continue
 
