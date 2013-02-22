@@ -609,7 +609,7 @@ class GeoBase(object):
 
 
 
-    def dropIndex(self, fields=None):
+    def dropIndex(self, fields=None, verbose=True):
         """Drop an index on an iterable of fields.
 
         If fields is not given all indexes are dropped.
@@ -627,7 +627,11 @@ class GeoBase(object):
             for fs in self._indexed:
                 del self._indexed[tuplify(fs)]
         else:
-            del self._indexed[tuplify(fields)]
+            if self.hasIndexOn(fields):
+                del self._indexed[tuplify(fields)]
+            else:
+                if verbose:
+                    print 'No index to drop on "%s".' % str(fields)
 
 
 
