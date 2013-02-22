@@ -995,17 +995,35 @@ class GeoBase(object):
 
 
 
-    def hasGeoSupport(self):
+    def hasGeoSupport(self, key=None):
         """Check if data type has geocoding support.
 
-        :returns: boolean for geocoding support
+        If a key parameter is given, check the geocode support
+        of this specific key.
+
+        :param key: if key parameter is not ``None``,
+            we check the geocode support for this specific key,
+            not for the general data with ``fields`` attribute
+        :returns:   boolean for geocoding support
 
         >>> geo_t.hasGeoSupport()
         True
         >>> geo_f.hasGeoSupport()
         False
+
+        For a specific key.
+
+        >>> geo_o.hasGeoSupport('ORY')
+        True
+        >>> geo_o.set('EMPTY')
+        >>> geo_o.hasGeoSupport('EMPTY')
+        False
+        >>> geo_o.delete('EMPTY') # avoid messing other tests
         """
-        fields = set(self.fields)
+        if key is None:
+            fields = set(self.fields)
+        else:
+            fields = set(self._things[key].keys())
 
         for required in GEO_FIELDS:
             if required not in fields:
