@@ -436,7 +436,7 @@ class GeoBase(object):
             if self._verbose:
                 print 'No geocode support, skipping grid...'
 
-        # Indices, we convert every iterable into tuple
+        # Indices
         for fields in self._indices:
             self.addIndex(fields, verbose=self._verbose)
 
@@ -567,15 +567,15 @@ class GeoBase(object):
 
 
 
-    def addIndex(self, fields, force=True, verbose=True):
+    def addIndex(self, fields, force=False, verbose=True):
         """Add an index on an iterable of fields.
 
         :param fields:  the iterable of fields
-        :param force:   ``True`` by default, force index update \
+        :param force:   ``False`` by default, force index update \
                 if it already exists
         :param verbose: toggle verbosity
 
-        >>> geo_o.addIndex('iata_code', verbose=True)
+        >>> geo_o.addIndex('iata_code', force=True, verbose=True)
         /!\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
 
@@ -1050,7 +1050,7 @@ class GeoBase(object):
 
 
 
-    def addGrid(self, radius=GRID_RADIUS, precision=5, force=True, verbose=True):
+    def addGrid(self, radius=GRID_RADIUS, precision=5, force=False, verbose=True):
         """Create the grid for geographical indexation.
 
         This operation is automatically performed an initialization if there
@@ -1061,12 +1061,12 @@ class GeoBase(object):
         :param precision: the hash length. This is only used if ``radius`` \
                 is ``None``, otherwise this parameter (a hash length) is \
                 computed from the radius
-        :param force:   ``True`` by default, force grid update \
+        :param force:   ``False`` by default, force grid update \
                 if it already exists
         :param verbose:   toggle verbosity
         :returns:         ``None``
 
-        >>> geo_o.addGrid(radius=50, verbose=True)
+        >>> geo_o.addGrid(radius=50, force=True, verbose=True)
         /!\ Grid already built, overriding...
         No usable geocode for ZZL: ("",""), skipping point...
         """
@@ -1490,7 +1490,7 @@ class GeoBase(object):
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
         Using index for ('iata_code',): value(s) ('MRS',)
         [(1, 'MRS'), (1, 'MRS@1')]
-        >>> geo_o.addIndex('iata_code')
+        >>> geo_o.addIndex('iata_code', force=True)
         /!\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
         >>> geo_o.addIndex('location_type')
