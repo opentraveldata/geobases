@@ -87,7 +87,9 @@ class GeoGrid(object):
             # Tricky, min of values only positive here
             precision = min(HASH_TO_ERROR.iteritems(), key=get_error)[0]
 
-        self._precision  = precision
+        self.radius    = radius
+        self.precision = precision
+
         self._avg_radius = HASH_TO_ERROR[precision][4]
 
         # Double mapping
@@ -106,7 +108,7 @@ class GeoGrid(object):
         :param lat_lng: the lat_lng of the point (a tuple of (lat, lng))
         :returns:       the case_id
         """
-        return encode(*lat_lng, precision=self._precision)
+        return encode(*lat_lng, precision=self.precision)
 
 
 
