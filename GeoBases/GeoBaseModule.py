@@ -608,6 +608,29 @@ class GeoBase(object):
         self._indexed[fields] = self._buildIndex(fields, verbose)
 
 
+
+    def dropIndex(self, fields=None):
+        """Drop an index on an iterable of fields.
+
+        If fields is not given all indexes are dropped.
+
+        :param fields:  the iterable of fields, if ``None``,
+            all indexes will be dropped
+
+        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        True
+        >>> geo_o.dropIndex(('icao_code', 'location_type'))
+        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        False
+        """
+        if fields is None:
+            for fs in self._indexed:
+                del self._indexed[tuplify(fs)]
+        else:
+            del self._indexed[tuplify(fields)]
+
+
+
     def updateIndex(self, fields=None, verbose=True):
         """Update index on fields.
 
@@ -656,20 +679,6 @@ class GeoBase(object):
 
         self.addIndex(fields, force=True, verbose=verbose)
 
-
-
-    def dropIndex(self, fields):
-        """Drop an index on an iterable of fields.
-
-        :param fields:  the iterable of fields
-
-        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
-        True
-        >>> geo_o.dropIndex(('icao_code', 'location_type'))
-        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
-        False
-        """
-        del self._indexed[tuplify(fields)]
 
 
 
