@@ -58,11 +58,11 @@ page](https://github.com/opentraveldata/geobases).
 Documentation
 -------------
 
-Here is the [API
-documentation](https://geobases.readthedocs.org) for
-the Python package. Check out the
-[wiki pages](https://github.com/opentraveldata/geobases/wiki/_pages) for any
-question!
+Here are some useful links:
+
+-   the [API documentation](https://geobases.readthedocs.org) for the Python package
+-   the [wiki pages](https://github.com/opentraveldata/geobases/wiki/_pages) for any question!
+-   the [twitter account](https://twitter.com/geobasesdev) for the latest news
 
 Project
 -------
