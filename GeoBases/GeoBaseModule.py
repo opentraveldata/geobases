@@ -689,8 +689,12 @@ class GeoBase(object):
                 self.dropIndex(fs, verbose=verbose)
                 self.addIndex(fs, verbose=verbose)
         else:
-            self.dropIndex(fields)
-            self.addIndex(fields, verbose=verbose)
+            if self.hasIndexOn(fields):
+                self.dropIndex(fields, verbose=verbose)
+                self.addIndex(fields, verbose=verbose)
+            else:
+                if verbose:
+                    print 'No index to update on "%s".' % str(fields)
 
 
 
