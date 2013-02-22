@@ -452,6 +452,19 @@ class GeoBase(object):
         if self._key_fields is not None:
             self._key_fields = tuplify(self._key_fields)
 
+        # We remove the None values to avoid creating useless @raw fields
+        for h in self._subdelimiters.keys():
+            if self._subdelimiters[h] is None:
+                del self._subdelimiters[h]
+            else:
+                self._subdelimiters[h] = tuplify(self._subdelimiters[h])
+
+        # We remove None, empty lists
+        for h in self._join_info.keys():
+            if self._join_info[h] is None or self._join_info[h] == []:
+                del self._join_info[h]
+            else:
+                self._join_info[h] = tuplify(self._join_info[h])
 
         # Paths conversion to dict, local paths handling
         if self._paths is not None:
