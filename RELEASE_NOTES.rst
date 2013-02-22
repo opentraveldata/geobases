@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + subdelimiters are no longer filled with None values
  + draft for join clauses in configuration
  + new updateIndex and updateGrid methods
  + addIndex does not update index, addGrid does not update grid
