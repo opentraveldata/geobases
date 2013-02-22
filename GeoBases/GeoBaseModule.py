@@ -608,6 +608,55 @@ class GeoBase(object):
         self._indexed[fields] = self._buildIndex(fields, verbose)
 
 
+    def updateIndex(self, fields=None, verbose=True):
+        """Update index on fields.
+
+        If fields is not given all indexes are updated.
+
+        :param fields:  the iterable of fields, if ``None``,
+            all indexes will be updated
+        :param verbose: toggle verbosity
+
+        Here is an example, we drop the index then make a query.
+
+        >>> geo_o.dropIndex('iata_code')
+        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # not indexed
+        [(1, 'NCE'), (1, 'NCE@1')]
+
+        Now we index and make the same query.
+
+        >>> geo_o.addIndex('iata_code')
+        Built index for fields ('iata_code',)
+        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed
+        [(1, 'NCE'), (1, 'NCE@1')]
+
+        Now we add a new key to the data.
+
+        >>> geo_o.set('NEW_KEY', 'iata_code', 'NCE')
+
+        If we run the query again, the result is wrong when
+        using the index, because it is not up-to-date.
+
+        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed, not up to date
+        [(1, 'NCE'), (1, 'NCE@1')]
+        >>> list(geo_o.findWith([('iata_code', 'NCE')], index=False)) # not indexed
+        [(1, 'NCE'), (1, 'NEW_KEY'), (1, 'NCE@1')]
+
+        Now we update all indexes, then the query works.
+
+        >>> geo_o.updateIndex('iata_code')
+        /!\ Index on ('iata_code',) already built, overriding...
+        >>> list(geo_o.findWith([('iata_code', 'NCE')])) # indexed, up to date
+        [(1, 'NCE'), (1, 'NEW_KEY'), (1, 'NCE@1')]
+        """
+        if fields is None:
+            for fs in self._indexed:
+                self.addIndex(fs, force=True, verbose=verbose)
+            return
+
+        self.addIndex(fields, force=True, verbose=verbose)
+
+
 
     def dropIndex(self, fields):
         """Drop an index on an iterable of fields.
