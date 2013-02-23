@@ -473,7 +473,11 @@ class GeoBase(object):
         new_join_info = {}
         for h, v in self._join_info.iteritems():
             if v is not None:
-                new_join_info[tuplify(h.split('/'))] = tuplify(v)
+                if isinstance(h, str):
+                    new_join_info[tuplify(h.split('/'))] = tuplify(v)
+                else:
+                    # In this case, input was as keyword argument
+                    new_join_info[tuplify(h)] = tuplify(v)
 
         self._join_info = new_join_info
 
