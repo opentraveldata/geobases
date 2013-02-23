@@ -192,11 +192,14 @@ ori_por:
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
     join_info:
-        country_code: [countries, code]
+        - fields: country_code
+          with  : [countries, code]
         # Freaking auto join possibility
-        tvl_por_list: [ori_por, iata_code]
+        - fields: tvl_por_list
+          with  : [ori_por, iata_code]
         # Join on multiple fields examples
-        #city_code/location_type: [ori_por, [iata_code, location_type]]
+        - fields: [city_code, location_type]
+          with  : [ori_por, [iata_code, location_type]]
     headers : &ori_por_headers
         - iata_code
         - icao_code
