@@ -356,6 +356,11 @@ class GeoBase(object):
             else:
                 raise ValueError('Option "%s" not understood in arguments.' % option)
 
+        # If None, put the default instead
+        for k, v in props.iteritems():
+            if v is None:
+                props[k] = DEFAULTS[k]
+
         # Final parameters affectation
         self._source        = props['source']
         self._headers       = props['headers']
