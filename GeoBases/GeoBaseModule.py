@@ -469,9 +469,9 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # We remove None, empty lists
+        # We remove None
         for h in self._join_info.keys():
-            if self._join_info[h] is None or self._join_info[h] == []:
+            if self._join_info[h] is None:
                 del self._join_info[h]
             else:
                 self._join_info[h] = tuplify(self._join_info[h])
@@ -509,7 +509,10 @@ class GeoBase(object):
         # Join handling
         for h, join_value in self._join_info.iteritems():
 
-            if len(join_value) == 1:
+            if len(join_value) == 0:
+                raise ValueError('No value for join info "%s" (was "%s").' % \
+                                (h, join_value))
+            elif len(join_value) == 1:
                 # Here if the user did not specify the field
                 # of the join on the external base, we assume
                 # it has the same name
