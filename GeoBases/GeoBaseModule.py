@@ -456,8 +456,11 @@ class GeoBase(object):
         """Some check on parameters.
         """
         # Tuplification
-        self._indices = tuplify(self._indices)
         self._headers = tuplify(self._headers)
+
+        for i, _ in enumerate(self._indices):
+            self._indices[i] = tuplify(self._indices[i])
+        self._indices = tuplify(self._indices)
 
         if self._key_fields is not None:
             self._key_fields = tuplify(self._key_fields)
