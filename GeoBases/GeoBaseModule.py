@@ -469,12 +469,13 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # We remove None
-        for h in self._join_info.keys():
-            if self._join_info[h] is None:
-                del self._join_info[h]
-            else:
-                self._join_info[h] = tuplify(self._join_info[h])
+        # We remove None and tuplify keys *and* values
+        new_join_info = {}
+        for h, v in self._join_info.iteritems():
+            if v is not None:
+                new_join_info[tuplify(h.split('/'))] = tuplify(v)
+
+        self._join_info = new_join_info
 
         # Paths conversion to dict, local paths handling
         if self._paths is not None:
