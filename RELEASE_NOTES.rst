@@ -7,8 +7,8 @@ V5
 
 + 5.0 :
 
+ + multiple join clause implementation on multiple fields, integrated with subdelimiters
  + subdelimiters are no longer filled with None values
- + draft for join clauses in configuration
  + new updateIndex and updateGrid methods
  + addIndex does not update index, addGrid does not update grid
  + cache directory instead of local directory for download and extraction
