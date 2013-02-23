@@ -2614,8 +2614,8 @@
 2657970	Winterthur	Winterthur	Eulachstadt,Gorad Vintehrtur,Vintertur,Vintertura,Vinterturas,Vinterturo,Vintertūra,Vintertūras,Vitudurum,Winterthour,Winterthur,ZLI,binteotueo,fyntrtwr,vu~intato~uru,wen te tu er,wntrtwr,Винтертур,Вінтертур,Горад Вінтэртур,فينترتور,ونترتور,ونٹرتھر,ヴィンタートゥール,温特图尔,빈터투어	47.5	8.75	P	PPLA2	CH		ZH	110	230		91908		449	Europe/Zurich	2012-06-25
 2657996	Wil	Wil		47.46152	9.04552	P	PPL	CH		SG	1728	3425		16808		569	Europe/Zurich	2010-04-05
 2658011	Wettingen	Wettingen	Wettingen,ZLF	47.4705	8.31636	P	PPL	CH		AG	1902	4045		18191		386	Europe/Zurich	2012-01-17
-2658145	Vevey	Vevey	Lungsod ng Vevey,V'ove,Veve,Vevey,Vevê,Vibiscum,ZKZ,vu~evu~ei,Веве,Вьове,ヴェヴェイ	46.46116	6.84328	P	PPL	CH		VD	2230	5890		15812		388	Europe/Zurich	2010-04-05
-2658154	Vernier	Vernier		46.21702	6.08497	P	PPL	CH		GE	2500	6643		30086		440	Europe/Zurich	2010-04-05
+2658145	Vevey	Vevey	Lungsod ng Vevey,V'ove,Veve,Vevey,Vevê,Vibiscum,ZKZ,vu~evu~ei,Веве,Вьове,ヴェヴェイ	46.46299	6.84345	P	PPL	CH		VD	2230	5890		15812		412	Europe/Zurich	2013-02-20
+2658154	Vernier	Vernier		46.21702	6.08497	P	PPL	CH		GE	2500	6643		30086		440	Europe/Zurich	2013-02-19
 2658216	Uster	Uster		47.34713	8.72091	P	PPLA2	CH		ZH	109	198		23279		469	Europe/Zurich	2011-03-01
 2658377	Thun	Thun	Thoune,Thun,Tun,ZTK,to~un,tu en,twn,Тун,תון,トゥーン,图恩	46.75118	7.62166	P	PPL	CH		BE	247	942		42136	560	565	Europe/Zurich	2012-04-21
 2658494	Steffisburg	Steffisburg	Steffisburg	46.77807	7.63249	P	PPL	CH		BE	247	939		15191		584	Europe/Zurich	2012-04-21
@@ -2624,10 +2624,10 @@
 2658656	Zürich (Kreis 11) / Seebach	Zuerich (Kreis 11) / Seebach	Seebach	47.42181	8.54779	P	PPLX	CH		ZH	112	261		17851		436	Europe/Zurich	2006-10-21
 2658761	Schaffhausen	Schaffhausen	Safhauzo,Scafusa,Schaffhausen,Schaffhouse,Schaffusa,Schofhausen,Sciaffusa,Shaffkhauzen,Szafuza,ZKJ,shafuhauzen,Ŝafhaŭzo,Шаффхаузен,シャフハウゼン	47.69732	8.63493	P	PPLA	CH		SH	1403	2939		33863	403	403	Europe/Zurich	2012-02-21
 2658822	Sankt Gallen	Sankt Gallen	Saint Gallen,Saint-Gall,San Gallo,San Gallu,San Galo,Sanctogallum,Sankt Gallen,Sankt-Gallen,Sankt-Galo,Son Gagl,St. Gallen,Санкт-Галлен	47.42391	9.37477	P	PPLA	CH		SG	1721	3203		70572		684	Europe/Zurich	2012-06-25
-2659070	Renens	Renens	Renens	46.53989	6.5881	P	PPL	CH		VD	2229	5591		17811		441	Europe/Zurich	2012-01-17
+2659070	Renens	Renens	Renens	46.53989	6.5881	P	PPL	CH		VD	2229	5591		17811		441	Europe/Zurich	2013-02-19
 2659099	Rapperswil	Rapperswil	Raperswil,Rappersvil',Rapperswil,Rapperswil SG,Рапперсвиль	47.22557	8.82228	P	PPL	CH		SG	1726	3340		34776		408	Europe/Zurich	2010-04-05
-2659127	Pully	Pully		46.51027	6.66183	P	PPL	CH		VD	2226	5590		16263		428	Europe/Zurich	2010-04-05
-2659296	Onex	Onex	Onex	46.18391	6.10181	P	PPL	CH		GE	2500	6631		17302		419	Europe/Zurich	2012-02-28
+2659127	Pully	Pully		46.51027	6.66183	P	PPL	CH		VD	2226	5590		16263		428	Europe/Zurich	2013-02-19
+2659296	Onex	Onex	Onex	46.18391	6.10181	P	PPL	CH		GE	2500	6631		17302		419	Europe/Zurich	2013-02-19
 2659297	Olten	Olten	Olten,ZJU	47.34999	7.90329	P	PPLA2	CH		SO	1108	2581		16411		406	Europe/Zurich	2011-03-01
 2659310	Zürich (Kreis 11) / Oerlikon	Zuerich (Kreis 11) / Oerlikon	Oerlikon	47.40823	8.54258	P	PPLX	CH		ZH	112	261		17922		459	Europe/Zurich	2006-10-21
 2659422	Nyon	Nyon	Noviodunum,Nyon,ZRN,n'on,Ньон	46.38318	6.23955	P	PPL	CH		VD	2228	5724		16797		401	Europe/Zurich	2010-04-05
@@ -2635,12 +2635,12 @@
 2659522	Muttenz	Muttenz		47.52271	7.64511	P	PPL	CH		BL	1301	2770		16927		293	Europe/Zurich	2010-04-05
 2659601	Montreux	Montreux	Montr'o,Montreux,Montrjo,ZJP,montoru,Монтрьо,Монтрё,მონტრე,モントルー	46.43301	6.91143	P	PPL	CH		VD	2230	5886		22897		403	Europe/Zurich	2010-04-05
 2659613	Monthey	Monthey	Monthey	46.25546	6.96066	P	PPL	CH		VS	2308	6153		15106		408	Europe/Zurich	2012-01-17
-2659667	Meyrin	Meyrin		46.23424	6.08025	P	PPL	CH		GE	2500	6630		19772		445	Europe/Zurich	2011-01-14
+2659667	Meyrin	Meyrin		46.23424	6.08025	P	PPL	CH		GE	2500	6630		19772		445	Europe/Zurich	2013-02-19
 2659811	Luzern	Luzern	Liucerna,Ljucern,Loukerne,Lucerna,Lucerne,Lucerno,Luzern,Medicago sativa,lu sai en,lwzrn,rutsu~erun,Λουκέρνη,Люцерн,לוצרן,ルツェルン,卢塞恩	47.05048	8.30635	P	PPLA	CH		LU	303	1061		57066		437	Europe/Zurich	2012-06-25
 2659836	Lugano	Lugano	LUG,Lugano,Luganum,lwghanw,Лугано,לוגאנו,لوغانو	46.01008	8.96004	P	PPLA2	CH		TI	2105	5192		26365		284	Europe/Zurich	2012-06-07
 2659873	Littau	Littau	Littau	47.05	8.26274	P	PPL	CH		LU	303	1061		16121		509	Europe/Zurich	2012-04-21
 2659977	Le Châtelard	Le Chatelard	Chatelard,Châtelard,Le Chatelard,Le Chatelard-Montreux,Le Châtelard,Le Châtelard-Montreux,Shatlar,Шатлар	46.44527	6.89908	P	PPL	CH		VD	2230	5886		23192		424	Europe/Zurich	2012-01-17
-2659994	Lausanne	Lausanne	Lausana,Lausanne,Lausonium,Lauzano,Laŭzano,Losanna,Losena,Lozan,Lozana,Lozane,Lozanna,QLS,lo san,luo sang,rozan'nu,Λωζάνη,Лозана,Лозанна,לוזאן,โลซาน,ローザンヌ,洛桑	46.516	6.63282	P	PPLA	CH		VD	2225	5586		116751		453	Europe/Zurich	2012-06-25
+2659994	Lausanne	Lausanne	Lausana,Lausanne,Lausonium,Lauzano,Laŭzano,Losanna,Losena,Lozan,Lozana,Lozane,Lozanna,QLS,lo san,luo sang,rozan'nu,Λωζάνη,Лозана,Лозанна,לוזאן,โลซาน,ローザンヌ,洛桑	46.516	6.63282	P	PPLA	CH		VD	2225	5586		116751		453	Europe/Zurich	2013-02-19
 2660076	La Chaux-de-Fonds	La Chaux-de-Fonds	Chaux-de-Fonds,La Chaux de Fonda,La Chaux-de-Fonds,ZHV	47.09993	6.82586	P	PPL	CH		NE	2402	6421		36825		995	Europe/Zurich	2010-04-05
 2660104	Kriens	Kriens	Kriens,Krienz,Krins,Кринс	47.03537	8.27631	P	PPL	CH		LU	303	1059		25010		493	Europe/Zurich	2012-01-17
 2660108	Kreuzlingen	Kreuzlingen	Kreuzlingen,ZHU	47.65	9.18333	P	PPLA2	CH		TG	2013	4671		17655		402	Europe/Zurich	2012-04-21
@@ -2652,7 +2652,7 @@
 2660365	Herisau	Herisau	Herisan,Herisau	47.38615	9.27916	P	PPLA	CH		AR	1501	3001		15438		780	Europe/Zurich	2010-04-05
 2660512	Grenchen	Grenchen	ZHI	47.1921	7.39586	P	PPL	CH		SO	1107	2546		15927		454	Europe/Zurich	2010-04-05
 2660549	Gossau	Gossau	Gossau	47.41694	9.25125	P	PPL	CH		SG	1721	3443		17043		639	Europe/Zurich	2012-01-17
-2660646	Genève	Geneve	Cenevre,GVA,Genava,Genebe,Genebra,Geneue,Geneva,Geneve,Genevi,Genevo,Genevra,Genewa,Genf,Genève,Ginebra,Ginevra,Gorad Zhehneva,Jenewa,Jenwe,Xenebra,Zeneva,Zheneva,Znev,jeneba,jineva,jnyf,jnywa,junevu,ri nei wa,z'nbh,zheneva,Ĝenevo,Ženeva,Ženēva,Γενέβη,Γενευη,Γενεύη,Горад Жэнева,Женева,Ժնև,ז'נבה,جنيف,جنیوا,जिनेवा,ჟენევა,ジュネーヴ,日内瓦,제네바	46.20222	6.14569	P	PPLA	CH		GE	2500	6621		183981		400	Europe/Zurich	2011-06-16
+2660646	Genève	Geneve	Cenevre,GVA,Genava,Genebe,Genebra,Geneue,Geneva,Geneve,Genevi,Genevo,Genevra,Genewa,Genf,Genève,Ginebra,Ginevra,Gorad Zhehneva,Jenewa,Jenwe,Xenebra,Zeneva,Zheneva,Znev,jeneba,jineva,jnyf,jnywa,junevu,ri nei wa,z'nbh,zheneva,Ĝenevo,Ženeva,Ženēva,Γενέβη,Γενευη,Γενεύη,Горад Жэнева,Женева,Ժնև,ז'נבה,جنيف,جنیوا,जिनेवा,ჟენევა,ジュネーヴ,日内瓦,제네바	46.20222	6.14569	P	PPLA	CH		GE	2500	6621		183981		400	Europe/Zurich	2013-02-19
 2660718	Fribourg	Fribourg	Freiburg,Freiburg im UEechtland,Freiburg im Uechtland,Freiburg im Üechtland,Friborg,Friborgo,Fribourg,Fribur,Friburas,Friburg,Friburgo,Friburgo im UEechtland,Friburgo im Üechtland,Friburgum,Fribôrg,Fribūras,Fryburg,ZHF,furiburu,Фрибур,フリブール	46.80237	7.15128	P	PPLA	CH		FR	1004	2196		32827	610	627	Europe/Zurich	2012-03-09
 2660727	Frauenfeld	Frauenfeld	Frauenfeld,ZHE,Фрауенфелд	47.55816	8.89854	P	PPLA	CH		TG	2012	4566		21979	417	405	Europe/Zurich	2012-04-21
 2660911	Emmen	Emmen	EML,Emmen	47.0811	8.30477	P	PPL	CH		LU	302	1024		26889		427	Europe/Zurich	2012-01-17
@@ -4187,13 +4187,13 @@
 2803723	Zülpich	Zulpich	Bitwa pod Tolbiac,Cjul'pikh,Slaget vid Tulpiacum,Tolbiac,Zuelpich,Zulpich,Zülpich,Цюльпих	50.69447	6.65414	P	PPL	DE		07				20208		167	Europe/Berlin	2012-09-06
 2803870	Zossen	Zossen	Zossen	52.216	13.44909	P	PPL	DE		11				17138		38	Europe/Berlin	2012-08-04
 2804008	Zittau	Zittau	Cittau,Nimeccina,ZIT,Zitava,Zitawa,Zittau,Zytawa,tsu~ittau,tsu~ittauno,Żytawa,Žitava,Žitawa,Німеччина,Циттау,ツィッタウ,ツィッタウの	50.89772	14.80764	P	PPL	DE		13	146			25785		242	Europe/Berlin	2013-01-25
-2804034	Zirndorf	Zirndorf		49.4424	10.95414	P	PPL	DE		02	095			25734		309	Europe/Berlin	2012-11-23
+2804034	Zirndorf	Zirndorf		49.4424	10.95414	P	PPL	DE		02	095	09573	09573134	25734		309	Europe/Berlin	2013-02-19
 2804748	Zerbst	Zerbst	Zerbst	51.9662	12.08517	P	PPL	DE		14				15680		68	Europe/Berlin	2012-06-05
 2804922	Zeitz	Zeitz	Zeitz	51.04962	12.1369	P	PPL	DE		14				29469		200	Europe/Berlin	2012-09-06
 2805059	Zehlendorf	Zehlendorf Bezirk		52.43333	13.25	P	PPLX	DE		16	00	11000	11000000	58469		46	Europe/Berlin	2012-06-09
 2805385	Xanten	Xanten	Ksanten,Santen,Xanten,kusanten,Ксантен,クサンテン	51.65877	6.45297	P	PPL	DE		07	051			21587		20	Europe/Berlin	2012-11-23
 2805597	Wurzen	Wurzen	Wurzen	51.3707	12.73938	P	PPL	DE		13	147			15233		125	Europe/Berlin	2012-11-26
-2805615	Würzburg	Wuerzburg	Birtsmpournk,Gorad Vjurcburg,Herbipolis,Vircburg,Viurcburgas,Vjurcburg,Wiazburg,Wuerzboerj,Wuerzburg,Wurtzbourg,Wurtzburgo,Wurzburg,Wurzburgo,Würzburg,Würzbörj,bwileucheubuleukeu,fwrtsbwrgh,vu~yurutsuburuku,wei er ci bao,weu xr sburk,wrzbrg,wwrtsbwrg,wyrzbwrg,Βίρτσμπουργκ,Вирцбург,Вюрцбург,Горад Вюрцбург,וירצבורג,فورتسبورغ,ورزبرگ,وورتسبورگ,เวือร์ซบูร์ก,ヴュルツブルク,维尔茨堡,뷔르츠부르크	49.78778	9.93611	P	PPLA2	DE		02	096			133731		187	Europe/Berlin	2012-01-29
+2805615	Würzburg	Wuerzburg	Birtsmpournk,Gorad Vjurcburg,Herbipolis,Vircburg,Viurcburgas,Vjurcburg,Wiazburg,Wuerzboerj,Wuerzburg,Wurtzbourg,Wurtzburgo,Wurzburg,Wurzburgo,Würzburg,Würzbörj,bwileucheubuleukeu,fwrtsbwrgh,vu~yurutsuburuku,wei er ci bao,weu xr sburk,wrzbrg,wwrtsbwrg,wyrzbwrg,Βίρτσμπουργκ,Вирцбург,Вюрцбург,Горад Вюрцбург,וירצבורג,فورتسبورغ,ورزبرگ,وورتسبورگ,เวือร์ซบูร์ก,ヴュルツブルク,维尔茨堡,뷔르츠부르크	49.78778	9.93611	P	PPLA2	DE		02	096	09663	09663000	133731		187	Europe/Berlin	2013-02-19
 2805644	Würselen	Wurselen	Wurselen,Würselen	50.81809	6.1347	P	PPL	DE		07	053			37074		189	Europe/Berlin	2012-11-26
 2805753	Wuppertal	Wuppertal	Boupertal,Gorad Vupertal',UWP,Vupertal,Vupertale,Vupertalis,Vupertāle,Vuppertal,Vuppertal',Wupperdaal,Wuppertal,bupeotal,fwbrtal,vuppataru,wu po ta er,wwprtal,wwprtl,Βούπερταλ,Вупертал,Вупперталь,Горад Вуперталь,וופרטל,فوبرتال,ووپرتال,وپرٹال,ვუპერტალი,ヴッパータール,伍珀塔尔,부퍼탈	51.27027	7.16755	P	PPL	DE		07	051			360797		180	Europe/Berlin	2012-11-27
 2805761	Wunstorf	Wunstorf	Wunstorf	52.42376	9.43585	P	PPL	DE		06				42080		45	Europe/Berlin	2012-08-04
@@ -4201,7 +4201,7 @@
 2806081	Wörth am Rhein	Worth am Rhein	Worth,Worth am Rhein,Wörth,Wörth am Rhein	49.04888	8.25959	P	PPL	DE		08				17272		103	Europe/Berlin	2012-09-06
 2806142	Worms	Worms	Borbetomagus,Vormatia,Vorms,Wormacja,Wormatia,Worms,ZQV,boleumseu,vu~orumusu,wwrms,Вормс,וורמס,ヴォルムス,보름스	49.63278	8.35916	P	PPL	DE		08				81099		91	Europe/Berlin	2012-09-06
 2806654	Wolfsburg	Wolfsburg	Vol'fsburg,Wolfsburg,Вольфсбург	52.42452	10.7815	P	PPL	DE		06				123064		65	Europe/Berlin	2012-08-04
-2806768	Wolfratshausen	Wolfratshausen		47.91289	11.42166	P	PPL	DE		02	091			17191		578	Europe/Berlin	2010-11-15
+2806768	Wolfratshausen	Wolfratshausen		47.91289	11.42166	P	PPL	DE		02	091	09173	09173147	17191		578	Europe/Berlin	2013-02-19
 2806914	Wolfenbüttel	Wolfenbuttel	Wolfenbuettel,Wolfenbuttel,Wolfenbüttel,Wulffenbuettel,Wulffenbüttel	52.16442	10.54095	P	PPL	DE		06				54740		78	Europe/Berlin	2012-08-04
 2806919	Wolfen	Wolfen	Vol'fen,Wolfen,Вольфен	51.66122	12.26873	P	PPL	DE		14				25251		75	Europe/Berlin	2012-09-06
 2807184	Witzenhausen	Witzenhausen	Witzenhausen	51.34103	9.8554	P	PPL	DE		05				16055		149	Europe/Berlin	2012-08-04
@@ -4231,7 +4231,7 @@
 2810538	Westend	Westend		52.51708	13.27636	P	PPLX	DE		16	00	11000	11000000	38501		60	Europe/Berlin	2012-06-09
 2810612	Wesseling	Wesseling	Wesseling	50.82709	6.9747	P	PPL	DE		07				35665		49	Europe/Berlin	2012-09-06
 2810678	Wesel	Wesel	Vezel',Wesel,Везель	51.6669	6.62037	P	PPL	DE		07	051			61685		25	Europe/Berlin	2012-11-26
-2810716	Wertheim	Wertheim	Wertheim	49.759	9.50852	P	PPL	DE		01				24869		149	Europe/Berlin	2012-09-06
+2810716	Wertheim	Wertheim	Wertheim	49.759	9.50852	P	PPL	DE		01	081	08128	08128131	24869		149	Europe/Berlin	2013-02-19
 2810808	Wernigerode	Wernigerode	Vernigerode,Wernigerode,Вернигероде	51.83652	10.78216	P	PPL	DE		14				34463		237	Europe/Berlin	2012-08-04
 2810833	Werne	Werne	Verne,Werne an der Lippe,Верне	51.66446	7.63421	P	PPL	DE		07				30810	60	60	Europe/Berlin	2010-01-29
 2810855	Wermelskirchen	Wermelskirchen	Wermelskirchen	51.1397	7.21583	P	PPL	DE		07				36816		274	Europe/Berlin	2012-08-04
@@ -4239,22 +4239,22 @@
 2810919	Werdohl	Werdohl	Werdohl	51.26011	7.76608	P	PPL	DE		07				20366		210	Europe/Berlin	2012-08-04
 2810945	Werder	Werder		52.37874	12.934	P	PPL	DE		11	00			22384		33	Europe/Berlin	2010-11-22
 2810969	Werdau	Werdau	Werdau	50.73604	12.37534	P	PPL	DE		13				24424		316	Europe/Berlin	2012-09-06
-2811204	Wendlingen am Neckar	Wendlingen am Neckar	Wendlingen	48.67124	9.37632	P	PPL	DE		01	081			15728		268	Europe/Berlin	2013-01-25
+2811204	Wendlingen am Neckar	Wendlingen am Neckar	Wendlingen	48.67124	9.37632	P	PPL	DE		01	081	08116	08116071	15728		268	Europe/Berlin	2013-02-19
 2811278	Wenden	Wenden	Wenden	50.96667	7.86667	P	PPLA4	DE		07	059	05966	05966028	19924		405	Europe/Berlin	2011-07-31
-2811292	Wendelstein	Wendelstein	Wendelstein	49.3523	11.15069	P	PPL	DE		02	095	09576		16220		345	Europe/Berlin	2012-09-18
+2811292	Wendelstein	Wendelstein	Wendelstein	49.3523	11.15069	P	PPL	DE		02	095	09576	09576151	16220		345	Europe/Berlin	2013-02-19
 2811644	Weiterstadt	Weiterstadt	Weiterstadt	49.9039	8.58874	P	PPL	DE		05				24253		108	Europe/Berlin	2012-09-06
 2811698	Weißwasser	Weisswasser	Betla Woda,Bialawoda,Białawoda,Bětła Woda,Weisswasser,Weißwasser	51.50403	14.64017	P	PPL	DE		13				22099		138	Europe/Berlin	2012-06-05
 2811899	Weißenfels	Weissenfels	Weissenfels,Weißenfels	51.20148	11.96843	P	PPL	DE		14				29792		120	Europe/Berlin	2012-09-06
-2811909	Weißenburg in Bayern	Weissenburg in Bayern	Weissenburg	49.03095	10.97221	P	PPL	DE		02				17801		428	Europe/Berlin	2009-06-15
+2811909	Weißenburg in Bayern	Weissenburg in Bayern	Weissenburg	49.03095	10.97221	P	PPL	DE		02	095	09577	09577177	17801		428	Europe/Berlin	2013-02-19
 2812145	Weinstadt-Endersbach	Weinstadt-Endersbach	Endersbach	48.81311	9.36387	P	PPL	DE		01	081	08119	08119091	26166		235	Europe/Berlin	2013-02-16
 2812174	Weinheim	Weinheim	Weinheim,wyynhyym,ויינהיים	49.54887	8.66697	P	PPL	DE		01	082	08226	08226096	43325		113	Europe/Berlin	2013-02-16
-2812204	Weingarten	Weingarten	Weingarten	47.81009	9.63863	P	PPL	DE		01	084			23802		471	Europe/Berlin	2012-11-26
+2812204	Weingarten	Weingarten	Weingarten	47.81009	9.63863	P	PPL	DE		01	084	08436	08436082	23802		471	Europe/Berlin	2013-02-19
 2812482	Weimar	Weimar	Vajmar,Vajmaro,Vejmar,Vymar,Výmar,Weimar,faymar,vu~aimaru,waymar,wei ma,Ваймар,Вајмар,Веймар,ויימאר,فايمار,وایمار,ヴァイマル,魏玛	50.9803	11.32903	P	PPL	DE		15				64727		233	Europe/Berlin	2012-09-06
-2812515	Weilheim in Oberbayern	Weilheim in Oberbayern	Weilheim,Weilheim in Oberbayern,Wilheim	47.84147	11.15484	P	PPL	DE		02				21401		579	Europe/Berlin	2012-09-06
+2812515	Weilheim in Oberbayern	Weilheim in Oberbayern	Weilheim,Weilheim in Oberbayern,Wilheim	47.84147	11.15484	P	PPL	DE		02	091	09190	09190157	21401		579	Europe/Berlin	2013-02-19
 2812522	Weilerswist	Weilerswist	Weilerswist	50.76667	6.83333	P	PPLA4	DE		07	053	05366	05366040	16321		112	Europe/Berlin	2011-07-31
 2812625	Weil der Stadt	Weil der Stadt	Weil der Stadt	48.74953	8.87176	P	PPL	DE		01	081	08115	08115050	19338		408	Europe/Berlin	2012-09-06
 2812636	Weil am Rhein	Weil am Rhein	Stadt Weil am Rhein,Vajl'-na-Rejne,Weil am Rhein,Weil-am-Rhein,Вайль-на-Рейне	47.59331	7.62082	P	PPL	DE		01	083	08336	08336091	29548		277	Europe/Berlin	2013-02-16
-2813040	Weiden	Weiden	Vajden,Weiden,Weyden,Вайден	49.67682	12.15613	P	PPL	DE		02				42550		399	Europe/Berlin	2012-09-06
+2813040	Weiden	Weiden	Vajden,Weiden,Weyden,Вайден	49.67682	12.15613	P	PPL	DE		02	093	09363	09363000	42550		399	Europe/Berlin	2013-02-19
 2813187	Weißensee	Weissensee	Berlin-Weissensee	52.55632	13.46649	P	PPLX	DE	DE	16	00	11000	11000000	47693		53	Europe/Berlin	2012-06-09
 2813390	Wegberg	Wegberg	Wegberg	51.14221	6.28436	P	PPL	DE		07				29622		64	Europe/Berlin	2012-08-04
 2813433	Weener	Weener	Weener	53.16332	7.35052	P	PPL	DE		06				15718		2	Europe/Berlin	2012-08-04
@@ -4266,13 +4266,13 @@
 2814131	Waren	Waren	Waren	53.5204	12.67985	P	PPL	DE		12				21470		63	Europe/Berlin	2012-07-04
 2814146	Wardenburg	Wardenburg		53.06667	8.2	P	PPLA4	DE		06	00	03458	03458013	16019		7	Europe/Berlin	2011-04-25
 2814153	Warburg	Warburg	Varburg,Varburgum Vestphalorum,Waberich,Warburg,warbwrg,Варбург,واربورگ	51.49011	9.14641	P	PPL	DE		07				24317		171	Europe/Berlin	2012-08-04
-2814270	Wangen im Allgäu	Wangen im Allgau	Wangen im Allgau,Wangen im Allgäu	47.6895	9.83247	P	PPL	DE		01	084			27045		557	Europe/Berlin	2012-11-26
+2814270	Wangen im Allgäu	Wangen im Allgau	Wangen im Allgau,Wangen im Allgäu	47.6895	9.83247	P	PPL	DE		01	084	08436	08436081	27045		557	Europe/Berlin	2013-02-19
 2814305	Wandlitz	Wandlitz		52.74196	13.45799	P	PPLA4	DE		11	00	12060	12060269	19888		66	Europe/Berlin	2011-04-25
 2814362	Waltrop	Waltrop	Waltrop	51.62125	7.40238	P	PPL	DE		07				30220		64	Europe/Berlin	2012-08-04
 2814462	Walsrode	Walsrode	Walsrode	52.86147	9.5926	P	PPL	DE		06				24448		44	Europe/Berlin	2012-07-04
 2814632	Wallenhorst	Wallenhorst	Wallenhorst	52.35	8.01667	P	PPLA4	DE		06	00	03459	03459033	24201		96	Europe/Berlin	2011-04-25
-2814791	Waldshut-Tiengen	Waldshut-Tiengen		47.62323	8.21717	P	PPL	DE		01				22404		341	Europe/Berlin	2007-11-23
-2814874	Waldkraiburg	Waldkraiburg		48.20854	12.39893	P	PPL	DE		02				24676		439	Europe/Berlin	2009-01-19
+2814791	Waldshut-Tiengen	Waldshut-Tiengen		47.62323	8.21717	P	PPL	DE		01	083	08337	08337126	22404		341	Europe/Berlin	2013-02-19
+2814874	Waldkraiburg	Waldkraiburg		48.20854	12.39893	P	PPL	DE		02	091	09183	09183148	24676		439	Europe/Berlin	2013-02-19
 2814883	Waldkirch	Waldkirch		48.09585	7.96371	P	PPL	DE		01	083	08316	08316056	20155		266	Europe/Berlin	2013-02-16
 2815137	Waldbröl	Waldbrol	Waldbrol,Waldbröl	50.87576	7.61688	P	PPL	DE		07				19533		310	Europe/Berlin	2012-09-06
 2815330	Waiblingen	Waiblingen		48.83241	9.31641	P	PPL	DE		01	081	08119	08119079	52945		233	Europe/Berlin	2013-02-16
@@ -4284,7 +4284,7 @@
 2816630	Völklingen	Volklingen	Volklingen,Völklingen	49.25162	6.85873	P	PPL	DE		09				41132		197	Europe/Berlin	2011-09-25
 2817065	Voerde	Voerde	Ferde,Voerde,Ферде	51.59703	6.6863	P	PPL	DE		07	051			38759		26	Europe/Berlin	2012-12-10
 2817105	Vlotho	Vlotho	Flotowe,Flôtôwe	52.1653	8.85996	P	PPL	DE		07	057			20214		68	Europe/Berlin	2011-11-06
-2817202	Vilshofen	Vilshofen		48.62695	13.19222	P	PPL	DE		02				16695		318	Europe/Berlin	2012-09-06
+2817202	Vilshofen	Vilshofen		48.62695	13.19222	P	PPL	DE		02	092	09275	09275154	16695		318	Europe/Berlin	2013-02-19
 2817220	Villingen-Schwenningen	Villingen-Schwenningen	Villingen-Schwenningen,Villingen-Shvenningen,ZQL,Виллинген-Швеннинген	48.06226	8.49358	P	PPL	DE		01	083	08326	08326074	81770		751	Europe/Berlin	2013-02-16
 2817311	Viersen	Viersen	Viersen,ZQK	51.25435	6.39441	P	PPL	DE		07	051			76153		37	Europe/Berlin	2012-12-24
 2817324	Viernheim	Viernheim	Viernheim	49.54033	8.5782	P	PPL	DE		05				32620		99	Europe/Berlin	2012-09-06
@@ -4299,11 +4299,11 @@
 2817927	Vaihingen an der Enz	Vaihingen an der Enz	Vaihingen,Vaihingen an der Enz	48.93563	8.96045	P	PPL	DE		01	081	08118	08118073	28867		292	Europe/Berlin	2013-02-16
 2818067	Uetersen	Uetersen	Gorad Jutehrzen,Itersen,Iterzen,Iterzene,Joterzen,Juterzen,Owetersen,QSM,U'tersen,UEterzen,Uetersen,Utarsan,Utersen,Yterzenas,u'etersen,uetersen,utarsena,uterasena,witeojen,yu te sen,yutarjhana,yutersen,yuteruzen,yuttarcen,ywtrsn,Ütersen,Üterzen,Јотерзен,Горад Ютэрзен,Итерзен,Уетерсен,Утăрсан,Уьтерсен,Ютерзен,Ѷтєрꙁєнъ,Ուետերսեն,אוטרסן,איטערזען,ئوته‌رزهن,یوترسن,ܐܝܛܙܢ,ऊएतेर्सेन्,यूटर्झन,উটার্সেন,উটেরসেন,ઊએતેર્સેન્,ଊଏତେର୍ସେନ୍,யூட்டர்சென்,ఊఎతెర్సెన్,ಯುಟೆರ್ಸೆನ್,อือแทร์เซิน,ཨུ་ཏེར་སེན,უეტერზენი,ኢውተዘን,ᐃᐊᐃᑖᓯᓐ/iaitaatsin,ユーテルゼン,于特森,위터젠,𐌺𐌿𐍂𐍉𐍅/Uetersen	53.68769	9.66394	P	PPL	DE		10				17921		6	Europe/Berlin	2012-07-04
 2818094	Uslar	Uslar	Uslar	51.6569	9.63501	P	PPL	DE		06				15951		167	Europe/Berlin	2011-07-11
-2818766	Unterschleißheim	Unterschleissheim	Schleisheim,Unterschleissheim,Unterschleißheim	48.28038	11.57684	P	PPL	DE		02				25567		474	Europe/Berlin	2012-09-06
+2818766	Unterschleißheim	Unterschleissheim	Schleisheim,Unterschleissheim,Unterschleißheim	48.28038	11.57684	P	PPL	DE		02	091	09184	09184149	25567		474	Europe/Berlin	2013-02-19
 2819465	Unterhaching	Unterhaching	Haching,Unterkhakhing,Унтерхахинг	48.06598	11.61564	P	PPLA4	DE		02	091	09184	09184148	20852		555	Europe/Berlin	2013-02-15
 2819974	Unterkrozingen	Unterkrozingen	Bad Krozingen,Unter-Bad Krozingen,Unterkrozingen	47.91933	7.69045	P	PPLX	DE		01	083	08315	08315006	15908		228	Europe/Berlin	2013-02-16
 2820087	Unna	Unna	Unna,ZQI,Унна	51.53794	7.68969	P	PPL	DE		07				66734		97	Europe/Berlin	2012-08-04
-2820256	Ulm	Ulm	Gorad Ul'm,Oulm,Ul'm,Ulm,Ulma,Ulmas,alm,awlm,ulleum,ulma,ulmi,urumu,wu er mu,xulm,Ουλμ,Горад Ульм,Улм,Ульм,אולם,أولم,الم,اولم,उल्म,উল্‌ম,อูล์ม,ულმი,ウルム,乌尔姆,울름	48.39841	9.99155	P	PPL	DE		01	084			120451		480	Europe/Berlin	2012-12-03
+2820256	Ulm	Ulm	Gorad Ul'm,Oulm,Ul'm,Ulm,Ulma,Ulmas,alm,awlm,ulleum,ulma,ulmi,urumu,wu er mu,xulm,Ουλμ,Горад Ульм,Улм,Ульм,אולם,أولم,الم,اولم,उल्म,উল্‌ম,อูล์ม,ულმი,ウルム,乌尔姆,울름	48.39841	9.99155	P	PPL	DE		01	084	08421	08421000	120451		480	Europe/Berlin	2013-02-19
 2820456	Uelzen	Uelzen	Uelzen	52.96572	10.56111	P	PPL	DE		06				34996		40	Europe/Berlin	2012-07-04
 2820577	Überlingen	Uberlingen	Uberlingen,Überlingen	47.76977	9.17136	P	PPL	DE		01	084	08435	08435059	21507		470	Europe/Berlin	2013-02-16
 2820621	Übach-Palenberg	Ubach-Palenberg	Ubach-Palenberg,Übach-Palenberg	50.93333	6.11667	P	PPLA4	DE		07	053	05370	05370028	25544		111	Europe/Berlin	2011-07-31
@@ -4312,8 +4312,8 @@
 2820973	Trossingen	Trossingen		48.07667	8.64409	P	PPL	DE		01	083	08327	08327049	15040		687	Europe/Berlin	2013-02-15
 2821029	Troisdorf	Troisdorf	Troisdorf,Trojsdorf,ZQG,Тройсдорф	50.80901	7.14968	P	PPL	DE		07	053			74749		66	Europe/Berlin	2013-01-03
 2821164	Trier	Trier	Augusta Treverorum,Treier,Treveris,Treves,Treviri,Treviro,Trewir,Trier,Trir,Trèveris,Trèves,Tréier,Tréveris,ZQF,te li er,teulieo,toria,Трир,トリーア,特里尔,트리어	49.75565	6.63935	P	PPLA4	DE		08	00	07211	07211000	100129		141	Europe/Berlin	2011-04-25
-2821515	Traunstein	Traunstein	Traunshtajn,Traunstein,Траунштайн	47.86825	12.64335	P	PPL	DE		02				18422		583	Europe/Berlin	2012-09-06
-2821517	Traunreut	Traunreut	Traunrojt,Траунройт	47.96269	12.59231	P	PPL	DE		02	091			21244		552	Europe/Berlin	2013-01-03
+2821515	Traunstein	Traunstein	Traunshtajn,Traunstein,Траунштайн	47.86825	12.64335	P	PPL	DE		02	091	09189	09189155	18422		583	Europe/Berlin	2013-02-19
+2821517	Traunreut	Traunreut	Traunrojt,Траунройт	47.96269	12.59231	P	PPL	DE		02	091	09189	09189154	21244		552	Europe/Berlin	2013-02-19
 2821807	Torgau	Torgau	Torgau,Торгау	51.56016	12.99617	P	PPL	DE		13				18746		80	Europe/Berlin	2012-09-06
 2821899	Tönisvorst	Tonisvorst	Stadt Tonisvorst,Stadt Tönisvorst,Tonisvorst,Tönisvorst	51.32092	6.49412	P	PPL	DE		07				30296		37	Europe/Berlin	2012-08-04
 2823368	Tettnang	Tettnang	Tettnang	47.66857	9.59132	P	PPL	DE		01	084	08435	08435057	18135		480	Europe/Berlin	2012-08-30
@@ -4326,13 +4326,13 @@
 2823812	Taufkirchen	Taufkirchen		48.0486	11.61701	P	PPLA4	DE		02	091	09184	09184145	17791		565	Europe/Berlin	2013-02-15
 2824461	Syke	Syke	Syke	52.91345	8.82209	P	PPL	DE		06				24274		21	Europe/Berlin	2012-08-04
 2824655	Sundern	Sundern	Sundern	51.3281	8.00369	P	PPL	DE		07	059			29609		287	Europe/Berlin	2012-11-22
-2824801	Sulzbach-Rosenberg	Sulzbach-Rosenberg	Sulzbach,Sulzbach-Rosenberg,Zul'cbakh-Rozenberg,Зульцбах-Розенберг	49.50126	11.74598	P	PPL	DE		02				20780		433	Europe/Berlin	2012-09-06
+2824801	Sulzbach-Rosenberg	Sulzbach-Rosenberg	Sulzbach,Sulzbach-Rosenberg,Zul'cbakh-Rozenberg,Зульцбах-Розенберг	49.50126	11.74598	P	PPL	DE		02	093	09371	09371151	20780		433	Europe/Berlin	2013-02-19
 2824841	Sulzbach	Sulzbach	Sulzbach	49.29882	7.05696	P	PPL	DE		09				18364		258	Europe/Berlin	2012-09-06
 2824948	Suhl	Suhl	Suhl,ZSO,zul',zuru,Зуль,ズール	50.60911	10.69401	P	PPL	DE		15				43509		500	Europe/Berlin	2012-09-06
-2825297	Stuttgart	Stuttgart	Estugarda,Gorad Shtutgart,STR,Shhutgart,Shtutgart,Shtutgarti,Shtuttgart,Stocarda,Stoccarda,Stoutnkarde,Stucarda,Stuggart,Stutgardia,Stutgartas,Stutgarte,Stutgarto,Stutqart,Stuttgart,ashtwtgart,ch tuthth kar th,icututkart,shtwtghart,shuto~uttogaruto,si tu jia te,stutagarta,stwtgrt,syututeugaleuteu,Ştutqart,Štutgartas,Štutgarte,Στουτγκάρδη,Горад Штутгарт,Штутгарт,Штуттгарт,Щутгарт,שטוטגארט,שטוטגרט,اشتوتگارت,سٹٹگارٹ,شتوتغارت,شٹوٹگارٹ,श्टुटगार्ट,স্টুটগার্ট,સ્ટુટગાર્ટ,இசுடுட்கார்ட்,സ്റ്റുട്ട്ഗാർട്ട്,ชตุทท์การ์ท,შტუტგარტი,シュトゥットガルト,斯图加特,슈투트가르트	48.78232	9.17702	P	PPLA	DE		01	081	08111		589793		252	Europe/Berlin	2011-06-16
+2825297	Stuttgart	Stuttgart	Estugarda,Gorad Shtutgart,STR,Shhutgart,Shtutgart,Shtutgarti,Shtuttgart,Stocarda,Stoccarda,Stoutnkarde,Stucarda,Stuggart,Stutgardia,Stutgartas,Stutgarte,Stutgarto,Stutqart,Stuttgart,ashtwtgart,ch tuthth kar th,icututkart,shtwtghart,shuto~uttogaruto,si tu jia te,stutagarta,stwtgrt,syututeugaleuteu,Ştutqart,Štutgartas,Štutgarte,Στουτγκάρδη,Горад Штутгарт,Штутгарт,Штуттгарт,Щутгарт,שטוטגארט,שטוטגרט,اشتوتگارت,سٹٹگارٹ,شتوتغارت,شٹوٹگارٹ,श्टुटगार्ट,স্টুটগার্ট,સ્ટુટગાર્ટ,இசுடுட்கார்ட்,സ്റ്റുട്ട്ഗാർട്ട്,ชตุทท์การ์ท,შტუტგარტი,シュトゥットガルト,斯图加特,슈투트가르트	48.78232	9.17702	P	PPLA	DE		01	081	08111	08111000	589793		252	Europe/Berlin	2013-02-19
 2825422	Stuhr	Stuhr		53.03333	8.75	P	PPLA4	DE		06	00	03251	03251037	32507		3	Europe/Berlin	2011-07-31
 2826082	Strausberg	Strausberg	QPK	52.57859	13.88741	P	PPL	DE		11				26649		67	Europe/Berlin	2012-06-24
-2826099	Straubing	Straubing	RBM,Straubing,Страубинг	48.88126	12.57385	P	PPL	DE		02	092			44580		323	Europe/Berlin	2012-11-26
+2826099	Straubing	Straubing	RBM,Straubing,Страубинг	48.88126	12.57385	P	PPL	DE		02	092	09263	09263000	44580		323	Europe/Berlin	2013-02-19
 2826287	Stralsund	Stralsund	BBH,Shtral'zund,Stralsund,shi te la er song,shutoraruzunto,Штральзунд,シュトラルズント,施特拉尔松	54.30911	13.0818	P	PPL	DE		12				58976		4	Europe/Berlin	2009-01-26
 2826304	Straelen	Straelen	Straelen	51.4419	6.26639	P	PPL	DE		07				15325		40	Europe/Berlin	2012-08-04
 2826595	Stolberg	Stolberg	Stolberg	50.77368	6.22595	P	PPL	DE		07				58874		234	Europe/Berlin	2012-09-06
@@ -4345,7 +4345,7 @@
 2828994	Steilshoop	Steilshoop		53.61028	10.05917	P	PPLX	DE		04				19343		30	Europe/Berlin	2011-08-21
 2829109	Steglitz	Steglitz Bezirk		52.46667	13.33333	P	PPLX	DE		16	00	11000	11000000	72464		53	Europe/Berlin	2012-06-09
 2829422	Staßfurt	Stassfurt	Shtasfurt,Stadt Stassfurt,Stadt Staßfurt,Stassfurt,Staßfurt,Штасфурт	51.85186	11.58508	P	PPL	DE		14				22960		68	Europe/Berlin	2012-06-05
-2829457	Starnberg	Starnberg	Shtarnberg,Starenberg,Starnberg,Штарнберг	48.00193	11.34416	P	PPL	DE		02	091			23086		586	Europe/Berlin	2012-11-26
+2829457	Starnberg	Starnberg	Shtarnberg,Starenberg,Starnberg,Штарнберг	48.00193	11.34416	P	PPL	DE		02	091	09188	09188139	23086		586	Europe/Berlin	2013-02-19
 2829758	Stadtlohn	Stadtlohn	Stadtlohn	51.99399	6.91918	P	PPL	DE		07				20602		51	Europe/Berlin	2012-08-04
 2829777	Stadthagen	Stadthagen		52.32333	9.20311	P	PPL	DE		06				23076		77	Europe/Berlin	2009-09-07
 2829804	Stadtallendorf	Stadtallendorf	Stadtallendorf	50.82261	9.01294	P	PPL	DE		05				21720		245	Europe/Berlin	2012-09-06
@@ -4355,7 +4355,7 @@
 2830035	Springe	Springe	Shpringe,Springe,Stadt Springe,Шпринге	52.20845	9.55416	P	PPL	DE		06				29828		110	Europe/Berlin	2011-03-20
 2830582	Speyer	Speyer	Espira,Gorad Shpaer,Schbaya,Shpajer,Shpejer,Speyer,Spira,Spire,Spyr,ZQC,ashpyr,shi pai er,shupaia,spe yex r,spyyr,syupaieo,Špýr,Горад Шпаер,Шпайер,Шпайєр,Шпейер,Шпејер,שפייר,اشپیر,สเปเยอร์,ስፓየር,シュパイアー,施派尔,슈파이어	49.32083	8.43111	P	PPL	DE		08				50343		96	Europe/Berlin	2012-09-06
 2830637	Spenge	Spenge	Spenge	52.14021	8.48475	P	PPL	DE		07				15625		104	Europe/Berlin	2012-08-04
-2831088	Sonthofen	Sonthofen	Sonthofen	47.51821	10.28262	P	PPL	DE		02	097			21285		750	Europe/Berlin	2012-11-23
+2831088	Sonthofen	Sonthofen	Sonthofen	47.51821	10.28262	P	PPL	DE		02	097	09780	09780139	21285		750	Europe/Berlin	2013-02-19
 2831250	Sonneberg	Sonneberg	Sonneberg,Stadt Sonneberg,Zonneberg,Зоннеберг	50.3592	11.17463	P	PPL	DE		15				23908		414	Europe/Berlin	2012-09-06
 2831276	Sondershausen	Sondershausen	Sondershausen	51.36973	10.87011	P	PPL	DE		15				21802		187	Europe/Berlin	2012-09-06
 2831403	Sömmerda	Sommerda	Sommerda,Sömmerda	51.15914	11.11524	P	PPL	DE		15				20853		137	Europe/Berlin	2012-09-06
@@ -4367,15 +4367,15 @@
 2831924	Singen	Singen		47.75935	8.8403	P	PPL	DE		01	083	08335	08335075	45696		436	Europe/Berlin	2013-02-15
 2831948	Sindelfingen	Sindelfingen	Sindelfingen,ZPZ,Zindel'fingen,Зиндельфинген	48.7	9.01667	P	PPL	DE		01	081	08115	08115045	61311		468	Europe/Berlin	2012-06-05
 2832023	Simmerath	Simmerath	Simmerath	50.6	6.3	P	PPLA4	DE		07	053	05334	05334028	15646		536	Europe/Berlin	2011-04-25
-2832232	Sigmaringen	Sigmaringen	Sigmaringen,zygmryngn,זיגמרינגן	48.08829	9.23033	P	PPL	DE		01				16592		624	Europe/Berlin	2012-09-06
+2832232	Sigmaringen	Sigmaringen	Sigmaringen,zygmryngn,זיגמרינגן	48.08829	9.23033	P	PPL	DE		01	084	08437	08437104	16592		624	Europe/Berlin	2013-02-19
 2832495	Siegen	Siegen	SGE,Siegen,Zigen,jigen,Зиген,ジーゲン	50.87482	8.02431	P	PPL	DE		07				107242		250	Europe/Berlin	2012-09-06
 2832521	Siegburg	Siegburg	Siebursh,Siegburg,ZPY,jikuburuku,zigburg,zygbwrg,Зигбург,זיגבורג,ジークブルク	50.80019	7.20769	P	PPL	DE		07	053	05382		39135		74	Europe/Berlin	2012-09-06
 2833073	Senftenberg	Senftenberg	Senftenberg,Zenftenberg,Zly Komorow,Zły Komorow,Зенфтенберг	51.52517	14.00164	P	PPL	DE		11				28988		106	Europe/Berlin	2012-06-05
 2833079	Senden	Senden	Senden	51.85	7.5	P	PPLA4	DE		07	055	05558	05558044	20363		62	Europe/Berlin	2011-04-25
-2833080	Senden	Senden		48.32441	10.04442	P	PPL	DE		02				22275		487	Europe/Berlin	2010-08-16
+2833080	Senden	Senden		48.32441	10.04442	P	PPL	DE		02	097	09775	09775152	22275		487	Europe/Berlin	2013-02-19
 2833170	Selm	Selm	Selm,Stadt Selm,Zel'm,Зельм	51.69689	7.46809	P	PPL	DE		07				27540		68	Europe/Berlin	2012-08-04
 2833242	Seligenstadt	Seligenstadt		50.0432	8.97394	P	PPL	DE		05	064			19569		112	Europe/Berlin	2012-11-23
-2833296	Selb	Selb		50.17058	12.13054	P	PPL	DE		02	094			17132		546	Europe/Berlin	2012-12-10
+2833296	Selb	Selb		50.17058	12.13054	P	PPL	DE		02	094	09479	09479152	17132		546	Europe/Berlin	2013-02-19
 2833475	Sehnde	Sehnde		52.31394	9.9682	P	PPL	DE		06	00			22265		66	Europe/Berlin	2010-11-22
 2833564	Seevetal	Seevetal		53.4	9.96667	P	PPLA4	DE		06	00	03353	03353031	41266		45	Europe/Berlin	2011-07-31
 2833592	Seesen	Seesen	Seesen	51.89096	10.17847	P	PPL	DE		06				21909		236	Europe/Berlin	2012-08-04
@@ -4384,18 +4384,18 @@
 2834265	Schwerte	Schwerte	Schwerte,ZPX	51.44387	7.5675	P	PPL	DE		07				50399		119	Europe/Berlin	2012-08-04
 2834282	Schwerin	Schwerin	Schwerin,Shverin,Suerinum,Swerin,shen wei lin,shuvu~erin,syubelin,Шверин,シュヴェリン,什未林,슈베린	53.62937	11.41316	P	PPLA	DE		12				96641		48	Europe/Berlin	2010-03-27
 2834372	Schwelm	Schwelm	Schwelm	51.28635	7.29388	P	PPL	DE		07				30235		239	Europe/Berlin	2012-08-04
-2834498	Schweinfurt	Schweinfurt	Kuspinian,Schweinfurt,ZPW,Куспиниан	50.04937	10.22175	P	PPL	DE		02	096			54012	250	220	Europe/Berlin	2012-11-26
+2834498	Schweinfurt	Schweinfurt	Kuspinian,Schweinfurt,ZPW,Куспиниан	50.04937	10.22175	P	PPL	DE		02	096	09662	09662000	54012	250	220	Europe/Berlin	2013-02-19
 2834629	Schwedt (Oder)	Schwedt (Oder)	Schwedt,Schwedt/Oder,Stadt Schwedt/Oder	53.05963	14.28154	P	PPL	DE		11				38001		2	Europe/Berlin	2009-01-28
 2834978	Schwarzenberg	Schwarzenberg	Schwarzenberg	50.53791	12.78522	P	PPL	DE		13	145			18523		460	Europe/Berlin	2012-11-23
 2835260	Schwanewede	Schwanewede	Schwanewede	53.23333	8.6	P	PPLA4	DE		06	00	03356	03356009	20015		12	Europe/Berlin	2011-07-31
-2835297	Schwandorf in Bayern	Schwandorf in Bayern	Schwandorf,Schwandorf in Bayern,Stadt Schwandorf	49.32534	12.1098	P	PPL	DE		02				28235		431	Europe/Berlin	2012-09-06
+2835297	Schwandorf in Bayern	Schwandorf in Bayern	Schwandorf,Schwandorf in Bayern,Stadt Schwandorf	49.32534	12.1098	P	PPL	DE		02	093	09376	09376161	28235		431	Europe/Berlin	2013-02-19
 2835342	Schwalmtal	Schwalmtal	Schwalmtal	51.21667	6.26667	P	PPLA4	DE		07	051	05166	05166024	19435		62	Europe/Berlin	2011-04-25
 2835345	Schwalmstadt	Schwalmstadt	Schwalmstadt	50.93333	9.21667	P	PPL	DE		05				19279		235	Europe/Berlin	2012-01-18
 2835382	Schwalbach	Schwalbach		49.3	6.81667	P	PPLA4	DE		09	00	10044	10044118	18708		210	Europe/Berlin	2011-07-31
 2835481	Schwäbisch Hall	Schwabisch Hall	Hale Suevice,Hall,Halla Suevica,Schwaebisch Hall,Schwäbisch Hall,シュヴェービッシュ・ハル	49.11127	9.73908	P	PPL	DE		01	081	08127	08127076	36543		322	Europe/Berlin	2013-02-16
 2835482	Schwäbisch Gmünd	Schwabisch Gmund	Gmund,Gmünd,Schwaebisch Gmuend,Schwäbisch Gmünd	48.79947	9.79809	P	PPL	DE		01	081	08136	08136065	61338		325	Europe/Berlin	2013-02-16
-2835537	Schwabach	Schwabach	Schwabach	49.33047	11.02346	P	PPL	DE		02				38554		328	Europe/Berlin	2012-09-06
-2836084	Schrobenhausen	Schrobenhausen	Schrobenhausen	48.56067	11.26071	P	PPL	DE		02				16143		411	Europe/Berlin	2012-09-06
+2835537	Schwabach	Schwabach	Schwabach	49.33047	11.02346	P	PPL	DE		02	095	09565	09565000	38554		328	Europe/Berlin	2013-02-19
+2836084	Schrobenhausen	Schrobenhausen	Schrobenhausen	48.56067	11.26071	P	PPL	DE		02	091	09185	09185158	16143		411	Europe/Berlin	2013-02-19
 2836203	Schramberg	Schramberg		48.22399	8.38583	P	PPL	DE		01	083	08325	08325053	18565		436	Europe/Berlin	2013-02-15
 2836282	Schortens	Schortens	Schortens	53.53333	7.95	P	PPLA4	DE		06	00	03455	03455015	21357		6	Europe/Berlin	2011-07-31
 2836320	Schorndorf	Schorndorf	Shorndorf,Шорндорф	48.80537	9.52721	P	PPL	DE		01	081	08119	08119067	39697		259	Europe/Berlin	2013-02-15
@@ -4432,11 +4432,11 @@
 2843355	Rudolstadt	Rudolstadt	Rudolstadt	50.72043	11.34046	P	PPL	DE		15				25476		192	Europe/Berlin	2012-09-06
 2843636	Rottweil	Rottweil	Rottweil,Rotvajl',Ротвайль	48.16783	8.62719	P	PPL	DE		01	083	08325	08325049	25510		605	Europe/Berlin	2013-02-16
 2843729	Rottenburg	Rottenburg		48.47629	8.93528	P	PPL	DE		01	084	08416	08416036	42721		349	Europe/Berlin	2013-02-15
-2844265	Roth	Roth	Rota,Roth,rosu,roto,rwt,Рота,רות,ロス,ロート	49.24762	11.09111	P	PPL	DE		02	095	09576		25083		340	Europe/Berlin	2012-09-18
+2844265	Roth	Roth	Rota,Roth,rosu,roto,rwt,Рота,רות,ロス,ロート	49.24762	11.09111	P	PPL	DE		02	095	09576	09576143	25083		340	Europe/Berlin	2013-02-19
 2844437	Rotenburg	Rotenburg	Rotenburg,Ротенбург	53.11125	9.41082	P	PPL	DE		06				22139		24	Europe/Berlin	2012-07-04
 2844588	Rostock	Rostock	Gorad Rostak,RLG,Roshhok,Roshtok,Rostochium,Rostock,Rostok,Rostoka,Rostokas,Roztok,loseutokeu,luo si tuo ke,rosutokku,rwstwk,rwstwq,Ρόστοκ,Горад Ростак,Росток,Рошток,Рощок,רוסטוק,روستوك,روستوک,روسٹاک,როსტოკი,ロストック,罗斯托克,로스토크	54.0887	12.14049	P	PPL	DE		12	00			198293		18	Europe/Berlin	2010-11-22
 2844862	Rösrath	Rosrath		50.89559	7.18175	P	PPL	DE		07	053			26868		89	Europe/Berlin	2010-11-15
-2844988	Rosenheim	Rosenheim	Pons Aeni,Rosenheim,Rosnheim,Rozenkhajm,luo sen hai mu,Розенхайм,罗森海姆	47.85637	12.12247	P	PPL	DE		02	091	09187		60167		448	Europe/Berlin	2012-08-27
+2844988	Rosenheim	Rosenheim	Pons Aeni,Rosenheim,Rosnheim,Rozenkhajm,luo sen hai mu,Розенхайм,罗森海姆	47.85637	12.12247	P	PPL	DE		02	091	09163	09163000	60167		448	Europe/Berlin	2013-02-19
 2845222	Ronnenberg	Ronnenberg		52.31939	9.65544	P	PPL	DE		06				23416		69	Europe/Berlin	2010-08-19
 2846032	Köln Rodenkirchen	Koeln Rodenkirchen	Rodenkirchen	50.87748	6.96928	P	PPLX	DE		07				101421		50	Europe/Berlin	2012-06-25
 2846523	Rinteln	Rinteln	Rintel'n,Stadt Rinteln,Ринтельн	52.18604	9.07917	P	PPL	DE		06				27843		60	Europe/Berlin	2010-01-29
@@ -4459,7 +4459,7 @@
 2848762	Reinheim	Reinheim	Reinheim	49.82923	8.83572	P	PPL	DE		05				17841		158	Europe/Berlin	2012-09-06
 2848845	Reinbek	Reinbek	Reinbek	53.51703	10.2488	P	PPL	DE		10				25261		42	Europe/Berlin	2012-07-04
 2849156	Reichenbach/Vogtland	Reichenbach/Vogtland	Reichenbach,Reichenbach/Vogtland,Stadt Reichenbach/Vogtland	50.62279	12.30344	P	PPL	DE		13	145			22530		402	Europe/Berlin	2012-11-27
-2849483	Regensburg	Regensburg	Ratisbon,Ratisbona,Ratisbonne,Ratyzbona,Regensburg,Regensburgo,Regenzburg,Rengschburg,Rezno,ZPM,regensuburuku,rgnsbwrg,Řezno,Регензбург,Регенсбург,Реґенсбурґ,רגנסבורג,レーゲンスブルク	49.015	12.09556	P	PPLA2	DE		02	093			129151		348	Europe/Berlin	2010-11-15
+2849483	Regensburg	Regensburg	Ratisbon,Ratisbona,Ratisbonne,Ratyzbona,Regensburg,Regensburgo,Regenzburg,Rengschburg,Rezno,ZPM,regensuburuku,rgnsbwrg,Řezno,Регензбург,Регенсбург,Реґенсбурґ,רגנסבורג,レーゲンスブルク	49.015	12.09556	P	PPLA2	DE		02	093	09362	09362000	129151		348	Europe/Berlin	2013-02-19
 2849548	Rees	Rees	Rees	51.76263	6.39778	P	PPL	DE		07				22544		16	Europe/Berlin	2012-08-04
 2849647	Recklinghausen	Recklinghausen	Recklinghausen,Reklingkhauzen,Riaekelkusen,Riäkelkusen,Реклингхаузен	51.61379	7.19738	P	PPL	DE		07				122438		74	Europe/Berlin	2012-08-04
 2849802	Ravensburg	Ravensburg	QRB,Ravensburg,Равенсбург	47.78198	9.61062	P	PPL	DE		01	084	08436	08436064	48825		495	Europe/Berlin	2013-02-16
@@ -4491,12 +4491,12 @@
 2853658	Pinneberg	Pinneberg	Pinnbarg,Pinneberg	53.66732	9.78936	P	PPL	DE		10				40577		6	Europe/Berlin	2012-07-04
 2853924	Pfungstadt	Pfungstadt	Pfungstadt	49.80557	8.60306	P	PPL	DE		05				25084		105	Europe/Berlin	2012-09-06
 2853928	Pfullingen	Pfullingen		48.46458	9.22796	P	PPL	DE		01	084	08415	08415059	18269		429	Europe/Berlin	2013-02-15
-2853969	Pforzheim	Pforzheim	Pforcgejm,Pforckhajm,Pforzheim,puforutsuhaimu,Пфорцгейм,Пфорцхајм,プフォルツハイム	48.88436	8.69892	P	PPL	DE		01	082			119313		266	Europe/Berlin	2012-11-23
+2853969	Pforzheim	Pforzheim	Pforcgejm,Pforckhajm,Pforzheim,puforutsuhaimu,Пфорцгейм,Пфорцхајм,プフォルツハイム	48.88436	8.69892	P	PPL	DE		01	082	08231	08231000	119313		266	Europe/Berlin	2013-02-19
 2854386	Pfaffenhofen an der Ilm	Pfaffenhofen an der Ilm	Pfaffenhofen an der Ilm	48.53333	11.51667	P	PPLA4	DE		02	091	09186	09186143	23192		425	Europe/Berlin	2011-07-31
 2854655	Petershagen	Petershagen	Petershagen	52.37513	8.96538	P	PPL	DE		07	057			27090		41	Europe/Berlin	2012-12-24
-2854923	Penzberg	Penzberg	Penzberg	47.75293	11.377	P	PPL	DE		02				16079		598	Europe/Berlin	2012-09-06
+2854923	Penzberg	Penzberg	Penzberg	47.75293	11.377	P	PPL	DE		02	091	09190	09190141	16079		598	Europe/Berlin	2013-02-19
 2855047	Peine	Peine	Paane,Peine,ZPG	52.31928	10.2352	P	PPL	DE		06	00	03157	03157006	49953		67	Europe/Berlin	2012-08-04
-2855328	Passau	Passau	Batavia Bavariae,Pasawa,Pasov,Passaou,Passau,Passavia,ZPF,passau,Πάσσαου,Пассау,パッサウ	48.57116	13.44898	P	PPL	DE		02	092	09262		50560		339	Europe/Berlin	2010-11-15
+2855328	Passau	Passau	Batavia Bavariae,Pasawa,Pasov,Passaou,Passau,Passavia,ZPF,passau,Πάσσαου,Пассау,パッサウ	48.5665	13.43122	P	PPL	DE		02	092	09262	09262000	50560		354	Europe/Berlin	2013-02-19
 2855441	Parchim	Parchim		53.42631	11.84875	P	PPL	DE		12				19161		52	Europe/Berlin	2009-05-14
 2855525	Papenburg	Papenburg	Papenburg	53.07738	7.40444	P	PPL	DE		06				34117		5	Europe/Berlin	2012-08-04
 2855598	Berlin Pankow	Berlin Pankow	Pankow	52.56926	13.40186	P	PPLX	DE	DE	16	00	11000	11000000	356019		47	Europe/Berlin	2012-09-19
@@ -4529,13 +4529,13 @@
 2859380	Ober-Ramstadt	Ober-Ramstadt	Ober-Ramstadt	49.83078	8.74887	P	PPL	DE		05				15367		230	Europe/Berlin	2012-09-06
 2860080	Oberkirch	Oberkirch		48.53241	8.07864	P	PPL	DE		01	083	08317	08317089	20375		193	Europe/Berlin	2013-02-16
 2860410	Oberhausen	Oberhausen	Oberhausen,Oberkhauzen,Omperchaouzen,Overhus,awbrhawzn,obahauzen,Ομπερχάουζεν,Оберхаузен,اوبرهاوزن,オーバーハウゼン	51.47311	6.88074	P	PPL	DE		07	051			219176		48	Europe/Berlin	2012-11-23
-2861402	Oberasbach	Oberasbach		49.42275	10.95766	P	PPL	DE		02				17306		316	Europe/Berlin	2009-04-15
+2861402	Oberasbach	Oberasbach		49.42275	10.95766	P	PPL	DE		02	095	09573	09573122	17306		316	Europe/Berlin	2013-02-19
 2861632	Nürtingen	Nurtingen		48.62565	9.34203	P	PPL	DE		01	081	08116	08116049	40210		284	Europe/Berlin	2013-02-16
-2861650	Nürnberg	Nuernberg	NUE,Neurenberg,Nirnberg,Nirnberga,Niurnbergas,Njurnberg,Norimberg,Norimberga,Norimberk,Norymberga,Nuernbarg,Nuernberg,Nuremberg,Nuremberga,Nurembergo,Nuremburg,Nurenberg,Nurenbergo,Nurenburg,Nurnberg,Nyremberg,Nyremberge,Nyremvergi,Nyrëmberg,Núremberg,Nürnbarg,Nürnberg,niu lun bao,niurnbergi,nurem beirk,nwileunbeleukeu,nyrnbrg,nyurunberuku,Νυρεμβέργη,Νυρεμβεργη,Нирнберг,Нюрнберг,נירנברג,นูเรมเบิร์ก,เนือร์นแบร์ก,ნიურნბერგი,ニュルンベルク,纽伦堡,뉘른베르크	49.45421	11.07752	P	PPL	DE		02	095			499237		302	Europe/Berlin	2012-12-18
+2861650	Nürnberg	Nuernberg	NUE,Neurenberg,Nirnberg,Nirnberga,Niurnbergas,Njurnberg,Norimberg,Norimberga,Norimberk,Norymberga,Nuernbarg,Nuernberg,Nuremberg,Nuremberga,Nurembergo,Nuremburg,Nurenberg,Nurenbergo,Nurenburg,Nurnberg,Nyremberg,Nyremberge,Nyremvergi,Nyrëmberg,Núremberg,Nürnbarg,Nürnberg,niu lun bao,niurnbergi,nurem beirk,nwileunbeleukeu,nyrnbrg,nyurunberuku,Νυρεμβέργη,Νυρεμβεργη,Нирнберг,Нюрнберг,נירנברג,นูเรมเบิร์ก,เนือร์นแบร์ก,ნიურნბერგი,ニュルンベルク,纽伦堡,뉘른베르크	49.45421	11.07752	P	PPL	DE		02	095	09564	09564000	499237		302	Europe/Berlin	2013-02-19
 2861677	Nümbrecht	Numbrecht	Numbrecht,Nümbrecht	50.9	7.55	P	PPLA4	DE		07	053	05374	05374032	17427		298	Europe/Berlin	2011-04-25
 2861733	Nottuln	Nottuln		51.93333	7.35	P	PPLA4	DE		07	055	05558	05558032	20427		106	Europe/Berlin	2011-04-25
 2861814	Northeim	Northeim	Northeim	51.70662	9.99998	P	PPL	DE		06				30894		135	Europe/Berlin	2012-08-04
-2861914	Nördlingen	Noerdlingen	Noerdlingen,Nördlingen	48.85122	10.48868	P	PPL	DE		02	097			19492	430	437	Europe/Berlin	2010-11-15
+2861914	Nördlingen	Noerdlingen	Noerdlingen,Nördlingen	48.85122	10.48868	P	PPL	DE		02	097	09779	09779194	19492	430	437	Europe/Berlin	2013-02-19
 2861934	Nordhorn	Nordhorn	Nordhorn,Nordkhorn,Nothoorn,nuo de huo en,nwrdhwrn,Нордхорн,نوردهورن,諾德霍恩	52.43081	7.06833	P	PPL	DE		06				52803		24	Europe/Berlin	2012-06-26
 2861982	Nordhausen	Nordhausen	Nordhausen,Nordkhauzen,Нордхаузен	51.5018	10.7957	P	PPL	DE		15				43912		213	Europe/Berlin	2012-09-06
 2862026	Norderstedt	Norderstedt	Nordershtedt,Norderstedt,Norderstedt Stadt,ZOV,Нордерштедт	53.6859	9.98041	P	PPL	DE		10				71439		27	Europe/Berlin	2012-07-04
@@ -4551,10 +4551,10 @@
 2863716	Nidda	Nidda	Nidda	50.4133	9.00638	P	PPL	DE		05	064			18241		132	Europe/Berlin	2013-01-03
 2863795	Neu Wulmstorf	Neu Wulmstorf		53.46667	9.8	P	PPLA4	DE		06	00	03353	03353026	20150		14	Europe/Berlin	2011-07-31
 2863840	Neuwied	Neuwied	Neuweid,Neuwied,Nojvid,ZOU,Нойвид	50.4336	7.47057	P	PPL	DE		08				66805		66	Europe/Berlin	2012-09-06
-2863941	Neu-Ulm	Neu-Ulm	Neu-Ulm,Noj-Ul'm,Nuevo Ulm,Subdistrikto Neu-Ulm,ZOT,xin wu er mu,Ной-Ульм,新乌尔姆	48.39279	10.01112	P	PPL	DE		02	097			51389		474	Europe/Berlin	2012-11-27
+2863941	Neu-Ulm	Neu-Ulm	Neu-Ulm,Noj-Ul'm,Nuevo Ulm,Subdistrikto Neu-Ulm,ZOT,xin wu er mu,Ной-Ульм,新乌尔姆	48.39279	10.01112	P	PPL	DE		02	097	09775	09775135	51389		474	Europe/Berlin	2013-02-19
 2864005	Neustrelitz	Neustrelitz	Neustrelitz,Nieg Strelitz,Nojshtrelice,Stadt Neustrelitz,Нойштрелице	53.3613	13.07292	P	PPL	DE		12				22291		65	Europe/Berlin	2012-07-04
 2864034	Neustadt in Holstein	Neustadt in Holstein		54.10707	10.8145	P	PPL	DE		10				16176		11	Europe/Berlin	2010-04-29
-2864053	Neustadt bei Coburg	Neustadt bei Coburg	Neustadt,Neustadt bei Coburg	50.32975	11.12058	P	PPL	DE		02				16715		357	Europe/Berlin	2012-09-06
+2864053	Neustadt bei Coburg	Neustadt bei Coburg	Neustadt,Neustadt bei Coburg	50.32975	11.12058	P	PPL	DE		02	094	09473	09473151	16715		357	Europe/Berlin	2013-02-19
 2864054	Neustadt an der Weinstraße	Neustadt an der Weinstrasse	Neustadt,Neustadt an der Haardt,Neustadt an der Weinstrasse,Neustadt an der Weinstraße,Nojshtadt-an-der-Vajnshtrasse,Нойштадт-ан-дер-Вайнштрассе	49.35009	8.13886	P	PPL	DE		08				53984		135	Europe/Berlin	2012-09-06
 2864058	Neustadt am Rübenberge	Neustadt am Rubenberge	Neustadt,Neustadt am Rubenberge,Neustadt am Rübenberge,Nojshtadt-am-Rjubenberge,Нойштадт-ам-Рюбенберге	52.50462	9.45871	P	PPL	DE		06				45942		42	Europe/Berlin	2011-04-28
 2864072	Neue Neustadt	Neue Neustadt	Magdeburg-Neustadt,Neue Neustadt,Nojshtadt,Нойштадт	52.15	11.63333	P	PPLX	DE		14				226851		51	Europe/Berlin	2010-04-29
@@ -4564,9 +4564,9 @@
 2864475	Neumünster	Neumunster	Neumuenster,Neumunster,Neumünster,Niemuenster,Niemünster,Novum Monasterium,noimyunsuta,ノイミュンスター	54.07477	9.98195	P	PPL	DE		10				78383		23	Europe/Berlin	2012-07-04
 2864549	Neumarkt in der Oberpfalz	Neumarkt in der Oberpfalz	Neumarkt,Neumarkt in der Oberpfalz,Nojmarkt,Stadt Neumarkt in der Oberpfalz,Ноймаркт	49.28028	11.46278	P	PPLA4	DE		02	093	09373	09373113	39557		431	Europe/Berlin	2011-07-31
 2864820	Neu Isenburg	Neu Isenburg	Neu Isenburg,Neulsenburg,Noj-Izenburg,Ной-Изенбург	50.04832	8.69406	P	PPL	DE		05	064			35293		129	Europe/Berlin	2012-11-23
-2865376	Neufahrn bei Freising	Neufahrn bei Freising	Neufahrn,Neufahrn bei Freising	48.31588	11.66316	P	PPL	DE		02				18255		463	Europe/Berlin	2012-09-06
+2865376	Neufahrn bei Freising	Neufahrn bei Freising	Neufahrn,Neufahrn bei Freising	48.31588	11.66316	P	PPL	DE		02	091	09178	09178145	18255		463	Europe/Berlin	2013-02-19
 2865716	Neuenhagen	Neuenhagen		52.52985	13.68914	P	PPL	DE		11				16170		58	Europe/Berlin	2009-01-29
-2866070	Neuburg an der Donau	Neuburg an der Donau	Neuburg,Neuburg an der Donau,Neuburg-Donau,Nojburg-an-der-Donau,Нойбург-ан-дер-Донау	48.73218	11.18709	P	PPL	DE		02				28370		380	Europe/Berlin	2012-09-06
+2866070	Neuburg an der Donau	Neuburg an der Donau	Neuburg,Neuburg an der Donau,Neuburg-Donau,Nojburg-an-der-Donau,Нойбург-ан-дер-Донау	48.73218	11.18709	P	PPL	DE		02	091	09185	09185149	28370		380	Europe/Berlin	2013-02-19
 2866135	Neubrandenburg	Neubrandenburg	FNB,Neubrandenbourg,Neubrandenburg,Nojbrandenburge,Нойбранденбурге	53.56414	13.27532	P	PPL	DE		12				68082		15	Europe/Berlin	2012-07-04
 2866280	Neu-Anspach	Neu-Anspach		50.31667	8.5	P	PPLA4	DE		05	064	06434	06434007	15276		320	Europe/Berlin	2011-07-31
 2866333	Nettetal	Nettetal	Nettetal	51.31667	6.28333	P	PPLA4	DE		07	051	05166	05166016	42417		52	Europe/Berlin	2011-07-31
@@ -4578,18 +4578,18 @@
 2867542	Munster	Munster	Munster	52.98569	10.08756	P	PPL	DE		06				17746		75	Europe/Berlin	2012-07-04
 2867543	Münster	Muenster	Gorad Mjunstehr,Minster,Minstere,Miunsteris,Mjunster,Moenster,Monasterium,Muenster,Munistri,Munster,Mönster,Münster,ming si te,mwinseuteo,mwnstr,mynstr,myunsuta,Μίνστερ,Горад Мюнстэр,Минстер,Мюнстер,מינסטר,مونستر,ミュンスター,明斯特,뮌스터	51.96236	7.62571	P	PPLA2	DE		07	055			270184		64	Europe/Berlin	2010-11-15
 2867613	Hannoversch Münden	Hannoversch Munden	Hann. Muenden,Hann. Münden,Hann.Muenden,Hann.Münden,Hannoverisch-Munden,Hannoverisch-Münden,Hannoversch Muenden,Hannoversch Münden,Muenden,Munden,Münden,Stadt Hann. Muenden,Stadt Hann. Münden,ハン・ミュンデン	51.41505	9.65046	P	PPL	DE		06				25073		129	Europe/Berlin	2010-01-30
-2867714	München	Muenchen	Gorad Mjunkhen,Lungsod ng Muenchen,Lungsod ng München,MUC,Minca,Minche,Minga,Minhen,Minhene,Minkhen,Miunchenas,Mjunkhen,Mnichov,Mnichow,Mníchov,Monachium,Monacho,Monaco,Monaco 'e Baviera,Monaco de Baviera,Monaco di Baviera,Monacu,Monacu di Baviera,Monacum,Muenchen,Muenegh,Muenhen,Muenih,Munchen,Munhen,Munic,Munich,Munich ed Baviera,Munih,Munike,Munique,Munix,Munkeno,Munkhen,Munîh,Mynihu,Myunxen,Myunxén,Mònacu,Mùnich ëd Baviera,Múnic,Múnich,München,Münegh,Münhen,Münih,mi wnik,mi'unikha,miunkheni,miyunik,mu ni hei,mwinhen,mwnykh,mynkn,myunhen,myunik,myunikha,myunsena,mywnkh,mywnykh,Μόναχο,Горад Мюнхен,Минхен,Мюнхен,Мүнхэн,Мӱнхен,Մյունխեն,מינכן,مونیخ,ميونخ,ميونيخ,میونخ,म्युन्शेन,म्यूनिख,মিউনিখ,மியூனிக்,ಮ್ಯೂನಿಕ್,มิวนิก,မြူးနစ်ချ်မြို့,მიუნხენი,ミュンヘン,慕尼黑,뮌헨	48.13743	11.57549	P	PPLA	DE		02	091			1260391		524	Europe/Berlin	2011-09-01
+2867714	München	Muenchen	Gorad Mjunkhen,Lungsod ng Muenchen,Lungsod ng München,MUC,Minca,Minche,Minga,Minhen,Minhene,Minkhen,Miunchenas,Mjunkhen,Mnichov,Mnichow,Mníchov,Monachium,Monacho,Monaco,Monaco 'e Baviera,Monaco de Baviera,Monaco di Baviera,Monacu,Monacu di Baviera,Monacum,Muenchen,Muenegh,Muenhen,Muenih,Munchen,Munhen,Munic,Munich,Munich ed Baviera,Munih,Munike,Munique,Munix,Munkeno,Munkhen,Munîh,Mynihu,Myunxen,Myunxén,Mònacu,Mùnich ëd Baviera,Múnic,Múnich,München,Münegh,Münhen,Münih,mi wnik,mi'unikha,miunkheni,miyunik,mu ni hei,mwinhen,mwnykh,mynkn,myunhen,myunik,myunikha,myunsena,mywnkh,mywnykh,Μόναχο,Горад Мюнхен,Минхен,Мюнхен,Мүнхэн,Мӱнхен,Մյունխեն,מינכן,مونیخ,ميونخ,ميونيخ,میونخ,म्युन्शेन,म्यूनिख,মিউনিখ,மியூனிக்,ಮ್ಯೂನಿಕ್,มิวนิก,မြူးနစ်ချ်မြို့,მიუნხენი,ミュンヘン,慕尼黑,뮌헨	48.13743	11.57549	P	PPLA	DE		02	091	09162	09162000	1260391		524	Europe/Berlin	2013-02-19
 2867770	Müllheim	Mullheim	Muellheim,Mulheim,Müllheim	47.8082	7.63035	P	PPL	DE		01	083	08315	08315074	18097		268	Europe/Berlin	2013-02-16
 2867838	Mülheim (Ruhr)	Muelheim (Ruhr)	Milchaim,Mjul'khajm-na-Rure,Moelm,Moeln,Muelheim,Muelheim (Ruhr),Muelheim an der Ruhr,Mulheim,Mulheim-on-Ruhr,Mölm,Möln,Mülheim,Mülheim (Ruhr),Mülheim an der Ruhr,Mülheim-on-Ruhr,Μιλχάιμ,Мюльхайм-на-Руре,מילהיים על הרוהר	51.43333	6.88333	P	PPL	DE		07	051			171000		43	Europe/Berlin	2012-11-23
 2867985	Mühlheim am Main	Muehlheim am Main	Muehlheim,Mühlheim	50.11667	8.83333	P	PPL	DE		05	064			26485		103	Europe/Berlin	2012-11-26
 2867993	Stuttgart Mühlhausen	Stuttgart Muehlhausen		48.84232	9.23028	P	PPLX	DE	DE	01	081	08111	08111000	26111		214	Europe/Berlin	2013-02-16
 2867996	Mühlhausen	Muhlhausen	Muehlhausen,Muehlhausen/Thueringen,Muhlhausen,Mühlhausen,Mühlhausen/Thüringen,Thomas-Muntzer-Stadt-Muhlhausen,Thomas-Müntzer-Stadt-Mühlhausen	51.20896	10.45275	P	PPL	DE		15				38108		198	Europe/Berlin	2012-09-06
-2868506	Mühldorf	Muhldorf	Muhldorf,Muhldorf am Inn,Mühldorf,Mühldorf am Inn	48.2467	12.52155	P	PPL	DE		02				17622		399	Europe/Berlin	2012-09-06
+2868506	Mühldorf	Muhldorf	Muhldorf,Muhldorf am Inn,Mühldorf,Mühldorf am Inn	48.2467	12.52155	P	PPL	DE		02	091	09183	09183128	17622		399	Europe/Berlin	2013-02-19
 2868788	Mühlacker	Muhlacker	Muhlacker,Mühlacker	48.94754	8.83675	P	PPL	DE		01	082	08236	08236040	26375		253	Europe/Berlin	2013-02-16
 2868936	Much	Much	Much	50.91667	7.4	P	PPLA4	DE		07	053	05382	05382036	15231		217	Europe/Berlin	2011-07-31
 2869019	Mössingen	Mossingen		48.40567	9.05419	P	PPL	DE		01	084	08416	08416025	20010		464	Europe/Berlin	2013-02-16
 2869120	Mosbach	Mosbach	Mosbach,Mosbach in Baden,Mosbakh,Mossbach,mosubahha,msbakh,Мосбах,مسباخ,モースバッハ	49.35357	9.15106	P	PPL	DE		01	082	08225	08225058	25106		280	Europe/Berlin	2013-02-16
-2869449	Moosburg	Moosburg	Moosburg,Moosburg an der Isar,Mosburg	48.47089	11.93811	P	PPL	DE		02				17363		418	Europe/Berlin	2012-09-06
+2869449	Moosburg	Moosburg	Moosburg,Moosburg an der Isar,Mosburg	48.47089	11.93811	P	PPL	DE		02	091	09178	09178143	17363		418	Europe/Berlin	2013-02-19
 2869791	Monheim	Monheim		51.09162	6.89218	P	PPL	DE		07				43747		38	Europe/Berlin	2012-08-04
 2869894	Mönchengladbach	Monchengladbach	Mjonkhengladbakh,Moenchengladbach,Monchengladbach,Muenchen-Gladbach,Mönchengladbach,dwsldwrf,men xing ge la de ba he,menhyengurattobahha,mwnshghladbakh,Мёнхенгладбах,دوسلدورف,مونشغلادباخ,メンヒェングラットバッハ,门兴格拉德巴赫	51.18539	6.44172	P	PPL	DE		07	051			261742		49	Europe/Berlin	2012-11-26
 2869994	Mölln	Molln	Moelln,Molln,Mölln	53.61702	10.68742	P	PPL	DE		10				18469		34	Europe/Berlin	2012-07-04
@@ -4605,7 +4605,7 @@
 2871736	Merseburg	Merseburg	Mersebourg,Merseburg,Merseburga,Merzeburg,Мерзебург	51.35478	11.98923	P	PPL	DE		14				34780		93	Europe/Berlin	2012-09-06
 2871845	Meppen	Meppen		52.69064	7.29097	P	PPL	DE		06				34198		15	Europe/Berlin	2011-11-06
 2871983	Menden	Menden	Menden	51.44337	7.77824	P	PPL	DE		07	059			58451		144	Europe/Berlin	2012-12-18
-2871992	Memmingen	Memmingen	FMM,Memmingen,memingen,メミンゲン	47.98372	10.18527	P	PPL	DE		02	097			41135		598	Europe/Berlin	2012-11-23
+2871992	Memmingen	Memmingen	FMM,Memmingen,memingen,メミンゲン	47.98372	10.18527	P	PPL	DE		02	097	09764	09764000	41135		598	Europe/Berlin	2013-02-19
 2872079	Melle	Melle	Melle	52.20197	8.33826	P	PPL	DE		06				46514		78	Europe/Berlin	2012-08-04
 2872155	Meißen	Meissen	Meissen,Meißen,Mejsen,Misen,Misnia,Miśnia,Míšeň,maisen,Мейсен,マイセン	51.16158	13.4737	P	PPL	DE		13	146			28492		109	Europe/Berlin	2012-11-26
 2872225	Meiningen	Meiningen	Majningen,Meiningen,Stadt Meiningen,Майнинген	50.56787	10.41521	P	PPL	DE		15				21580		292	Europe/Berlin	2010-01-29
@@ -4617,15 +4617,15 @@
 2872649	Mayen	Mayen	Mayen	50.32797	7.22277	P	PPL	DE		08				19414		244	Europe/Berlin	2012-09-06
 2873211	Marsberg	Marsberg	Eresburg,Marsberg	51.46171	8.84949	P	PPL	DE		07				21914		254	Europe/Berlin	2011-11-06
 2873263	Marl	Marl	Marl	51.65671	7.09038	P	PPL	DE		07				91398		64	Europe/Berlin	2012-08-04
-2873289	Marktredwitz	Marktredwitz	Harktrednitz,Marktredwitz,Martredwitz	50.00443	12.08593	P	PPL	DE		02				18204		538	Europe/Berlin	2012-09-06
-2873291	Marktoberdorf	Marktoberdorf	Marktoberdorf	47.77964	10.61713	P	PPL	DE		02				18505		763	Europe/Berlin	2012-09-06
+2873289	Marktredwitz	Marktredwitz	Harktrednitz,Marktredwitz,Martredwitz	50.00443	12.08593	P	PPL	DE		02	094	09479	09479136	18204		538	Europe/Berlin	2013-02-19
+2873291	Marktoberdorf	Marktoberdorf	Marktoberdorf	47.77964	10.61713	P	PPL	DE		02	097	09777	09777151	18505		763	Europe/Berlin	2013-02-19
 2873351	Markkleeberg West	Markkleeberg West	Markkleeberg,Markkleeberg West	51.28333	12.36667	P	PPLX	DE		13				23464		117	Europe/Berlin	2012-01-18
 2873356	Märkisches Viertel	Markisches Viertel	Markisches Viertel,Märkisches Viertel	52.56667	13.36667	P	PPLX	DE		16	00	11000	11000000	35230		43	Europe/Berlin	2012-06-09
 2873589	Marienfelde	Marienfelde		52.41868	13.36723	P	PPLX	DE		16	00	11000	11000000	30338		44	Europe/Berlin	2012-06-09
 2873606	Mariendorf	Mariendorf		52.4378	13.38109	P	PPLX	DE		16	00	11000	11000000	49917		49	Europe/Berlin	2012-06-09
 2873759	Marburg an der Lahn	Marburg an der Lahn	Marbourg,Marburg,Marburg an der Lahn,Marburgo,Marmpournk,Μάρμπουργκ,Марбург,マールブルク・アン・デア・ラーン	50.80904	8.77069	P	PPL	DE		05	065			78895		195	Europe/Berlin	2013-01-03
 2873776	Marbach am Neckar	Marbach am Neckar	Marbach	48.93964	9.25995	P	PPL	DE		01	081	08118	08118049	15604		242	Europe/Berlin	2013-02-15
-2873891	Mannheim	Mannheim	Gorad Mangejm,MHG,Man'chaim,Man'geym,Man'géym,Mangejm,Manhajmi,Manheima,Manheimas,Manhemium,Mankhajm,Mannheim,Monnem,man hai mu,manaha'ima,manhaim,manhaimi,manhaimu,manhaym,mnhyym,Μάνχαϊμ,Горад Мангейм,Мангейм,Манхайм,Манхајм,מנהיים,مانهايم,مانهایم,मानहाइम,მანჰაიმი,ማንሃይም,マンハイム,曼海姆,만하임	49.49671	8.47955	P	PPL	DE		01				307960		93	Europe/Berlin	2012-09-06
+2873891	Mannheim	Mannheim	Gorad Mangejm,MHG,Man'chaim,Man'geym,Man'géym,Mangejm,Manhajmi,Manheima,Manheimas,Manhemium,Mankhajm,Mannheim,Monnem,man hai mu,manaha'ima,manhaim,manhaimi,manhaimu,manhaym,mnhyym,Μάνχαϊμ,Горад Мангейм,Мангейм,Манхайм,Манхајм,מנהיים,مانهايم,مانهایم,मानहाइम,მანჰაიმი,ማንሃይም,マンハイム,曼海姆,만하임	49.49671	8.47955	P	PPL	DE		01	082	08222	08222000	307960		93	Europe/Berlin	2013-02-19
 2874225	Mainz	Mainz	Gorad Majnc,Maganza,Magonza,Maguncia,Maguntzia,Magunza,Magúncia,Maianca,Maiança,Mainca,Maincas,Maints,Mainz,Majenco,Majnc,Majnci,Mayence,Mayns,Meenz,Mogontiacum,Moguncja,Moguntiacum,Mohuc,Mohuč,ma'intsa,maincheu,maintsi,maintsu,maynts,maynz,mei yin ci,mins,myynz,Μάιντς,Горад Майнц,Майнц,Мајнц,מיינץ,مائنز,ماينتس,ماینتس,माइंत्स,ไมนซ์,მაინცი,マインツ,美因茨,마인츠	49.98419	8.2791	P	PPLA	DE		08				184997		112	Europe/Berlin	2012-09-06
 2874230	Maintal	Maintal	Maintal	50.15	8.83333	P	PPL	DE		05	064			38313		107	Europe/Berlin	2012-12-10
 2874455	Mahlsdorf	Mahlsdorf	Berlin-Mahlsdorf	52.50935	13.61373	P	PPLX	DE	DE	16	00	11000	11000000	26954		53	Europe/Berlin	2012-06-09
@@ -4644,20 +4644,20 @@
 2875645	Loxstedt	Loxstedt	Loxstedt	53.46667	8.65	P	PPLA4	DE		06	00	03352	03352032	16382		7	Europe/Berlin	2011-04-25
 2875831	Losheim	Losheim		49.5099	6.74549	P	PPL	DE		09				16660		305	Europe/Berlin	2012-09-06
 2875881	Lörrach	Lorrach	Loerrach,Lorrach,Lörrach,loerrach,lörrach	47.61497	7.66457	P	PPL	DE		01	083	08336	08336050	47002		308	Europe/Berlin	2013-02-16
-2876147	Lohr	Lohr	Lohr	49.99431	9.57561	P	PPL	DE		02	096			16127		171	Europe/Berlin	2012-11-23
+2876147	Lohr	Lohr	Lohr	49.99431	9.57561	P	PPL	DE		02	096	09677	09677155	16127		171	Europe/Berlin	2013-02-19
 2876185	Lohne	Lohne	Lohne	52.66625	8.2375	P	PPL	DE		06				25111		44	Europe/Berlin	2012-08-04
 2876218	Lohmar	Lohmar	Lohmar	50.83868	7.21399	P	PPL	DE		07				31339		95	Europe/Berlin	2012-09-06
 2876755	Löbau	Lobau	Lobau,Loebau,Lubij,Löbau	51.09954	14.66738	P	PPL	DE		13				18374		269	Europe/Berlin	2012-06-05
 2876865	Lippstadt	Lippstadt	Lippshtadte,Lippstadt,Липпштадте	51.67369	8.34482	P	PPL	DE		07	059			67219		79	Europe/Berlin	2012-11-23
 2877088	Lingen	Lingen	Lingen,Линген	52.52143	7.31845	P	PPL	DE		06				51310		25	Europe/Berlin	2012-08-04
 2877142	Lindlar	Lindlar		51.01959	7.37758	P	PPLA4	DE		07	053	05374	05374020	22723		231	Europe/Berlin	2011-07-31
-2877550	Lindau	Lindau	Lindau,Lindau Bodensee,Lindau saar,rindau,Линдау,リンダウ	47.54612	9.68431	P	PPL	DE		02	097			24518		394	Europe/Berlin	2012-11-23
+2877550	Lindau	Lindau	Lindau,Lindau Bodensee,Lindau saar,rindau,Линдау,リンダウ	47.54612	9.68431	P	PPL	DE		02	097	09776	09776116	24518		394	Europe/Berlin	2013-02-19
 2877648	Limburg an der Lahn	Limburg an der Lahn	Limburg,Limburg an der Lahn,Limburg-na-Lane,Limburgis ad Lanem,Лимбург-на-Лане	50.3836	8.0503	P	PPL	DE		05				33820		138	Europe/Berlin	2012-09-06
 2877673	Limbach-Oberfrohna	Limbach-Oberfrohna	Limbach,Limbach-Oberfrohna,Limbakh-Oberfrona,Лимбах-Оберфрона	50.85882	12.76165	P	PPL	DE		13	145			27056		359	Europe/Berlin	2012-11-26
 2877709	Lilienthal	Lilienthal	Lilienthal	53.13333	8.91667	P	PPLA4	DE		06	00	03356	03356005	18293		2	Europe/Berlin	2011-07-31
 2878018	Lichterfelde	Lichterfelde	Gross Lichterfelde,Groß Lichterfelde	52.4333	13.30762	P	PPLX	DE	DE	16	00	11000	11000000	80149		47	Europe/Berlin	2012-06-09
 2878044	Lichtenrade	Lichtenrade		52.39844	13.40637	P	PPLX	DE		16	00	11000	11000000	49489		45	Europe/Berlin	2012-06-09
-2878074	Lichtenfels	Lichtenfels		50.14567	11.05928	P	PPL	DE		02				21336		263	Europe/Berlin	2008-08-19
+2878074	Lichtenfels	Lichtenfels		50.14567	11.05928	P	PPL	DE		02	094	09478	09478139	21336		263	Europe/Berlin	2013-02-19
 2878234	Leverkusen	Leverkusen	Laevverkuuse,Leberkouzen,Leverkusen,Leverkuzen,Lävverkuuse,ZOA,lyfrkwzn,rebakuzen,Λεβερκούζεν,Леверкузен,ليفركوزن,レバークーゼン	51.0303	6.98432	P	PPL	DE		07	053			162738		42	Europe/Berlin	2012-11-23
 2878270	Leutkirch im Allgäu	Leutkirch im Allgau	Leutkirch,Leutkirch im Allgau,Leutkirch im Allgäu	47.82672	10.0205	P	PPL	DE		01	084	08436	08436055	22362		677	Europe/Berlin	2013-02-15
 2878673	Leopoldshöhe	Leopoldshohe		52.01246	8.69834	P	PPLA4	DE		07	057	05766	05766048	16219		132	Europe/Berlin	2011-04-25
@@ -4673,7 +4673,7 @@
 2879697	Leer	Leer	Hleri,Leer,Ler,Lera,Lier,lr,lr, nydrzaksn,rea,Лер,Лера,לר,لر، نیدرزاکسن,レーア	53.23157	7.461	P	PPL	DE		06				33886		7	Europe/Berlin	2011-11-07
 2879832	Lebach	Lebach	Lebach	49.41122	6.90988	P	PPL	DE		09				21583		231	Europe/Berlin	2012-09-06
 2880077	Laupheim	Laupheim	Laupheim	48.22786	9.87874	P	PPL	DE		01	084	08426	08426070	19012		517	Europe/Berlin	2013-02-15
-2880144	Lauf an der Pegnitz	Lauf an der Pegnitz	Lauf,Lauf an der Pegnitz	49.51386	11.28247	P	PPL	DE		02	095			26403		330	Europe/Berlin	2012-12-07
+2880144	Lauf an der Pegnitz	Lauf an der Pegnitz	Lauf,Lauf an der Pegnitz	49.51386	11.28247	P	PPL	DE		02	095	09574	09574138	26403		330	Europe/Berlin	2013-02-19
 2880221	Lauchhammer	Lauchhammer	Lauchhammer,Lauchhammer East,Stadt Lauchhammer	51.48813	13.76623	P	PPL	DE		11				18990		96	Europe/Berlin	2012-06-05
 2880498	Lankwitz	Lankwitz		52.43623	13.3459	P	PPLX	DE		16	00	11000	11000000	41242		43	Europe/Berlin	2012-06-09
 2881018	Langenhorn	Langenhorn		53.66556	10.00137	P	PPLX	DE		04				41560		27	Europe/Berlin	2011-08-21
@@ -4681,8 +4681,8 @@
 2881085	Langenfeld	Langenfeld	Langenfeld	51.10821	6.94831	P	PPL	DE		07	051			59378		50	Europe/Berlin	2012-11-22
 2881276	Langen	Langen		53.60554	8.59509	P	PPL	DE		03				18863		6	Europe/Berlin	2008-07-28
 2881279	Langen	Langen	Langen	49.98955	8.66852	P	PPL	DE		05				35416		139	Europe/Berlin	2012-09-06
-2881485	Landshut	Landshut	Gorad Landskhut,Landishuta,Landsgut,Landshuad,Landshut,Landshutas,Landskhut,Lantschout,QLG,lan ci hu te,lancheuhuteu,landshwt,lndshwt,rantsufuto,Λάντσχουτ,Горад Ландсхут,Ландсгут,Ландсхут,لاندشوت,لندشوت,ლანდსჰუტი,ランツフート,兰茨胡特,란츠후트	48.53333	12.15	P	PPLA2	DE		02	092			60488		399	Europe/Berlin	2010-11-15
-2881509	Landsberg am Lech	Landsberg am Lech	Landsberg,Landsberg am Lech	48.04819	10.88282	P	PPL	DE		02	091			27017		637	Europe/Berlin	2010-11-15
+2881485	Landshut	Landshut	Gorad Landskhut,Landishuta,Landsgut,Landshuad,Landshut,Landshutas,Landskhut,Lantschout,QLG,lan ci hu te,lancheuhuteu,landshwt,lndshwt,rantsufuto,Λάντσχουτ,Горад Ландсхут,Ландсгут,Ландсхут,لاندشوت,لندشوت,ლანდსჰუტი,ランツフート,兰茨胡特,란츠후트	48.53333	12.15	P	PPLA2	DE		02	092	09261	09261000	60488		399	Europe/Berlin	2013-02-19
+2881509	Landsberg am Lech	Landsberg am Lech	Landsberg,Landsberg am Lech	48.04819	10.88282	P	PPL	DE		02	091	09181	09181130	27017		637	Europe/Berlin	2013-02-19
 2881646	Landau in der Pfalz	Landau in der Pfalz	Landau,Landau in der Pfalz,Ландау,לנדאו	49.19844	8.11692	P	PPL	DE		08				41612		141	Europe/Berlin	2012-09-06
 2881695	Lampertheim	Lampertheim	Lampertheim	49.59786	8.4725	P	PPL	DE		05				31635		92	Europe/Berlin	2012-09-06
 2881885	Lahr	Lahr	Lahr,Lahr/Schwarzwald,Lar,Лар	48.34042	7.86886	P	PPL	DE		01	083	08317	08317065	43863		185	Europe/Berlin	2013-02-16
@@ -4693,9 +4693,9 @@
 2882318	Kürten	Kurten	Kurten,Kürten	51.05	7.26667	P	PPLA4	DE		07	053	05378	05378012	20103		181	Europe/Berlin	2011-07-31
 2882439	Künzelsau	Kunzelsau	Kunzelsau,Künzelsau	49.2818	9.68352	P	PPL	DE		01	081	08126	08126046	15070		234	Europe/Berlin	2013-02-15
 2882440	Künzell	Kunzell		50.5442	9.71792	P	PPLA4	DE		05	066	06631	06631017	16124		307	Europe/Berlin	2011-04-25
-2882588	Kulmbach	Kulmbach	Culmbach,Kul'mbakh,Kulmbach,Stadt Kulmbach,kurumubahha,Кульмбах,クルムバッハ	50.10068	11.45032	P	PPL	DE		02				27565		327	Europe/Berlin	2012-09-06
+2882588	Kulmbach	Kulmbach	Culmbach,Kul'mbakh,Kulmbach,Stadt Kulmbach,kurumubahha,Кульмбах,クルムバッハ	50.10068	11.45032	P	PPL	DE		02	094	09477	09477128	27565		327	Europe/Berlin	2013-02-19
 2883754	Kronberg	Kronberg	Cronberg in Taunus	50.17745	8.51252	P	PPL	DE		05	064			17730		243	Europe/Berlin	2010-11-15
-2883784	Kronach	Kronach		50.23963	11.33308	P	PPL	DE		02	094	09476		18248		313	Europe/Berlin	2013-02-07
+2883784	Kronach	Kronach		50.23963	11.33308	P	PPL	DE		02	094	09476	09476145	18248		313	Europe/Berlin	2013-02-19
 2884050	Kreuztal	Kreuztal	Kreuztal,Kreuzthal	50.96775	7.98848	P	PPL	DE		07				31772		334	Europe/Berlin	2012-09-06
 2884161	Kreuzberg	Bezirk Kreuzberg		52.49973	13.40338	P	PPLX	DE		16	00	11000	11000000	147532		40	Europe/Berlin	2012-06-09
 2884245	Kreuzau	Kreuzau	Kreuzau,Kreuzau uber Duren,Kreuzau über Düren	50.75	6.48333	P	PPLA4	DE		07	053	05358	05358028	18400		145	Europe/Berlin	2011-07-31
@@ -4713,13 +4713,13 @@
 2885734	Königswinter	Konigswinter	Konigswinter,Königswinter	50.68376	7.18675	P	PPL	DE		07	053			41164		135	Europe/Berlin	2012-11-23
 2885760	Königstein im Taunus	Konigstein im Taunus	Konigstein,Konigstein im Taunus,Königstein,Königstein im Taunus	50.18367	8.46395	P	PPL	DE		05	064	06434	06434005	15661		395	Europe/Berlin	2012-11-28
 2885800	Königslutter am Elm	Konigslutter am Elm	Konigslutter,Konigslutter am Elm,Königslutter,Königslutter am Elm	52.25116	10.81683	P	PPL	DE		06				16419		120	Europe/Berlin	2012-08-04
-2885908	Königsbrunn	Konigsbrunn	Konigsbrunn,Königsbrunn	48.27506	10.89178	P	PPL	DE		02				27494		510	Europe/Berlin	2012-09-06
+2885908	Königsbrunn	Konigsbrunn	Konigsbrunn,Königsbrunn	48.27506	10.89178	P	PPL	DE		02	097	09772	09772163	27494		510	Europe/Berlin	2013-02-19
 2886242	Köln	Koeln	Augusta Ubiorum,CGN,Cologna,Cologne,Colonha,Colonia,Colonia Agrippina,Colonia Agrippinensis,Colonia Claudia Ara Agrippinensium,Colònia,Colônia,Cołogna,Culonia,Cwlen,Gorad Kjol'n,K'oln,Kel'n,Keln,Kelnas,Kelne,Kelni,Keulen,Kjol'n,Koelle,Koeln,Kol'n,Kolin nad Rynem,Kolin nad Rynom,Koln,Kolon,Kolonia,Kolonjo,Kolín nad Rýnem,Kolín nad Rýnom,Këlni,Kölle,Köln,Lungsod ng Cologne,Oppidum Ubiorum,kalon,ke long,kerun,kholoy,kln,klwn,koelleun,koln,kolon,kwlwn,kwlwnya,kyolna,qln,Ķelne,Κολωνία,Горад Кёльн,Келн,Кельн,Кьолн,Кёльн,Кӧльн,Քյոլն,קלן,קעלן,كولونيا,کلن,کلون,کولون,क्योल्न,கோல்ன்,కొలోన్,ಕಲೋನ್,โคโลญ,კელნი,ኮልን,ケルン,科隆,쾰른	50.93333	6.95	P	PPLA2	DE		07	053			963395		58	Europe/Berlin	2012-03-16
-2886446	Kolbermoor	Kolbermoor	Kolbermoor	47.84965	12.06696	P	PPL	DE		02				17941		461	Europe/Berlin	2012-09-06
+2886446	Kolbermoor	Kolbermoor	Kolbermoor	47.84965	12.06696	P	PPL	DE		02	091	09187	09187150	17941		461	Europe/Berlin	2013-02-19
 2886946	Koblenz	Koblenz	Coblenca,Coblence,Coblentz,Coblenz,Coblenza,Coblença,Confluentes,Gorad Koblenc,Koblenc,Koblencas,Koblenci,Koblencja,Koblenco,Koblentza,Koblenz,Komplents,ke bu lun ci,kobeullencheu,koburentsu,kwblns,kwblnts,kwblnz,qwblnz,Κόμπλεντς,Горад Кобленц,Кобленц,קובלנץ,كوبلنس,کوبلنتس,کوبلنز,コブレンツ,科布倫茨,코블렌츠	50.35357	7.57884	P	PPL	DE		08				107319		74	Europe/Berlin	2012-09-06
 2887835	Kleve	Kleve	Cleeve,Cleve,Cleveris,Cleves,Clèves,Cléveris,Kleef,Kleve,kurefe,Клеве,クレーフェ	51.78826	6.13865	P	PPL	DE		07	051			49072		11	Europe/Berlin	2012-11-14
 2888523	Kleinmachnow	Kleinmachnow		52.40786	13.22514	P	PPLA4	DE		11	00	12069	12069304	17892		47	Europe/Berlin	2011-07-31
-2890158	Kitzingen	Kitzingen	KZG,Kitzingen	49.73973	10.15072	P	PPL	DE		02	096			21387		189	Europe/Berlin	2012-11-23
+2890158	Kitzingen	Kitzingen	KZG,Kitzingen	49.73973	10.15072	P	PPL	DE		02	096	09675	09675141	21387		189	Europe/Berlin	2013-02-19
 2890425	Kirchlengern	Kirchlengern		52.2	8.63333	P	PPLA4	DE		07	057	05758	05758020	16338		64	Europe/Berlin	2011-04-25
 2890473	Kirchheim unter Teck	Kirchheim unter Teck	Kirchheim,Kirkhgajm-unter-Tek,Кирхгайм-унтер-Тек	48.64683	9.45378	P	PPL	DE		01	081	08116	08116033	40206		316	Europe/Berlin	2013-02-16
 2890504	Kirchhain	Kirchhain	Kirchhain	50.8272	8.92806	P	PPL	DE		05	065			16381		220	Europe/Berlin	2012-11-27
@@ -4727,17 +4727,17 @@
 2891122	Kiel	Kiel	KEL,Kiel,Kielia,Kielo,Kijlo,Kil,Kil',Kilonia,Kyle,ji er,kil,kiru,kyl,qyl,Κίελο,Кил,Киль,קיל,كيل,キール,基尔,킬	54.32133	10.13489	P	PPLA	DE		10				232758		7	Europe/Berlin	2008-07-18
 2891258	Kevelaer	Kevelaer	Kevelaer	51.58243	6.24603	P	PPL	DE		07	051			28064		21	Europe/Berlin	2012-11-23
 2891524	Kerpen	Kerpen	Kerpe,Kerpen,Керпен	50.86991	6.69691	P	PPL	DE		07	053			64226		81	Europe/Berlin	2012-11-23
-2891621	Kempten (Allgäu)	Kempten (Allgaeu)		47.72674	10.31389	P	PPL	DE		02	097			61399		681	Europe/Berlin	2010-11-15
+2891621	Kempten (Allgäu)	Kempten (Allgaeu)		47.72674	10.31389	P	PPL	DE		02	097	09763	09763000	61399		681	Europe/Berlin	2013-02-19
 2891643	Kempen	Kempen	Kempen	51.36432	6.41858	P	PPL	DE		07				36312		35	Europe/Berlin	2012-08-04
 2891832	Kelkheim (Taunus)	Kelkheim (Taunus)	Kelkheim,Kelkheim (Taunus),Stadt Kelkheim (Taunus)	50.13703	8.4502	P	PPL	DE		05				26814		210	Europe/Berlin	2012-09-06
-2891834	Kelheim	Kelheim	Kelheim	48.91725	11.88618	P	PPL	DE		02				15723		348	Europe/Berlin	2012-12-18
+2891834	Kelheim	Kelheim	Kelheim	48.91725	11.88618	P	PPL	DE		02	092	09273	09273137	15723		348	Europe/Berlin	2013-02-19
 2891951	Kehl	Kehl	Kehl,Kehl am Rhein,Kehl im Hanauerland,Kel',Kiel,Stadt Kehl,keru,Кель,ケール	48.57297	7.81523	P	PPL	DE		01	083	08317	08317057	34009		138	Europe/Berlin	2013-02-16
 2892051	Kaulsdorf	Kaulsdorf	Berlin-Kaulsdorf	52.51732	13.58871	P	PPLX	DE	DE	16	00	11000	11000000	18675		55	Europe/Berlin	2012-06-09
-2892080	Kaufbeuren	Kaufbeuren	Kaufbeuren	47.88238	10.62192	P	PPL	DE		02				42505		678	Europe/Berlin	2012-09-06
+2892080	Kaufbeuren	Kaufbeuren	Kaufbeuren	47.88238	10.62192	P	PPL	DE		02	097	09762	09762000	42505		678	Europe/Berlin	2013-02-19
 2892518	Kassel	Kassel	Cassala,Cassel,Castellum,Chasalla,Gorad Kasel',KSF,Kasel,Kasele,Kaseli,Kaselis,Kaselo,Kassel,Kassel',ka sai er,kasel,kasl,kasseru,khas seil,kysl,Κάσσελ,Горад Касель,Касел,Кассель,קאסל,كاسل,کاسل,کیسل,คัสเซิล,カッセル,卡塞尔,卡塞爾,카셀	51.31667	9.5	P	PPLA2	DE		05	066	06611		194501		164	Europe/Berlin	2010-11-21
 2892705	Karow	Karow	Berlin-Karow	52.60904	13.48117	P	PPLX	DE	DE	16	00	11000	11000000	18817		55	Europe/Berlin	2012-06-09
-2892786	Karlstadt	Karlstadt	Karlstadt	49.96034	9.77239	P	PPL	DE		02				15272		172	Europe/Berlin	2012-09-06
-2892794	Karlsruhe	Karlsruhe	Carlsruhe,Carolsruha,FKB,Karlsroue,Karlsrue,Karlsrueh,Karlsruhe,ka er si lu e,kaleulseulue,karlsrwhh,karusurue,Καρλσρούη,Карлсруе,Карлсруэ,קארלסרוהה,كارلسروهه,کارلسروهه,კარლსრუე,カールスルーエ,卡尔斯鲁厄,카를스루에	49.00472	8.38583	P	PPLA2	DE		01	082			283799		115	Europe/Berlin	2013-02-03
+2892786	Karlstadt	Karlstadt	Karlstadt	49.96034	9.77239	P	PPL	DE		02	096	09677	09677148	15272		172	Europe/Berlin	2013-02-19
+2892794	Karlsruhe	Karlsruhe	Carlsruhe,Carolsruha,FKB,Karlsroue,Karlsrue,Karlsrueh,Karlsruhe,ka er si lu e,kaleulseulue,karlsrwhh,karusurue,Καρλσρούη,Карлсруе,Карлсруэ,קארלסרוהה,كارلسروهه,کارلسروهه,კარლსრუე,カールスルーエ,卡尔斯鲁厄,카를스루에	49.00472	8.38583	P	PPLA2	DE		01	082	08212	08212000	283799		115	Europe/Berlin	2013-02-19
 2892811	Karlshorst	Karlshorst	Berlin-Karlshorst	52.48419	13.53185	P	PPLX	DE	DE	16	00	11000	11000000	22285		36	Europe/Berlin	2012-06-09
 2892874	Karlsfeld	Karlsfeld	Karlsfeld	48.21667	11.46667	P	PPLA4	DE		02	091	09174	09174126	17920		498	Europe/Berlin	2011-07-31
 2892980	Karben	Karben		50.23019	8.77155	P	PPL	DE		05	064			21642		118	Europe/Berlin	2010-11-15
@@ -4754,7 +4754,7 @@
 2895569	Itzehoe	Itzehoe		53.92099	9.51529	P	PPL	DE		10				33047		7	Europe/Berlin	2010-10-13
 2895664	Isernhagen Farster Bauerschaft	Isernhagen Farster Bauerschaft		52.47093	9.84179	P	PPL	DE		06				22601		74	Europe/Berlin	2012-08-04
 2895669	Iserlohn	Iserlohn	Iserlaun,Iserlohn,Izerlon,ZNR,Изерлон	51.37547	7.70281	P	PPL	DE		07				97910		242	Europe/Berlin	2012-08-04
-2895992	Ingolstadt	Ingolstadt	Ingol'shtadt,Ingolshhat,Ingolshtat,Ingolstadt,ingorushutatto,Инголштат,Инголщат,Ингольштадт,インゴルシュタット	48.76508	11.42372	P	PPL	DE		02	091			120658		367	Europe/Berlin	2012-11-28
+2895992	Ingolstadt	Ingolstadt	Ingol'shtadt,Ingolshhat,Ingolshtat,Ingolstadt,ingorushutatto,Инголштат,Инголщат,Ингольштадт,インゴルシュタット	48.76508	11.42372	P	PPL	DE		02	091	09161	09161000	120658		367	Europe/Berlin	2013-02-19
 2896514	Ilmenau	Ilmenau	Il'menau,Ilmenau,Stadt Ilmenau,Илменау,Ильменау	50.68322	10.91858	P	PPL	DE		15				27055		478	Europe/Berlin	2012-07-04
 2896538	Illingen	Illingen	Illingen	49.37362	7.04758	P	PPL	DE		09				18488		281	Europe/Berlin	2012-09-06
 2896546	Illertissen	Illertissen	Illertissen	48.22336	10.10347	P	PPL	DE		02	097	09775	09775129	16522		516	Europe/Berlin	2011-04-13
@@ -4776,12 +4776,12 @@
 2899449	Homburg	Homburg	Homburg	49.32637	7.33867	P	PPL	DE		09				44607		234	Europe/Berlin	2012-09-06
 2899538	Holzwickede	Holzwickede		51.5	7.63333	P	PPLA4	DE		07	059	05978	05978016	17821		135	Europe/Berlin	2011-07-31
 2899601	Holzminden	Holzminden		51.82798	9.4455	P	PPL	DE		06				20998		91	Europe/Berlin	2011-03-21
-2899676	Holzkirchen	Holzkirchen		47.87663	11.70181	P	PPL	DE		02	091			15199		691	Europe/Berlin	2010-11-15
+2899676	Holzkirchen	Holzkirchen		47.87663	11.70181	P	PPL	DE		02	091	09182	09182120	15199		691	Europe/Berlin	2013-02-19
 2901420	Hohenstein-Ernstthal	Hohenstein-Ernstthal	Hohenstein-Ernstthal	50.80064	12.71287	P	PPL	DE		13	145			16542		387	Europe/Berlin	2012-12-18
 2901588	Hohen Neuendorf	Hohen Neuendorf	Hohen Neuendorf	52.67631	13.27775	P	PPL	DE		11				21893		51	Europe/Berlin	2012-08-04
 2902533	Hofheim am Taunus	Hofheim am Taunus	Hofheim,Hofheim am Taunus,Hofheim in Taunus	50.09019	8.4493	P	PPL	DE		05				37750		129	Europe/Berlin	2012-09-06
 2902559	Hofgeismar	Hofgeismar	Hofgeismar	51.49607	9.385	P	PPL	DE		05	066			16444		152	Europe/Berlin	2013-01-11
-2902768	Hof	Hof	Hof,Khof,Хоф	50.31622	11.91833	P	PPL	DE		02				49239		482	Europe/Berlin	2012-09-06
+2902768	Hof	Hof	Hof,Khof,Хоф	50.31622	11.91833	P	PPL	DE		02	094	09464	09464000	49239		482	Europe/Berlin	2013-02-19
 2902852	Hockenheim	Hockenheim	Hockenheim	49.32334	8.55194	P	PPL	DE		01	082	08226	08226032	20614		102	Europe/Berlin	2013-02-15
 2903175	Hochheim am Main	Hochheim am Main	Hochheim,Hochheim am Main	50.01436	8.35218	P	PPL	DE		05	064			17027		127	Europe/Berlin	2013-01-21
 2904725	Hille	Hille	Hille	52.33333	8.75	P	PPLA4	DE		07	057	05770	05770012	16567		58	Europe/Berlin	2011-07-31
@@ -4794,7 +4794,7 @@
 2905206	Hettstedt	Hettstedt	Hefstedt,Hettstedt	51.6503	11.51146	P	PPL	DE		14				15949		147	Europe/Berlin	2012-07-04
 2905290	Hessisch Oldendorf	Hessisch Oldendorf	Hessisch Oldendorf	52.17269	9.24913	P	PPL	DE		06				20129		70	Europe/Berlin	2012-08-04
 2905455	Herzogenrath	Herzogenrath		50.87067	6.10136	P	PPL	DE		07	053	05334		47381		143	Europe/Berlin	2010-11-23
-2905457	Herzogenaurach	Herzogenaurach	Herzogenaurach,Khercogenaurakh,XHI,Херцогенаурах	49.56798	10.88565	P	PPL	DE		02				23319		300	Europe/Berlin	2010-01-29
+2905457	Herzogenaurach	Herzogenaurach	Herzogenaurach,Khercogenaurakh,XHI,Херцогенаурах	49.56798	10.88565	P	PPL	DE		02	095	09572	09572132	23319		300	Europe/Berlin	2013-02-19
 2905560	Herten	Herten	Heritono,Herten,Hėritono	51.59638	7.14387	P	PPL	DE		07				65306		66	Europe/Berlin	2012-08-04
 2905826	Herrenberg	Herrenberg		48.59523	8.86648	P	PPL	DE		01	081	08115	08115021	31338		431	Europe/Berlin	2012-06-05
 2905891	Herne	Herne	Herne,Kherne,herune,Херне,ヘルネ	51.5388	7.22572	P	PPL	DE		07	059			172108		69	Europe/Berlin	2012-11-23
@@ -4849,12 +4849,12 @@
 2913195	Haan	Haan	Haan,Khaan,Stadt Haan,Хаан	51.19382	7.0133	P	PPL	DE		07				29431		158	Europe/Berlin	2012-08-04
 2913366	Gütersloh	Gutersloh	Gjuterslo,Guetersloh,Gutersloh,Gütersloh,ju te si luo,Гютерсло,居特斯洛	51.90693	8.37854	P	PPL	DE		07				96180		75	Europe/Berlin	2012-08-04
 2913433	Güstrow	Gustrow		53.7972	12.17337	P	PPL	DE		12				31217		9	Europe/Berlin	2010-12-03
-2913537	Gunzenhausen	Gunzenhausen	Gunzenhausen	49.11663	10.75971	P	PPL	DE		02				16477		440	Europe/Berlin	2012-09-06
-2913555	Günzburg	Gunzburg	Gunzburg,Günzburg	48.45599	10.27695	P	PPL	DE		02	097			19737		467	Europe/Berlin	2012-12-03
+2913537	Gunzenhausen	Gunzenhausen	Gunzenhausen	49.11663	10.75971	P	PPL	DE		02	095	09577	09577136	16477		440	Europe/Berlin	2013-02-19
+2913555	Günzburg	Gunzburg	Gunzburg,Günzburg	48.45599	10.27695	P	PPL	DE		02	097	09774	09774135	19737		467	Europe/Berlin	2013-02-19
 2913761	Gummersbach	Gummersbach	Gummersbach,ZEW	51.02608	7.56473	P	PPL	DE		07				53131		252	Europe/Berlin	2012-08-04
 2913922	Guben	Guben	Guben,Gubin,Губен	51.94987	14.71447	P	PPL	DE		11				21608		47	Europe/Berlin	2010-09-10
 2914929	Groß-Umstadt	Gross-Umstadt	Gross-Umstadt,Groß-Umstadt	49.86899	8.9321	P	PPL	DE		05				21758		182	Europe/Berlin	2012-09-06
-2915196	Großostheim	Grossostheim	Grossostheim,Großostheim	49.91986	9.07596	P	PPL	DE		02				16346		126	Europe/Berlin	2012-09-06
+2915196	Großostheim	Grossostheim	Grossostheim,Großostheim	49.91986	9.07596	P	PPL	DE		02	096	09671	09671122	16346		126	Europe/Berlin	2013-02-19
 2915613	Groß-Gerau	Gross-Gerau	Gross-Gerau,Groß-Gerau	49.92139	8.48255	P	PPL	DE		05				23641		88	Europe/Berlin	2012-09-06
 2916630	Großenhain	Grossenhain	Grossenhain,Großenhain	51.28951	13.5335	P	PPL	DE		13				16573		130	Europe/Berlin	2012-09-06
 2917138	Gronau	Gronau	Gronau	52.21099	7.02238	P	PPL	DE		07	055			46161		39	Europe/Berlin	2012-11-26
@@ -4884,11 +4884,11 @@
 2920789	Gesundbrunnen	Gesundbrunnen		52.55035	13.39139	P	PPLX	DE		16	00	11000	11000000	84789		53	Europe/Berlin	2012-06-09
 2920834	Geseke	Geseke	Gesecke,Geseke,Gesiki,Gezeke,Gisiki,Gêsiki,Gīsiki,Гезеке	51.64091	8.5109	P	PPL	DE		07				20602		110	Europe/Berlin	2012-08-04
 2920842	Gescher	Gescher	Gascheri,Gasgeri,Gescher,Gāscheri,Gāsgeri	51.954	7.00481	P	PPL	DE		07	055			17115		62	Europe/Berlin	2013-01-17
-2920891	Gersthofen	Gersthofen	Gersthofen	48.42432	10.87273	P	PPL	DE		02	097			20254		464	Europe/Berlin	2012-11-22
+2920891	Gersthofen	Gersthofen	Gersthofen	48.42432	10.87273	P	PPL	DE		02	097	09772	09772147	20254		464	Europe/Berlin	2013-02-19
 2921034	Germersheim	Germersheim	Gemersheim,Germersheim,Germerskhajm,Гермерсхайм	49.22306	8.36389	P	PPL	DE		08				20972		99	Europe/Berlin	2012-01-18
-2921039	Germering	Germering	Germering	48.13392	11.3765	P	PPL	DE		02				36834		535	Europe/Berlin	2012-09-06
+2921039	Germering	Germering	Germering	48.13392	11.3765	P	PPL	DE		02	091	09179	09179123	36834		535	Europe/Berlin	2013-02-19
 2921061	Gerlingen	Gerlingen		48.79954	9.06316	P	PPL	DE		01	081	08118	08118019	19050		341	Europe/Berlin	2013-02-16
-2921139	Geretsried	Geretsried		47.85775	11.48054	P	PPL	DE		02	091			23364		607	Europe/Berlin	2010-11-15
+2921139	Geretsried	Geretsried		47.85775	11.48054	P	PPL	DE		02	091	09173	09173126	23364		607	Europe/Berlin	2013-02-19
 2921232	Gera	Gera	Gera,ZGA,ge la,gera,Гера,ゲーラ,格拉	50.88029	12.08187	P	PPL	DE		15				104659		203	Europe/Berlin	2010-05-23
 2921242	Georgsmarienhütte	Georgsmarienhutte	Georgsmarienhutte,Georgsmarienhütte	52.20296	8.0448	P	PPL	DE		06				32580		100	Europe/Berlin	2012-08-04
 2921466	Gelsenkirchen	Gelsenkirchen	Chaesekerken,Chäsekerken,Gel'zenkirkhen,Gelsenkirchen,Gelsenkirhene,Gelzenkirchenas,Gelzenkirkhen,Gelzenkirxen,Nkelzen'kirchen,ZEJ,gai er sen ji xing,geljenkileuhen,geruzenkiruhyen,ghylznkyrshn,glznqyrsn,kel sen kheiyr sen,Γκελζενκίρχεν,Гелзенкирхен,Гельзенкирхен,גלזנקירשן,غيلزنكيرشن,گلزن‌کیرشن,เกลเซนเคียร์เซน,ゲルゼンキルヒェン,盖尔森基兴,겔젠키르헨	51.5075	7.12283	P	PPL	DE		07	055			270028		60	Europe/Berlin	2012-12-10
@@ -4898,14 +4898,14 @@
 2921837	Geilenkirchen	Geilenkirchen	GKE,Geilenkirchen,Gejlenkirkhen,Гейленкирхен	50.96745	6.11763	P	PPL	DE		07				28334		71	Europe/Berlin	2012-09-06
 2922102	Geesthacht	Geesthacht	Geesthacht,Stadt Geesthacht	53.43575	10.3779	P	PPL	DE		10				29487		60	Europe/Berlin	2012-07-04
 2922230	Gauting	Gauting		48.06919	11.37703	P	PPLA4	DE		02	091	09188	09188120	19216		583	Europe/Berlin	2011-04-25
-2922530	Garmisch-Partenkirchen	Garmisch-Partenkirchen	Garmisch-Partenkirchen,Garmish-Partenkirkhen,Markt Garmisch-Partenkirchen,ZEI,garumisshu=parutenkiruhyen,Гармиш-Партенкирхен,ガルミッシュ＝パルテンキルヒェン	47.49209	11.09576	P	PPL	DE		02	091			26022		705	Europe/Berlin	2010-11-15
-2922582	Garching bei München	Garching bei Munchen	Arching,Garching,Garching bei Munchen,Garching bei München	48.24896	11.65101	P	PPL	DE		02				15303		479	Europe/Berlin	2012-09-06
+2922530	Garmisch-Partenkirchen	Garmisch-Partenkirchen	Garmisch-Partenkirchen,Garmish-Partenkirkhen,Markt Garmisch-Partenkirchen,ZEI,garumisshu=parutenkiruhyen,Гармиш-Партенкирхен,ガルミッシュ＝パルテンキルヒェン	47.49209	11.09576	P	PPL	DE		02	091	09180	09180117	26022		705	Europe/Berlin	2013-02-19
+2922582	Garching bei München	Garching bei Munchen	Arching,Garching,Garching bei Munchen,Garching bei München	48.24896	11.65101	P	PPL	DE		02	091	09184	09184119	15303		479	Europe/Berlin	2013-02-19
 2922586	Garbsen	Garbsen	Garbsen,ZEH	52.41371	9.5899	P	PPL	DE		06				63355		46	Europe/Berlin	2012-08-04
 2922731	Ganderkesee	Ganderkesee	Ganderkesee	53.03333	8.53333	P	PPLA4	DE		06	00	03458	03458005	31141		34	Europe/Berlin	2011-07-31
 2923362	Gaggenau	Gaggenau	Gaggenau	48.8	8.33333	P	PPL	DE		01	082	08216	08216015	29496		186	Europe/Berlin	2013-02-15
-2923544	Fürth	Furth	Firt,Fjurt,Fuerth,Fürth,fei er te,fu~yuruto,Фирт,Фюрт,フュルト,菲尔特	49.47593	10.98856	P	PPL	DE		02	095			112025		302	Europe/Berlin	2012-11-27
+2923544	Fürth	Furth	Firt,Fjurt,Fuerth,Fürth,fei er te,fu~yuruto,Фирт,Фюрт,フュルト,菲尔特	49.47593	10.98856	P	PPL	DE		02	095	09563	09563000	112025		302	Europe/Berlin	2013-02-19
 2923588	Fürstenwalde	Furstenwalde	Furstenwalde,Fürstenwalde	52.36067	14.06185	P	PPL	DE		11				33539		40	Europe/Berlin	2012-08-04
-2923625	Fürstenfeldbruck	Fuerstenfeldbruck	Bruck,Fuerstenfeldbruck,Fuerstenfeldburg,Furstenfeld,Fürstenfeldbruck,fjurstenfel'dbruk,Фюрстенфельдбрук	48.17904	11.2547	P	PPL	DE		02	091			33533	517	519	Europe/Berlin	2012-03-26
+2923625	Fürstenfeldbruck	Fuerstenfeldbruck	Bruck,Fuerstenfeldbruck,Fuerstenfeldburg,Furstenfeld,Fürstenfeldbruck,fjurstenfel'dbruk,Фюрстенфельдбрук	48.17904	11.2547	P	PPL	DE		02	091	09179	09179121	33533	517	519	Europe/Berlin	2013-02-19
 2923822	Fulda	Fulda	Ful'da,Fulda,ZEE,furuda,Фульда,フルダ	50.55162	9.67518	P	PPL	DE		05	066			63760		265	Europe/Berlin	2010-11-15
 2924206	Fröndenberg	Frondenberg	Frondenberg,Fröndenberg	51.47563	7.76946	P	PPL	DE		07	059			22964		162	Europe/Berlin	2012-12-19
 2924302	Frohnau	Frohnau		52.63336	13.29024	P	PPLX	DE		16	00	11000	11000000	16571		55	Europe/Berlin	2012-06-09
@@ -4917,13 +4917,13 @@
 2924625	Friedrichsdorf	Friedrichsdorf		50.24962	8.64281	P	PPL	DE		05	064			24435		202	Europe/Berlin	2010-11-15
 2924770	Friedenau	Friedenau		52.47133	13.32813	P	PPLX	DE		16	00	11000	11000000	26972		44	Europe/Berlin	2012-06-09
 2924802	Friedberg	Friedberg	Fridberg,Friedberg,Friedberg in Hessen,Friedburg,Фридберг	50.33739	8.75591	P	PPL	DE		05				27484		133	Europe/Berlin	2012-09-06
-2924803	Friedberg	Friedberg	Fridberg,Friedberg bei Augsburg,Фридберг	48.35693	10.98461	P	PPL	DE		02	097	09771		29189	514	517	Europe/Berlin	2010-11-15
+2924803	Friedberg	Friedberg	Fridberg,Friedberg bei Augsburg,Фридберг	48.35693	10.98461	P	PPL	DE		02	097	09771	09771130	29189	514	517	Europe/Berlin	2013-02-19
 2924894	Freudenstadt	Freudenstadt	Freudenstadt	48.46695	8.41371	P	PPL	DE		01	082	08237	08237028	23868		721	Europe/Berlin	2013-02-15
 2924915	Freudenberg	Freudenberg	Freudenberg	50.89741	7.87414	P	PPL	DE		07				18601		323	Europe/Berlin	2012-09-06
 2925017	Freital	Freital	Frajtal',Freital,Freithal,Фрайталь	51.00166	13.6488	P	PPL	DE		13	146			39027		171	Europe/Berlin	2012-12-03
-2925034	Freising	Freising	Frajzing,Freising,Freysing,Frisinga,Fryzynga,fu lai xin,Фрайзинг,弗赖辛	48.40351	11.74876	P	PPL	DE		02				42570		448	Europe/Berlin	2010-11-19
-2925080	Freilassing	Freilassing	Freilassing,QFL	47.84085	12.98114	P	PPL	DE		02				15909		420	Europe/Berlin	2012-09-06
-2925177	Freiburg	Freiburg	Frajburg,Freiburg,Freiburg im Breisgau,Fribourg-en-Brisgau,Friburg de Brisgovia,Friburg de Brisgòvia,Friburgo de Brisgovia,Friburgo in Brisgovia,Fryburg Bryzgowijski,Phraimpournk,fraybwrg,fu lai bao,furaiburuku,Φράιμπουργκ,Фрайбург,Фрајбург,فرایبورگ,フライブルク,弗莱堡	47.9959	7.85222	P	PPLA2	DE		01	083			215966	278	279	Europe/Berlin	2010-11-21
+2925034	Freising	Freising	Frajzing,Freising,Freysing,Frisinga,Fryzynga,fu lai xin,Фрайзинг,弗赖辛	48.40351	11.74876	P	PPL	DE		02	091	09178	09178124	42570		448	Europe/Berlin	2013-02-19
+2925080	Freilassing	Freilassing	Freilassing,QFL	47.84085	12.98114	P	PPL	DE		02	091	09172	09172118	15909		420	Europe/Berlin	2013-02-19
+2925177	Freiburg	Freiburg	Frajburg,Freiburg,Freiburg im Breisgau,Fribourg-en-Brisgau,Friburg de Brisgovia,Friburg de Brisgòvia,Friburgo de Brisgovia,Friburgo in Brisgovia,Fryburg Bryzgowijski,Phraimpournk,fraybwrg,fu lai bao,furaiburuku,Φράιμπουργκ,Фрайбург,Фрајбург,فرایبورگ,フライブルク,弗莱堡	47.9959	7.85222	P	PPLA2	DE		01	083	08311	08311000	215966	278	279	Europe/Berlin	2013-02-19
 2925189	Freiberg am Neckar	Freiberg am Neckar	Freiberg	48.93196	9.2024	P	PPL	DE		01	081	08118	08118078	15235		256	Europe/Berlin	2013-02-15
 2925192	Freiberg	Freiberg	Frajberg,Freiberg,Freiburg,furaiberuku,Фрайберг,フライベルク	50.91089	13.33881	P	PPL	DE		13	145			43670		404	Europe/Berlin	2012-11-26
 2925259	Frechen	Frechen	Frechen	50.91485	6.8118	P	PPL	DE		07	053	05362		48733		68	Europe/Berlin	2012-09-06
@@ -4933,7 +4933,7 @@
 2925629	Frankenberg	Frankenberg	Frankenberg	51.0589	8.80077	P	PPL	DE		05				19276		308	Europe/Berlin	2012-08-04
 2925630	Frankenberg	Frankenberg	Frankenberg	50.91297	13.04011	P	PPL	DE		13				16850		284	Europe/Berlin	2012-06-05
 2925832	Forst	Forst	Barsac,Barsc,Baršć,Forst,Forst/Lausitz,Stadt Forst (Lausitz),Форст	51.73544	14.63971	P	PPL	DE		11				22843		76	Europe/Berlin	2012-06-05
-2925910	Forchheim	Forchheim	Forchheim	49.71754	11.05877	P	PPL	DE		02				30442		261	Europe/Berlin	2008-10-30
+2925910	Forchheim	Forchheim	Forchheim	49.71754	11.05877	P	PPL	DE		02	094	09474	09474126	30442		261	Europe/Berlin	2013-02-19
 2926120	Flörsheim	Florsheim	Florsheim,Florsheim am Main,Flörsheim,Flörsheim am Main	50.01312	8.42779	P	PPL	DE		05	064			20023		91	Europe/Berlin	2012-11-27
 2926271	Flensburg	Flensburg	FLF,Flensborg,Flensbourg,Flensburg,furensuburuku,Фленсбург,フレンスブルク	54.78431	9.43961	P	PPL	DE		10				85838		33	Europe/Berlin	2012-07-04
 2926670	Finsterwalde	Finsterwalde	Finsterwalde	51.63388	13.70662	P	PPL	DE		11				18922		106	Europe/Berlin	2012-06-05
@@ -4951,12 +4951,12 @@
 2928967	Eschwege	Eschwege	Escevegia,Eschwege	51.18386	10.05329	P	PPL	DE		05				21191		159	Europe/Berlin	2012-09-06
 2929134	Eschborn	Eschborn	Eschborn	50.14328	8.57111	P	PPL	DE		05	064			20383		130	Europe/Berlin	2012-12-24
 2929247	Erwitte	Erwitte	Arwitti,Eritonon,Erwitte,Ėritonon	51.6127	8.3384	P	PPL	DE		07				16081		105	Europe/Berlin	2012-08-04
-2929567	Erlangen	Erlangen	Ehrlangen,Erlan'nken,Erlanga,Erlangen,Erlangenas,Gorad Ehrlangen,ZCZ,ai er lan gen,ai er lang gen,arlangn,arlnjn,arlynjn,earangen,eleullang-gen,Έρλανγκεν,Горад Эрланген,Ерланген,Эрланген,ארלנגן,ارلانگن,ارلنجن,ارلینجن,エアランゲン,埃尔朗根,埃爾蘭根,에를랑겐	49.59099	11.00783	P	PPL	DE		02	095			102675		282	Europe/Berlin	2012-12-18
+2929567	Erlangen	Erlangen	Ehrlangen,Erlan'nken,Erlanga,Erlangen,Erlangenas,Gorad Ehrlangen,ZCZ,ai er lan gen,ai er lang gen,arlangn,arlnjn,arlynjn,earangen,eleullang-gen,Έρλανγκεν,Горад Эрланген,Ерланген,Эрланген,ארלנגן,ارلانگن,ارلنجن,ارلینجن,エアランゲン,埃尔朗根,埃爾蘭根,에를랑겐	49.59099	11.00783	P	PPL	DE		02	095	09562	09562000	102675		282	Europe/Berlin	2013-02-19
 2929600	Erkrath	Erkrath	Ehrkrat,Erkrath,Эркрат	51.22235	6.9083	P	PPL	DE		07	051			47815		66	Europe/Berlin	2012-11-23
 2929622	Erkelenz	Erkelenz	Ehrkelenc,Erkelenc,Erkelenz,arklnz,Еркеленц,Эркеленц,ارکلنز	51.07947	6.31531	P	PPL	DE		07				44650		95	Europe/Berlin	2012-08-04
 2929670	Erfurt	Erfurt	ERF,Ehrfurt,Erfordia,Erfurt,Erfurtas,Erfurte,Erfurti,Erfurto,Erphourte,Gorad Ehrfurt,Jarobrod,ai er fu te,arfwrt,eafuruto,eleupuleuteu,erapharta,Érfurt,Ερφούρτη,Горад Эрфурт,Ерфурт,Эрфурт,ארפורט,إرفورت,ارفرٹ,ارفورت,एरफर्ट,エアフルト,埃尔福特,에르푸르트	50.9787	11.03283	P	PPLA	DE		15				203254		194	Europe/Berlin	2012-09-06
 2929671	Erftstadt	Erftstadt	Erftstadt	50.81481	6.79386	P	PPL	DE		07				51207		96	Europe/Berlin	2012-09-06
-2929715	Erding	Erding	Aerding,Ehrding,Erding As,Эрдинг	48.30603	11.90686	P	PPL	DE	DE	02	091			33519		466	Europe/Berlin	2010-11-15
+2929715	Erding	Erding	Aerding,Ehrding,Erding As,Эрдинг	48.30603	11.90686	P	PPL	DE	DE	02	091	09177	09177117	33519		466	Europe/Berlin	2013-02-19
 2929831	Eppingen	Eppingen	Eppingen	49.13644	8.91229	P	PPL	DE		01	081	08125	08125026	21179		195	Europe/Berlin	2013-02-15
 2929865	Eppelborn	Eppelborn	Eppelborn	49.4	6.96667	P	PPLA4	DE		09	00	10043	10043111	18079		244	Europe/Berlin	2011-04-25
 2930030	Ennigerloh	Ennigerloh	Aningeroloh,Aningerolôh,Ennigerloh	51.83843	8.03093	P	PPL	DE		07	055			20713		105	Europe/Berlin	2012-08-04
@@ -4995,13 +4995,13 @@
 2935517	Dortmund	Dortmund	DTM,Dortmund,Dortmundas,Dortmunde,Dortmundi,Dueoerpm,Düörpm,Ntortmount,Throtmenni,Tremonia,d xr thmund,doleuteumunteu,dorutomunto,duo te meng de,dwrtmwnd,Ντόρτμουντ,Дортмунд,דורטמונד,دورتموند,ดอร์ทมุนด์,ドルトムント,多特蒙德,도르트문트	51.51494	7.466	P	PPL	DE		07	059			588462		100	Europe/Berlin	2012-11-28
 2935530	Dorsten	Dorsten	Dorsten,ZCX,Дорстен	51.66166	6.96514	P	PPL	DE		07				79981		31	Europe/Berlin	2012-08-04
 2935825	Dormagen	Dormagen	Dormagen,ZCW,Дормаген	51.09683	6.83167	P	PPL	DE		07	051			63582		43	Europe/Berlin	2012-11-27
-2936253	Donauwörth	Donauworth	Donauwerth,Donauwoerth,Donauworth,Donauwörth,donauvu~eruto,ドナウヴェルト	48.71804	10.7793	P	PPL	DE		02				18364		455	Europe/Berlin	2012-11-13
+2936253	Donauwörth	Donauworth	Donauwerth,Donauwoerth,Donauworth,Donauwörth,donauvu~eruto,ドナウヴェルト	48.71804	10.7793	P	PPL	DE		02	097	09779	09779131	18364		455	Europe/Berlin	2013-02-19
 2936267	Donaueschingen	Donaueschingen	Donauehshingen,Donaueschingen,donauesshingen,Донауэшинген,ドナウエッシンゲン	47.95514	8.49707	P	PPL	DE		01	083	08326	08326012	21604		678	Europe/Berlin	2013-02-15
 2936658	Döbeln	Dobeln	Debel'n,Dobeln,Doebeln,Doeberln,Döbeln,Stadt Dobeln,Stadt Döbeln,Дебельн	51.1221	13.11027	P	PPL	DE		13	145			21338		167	Europe/Berlin	2012-09-06
 2936705	Ditzingen	Ditzingen		48.82672	9.06703	P	PPL	DE		01	081	08118	08118011	24149		300	Europe/Berlin	2013-02-15
 2936871	Dinslaken	Dinslaken	Dinslaken,Dinslakena,Ntinslaken,ZCV,Ντίνσλακεν,Динслакена	51.56227	6.7434	P	PPL	DE		07	051			70573		30	Europe/Berlin	2012-12-07
-2936909	Dingolfing	Dingolfing	Dingelfing,Dingolfing	48.64244	12.49283	P	PPL	DE		02				18805		357	Europe/Berlin	2012-11-13
-2936974	Dillingen an der Donau	Dillingen an der Donau	Dillingen,Dillingen an der Donau,Dillingen-na-Dunae,Диллинген-на-Дунае	48.58153	10.49528	P	PPL	DE		02				18734		428	Europe/Berlin	2012-09-06
+2936909	Dingolfing	Dingolfing	Dingelfing,Dingolfing	48.64244	12.49283	P	PPL	DE		02	092	09279	09279112	18805		357	Europe/Berlin	2013-02-19
+2936974	Dillingen an der Donau	Dillingen an der Donau	Dillingen,Dillingen an der Donau,Dillingen-na-Dunae,Диллинген-на-Дунае	48.58153	10.49528	P	PPL	DE		02	097	09773	09773125	18734		428	Europe/Berlin	2013-02-19
 2936977	Dillingen	Dillingen	Dillengen,Dillingen	49.35557	6.72781	P	PPL	DE		09				21526		185	Europe/Berlin	2012-09-06
 2936985	Dillenburg	Dillenburg	Dillenberg,Dillenburg,Дилленбург	50.74114	8.28699	P	PPL	DE		05				24461		253	Europe/Berlin	2012-09-06
 2937040	Dietzenbach	Dietzenbach	Dietzenbach,Stadt Dietzenbach	50.00976	8.77784	P	PPL	DE		05				33256		144	Europe/Berlin	2012-09-06
@@ -5012,24 +5012,24 @@
 2938323	Delmenhorst	Delmenhorst	Del'menkhorst,Delmenhorst,Demost,ZCT,derumenhorusuto,Дельменхорст,デルメンホルスト	53.0511	8.63091	P	PPL	DE		06	00	03401		75893		6	Europe/Berlin	2012-08-04
 2938376	Delitzsch	Delitzsch	Delich,Delitzsch,Stadt Delitzsch,Делич	51.52546	12.34284	P	PPL	DE		13	147			24998		95	Europe/Berlin	2012-11-23
 2938389	Delbrück	Delbruck	Delbruck,Delbrück	51.76502	8.56223	P	PPL	DE		07	057			29884		96	Europe/Berlin	2012-11-23
-2938540	Deggendorf	Deggendorf	Deckendorf,Degendorf,Deggendorf,Дегендорф	48.84086	12.96068	P	PPL	DE		02	092			31081		360	Europe/Berlin	2012-11-27
+2938540	Deggendorf	Deggendorf	Deckendorf,Degendorf,Deggendorf,Дегендорф	48.84086	12.96068	P	PPL	DE		02	092	09271	09271119	31081		360	Europe/Berlin	2013-02-19
 2938784	Datteln	Datteln	Datteln	51.66667	7.38333	P	PPL	DE		07				36338		46	Europe/Berlin	2012-01-18
 2938913	Darmstadt	Darmstadt	Darmshhat,Darmshtadi,Darmshtadt,Darmshtat,Darmstadium,Darmstadt,Darmstat,Darmstatas,Darmstate,Darmundestadt,Darmştat,Darmštatas,Darmštate,Gorad Darmshtat,Ntarmstat,ZCS,da mu shi ta te,daleumsyutateu,darmastata,darmshtat,darumushutatto,drmstdt,Ντάρμστατ,Горад Дармштат,Дармштадт,Дармштат,Дармщат,דרמשטדט,دارمشتات,ڈریمسٹڈ,डार्मश्टाट,ダルムシュタット,达姆施塔特,다름슈타트	49.87056	8.64944	P	PPLA2	DE		05	064			140385		145	Europe/Berlin	2010-11-21
 2939167	Damme	Damme	Damme,Дамме	52.52157	8.19793	P	PPL	DE		06				16024		62	Europe/Berlin	2012-08-04
 2939440	Dahlem	Dahlem		52.4581	13.28702	P	PPLX	DE		16	00	11000	11000000	15737		54	Europe/Berlin	2012-06-09
-2939623	Dachau	Dachau	Dachau,Dakhau,KZ Dachau,ZCR,Дахау,דכאו	48.26	11.43402	P	PPL	DE		02	091			39740		502	Europe/Berlin	2012-12-03
+2939623	Dachau	Dachau	Dachau,Dakhau,KZ Dachau,ZCR,Дахау,דכאו	48.26	11.43402	P	PPL	DE		02	091	09174	09174115	39740		502	Europe/Berlin	2013-02-19
 2939658	Cuxhaven	Cuxhaven	Cuxhaven,FCN,Kukskhafen,Куксхафен	53.87176	8.69087	P	PPL	DE		06	00			52677		5	Europe/Berlin	2010-11-22
 2939747	Crimmitschau	Crimmitschau	Crimmitschau,Crimmitshau,Krimmichau,Stadt Crimmitschau,Криммичау	50.81644	12.39045	P	PPL	DE		13	145			22442		268	Europe/Berlin	2012-11-26
 2939797	Crailsheim	Crailsheim	Krajl'skhajm,QEI,Stadt Crailsheim,Крайльсхайм	49.13444	10.07193	P	PPL	DE		01	081	08127	08127014	32262		409	Europe/Berlin	2013-02-16
 2939811	Cottbus	Cottbus	CBU,Chocebuz,Chociebuz,Chociebuż,Chosebuz,Choćebuz,Chośebuz,Cottbus,Kotbus,Kottbus,ke te bu si,koteubuseu,kotobusu,Котбус,Коттбус,コトブス,科特布斯,코트부스	51.75769	14.32888	P	PPL	DE		11				84754		72	Europe/Berlin	2012-06-05
 2939820	Coswig	Coswig	Coswig	51.13204	13.58312	P	PPL	DE		13	146			22304		109	Europe/Berlin	2012-11-23
 2939945	Coesfeld	Coesfeld	Coesfeld,Koesfeld,Kosfel'd,Косфельд	51.94349	7.16809	P	PPL	DE		07				36631		85	Europe/Berlin	2012-08-04
-2939951	Coburg	Coburg	Cobourg,Coburg,Coburgo,Coburgum,Cuburgh,Gorad Koburg,Koburg,Koburq,Landkreis Coburg,Powiat Coburg,Subdistrikto Coburg,ke bao,koburuku,kwbrg,kwbwg,kwbwrgh,Горад Кобург,Кобург,كوبورغ,کوبرگ,کوبوگ,コーブルク,科堡	50.25937	10.96384	P	PPL	DE		02	094	09473		41901		327	Europe/Berlin	2012-07-04
+2939951	Coburg	Coburg	Cobourg,Coburg,Coburgo,Coburgum,Cuburgh,Gorad Koburg,Koburg,Koburq,Landkreis Coburg,Powiat Coburg,Subdistrikto Coburg,ke bao,koburuku,kwbrg,kwbwg,kwbwrgh,Горад Кобург,Кобург,كوبورغ,کوبرگ,کوبوگ,コーブルク,科堡	50.25937	10.96384	P	PPL	DE		02	094	09463	09463000	41901		327	Europe/Berlin	2013-02-19
 2939969	Cloppenburg	Cloppenburg	Cloppenburg,Kloppenburg,Клоппенбург	52.84754	8.045	P	PPL	DE		06				31177		40	Europe/Berlin	2012-08-04
 2939995	Clausthal-Zellerfeld	Clausthal-Zellerfeld	Bergstadt-Clausthal-Zellerfeld,Clausthal-Zellerfeld	51.80949	10.33821	P	PPL	DE		06				15345		560	Europe/Berlin	2012-08-04
 2940132	Chemnitz	Chemnitz	Chemnicas,Chemnicium,Chemnitz,Gorad Khemnic,Hemnica,Kamjenica,Karl-Marx-Stadt,Kemnic,Kemnits,Khemnic,Saska Kamenice,Saská Kamenice,chymntz,kai mu ni ci,kemnicheu,kemunittsu,khe mniths,kmnytz,kymnts,qmnyz,Κέμνιτς,Горад Хемніц,Кемниц,Хемниц,Хемніц,קמניץ,كيمنتس,چیمنتز,کمنیتز,เคมนิทซ์,ケムニッツ,开姆尼茨,켐니츠	50.83333	12.91667	P	PPLA2	DE		13	145	14511	14511000	247220		300	Europe/Berlin	2011-04-24
 2940187	Charlottenburg	Charlottenburg Bezirk		52.51667	13.28333	P	PPLX	DE		16	00	11000	11000000	119857		46	Europe/Berlin	2012-06-09
-2940204	Cham	Cham	Cham,Cham Regen,QHQ	49.22565	12.65501	P	PPL	DE		02	093			17314		429	Europe/Berlin	2012-11-26
+2940204	Cham	Cham	Cham,Cham Regen,QHQ	49.22565	12.65501	P	PPL	DE		02	093	09372	09372116	17314		429	Europe/Berlin	2013-02-19
 2940213	Celle	Celle	Celle,ZCN,Целле	52.62264	10.08047	P	PPL	DE		06				71010		45	Europe/Berlin	2011-04-28
 2940231	Castrop-Rauxel	Castrop-Rauxel	Castrop-Rauxel,Stadt Castrop-Rauxel,ZCM	51.55657	7.31155	P	PPL	DE		07				77924		102	Europe/Berlin	2012-08-04
 2940383	Calw	Calw	Calw,Kalv,karufu,Калв,カルフ	48.71419	8.74031	P	PPL	DE		01	082	08235	08235085	23740		339	Europe/Berlin	2013-02-16
@@ -5037,7 +5037,7 @@
 2940512	Butzbach	Butzbach		50.43395	8.67122	P	PPL	DE		05	064			25156		206	Europe/Berlin	2010-11-15
 2940938	Bürstadt	Burstadt	Burstadt,Bürstadt	49.64266	8.45936	P	PPL	DE		05	064			15348		90	Europe/Berlin	2013-01-21
 2940942	Burscheid	Burscheid	Burscheid,Burshajd,Буршайд	51.1	7.11667	P	PPL	DE		07				19215		192	Europe/Berlin	2012-01-18
-2941279	Burghausen	Burghausen	Burghausen,Burkhausen	48.16925	12.83139	P	PPL	DE		02				18263		411	Europe/Berlin	2012-09-06
+2941279	Burghausen	Burghausen	Burghausen,Burkhausen	48.16925	12.83139	P	PPL	DE		02	091	09171	09171112	18263		411	Europe/Berlin	2013-02-19
 2941405	Burgdorf	Burgdorf	Borchdoerp,Borchdörp,Bortaerpe,Bortoerp,Bortärpe,Bortörp	52.44628	10.0064	P	PPL	DE		06	00	03241	03241003	30218		55	Europe/Berlin	2011-02-16
 2941501	Burg bei Magdeburg	Burg bei Magdeburg	Burg,Stadt Burg bei Magdeburg	52.27152	11.85493	P	PPL	DE		14				24958		44	Europe/Berlin	2009-03-15
 2941570	Büren	Buren	Bueren,Buren,Burion,Büren,Būrion	51.55109	8.55956	P	PPL	DE		07	057			22263		254	Europe/Berlin	2012-11-23
@@ -5051,7 +5051,7 @@
 2942634	Buchen	Buchen	Buchen,Buchen in Odenwald	49.52416	9.32293	P	PPL	DE		01	082	08225	08225014	18890		344	Europe/Berlin	2013-02-16
 2943320	Brühl	Bruhl		50.82928	6.90499	P	PPL	DE		07				44137		68	Europe/Berlin	2010-09-08
 2943336	Brüggen	Bruggen		51.24053	6.18376	P	PPLA4	DE		07	051	05166	05166004	16105		44	Europe/Berlin	2011-04-25
-2943408	Bruckmühl	Bruckmuhl	Bruckmuhl,Bruckmühl	47.87859	11.91098	P	PPL	DE		02				15851		509	Europe/Berlin	2012-08-23
+2943408	Bruckmühl	Bruckmuhl	Bruckmuhl,Bruckmühl	47.87859	11.91098	P	PPL	DE		02	091	09187	09187122	15851		509	Europe/Berlin	2013-02-19
 2943560	Bruchsal	Bruchsal	Bruchsal,Bruchsalia,Brukhzal',Брухзаль	49.12426	8.59804	P	PPL	DE		01	082	08215	08215009	42785		135	Europe/Berlin	2013-02-16
 2943573	Bruchköbel	Bruchkobel	Bruchkobel,Bruchköbel	50.17853	8.92316	P	PPL	DE		05				20892		115	Europe/Berlin	2012-09-06
 2944027	Britz	Britz		52.44293	13.43388	P	PPLX	DE		16	00	11000	11000000	39488		44	Europe/Berlin	2012-06-09
@@ -5073,11 +5073,11 @@
 2946366	Boppard	Boppard	Boppard,Боппард	50.23085	7.58992	P	PPL	DE		08				16215		80	Europe/Berlin	2010-06-23
 2946447	Bonn	Bonn	Bon,Bona,Boni,Bonn,Bonna,Gorad Bon,Vonni,bn,bo en,bon,bona,boni,bwn,bxnn,Βόννη,Бон,Бонн,Горад Бон,באן,בון,بن,بون,बॉन,บอนน์,བྷོ་ཨིན།,ბონი,ボン,波恩,본	50.73438	7.09548	P	PPL	DE		07	053			313125		57	Europe/Berlin	2012-11-23
 2946478	Bönen	Bonen	Bonen,Bönen	51.6	7.76667	P	PPLA4	DE		07	059	05978	05978008	19393		73	Europe/Berlin	2011-07-31
-2947022	Bogenhausen	Bogenhausen	Bogenhausen	48.15221	11.61585	P	PPLX	DE		02				77542		520	Europe/Berlin	2012-09-06
+2947022	Bogenhausen	Bogenhausen	Bogenhausen	48.15221	11.61585	P	PPLX	DE		02	091	09162	09162000	77542		520	Europe/Berlin	2013-02-19
 2947416	Bochum	Bochum	Baukem,Bochum,Bohuma,Bokhem,Bokhum,Bōkhêm,QBO,bo hong,bofumu,bwkhwm,bwkwm,Бохум,בוכום,بوخوم,ボーフム,波鸿	51.48165	7.21648	P	PPL	DE		07	059			385729		98	Europe/Berlin	2012-11-23
 2947421	Bocholt	Bocholt	Bocholt,Bokelt,Bokholt,Bōkholt,ZCI	51.83879	6.61531	P	PPL	DE		07	051			73943		25	Europe/Berlin	2012-11-28
 2947444	Böblingen	Boblingen	B'oblingen,Boblingen,Boeblingen,Böblingen,Бьоблинген	48.68495	9.02955	P	PPL	DE		01	081	08115	08115003	46282		503	Europe/Berlin	2012-09-06
-2947449	Bobingen	Bobingen	Bobingen	48.27091	10.8339	P	PPL	DE		02				16682		519	Europe/Berlin	2012-09-06
+2947449	Bobingen	Bobingen	Bobingen	48.27091	10.8339	P	PPL	DE		02	097	09772	09772125	16682		519	Europe/Berlin	2013-02-19
 2947641	Blomberg	Blomberg		51.94331	9.09067	P	PPL	DE		07	057			17183		184	Europe/Berlin	2010-11-15
 2947739	Blieskastel	Blieskastel		49.23724	7.25617	P	PPL	DE		09	00			23212		242	Europe/Berlin	2010-11-22
 2948071	Blankenburg	Blankenburg		51.79025	10.95509	P	PPL	DE		14				15963		241	Europe/Berlin	2012-07-30
@@ -5101,12 +5101,12 @@
 2951648	Bedburg	Bedburg		50.99258	6.57128	P	PPL	DE		07	053			24937		62	Europe/Berlin	2010-11-15
 2951654	Beckum	Beckum	Beckum	51.75571	8.04075	P	PPL	DE		07	055			37814		115	Europe/Berlin	2013-01-25
 2951679	Beckingen	Beckingen		49.4	6.7	P	PPLA4	DE		09	00	10042	10042111	15983		216	Europe/Berlin	2011-04-25
-2951825	Bayreuth	Bayreuth	BYU,Bairoit,Bajrojt,Baruthum,Bayreith,Bayreuth,Gorad Bajrojt,bai luo yi te,bailoiteu,bairoito,bayrwyt,byyrwyt,Μπαϊρόιτ,Байройт,Бајројт,Горад Байройт,ביירוית,بايرويت,بایرویت,バイロイト,拜罗伊特,바이로이트	49.94806	11.57833	P	PPLA2	DE		02	094			75061		341	Europe/Berlin	2010-11-21
+2951825	Bayreuth	Bayreuth	BYU,Bairoit,Bajrojt,Baruthum,Bayreith,Bayreuth,Gorad Bajrojt,bai luo yi te,bailoiteu,bairoito,bayrwyt,byyrwyt,Μπαϊρόιτ,Байройт,Бајројт,Горад Байройт,ביירוית,بايرويت,بایرویت,バイロイト,拜罗伊特,바이로이트	49.94806	11.57833	P	PPLA2	DE		02	094	09462	09462000	75061		341	Europe/Berlin	2013-02-19
 2951881	Bautzen	Bautzen	Baucen,Bautzen,Budysin,Budyšin,Budyšín,Budziszyn,bautsu~en,Бауцен,バウツェン	51.18035	14.43494	P	PPL	DE		13	146			41972		205	Europe/Berlin	2012-11-26
 2951923	Baunatal	Baunatal	Baunatal	51.25182	9.40747	P	PPL	DE		05	066			28173		216	Europe/Berlin	2012-11-27
 2951935	Baumschulenweg	Baumschulenweg	Baumschulenweg,Berlin-Baumschulenweg	52.46582	13.48524	P	PPLX	DE		16	00	11000	11000000	17186		35	Europe/Berlin	2012-08-04
 2952252	Bassum	Bassum	Bassum	52.85059	8.72791	P	PPL	DE		06				16191		45	Europe/Berlin	2012-08-04
-2952984	Bamberg	Bamberg	Bambarg,Bamberg,Bamberga,Bambergas,Bamberk,Bampernk,Gorad Bamberg,ZCD,ba mu bei ge,bambeleukeu,bambergi,bambrg,ban bao,banberuku,bmbrg,Μπάμπεργκ,Бамберг,Горад Бамберг,במברג,بامبرگ,บัมแบร์ก,ბამბერგი,バンベルク,巴姆贝格,班堡,밤베르크	49.89873	10.90067	P	PPL	DE		02	094			70047		244	Europe/Berlin	2012-11-23
+2952984	Bamberg	Bamberg	Bambarg,Bamberg,Bamberga,Bambergas,Bamberk,Bampernk,Gorad Bamberg,ZCD,ba mu bei ge,bambeleukeu,bambergi,bambrg,ban bao,banberuku,bmbrg,Μπάμπεργκ,Бамберг,Горад Бамберг,במברג,بامبرگ,บัมแบร์ก,ბამბერგი,バンベルク,巴姆贝格,班堡,밤베르크	49.89873	10.90067	P	PPL	DE		02	094	09461	09461000	70047		244	Europe/Berlin	2013-02-19
 2953089	Balingen	Balingen		48.27525	8.85464	P	PPL	DE		01	084	08417	08417002	34414		512	Europe/Berlin	2013-02-16
 2953197	Baiersbronn	Baiersbronn	Baiersbronn	48.5	8.38333	P	PPLA4	DE		01	082	08237	08237004	16248		748	Europe/Berlin	2011-07-31
 2953269	Bahnhof Löhne	Bahnhof Lohne	Bahnhof Lohne,Bahnhof Löhne	52.20737	8.7149	P	PPL	DE		07				41677		55	Europe/Berlin	2012-08-04
@@ -5115,19 +5115,19 @@
 2953317	Bad Wildungen	Bad Wildungen		51.11963	9.12475	P	PPL	DE		05	066			18037		276	Europe/Berlin	2010-11-15
 2953320	Bad Waldsee	Bad Waldsee	Bad Waldsee	47.92027	9.7549	P	PPL	DE		01	084	08436	08436009	19840		594	Europe/Berlin	2013-02-15
 2953321	Bad Vilbel	Bad Vilbel		50.17866	8.73756	P	PPL	DE		05	064			30736		117	Europe/Berlin	2010-11-15
-2953324	Bad Tölz	Bad Tolz	Bad Toelz,Tolz	47.76111	11.5589	P	PPL	DE		02	091			17434		662	Europe/Berlin	2010-11-15
+2953324	Bad Tölz	Bad Tolz	Bad Toelz,Tolz	47.76111	11.5589	P	PPL	DE		02	091	09173	09173112	17434		662	Europe/Berlin	2013-02-19
 2953339	Bad Soden am Taunus	Bad Soden am Taunus	Bad Soden,Bad Soden in Taunus	50.1408	8.50449	P	PPL	DE		05	064			21357		139	Europe/Berlin	2012-12-19
 2953341	Bad Segeberg	Bad Segeberg	Bad Segeberg	53.94313	10.30215	P	PPL	DE		10				16052		40	Europe/Berlin	2012-07-04
 2953347	Bad Schwartau	Bad Schwartau	Bad Schwartau	53.91887	10.69691	P	PPL	DE		10				19722		11	Europe/Berlin	2011-02-16
 2953357	Bad Salzungen	Bad Salzungen	Bad Salzungen	50.81342	10.2361	P	PPL	DE		15				16410		250	Europe/Berlin	2012-09-06
 2953358	Bad Salzuflen	Bad Salzuflen		52.0862	8.74434	P	PPL	DE		07	057			54899		82	Europe/Berlin	2010-11-15
 2953363	Bad Säckingen	Bad Sackingen	Sackingen,Säckingen	47.55371	7.94612	P	PPL	DE		01	083	08337	08337096	16549		290	Europe/Berlin	2013-02-15
-2953371	Bad Reichenhall	Bad Reichenhall	Bad Reichenhall,Datreiche Hall,Reichenhall	47.72947	12.87819	P	PPL	DE		02	091			16910		469	Europe/Berlin	2012-11-22
+2953371	Bad Reichenhall	Bad Reichenhall	Bad Reichenhall,Datreiche Hall,Reichenhall	47.72947	12.87819	P	PPL	DE		02	091	09172	09172114	16910		469	Europe/Berlin	2013-02-19
 2953374	Bad Rappenau	Bad Rappenau	Bad Rappenau	49.23848	9.1018	P	PPL	DE		01	081	08125	08125006	20581		243	Europe/Berlin	2013-02-15
 2953379	Bad Pyrmont	Bad Pyrmont	Bad Pyrmont	51.9859	9.25246	P	PPL	DE		06				21629		122	Europe/Berlin	2012-08-04
 2953385	Bad Oldesloe	Bad Oldesloe	Bad Oldesloe	53.81167	10.37417	P	PPL	DE		10				24322		10	Europe/Berlin	2011-08-21
 2953386	Bad Oeynhausen	Bad Oeynhausen	Bad Oeyhausen,Bad Oeynhausen	52.20699	8.80365	P	PPL	DE		07				49513		62	Europe/Berlin	2012-08-04
-2953389	Bad Neustadt an der Saale	Bad Neustadt an der Saale	Bad Neustadt,Bad Neustadt an der Saale,Neustadt,Neustadt an der Saale	50.32174	10.20673	P	PPL	DE		02	096			16064		236	Europe/Berlin	2012-11-23
+2953389	Bad Neustadt an der Saale	Bad Neustadt an der Saale	Bad Neustadt,Bad Neustadt an der Saale,Neustadt,Neustadt an der Saale	50.32174	10.20673	P	PPL	DE		02	096	09673	09673114	16064		236	Europe/Berlin	2013-02-19
 2953391	Bad Neuenahr-Ahrweiler	Bad Neuenahr-Ahrweiler	Bad Neuenahr-Ahrweiler,Stadt Bad Neuenahr-Ahrweiler	50.54322	7.1113	P	PPL	DE		08				27823		97	Europe/Berlin	2012-09-06
 2953395	Bad Nauheim	Bad Nauheim	Stadt Bad Nauheim	50.36463	8.73859	P	PPL	DE		05	064			30291		157	Europe/Berlin	2010-11-15
 2953398	Bad Münstereifel	Bad Munstereifel	Bad Munstereifel,Bad Münstereifel,Munstereifel,Münstereifel	50.55666	6.76424	P	PPL	DE		07	053			19051		383	Europe/Berlin	2012-11-26
@@ -5136,7 +5136,7 @@
 2953405	Bad Lippspringe	Bad Lippspringe	Bad Lippspringe,Lippspringe	51.78333	8.81683	P	PPL	DE		07				15175		144	Europe/Berlin	2012-08-04
 2953413	Bad Langensalza	Bad Langensalza	Bad Langensalza,Langensalza	51.10771	10.646	P	PPL	DE		15				18183		190	Europe/Berlin	2012-09-06
 2953416	Bad Kreuznach	Bad Kreuznach	Bad Kreuznach,Kreuznach	49.8414	7.86713	P	PPL	DE		08				43213		122	Europe/Berlin	2012-09-06
-2953424	Bad Kissingen	Bad Kissingen	Bad Kissingen	50.20228	10.07784	P	PPL	DE		02	096			21328		232	Europe/Berlin	2012-11-23
+2953424	Bad Kissingen	Bad Kissingen	Bad Kissingen	50.20228	10.07784	P	PPL	DE		02	096	09672	09672114	21328		232	Europe/Berlin	2013-02-19
 2953435	Bad Honnef	Bad Honnef	Bad Honnef,Bad Honnef am Rhein,Honnef	50.64336	7.2278	P	PPL	DE		07	053	05382	05382008	25348		73	Europe/Berlin	2011-04-25
 2953436	Bad Homburg vor der Höhe	Bad Homburg vor der Hohe	Bad Homburg,Bad Homburg v.d. Hoehe,Bad Homburg v.d. Höhe,Bad Homburg vor der Hoehe,Bad Homburg vor der Höhe,Homburg vor der Hohe,Homburg vor der Höhe,Mpant Chommpournk,Μπαντ Χόμμπουργκ	50.22667	8.61963	P	PPL	DE		05	064			51859		182	Europe/Berlin	2010-11-15
 2953439	Bad Hersfeld	Bad Hersfeld	Bad Hersfeld,Bad-Khersfel'd,Hersfeld,Бад-Херсфельд	50.87197	9.70891	P	PPL	DE		05	066			30725		204	Europe/Berlin	2012-11-27
@@ -5147,38 +5147,38 @@
 2953525	Bad Driburg	Bad Driburg	Bad Driburg	51.73297	9.01969	P	PPL	DE		07	057			19553		200	Europe/Berlin	2012-11-23
 2953545	Bad Berleburg	Bad Berleburg	Bad Berleburg,Berleberg,Berleburg	51.05224	8.39228	P	PPL	DE		07	059			20757		518	Europe/Berlin	2012-11-26
 2953552	Bad Bentheim	Bad Bentheim	Bad Bentheim	52.31814	7.16343	P	PPL	DE		06				15508		45	Europe/Berlin	2012-08-04
-2953558	Bad Aibling	Bad Aibling	Aibling,Albling	47.8638	12.01055	P	PPL	DE		02	091			17672		482	Europe/Berlin	2010-11-15
+2953558	Bad Aibling	Bad Aibling	Aibling,Albling	47.8638	12.01055	P	PPL	DE		02	091	09187	09187117	17672		482	Europe/Berlin	2013-02-19
 2953568	Backnang	Backnang	Backnang	48.94744	9.43718	P	PPL	DE		01	081	08119	08119008	35778		273	Europe/Berlin	2013-02-16
 2953770	Babenhausen	Babenhausen	Babenhausen	49.96519	8.95129	P	PPL	DE		05	064			16575		128	Europe/Berlin	2012-11-26
 2954006	Aurich	Aurich	Auerk,Aurich	53.46919	7.48232	P	PPL	DE		06				40319		5	Europe/Berlin	2012-07-04
-2954172	Augsburg	Augsburg	Aounksmpournk,Augsberg,Augsbourg,Augsburg,Augsburgas,Augsburgo,Augusta,Augusta Vindelicorum,ao ge si bao,augusuburuku,aukusuburuku,awghsbwrgh,Άουγκσμπουργκ,Аугсбург,آوغسبورغ,アウクスブルク,アウグスブルク,奥格斯堡	48.36667	10.88333	P	PPLA2	DE		02	097			259196		485	Europe/Berlin	2010-11-15
+2954172	Augsburg	Augsburg	Aounksmpournk,Augsberg,Augsbourg,Augsburg,Augsburgas,Augsburgo,Augusta,Augusta Vindelicorum,ao ge si bao,augusuburuku,aukusuburuku,awghsbwrgh,Άουγκσμπουργκ,Аугсбург,آوغسبورغ,アウクスブルク,アウグスブルク,奥格斯堡	48.36667	10.88333	P	PPLA2	DE		02	097	09761	09761000	259196		485	Europe/Berlin	2013-02-19
 2954602	Auerbach	Auerbach	Auerbach	50.51155	12.40083	P	PPL	DE		13				21358		505	Europe/Berlin	2012-09-06
 2954695	Aue	Aue	Aue,Aue-Auerhammer,Aueh,Stadt Aue,Ауэ	50.59034	12.70657	P	PPL	DE		13				18554		369	Europe/Berlin	2012-09-06
 2954932	Attendorn	Attendorn	Attandara	51.12645	7.90333	P	PPL	DE		07	059			24773		260	Europe/Berlin	2011-11-06
 2955168	Aschersleben	Aschersleben	Aschersleben,Ashersleben,Ашерслебен	51.75742	11.46084	P	PPL	DE		14				24892		119	Europe/Berlin	2012-07-04
 2955224	Ascheberg	Ascheberg	Ascheberg	51.78333	7.61667	P	PPLA4	DE		07	055	05558	05558004	15184		68	Europe/Berlin	2011-04-25
-2955272	Aschaffenburg	Aschaffenburg	Asafenburga,Aschaffenbourg,Aschaffenburg,Ashaffenburg,Auscheffenburg,Ašafenburga,ZCB,ashaffenburuku,Ашаффенбург,アシャッフェンブルク	49.97704	9.15214	P	PPL	DE		02	096	09661		68551		139	Europe/Berlin	2012-09-06
+2955272	Aschaffenburg	Aschaffenburg	Asafenburga,Aschaffenbourg,Aschaffenburg,Ashaffenburg,Auscheffenburg,Ašafenburga,ZCB,ashaffenburuku,Ашаффенбург,アシャッフェンブルク	49.97704	9.15214	P	PPL	DE		02	096	09661	09661000	68551		139	Europe/Berlin	2013-02-19
 2955421	Bad Arolsen	Bad Arolsen	Bad Arolsen	51.37982	9.01445	P	PPL	DE		05	066			16854		292	Europe/Berlin	2010-11-15
 2955439	Arnstadt	Arnstadt	Arnshtadte,Arnstadt,Арнштадте	50.84048	10.95198	P	PPL	DE		15				25678		282	Europe/Berlin	2012-07-04
 2955471	Arnsberg	Arnsberg	Arnsberg,Arnsberga,Arnsberge,Арнсберге	51.38333	8.08333	P	PPLA2	DE		07	059			76612		295	Europe/Berlin	2010-11-21
 2955770	Apolda	Apolda	Apol'de,Apolda,Stadt Apolda,Апольде	51.02624	11.51638	P	PPL	DE		15				24793		172	Europe/Berlin	2012-09-06
-2955936	Ansbach	Ansbach	Ansbach,Ansbakh,QOB,Ансбах	49.3	10.58333	P	PPLA2	DE		02	095			31839		405	Europe/Berlin	2010-11-15
+2955936	Ansbach	Ansbach	Ansbach,Ansbakh,QOB,Ансбах	49.3	10.58333	P	PPLA2	DE		02	095	09561	09561000	31839		405	Europe/Berlin	2013-02-19
 2956005	Annaberg-Buchholz	Annaberg-Buchholz	Annaberg,Annaberg-Bukhkhol'c,Buchholz,Stadt Annaberg-Buchholz,Аннаберг-Буххольц	50.57953	13.00627	P	PPL	DE		13	145			23092		627	Europe/Berlin	2012-11-22
 2956093	Angermünde	Angermunde		53.01499	13.99924	P	PPL	DE		11				15453		47	Europe/Berlin	2009-01-28
 2956206	Andernach	Andernach	Andernach,Andernakh,Stadt Andernach,Андернах	50.43109	7.40425	P	PPL	DE		08				29599		71	Europe/Berlin	2012-09-06
-2956656	Amberg	Amberg	Amberg,Gebenbach,amberg,Амберг	49.44287	11.86267	P	PPL	DE		02	093			44737		390	Europe/Berlin	2012-11-26
+2956656	Amberg	Amberg	Amberg,Gebenbach,amberg,Амберг	49.44287	11.86267	P	PPL	DE		02	093	09361	09361000	44737		390	Europe/Berlin	2013-02-19
 2956710	Alzey	Alzey	Alzey,XZY	49.74657	8.11513	P	PPL	DE		08				18241		177	Europe/Berlin	2012-09-06
-2956715	Alzenau in Unterfranken	Alzenau in Unterfranken	Alzenau,Alzenau in Unterfranken	50.0888	9.06455	P	PPL	DE		02	096			18932		135	Europe/Berlin	2012-11-27
+2956715	Alzenau in Unterfranken	Alzenau in Unterfranken	Alzenau,Alzenau in Unterfranken	50.0888	9.06455	P	PPL	DE		02	096	09671	09671111	18932		135	Europe/Berlin	2013-02-19
 2957185	Altglienicke	Altglienicke	Berlin-Altglienicke	52.41116	13.5355	P	PPLX	DE	DE	16	00	11000	11000000	26426		45	Europe/Berlin	2012-06-09
 2957773	Altenburg	Altenburg	AOC,Al'tenburg,Altenbourg,Altenburg,Альтенбург	50.98763	12.43684	P	PPL	DE		15				38568		214	Europe/Berlin	2012-09-06
 2957886	Altena	Altena	Altena	51.29472	7.67336	P	PPL	DE		07				20862		231	Europe/Berlin	2012-08-04
-2958024	Altdorf	Altdorf		49.3856	11.3573	P	PPL	DE		02	095			15312		429	Europe/Berlin	2012-11-26
+2958024	Altdorf	Altdorf		49.3856	11.3573	P	PPL	DE		02	095	09574	09574112	15312		429	Europe/Berlin	2013-02-19
 2958128	Alsfeld	Alsfeld	Alsfeld	50.75185	9.27082	P	PPL	DE		05	065			17771		247	Europe/Berlin	2012-11-22
 2958141	Alsdorf	Alsdorf	Alsdorf	50.87672	6.16399	P	PPL	DE		07	053			46340		167	Europe/Berlin	2012-12-13
 2958516	Alfter	Alfter	Alfter	50.73333	7.01667	P	PPLA4	DE		07	053	05382	05382004	21814		85	Europe/Berlin	2011-04-25
 2958533	Alfeld	Alfeld		51.98382	9.81989	P	PPL	DE		06				21270		91	Europe/Berlin	2010-08-18
 2958595	Albstadt	Albstadt	Albstadt	48.21644	9.02596	P	PPL	DE		01	084	08417	08417079	46664		733	Europe/Berlin	2013-02-16
-2958975	Aichach	Aichach	Aicha	48.45755	11.13413	P	PPL	DE		02	097			21042		453	Europe/Berlin	2010-11-15
+2958975	Aichach	Aichach	Aicha	48.45755	11.13413	P	PPL	DE		02	097	09771	09771113	21042		453	Europe/Berlin	2013-02-19
 2959083	Ahrensburg	Ahrensburg	Ahrensburg,Stadt Ahrensburg	53.67515	10.22593	P	PPL	DE		10				30103		43	Europe/Berlin	2012-07-04
 2959223	Ahlen	Ahlen	Ahlen,Alen,Alena,Alna,Alnon,Aulen,aren,Ālena,Ālna,Ālnon,Ален,アーレン	51.76338	7.8887	P	PPL	DE		07				55280		82	Europe/Berlin	2011-11-06
 2959279	Ahaus	Ahaus	Ahaus	52.07936	7.01344	P	PPL	DE		07	055			38165		51	Europe/Berlin	2012-11-16
@@ -5616,7 +5616,7 @@
 3660478	Atuntaqui	Atuntaqui		0.33151	-78.21705	P	PPL	EC		11				17456		2391	America/Guayaquil	2013-01-11
 3660689	Ambato	Ambato	ATF,Ambato,San Juan de Ambato,Амбато	-1.24908	-78.61675	P	PPL	EC		19				154369		2597	America/Guayaquil	2010-01-29
 587577	Viljandi	Viljandi	Felin,Fellin,VIL'JANDI,Vil'jandi,Vil'yandi,Vilande,Viljandi,Viljandis,Vil’yandi,Vylande,Vylandė,Vīlande,Wiljandi,ВИЛЬЯНДИ,Вильянди,ויליאנדי	58.36389	25.59	P	PPLA	EE		20	0897			20309		82	Europe/Tallinn	2012-01-17
-588335	Tartu	Tartu	Derpt,Dorpat,TARTU,TAY,Tarbatum,Tartto,Tartu,Terbata,Tērbata,Yur'yev,Yurev,taleutu,taruto~u,trtw,ТАРТУ,Тарту,טרטו,ტარტუ,タルトゥ,타르투	58.38062	26.72509	P	PPLA	EE		18	0795			101092		39	Europe/Tallinn	2012-01-18
+588335	Tartu	Tartu	Derpt,Dorpat,TAY,Tarbatum,Tartto,Tartu,Terbata,Tērbata,Yur'yev,Yurev,taleutu,taruto~u,trtw,Тарту,טרטו,ტარტუ,タルトゥ,타르투	58.38062	26.72509	P	PPLA	EE		18	0795			101092		39	Europe/Tallinn	2013-02-22
 588409	Tallinn	Tallinn	Castrum Danorum,Kallinn,Kolyvan,QUF,Raeaeveli,Reval,Revel',Rääveli,Talin,Talin - Tallinn,Talinas,Talino,Tallin,Tallina,Tallinn,Tallinna,Talín - Tallinn,Tàllin,ta lin,tallin,talyn,tarin,thallin n,Ταλίν,Ταλιν,Ταλλίν,Талин,Таллин,Таллін,Талін,Տալլին,טאלין,تالين,ทาลลินน์,ტალინი,ታሊን,タリン,塔林,탈린	59.43696	24.75353	P	PPLC	EE		01	0784			394024		12	Europe/Tallinn	2012-04-23
 588686	Sillamäe	Sillamae	SILLAMJAEH,Silameje,Silamejė,Silamiaje,Silamiajė,Sillamae,Sillamaee,Sillamagi,Sillame,Sillamyae,Sillamäe,Sillamē,Suvilad,sillamjae,sillamjaeh,СИЛЛАМЯЭ,Силламяе,Силламяэ	59.39972	27.75472	P	PPL	EE		03	0735			16672		19	Europe/Tallinn	2012-01-17
 589165	Rakvere	Rakvere	RAKVERE,Rakvere,Rakvere_vald,Rakwere,Vezenberg,Wesenberg,РАКВЕРЕ	59.34639	26.35583	P	PPLA	EE		08	0663			16736		84	Europe/Tallinn	2012-01-17
@@ -15311,7 +15311,7 @@
 1685117	Tabaco	Tabaco	Tobaco	13.35861	123.73361	P	PPLA3	PH		05	05	1685118		57860		4	Asia/Manila	2011-07-31
 1685146	Taal	Taal	Taal,Таал	13.87992	120.92311	P	PPLA3	PH		40	09	1685148		39745		42	Asia/Manila	2011-07-31
 1685218	Surigao	Surigao	Ciudad ti Surigao,SUG,Surigao,Surigao City	9.78389	125.48889	P	PPL	PH		00	F9			87832		17	Asia/Manila	2010-08-14
-1685230	Surallah	Surallah	Surallah	6.36667	124.73333	P	PPL	PH		12	70			31089		194	Asia/Manila	2012-01-17
+1685230	Surallah	Surallah	AAV,Surallah	6.37527	124.74521	P	PPL	PH		12	70			31089		189	Asia/Manila	2013-02-19
 1685577	Subic	Subic	Subic	14.87999	120.23433	P	PPLA3	PH		03	64	1685580		67664		10	Asia/Manila	2011-07-31
 1685622	Suay	Suay	Suay	10.0533	122.8423	P	PPL	PH		06	H3			19672		37	Asia/Manila	2012-06-05
 1685755	Sorsogon	Sorsogon		12.97389	123.99333	P	PPLA3	PH		05	58	1685759		82730		13	Asia/Manila	2011-07-31
@@ -15495,7 +15495,7 @@
 1704002	Magarao	Magarao	Magarao	13.6604	123.1869	P	PPLA3	PH		05	16	1704003		15205		5	Asia/Manila	2011-07-31
 1704021	Maganoy	Maganoy	Maganai,Maganoy,Maganui,Maganuy,Magonay	6.86472	124.44167	P	PPLA3	PH		14	56	1704022		17394		35	Asia/Manila	2011-07-31
 1704067	Magalang	Magalang	Magalan,Magalang	15.2151	120.6596	P	PPLA3	PH		03	50	1704068		68988		46	Asia/Manila	2011-07-31
-1704703	Mabalacat	Mabalacat	Mabalacat	15.2216	120.5736	P	PPLA3	PH		03	50	1704704		188050		109	Asia/Manila	2011-07-31
+1704703	Mabalacat	Mabalacat	CRK,Mabalacat	15.2216	120.5736	P	PPLA3	PH		03	50	1704704		188050		109	Asia/Manila	2013-02-19
 1704758	Maasin	Maasin	City of Maasin,Maasin,Massin City	10.13361	124.84472	P	PPLA3	PH	PH	08	59	1704764		18313	3	9	Asia/Manila	2012-06-10
 1704781	Maao	Maao	Ma-ao Barrio,Maao	10.4896	122.9907	P	PPL	PH		06	H3			25837		58	Asia/Manila	2012-06-05
 1704968	Lupon	Lupon	Lupon,Sumlog	6.89814	126.00961	P	PPLA3	PH		11	26			27247		23	Asia/Manila	2010-08-15
@@ -15689,7 +15689,7 @@
 1730413	Apalit	Apalit	Apalit	14.95333	120.77	P	PPLA3	PH		03	50	1730414		77418		14	Asia/Manila	2011-07-31
 1730501	Antipolo	Antipolo		14.58639	121.17528	P	PPL	PH		40	53			549543		194	Asia/Manila	2010-08-14
 1730713	Angono	Angono	Angono	14.5266	121.1536	P	PPLA3	PH		40	53	1730714		87199		11	Asia/Manila	2011-07-31
-1730737	Angeles City	Angeles City	Angeles	15.15	120.58333	P	PPL	PH		03	50			299391		102	Asia/Manila	2010-08-14
+1730737	Angeles City	Angeles City	Angeles,Angeles City,CRK	15.15	120.58333	P	PPL	PH		03	50			299391		102	Asia/Manila	2013-02-19
 1730749	Angat	Angat	Angat,Santa Cruz	14.9285	121.03	P	PPLA3	PH		03	13	1730750		41235		42	Asia/Manila	2011-07-31
 1731212	Amadeo	Amadeo		14.17056	120.92361	P	PPLA3	PH		40	20	1731214		16618		437	Asia/Manila	2011-07-31
 1731486	Alicia	Alicia	Alicia	16.77936	121.69734	P	PPLA3	PH		02	31	1731489		24732	55	75	Asia/Manila	2011-07-31
@@ -17830,6 +17830,7 @@
 2676176	Södertälje	Soedertaelje	S'odertale,S'odertele,S'odertelie,Soedertaelje,Södertälje,Telga australis,Сьодертале,Сьодертеле,Сьодертелие	59.19554	17.62525	P	PPLA2	SE		26	0181			60279		29	Europe/Stockholm	2011-12-20
 2677234	Skövde	Skoevde	Schednia,Shevde,Skoevde,Skofde,Skovd,Skovde,Sköfde,Skövd,Skövde,Skøvde,Шевде	58.39118	13.84506	P	PPLA2	SE		28	1496			33119		152	Europe/Stockholm	2011-12-20
 2680075	Sandviken	Sandviken	Sandviken,Сандвикен	60.61667	16.76667	P	PPLA2	SE		03	2181			22111		66	Europe/Stockholm	2011-12-20
+2683034	Råsunda	Rasunda		59.36667	17.98333	P	PPLX	SE		26	0184			16877		38	Europe/Stockholm	2013-02-22
 2684395	Partille	Partille		57.7395	12.10642	P	PPLA2	SE		28	1402			28648		11	Europe/Stockholm	2011-12-20
 2685750	Östersund	Ostersund	Ehstersund,Estersund,OEstersund,Ostersund,Östersund,Østersund,Естерсунд,Эстерсунд	63.1792	14.63566	P	PPLA	SE		07	2380			42940		328	Europe/Stockholm	2010-03-28
 2685828	Östermalm	OEstermalm	OEstermalm,Ostermalm,Stockholm kerueletei,Stockholm kerületei,Östermalm,Østermalm	59.33879	18.08487	P	PPLX	SE		26	0180			36418		30	Europe/Stockholm	2010-08-28
@@ -19369,6 +19370,7 @@
 6559559	Komsomolsk	Komsomolsk	Komsomol's'k,Komsomol'sk,Комсомольск,Комсомольськ	49.00973	33.64546	P	PPL	UA		18				51740		69	Europe/Kiev	2011-12-19
 6930327	Славутич	Slavutich	Slavutich,Славутич	51.51964	30.73434	P	PPL	UA		13				25000		136	Europe/Kiev	2009-02-28
 7525990	Yuzhnoukrains'k	Yuzhnoukrains'k	Juzhnoukrains'k,Juzhnoukrainsk,Южноукраинск,Южноукраїнськ	47.81777	31.18263	P	PPL	UA		16				39430		87	Europe/Kiev	2010-10-21
+8468760	Novoyavorivs'k	Novoyavorivs'k	Novojavorivs'k,Novojavorovsk,Новояворовск,Новояворівськ	49.93023	23.57357	P	PPL	UA		15				28807		284	Europe/Kiev	2013-02-19
 225835	Yumbe	Yumbe	Yumbe	3.46506	31.24689	P	PPLA2	UG		N	97			24300		982	Africa/Kampala	2012-05-06
 225858	Wobulenzi	Wobulenzi	Wobolenzi,Wobulenzi,Wobulenzil	0.72833	32.51222	P	PPL	UG		C	70			24415		1155	Africa/Kampala	2012-04-28
 225964	Wakiso	Wakiso	Wakiso	0.40444	32.45944	P	PPLA2	UG		C	96			20530		1204	Africa/Kampala	2012-05-06
