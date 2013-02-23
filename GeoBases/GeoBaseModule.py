@@ -500,10 +500,8 @@ class GeoBase(object):
 
         # Some headers are not accepted
         for h in self._headers:
-            if str(h).endswith('@raw') or \
-               str(h).endswith('@join') or \
-               str(h).startswith('__'):
-                raise ValueError('Header %s not accepted, should not end with "@raw" or "@join" or start with "__".' % h)
+            if str(h).endswith('@raw') or str(h).startswith('__'):
+                raise ValueError('Header "%s" cannot end with "@raw" or start with "__".' % h)
 
 
         # Join handling
@@ -785,7 +783,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowData(row, headers, delimiter, subdelimiters, join_info, join_bases, key, lno):
+    def _buildRowData(row, headers, delimiter, subdelimiters, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
@@ -812,22 +810,10 @@ class GeoBase(object):
                 data['__gar__'].append(v)
             else:
                 if h not in subdelimiters:
-                    if h not in join_info:
-                        data[h] = v
-                    else:
-                        data['%s@join' % h] = v
-                        data[h] = tuple(k for _, k in
-                                        join_bases[join_info[h][0]].findWith([(join_info[h][1], v)]))
+                    data[h] = v
                 else:
                     data['%s@raw' % h] = v
-
-                    if h not in join_info:
-                        data[h] = recursive_split(v, subdelimiters[h])
-                    else:
-                        data['%s@join' % h] = v
-                        data[h] = tuple(tuple(k for _, k in
-                                              join_bases[join_info[h][0]].findWith([(join_info[h][1], t)]))
-                                        for t in recursive_split(v, subdelimiters[h]))
+                    data[h] = recursive_split(v, subdelimiters[h])
 
         # Flattening the __gar__ list
         data['__gar__'] = delimiter.join(data['__gar__'])
@@ -908,8 +894,6 @@ class GeoBase(object):
         key_fields    = self._key_fields
         delimiter     = self._delimiter
         subdelimiters = self._subdelimiters
-        join_info     = self._join_info
-        join_bases    = self._join_bases
         quotechar     = self._quotechar
         limit         = self._limit
         skip          = self._skip
@@ -957,7 +941,7 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, join_info, join_bases, key, lno)
+            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self._things:
@@ -993,10 +977,6 @@ class GeoBase(object):
         for h in headers:
             if h in subdelimiters:
                 self.fields.append('%s@raw' % h)
-
-            if h in join_info:
-                self.fields.append('%s@join' % h)
-
             if h is not None:
                 self.fields.append(h)
 
@@ -2861,7 +2841,6 @@ class GeoBase(object):
             # Keeping only important fields
             if not str(field).startswith('__') and \
                not str(field).endswith('@raw') and \
-               not str(field).endswith('@join') and \
                field not in elem:
 
                 elem[field] = str(self.get(key, field))
