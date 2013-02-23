@@ -178,7 +178,9 @@ ori_por:
         - Por/Ori/ori_por_public.csv
         - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
     key_fields    : iata_code
-    indices       : [iata_code, [iata_code, country_code]]
+    indices       :
+        - iata_code
+        - [iata_code, country_code]
     limit         : # put a number to load only the first lines
     skip          : 1 # put a number to skip the first lines
     discard_dups  : false # This is the default behavior anyway
