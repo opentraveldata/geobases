@@ -204,6 +204,24 @@ ASSETS = {
 }
 
 
+# Defaults
+DEFAULTS = {
+    'source'        : None,  # not for configuration file, use path/local
+    'paths'         : None,
+    'headers'       : [],
+    'key_fields'    : None,
+    'indices'       : [],
+    'delimiter'     : '^',
+    'subdelimiters' : {},
+    'join_info'     : {},
+    'quotechar'     : '"',
+    'limit'         : None,
+    'skip'          : None,
+    'discard_dups'  : False,
+    'verbose'       : True,
+    'local'         : True,  # only for configuration file
+}
+
 
 # We only export the main class
 __all__ = ['GeoBase', 'SOURCES', 'SOURCES_CONF_PATH', 'SOURCES_DIR']
@@ -301,22 +319,9 @@ class GeoBase(object):
         self.loaded = None # loaded stuff information, depends on sources and paths
 
         # Defaults
-        props = {
-            'source'        : None,  # not for configuration file, use path/local
-            'paths'         : None,
-            'headers'       : [],
-            'key_fields'    : None,
-            'indices'       : [],
-            'delimiter'     : '^',
-            'subdelimiters' : {},
-            'join_info'     : {},
-            'quotechar'     : '"',
-            'limit'         : None,
-            'skip'          : None,
-            'discard_dups'  : False,
-            'verbose'       : True,
-            'local'         : True,  # only for configuration file
-        }
+        props = {}
+        for k, v in DEFAULTS.iteritems():
+            props[k] = v
 
         # The default for "local" is True if paths are read
         # from the configuration file, False if paths are read
