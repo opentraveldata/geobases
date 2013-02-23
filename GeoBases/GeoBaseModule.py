@@ -539,6 +539,10 @@ class GeoBase(object):
                                                       join_info={},
                                                       verbose=False)
 
+            if self._verbose:
+                print 'Loaded external base "%s" as join data for "%s" on "%s"' % \
+                        (join_data, join_fields, fields)
+
             join_b = self._join_bases[join_data]
 
             for f in join_fields:
@@ -548,10 +552,6 @@ class GeoBase(object):
 
             # We index the field to optimize further findWith
             join_b.addIndex(join_fields, verbose=True)
-
-            if self._verbose:
-                print 'Load external base "%s" as join data for "%s" on "%s"' % \
-                        (join_data, join_fields, fields)
 
 
 
