@@ -1269,7 +1269,10 @@ class GeoBase(object):
 
             value = self._things[key][field]
 
-            ext_get = lambda k : join_b.get(k, ext_field)
+            if ext_field == '__loc__':
+                ext_get = join_b.getLocation
+            else:
+                ext_get = lambda k : join_b.get(k, ext_field)
 
             if field not in self._subdelimiters:
                 res = tuple(ext_get(k) for _, k in
