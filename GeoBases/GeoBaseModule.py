@@ -532,15 +532,15 @@ class GeoBase(object):
                                                       join_info={},
                                                       verbose=False)
 
-            ext_g = self._join_bases[join_data]
+            join_b = self._join_bases[join_data]
 
-            if join_field not in ext_g.fields:
+            if join_field not in join_b.fields:
                 raise ValueError('Wrong join field "%s". Not in %s' % \
-                                 (join_field, ext_g.fields))
+                                 (join_field, join_b.fields))
 
             # We index the field to optimize further findWith
-            if not ext_g.hasIndexOn(join_field):
-                ext_g.addIndex(join_field, verbose=False)
+            if not join_b.hasIndexOn(join_field):
+                join_b.addIndex(join_field, verbose=False)
 
             if self._verbose:
                 print 'Load external base "%s" as join data for "%s" on "%s"' % \
