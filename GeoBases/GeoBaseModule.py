@@ -548,9 +548,13 @@ class GeoBase(object):
                                                      join={},
                                                      verbose=False)
 
-            if self._verbose:
-                print 'Loaded external base "%s" as join data for "%s" on "%s"' % \
-                        (join_base, join_fields, fields)
+                if self._verbose:
+                    print 'Loaded external base "%s" [with %s] for join on %s' % \
+                            (join_base, join_fields, fields)
+            else:
+                if self._verbose:
+                    print 'Skipped loading external base "%s" [with %s] for join on %s' % \
+                            (join_base, join_fields, fields)
 
             ext_b = self._ext_bases[join_base]
 
