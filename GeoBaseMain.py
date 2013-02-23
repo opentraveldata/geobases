@@ -1632,9 +1632,8 @@ def main():
             last = None
 
         elif interactive_type == '__exact__':
-            if not g.hasIndexOn(interactive_field):
-                print 'No index on %s, indexing now...' % interactive_field
-                g.addIndex(interactive_field, verbose=logorrhea)
+            # Indexing if not already done at init
+            g.addIndex(interactive_field, verbose=logorrhea)
 
             res = []
             for val in values:

@@ -547,8 +547,7 @@ class GeoBase(object):
                                      (f, join_b.fields))
 
             # We index the field to optimize further findWith
-            if not join_b.hasIndexOn(join_fields):
-                join_b.addIndex(join_fields, verbose=False)
+            join_b.addIndex(join_fields, verbose=True)
 
             if self._verbose:
                 print 'Load external base "%s" as join data for "%s" on "%s"' % \
