@@ -585,13 +585,24 @@ def best_field(candidates, possibilities, default=None):
 def build_help_sources(sources, sources_conf_path, sources_dir):
     """Display informations on available sources.
     """
-    is_archive = lambda path: 'extract' in path
-
-    fmt_keys = lambda l: str(l) if isinstance(l, str) else '+'.join(l)
-    fmt_path = lambda p: str(p) if isinstance(p, str) else '%s %s' % \
-            (p['file'], '' if not is_archive(p) else  '-> %s' % p['extract'])
-
     missing = '<none>'
+
+    def fmt_keys(l):
+        """Nice key_fields formatting."""
+        if l is None:
+            return missing
+        if isinstance(l, (list, tuple, set)):
+            return '+'.join(l)
+        return str(l)
+
+    def fmt_path(p):
+        """Nice path formatting."""
+        if isinstance(p, str):
+            return str(p)
+        if 'extract' not in p:
+            return p['file']
+        return '%s -> %s' % (p['file'], p['extract'])
+
     tip = [dedent('''
     * Data sources from %s [%s]
     ''' % (sources_dir, op.basename(sources_conf_path)))]
@@ -611,11 +622,12 @@ def build_help_sources(sources, sources_conf_path, sources_dir):
 
         if isinstance(paths, (str, dict)):
             paths = [paths]
-
-        tip.append('%-20s | %-25s | %s' % (data, fmt_keys(keys), '.) %s' % fmt_path(paths[0])))
+        tip.append('%-20s | %-25s | %s' % \
+                   (data, fmt_keys(keys), '.) %s' % fmt_path(paths[0])))
 
         for n, path in enumerate(paths[1:], start=1):
-            tip.append('%-20s | %-25s | %s' % ('-', '-', '%s) %s' % (n, fmt_path(path))))
+            tip.append('%-20s | %-25s | %s' % \
+                       ('-', '-', '%s) %s' % (n, fmt_path(path))))
 
     tip.append('-' * 80)
 
