@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + new hasJoin method, hasIndexOn is renamed hasIndex
  + CLI: possibility to add subdelimiters and join info with headers{base:field}{subdel} syntax
  + multiple join clause implementation on multiple fields, integrated with subdelimiters
  + subdelimiters are no longer filled with None values
