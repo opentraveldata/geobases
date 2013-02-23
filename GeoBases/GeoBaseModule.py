@@ -2755,7 +2755,7 @@ class GeoBase(object):
             geo_support = False
 
             if verbose:
-                print '/!\ Could not find fields %s in headers %s.' % \
+                print '\n/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GEO_FIELDS), self.fields)
 
         if icon_label is not None and icon_label not in self.fields:
