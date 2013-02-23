@@ -55,7 +55,7 @@ from __future__ import with_statement
 import os
 import os.path as op
 import heapq
-from itertools import izip_longest, count
+from itertools import izip_longest, count, product
 import csv
 import json
 from shutil import copy
@@ -505,22 +505,23 @@ class GeoBase(object):
 
 
         # Join handling
-        for h, value in self._join_info.iteritems():
+        for fields, value in self._join_info.iteritems():
 
             if len(value) == 0:
                 raise ValueError('No value for join info "%s" (was "%s").' % \
-                                (h, value))
+                                (fields, value))
             elif len(value) == 1:
                 # Here if the user did not specify the field
                 # of the join on the external base, we assume
                 # it has the same name
-                # value <=> join_data [, join_field]
-                join_data, join_field = value[0], h
+                # value <=> join_data [, join_fields]
+                join_data, join_fields = value[0], fields
             else:
-                join_data, join_field = value[0], value[1]
+                join_data, join_fields = value[0], tuplify(value[1])
 
             # Creation of external bases
-            self._join_info[h] = join_data, join_field
+            self._join_info[fields] = join_data, join_fields
+
 
             if join_data not in SOURCES:
                 raise ValueError('Wrong join data type "%s". Not in %s' % \
@@ -534,17 +535,18 @@ class GeoBase(object):
 
             join_b = self._join_bases[join_data]
 
-            if join_field not in join_b.fields:
-                raise ValueError('Wrong join field "%s". Not in %s' % \
-                                 (join_field, join_b.fields))
+            for f in join_fields:
+                if f not in join_b.fields:
+                    raise ValueError('Wrong join field "%s". Not in %s' % \
+                                     (f, join_b.fields))
 
             # We index the field to optimize further findWith
-            if not join_b.hasIndexOn(join_field):
-                join_b.addIndex(join_field, verbose=False)
+            if not join_b.hasIndexOn(join_fields):
+                join_b.addIndex(join_fields, verbose=False)
 
             if self._verbose:
                 print 'Load external base "%s" as join data for "%s" on "%s"' % \
-                        (join_data, join_field, h)
+                        (join_data, join_fields, fields)
 
 
 
@@ -1241,15 +1243,16 @@ class GeoBase(object):
 
 
 
-    def _joinGet(self, key, field=None, ext_field=None):
+    def _joinGet(self, key, fields=None, ext_field=None):
         """Get that performs join with external bases.
 
         :param key:     the key of the thing (like ``'SFO'``)
-        :param field:   the field (like ``'name'`` or ``'iata_code'``)
+        :param fields:  the iterable of fields (like ``'name'`` or \
+                ``'iata_code'``)
         :param ext_field:  the external field we want in the external \
                 base
         :raises:        ``KeyError`` if the key is not in the base
-        :raises:        ``ValueError`` if the field has no join information
+        :raises:        ``ValueError`` if ``fields`` has no join information
         :returns:       the needed information
 
         >>> geo_o._joinGet('CDG', 'country_code', '__key__')
@@ -1258,29 +1261,39 @@ class GeoBase(object):
         ('France',)
         >>> geo_o._joinGet('CDG', 'city_code')
         Traceback (most recent call last):
-        ValueError: Field "city_code" has no join information
+        ValueError: Fields "('city_code',)" has no join information, available: ...
         """
-        if field not in self._join_info:
-            raise ValueError('Field "%s" has no join information' % field)
+        # We only work with tuple of fields for joining
+        fields = tuplify(fields)
+
+        if fields not in self._join_info:
+            raise ValueError('Fields "%s" has no join information, available: %s' % \
+                             (str(fields), self._join_info.keys()))
 
         try:
-            join_data, join_field = self._join_info[field]
+            join_data, join_fields = self._join_info[fields]
             join_b = self._join_bases[join_data]
 
-            value = self._things[key][field]
+            values = tuple(self._things[key][f] for f in fields)
 
             if ext_field == '__loc__':
                 ext_get = join_b.getLocation
             else:
                 ext_get = lambda k : join_b.get(k, ext_field)
 
-            if field not in self._subdelimiters:
+            if all(f not in self._subdelimiters for f in fields):
                 res = tuple(ext_get(k) for _, k in
-                            join_b.findWith([(join_field, value)]))
+                            join_b.findWith(zip(join_fields, values)))
             else:
+                # This is the cartesian product of all possible combinations
+                # of subdelimited values
+                # *flatten* is here to create the lists from values which are
+                # not embedded in a container, before given it to *product*
+                comb = product(*(flatten(v) for v in values))
+
                 res = tuple(tuple(ext_get(k) for _, k in
-                                  join_b.findWith([(join_field, t)]))
-                            for t in flat_iter(value))
+                                  join_b.findWith(zip(join_fields, c)))
+                            for c in comb)
 
         except KeyError:
             # We keep the context exception from external base
@@ -3223,24 +3236,29 @@ def recursive_split(value, splits):
 
 
 
-def flat_iter(value):
+def flatten(value, deep=False):
     """Iterator over recursive_split values.
 
     We flatten the structure.
 
-    >>> list(flat_iter(()))
+    >>> list(flatten(()))
     []
-    >>> list(flat_iter('T0'))
+    >>> list(flatten('T0'))
     ['T0']
-    >>> list(flat_iter(['T1', 'T1']))
+    >>> list(flatten(['T1', 'T1']))
     ['T1', 'T1']
-    >>> list(flat_iter([('T2', 'T2'), 'T1']))
+    >>> list(flatten([('T2', 'T2'), 'T1']))
+    [('T2', 'T2'), 'T1']
+    >>> list(flatten([('T2', 'T2'), 'T1'], deep=True))
     ['T2', 'T2', 'T1']
     """
     if isinstance(value, (list, tuple, set)):
         for e in value:
-            for ee in flat_iter(e):
-                yield ee
+            if not deep:
+                yield e
+            else:
+                for ee in flatten(e):
+                    yield ee
     else:
         yield value
 
