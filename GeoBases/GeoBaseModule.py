@@ -1224,6 +1224,9 @@ class GeoBase(object):
 
             raise KeyError("Thing not found: %s" % str(key))
 
+        if 'ext_field' in kwargs:
+            return self._joinGet(key, field, kwargs['ext_field'])
+
         # Key is in geobase here
         if field is None:
             return self._things[key]
@@ -1233,6 +1236,52 @@ class GeoBase(object):
         except KeyError:
             raise KeyError("Field '%s' [for key '%s'] not in %s" % \
                            (field, key, self._things[key].keys()))
+        else:
+            return res
+
+
+
+    def _joinGet(self, key, field=None, ext_field=None):
+        """Get that performs join with external bases.
+
+        :param key:     the key of the thing (like ``'SFO'``)
+        :param field:   the field (like ``'name'`` or ``'iata_code'``)
+        :param ext_field:  the external field we want in the external \
+                base
+        :raises:        ``KeyError`` if the key is not in the base
+        :raises:        ``ValueError`` if the field has no join information
+        :returns:       the needed information
+
+        >>> geo_o._joinGet('CDG', 'country_code', '__key__')
+        ('FR',)
+        >>> geo_o._joinGet('CDG', 'country_code', 'name')
+        ('France',)
+        >>> geo_o._joinGet('CDG', 'city_code')
+        Traceback (most recent call last):
+        ValueError: Field "city_code" has no join information
+        """
+        if field not in self._join_info:
+            raise ValueError('Field "%s" has no join information' % field)
+
+        try:
+            join_data, join_field = self._join_info[field]
+            join_b = self._join_bases[join_data]
+
+            value = self._things[key][field]
+
+            ext_get = lambda k : join_b.get(k, ext_field)
+
+            if field not in self._subdelimiters:
+                res = tuple(ext_get(k) for _, k in
+                            join_b.findWith([(join_field, value)]))
+            else:
+                res = tuple(tuple(ext_get(k) for _, k in
+                                  join_b.findWith([(join_field, t)]))
+                            for t in flat_iter(value))
+
+        except KeyError:
+            # We keep the context exception from external base
+            raise
         else:
             return res
 
@@ -3168,6 +3217,30 @@ def recursive_split(value, splits):
                      for v in value.split(splits[0]) if v)
 
     raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
+
+
+
+def flat_iter(value):
+    """Iterator over recursive_split values.
+
+    We flatten the structure.
+
+    >>> list(flat_iter(()))
+    []
+    >>> list(flat_iter('T0'))
+    ['T0']
+    >>> list(flat_iter(['T1', 'T1']))
+    ['T1', 'T1']
+    >>> list(flat_iter([('T2', 'T2'), 'T1']))
+    ['T2', 'T2', 'T1']
+    """
+    if isinstance(value, (list, tuple, set)):
+        for e in value:
+            for ee in flat_iter(e):
+                yield ee
+    else:
+        yield value
+
 
 
 def tuplify(s):
