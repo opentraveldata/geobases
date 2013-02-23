@@ -1377,6 +1377,7 @@ def main():
         headers    = guess_headers(first_l.split(delimiter))
         key_fields = guess_key_fields(headers, first_l.split(delimiter))
 
+        headers_r     = None # to store raw headers given
         subdelimiters = {}
         join_info     = {}
 
@@ -1391,7 +1392,8 @@ def main():
             if args['indexation'][1] == '__head__':
                 headers = source.next().rstrip().split(delimiter)
             else:
-                headers = args['indexation'][1].split(SPLIT)
+                headers   = args['indexation'][1].split(SPLIT)
+                headers_r = headers[:] # backup
                 join_info, subdelimiters = clean_headers(headers)
         else:
             # Reprocessing the headers with custom delimiter
@@ -1413,7 +1415,7 @@ def main():
         if verbose:
             print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
                     (delimiter,
-                     SPLIT.join(headers),
+                     SPLIT.join(headers if headers_r is None else headers_r),
                      SPLIT.join(key_fields) if key_fields is not None else DISABLE,
                      discard_dups_r,
                      SPLIT.join(indices[0]) if indices else DISABLE)
