@@ -551,7 +551,7 @@ class GeoBase(object):
                                      (f, join_b.fields))
 
             # We index the field to optimize further findWith
-            join_b.addIndex(join_fields, verbose=True)
+            join_b.addIndex(join_fields, verbose=self._verbose)
 
 
 
