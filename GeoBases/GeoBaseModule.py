@@ -507,19 +507,19 @@ class GeoBase(object):
 
 
         # Join handling
-        for h, join_value in self._join_info.iteritems():
+        for h, value in self._join_info.iteritems():
 
-            if len(join_value) == 0:
+            if len(value) == 0:
                 raise ValueError('No value for join info "%s" (was "%s").' % \
-                                (h, join_value))
-            elif len(join_value) == 1:
+                                (h, value))
+            elif len(value) == 1:
                 # Here if the user did not specify the field
                 # of the join on the external base, we assume
                 # it has the same name
-                # join_value <=> join_data [, join_field]
-                join_data, join_field = join_value[0], h
+                # value <=> join_data [, join_field]
+                join_data, join_field = value[0], h
             else:
-                join_data, join_field = join_value[0], join_value[1]
+                join_data, join_field = value[0], value[1]
 
             # Creation of external bases
             self._join_info[h] = join_data, join_field
@@ -530,7 +530,9 @@ class GeoBase(object):
 
             if join_data not in self._join_bases:
                 # To avoid recursion, we force the join_info to be empty
-                self._join_bases[join_data] = GeoBase(join_data, join_info={}, verbose=False)
+                self._join_bases[join_data] = GeoBase(join_data,
+                                                      join_info={},
+                                                      verbose=False)
 
             ext_g = self._join_bases[join_data]
 
