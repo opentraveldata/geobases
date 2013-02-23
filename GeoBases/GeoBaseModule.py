@@ -461,8 +461,8 @@ class GeoBase(object):
         if self._key_fields is not None:
             self._key_fields = tuplify(self._key_fields)
 
-        for i, _ in enumerate(self._indices):
-            self._indices[i] = tuplify(self._indices[i])
+        for i, v in enumerate(self._indices):
+            self._indices[i] = tuplify(v)
         self._indices = tuplify(self._indices)
 
         # We remove the None values to avoid creating useless @raw fields
