@@ -502,7 +502,7 @@ class GeoBase(object):
         # Some headers are not accepted
         for h in self._headers:
             if str(h).endswith('@raw') or str(h).startswith('__'):
-                raise ValueError('Header "%s" cannot end with "@raw" or start with "__".' % h)
+                raise ValueError('Header "%s" cannot contain "@raw" or "__".' % h)
 
 
         # Join handling
@@ -523,6 +523,11 @@ class GeoBase(object):
             # Creation of external bases
             self._join_info[fields] = join_data, join_fields
 
+            # When joining on multiple fields, you have to provide
+            # the same number of fields for current base to external
+            if len(fields) != len(join_fields):
+                raise ValueError('"%s" should be the same length has "%s" as join information.' % \
+                                (fields, join_fields))
 
             if join_data not in SOURCES:
                 raise ValueError('Wrong join data type "%s". Not in %s' % \
