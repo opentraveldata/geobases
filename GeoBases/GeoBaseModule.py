@@ -472,17 +472,6 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # We remove None and tuplify keys *and* values
-        new_join_info = {}
-        for h, v in self._join_info.iteritems():
-            if v is not None:
-                if isinstance(h, str):
-                    new_join_info[tuplify(h.split('/'))] = tuplify(v)
-                else:
-                    # In this case, input was as keyword argument
-                    new_join_info[tuplify(h)] = tuplify(v)
-
-        self._join_info = new_join_info
 
         # Paths conversion to dict, local paths handling
         if self._paths is not None:
@@ -511,6 +500,15 @@ class GeoBase(object):
             if str(h).endswith('@raw') or str(h).startswith('__'):
                 raise ValueError('Header "%s" cannot contain "@raw" or "__".' % h)
 
+
+        # We remove None, convert to dict, tuplify keys *and* values
+        new_join_info = {}
+
+        for i, v in enumerate(self._join_info):
+            if v is not None:
+                new_join_info[tuplify(v['fields'])] = tuplify(v['with'])
+
+        self._join_info = new_join_info
 
         # Join handling
         for fields, value in self._join_info.iteritems():
