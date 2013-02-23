@@ -467,7 +467,8 @@ def generate_headers(n):
         yield 'H%s' % i
 
 
-REG = re.compile("([^{}]*){?([^{}]*)}?{?([^{}]*)}?")
+ADD_INFO_REG   = re.compile("([^{}]*)({?[^{}]*}?)({?[^{}]*}?)")
+ADD_INFO_SPLIT = ':'
 
 def clean_headers(headers):
     """
@@ -475,19 +476,34 @@ def clean_headers(headers):
     and return what was found.
     """
     subdelimiters = {}
-    join_info     = {}
+    join          = []
 
     for i, h in enumerate(headers):
-        groups = REG.match(h)
-        if groups is not None:
-            nh, ji, subd = groups.groups()
-            headers[i] = nh
-            if ji:
-                join_info[nh] = ji.split(':')
-            if subd:
-                subdelimiters[nh] = subd.split(':')
 
-    return join_info, subdelimiters
+        m = ADD_INFO_REG.match(h)
+        if m is None:
+            continue
+
+        clean_h, jn, subd = m.groups()
+        headers[i] = clean_h
+
+        # We consider the join only if the user did not give nothing or empty {}
+        jn = jn.strip('{}')
+        if jn:
+            join.append({
+                'fields' : clean_h,
+                'with'   : jn.split(':', 1)
+            })
+
+        # For the subdelimiters we consider {} as empty string
+        if subd:
+            subd = subd.strip('{}')
+            if subd == '':
+                subdelimiters[clean_h] = ''
+            else:
+                subdelimiters[clean_h] = subd.split(':')
+
+    return join, subdelimiters
 
 
 def guess_headers(s_row):
@@ -1379,7 +1395,7 @@ def main():
 
         headers_r     = None # to store raw headers given
         subdelimiters = {}
-        join_info     = {}
+        join          = []
 
         discard_dups_r = DEF_DISCARD_RAW
         discard_dups   = DEF_DISCARD
@@ -1394,7 +1410,7 @@ def main():
             else:
                 headers   = args['indexation'][1].split(SPLIT)
                 headers_r = headers[:] # backup
-                join_info, subdelimiters = clean_headers(headers)
+                join, subdelimiters = clean_headers(headers)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
@@ -1428,7 +1444,7 @@ def main():
             'discard_dups' : discard_dups,
             'indices'      : indices,
             'subdelimiters': subdelimiters,
-            'join_info'    : join_info,
+            'join'         : join,
             'verbose'      : logorrhea
         }
 
@@ -1446,10 +1462,10 @@ def main():
 
         if len(args['indexation']) >= 2 and args['indexation'][1] != SKIP:
             add_options['headers'] = args['indexation'][1].split(SPLIT)
-            join_info, subdelimiters = clean_headers(add_options['headers'])
+            join, subdelimiters = clean_headers(add_options['headers'])
 
-            if join_info:
-                add_options['join_info'] = join_info
+            if join:
+                add_options['join'] = join
             if subdelimiters:
                 add_options['subdelimiters'] = subdelimiters
 
