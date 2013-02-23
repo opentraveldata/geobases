@@ -1256,6 +1256,29 @@ class GeoBase(object):
 
 
 
+    def hasJoinOn(self, fields=None):
+        """Tells if an iterable of fields has join information.
+
+        Default value is ``None`` for fields, this will test the
+        presence of any join information.
+
+        :param fields:  the iterable of fields
+        :returns:       a boolean
+
+        >>> geo_o.hasJoinOn('iata_code')
+        False
+        >>> geo_o.hasJoinOn('tvl_por_list')
+        True
+        >>> geo_o.hasJoinOn()
+        True
+        """
+        if fields is None:
+            return not not self._join_info
+
+        return tuplify(fields) in self._join_info
+
+
+
     def _joinGet(self, key, fields=None, ext_field=None):
         """Get that performs join with external bases.
 
@@ -1279,7 +1302,7 @@ class GeoBase(object):
         # We only work with tuple of fields for joining
         fields = tuplify(fields)
 
-        if fields not in self._join_info:
+        if not self.hasJoinOn(fields):
             raise ValueError('Fields "%s" has no join information, available: %s' % \
                              (str(fields), self._join_info.keys()))
 
