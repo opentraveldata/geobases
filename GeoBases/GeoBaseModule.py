@@ -1292,7 +1292,7 @@ class GeoBase(object):
                             join_b.findWith(zip(join_fields, values)))
             else:
                 # This is the cartesian product of all possible combinations
-                # of subdelimited values
+                # of sub-delimited values
                 # *flatten* is here to create the lists from values which are
                 # not embedded in a container, before given it to *product*
                 comb = product(*(flatten(v) for v in values))

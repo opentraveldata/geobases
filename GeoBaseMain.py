@@ -17,6 +17,7 @@ from textwrap import dedent
 import signal
 import platform
 import json
+import re
 
 import SimpleHTTPServer
 import SocketServer
@@ -466,6 +467,29 @@ def generate_headers(n):
         yield 'H%s' % i
 
 
+REG = re.compile("([^{}]*){?([^{}]*)}?{?([^{}]*)}?")
+
+def clean_headers(headers):
+    """
+    Remove additional informations from headers,
+    and return what was found.
+    """
+    subdelimiters = {}
+    join_info     = {}
+
+    for i, h in enumerate(headers):
+        groups = REG.match(h)
+        if groups is not None:
+            nh, ji, subd = groups.groups()
+            headers[i] = nh
+            if ji:
+                join_info[nh] = ji.split(':')
+            if subd:
+                subdelimiters[nh] = subd.split(':')
+
+    return join_info, subdelimiters
+
+
 def guess_headers(s_row):
     """Heuristic to guess the lat/lng fields from first row.
     """
@@ -857,7 +881,7 @@ if ENV_WARNINGS:
     **********************************************************************
     By the way, since you probably did not read the documentation :D,    *
     you should also add this for the completion to work with zsh.        *
-    You're using zsh right o_O?                                          *
+    You are using zsh right o_O?                                          *
                                                                          *
         # Add custom completion scripts
         fpath=(~/.zsh/completion $fpath)
@@ -1353,6 +1377,9 @@ def main():
         headers    = guess_headers(first_l.split(delimiter))
         key_fields = guess_key_fields(headers, first_l.split(delimiter))
 
+        subdelimiters = {}
+        join_info     = {}
+
         discard_dups_r = DEF_DISCARD_RAW
         discard_dups   = DEF_DISCARD
         indices        = DEF_INDICES
@@ -1365,6 +1392,7 @@ def main():
                 headers = source.next().rstrip().split(delimiter)
             else:
                 headers = args['indexation'][1].split(SPLIT)
+                join_info, subdelimiters = clean_headers(headers)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
@@ -1397,6 +1425,8 @@ def main():
             'key_fields'   : key_fields,
             'discard_dups' : discard_dups,
             'indices'      : indices,
+            'subdelimiters': subdelimiters,
+            'join_info'    : join_info,
             'verbose'      : logorrhea
         }
 
@@ -1414,6 +1444,12 @@ def main():
 
         if len(args['indexation']) >= 2 and args['indexation'][1] != SKIP:
             add_options['headers'] = args['indexation'][1].split(SPLIT)
+            join_info, subdelimiters = clean_headers(add_options['headers'])
+
+            if join_info:
+                add_options['join_info'] = join_info
+            if subdelimiters:
+                add_options['subdelimiters'] = subdelimiters
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
             add_options['key_fields'] = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
@@ -1429,7 +1465,7 @@ def main():
                 print 'Loading "%s"...' % args['base']
             else:
                 print 'Loading "%s" with custom: %s ...' % \
-                        (args['base'], ' and '.join('%s = %s' % kv for kv in add_options.items()))
+                        (args['base'], ' ; '.join('%s = %s' % kv for kv in add_options.items()))
 
         g = GeoBase(data=args['base'], verbose=logorrhea, **add_options)
 
