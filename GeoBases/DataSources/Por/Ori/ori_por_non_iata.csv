@@ -93,6 +93,8 @@ MXQ^ZZZZ^^N^0^1^Mitchell River Airport^Mitchell River Airport^-15.67^141.8^S^AIR
 TODO:MYS^MOYALE^MOYALE^MOYALE/ET^MYS^Y^^ET^AFRIC^ITC2^ET^3.467^39.1^0^N^CA
 MZA^ZZZZ^^Y^8260952^1^Muzaffarnagar^Muzaffarnagar^29.48^77.7^S^AIRP^0.0046660565392^^2012-09-01^IATA Notification #37 (2012) - Airport not found^IN^^India^36^Uttar Pradesh^Uttar Pradesh^^^^^^0^^249^Asia/Kolkata^5.5^5.5^5.5^2012-04-29^DED^Dehradun Airport^Dehradun Airport^MZA^^CA^^
 NBR^ZZZZ^^N^0^1^Nambour Airport^Nambour Airport^-26.603333^153.091111^S^AIRP^^^^Duplicate of MCY?^AU^^Australia^04^Queensland^Queensland^36710^Sunshine Coast^Sunshine Coast^^^0^^3^Australia/Brisbane^10.0^10.0^10.0^2012-04-29^NBR^Nambour^Nambour^^QL^CA^^
+NCP^ZZZZ^^N^0^1^Luzon Is Cubi Pt NAS^Luzon Is Cubi Pt NAS^10.0^121.0^S^AIRP^^^2013-02-01^IATA Notification #43 (2013) - Same location as SFS^PH^^PH^Asia^^^^^^^^^^^^Asia/Manila^^^^-1^NCP^Luzon Is^Luzon Is^^^A^^
+NCP^ZZZZ^^N^0^1^Luzon Is^Luzon Is^10.0^121.0^P^PPLC^0.0208373879372^^2013-02-01^IATA Notification #43 (2013) - With deletion of NCP airport, the city no longer meets criteria for Metropolitan Area^PH^^PH^Asia^^^^^^^^^^^^Asia/Manila^^^^-1^NCP^Luzon Is^Luzon Is^CRK,NCP^^C^^
 NET^ZZZZ^^N^0^1^New Bight Airport^New Bight Airport^24.31425^-75.45882^S^AIRP^^^^Duplicate of TBI^BS^^Bahamas^06^Cat Island^Cat Island^^^^^^0^^7^America/Nassau^-5.0^-4.0^-5.0^2012-04-29^NET^New Bight^New Bight^^^CA^^
 NGM^ZZZZ^^N^0^1^GUAM/GU:AGANA NAS^GUAM/GU:AGANA NAS^13.49^144.7^S^AIRP^^^2012-06-01^IATA Notification #36 (2012) - Same location as GUM - Naval Air Station closed in 1993^GU^^Guam^BA^Barrigada Municipality^Barrigada Municipality^^^^^^0^82^84^Pacific/Guam^10.0^10.0^10.0^2011-06-25^GUM^Guam^Guam^^^A^^
 TODO:NGV^UNKNOWN5770^UNKNOWN5770^UNKNOWN5770/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^-17.043464^15.683822^0^N^CA
@@ -101,6 +103,7 @@ TODO:NOE^UNKNOWN5867^UNKNOWN5867^UNKNOWN5867/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^53.62^7.
 TODO:NRQ^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^42.52^1.517^0^N^CA
 NRV^ZZZZ^N^0^1^GUAM/GU:USCG SHORE STATION^GUAM/GU:USCG SHORE STATION^^13.48^144.7^S^AIRP^^^2012-06-01^IATA Notification #36 (2012) - Airport not found^GU^^Guam^BA^Barrigada Municipality^Barrigada Municipality^^^^^^0^82^84^Pacific/Guam^10.0^10.0^10.0^2011-06-25^GUM^Guam^Guam^^^A^^
 NSA^ZZZZ^^Y^8299129^1^Noosa Airport^Noosa Airport^-26.25^153.2^S^AIRP^^^2012-02-01^IATA Notification #31 (2012) - Same location as NSV^AU^^Australia^^^^^^^^^0^^-9999^Australia/Brisbane^10.0^10.0^10.0^2012-05-18^NSA^Noosa^Noosa^^QL^CA^^
+NSP^RPLS^^Y^6301846^1^Sangley Point^Sangley Point^14.495364^120.904075^S^AIRP^^^2013-02-01^IATA Notification #43 (2013) - Same location as SGL^PH^^Philippines^Asia^^^^^^^^^0^2^0^Asia/Manila^8.0^8.0^8.0^2007-01-03^NSP^Sangley Point^Sangley Point^NSP^^CA^http://en.wikipedia.org/wiki/U.S._Naval_Station_Sangley_Point^
 TODO:OHP^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^56.58^-5.5^0^N^CA
 OMN^ZZZZ^^Y^8298864^1^Osmanabad^Osmanabad^18.15^76.1^S^AIRP^^^2012-09-01^IATA Notification #37 (2012) - Airport not found^IN^^India^16^Mahārāshtra^Maharashtra^^^^^^0^^640^Asia/Kolkata^5.5^5.5^5.5^2012-05-18^OMN^Osmanabad^Osmanabad^^^CA^^
 TODO:OSP^UNKNOWN6248^UNKNOWN6248^UNKNOWN6248/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^54.478889^17.1075^0^N^CA
