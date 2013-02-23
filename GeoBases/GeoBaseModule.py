@@ -566,8 +566,11 @@ class GeoBase(object):
 
 
 
-    def hasIndexOn(self, fields):
+    def hasIndexOn(self, fields=None):
         """Tells if an iterable of fields is indexed.
+
+        Default value is ``None`` for fields, this will test the
+        presence of any index.
 
         :param fields:  the iterable of fields
         :returns:       a boolean
@@ -576,7 +579,12 @@ class GeoBase(object):
         True
         >>> geo_o.hasIndexOn(('iata_code', 'asciiname'))
         False
+        >>> geo_o.hasIndexOn()
+        True
         """
+        if fields is None:
+            return not not self._indexed
+
         return tuplify(fields) in self._indexed
 
 
