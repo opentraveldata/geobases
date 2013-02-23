@@ -191,7 +191,7 @@ ori_por:
         #location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
-    join_info:
+    join:
         - fields: country_code
           with  : [countries, code]
         # Freaking auto join possibility

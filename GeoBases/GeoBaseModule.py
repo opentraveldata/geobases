@@ -213,7 +213,7 @@ DEFAULTS = {
     'indices'       : [],
     'delimiter'     : '^',
     'subdelimiters' : {},
-    'join_info'     : {},
+    'join'          : [],
     'quotechar'     : '"',
     'limit'         : None,
     'skip'          : None,
@@ -250,6 +250,10 @@ class GeoBase(object):
         - delimiter     : ``'^'`` by default, delimiter for each field,
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` \
                 dict to define subdelimiters
+        - join          : ``[]`` by default, list of dict defining join \
+                clauses. A join clause is a dict ``{ fields : [base, \
+                fields]}``, for example ``{ 'country_code' : ['countries', \
+                'code']}``
         - quotechar     : ``'"'`` by default, this is the string defined for \
                 quoting
         - limit         : ``None`` by default, put an int if you want to \
@@ -304,7 +308,7 @@ class GeoBase(object):
         self._ggrid   = None
 
         # Other bases for join clauses
-        self._join_bases = {}
+        self._ext_bases = {}
 
         # A cache for the fuzzy searches
         self._fuzzy_cache = {}
@@ -368,7 +372,7 @@ class GeoBase(object):
         self._indices       = props['indices']
         self._delimiter     = props['delimiter']
         self._subdelimiters = props['subdelimiters']
-        self._join_info     = props['join_info']
+        self._join          = props['join']
         self._quotechar     = props['quotechar']
         self._limit         = props['limit']
         self._skip          = props['skip']
@@ -502,16 +506,16 @@ class GeoBase(object):
 
 
         # We remove None, convert to dict, tuplify keys *and* values
-        new_join_info = {}
+        new_join = {}
 
-        for i, v in enumerate(self._join_info):
+        for i, v in enumerate(self._join):
             if v is not None:
-                new_join_info[tuplify(v['fields'])] = tuplify(v['with'])
+                new_join[tuplify(v['fields'])] = tuplify(v['with'])
 
-        self._join_info = new_join_info
+        self._join = new_join
 
         # Join handling
-        for fields, value in self._join_info.iteritems():
+        for fields, value in self._join.iteritems():
 
             if len(value) == 0:
                 raise ValueError('No value for join info "%s" (was "%s").' % \
@@ -520,13 +524,13 @@ class GeoBase(object):
                 # Here if the user did not specify the field
                 # of the join on the external base, we assume
                 # it has the same name
-                # value <=> join_data [, join_fields]
-                join_data, join_fields = value[0], fields
+                # value <=> join_base [, join_fields]
+                join_base, join_fields = value[0], fields
             else:
-                join_data, join_fields = value[0], tuplify(value[1])
+                join_base, join_fields = value[0], tuplify(value[1])
 
             # Creation of external bases
-            self._join_info[fields] = join_data, join_fields
+            self._join[fields] = join_base, join_fields
 
             # When joining on multiple fields, you have to provide
             # the same number of fields for current base to external
@@ -534,29 +538,29 @@ class GeoBase(object):
                 raise ValueError('"%s" should be the same length has "%s" as join information.' % \
                                 (fields, join_fields))
 
-            if join_data not in SOURCES:
+            if join_base not in SOURCES:
                 raise ValueError('Wrong join data type "%s". Not in %s' % \
-                                 (join_data, sorted(SOURCES.keys())))
+                                 (join_base, sorted(SOURCES.keys())))
 
-            if join_data not in self._join_bases:
-                # To avoid recursion, we force the join_info to be empty
-                self._join_bases[join_data] = GeoBase(join_data,
-                                                      join_info={},
-                                                      verbose=False)
+            if join_base not in self._ext_bases:
+                # To avoid recursion, we force the join to be empty
+                self._ext_bases[join_base] = GeoBase(join_base,
+                                                     join={},
+                                                     verbose=False)
 
             if self._verbose:
                 print 'Loaded external base "%s" as join data for "%s" on "%s"' % \
-                        (join_data, join_fields, fields)
+                        (join_base, join_fields, fields)
 
-            join_b = self._join_bases[join_data]
+            ext_b = self._ext_bases[join_base]
 
             for f in join_fields:
-                if f not in join_b.fields:
+                if f not in ext_b.fields:
                     raise ValueError('Wrong join field "%s". Not in %s' % \
-                                     (f, join_b.fields))
+                                     (f, ext_b.fields))
 
             # We index the field to optimize further findWith
-            join_b.addIndex(join_fields, verbose=self._verbose)
+            ext_b.addIndex(join_fields, verbose=self._verbose)
 
 
 
@@ -1278,9 +1282,9 @@ class GeoBase(object):
         True
         """
         if fields is None:
-            return not not self._join_info
+            return not not self._join
 
-        return tuplify(fields) in self._join_info
+        return tuplify(fields) in self._join
 
 
 
@@ -1309,22 +1313,22 @@ class GeoBase(object):
 
         if not self.hasJoin(fields):
             raise ValueError('Fields "%s" has no join information, available: %s' % \
-                             (str(fields), self._join_info.keys()))
+                             (str(fields), self._join.keys()))
 
         try:
-            join_data, join_fields = self._join_info[fields]
-            join_b = self._join_bases[join_data]
+            join_base, join_fields = self._join[fields]
+            ext_b = self._ext_bases[join_base]
 
             values = tuple(self._things[key][f] for f in fields)
 
             if ext_field == '__loc__':
-                ext_get = join_b.getLocation
+                ext_get = ext_b.getLocation
             else:
-                ext_get = lambda k : join_b.get(k, ext_field)
+                ext_get = lambda k : ext_b.get(k, ext_field)
 
             if all(f not in self._subdelimiters for f in fields):
                 res = tuple(ext_get(k) for _, k in
-                            join_b.findWith(zip(join_fields, values)))
+                            ext_b.findWith(zip(join_fields, values)))
             else:
                 # This is the cartesian product of all possible combinations
                 # of sub-delimited values
@@ -1333,7 +1337,7 @@ class GeoBase(object):
                 comb = product(*(flatten(v) for v in values))
 
                 res = tuple(tuple(ext_get(k) for _, k in
-                                  join_b.findWith(zip(join_fields, c)))
+                                  ext_b.findWith(zip(join_fields, c)))
                             for c in comb)
 
         except KeyError:
