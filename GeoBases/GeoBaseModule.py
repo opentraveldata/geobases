@@ -566,7 +566,7 @@ class GeoBase(object):
 
 
 
-    def hasIndexOn(self, fields=None):
+    def hasIndex(self, fields=None):
         """Tells if an iterable of fields is indexed.
 
         Default value is ``None`` for fields, this will test the
@@ -575,11 +575,11 @@ class GeoBase(object):
         :param fields:  the iterable of fields
         :returns:       a boolean
 
-        >>> geo_o.hasIndexOn('iata_code')
+        >>> geo_o.hasIndex('iata_code')
         True
-        >>> geo_o.hasIndexOn(('iata_code', 'asciiname'))
+        >>> geo_o.hasIndex(('iata_code', 'asciiname'))
         False
-        >>> geo_o.hasIndexOn()
+        >>> geo_o.hasIndex()
         True
         """
         if fields is None:
@@ -618,7 +618,7 @@ class GeoBase(object):
 
         fields = tuplify(fields)
 
-        if self.hasIndexOn(fields):
+        if self.hasIndex(fields):
             if not force:
                 if verbose:
                     print '/!\ Index on %s already built, exiting...' % str(fields)
@@ -639,17 +639,17 @@ class GeoBase(object):
         :param fields:  the iterable of fields, if ``None``,
             all indexes will be dropped
 
-        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        >>> geo_o.hasIndex(('icao_code', 'location_type'))
         True
         >>> geo_o.dropIndex(('icao_code', 'location_type'))
-        >>> geo_o.hasIndexOn(('icao_code', 'location_type'))
+        >>> geo_o.hasIndex(('icao_code', 'location_type'))
         False
         """
         if fields is None:
             for fs in self._indexed:
                 del self._indexed[tuplify(fs)]
         else:
-            if self.hasIndexOn(fields):
+            if self.hasIndex(fields):
                 del self._indexed[tuplify(fields)]
             else:
                 if verbose:
@@ -711,7 +711,7 @@ class GeoBase(object):
                 self.dropIndex(fs, verbose=verbose)
                 self.addIndex(fs, verbose=verbose)
         else:
-            if self.hasIndexOn(fields):
+            if self.hasIndex(fields):
                 self.dropIndex(fields, verbose=verbose)
                 self.addIndex(fields, verbose=verbose)
             else:
@@ -1256,7 +1256,7 @@ class GeoBase(object):
 
 
 
-    def hasJoinOn(self, fields=None):
+    def hasJoin(self, fields=None):
         """Tells if an iterable of fields has join information.
 
         Default value is ``None`` for fields, this will test the
@@ -1265,11 +1265,11 @@ class GeoBase(object):
         :param fields:  the iterable of fields
         :returns:       a boolean
 
-        >>> geo_o.hasJoinOn('iata_code')
+        >>> geo_o.hasJoin('iata_code')
         False
-        >>> geo_o.hasJoinOn('tvl_por_list')
+        >>> geo_o.hasJoin('tvl_por_list')
         True
-        >>> geo_o.hasJoinOn()
+        >>> geo_o.hasJoin()
         True
         """
         if fields is None:
@@ -1302,7 +1302,7 @@ class GeoBase(object):
         # We only work with tuple of fields for joining
         fields = tuplify(fields)
 
-        if not self.hasJoinOn(fields):
+        if not self.hasJoin(fields):
             raise ValueError('Fields "%s" has no join information, available: %s' % \
                              (str(fields), self._join_info.keys()))
 
@@ -1484,10 +1484,10 @@ class GeoBase(object):
         """
         fields = tuple(f for f, _ in conditions)
 
-        if self.hasIndexOn(fields) and mode == 'and':
+        if self.hasIndex(fields) and mode == 'and':
             return True
 
-        if all(self.hasIndexOn(f) for f in fields):
+        if all(self.hasIndex(f) for f in fields):
             return True
 
         return False
@@ -1500,7 +1500,7 @@ class GeoBase(object):
         fields = tuple(f for f, _ in conditions)
         values = tuple(v for _, v in conditions)
 
-        if self.hasIndexOn(fields) and mode == 'and':
+        if self.hasIndex(fields) and mode == 'and':
             if verbose:
                 print 'Using index for %s: value(s) %s' % (str(fields), str(values))
 
@@ -1511,7 +1511,7 @@ class GeoBase(object):
                     yield m, key
 
 
-        elif all(self.hasIndexOn(f) for f in fields):
+        elif all(self.hasIndex(f) for f in fields):
             if verbose:
                 print 'Using index for %s: value(s) %s' % \
                         (' and '.join(str((f,)) for f in set(fields)),
