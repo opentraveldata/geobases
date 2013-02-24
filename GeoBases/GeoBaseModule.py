@@ -1277,6 +1277,30 @@ class GeoBase(object):
             return res
 
 
+    def getJoinBase(self, fields, verbose=True):
+        """Get joined base from the fields who have join.
+
+        :param fields:  the iterable of fields
+        :param verbose: boolean, toggle verbosity
+        :returns:       a GeoBase object or ``None`` if fields are not joined
+
+        >>> geo_o.getJoinBase('iata_code')
+        Fields "('iata_code',)" do not have join, cannot retrieve external base.
+        >>> geo_o.getJoinBase('country_code') # doctest: +SKIP
+        <GeoBases.GeoBaseModule.GeoBase object at 0x...>
+        """
+        fields = tuplify(fields)
+
+        if not self.hasJoin(fields):
+            if verbose:
+                print 'Fields "%s" do not have join, cannot retrieve external base.' % str(fields)
+            return
+
+        # This is the data type of the joined base
+        join_base = self._join[fields][0]
+
+        return self._ext_bases[join_base]
+
 
     def hasJoin(self, fields=None):
         """Tells if an iterable of fields has join information.
