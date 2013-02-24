@@ -263,7 +263,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
 
 
-def display(geob, list_of_things, omit, show, important, ref_type):
+def display(geob, list_of_things, omit, show, show_additional, important, ref_type):
     """
     Main display function in Linux terminal, with
     nice color and everything.
@@ -276,7 +276,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         show = [REF] + geob.fields[:]
 
     # Building final shown headers
-    show_wo_omit = [f for f in show if f not in omit]
+    show_wo_omit = [f for f in show if f not in omit] + show_additional
 
     # Different behaviour given number of results
     # We adapt the width between MIN_CHAR_COL and MAX_CHAR_COL
@@ -331,7 +331,7 @@ def display(geob, list_of_things, omit, show, important, ref_type):
         print ''.join(l)
 
 
-def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
+def display_quiet(geob, list_of_things, omit, show, show_additional, ref_type, delim, header):
     """
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
@@ -346,7 +346,7 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
         show = [f for f in t_show if '%s@raw' % f not in t_show]
 
     # Building final shown headers
-    show_wo_omit = [f for f in show if f not in omit]
+    show_wo_omit = [f for f in show if f not in omit] + show_additional
 
     # Headers joined
     j_headers = delim.join(str(f) for f in show_wo_omit)
@@ -879,8 +879,9 @@ DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS    = ('__key__',)
 DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
 DEF_PHONETIC_METHOD = 'dmetaphone'
-DEF_SHOW_FIELDS     = []
 DEF_OMIT_FIELDS     = []
+DEF_SHOW_FIELDS     = []
+DEF_SHOW_ADD_FIELDS = []
 
 # For requests with findWith, force stringification before testing
 FORCE_STR = False
@@ -1163,7 +1164,7 @@ def handle_args():
         help = dedent('''\
         Does not print some fields on stdout.
         May help to get cleaner output.
-        "%s" is an available keyword as well as any other geobase fields.
+        "%s" is an available value as well as any other fields.
         ''' % REF),
         nargs = '+',
         default = DEF_OMIT_FIELDS)
@@ -1172,10 +1173,19 @@ def handle_args():
         help = dedent('''\
         Only print some fields on stdout.
         May help to get cleaner output.
-        "%s" is an available keyword as well as any other geobase fields.
+        "%s" is an available value as well as any other fields.
         ''' % REF),
         nargs = '+',
         default = DEF_SHOW_FIELDS)
+
+    parser.add_argument('-S', '--show-additional',
+        help = dedent('''\
+        In addition to the normal displayed fields, add other fields.
+        This is useful for displaying fields with join information,
+        with the field:external_field syntax.
+        ''' % REF),
+        nargs = '+',
+        default = DEF_SHOW_ADD_FIELDS)
 
     parser.add_argument('-l', '--limit',
         help = dedent('''\
@@ -1638,11 +1648,14 @@ def main():
     phonetic_method = args['phonetic_method']
 
     # show / omit
+    if args['omit'] == SKIP:
+        args['omit'] = DEF_OMIT_FIELDS
+
     if args['show'] == SKIP:
         args['show'] = DEF_SHOW_FIELDS
 
-    if args['omit'] == SKIP:
-        args['omit'] = DEF_OMIT_FIELDS
+    if args['show_additional'] == SKIP:
+        args['show_additional'] = DEF_SHOW_ADD_FIELDS
 
 
 
@@ -1679,7 +1692,7 @@ def main():
         if f is not None
     ]
 
-    for field in args['show'] + args['omit'] + fields_to_test:
+    for field in args['show'] + args['show_additional'] + args['omit'] + fields_to_test:
         field, ext_field = check_ext_field(g, field)
 
         if field not in [REF] + g.fields:
@@ -1946,10 +1959,10 @@ def main():
 
     if frontend == 'terminal':
         print
-        display(g, res, set(args['omit']), args['show'], important, ref_type)
+        display(g, res, set(args['omit']), args['show'], args['show_additional'], important, ref_type)
 
     if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], ref_type, quiet_delimiter, header_display)
+        display_quiet(g, res, set(args['omit']), args['show'], args['show_additional'], ref_type, quiet_delimiter, header_display)
 
     if verbose and not IS_WINDOWS:
         for warn_msg in ENV_WARNINGS:
