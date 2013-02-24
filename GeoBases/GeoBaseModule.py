@@ -2977,8 +2977,8 @@ class GeoBase(object):
                                       reverse=True)
             }))
 
-        # We do not render the map template if no geocode support
-        if self.hasGeoSupport() or draw_join_fields:
+        # We do not render the map template if nothing to see
+        if data or data_lines:
             rendered = ['map', 'table']
         else:
             rendered = ['table']
