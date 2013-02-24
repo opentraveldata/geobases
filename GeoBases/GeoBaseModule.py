@@ -1607,14 +1607,17 @@ class GeoBase(object):
         Built index for fields ('iata_code',)
         >>> geo_o.addIndex('location_type')
         Built index for fields ('location_type',)
+
+        Now querying with simple indexes (dropping multiple index if it exists).
+
+        >>> geo_o.dropIndex(('iata_code', 'location_type'), verbose=False)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); ('A',)
         [(2, 'NCE')]
 
         Multiple index.
 
-        >>> geo_o.addIndex(('iata_code', 'location_type'))
-        Built index for fields ('iata_code', 'location_type')
+        >>> geo_o.addIndex(('iata_code', 'location_type'), verbose=False)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
         Using index for ('iata_code', 'location_type'): value(s) ('NCE', 'A')
         [(2, 'NCE')]
