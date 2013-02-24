@@ -334,7 +334,19 @@ def fields_to_show(defaults, omit, show, show_additional):
         show = [REF] + defaults[:]
 
     # Building final shown headers
-    return [f for f in show if f not in omit] + show_additional
+    shown_fields = [f for f in show if f not in omit]
+
+    # Trying to cleverly position addtional field
+    for af in show_additional:
+        for i, f in enumerate(shown_fields):
+            if af.startswith(f):
+                shown_fields.insert(i+1, af)
+                break
+        else:
+            shown_fields.append(af)
+
+    return shown_fields
+
 
 
 def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
