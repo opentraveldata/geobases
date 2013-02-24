@@ -263,7 +263,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
 
 
-def display(geob, list_of_things, omit, show, show_additional, important, ref_type):
+def display(geob, list_of_things, shown_fields, ref_type, important):
     """
     Main display function in Linux terminal, with
     nice color and everything.
@@ -271,12 +271,6 @@ def display(geob, list_of_things, omit, show, show_additional, important, ref_ty
     if not list_of_things:
         print 'No elements to display.'
         return
-
-    if not show:
-        show = [REF] + geob.fields[:]
-
-    # Building final shown headers
-    show_wo_omit = [f for f in show if f not in omit] + show_additional
 
     # Different behaviour given number of results
     # We adapt the width between MIN_CHAR_COL and MAX_CHAR_COL
@@ -293,7 +287,7 @@ def display(geob, list_of_things, omit, show, show_additional, important, ref_ty
 
     c = RotatingColors(BACKGROUND_COLOR)
 
-    for f in show_wo_omit:
+    for f in shown_fields:
         # Computing clean fields, external fields, ...
         if f == REF:
             cf = REF
@@ -333,25 +327,24 @@ def display(geob, list_of_things, omit, show, show_additional, important, ref_ty
         print ''.join(l)
 
 
-def display_quiet(geob, list_of_things, omit, show, show_additional, ref_type, delim, header):
+def fields_to_show(defaults, omit, show, show_additional):
+    """Prcess fields to show.
+    """
+    if not show:
+        show = [REF] + defaults[:]
+
+    # Building final shown headers
+    return [f for f in show if f not in omit] + show_additional
+
+
+def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
     """
     This function displays the results in programming
     mode, with --quiet option. This is useful when you
     want to use use the result in a pipe for example.
     """
-    if not show:
-        # Temporary
-        t_show = [REF] + geob.fields[:]
-
-        # In this default case, we remove splitted valued if
-        # corresponding raw values exist
-        show = [f for f in t_show if '%s@raw' % f not in t_show]
-
-    # Building final shown headers
-    show_wo_omit = [f for f in show if f not in omit] + show_additional
-
     # Headers joined
-    j_headers = delim.join(str(f) for f in show_wo_omit)
+    j_headers = delim.join(str(f) for f in shown_fields)
 
     # Displaying headers only for RH et CH
     if header == 'RH':
@@ -361,7 +354,7 @@ def display_quiet(geob, list_of_things, omit, show, show_additional, ref_type, d
 
     # Caching getters
     getters = {}
-    for f in show_wo_omit:
+    for f in shown_fields:
         if f == REF:
             continue
         cf, ext_f = check_ext_field(geob, f)
@@ -372,7 +365,7 @@ def display_quiet(geob, list_of_things, omit, show, show_additional, ref_type, d
 
     for h, k in list_of_things:
         l = []
-        for f in show_wo_omit:
+        for f in shown_fields:
             if f == REF:
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
@@ -1185,7 +1178,7 @@ def handle_args():
         In addition to the normal displayed fields, add other fields.
         This is useful for displaying fields with join information,
         with the field:external_field syntax.
-        ''' % REF),
+        '''),
         nargs = '+',
         default = DEF_SHOW_ADD_FIELDS)
 
@@ -1960,11 +1953,23 @@ def main():
 
 
     if frontend == 'terminal':
+        shown_fields = fields_to_show(g.fields,
+                                      set(args['omit']),
+                                      args['show'],
+                                      args['show_additional'])
+
         print
-        display(g, res, set(args['omit']), args['show'], args['show_additional'], important, ref_type)
+        display(g, res, shown_fields, ref_type, important)
 
     if frontend == 'quiet':
-        display_quiet(g, res, set(args['omit']), args['show'], args['show_additional'], ref_type, quiet_delimiter, header_display)
+        defaults = [f for f in g.fields if '%s@raw' % f not in g.fields]
+
+        shown_fields = fields_to_show(defaults,
+                                      set(args['omit']),
+                                      args['show'],
+                                      args['show_additional'])
+
+        display_quiet(g, res, shown_fields, ref_type, quiet_delimiter, header_display)
 
     if verbose and not IS_WINDOWS:
         for warn_msg in ENV_WARNINGS:
