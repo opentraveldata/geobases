@@ -544,7 +544,11 @@ class GeoBase(object):
             raise ValueError('Wrong join data type "%s". Not in %s' % \
                              (join_base, sorted(SOURCES.keys())))
 
-        if join_base not in self._ext_bases:
+        if join_base in self._ext_bases:
+            if self._verbose:
+                print 'Skipped loading external base "%s" [with %s] for join on %s' % \
+                        (join_base, join_fields, fields)
+        else:
             # To avoid recursion, we force the join to be empty
             if join_base == self.data:
                 self._ext_bases[join_base] = self
@@ -555,16 +559,11 @@ class GeoBase(object):
             else:
                 self._ext_bases[join_base] = GeoBase(join_base,
                                                      join=[],
-
                                                      verbose=False)
 
                 if self._verbose:
                     print 'Loaded external base "%s" [with %s] for join on %s' % \
                             (join_base, join_fields, fields)
-        else:
-            if self._verbose:
-                print 'Skipped loading external base "%s" [with %s] for join on %s' % \
-                        (join_base, join_fields, fields)
 
         ext_b = self._ext_bases[join_base]
 
