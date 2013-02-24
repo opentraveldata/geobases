@@ -3132,6 +3132,8 @@ class GeoBase(object):
                              for fields in self._join))
 
             for c in comb:
+                if not c:
+                    continue
                 for e, f in zip(c, self._join.keys()):
                     join_icons[e] = self._buildAnonymousIconData(e, f)
 
