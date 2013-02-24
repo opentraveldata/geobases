@@ -218,6 +218,24 @@ def flatten(value, level=0):
         return str(value)
 
 
+def check_ext_field(geob, field):
+    """
+    Check if a field given by user contains
+    join fields and external field.
+    """
+    l = field.split(':', 1)
+
+    if len(l) <= 1:
+        return field, None
+
+    f, ext_f = l
+
+    if geob.hasJoin(f):
+        return f, ext_f
+
+    return field, None
+
+
 def fmt_ref(ref, ref_type, no_symb=False):
     """
     Display the reference depending on its type.
@@ -300,7 +318,14 @@ def display(geob, list_of_things, omit, show, important, ref_type):
                 l.append(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
             for _, k in list_of_things:
-                l.append(fixed_width(geob.get(k, f), col, lim, truncate))
+                cf, ext_f = check_ext_field(geob, f)
+
+                if ext_f is None:
+                    v = geob.get(k, cf)
+                else:
+                    v = geob.get(k, cf, ext_field=ext_f)
+
+                l.append(fixed_width(v, col, lim, truncate))
 
         next(c)
         print ''.join(l)
@@ -338,7 +363,13 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
             if f == REF:
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
-                v = geob.get(k, f)
+                cf, ext_f = check_ext_field(geob, f)
+
+                if ext_f is None:
+                    v = geob.get(k, cf)
+                else:
+                    v = geob.get(k, cf, ext_field=ext_f)
+
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
@@ -1642,8 +1673,15 @@ def main():
     ]
 
     for field in args['show'] + args['omit'] + fields_to_test:
+        field, ext_field = check_ext_field(g, field)
+
         if field not in [REF] + g.fields:
             error('field', field, g.data, sorted([REF] + g.fields))
+
+        if ext_field is not None:
+            ext_g = g.getJoinBase(field)
+            if ext_field not in [REF] + ext_g.fields:
+                error('field', ext_field, ext_g.data, sorted([REF] + ext_g.fields))
 
     # Testing icon_type from -M
     if icon_type not in ALLOWED_ICON_TYPES:
