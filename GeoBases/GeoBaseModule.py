@@ -2966,7 +2966,9 @@ class GeoBase(object):
                     'icon_type'       : icon_type,
                     'base_icon'       : base_icon,
                     'link_duplicates' : link_duplicates,
-                    'nb_user_lines'   : len(add_lines),
+                    'nb_user_lines'   : len(add_lines +
+                                            add_anonymous_lines +
+                                            join_lines),
                 },
                 'points'     : data,
                 'lines'      : data_lines,
