@@ -1522,6 +1522,11 @@ def main():
         if len(args['indexation']) >= 5 and args['indexation'][4] != SKIP:
             indices = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
 
+        # Checking join bases
+        for e in join:
+            if e['with'][0] not in SOURCES:
+                error('data', e['with'][0], sorted(SOURCES.keys()))
+
         if verbose:
             print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
                     (delimiter,
