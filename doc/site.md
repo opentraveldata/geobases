@@ -287,8 +287,8 @@ and using the `set` method.
 
 ```python
 >>> geo_t.visualize()
-* Added lines for duplicates linking, total 0
 > Affecting category None     to color blue    | volume 3190
+* Added lines for duplicates linking, total 0
 
 * Now you may use your browser to visualize:
 example_map.html example_table.html
