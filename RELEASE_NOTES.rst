@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + Added map visualization possibilities on join clauses
  + new -S/--show-additional method to add fields to the current display
  + Python: new getJoinBase method to give access to external base properties
  + CLI: cache fields analysis to speed up quiet mode
