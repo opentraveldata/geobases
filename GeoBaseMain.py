@@ -317,15 +317,15 @@ def display(geob, list_of_things, omit, show, important, ref_type):
             for h, _ in list_of_things:
                 l.append(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
+            cf, ext_f = check_ext_field(geob, f)
+
+            if ext_f is None:
+                get = lambda k: geob.get(k, cf)
+            else:
+                get = lambda k: geob.get(k, cf, ext_field=ext_f)
+
             for _, k in list_of_things:
-                cf, ext_f = check_ext_field(geob, f)
-
-                if ext_f is None:
-                    v = geob.get(k, cf)
-                else:
-                    v = geob.get(k, cf, ext_field=ext_f)
-
-                l.append(fixed_width(v, col, lim, truncate))
+                l.append(fixed_width(get(k), col, lim, truncate))
 
         next(c)
         print ''.join(l)
