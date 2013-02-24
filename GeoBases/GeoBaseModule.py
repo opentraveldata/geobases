@@ -1339,19 +1339,19 @@ class GeoBase(object):
             else:
                 ext_get = lambda k : ext_b.get(k, ext_field)
 
-            if all(f not in self._subdelimiters for f in fields):
-                res = tuple(ext_get(k) for _, k in
-                            ext_b.findWith(zip(join_fields, values)))
-            else:
+            if any(f in self._subdelimiters for f in fields):
                 # This is the cartesian product of all possible combinations
                 # of sub-delimited values
-                # *flatten* is here to create the lists from values which are
+                # *iter_over_subdel* is here to create the lists from values which are
                 # not embedded in a container, before given it to *product*
-                comb = product(*(flatten(v) for v in values))
+                comb = product(*(iter_over_subdel(v, deep=False) for v in values))
 
                 res = tuple(tuple(ext_get(k) for _, k in
                                   ext_b.findWith(zip(join_fields, c)))
                             for c in comb)
+            else:
+                res = tuple(ext_get(k) for _, k in
+                            ext_b.findWith(zip(join_fields, values)))
 
         except KeyError:
             # We keep the context exception from external base
@@ -3297,20 +3297,20 @@ def recursive_split(value, splits):
 
 
 
-def flatten(value, deep=False):
+def iter_over_subdel(value, deep=False):
     """Iterator over recursive_split values.
 
-    We flatten the structure.
+    We iter over the sub elements of the structure.
 
-    >>> list(flatten(()))
+    >>> list(iter_over_subdel(()))
     []
-    >>> list(flatten('T0'))
+    >>> list(iter_over_subdel('T0'))
     ['T0']
-    >>> list(flatten(['T1', 'T1']))
+    >>> list(iter_over_subdel(['T1', 'T1']))
     ['T1', 'T1']
-    >>> list(flatten([('T2', 'T2'), 'T1']))
+    >>> list(iter_over_subdel([('T2', 'T2'), 'T1']))
     [('T2', 'T2'), 'T1']
-    >>> list(flatten([('T2', 'T2'), 'T1'], deep=True))
+    >>> list(iter_over_subdel([('T2', 'T2'), 'T1'], deep=True))
     ['T2', 'T2', 'T1']
     """
     if isinstance(value, (list, tuple, set)):
@@ -3318,7 +3318,7 @@ def flatten(value, deep=False):
             if not deep:
                 yield e
             else:
-                for ee in flatten(e):
+                for ee in iter_over_subdel(e):
                     yield ee
     else:
         yield value
