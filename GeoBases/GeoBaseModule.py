@@ -2771,8 +2771,8 @@ class GeoBase(object):
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
-                'nodes'  : nodes,
-                'meta'   : {
+                'nodes' : nodes,
+                'meta'  : {
                     'graph_fields' : graph_fields,
                     'graph_weight' : graph_weight,
                     'with_types'   : with_types,
@@ -2944,7 +2944,7 @@ class GeoBase(object):
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
-                'meta'       : {
+                'meta' : {
                     'icon_label'      : icon_label,
                     'icon_weight'     : icon_weight,
                     'icon_color'      : icon_color,
