@@ -317,7 +317,7 @@ class GeoBase(object):
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
-        self.fields = []
+        self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
         self.data   = data
         self.loaded = None # loaded stuff information, depends on sources and paths
 
@@ -428,9 +428,6 @@ class GeoBase(object):
                 raise IOError('Nothing was loaded from:%s' % \
                               ''.join('\n(*) %s' % p['file'] for p in self._paths))
 
-        else:
-            # We add those default fields if user adds data with self.set
-            self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
 
         if self._verbose:
             if isinstance(self.loaded, str):
