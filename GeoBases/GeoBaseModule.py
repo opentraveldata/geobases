@@ -2794,6 +2794,7 @@ class GeoBase(object):
                   add_anonymous_icons=None,
                   add_anonymous_lines=None,
                   link_duplicates=True,
+                  draw_join_fields=False,
                   catalog=None,
                   line_colors=None,
                   verbose=True):
@@ -2817,6 +2818,8 @@ class GeoBase(object):
                 to draw additional lines from geocodes not in the data
         :param link_duplicates: boolean toggling lines between duplicated \
                 keys
+        :param draw_join_fields: boolean toggling drawing of join fields \
+                containing geocode information
         :param catalog:     dictionary of ``{'value': 'color'}`` to have \
                 specific colors for some categories, which is computed with \
                 the ``icon_color`` field
@@ -2828,14 +2831,14 @@ class GeoBase(object):
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
         """
-        if self.hasGeoSupport():
-            geo_support = True
-        else:
-            geo_support = False
-
+        if not self.hasGeoSupport():
             if verbose:
-                print '\n/!\ Could not find fields %s in headers %s.' % \
+                print
+                print '/!\ Could not find fields %s in headers %s.' % \
                         (' and '.join(GEO_FIELDS), self.fields)
+                print '/!\ Setting draw_join_fields to True.'
+
+            draw_join_fields = True
 
         if icon_label is not None and icon_label not in self.fields:
             raise ValueError('icon_label "%s" not in fields %s.' % (icon_label, self.fields))
@@ -2902,9 +2905,41 @@ class GeoBase(object):
             self._buildIconData(key, get_label, get_weight, get_category)
             for key in from_keys
         ] + [
-            self._buildAnonymousIconData(lat_lng)
+            self._buildAnonymousIconData(lat_lng, 'Anonymous')
             for lat_lng in add_anonymous_icons
         ]
+
+        # Duplicates data
+        if link_duplicates:
+            dup_lines = self._buildLinksForDuplicates(data)
+            if verbose:
+                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
+        else:
+            dup_lines = []
+
+        # Join data
+        if draw_join_fields:
+            join_icons, join_lines = self._buildLinesDataForJoinFields(data, 'Join line', 'purple')
+            if verbose:
+                print '* Added icons for join fields, total %s' % len(join_icons)
+                print '* Added lines for join fields, total %s' % len(join_lines)
+        else:
+            join_icons, join_lines = [], []
+
+        data = data + join_icons
+
+        # Gathering data for lines
+        data_lines = [
+            self._buildLineData(l, get_label, 'Duplicates', line_colors[0])
+            for l in dup_lines
+        ] + [
+            self._buildLineData(l, get_label, 'Line', line_colors[1])
+            for l in add_lines
+        ] + [
+            self._buildAnonymousLineData(l, 'Anonymous line', line_colors[2], ['Anonymous'] * len(l))
+            for l in add_anonymous_lines
+        ] + \
+            join_lines
 
         # Icon type
         has_many  = len(data) >= 100
@@ -2918,26 +2953,6 @@ class GeoBase(object):
         # Finally, we write the colors as an element attribute
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
-
-        # Duplicates data
-        if link_duplicates:
-            dup_lines = self._buildLinksForDuplicates(data)
-            if verbose:
-                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
-        else:
-            dup_lines = []
-
-        # Gathering data for lines
-        data_lines = [
-            self._buildLineData(l, get_label, 'Duplicates', line_colors[0])
-            for l in dup_lines
-        ] + [
-            self._buildLineData(l, get_label, 'Line', line_colors[1])
-            for l in add_lines
-        ] + [
-            self._buildAnonymousLineData(l, 'Anonymous line', line_colors[2])
-            for l in add_anonymous_lines
-        ]
 
         # Dump the json geocodes
         json_name = '%s_map.json' % output
@@ -2961,7 +2976,7 @@ class GeoBase(object):
             }))
 
         # We do not render the map template if no geocode support
-        if geo_support:
+        if self.hasGeoSupport() or draw_join_fields:
             rendered = ['map', 'table']
         else:
             rendered = ['table']
@@ -2999,7 +3014,7 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildAnonymousIconData(lat_lng):
+    def _buildAnonymousIconData(lat_lng, marker_title):
         """Build data for anonymous point display.
         """
         if lat_lng is None:
@@ -3007,7 +3022,7 @@ class GeoBase(object):
 
         return {
             '__key__' : '(%s, %s)' % lat_lng,
-            '__lab__' : 'Anonymous',
+            '__lab__' : str(marker_title),
             '__wei__' : 0,
             '__cat__' : '@',
             'lat'     : lat_lng[0],
@@ -3041,18 +3056,18 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildAnonymousLineData(line, title, color):
+    def _buildAnonymousLineData(line, title, color, marker_titles):
         """Build data for anonymous line display.
         """
         data_line = []
 
-        for lat_lng in line:
+        for lat_lng, marker_title in zip(line, marker_titles):
             if lat_lng is None:
                 lat_lng = '?', '?'
 
             data_line.append({
                 '__key__' : '(%s, %s)' % lat_lng,
-                '__lab__' : 'Anonymous',
+                '__lab__' : str(marker_title),
                 'lat'     : lat_lng[0],
                 'lng'     : lat_lng[1],
             })
@@ -3091,6 +3106,37 @@ class GeoBase(object):
                 done_keys = done_keys | mkey
 
         return dup_lines
+
+
+    def _buildLinesDataForJoinFields(self, data, title, line_color):
+        """Build lines data for join fields
+        """
+        join_lines = []
+        join_icons = {}
+
+        for elem in data:
+            key = elem['__key__']
+
+            if key not in self:
+                # Possible for anonymous keys added for display
+                continue
+
+            if self.hasGeoSupport(key):
+                # The key perhaps has no geocode, but it has geocode
+                # support, meaning it has a geocode which is not filled
+                continue
+
+            comb = product(*(self.get(key, fields, ext_field='__loc__')
+                             for fields in self._join))
+
+            for c in comb:
+                for e, f in zip(c, self._join.keys()):
+                    join_icons[e] = self._buildAnonymousIconData(e, f)
+
+                join_lines.append(self._buildAnonymousLineData(c, title, line_color, self._join.keys()))
+
+        return join_icons.values(), join_lines
+
 
 
 def compute_base_icon(icon_type, has_many):
