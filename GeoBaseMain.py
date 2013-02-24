@@ -294,20 +294,29 @@ def display(geob, list_of_things, omit, show, show_additional, important, ref_ty
     c = RotatingColors(BACKGROUND_COLOR)
 
     for f in show_wo_omit:
+        # Computing clean fields, external fields, ...
+        if f == REF:
+            cf = REF
+        else:
+            cf, ext_f = check_ext_field(geob, f)
+            if ext_f is None:
+                get = lambda k: geob.get(k, cf)
+            else:
+                get = lambda k: geob.get(k, cf, ext_field=ext_f)
 
-        if f in important:
+        if cf in important:
             col = c.getEmph()
-        elif f == REF:
+        elif cf == REF:
             col = c.getHeader()
-        elif str(f).startswith('__'):
+        elif str(cf).startswith('__'):
             col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
 
-        if str(f).endswith('@raw'):
+        if str(cf).endswith('@raw'):
             col = c.convertRaw(col)  # For @raw fields
 
-        if geob.hasJoin(f):
+        if geob.hasJoin(cf):
             col = c.convertJoin(col) # For joined fields
 
         # Fields on the left
@@ -317,13 +326,6 @@ def display(geob, list_of_things, omit, show, show_additional, important, ref_ty
             for h, _ in list_of_things:
                 l.append(fixed_width(fmt_ref(h, ref_type), col, lim, truncate))
         else:
-            cf, ext_f = check_ext_field(geob, f)
-
-            if ext_f is None:
-                get = lambda k: geob.get(k, cf)
-            else:
-                get = lambda k: geob.get(k, cf, ext_field=ext_f)
-
             for _, k in list_of_things:
                 l.append(fixed_width(get(k), col, lim, truncate))
 
