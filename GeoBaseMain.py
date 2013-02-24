@@ -151,6 +151,14 @@ class RotatingColors(object):
         return tuple(current)
 
 
+    def convertJoin(self, col):
+        """Get special join color. Only change foreground color.
+        """
+        current    = list(col)
+        current[0] = 'green' if self._background == 'black' else 'cyan'
+        return tuple(current)
+
+
     @staticmethod
     def convertBold(col):
         """Get special field color. Only change bold type.
@@ -252,6 +260,9 @@ def display(geob, list_of_things, omit, show, important, ref_type):
 
         if str(f).endswith('@raw'):
             col = c.convertRaw(col)  # For @raw fields
+
+        if geob.hasJoin(f):
+            col = c.convertJoin(col) # For joined fields
 
         # Fields on the left
         l = [fixed_width(f, c.convertBold(col), lim, truncate)]
