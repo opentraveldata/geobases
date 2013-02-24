@@ -446,10 +446,14 @@ class GeoBase(object):
             if self._verbose:
                 print 'No geocode support, skipping grid...'
 
+
         # Indices
         for fields in self._indices:
             self.addIndex(fields, verbose=self._verbose)
 
+        # Join handling
+        for fields, join_data in self._join.iteritems():
+            self._loadExtBase(fields, join_data)
 
 
     def _checkProperties(self):
@@ -510,57 +514,67 @@ class GeoBase(object):
 
         self._join = new_join
 
-        # Join handling
-        for fields, value in self._join.iteritems():
 
-            if len(value) == 0:
-                raise ValueError('No value for join info "%s" (was "%s").' % \
-                                (fields, value))
-            elif len(value) == 1:
-                # Here if the user did not specify the field
-                # of the join on the external base, we assume
-                # it has the same name
-                # value <=> join_base [, join_fields]
-                join_base, join_fields = value[0], fields
+
+    def _loadExtBase(self, fields, join_data):
+        """External bases for join fields handling.
+        """
+        if len(join_data) == 0:
+            raise ValueError('Empty join_data for fields "%s" (was "%s").' % \
+                            (fields, join_data))
+        elif len(join_data) == 1:
+            # Here if the user did not specify the field
+            # of the join on the external base, we assume
+            # it has the same name
+            # join_data <=> join_base [, join_fields]
+            join_base, join_fields = join_data[0], fields
+        else:
+            join_base, join_fields = join_data[0], tuplify(join_data[1])
+
+        # Creation of external bases
+        self._join[fields] = join_base, join_fields
+
+        # When joining on multiple fields, you have to provide
+        # the same number of fields for current base to external
+        if len(fields) != len(join_fields):
+            raise ValueError('"%s" should be the same length has "%s" as join fields.' % \
+                            (fields, join_fields))
+
+        if join_base not in SOURCES:
+            raise ValueError('Wrong join data type "%s". Not in %s' % \
+                             (join_base, sorted(SOURCES.keys())))
+
+        if join_base not in self._ext_bases:
+            # To avoid recursion, we force the join to be empty
+            if join_base == self.data:
+                self._ext_bases[join_base] = self
+
+                if self._verbose:
+                    print 'Auto-referencing base "%s" [with %s] for join on %s' % \
+                            (join_base, join_fields, fields)
             else:
-                join_base, join_fields = value[0], tuplify(value[1])
-
-            # Creation of external bases
-            self._join[fields] = join_base, join_fields
-
-            # When joining on multiple fields, you have to provide
-            # the same number of fields for current base to external
-            if len(fields) != len(join_fields):
-                raise ValueError('"%s" should be the same length has "%s" as join information.' % \
-                                (fields, join_fields))
-
-            if join_base not in SOURCES:
-                raise ValueError('Wrong join data type "%s". Not in %s' % \
-                                 (join_base, sorted(SOURCES.keys())))
-
-            if join_base not in self._ext_bases:
-                # To avoid recursion, we force the join to be empty
                 self._ext_bases[join_base] = GeoBase(join_base,
-                                                     join={},
+                                                     join=[],
+
                                                      verbose=False)
 
                 if self._verbose:
                     print 'Loaded external base "%s" [with %s] for join on %s' % \
                             (join_base, join_fields, fields)
-            else:
-                if self._verbose:
-                    print 'Skipped loading external base "%s" [with %s] for join on %s' % \
-                            (join_base, join_fields, fields)
+        else:
+            if self._verbose:
+                print 'Skipped loading external base "%s" [with %s] for join on %s' % \
+                        (join_base, join_fields, fields)
 
-            ext_b = self._ext_bases[join_base]
+        ext_b = self._ext_bases[join_base]
 
-            for f in join_fields:
-                if f not in ext_b.fields:
-                    raise ValueError('Wrong join field "%s". Not in %s' % \
-                                     (f, ext_b.fields))
+        for f in join_fields:
+            if f not in ext_b.fields:
+                raise ValueError('Wrong join field "%s". Not in %s' % \
+                                 (f, ext_b.fields))
 
-            # We index the field to optimize further findWith
-            ext_b.addIndex(join_fields, verbose=self._verbose)
+        # We index the field to optimize further findWith
+        ext_b.addIndex(join_fields, verbose=self._verbose)
 
 
 
