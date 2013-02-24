@@ -503,6 +503,7 @@ _hello() {
      "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]: :->trep_format" \
      "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
      "(-s --show)"{-s,--show}"[Only display some fields in output]:*: :->show" \
+     "(-S --show-additional)"{-S,--show-additional}"[Display additional fields in output]:*: :->show_additional" \
      "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]: :->limit" \
      "(-i --indexation)"{-i,--indexation}"[Specify metadata for stdin data input.]:*: :->indexation" \
      "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not data input]:*: :->interactive" \
@@ -539,7 +540,7 @@ _hello() {
         _arguments \
             "*:value"
         ;;
-    exact_property|fuzzy_property|phonetic_property|show|omit)
+    exact_property|fuzzy_property|phonetic_property|show|show_additional|omit)
         _fields "$base" "field"
         ;;
     phonetic_method)
