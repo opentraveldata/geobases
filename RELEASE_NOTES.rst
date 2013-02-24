@@ -7,6 +7,13 @@ V5
 
 + 5.0 :
 
+ + new -S/--show-additional method to add fields to the current display
+ + Python: new getJoinBase method to give access to external base properties
+ + CLI: cache fields analysis to speed up quiet mode
+ + CLI: properly flatten all nested structure in quiet mode
+ + CLI: possibility to show external fields from --show using field:external_field syntax
+ + CLI: display join fields wih a different color
+ + autoreference for autojoin to avoid loading ori_por twice
  + new hasJoin method, hasIndexOn is renamed hasIndex
  + CLI: possibility to add subdelimiters and join info with headers{base:field}{subdel} syntax
  + multiple join clause implementation on multiple fields, integrated with subdelimiters
