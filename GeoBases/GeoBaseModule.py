@@ -546,7 +546,7 @@ class GeoBase(object):
 
         if join_base in self._ext_bases:
             if self._verbose:
-                print 'Skipped loading external base "%s" [with %s] for join on %s' % \
+                print '(Join) skipped [already done] load for external base "%s" [with %s] for join on %s' % \
                         (join_base, join_fields, fields)
         else:
             # To avoid recursion, we force the join to be empty
@@ -554,7 +554,7 @@ class GeoBase(object):
                 self._ext_bases[join_base] = self
 
                 if self._verbose:
-                    print 'Auto-referencing base "%s" [with %s] for join on %s' % \
+                    print '(Join) auto-referenced base "%s" [with %s] for join on %s' % \
                             (join_base, join_fields, fields)
             else:
                 self._ext_bases[join_base] = GeoBase(join_base,
@@ -562,7 +562,7 @@ class GeoBase(object):
                                                      verbose=False)
 
                 if self._verbose:
-                    print 'Loaded external base "%s" [with %s] for join on %s' % \
+                    print '(Join) loaded external base "%s" [with %s] for join on %s' % \
                             (join_base, join_fields, fields)
 
         ext_b = self._ext_bases[join_base]
