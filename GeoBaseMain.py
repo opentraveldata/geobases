@@ -1699,10 +1699,10 @@ def main():
             error('property', args['phonetic_property'], g.data, sorted(g.fields))
 
     # Failing on unknown fields
-    fields_to_test = graph_fields + [
+    fields_to_test = [
         f for f in (icon_label, icon_weight, icon_color, interactive_field, graph_weight)
         if f is not None
-    ]
+    ] + graph_fields
 
     for field in args['show'] + args['show_additional'] + args['omit'] + fields_to_test:
         field, ext_field = check_ext_field(g, field)
