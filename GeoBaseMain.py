@@ -357,19 +357,27 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
     elif header == 'CH':
         print '#%s' % j_headers
 
+    # Caching getters
+    getters = {}
+    for f in show_wo_omit:
+        if f == REF:
+            continue
+        cf, ext_f = check_ext_field(geob, f)
+        if ext_f is None:
+            getters[f] = cf, ext_f, lambda k, cf, ext_f: geob.get(k, cf)
+        else:
+            getters[f] = cf, ext_f, lambda k, cf, ext_f: geob.get(k, cf, ext_field=ext_f)
+
     for h, k in list_of_things:
         l = []
         for f in show_wo_omit:
             if f == REF:
                 l.append(fmt_ref(h, ref_type, no_symb=True))
             else:
-                cf, ext_f = check_ext_field(geob, f)
+                # Get from getters cache
+                cf, ext_f, get = getters[f]
 
-                if ext_f is None:
-                    v = geob.get(k, cf)
-                else:
-                    v = geob.get(k, cf, ext_field=ext_f)
-
+                v = get(k, cf, ext_f)
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
