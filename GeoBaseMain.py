@@ -537,8 +537,7 @@ def generate_headers(n):
         yield 'H%s' % i
 
 
-ADD_INFO_REG   = re.compile("([^{}]*)({?[^{}]*}?)({?[^{}]*}?)")
-ADD_INFO_SPLIT = ':'
+ADD_INFO_REG = re.compile("([^{}]*)({?[^{}]*}?)({?[^{}]*}?)")
 
 def clean_headers(headers):
     """
