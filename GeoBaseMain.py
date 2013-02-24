@@ -189,6 +189,34 @@ class RotatingColors(object):
         return ('magenta', None, [])
 
 
+def flatten(value, level=0):
+    """Flatten nested structures into str.
+
+    >>> flatten(())
+    ''
+    >>> flatten('T0')
+    'T0'
+    >>> flatten(['T1', 'T1'])
+    'T1/T1'
+    >>> flatten([('T2', 'T2'), 'T1'])
+    'T2:T2/T1'
+    >>> flatten([('T2', ['T3', 'T3']), 'T1'])
+    'T2:T3,T3/T1'
+    """
+    splitters = ['/', ':', ',']
+
+    if level >= len(splitters):
+        splitter = '|'
+    else:
+        splitter = splitters[level]
+
+    level += 1
+
+    if isinstance(value, (list, tuple, set)):
+        return splitter.join(flatten(e, level) for e in value)
+    else:
+        return str(value)
+
 
 def fmt_ref(ref, ref_type, no_symb=False):
     """
@@ -314,8 +342,8 @@ def display_quiet(geob, list_of_things, omit, show, ref_type, delim, header):
                 # Small workaround to display nicely lists in quiet mode
                 # Fields @raw are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
-                if str(f).startswith('__') and isinstance(v, (list, tuple, set)):
-                    l.append(SPLIT.join(str(el) for el in v))
+                if isinstance(v, (list, tuple, set)):
+                    l.append(flatten(v))
                 else:
                     l.append(str(v))
 
@@ -1883,8 +1911,14 @@ def main():
             print dedent(warn_msg),
 
 
+def _test():
+    """When called directly, launching doctests.
+    """
+    import doctest
+    doctest.testmod()
+
 
 if __name__ == '__main__':
-
+    #_test()
     main()
 
