@@ -1597,15 +1597,15 @@ def main():
     if args['exact'] is not None:
         for field in exact_properties:
             if field not in g.fields:
-                error('property', field, g.data, g.fields)
+                error('property', field, g.data, sorted(g.fields))
 
     if args['fuzzy'] is not None:
         if args['fuzzy_property'] not in g.fields:
-            error('property', args['fuzzy_property'], g.data, g.fields)
+            error('property', args['fuzzy_property'], g.data, sorted(g.fields))
 
     if args['phonetic'] is not None:
         if args['phonetic_property'] not in g.fields:
-            error('property', args['phonetic_property'], g.data, g.fields)
+            error('property', args['phonetic_property'], g.data, sorted(g.fields))
 
     # Failing on unknown fields
     fields_to_test = graph_fields + [
@@ -1615,7 +1615,7 @@ def main():
 
     for field in args['show'] + args['omit'] + fields_to_test:
         if field not in [REF] + g.fields:
-            error('field', field, g.data, [REF] + g.fields)
+            error('field', field, g.data, sorted([REF] + g.fields))
 
     # Testing icon_type from -M
     if icon_type not in ALLOWED_ICON_TYPES:
