@@ -3202,7 +3202,7 @@ class GeoBase(object):
 
                     join_icons[jkey] = {
                         '__key__' : jkey,
-                        '__lab__' : '%s [join on %s for %s]' % \
+                        '__lab__' : '%-6s [join on %s for %s]' % \
                                 (jkey, '/'.join(fields), '/'.join(values)),
                         '__wei__' : get_weight(key),   # *key*, not *jkey*
                         '__cat__' : get_category(key), # *key*, not *jkey*
@@ -3212,7 +3212,7 @@ class GeoBase(object):
 
                     data_line.append({
                         '__key__' : jkey,
-                        '__lab__' : '%s [join on %s for %s]' % \
+                        '__lab__' : '%-6s [join on %s for %s]' % \
                                 (jkey, '/'.join(fields), '/'.join(values)),
                         'lat'     : lat_lng[0],
                         'lng'     : lat_lng[1],
