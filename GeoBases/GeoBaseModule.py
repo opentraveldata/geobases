@@ -3000,9 +3000,9 @@ class GeoBase(object):
                     'icon_type'       : icon_type,
                     'base_icon'       : base_icon,
                     'link_duplicates' : link_duplicates,
-                    'nb_user_lines'   : len(add_lines +
-                                            add_anonymous_lines +
-                                            join_lines),
+                    'toggle_lines'    : True if (add_lines or \
+                                                 add_anonymous_lines or \
+                                                 not self.hasGeoSupport()) else False,
                 },
                 'points'     : data,
                 'lines'      : data_lines,

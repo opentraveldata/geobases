@@ -192,7 +192,7 @@ function initialize(jsonData) {
     var icon_type       = jsonData.meta.icon_type;
     var base_icon       = jsonData.meta.base_icon;
     //var link_duplicates = jsonData.meta.link_duplicates;
-    var nb_user_lines   = jsonData.meta.nb_user_lines;
+    var toggle_lines    = jsonData.meta.toggle_lines;
 
     var with_icons   = icon_type   !== null;
     var with_circles = icon_weight !== null;
@@ -451,7 +451,7 @@ function initialize(jsonData) {
 
     $('#lines').click(toggleLines);
 
-    if (nb_user_lines !== 0) {
+    if (toggle_lines) {
         // If the user defined some lines in input
         // We do not wait for him to click on the button
         toggleLines();
