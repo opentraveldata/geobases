@@ -2937,12 +2937,12 @@ class GeoBase(object):
                 if verbose:
                     print '* Detected geocode support in join fields %s.' % str(fields_with_geo_join)
 
-                join_icons, join_lines = self._buildLinesDataForJoinFields(fields_with_geo_join,
-                                                                           data,
-                                                                           'Join line',
-                                                                           line_colors[3],
-                                                                           get_weight,
-                                                                           get_category)
+                join_icons, join_lines = self._buildJoinLinesData(fields_with_geo_join,
+                                                                  data,
+                                                                  'Join line',
+                                                                  line_colors[3],
+                                                                  get_weight,
+                                                                  get_category)
                 if verbose:
                     print '* Added icons for join fields, total %s' % len(join_icons)
                     print '* Added lines for join fields, total %s' % len(join_lines)
@@ -3139,7 +3139,7 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildLinesDataForJoinFields(self, fields_with_geo_join, data, title, line_color, get_weight, get_category):
+    def _buildJoinLinesData(self, fields_with_geo_join, data, title, line_color, get_weight, get_category):
         """Build lines data for join fields
         """
         join_lines = []
