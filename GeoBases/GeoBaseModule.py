@@ -109,7 +109,7 @@ LNG_FIELD  = 'lng'
 GEO_FIELDS = (LAT_FIELD, LNG_FIELD)
 
 # Default grid size
-GRID_RADIUS = 50 #kms
+GRID_RADIUS = 50 # kms
 
 # Default min match for fuzzy searches
 MIN_MATCH  = 0.75
