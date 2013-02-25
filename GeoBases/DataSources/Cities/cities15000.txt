@@ -2210,7 +2210,6 @@
 6318694	Simões Filho	Simoes Filho		-12.78444	-38.40389	P	PPL	BR		05	2930709			116662		33	America/Bahia	2012-08-03
 6318696	Sinop	Sinop	OPS	-11.86417	-55.5025	P	PPL	BR		14	5107909			116013		378	America/Cuiaba	2013-01-09
 6693804	Cambebba	Cambebba		-3.62092	-38.82913	P	PPLG	BR		06	2303709			0		41	America/Fortaleza	2012-08-03
-7732959	Disney	Disney		-20.30285	-40.33433	P	PPLF	BR		08	3205309			234234		188	America/Sao_Paulo	2012-08-03
 7874479	Trindade	Trindade		-27.58612	-48.52335	P	PPLL	BR		26	4205407			15100	20	10	America/Sao_Paulo	2012-08-03
 7874492	Freguesia do Ribeirao da Ilha	Freguesia do Ribeirao da Ilha		-27.71773	-48.56266	P	PPLL	BR		26	4205407			21000	3	13	America/Sao_Paulo	2012-08-03
 3571824	Nassau	Nassau	City of Nassau,NAS,Nasau,Nassaou,Nassau,Nassau City,na sao,naso,nasso,Νασσάου,Нассау,נסאו,ናሶ,ナッソー,拿骚,나소	25.05823	-77.34306	P	PPLC	BS		23				227940		5	America/Nassau	2010-05-30
@@ -2916,7 +2915,7 @@
 1280737	Lhasa	Lhasa	LXA,La-sa-shih,Lasa,Lhasa,Lhasa Shi,Lhassa,Lkhasa,la sa,la sa shi,lasa,lassa,lhsh,rasa,Лхаса,להסה,لاسا شەھىرى,লাসা,ལྷ་ས་,ラサ,拉萨,拉萨市,라사,라싸	29.65	91.1	P	PPLA	CN		14				118721		3651	Asia/Urumqi	2012-01-18
 1280757	Laojunmiao	Laojunmiao	Lao-chun-miao,Lao-chün-miao,Laojunmiao,Laojunmiao Zhen,Yu-men-shih,Yu-men-yu-k'uang-ch'u,Yumen,Yü-men-shih,Yü-men-yu-k’uang-ch’ü,lao jun miao,lao jun miao zhen,yu men,玉门,老君庙,老君庙镇	39.83333	97.73333	P	PPLA4	CN		15				84769		2026	Asia/Chongqing	2012-01-18
 1280849	Kashi	Kashi	K'a-shih,K'o-shih,KHG,Kachgar,Kaschgar,Kasgar,Kashgar,Kashgar Kona Shahr,Kashgar Kone Shahr,Kashi,Kashi Shi,Kaszgar,Kaxgar,Kaşgar,Kona Shahr,K̩əxk̩ər,K’a-shih,K’o-shih,Qeshqer,Shu-fu,Su-fu,kashugaru,kasyugaleu,ke shen,ke shen shi,Кашгар,Қәшқәр,قەشقەر,カシュガル,喀什,喀什市,카슈가르	39.45472	75.97972	P	PPL	CN		13				274717		1288	Asia/Kashgar	2012-01-18
-1280957	Jiayuguan	Jiayuguan	Ch'ia-hsu-kuan,Chia-yu-kuan,Chia-yü-kuan,Chiayukwan,Ch’ia-hsu-kuan,Czjajujguan',JGN,Jiayuguan,Kia-yu-kuan,Kiayukwan,Tseyasyuyguan',Tseyasyuyguan’,Yumen,jia yu guan,jia yu guan shi,Цзяюйгуань,嘉峪关,嘉峪关市	39.81667	98.3	P	PPL	CN		15				122396		1623	Asia/Chongqing	2012-01-18
+1280957	Jiayuguan	Jiayuguan	Ch'ia-hsu-kuan,Chia-yu-kuan,Chia-yü-kuan,Chiayukwan,Ch’ia-hsu-kuan,Czjajujguan',JGN,Jiayuguan,Kia-yu-kuan,Kiayukwan,Tseyasyuyguan',Tseyasyuyguan’,Yumen,jia yu guan,jia yu guan shi,Цзяюйгуань,嘉峪关,嘉峪关市	39.81121	98.28618	P	PPL	CN		15				122396		1621	Asia/Chongqing	2013-02-23
 1281019	Hotan	Hotan	HTN,Ho-t'ien,Ho-t'ien-chen,Ho-tien-hsien,Ho-t’ien,Ho-t’ien-chen,Hotan,Hotən,Khotan,Xoten,he tian shi,hotan shi,Хотан,Хотән,خوتەن,خوتەن شەھىرى,ホータン市,和田市	37.09972	79.92694	P	PPL	CN	CN	13				114000		1393	Asia/Kashgar	2012-01-18
 1281368	Dêqên	Deqen	Dechen,Deqing,de qing,Дечен,བདེ་ཆེན,德庆	29.96178	90.71875	P	PPL	CN		14				62400		3974	Asia/Urumqi	2011-02-22
 1529102	Urunchi	Urunchi	Dikhua,Ouroumtchi,Ti-hua,Ti-hua-ch'eng,Ti-hua-ch’eng,Ti-hua-hsien,Ti-hua-shih,Tihwa,Tihwafu,Tikhua,Tikhva,UEruemqi,URC,Urumchi,Urumci,Urumptsi,Urumqi,Urumqi Shi,Urumtschi,Urumtsi,Urumutsi,Urumçi,Urumči,Urunchi,Wu-lu-mu-ch'i,Wu-lu-mu-ch'i-shih,Wu-lu-mu-ch’i,Wu-lu-mu-ch’i-shih,Wulumuqi,Wurumch'ih,Wurumch’ih,awrwmchy,awrwmtshy,ulumuchi,urumuchi,wu lu mu qi,wu lu mu qi shi,Ürümchi,Ürümqi,Ürümqi Shi,Урумчи,Үрүмчи,أورومتشي,ئۈرۈمچى,ئۈرۈمچى شەھىرى,ئۈرۈمچی,اورومچی,ウルムチ,乌鲁木齐,乌鲁木齐市,우루무치	43.80096	87.60046	P	PPLA	CN		13				1508225		862	Asia/Urumqi	2012-11-26
@@ -6987,7 +6986,7 @@
 3028808	Cannes	Cannes	CEQ,Canas,Canes,Cannes,Canua,Chalier,Châlier,Gorad Kany,Kan,Kanai,Kann,Kannas,Kannes,Kanni,Kanntae,Kanny,jia na,kaina,kan,kan'nu,kana,kn,Κάννες,Горад Каны,Кан,Канни,Каннтæ,Канны,קאן,كان,کان,کن,कान,कैन,கான்,กาน,კანი,カンヌ,戛纳,칸	43.55135	7.01275	P	PPL	FR		B8	06	061	06029	70011	0	11	Europe/Paris	2011-11-02
 3029030	Cambrai	Cambrai	Cambrai,Cambria,Kambre,XCB,kanbure,Камбре,カンブレー	50.16667	3.23333	P	PPLA3	FR		B4	59	592	59122	36492		61	Europe/Paris	2011-11-02
 3029096	Caluire-et-Cuire	Caluire-et-Cuire	Caluire,Caluire-et-Cuire,Kalir e Kir,Scevola,Scévola,karyuiru=e=kyuiru,Калир е Кир,カリュイール＝エ＝キュイール	45.79041	4.84112	P	PPL	FR		B9	69	691	69034	42763		251	Europe/Paris	2012-01-18
-3029162	Calais	Calais	Calais,Caletum,Kale,Kales,jia lai,kare,Кале,קאלה,カレー,加来	50.9581	1.85205	P	PPLA3	FR		B4	62	626	62193	74433		5	Europe/Paris	2011-11-02
+3029162	Calais	Calais	CQF,Calais,Caletum,Kale,Kales,jia lai,kare,Кале,קאלה,カレー,加来	50.9581	1.85205	P	PPLA3	FR		B4	62	626	62193	74433		5	Europe/Paris	2013-02-23
 3029213	Cahors	Cahors	Cahors,Caors,Divona Cadurcorum,Kagor,Kaor,ZAO,kaoru,Кагор,Каор,カオール	44.4491	1.43663	P	PPLA2	FR		B3	46	461	46042	23331		142	Europe/Paris	2011-11-02
 3029227	Cagnes-sur-Mer	Cagnes-sur-Mer	Cagnes,Cagnes-sur-Mer,Kan sir Mer,Kan sjur Mer,XCG,Кан сюр Мер,Кањ сир Мер	43.6646	7.15339	P	PPL	FR		B8	06	061	06027	46923		15	Europe/Paris	2012-01-18
 3029241	Caen	Caen	CFR,Caen,Kan,ka ang,kan,Кан,カーン,卡昂	49.18585	-0.35912	P	PPLA	FR		99	14	142	14118	110624		21	Europe/Paris	2011-12-08
@@ -7333,7 +7332,7 @@
 2641609	New Milton	New Milton		50.75601	-1.6658	P	PPL	GB		ENG	F2	24UJ		23753		40	Europe/London	2012-03-29
 2641616	Newmarket	Newmarket	Newmarket	52.24467	0.40418	P	PPL	GB		ENG	N5	42UC		17324		28	Europe/London	2010-08-03
 2641617	New Malden	New Malden	New Malden	51.39915	-0.2556	P	PPLX	GB		ENG	GLA	G7		23818		19	Europe/London	2012-05-18
-2641673	Newcastle upon Tyne	Newcastle upon Tyne	N'jukasl,N'jukasl-apon-Tajn,NCL,Neuchate,Neuchâté,Newcastle,Newcastle upon Tyne,Newcastle-on-Tyne,Newcastle-upon-Tyne,nywkasl,nywkasl abwn tayn,tai en he pan niu ka si er,Ньюкасл,Ньюкасл-апон-Тайн,ניוקאסל,نيوكاسل أبون تاين,نیوکاسل,ニューカッスル・アポン・タイン,泰恩河畔纽卡斯尔	54.97328	-1.61396	P	PPLA2	GB		ENG	I7			192382		54	Europe/London	2012-07-04
+2641673	Newcastle upon Tyne	Newcastle upon Tyne	N'jukasl,N'jukasl-apon-Tajn,NCL,Neuchate,Neuchâté,Newcastle,Newcastle upon Tyne,Newcastle-on-Tyne,Newcastle-upon-Tyne,nywkasl,nywkasl abwn tayn,tai en he pan niu ka si er,Ньюкасл,Ньюкасл-апон-Тайн,ניוקאסל,نيوكاسل أبون تاين,نیوکاسل,ニューカッスル・アポン・タイン,泰恩河畔纽卡斯尔	54.97328	-1.61396	P	PPLA2	GB		ENG	I7			192382		54	Europe/London	2013-02-23
 2641674	Newcastle under Lyme	Newcastle under Lyme	Newcastle under Lyme,Newcastle-under-Lyme	53	-2.23333	P	PPL	GB		ENG	M9	41UE		75794		160	Europe/London	2012-01-17
 2641689	Newbury	Newbury	N'juberi,Ньюбери	51.40033	-1.32059	P	PPLA2	GB		ENG	P4	00MB062		33065		80	Europe/London	2011-02-23
 2641690	Newburn	Newburn		54.9876	-1.74415	P	PPL	GB		ENG	I7	00EM073		41347		40	Europe/London	2011-03-03
@@ -16972,7 +16971,7 @@
 507599	Pokrov	Pokrov	POKROV,Pokrov,ПОКРОВ,Покров	55.91797	39.17242	P	PPL	RU		83				15867		132	Europe/Moscow	2012-01-17
 507624	Pokhvistnevo	Pokhvistnevo	Pokhvistnevo,Похвистнево	53.65237	52.12738	P	PPL	RU		65				28300		69	Europe/Samara	2011-12-19
 508034	Podporozh’ye	Podporozh'ye	Podporoshje,Podporozh'e,Podporozh'ye,Podporozh'ye-Verkhneye,Podporozh’ye,Podporozh’ye-Verkhneye,Podporozje,Подпорожье	60.91124	34.17064	P	PPL	RU		42				19600		56	Europe/Moscow	2012-01-17
-508101	Podol’sk	Podol'sk	Podol'sk,Podolsk,Podol’sk,Подольск	55.42418	37.55472	P	PPL	RU		47	508091			179400		162	Europe/Moscow	2013-01-25
+508101	Podol’sk	Podol'sk	OSF,Podol'sk,Podolsk,Podol’sk,Подольск	55.42418	37.55472	P	PPL	RU		47	508091			179400		162	Europe/Moscow	2013-02-23
 508656	Pochëp	Pochep	Pochep,Pocher,Pochjop,Pochëp,Potschep,Potsjep,Почеп,Почёп	52.9336	33.4464	P	PPL	RU		10				15100		163	Europe/Moscow	2012-01-17
 509052	Plavsk	Plavsk	PLAVSK,Plavsk,Plavskiy,Plavskoye,Plawsk,ПЛАВСК,Плавск	53.70944	37.29194	P	PPL	RU		76				16763		180	Europe/Moscow	2012-01-17
 509598	Pikalëvo	Pikalevo	Pikalevo,Pikaljovo,Pikalëvo,Пикалево,Пикалёво	59.51833	34.16639	P	PPL	RU		42				22072		184	Europe/Moscow	2012-01-17
@@ -21146,7 +21145,7 @@
 5099292	Hopatcong Hills	Hopatcong Hills		40.94399	-74.67072	P	PPL	US		NJ	037			16267	336	346	America/New_York	2006-01-17
 5099724	Irvington	Irvington		40.73232	-74.23487	P	PPL	US		NJ	013			61323	47	48	America/New_York	2006-01-17
 5099738	Iselin	Iselin		40.57538	-74.32237	P	PPL	US		NJ	023			18695	19	22	America/New_York	2011-05-14
-5099836	Jersey City	Jersey City	Dzhersi-Siti,Джерси-Сити	40.72816	-74.07764	P	PPLA2	US		NJ	017			247597	9	11	America/New_York	2011-05-14
+5099836	Jersey City	Jersey City	Dzhersi-Siti,JEC,Джерси-Сити	40.72816	-74.07764	P	PPLA2	US		NJ	017			247597	9	11	America/New_York	2013-02-23
 5099967	Kearny	Kearny	Kerni,Керни	40.76843	-74.14542	P	PPL	US		NJ	017			40684	32	35	America/New_York	2011-05-14
 5100280	Lakewood	Lakewood	Lejkvud,Лейквуд	40.09789	-74.21764	P	PPL	US		NJ	029			53805	23	23	America/New_York	2011-05-14
 5100506	Linden	Linden	LDJ,Linden,Линден	40.62205	-74.24459	P	PPL	US		NJ	039			40499	5	6	America/New_York	2011-05-14
