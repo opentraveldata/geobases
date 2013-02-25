@@ -250,9 +250,9 @@ class GeoBase(object):
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` \
                 dict to define subdelimiters
         - join          : ``[]`` by default, list of dict defining join \
-                clauses. A join clause is a dict ``{ fields : [base, \
-                fields]}``, for example ``{ 'country_code' : ['countries', \
-                'code']}``
+                clauses. A join clause is a dict ``{ 'fields' : fields, \
+                'with' : [base, fields]}``, for example ``{ 'fields' : \
+                'country_code', 'with' : ['countries', 'code']}``
         - quotechar     : ``'"'`` by default, this is the string defined for \
                 quoting
         - limit         : ``None`` by default, put an int if you want to \
@@ -2817,9 +2817,9 @@ class GeoBase(object):
                 ``[[(lat1, lng1), (lat2, lng2), ..., (latN, lngN)], ...]``,  \
                 to draw additional lines from geocodes not in the data
         :param link_duplicates: boolean toggling lines between duplicated \
-                keys
+                keys, default ``True``
         :param draw_join_fields: boolean toggling drawing of join fields \
-                containing geocode information
+                containing geocode information, default ``False``
         :param catalog:     dictionary of ``{'value': 'color'}`` to have \
                 specific colors for some categories, which is computed with \
                 the ``icon_color`` field
