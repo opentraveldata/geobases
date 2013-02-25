@@ -2919,25 +2919,25 @@ class GeoBase(object):
             # We start goin over the self.fields to preserve fields order
             # then we look for potential join on multiple fields
             # in self._join.keys()
-            fields_with_geo_join = []
+            geo_join_fields_list = []
 
             for fields in self.fields + self._join.keys():
                 fields = tuplify(fields)
-                if fields in fields_with_geo_join:
+
+                if fields in geo_join_fields_list:
                     continue
+
                 if self.hasJoin(fields):
                     if self.getJoinBase(fields).hasGeoSupport():
-                        fields_with_geo_join.append(fields)
+                        geo_join_fields_list.append(fields)
 
-            if not fields_with_geo_join:
+
+            if not geo_join_fields_list:
                 if verbose:
                     print '* Could not detect geocode support in join fields.'
 
             else:
-                if verbose:
-                    print '* Detected geocode support in join fields %s.' % str(fields_with_geo_join)
-
-                join_icons, join_lines = self._buildJoinLinesData(fields_with_geo_join,
+                join_icons, join_lines = self._buildJoinLinesData(geo_join_fields_list,
                                                                   data,
                                                                   'Join line',
                                                                   line_colors[3],
@@ -3145,12 +3145,12 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildJoinLinesData(self, fields_with_geo_join, data, title, line_color, get_weight, get_category, verbose=True):
+    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_weight, get_category, verbose=True):
         """Build lines data for join fields
         """
         # Precaution on fields type
-        fields_with_geo_join = [
-            tuplify(fields) for fields in fields_with_geo_join
+        geo_join_fields_list = [
+            tuplify(fields) for fields in geo_join_fields_list
         ]
 
         join_lines = []
@@ -3170,15 +3170,15 @@ class GeoBase(object):
 
             joined_values = [
                 self.get(key, fields, ext_field='__key__')
-                for fields in fields_with_geo_join
+                for fields in geo_join_fields_list
             ]
 
             # Cartesian product is made on non-empty join results
             if verbose:
-                for v, fields in zip(joined_values, fields_with_geo_join):
+                for v, fields in zip(joined_values, geo_join_fields_list):
                     if not v:
                         values = [str(self.get(key, f)) for f in fields]
-                        print 'Could not retrieve data from join on %s for %s' % \
+                        print 'Could not retrieve data from join on "%s" for "%s".' % \
                                 ('/'.join(fields), '/'.join(values))
 
             comb = product(*[v for v in joined_values if v])
@@ -3191,7 +3191,7 @@ class GeoBase(object):
 
                 data_line = []
 
-                for jkey, fields in zip(c, fields_with_geo_join):
+                for jkey, fields in zip(c, geo_join_fields_list):
 
                     lat_lng = self.getJoinBase(fields).getLocation(jkey)
 
