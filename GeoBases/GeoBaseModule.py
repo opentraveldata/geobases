@@ -3148,6 +3148,11 @@ class GeoBase(object):
     def _buildJoinLinesData(self, fields_with_geo_join, data, title, line_color, get_weight, get_category, verbose=True):
         """Build lines data for join fields
         """
+        # Precaution on fields type
+        fields_with_geo_join = [
+            tuplify(fields) for fields in fields_with_geo_join
+        ]
+
         join_lines = []
         join_icons = {}
 
@@ -3193,9 +3198,6 @@ class GeoBase(object):
                     if lat_lng is None:
                         lat_lng = '?', '?'
 
-                    # Precaution on fields type, should not necessary since
-                    # these are from self._join
-                    fields = tuplify(fields)
                     values = [str(self.get(key, f)) for f in fields]
 
                     join_icons[jkey] = {
