@@ -3007,7 +3007,12 @@ class GeoBase(object):
             }))
 
         # We do not render the map template if nothing to see
-        if data or data_lines:
+        nb_geocoded_points = 0
+        for elem in data:
+            if (elem['lat'], elem['lng']) != ('?', '?'):
+                nb_geocoded_points += 1
+
+        if nb_geocoded_points > 0 or data_lines:
             rendered = ['map', 'table']
         else:
             rendered = ['table']
