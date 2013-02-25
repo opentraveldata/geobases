@@ -923,11 +923,11 @@ if is_in_path('google-chrome'):
     BROWSER = 'google-chrome'
 
 # Defaults for map
-DEF_LABEL_FIELDS    = ('name',       'country_name', '__key__')
-DEF_WEIGHT_FIELDS   = ('page_rank',  'population',   None)
-DEF_COLOR_FIELDS    = ('raw_offset', 'fclass',       None)
-DEF_ICON_TYPE       = 'auto' # icon type: small, big, auto, ...
-DEF_LINK_DUPLICATES = True
+DEF_LABEL_FIELDS     = ('name',       'country_name', '__key__')
+DEF_WEIGHT_FIELDS    = ('page_rank',  'population',   None)
+DEF_COLOR_FIELDS     = ('raw_offset', 'fclass',       None)
+DEF_ICON_TYPE        = 'auto' # icon type: small, big, auto, ...
+DEF_LINK_DUPLICATES  = True
 DEF_DRAW_JOIN_FIELDS = False
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
@@ -1608,11 +1608,11 @@ def main():
         args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
     # Reading map options
-    icon_label      = best_field(DEF_LABEL_FIELDS,  g.fields)
-    icon_weight     = best_field(DEF_WEIGHT_FIELDS, g.fields)
-    icon_color      = best_field(DEF_COLOR_FIELDS,  g.fields)
-    icon_type       = DEF_ICON_TYPE
-    link_duplicates = DEF_LINK_DUPLICATES
+    icon_label       = best_field(DEF_LABEL_FIELDS,  g.fields)
+    icon_weight      = best_field(DEF_WEIGHT_FIELDS, g.fields)
+    icon_color       = best_field(DEF_COLOR_FIELDS,  g.fields)
+    icon_type        = DEF_ICON_TYPE
+    link_duplicates  = DEF_LINK_DUPLICATES
     draw_join_fields = DEF_DRAW_JOIN_FIELDS
 
     if len(args['map_options']) >= 1 and args['map_options'][0] != SKIP:
