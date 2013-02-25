@@ -2931,6 +2931,10 @@ class GeoBase(object):
                     if self.getJoinBase(fields).hasGeoSupport():
                         geo_join_fields_list.append(fields)
 
+                        if verbose:
+                            print '* Detected geocode support in join fields %s [%s].' % \
+                                    (str(fields), str(self._join[fields]))
+
 
             if not geo_join_fields_list:
                 if verbose:
