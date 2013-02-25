@@ -2823,10 +2823,11 @@ class GeoBase(object):
         :param catalog:     dictionary of ``{'value': 'color'}`` to have \
                 specific colors for some categories, which is computed with \
                 the ``icon_color`` field
-        :param line_colors: tuple of 3 colors to change the default lines \
+        :param line_colors: tuple of 4 colors to change the default lines \
                 color, the three values are for the three line types: those \
                 computed with ``link_duplicates``, those given with \
-                ``add_lines``, those given with ``add_anonymous_lines``
+                ``add_lines``, those given with ``add_anonymous_lines``, \
+                those computed with ``draw_join_fields``
         :param verbose:     toggle verbosity
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
@@ -2894,10 +2895,10 @@ class GeoBase(object):
             }
 
         if line_colors is None:
-            line_colors = 'blue', 'orange', 'yellow'
+            line_colors = 'blue', 'orange', 'yellow', 'purple'
 
-        if len(line_colors) != 3:
-            raise ValueError('line_colors must a tuple of 3 colors, was %s.' % \
+        if len(line_colors) != 4:
+            raise ValueError('line_colors must a tuple of 4 colors, was %s.' % \
                              str(line_colors))
 
         # Storing json data
@@ -2919,7 +2920,7 @@ class GeoBase(object):
 
         # Join data
         if draw_join_fields:
-            join_icons, join_lines = self._buildLinesDataForJoinFields(data, 'Join line', 'purple')
+            join_icons, join_lines = self._buildLinesDataForJoinFields(data, 'Join line', line_colors[4])
             if verbose:
                 print '* Added icons for join fields, total %s' % len(join_icons)
                 print '* Added lines for join fields, total %s' % len(join_lines)
