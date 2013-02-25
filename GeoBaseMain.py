@@ -928,6 +928,7 @@ DEF_WEIGHT_FIELDS   = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS    = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE       = 'auto' # icon type: small, big, auto, ...
 DEF_LINK_DUPLICATES = True
+DEF_DRAW_JOIN_FIELDS = False
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
@@ -1290,7 +1291,7 @@ def handle_args():
 
     parser.add_argument('-M', '--map-options',
         help = dedent('''\
-        5 optional arguments: label, weight, color, icon, duplicates.
+        6 optional arguments: label, weight, color, icon, duplicates, draw_join_fields.
             1) label is the field to display on map points.
                Default is %s depending on fields.
             2) weight is the field used to draw circles around points.
@@ -1308,11 +1309,16 @@ def handle_args():
             5) duplicates is a boolean to toggle lines between duplicated keys.
                Default is %s. Put %s as a truthy value,
                any other value will be falsy.
+            6) draw_join_fields is a boolean to toggle lines drawing when
+               scanning joined fields who may have geocoding information.
+               Default is %s. Put %s as a truthy value,
+               any other value will be falsy.
         For any field, you may put "%s" to leave the default value.
         Example: -M _ population _ __none__ _
         ''' % ((fmt_or(DEF_LABEL_FIELDS), fmt_or(DEF_WEIGHT_FIELDS), DISABLE,
                 fmt_or(DEF_COLOR_FIELDS), DISABLE, DISABLE, DEF_ICON_TYPE,
-                DEF_LINK_DUPLICATES, fmt_or(TRUTHY), SKIP))),
+                DEF_LINK_DUPLICATES, fmt_or(TRUTHY), DEF_DRAW_JOIN_FIELDS,
+                fmt_or(TRUTHY), SKIP))),
         nargs = '+',
         metavar = 'FIELDS',
         default = [])
@@ -1607,6 +1613,7 @@ def main():
     icon_color      = best_field(DEF_COLOR_FIELDS,  g.fields)
     icon_type       = DEF_ICON_TYPE
     link_duplicates = DEF_LINK_DUPLICATES
+    draw_join_fields = DEF_DRAW_JOIN_FIELDS
 
     if len(args['map_options']) >= 1 and args['map_options'][0] != SKIP:
         icon_label = args['map_options'][0]
@@ -1622,6 +1629,9 @@ def main():
 
     if len(args['map_options']) >= 5 and args['map_options'][4] != SKIP:
         link_duplicates = args['map_options'][4] in TRUTHY
+
+    if len(args['map_options']) >= 6 and args['map_options'][5] != SKIP:
+        draw_join_fields = args['map_options'][5] in TRUTHY
 
     # Reading graph options
     # Default graph_fields is first two available from DEF_GRAPH_FIELDS
@@ -1926,6 +1936,7 @@ def main():
                                 add_anonymous_icons=None,
                                 add_anonymous_lines=None,
                                 link_duplicates=link_duplicates,
+                                draw_join_fields=draw_join_fields,
                                 catalog=None,
                                 line_colors=None,
                                 verbose=True)
