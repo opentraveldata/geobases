@@ -44,7 +44,7 @@ even with ``('iata_code', 'location_type')`` key:
     >>> geo = GeoBase(data='ori_por_multi')
     In skipped zone, dropping line 1: "iata_code...".
     /!\ [lno ...] CRK+A is duplicated #1, first found lno ...
-    /!\ [lno ...] RDU+CA is duplicated #1, first found lno ...
+    /!\ [lno ...] RDU+A is duplicated #1, first found lno ...
     Import successful from ...
     Available fields for things: ...
 """
@@ -1663,11 +1663,11 @@ class GeoBase(object):
         >>> len(list(geo_o.findWith(c_1)))
         18
         >>> len(list(geo_o.findWith(c_2)))
-        92
+        93
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
-        108
+        109
 
         This works too \o/.
 
