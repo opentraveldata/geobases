@@ -420,7 +420,7 @@ function initialize(jsonData) {
             clickable       : true,
             path            : coords,
             strokeColor     : lcol,
-            strokeOpacity   : 0.5,
+            strokeOpacity   : 0.4,
             strokeWeight    : 5
         });
 
