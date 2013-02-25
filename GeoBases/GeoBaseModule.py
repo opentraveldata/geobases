@@ -2916,11 +2916,18 @@ class GeoBase(object):
 
         if draw_join_fields:
             # Finding out which external base has geocode support
+            # We start goin over the self.fields to preserve fields order
+            # then we look for potential join on multiple fields
+            # in self._join.keys()
             fields_with_geo_join = []
 
-            for fields in self._join:
-                if self.getJoinBase(fields).hasGeoSupport():
-                    fields_with_geo_join.append(fields)
+            for fields in self.fields + self._join.keys():
+                fields = tuplify(fields)
+                if fields in fields_with_geo_join:
+                    continue
+                if self.hasJoin(fields):
+                    if self.getJoinBase(fields).hasGeoSupport():
+                        fields_with_geo_join.append(fields)
 
             if not fields_with_geo_join:
                 if verbose:
