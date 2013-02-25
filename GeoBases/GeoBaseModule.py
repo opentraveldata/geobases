@@ -3003,7 +3003,7 @@ class GeoBase(object):
                     'link_duplicates' : link_duplicates,
                     'toggle_lines'    : True if (add_lines or \
                                                  add_anonymous_lines or \
-                                                 not self.hasGeoSupport()) else False,
+                                                 draw_join_fields) else False,
                 },
                 'points'     : data,
                 'lines'      : data_lines,
