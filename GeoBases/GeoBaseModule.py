@@ -2945,6 +2945,7 @@ class GeoBase(object):
                                                                   data,
                                                                   'Join line',
                                                                   line_colors[3],
+                                                                  get_label,
                                                                   get_weight,
                                                                   get_category,
                                                                   verbose)
@@ -3149,7 +3150,7 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_weight, get_category, verbose=True):
+    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_label, get_weight, get_category, verbose=True):
         """Build lines data for join fields
         """
         # Precaution on fields type
@@ -3162,14 +3163,10 @@ class GeoBase(object):
 
         for elem in data:
             key = elem['__key__']
+            key_lat_lng = self.getLocation(key)
 
             if key not in self:
                 # Possible for anonymous keys added for display
-                continue
-
-            if self.hasGeoSupport(key):
-                # The key perhaps has no geocode, but it has geocode
-                # support, meaning it has a geocode which is not filled
                 continue
 
             joined_values = [
@@ -3195,32 +3192,46 @@ class GeoBase(object):
 
                 data_line = []
 
-                for jkey, fields in zip(c, geo_join_fields_list):
-
-                    lat_lng = self.getJoinBase(fields).getLocation(jkey)
-
-                    if lat_lng is None:
-                        lat_lng = '?', '?'
-
-                    values = [str(self.get(key, f)) for f in fields]
-
-                    join_icons[jkey] = {
-                        '__key__' : jkey,
-                        '__lab__' : '%-6s [join on %s for %s]' % \
-                                (jkey, '/'.join(fields), '/'.join(values)),
-                        '__wei__' : get_weight(key),   # *key*, not *jkey*
-                        '__cat__' : get_category(key), # *key*, not *jkey*
-                        'lat'     : lat_lng[0],
-                        'lng'     : lat_lng[1]
-                    }
-
+                if key_lat_lng is not None:
+                    # We add the geocode at the beginning of the line
                     data_line.append({
-                        '__key__' : jkey,
-                        '__lab__' : '%-6s [join on %s for %s]' % \
-                                (jkey, '/'.join(fields), '/'.join(values)),
-                        'lat'     : lat_lng[0],
-                        'lng'     : lat_lng[1],
+                        '__key__' : key,
+                        '__lab__' : get_label(key),
+                        'lat'     : key_lat_lng[0],
+                        'lng'     : key_lat_lng[1],
                     })
+
+                for jkeys, fields in zip(c, geo_join_fields_list):
+
+                    # Is a tuple if we had some subdelimiters
+                    jkeys = tuplify(jkeys)
+
+                    for jkey in jkeys:
+
+                        lat_lng = self.getJoinBase(fields).getLocation(jkey)
+
+                        if lat_lng is None:
+                            lat_lng = '?', '?'
+
+                        values = [str(self.get(key, f)) for f in fields]
+
+                        join_icons[jkey] = {
+                            '__key__' : jkey,
+                            '__lab__' : '%-6s [join on %s for %s]' % \
+                                    (jkey, '/'.join(fields), '/'.join(values)),
+                            '__wei__' : get_weight(key),   # *key*, not *jkey*
+                            '__cat__' : get_category(key), # *key*, not *jkey*
+                            'lat'     : lat_lng[0],
+                            'lng'     : lat_lng[1]
+                        }
+
+                        data_line.append({
+                            '__key__' : jkey,
+                            '__lab__' : '%-6s [join on %s for %s]' % \
+                                    (jkey, '/'.join(fields), '/'.join(values)),
+                            'lat'     : lat_lng[0],
+                            'lng'     : lat_lng[1],
+                        })
 
                 join_lines.append({
                     '__lab__' : title,
