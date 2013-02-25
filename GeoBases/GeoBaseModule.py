@@ -2942,7 +2942,8 @@ class GeoBase(object):
                                                                   'Join line',
                                                                   line_colors[3],
                                                                   get_weight,
-                                                                  get_category)
+                                                                  get_category,
+                                                                  verbose)
                 if verbose:
                     print '* Added icons for join fields, total %s' % len(join_icons)
                     print '* Added lines for join fields, total %s' % len(join_lines)
@@ -3144,7 +3145,7 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildJoinLinesData(self, fields_with_geo_join, data, title, line_color, get_weight, get_category):
+    def _buildJoinLinesData(self, fields_with_geo_join, data, title, line_color, get_weight, get_category, verbose=True):
         """Build lines data for join fields
         """
         join_lines = []
@@ -3168,6 +3169,13 @@ class GeoBase(object):
             ]
 
             # Cartesian product is made on non-empty join results
+            if verbose:
+                for v, fields in zip(joined_values, fields_with_geo_join):
+                    if not v:
+                        values = [str(self.get(key, f)) for f in fields]
+                        print 'Could not retrieve data from join on %s for %s' % \
+                                ('/'.join(fields), '/'.join(values))
+
             comb = product(*[v for v in joined_values if v])
 
             for c in comb:
