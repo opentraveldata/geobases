@@ -929,6 +929,8 @@ DEF_DISCARD_RAW = 'F'
 DEF_DISCARD     = False
 DEF_INDICES     = []
 
+DEF_JOIN_RAW = SKIP
+DEF_JOIN     = []
 
 # Port for SimpleHTTPServer
 ADDRESS = '0.0.0.0'
@@ -1522,8 +1524,8 @@ def main():
         discard_dups   = DEF_DISCARD
         indices        = DEF_INDICES
 
-        m_join_r = SKIP
-        m_join   = []
+        m_join_r = DEF_JOIN_RAW
+        m_join   = DEF_JOIN
 
         if len(args['indexation']) >= 1 and args['indexation'][0] != SKIP:
             delimiter = args['indexation'][0]
