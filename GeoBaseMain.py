@@ -334,7 +334,7 @@ def display(geob, list_of_things, shown_fields, ref_type, important):
 
 
 def fields_to_show(defaults, omit, show, show_additional):
-    """Prcess fields to show.
+    """Process fields to show.
     """
     if not show:
         show = [REF] + defaults[:]
