@@ -3179,8 +3179,8 @@ class GeoBase(object):
                 for v, fields in zip(joined_values, geo_join_fields_list):
                     if not v:
                         values = [str(self.get(key, f)) for f in fields]
-                        print 'Could not retrieve data from join on "%s" for "%s".' % \
-                                ('/'.join(fields), '/'.join(values))
+                        print 'Could not retrieve data from join on "%s" for "%s", key "%s".' % \
+                                ('/'.join(fields), '/'.join(values), key)
 
             comb = product(*[v for v in joined_values if v])
 
