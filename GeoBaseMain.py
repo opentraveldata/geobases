@@ -337,13 +337,22 @@ def fields_to_show(defaults, omit, show, show_additional):
     shown_fields = [f for f in show if f not in omit]
 
     # Trying to cleverly position addtional field
+    positions = []
     for af in show_additional:
         for i, f in enumerate(shown_fields):
             if af.startswith(f):
-                shown_fields.insert(i+1, af)
+                positions.append(i+1)
                 break
         else:
-            shown_fields.append(af)
+            positions.append(-1)
+
+    already_inserted = 0
+    for af, p in zip(show_additional, positions):
+        if p == -1:
+            shown_fields.insert(-1, af)
+        else:
+            shown_fields.insert(p + already_inserted, af)
+            already_inserted += 1
 
     return shown_fields
 
