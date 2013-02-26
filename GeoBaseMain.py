@@ -1510,6 +1510,9 @@ def main():
         discard_dups   = DEF_DISCARD
         indices        = DEF_INDICES
 
+        m_join_r = SKIP
+        m_join   = []
+
         if len(args['indexation']) >= 1 and args['indexation'][0] != SKIP:
             delimiter = args['indexation'][0]
 
@@ -1519,7 +1522,9 @@ def main():
             else:
                 headers   = args['indexation'][1].split(SPLIT)
                 headers_r = headers[:] # backup
-                join, subdelimiters = clean_headers(headers)
+                l_join, l_subdelimiters = clean_headers(headers)
+                join.extend(l_join)
+                subdelimiters.update(l_subdelimiters)
         else:
             # Reprocessing the headers with custom delimiter
             headers = guess_headers(first_l.split(delimiter))
@@ -1537,18 +1542,31 @@ def main():
         if len(args['indexation']) >= 5 and args['indexation'][4] != SKIP:
             indices = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
 
+        if len(args['indexation']) >= 6 and args['indexation'][5] != SKIP:
+            m_join_r = args['indexation'][5]
+            m_join   = [] if args['indexation'][5] == DISABLE else clean_headers([args['indexation'][5]])[0]
+
+            if m_join:
+                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+
+                if len(m_join[0]['with']) > 1:
+                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
+
+                join.extend(m_join)
+
         # Checking join bases
         for e in join:
             if e['with'][0] not in SOURCES:
                 error('data', e['with'][0], sorted(SOURCES.keys()))
 
         if verbose:
-            print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s"' % \
+            print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s" "%s"' % \
                     (delimiter,
                      SPLIT.join(headers if headers_r is None else headers_r),
                      SPLIT.join(key_fields) if key_fields is not None else DISABLE,
                      discard_dups_r,
-                     SPLIT.join(indices[0]) if indices else DISABLE)
+                     SPLIT.join(indices[0]) if indices else DISABLE,
+                     m_join_r)
 
         options = {
             'source'       : source,
@@ -1576,12 +1594,12 @@ def main():
 
         if len(args['indexation']) >= 2 and args['indexation'][1] != SKIP:
             add_options['headers'] = args['indexation'][1].split(SPLIT)
-            join, subdelimiters = clean_headers(add_options['headers'])
+            l_join, l_subdelimiters = clean_headers(add_options['headers'])
 
-            if join:
-                add_options['join'] = join
-            if subdelimiters:
-                add_options['subdelimiters'] = subdelimiters
+            if l_join:
+                add_options['join'] = l_join
+            if l_subdelimiters:
+                add_options['subdelimiters'] = l_subdelimiters
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
             add_options['key_fields'] = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
@@ -1591,6 +1609,19 @@ def main():
 
         if len(args['indexation']) >= 5 and args['indexation'][4] != SKIP:
             add_options['indices'] = [] if args['indexation'][4] == DISABLE else [args['indexation'][4].split(SPLIT)]
+        if len(args['indexation']) >= 6 and args['indexation'][5] != SKIP:
+            m_join = [] if args['indexation'][5] == DISABLE else clean_headers([args['indexation'][5]])[0]
+
+            if m_join:
+                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+
+                if len(m_join[0]['with']) > 1:
+                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
+
+                if 'join' in add_options:
+                    add_options['join'].extend(m_join)
+                else:
+                    add_options['join'] = m_join
 
         if verbose:
             if not add_options:
