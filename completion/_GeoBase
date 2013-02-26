@@ -584,7 +584,10 @@ _hello() {
                 "*:discard duplicates:(_ Y N)"
             ;;
         4)
-            _fields_extended "$base" "indices"
+            _fields "$base" "indices"
+            ;;
+        5)
+            _fields "$base" "join"
             ;;
         *)
             _arguments \
