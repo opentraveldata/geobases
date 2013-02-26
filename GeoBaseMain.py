@@ -1237,8 +1237,7 @@ def handle_args():
                Put %s to use None as key_fields, which will cause the keys
                to be generated from the line numbers.
             4) discard_dups is a boolean to toggle duplicated keys dropping.
-               Default is %s. Put %s as a truthy value,
-               any other value will be falsy.
+               Put %s as a truthy value, any other value will be falsy.
             5) indices is a field, if given, this will build an index on that field
                to speed up findWith queries.
             6) join is a join clause defined with fields{base:external_fields}.
@@ -1246,7 +1245,7 @@ def handle_args():
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
-        ''' % (DISABLE, DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SPLIT, SKIP)),
+        ''' % (DISABLE, fmt_or(TRUTHY), SPLIT, SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
