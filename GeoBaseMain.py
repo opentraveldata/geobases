@@ -1222,11 +1222,14 @@ def handle_args():
         help = dedent('''\
         Specify metadata, for stdin input as well as existing bases.
         This will override defaults for existing bases.
-        5 optional arguments: delimiter, headers, key_fields, discard_dups, indices.
+        6 optional arguments: delimiter, headers, key_fields, discard_dups, indices, join.
             1) default delimiter is smart :).
             2) default headers will use numbers, and try to sniff lat/lng.
                Use __head__ as header value to
                burn the first line to define the headers.
+               Use header{base:external_field}{subdelimiter} syntax to define
+               a join clause for a header, and/or a subdelimiter.
+               To give just the subdelimiter you may use header{}{subdelimiter}.
             3) default key_fields will take the first plausible field.
                Put %s to use None as key_fields, which will cause the keys
                to be generated from the line numbers.
@@ -1235,10 +1238,12 @@ def handle_args():
                any other value will be falsy.
             5) indices is a field, if given, this will build an index on that field
                to speed up findWith queries.
+            6) join is a join clause defined with fields{base:external_fields}.
+               This clause can concern multiple fields delimited by "%s".
         Multiple fields may be specified with "%s" delimiter.
         For any field, you may put "%s" to leave the default value.
         Example: -i ',' key/name/country key/country _
-        ''' % (DISABLE, DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SKIP)),
+        ''' % (DISABLE, DEF_DISCARD, fmt_or(TRUTHY), SPLIT, SPLIT, SKIP)),
         nargs = '+',
         metavar = 'METADATA',
         default = [])
