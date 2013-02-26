@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + CLI: possibility to add a join clause on multiple fields with new -i argument (and possibility to --show it)
  + Added map visualization possibilities on join clauses (another arg. for -M on CLI)
  + new -S/--show-additional method to add fields to the current display
  + Python: new getJoinBase method to give access to external base properties
@@ -16,7 +17,7 @@ V5
  + CLI: display join fields wih a different color
  + autoreference for autojoin to avoid loading ori_por twice
  + new hasJoin method, hasIndexOn is renamed hasIndex
- + CLI: possibility to add subdelimiters and join info with headers{base:field}{subdel} syntax
+ + CLI: possibility to add subdelimiters and join clauses with header{base:field}{subdel} syntax
  + multiple join clause implementation on multiple fields, integrated with subdelimiters
  + subdelimiters are no longer filled with None values
  + new updateIndex and updateGrid methods
