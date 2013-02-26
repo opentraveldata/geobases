@@ -905,6 +905,12 @@ DEF_OMIT_FIELDS     = []
 DEF_SHOW_FIELDS     = []
 DEF_SHOW_ADD_FIELDS = []
 
+# Magic value option to skip and leave default, or disable
+SKIP    = '_'
+SPLIT   = '/'
+DISABLE = '__none__'
+REF     = '__ref__'
+
 # For requests with findWith, force stringification before testing
 FORCE_STR = False
 
@@ -923,11 +929,6 @@ DEF_DISCARD_RAW = 'F'
 DEF_DISCARD     = False
 DEF_INDICES     = []
 
-# Magic value option to skip and leave default, or disable
-SKIP    = '_'
-SPLIT   = '/'
-DISABLE = '__none__'
-REF     = '__ref__'
 
 # Port for SimpleHTTPServer
 ADDRESS = '0.0.0.0'
