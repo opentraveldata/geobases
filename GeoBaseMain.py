@@ -1731,7 +1731,7 @@ def main():
 
         if ext_field is not None:
             ext_g = g.getJoinBase(field)
-            if ext_field not in [REF] + ext_g.fields:
+            if ext_field not in [REF] + ext_g.fields + ['__loc__']:
                 error('field', ext_field, ext_g.data, sorted([REF] + ext_g.fields))
 
     # Testing icon_type from -M
