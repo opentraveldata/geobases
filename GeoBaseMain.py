@@ -233,6 +233,12 @@ def check_ext_field(geob, field):
     if geob.hasJoin(f):
         return f, ext_f
 
+    # In case of multiple join fields
+    f = tuple(f.split(SPLIT))
+
+    if geob.hasJoin(f):
+        return f, ext_f
+
     return field, None
 
 
@@ -1758,7 +1764,11 @@ def main():
         field, ext_field = check_ext_field(g, field)
 
         if field not in [REF] + g.fields:
-            error('field', field, g.data, sorted([REF] + g.fields))
+            # Join fields call are ok, but they are not in self.fields
+            if not g.hasJoin(field):
+                error('field', field, g.data, sorted([REF]    + \
+                                                     g.fields + \
+                                                     ['(join) %s' % SPLIT.join(k) for k in g._join]))
 
         if ext_field is not None:
             ext_g = g.getJoinBase(field)
