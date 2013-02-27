@@ -512,7 +512,7 @@ _fields_and_join() {
         ;;
     ori_por)
         _arguments \
-            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: city_code/location_type: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
         ;;
     ori_por_multi)
         _arguments \
@@ -568,7 +568,7 @@ _fields_and_join() {
         ;;
     *)
         _arguments \
-            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: city_code/location_type: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
         ;;
     esac
 }
