@@ -313,7 +313,7 @@ function initialize(jsonData) {
             // Augmenting the marker type
             circle.weight = w;
             circle.help = ' ' +
-            '<div class="infowindow large">' +
+            '<div class="infowindow medium">' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
                 '<i>{0}</i> {1}<br/>'.fmt(icon_weight, w);
 
@@ -399,8 +399,9 @@ function initialize(jsonData) {
         lcol = jsonData.lines[i].__col__;
 
         coords = [];
-        help   = '<div class="infowindow large">' +
-                     '<h3>{0}</h3><table>'.fmt(name);
+        help   = '<div class="infowindow medium">' +
+                     '<h3>{0}</h3><table>'.fmt(name) +
+                     '<tr><td><i>{0}</i></td><td><i>{1}</i></td></tr>'.fmt('Key', 'Label');
 
         for (j=0, d=ods.length; j<d; j++) {
 
