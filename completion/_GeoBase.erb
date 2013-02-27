@@ -76,6 +76,24 @@ _fields_extended() {
 }
 
 
+_fields_and_join() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in<% SOURCES.each do |source, config| %>
+    <%= source %>)
+        _arguments \
+            "*:$help for <%= source %>:(<%= (['_', '__key__', '__lno__'] + [config['join'].map{ |d| d['fields'] }] + config['headers']).join(' ') %>)"
+        ;;<% end %>
+    *)
+        _arguments \
+            "*:$help for ori_por:(<%= (['_', '__key__', '__lno__'] + [SOURCES['ori_por']['join'].map{ |d| d['fields'] }] + SOURCES['ori_por']['headers']).join(' ') %>)"
+        ;;
+    esac
+}
+
+
 count_opt() {
     echo $((`echo "$1" |sed 's/[^:]//g' |wc -m` - 1))
 }
@@ -156,8 +174,11 @@ _hello() {
         _arguments \
             "*:value"
         ;;
-    exact_property|fuzzy_property|phonetic_property|show|show_additional|omit)
+    exact_property|fuzzy_property|phonetic_property)
         _fields "$base" "field"
+        ;;
+    show|show_additional|omit)
+        _fields_and_join "$base" "field"
         ;;
     phonetic_method)
         _arguments \

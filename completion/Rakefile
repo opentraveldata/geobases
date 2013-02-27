@@ -22,8 +22,14 @@ ASSET_FILES = {
 
 # Config enhancements
 SOURCES.each do |data, config|
-    if config.nil? or config['headers'].nil?
+    if config.nil?
         SOURCES[data] = { 'headers' => [] }
+    end
+    if SOURCES[data]['headers'].nil?
+        SOURCES[data]['headers'] = []
+    end
+    if SOURCES[data]['join'].nil?
+        SOURCES[data]['join'] = []
     end
 end
 
@@ -38,6 +44,16 @@ SOURCES.each do |data, config|
         end
     end
     config['headers'] = headers
+end
+
+SOURCES.each do |data, config|
+    config['join'].each do |d|
+        if d['fields'].is_a? String
+            d['fields'] = d['fields'] + ':'
+        else
+            d['fields'] = d['fields'].join('/') + ':'
+        end
+    end
 end
 
 # Special autocomplete for feed

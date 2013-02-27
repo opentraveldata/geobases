@@ -198,8 +198,8 @@ ori_por:
         - fields: tvl_por_list
           with  : [ori_por, iata_code]
         # Join on multiple fields examples
-        #- fields: [city_code, location_type]
-        #  with  : [ori_por, [iata_code, location_type]]
+        - fields: [city_code, location_type]
+          with  : [ori_por, [iata_code, location_type]]
     headers : &ori_por_headers
         - iata_code
         - icao_code

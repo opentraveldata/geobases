@@ -1775,7 +1775,7 @@ def main():
             if not g.hasJoin(field):
                 error('field', field, g.data, sorted([REF]    + \
                                                      g.fields + \
-                                                     ['(join) %s' % SPLIT.join(k) for k in g._join]))
+                                                     ['(join) %s:' % SPLIT.join(k) for k in g._join]))
 
         if ext_field is not None:
             ext_g = g.getJoinBase(field)
