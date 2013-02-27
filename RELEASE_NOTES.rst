@@ -37,7 +37,7 @@ V5
  + CLI: display sources and examples on --help
  + CLI: display tips on --verbose when stdin data
  + -I is now slightly different: default is exact search on a default field (no longer key search, use __key__ for that)
- + clever autocomplete for zsh
+ + clever autocomplete for zsh on displayed fields for the different options
  + new GeoBase.fuzzyClean and GeoBase.phonemes static methods
  + possiblity to draw on the map things that are not in the GeoBase
  + urls input for YAML configuration
