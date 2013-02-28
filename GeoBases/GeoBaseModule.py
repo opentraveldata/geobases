@@ -58,8 +58,6 @@ from itertools import izip_longest, count, product
 import csv
 import json
 from shutil import copy
-from urllib import urlretrieve
-from zipfile import ZipFile
 
 # Not in standard library
 from fuzzy import DMetaphone, nysiis
@@ -96,10 +94,15 @@ def relative(rel_path, root=DIRNAME):
 
 # 1) Path to global configuration
 # 2) Root folder where we find data
+# 3) Cache directory
 SOURCES_CONF_PATH = relative('DataSources/Sources.yaml')
 SOURCES_DIR       = op.dirname(SOURCES_CONF_PATH)
+CACHE_DIR         = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 
-SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR)
+if not op.isdir(CACHE_DIR):
+    os.mkdir(CACHE_DIR)
+
+SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR, CACHE_DIR)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -113,35 +116,6 @@ GRID_RADIUS = 50 # kms
 MIN_MATCH  = 0.75
 RADIUS     = 50
 NB_CLOSEST = 1
-
-# Remote prefix detection
-R_PREFIXES = set(['http://', 'https://'])
-has_prefix = lambda path, prefixes: any(path.lower().startswith(p) for p in prefixes)
-
-def is_remote(path):
-    """Tells if a path is remote.
-    """
-    return has_prefix(path['file'], R_PREFIXES)
-
-# Remote prefix detection
-is_archive = lambda path: 'extract' in path
-
-# Date comparisons
-def is_older(a, b):
-    """Test file last modifcation time.
-    """
-    try:
-        if os.stat(a).st_mtime < os.stat(b).st_mtime:
-            return True
-    except OSError:
-        # If this fails, we say it is not older
-        pass
-    return False
-
-# Cache directory
-CACHE_DIR = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
-if not op.isdir(CACHE_DIR):
-    os.mkdir(CACHE_DIR)
 
 # Loading indicator
 NB_LINES_STEP = 100000
@@ -390,26 +364,10 @@ class GeoBase(object):
         elif self._paths is not None:
             # Here we read the source from the configuration file
             for path in self._paths:
+                file_ = SOURCES_ADMIN.handle_path(path, self._verbose)
 
-                if not is_remote(path):
-                    file_ = path['file']
-                else:
-                    file_, success = download_lazy(path['file'], self._verbose)
-
-                    if not success:
-                        if self._verbose:
-                            print '/!\ Failed to download "%s", failing over...' % path['file']
-                        continue
-
-                if is_archive(path):
-                    archive = file_
-                    file_, success = extract_lazy(archive, path['extract'], self._verbose)
-
-                    if not success:
-                        if self._verbose:
-                            print '/!\ Failed to extract "%s" from "%s", failing over...' % \
-                                    (path['extract'], archive)
-                        continue
+                if file_ is None:
+                    continue
 
                 try:
                     with open(file_) as source_fl:
@@ -474,28 +432,8 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-
         # Paths conversion to dict, local paths handling
-        if self._paths is not None:
-            if isinstance(self._paths, (str, dict)):
-                # If paths is just *one* archive or *one* file
-                self._paths = [self._paths]
-
-            for i, path in enumerate(self._paths):
-                # We normalize all path as a dict structure
-                if isinstance(path, str):
-                    self._paths[i] = {
-                        'file' : path
-                    }
-
-            for i, path in enumerate(self._paths):
-                # "local" is only used for sources from configuration
-                # to have a relative path from the configuration file
-                if not is_remote(path) and self._local is True:
-                    path['file'] = relative(path['file'], root=SOURCES_ADMIN.sources_dir)
-
-            self._paths = tuple(self._paths)
-
+        self._paths = SOURCES_ADMIN.convert_paths_format(self._paths, self._local)
 
         # Some headers are not accepted
         for h in self._headers:
@@ -3512,66 +3450,6 @@ def tuplify(s):
     else:
         return tuple(s)
 
-
-def download_lazy(resource, verbose=True):
-    """
-    Download a remote file only if target file is not already
-    in cache directory.
-    Returns boolean for success or failure, and path
-    to downloaded file (may not be exactly the same as the one checked).
-    """
-    # If in cache directory, we use it, otherwise we download it
-    filename_test = op.join(CACHE_DIR, op.basename(resource))
-
-    if op.isfile(filename_test):
-        if verbose:
-            print '/!\ Using "%s" already in cache directory for "%s"' % \
-                    (filename_test, resource)
-        return filename_test, True
-
-    if verbose:
-        print '/!\ Downloading "%s" in cache directory from "%s"' % \
-                (filename_test, resource)
-    try:
-        dl_filename, _ = urlretrieve(resource, filename_test)
-    except IOError:
-        return None, False
-    else:
-        return dl_filename, True
-
-
-def extract_lazy(archive, filename, verbose=True):
-    """
-    Extract a file from archive if file is not already in
-    the cache directory.
-    """
-    # Perhaps the file was already extracted here
-    # We also check the dates of modification in case
-    # the extracted file obsolete
-    filename_test = op.join(CACHE_DIR, filename)
-
-    if op.isfile(filename_test):
-        if is_older(archive, filename_test):
-            if verbose:
-                print '/!\ Skipping extraction for "%s", already at "%s"' % \
-                        (filename, filename_test)
-            return filename_test, True
-
-        if verbose:
-            print '/!\ File "%s" already at "%s", but "%s" is newer, removing' % \
-                    (filename, filename_test, archive)
-
-    if verbose:
-        print '/!\ Extracting "%s" from "%s" in "%s"' % \
-                (filename, archive, filename_test)
-
-    # We extract one file from the archive
-    try:
-        extracted = ZipFile(archive).extract(filename, op.dirname(filename_test))
-    except IOError:
-        return None, False
-    else:
-        return extracted, True
 
 
 def build_get_phonemes(method):
