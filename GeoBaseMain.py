@@ -183,7 +183,7 @@ class RotatingColors(object):
 
     @staticmethod
     def getSpecial():
-        """Get special property color.
+        """Get special field color.
         """
         return ('magenta', None, [])
 
@@ -744,12 +744,6 @@ def error(name, *args):
         for p in build_pairs(args[1]):
             print >> stderr, '\t%-20s\t%-20s' % p
 
-    elif name == 'property':
-        print >> stderr, '\n/!\ Wrong property "%s".' % args[0]
-        print >> stderr, 'For data type "%s", you may select:' % args[1]
-        for p in build_pairs(args[2]):
-            print >> stderr, '\t%-20s\t%-20s' % p
-
     elif name == 'field':
         print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
         print >> stderr, 'For data type "%s", you may select:' % args[1]
@@ -941,6 +935,7 @@ def handle_args():
         Main argument. This will be used as a list of keys on which we
         apply filters. Leave empty to consider all keys.
         '''),
+        metavar = 'KEY',
         nargs = '*')
 
     parser.add_argument('-b', '--base',
@@ -949,24 +944,27 @@ def handle_args():
         stations, airports, countries... Give unadmissible value
         and all possibilities will be displayed.
         ''' % DEF_BASE),
+        metavar = 'BASE',
         default = DEF_BASE)
 
     parser.add_argument('-f', '--fuzzy',
         help = dedent('''\
         Rather than looking up a key, this mode will search the best
-        match for the property given by --fuzzy-property option, for
+        match for the field given by --fuzzy-field option, for
         the argument. Limit can be specified with --fuzzy-limit option.
         '''),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
-    parser.add_argument('-F', '--fuzzy-property',
+    parser.add_argument('-F', '--fuzzy-field',
         help = dedent('''\
-        When performing a fuzzy search, specify the property to be chosen.
+        When performing a fuzzy search, specify the field to be chosen.
         Default is %s
         depending on fields.
-        Give unadmissible property and available values will be displayed.
+        Give unadmissible field and available values will be displayed.
         ''' % fmt_or(DEF_FUZZY_FIELDS)),
+        metavar = 'FIELD',
         default = None)
 
     parser.add_argument('-L', '--fuzzy-limit',
@@ -974,26 +972,29 @@ def handle_args():
         Specify a min limit for fuzzy searches, default is %s.
         This is the Levenshtein ratio of the two strings.
         ''' % DEF_FUZZY_LIMIT),
+        metavar = 'RATIO',
         default = DEF_FUZZY_LIMIT,
         type = float)
 
     parser.add_argument('-p', '--phonetic',
         help = dedent('''\
         Rather than looking up a key, this mode will search the best phonetic
-        match for the property given by --phonetic-property option, for
+        match for the field given by --phonetic-field option, for
         the argument. This works well only for english.
         Use --phonetic-method to change the method used.
         '''),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
-    parser.add_argument('-P', '--phonetic-property',
+    parser.add_argument('-P', '--phonetic-field',
         help = dedent('''\
-        When performing a phonetic search, specify the property to be chosen.
+        When performing a phonetic search, specify the field to be chosen.
         Default is %s
         depending on fields.
-        Give unadmissible property and available values will be displayed.
+        Give unadmissible field and available values will be displayed.
         ''' % fmt_or(DEF_PHONETIC_FIELDS)),
+        metavar = 'FIELD',
         default = None)
 
     parser.add_argument('-y', '--phonetic-method',
@@ -1001,28 +1002,31 @@ def handle_args():
         By default, --phonetic uses "%s" method. With this option, you
         can change this to %s.
         ''' % (DEF_PHONETIC_METHOD, fmt_or(ALLOWED_PHONETIC_METHODS))),
+        metavar = 'METHOD',
         default = DEF_PHONETIC_METHOD)
 
     parser.add_argument('-e', '--exact',
         help = dedent('''\
         Rather than looking up a key, this mode will search all keys
-        whose specific property given by --exact-property match the
-        argument. By default, the %s property is used for the search.
-        You can have several property matching by giving multiple values
-        delimited by "%s" for --exact-property. Make sure you give the
+        whose specific field given by --exact-field match the
+        argument. By default, the %s field is used for the search.
+        You can have several field matching by giving multiple values
+        delimited by "%s" for --exact-field. Make sure you give the
         same number of values delimited also by "%s" then.
         ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
-    parser.add_argument('-E', '--exact-property',
+    parser.add_argument('-E', '--exact-field',
         help = dedent('''\
-        When performing an exact search, specify the property to be chosen.
-        Default is %s. Give unadmissible property and available
+        When performing an exact search, specify the field to be chosen.
+        Default is %s. Give unadmissible field and available
         values will be displayed.
         You can give multiple properties delimited by "%s". Make sure
         you give the same number of values delimited also by "%s" for -e then.
         ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
+        metavar = 'FIELD',
         default = None)
 
     parser.add_argument('-r', '--reverse',
@@ -1047,6 +1051,7 @@ def handle_args():
         a geocode as input, use the 'lat, lng' format, with quotes.
         Example: -n CDG
         '''),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
@@ -1055,6 +1060,7 @@ def handle_args():
         Specify a radius in km when performing geographical
         searches with --near. Default is %s km.
         ''' % DEF_NEAR_LIMIT),
+        metavar = 'RADIUS',
         default = DEF_NEAR_LIMIT,
         type = float)
 
@@ -1066,6 +1072,7 @@ def handle_args():
         a geocode as input, use the 'lat, lng' format, with quotes.
         Example: -c '48.853, 2.348'
         '''),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
@@ -1073,6 +1080,7 @@ def handle_args():
         help = dedent('''\
         Specify a limit for closest search with --closest, default is %s.
         ''' % DEF_CLOSEST_LIMIT),
+        metavar = 'LIM',
         default = DEF_CLOSEST_LIMIT,
         type = int)
 
@@ -1090,6 +1098,7 @@ def handle_args():
         help = dedent('''\
         Rather than looking up a key, this mode will use opentrep.
         '''),
+        metavar = 'VALUE',
         default = None,
         nargs = '+')
 
@@ -1097,6 +1106,7 @@ def handle_args():
         help = dedent('''\
         Specify a format for trep searches with --trep, default is "%s".
         ''' % DEF_TREP_FORMAT),
+        metavar = 'FORMAT',
         default = DEF_TREP_FORMAT)
 
     parser.add_argument('-o', '--omit',
@@ -1105,6 +1115,7 @@ def handle_args():
         May help to get cleaner output.
         "%s" is an available value as well as any other fields.
         ''' % REF),
+        metavar = 'FIELD',
         nargs = '+',
         default = DEF_OMIT_FIELDS)
 
@@ -1114,6 +1125,7 @@ def handle_args():
         May help to get cleaner output.
         "%s" is an available value as well as any other fields.
         ''' % REF),
+        metavar = 'FIELD',
         nargs = '+',
         default = DEF_SHOW_FIELDS)
 
@@ -1123,6 +1135,7 @@ def handle_args():
         This is useful for displaying fields with join information,
         with the field:external_field syntax.
         '''),
+        metavar = 'FIELD',
         nargs = '+',
         default = DEF_SHOW_ADD_FIELDS)
 
@@ -1132,6 +1145,7 @@ def handle_args():
         This must be an integer.
         Default is %s, except in quiet mode where it is disabled.
         ''' % DEF_NUM_COL),
+        metavar = 'NUM',
         default = None)
 
     parser.add_argument('-i', '--indexation',
@@ -1160,7 +1174,7 @@ def handle_args():
         Example: -i ',' key/name/country key/country _
         ''' % (DISABLE, fmt_or(TRUTHY), SPLIT, SPLIT, SKIP)),
         nargs = '+',
-        metavar = 'METADATA',
+        metavar = 'OPTION',
         default = [])
 
     parser.add_argument('-I', '--interactive-query',
@@ -1210,7 +1224,7 @@ def handle_args():
         Example: -Q ';' RH
         ''' % (DEF_QUIET_DELIM, DEF_QUIET_HEADER, SKIP)),
         nargs = '+',
-        metavar = 'INFO',
+        metavar = 'OPTION',
         default = [])
 
     parser.add_argument('-m', '--map',
@@ -1255,7 +1269,7 @@ def handle_args():
                 DEF_LINK_DUPLICATES, fmt_or(TRUTHY), DEF_DRAW_JOIN_FIELDS,
                 fmt_or(TRUTHY), SKIP))),
         nargs = '+',
-        metavar = 'FIELDS',
+        metavar = 'OPTION',
         default = [])
 
     parser.add_argument('-g', '--graph',
@@ -1278,7 +1292,7 @@ def handle_args():
         %s [...].
         ''' % ', '.join(DEF_GRAPH_FIELDS[0:5])),
         nargs = '+',
-        metavar = 'FIELDS',
+        metavar = 'FIELD',
         default = [])
 
     parser.add_argument('-W', '--graph-weight',
@@ -1408,11 +1422,11 @@ def main():
 
     # Updating file
     if args['update']:
-        GeoBase.checkDataUpdates()
+        SOURCES_ADMIN.check_data_updates()
         exit(0)
 
     if args['update_forced']:
-        GeoBase.checkDataUpdates(force=True)
+        SOURCES_ADMIN.check_data_updates(force=True)
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
@@ -1562,16 +1576,16 @@ def main():
         after_init = datetime.now()
 
     # Tuning parameters
-    if args['exact_property'] is None or args['exact_property'] == SKIP:
-        args['exact_property'] = best_field(DEF_EXACT_FIELDS, g.fields)
+    if args['exact_field'] is None or args['exact_field'] == SKIP:
+        args['exact_field'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
-    exact_properties = args['exact_property'].split(SPLIT)
+    exact_properties = args['exact_field'].split(SPLIT)
 
-    if args['fuzzy_property'] is None or args['fuzzy_property'] == SKIP:
-        args['fuzzy_property'] = best_field(DEF_FUZZY_FIELDS, g.fields)
+    if args['fuzzy_field'] is None or args['fuzzy_field'] == SKIP:
+        args['fuzzy_field'] = best_field(DEF_FUZZY_FIELDS, g.fields)
 
-    if args['phonetic_property'] is None or args['phonetic_property'] == SKIP:
-        args['phonetic_property'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
+    if args['phonetic_field'] is None or args['phonetic_field'] == SKIP:
+        args['phonetic_field'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
     # Reading map options
     icon_label       = best_field(DEF_LABEL_FIELDS,  g.fields)
@@ -1664,15 +1678,15 @@ def main():
     if args['exact'] is not None:
         for field in exact_properties:
             if field not in g.fields:
-                error('property', field, g.data, sorted(g.fields))
+                error('field', field, g.data, sorted(g.fields))
 
     if args['fuzzy'] is not None:
-        if args['fuzzy_property'] not in g.fields:
-            error('property', args['fuzzy_property'], g.data, sorted(g.fields))
+        if args['fuzzy_field'] not in g.fields:
+            error('field', args['fuzzy_field'], g.data, sorted(g.fields))
 
     if args['phonetic'] is not None:
-        if args['phonetic_property'] not in g.fields:
-            error('property', args['phonetic_property'], g.data, sorted(g.fields))
+        if args['phonetic_field'] not in g.fields:
+            error('field', args['phonetic_field'], g.data, sorted(g.fields))
 
     # Failing on unknown fields
     fields_to_test = [
@@ -1688,7 +1702,7 @@ def main():
             if not g.hasJoin(field):
                 error('field', field, g.data, sorted([REF]    + \
                                                      g.fields + \
-                                                     ['%s: (join)' % SPLIT.join(k) for k in g._join]))
+                                                     ['(join) %s:' % SPLIT.join(k) for k in g._join]))
 
         if ext_field is not None:
             ext_g = g.getJoinBase(field)
@@ -1788,9 +1802,9 @@ def main():
 
         if verbose:
             if args['reverse']:
-                print '(*) Applying: property %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
+                print '(*) Applying: field %s' % (' %s ' % mode).join('%s != "%s"' % c for c in conditions)
             else:
-                print '(*) Applying: property %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
+                print '(*) Applying: field %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
         res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR, verbose=logorrhea))
         last = 'exact'
@@ -1799,18 +1813,18 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print '(*) Applying: property %s ~= "%s" (%.1f%%)' % (args['fuzzy_property'], args['fuzzy'], 100 * args['fuzzy_limit'])
+            print '(*) Applying: field %s ~= "%s" (%.1f%%)' % (args['fuzzy_field'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
-        res = list(g.fuzzyFind(args['fuzzy'], args['fuzzy_property'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
+        res = list(g.fuzzyFind(args['fuzzy'], args['fuzzy_field'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
 
 
     if args['phonetic'] is not None:
         args['phonetic'] = ' '.join(args['phonetic'])
         if verbose:
-            print '(*) Applying: property %s sounds ~ "%s" with %s' % (args['phonetic_property'], args['phonetic'], phonetic_method)
+            print '(*) Applying: field %s sounds ~ "%s" with %s' % (args['phonetic_field'], args['phonetic'], phonetic_method)
 
-        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_property'], method=phonetic_method, from_keys=ex_keys(res), verbose=logorrhea))
+        res = sorted(g.phoneticFind(args['phonetic'], args['phonetic_field'], method=phonetic_method, from_keys=ex_keys(res), verbose=logorrhea))
         last = 'phonetic'
 
 
@@ -1876,10 +1890,10 @@ def main():
             important.add(prop)
 
     if args['fuzzy'] is not None:
-        important.add(args['fuzzy_property'])
+        important.add(args['fuzzy_field'])
 
     if args['phonetic'] is not None:
-        important.add(args['phonetic_property'])
+        important.add(args['phonetic_field'])
 
     if interactive_query_mode:
         important.add(interactive_field)
