@@ -16,12 +16,18 @@ from zipfile import ZipFile
 # Not in standard library
 import yaml
 
+# YAML formatting
+DUMP_STYLE = {
+    'indent'             : 4,
+    'default_flow_style' : False
+}
+
 
 class SourcesAdmin(object):
     """
     This class is used to administrate sources.
     """
-    def __init__(self, sources_conf_path, sources_dir, cache_dir):
+    def __init__(self, sources_conf_path, sources_dir, cache_dir, update_script_path):
 
         # Path to the configuration file
         self.sources_conf_path = sources_conf_path
@@ -34,6 +40,9 @@ class SourcesAdmin(object):
 
         # Cache directory
         self.cache_dir = cache_dir
+
+        # Maintenance script
+        self.update_script_path = update_script_path
 
 
     def __contains__(self, source):
@@ -48,9 +57,20 @@ class SourcesAdmin(object):
         return iter(self.sources)
 
 
+    def check_data_updates(self, force=False):
+        """Launch update script on data files.
+        """
+        force_option = '-f' if force else ''
+
+        os.system('bash %s %s' % (self.update_script_path, force_option))
+
+
     def get(self, source):
         """Get source information.
         """
+        if source not in self.sources:
+            raise KeyError('Source %s not in sources.' % source)
+
         return self.sources[source]
 
 
@@ -79,6 +99,26 @@ class SourcesAdmin(object):
         self.sources[source][option] = option_config
 
 
+    def show(self, source):
+        """Show source status.
+        """
+        if source not in self.sources:
+            print 'Source %s not in sources.' % source
+            return
+
+        print yaml.dump({
+            source : self.get(source)
+        }, **DUMP_STYLE)
+
+
+    def save(self, filename):
+        """Dump sources in configuration file.
+        """
+        with open(filename, 'w') as f:
+            f.write(yaml.dump(self.sources, **DUMP_STYLE))
+
+
+
     def build_help(self):
         """Display informations on available sources.
         """
@@ -96,7 +136,7 @@ class SourcesAdmin(object):
             """Nice path formatting."""
             if isinstance(p, str):
                 return str(p)
-            if 'extract' not in p:
+            if not is_archive(p):
                 return p['file']
             return '%s -> %s' % (p['file'], p['extract'])
 
@@ -153,7 +193,7 @@ class SourcesAdmin(object):
         print
         print yaml.dump({
             '<INSERT_ANY_NAME>' : conf
-        }, indent=4, default_flow_style=None)
+        }, **DUMP_STYLE)
 
         print '# ================  END  ==============='
         print 'EOF'
@@ -175,7 +215,7 @@ class SourcesAdmin(object):
 
             if not success:
                 if verbose:
-                    print '/!\ Failed to download "%s"...' % path['file']
+                    print '/!\ Failed to download "%s".' % path['file']
                 return
 
         if is_archive(path):
@@ -184,7 +224,7 @@ class SourcesAdmin(object):
 
             if not success:
                 if verbose:
-                    print '/!\ Failed to extract "%s" from "%s"...' % \
+                    print '/!\ Failed to extract "%s" from "%s".' % \
                             (path['extract'], archive)
                 return
 

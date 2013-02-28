@@ -95,14 +95,15 @@ def relative(rel_path, root=DIRNAME):
 # 1) Path to global configuration
 # 2) Root folder where we find data
 # 3) Cache directory
-SOURCES_CONF_PATH = relative('DataSources/Sources.yaml')
-SOURCES_DIR       = op.dirname(SOURCES_CONF_PATH)
-CACHE_DIR         = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
+UPDATE_SCRIPT_PATH = relative('DataSources/CheckDataUpdates.sh')
+SOURCES_CONF_PATH  = relative('DataSources/Sources.yaml')
+SOURCES_DIR        = op.dirname(SOURCES_CONF_PATH)
+CACHE_DIR          = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 
 if not op.isdir(CACHE_DIR):
     os.mkdir(CACHE_DIR)
 
-SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR, CACHE_DIR)
+SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR, CACHE_DIR, UPDATE_SCRIPT_PATH)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -510,17 +511,6 @@ class GeoBase(object):
 
         # We index the field to optimize further findWith
         ext_b.addIndex(join_fields, verbose=self._verbose)
-
-
-
-    @staticmethod
-    def checkDataUpdates(force=False):
-        """Launch update script on data files.
-        """
-        script_path  = relative('DataSources/CheckDataUpdates.sh')
-        force_option = '-f' if force else ''
-
-        os.system('bash %s %s' % (script_path, force_option))
 
 
 
