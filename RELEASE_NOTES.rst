@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + -A/--any is now -O/--or to control multiple --exact filters behavior
  + CLI: possibility to add a join clause on multiple fields with new -i argument (and possibility to --show it)
  + Added map visualization possibilities on join clauses (another arg. for -M on CLI)
  + new -S/--show-additional method to add fields to the current display
