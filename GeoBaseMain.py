@@ -785,7 +785,7 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = SOURCES_ADMIN.build_help()
+HELP_SOURCES = SOURCES_ADMIN.build_status()
 CLI_EXAMPLES = '''
 * Command line examples
 
@@ -797,6 +797,7 @@ CLI_EXAMPLES = '''
  $ cat data.csv | %s             # with your data
 ''' % ((op.basename(argv[0]),) * 6)
 
+DEF_ADMIN_COMMAND   = None
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
 DEF_NEAR_LIMIT      = 50.
@@ -937,6 +938,14 @@ def handle_args():
         '''),
         metavar = 'KEY',
         nargs = '*')
+
+    parser.add_argument('-A', '--admin',
+        help = dedent('''\
+        This option can be used to administrate sources.
+        '''),
+        nargs = '*',
+        metavar = 'COMMAND',
+        default = DEF_ADMIN_COMMAND)
 
     parser.add_argument('-b', '--base',
         help = dedent('''\
@@ -1427,6 +1436,79 @@ def main():
 
     if args['update_forced']:
         SOURCES_ADMIN.check_data_updates(force=True)
+        exit(0)
+
+    if args['admin'] is not None:
+        admin = args['admin']
+
+        if not admin:
+            admin = ['status']
+
+        elif admin[0] == 'status':
+            if len(admin) == 1:
+                print SOURCES_ADMIN.build_status()
+            else:
+                print SOURCES_ADMIN.build_status(admin[1])
+
+        elif admin[0] == 'show':
+            if len(admin) == 1:
+                SOURCES_ADMIN.show()
+            else:
+                SOURCES_ADMIN.show(admin[1])
+
+        elif admin[0] == 'drop':
+            if len(admin) == 1:
+                SOURCES_ADMIN.drop()
+            else:
+                SOURCES_ADMIN.drop(admin[1])
+            SOURCES_ADMIN.save()
+
+        elif admin[0] == 'restore':
+            SOURCES_ADMIN.restore()
+
+        elif admin[0] == 'edit':
+            if len(admin) == 1:
+                source_name = raw_input('Source name : ')
+            else:
+                source_name = admin[1]
+
+            if source_name not in SOURCES_ADMIN:
+                SOURCES_ADMIN.add(source_name, {
+                    'local' : False
+                })
+
+            conf = SOURCES_ADMIN.get(source_name)
+
+            # We will non empty values here
+            new_conf = {}
+
+            paths = raw_input('Paths       : [%s] ' % conf.get('paths', ''))
+            if paths:
+                new_conf['paths'] = op.realpath(paths)
+
+                copy_in_cache = raw_input('Copy in cache %s [Y/N]?' % SOURCES_ADMIN.cache_dir)
+                if copy_in_cache == 'Y':
+                    new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
+                    new_conf['paths'] = op.realpath(new_path)
+
+            delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
+            if delimiter:
+                new_conf['delimiter'] = delimiter
+
+            headers = raw_input('Headers     : [%s] ' % conf.get('headers', ''))
+            if headers:
+                new_conf['headers'] = headers.split(SPLIT)
+
+            key_fields = raw_input('Key fields  : [%s] ' % conf.get('key_fields', ''))
+            if key_fields:
+                new_conf['key_fields'] = key_fields.split(SPLIT)
+
+            SOURCES_ADMIN.update(source_name, new_conf)
+            SOURCES_ADMIN.save()
+
+        else:
+            print 'Command %s not understood.' % admin[0]
+            exit(1)
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:

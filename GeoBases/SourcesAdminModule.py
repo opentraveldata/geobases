@@ -12,6 +12,7 @@ import os.path as op
 from textwrap import dedent
 from urllib import urlretrieve
 from zipfile import ZipFile
+from shutil import copy
 
 # Not in standard library
 import yaml
@@ -21,6 +22,8 @@ DUMP_STYLE = {
     'indent'             : 4,
     'default_flow_style' : False
 }
+
+backup_name = lambda p: p.replace('.yaml', '.orig.yaml')
 
 
 class SourcesAdmin(object):
@@ -32,8 +35,13 @@ class SourcesAdmin(object):
         # Path to the configuration file
         self.sources_conf_path = sources_conf_path
 
-        with open(sources_conf_path) as fl:
-            self.sources = yaml.load(fl)
+        # Creating backup
+        self.sources_conf_path_backup = backup_name(self.sources_conf_path)
+
+        # We backup noly on the first run and never override
+        if not op.isfile(self.sources_conf_path_backup):
+            copy(self.sources_conf_path,
+                 self.sources_conf_path_backup)
 
         # Root folder where we find data
         self.sources_dir = sources_dir
@@ -43,6 +51,18 @@ class SourcesAdmin(object):
 
         # Maintenance script
         self.update_script_path = update_script_path
+
+        # Loading data
+        self.sources = None
+        self.load()
+
+
+
+    def load(self):
+        """Load configuration file.
+        """
+        with open(self.sources_conf_path) as fl:
+            self.sources = yaml.load(fl)
 
 
     def __contains__(self, source):
@@ -65,9 +85,12 @@ class SourcesAdmin(object):
         os.system('bash %s %s' % (self.update_script_path, force_option))
 
 
-    def get(self, source):
+    def get(self, source=None):
         """Get source information.
         """
+        if source is None:
+            return self.sources
+
         if source not in self.sources:
             raise KeyError('Source %s not in sources.' % source)
 
@@ -79,29 +102,54 @@ class SourcesAdmin(object):
         """
         if source in self.sources:
             print 'Source %s already exists.' % source
-        else:
-            self.sources[source] = config
+            return
+
+        self.sources[source] = config
 
 
-    def drop(self, source):
+    def copy_in_cache(self, path):
+        """Move source file in cache directory.
+        """
+        if not op.isfile(path):
+            print 'File %s does not exist' % path
+            return
+
+        copy(path, self.cache_dir)
+
+        return op.join(self.cache_dir, op.basename(path))
+
+
+    def drop(self, source=None):
         """Drop source.
         """
+        if source is None:
+            self.sources = {}
+
+        if source not in self.sources:
+            print 'Source %s already exists.' % source
+            return
+
         del self.sources[source]
 
 
-    def update(self, source, option, option_config):
+    def update(self, source, config):
         """Update source.
         """
         if source not in self.sources:
             print 'Source %s not in sources.' % source
             return
 
-        self.sources[source][option] = option_config
+        for option, option_config in config.iteritems():
+            self.sources[source][option] = option_config
 
 
-    def show(self, source):
+    def show(self, source=None):
         """Show source status.
         """
+        if source is None:
+            print yaml.dump(self.sources, **DUMP_STYLE)
+            return
+
         if source not in self.sources:
             print 'Source %s not in sources.' % source
             return
@@ -111,17 +159,36 @@ class SourcesAdmin(object):
         }, **DUMP_STYLE)
 
 
-    def save(self, filename):
+    def save(self, filename=None):
         """Dump sources in configuration file.
         """
+        if filename is None:
+            filename = self.sources_conf_path
+
         with open(filename, 'w') as f:
             f.write(yaml.dump(self.sources, **DUMP_STYLE))
 
 
+    def restore(self, load=False):
+        """Restore original file.
+        """
+        copy(self.sources_conf_path_backup,
+             self.sources_conf_path)
 
-    def build_help(self):
+        if load:
+            self.load()
+
+
+    def build_status(self, source=None):
         """Display informations on available sources.
         """
+        if source is None:
+            displayed = sorted(self.sources)
+        else:
+            if source not in self.sources:
+                return 'Source %s not in sources.' % source
+            displayed = [source]
+
         missing = '<none>'
 
         def fmt_keys(l):
@@ -148,7 +215,7 @@ class SourcesAdmin(object):
         tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT + FAILOVERS)'))
         tip.append('-' * 80)
 
-        for source in sorted(self.sources.keys()):
+        for source in displayed:
             config = self.sources[source]
 
             if config is not None:
