@@ -607,7 +607,7 @@ _hello() {
      "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]: :->exact_value" \
      "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]: :->exact_property" \
      "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
-     "(-A --any)"{-A,--any}"[Change *and* behavior to *or* behavior for multiple --exact]" \
+     "(-O --or)"{-O,--or}"[Change *and* behavior to *or* behavior for multiple --exact fields]" \
      "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]: :->near_point" \
      "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]: :->near_limit_km" \
      "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]: :->from_point" \
