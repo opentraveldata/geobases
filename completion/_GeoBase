@@ -690,7 +690,7 @@ _hello() {
         case `count_opt $admin` in
         0)
             _arguments \
-                "*:command:(status show drop restore edit)"
+                "*:command:(status fullstatus drop restore edit)"
             ;;
         1)
             _arguments \

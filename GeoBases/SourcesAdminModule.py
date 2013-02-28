@@ -143,8 +143,8 @@ class SourcesAdmin(object):
             self.sources[source][option] = option_config
 
 
-    def show(self, source=None):
-        """Show source status.
+    def full_status(self, source=None):
+        """Show source full status.
         """
         if source is None:
             print yaml.dump(self.sources, **DUMP_STYLE)

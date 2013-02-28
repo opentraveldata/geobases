@@ -709,6 +709,14 @@ def build_pairs(L, layout='v'):
     raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
 
+def fmt_list(L):
+    """Format stuff from the configuration file.
+    """
+    if isinstance(L, str):
+        return L
+
+    return SPLIT.join(str(e) for e in L)
+
 
 def best_field(candidates, possibilities, default=None):
     """Select best candidate in possibilities.
@@ -797,7 +805,7 @@ CLI_EXAMPLES = '''
  $ cat data.csv | %s             # with your data
 ''' % ((op.basename(argv[0]),) * 6)
 
-DEF_ADMIN_COMMAND   = None
+DEF_ADMIN_COMMAND   = ('status', None)
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
 DEF_NEAR_LIMIT      = 50.
@@ -825,6 +833,7 @@ FORCE_STR = False
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
+ALLOWED_COMMANDS         = ('status', 'fullstatus', 'drop', 'restore', 'edit')
 
 DEF_INTER_FIELDS = ('iata_code', '__key__')
 DEF_INTER_TYPE   = '__exact__'
@@ -942,10 +951,14 @@ def handle_args():
     parser.add_argument('-A', '--admin',
         help = dedent('''\
         This option can be used to administrate sources.
-        '''),
+        It accepts a two arguments: command, base.
+        As command argument, you may use either
+        %s.
+        Defaults are %s.
+        ''' % (', '.join(ALLOWED_COMMANDS), ', '.join(str(c) for c in DEF_ADMIN_COMMAND))),
         nargs = '*',
         metavar = 'COMMAND',
-        default = DEF_ADMIN_COMMAND)
+        default = None)
 
     parser.add_argument('-b', '--base',
         help = dedent('''\
@@ -1360,6 +1373,7 @@ def handle_args():
     return vars(parser.parse_args())
 
 
+
 # How to profile: execute this and uncomment @profile
 # $ kernprof.py --line-by-line --view file.py ORY
 #@profile
@@ -1441,33 +1455,27 @@ def main():
     if args['admin'] is not None:
         admin = args['admin']
 
-        if not admin:
-            admin = ['status']
+        if len(admin) < 1:
+            admin[0] = DEF_ADMIN_COMMAND[0]
 
-        elif admin[0] == 'status':
-            if len(admin) == 1:
-                print SOURCES_ADMIN.build_status()
-            else:
-                print SOURCES_ADMIN.build_status(admin[1])
+        if len(admin) < 2:
+            admin.append(DEF_ADMIN_COMMAND[1])
 
-        elif admin[0] == 'show':
-            if len(admin) == 1:
-                SOURCES_ADMIN.show()
-            else:
-                SOURCES_ADMIN.show(admin[1])
+        if admin[0] == 'status':
+            print SOURCES_ADMIN.build_status(admin[1])
+
+        elif admin[0] == 'fullstatus':
+            SOURCES_ADMIN.full_status(admin[1])
 
         elif admin[0] == 'drop':
-            if len(admin) == 1:
-                SOURCES_ADMIN.drop()
-            else:
-                SOURCES_ADMIN.drop(admin[1])
+            SOURCES_ADMIN.drop(admin[1])
             SOURCES_ADMIN.save()
 
         elif admin[0] == 'restore':
             SOURCES_ADMIN.restore()
 
         elif admin[0] == 'edit':
-            if len(admin) == 1:
+            if len(admin) == 1 or admin[1] is None:
                 source_name = raw_input('Source name : ')
             else:
                 source_name = admin[1]
@@ -1483,7 +1491,7 @@ def main():
             # We will non empty values here
             new_conf = {}
 
-            paths = raw_input('Paths       : [%s] ' % conf.get('paths', ''))
+            paths = raw_input('Paths       : [%s] ' % fmt_list(conf.get('paths', '')))
             if paths:
                 new_conf['paths'] = op.realpath(paths)
 
@@ -1492,17 +1500,40 @@ def main():
                     new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
                     new_conf['paths'] = op.realpath(new_path)
 
+
             delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
             if delimiter:
                 new_conf['delimiter'] = delimiter
 
-            headers = raw_input('Headers     : [%s] ' % conf.get('headers', ''))
+            headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', '')))
             if headers:
+                join, subdelimiters = clean_headers(headers)
                 new_conf['headers'] = headers.split(SPLIT)
+                if join:
+                    new_conf['join'] = join
+                    print 'Detected join %s' % str(join)
+                if subdelimiters:
+                    new_conf['subdelimiters'] = subdelimiters
+                    print 'Detected subdelimiters %s' % str(subdelimiters)
 
-            key_fields = raw_input('Key fields  : [%s] ' % conf.get('key_fields', ''))
+            key_fields = raw_input('Key fields  : [%s] ' % fmt_list(conf.get('key_fields', '')))
             if key_fields:
                 new_conf['key_fields'] = key_fields.split(SPLIT)
+
+            indices = raw_input('Indices     : [%s] ' % fmt_list(conf.get('indices', '')))
+            if indices:
+                new_conf['indices'] = [indices.split(SPLIT)]
+
+            m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', '')))
+            if m_join:
+                m_join = clean_headers(m_join)[0]
+                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+
+                if len(m_join[0]['with']) > 1:
+                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
+
+                new_conf['join'] = m_join
+                print 'Adding join %s' % str(m_join)
 
             SOURCES_ADMIN.update(source_name, new_conf)
             SOURCES_ADMIN.save()
