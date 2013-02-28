@@ -575,7 +575,7 @@ _fields_and_join() {
 
 
 count_opt() {
-    echo $((`echo "$1" |sed 's/[^:]//g' |wc -m` - 1))
+    echo $((`echo "$1" | sed 's/\\\\://g' | sed 's/[^:]//g' |wc -m` - 1))
 }
 
 get_opt_value() {
