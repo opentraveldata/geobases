@@ -1473,6 +1473,7 @@ def main():
                 source_name = admin[1]
 
             if source_name not in SOURCES_ADMIN:
+                print 'New source!'
                 SOURCES_ADMIN.add(source_name, {
                     'local' : False
                 })

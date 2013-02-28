@@ -117,6 +117,7 @@ _hello() {
     typeset -A opt_args
 
     _arguments \
+     "(* -)"{-A,--admin}"[Administrate sources]:*: :->admin" \
      "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]: :->base" \
      "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-field field. Default field is \"name\"]: :->fuzzy_value" \
      "(-F --fuzzy-field)"{-F,--fuzzy-field}"[Specify a field for fuzzy searches]: :->fuzzy_field" \
@@ -157,6 +158,7 @@ _hello() {
      "*:list of keys:()"
 
     # Arguments value
+    admin=`get_opt_value "${opt_args[-A]}" "${opt_args[--admin]}"`
     base=`get_opt_value "${opt_args[-b]}" "${opt_args[--base]}"`
     indexation=`get_opt_value "${opt_args[-i]}" "${opt_args[--indexation]}"`
     interactive=`get_opt_value "${opt_args[-I]}" "${opt_args[--interactive-query]}"`
@@ -203,6 +205,22 @@ _hello() {
     trep_format)
         _arguments \
             "*:trep format:(F S I J)"
+        ;;
+    admin)
+        case `count_opt $admin` in
+        0)
+            _arguments \
+                "*:command:(status show drop restore edit)"
+            ;;
+        1)
+            _arguments \
+                "*:base:(<%= SOURCES.keys.sort.join(' ') %>)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -A"
+            ;;
+        esac
         ;;
     indexation)
         case `count_opt $indexation` in
