@@ -1461,6 +1461,11 @@ def main():
         if len(admin) < 2:
             admin.append(DEF_ADMIN_COMMAND[1])
 
+        if admin[0] not in ALLOWED_COMMANDS:
+            print 'Command "%s" not understood, should be in %s.' % \
+                    (admin[0], str(ALLOWED_COMMANDS))
+            exit(1)
+
         if admin[0] == 'status':
             print SOURCES_ADMIN.build_status(admin[1])
 
@@ -1475,74 +1480,76 @@ def main():
             SOURCES_ADMIN.restore()
 
         elif admin[0] == 'edit':
-            if len(admin) == 1 or admin[1] is None:
-                source_name = raw_input('Source name : ')
-            else:
-                source_name = admin[1]
-
-            if source_name not in SOURCES_ADMIN:
-                print 'New source!'
-                SOURCES_ADMIN.add(source_name, {
-                    'local' : False
-                })
-
-            conf = SOURCES_ADMIN.get(source_name)
-
-            # We will non empty values here
-            new_conf = {}
-
-            paths = raw_input('Paths       : [%s] ' % fmt_list(conf.get('paths', '')))
-            if paths:
-                new_conf['paths'] = op.realpath(paths)
-
-                copy_in_cache = raw_input('Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir)
-                if copy_in_cache == 'Y':
-                    new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
-                    new_conf['paths'] = op.realpath(new_path)
+            try:
+                if len(admin) == 1 or admin[1] is None:
+                    source_name = raw_input('Source name : ')
                 else:
-                    print 'Did not copy in %s, source still at %s' % (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+                    source_name = admin[1]
+
+                if source_name not in SOURCES_ADMIN:
+                    print 'New source!'
+                    SOURCES_ADMIN.add(source_name, {
+                        'local' : False
+                    })
+
+                conf = SOURCES_ADMIN.get(source_name)
+
+                # We will non empty values here
+                new_conf = {}
+
+                paths = raw_input('Paths       : [%s] ' % fmt_list(conf.get('paths', '')))
+                if paths:
+                    new_conf['paths'] = op.realpath(paths)
+
+                    copy_in_cache = raw_input('Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir)
+                    if copy_in_cache == 'Y':
+                        new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
+                        new_conf['paths'] = op.realpath(new_path)
+                    else:
+                        print 'Did not copy in %s, source still at %s' % (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
 
-            delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
-            if delimiter:
-                new_conf['delimiter'] = delimiter
+                delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
+                if delimiter:
+                    new_conf['delimiter'] = delimiter
 
-            headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', ''))).split(SPLIT)
-            if headers:
-                join, subdelimiters = clean_headers(headers)
-                new_conf['headers'] = headers
-                if join:
-                    new_conf['join'] = join
-                    print 'Detected join %s' % str(join)
-                if subdelimiters:
-                    new_conf['subdelimiters'] = subdelimiters
-                    print 'Detected subdelimiters %s' % str(subdelimiters)
+                headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', ''))).split(SPLIT)
+                if headers:
+                    join, subdelimiters = clean_headers(headers)
+                    new_conf['headers'] = headers
+                    if join:
+                        new_conf['join'] = join
+                        print 'Detected join %s' % str(join)
+                    if subdelimiters:
+                        new_conf['subdelimiters'] = subdelimiters
+                        print 'Detected subdelimiters %s' % str(subdelimiters)
 
-            key_fields = raw_input('Key fields  : [%s] ' % fmt_list(conf.get('key_fields', '')))
-            if key_fields:
-                new_conf['key_fields'] = key_fields.split(SPLIT)
+                key_fields = raw_input('Key fields  : [%s] ' % fmt_list(conf.get('key_fields', '')))
+                if key_fields:
+                    new_conf['key_fields'] = key_fields.split(SPLIT)
 
-            indices = raw_input('Indices     : [%s] ' % fmt_list(conf.get('indices', '')))
-            if indices:
-                new_conf['indices'] = [indices.split(SPLIT)]
+                indices = raw_input('Indices     : [%s] ' % fmt_list(conf.get('indices', '')))
+                if indices:
+                    new_conf['indices'] = [indices.split(SPLIT)]
 
-            m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', ''))).split(SPLIT)
-            if m_join:
-                m_join = clean_headers(m_join)[0]
-                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+                m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', ''))).split(SPLIT)
+                if m_join:
+                    m_join = clean_headers(m_join)[0]
+                    m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
 
-                if len(m_join[0]['with']) > 1:
-                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
+                    if len(m_join[0]['with']) > 1:
+                        m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
 
-                new_conf['join'] = m_join
-                print 'Adding join %s' % str(m_join)
+                    new_conf['join'] = m_join
+                    print 'Adding join %s' % str(m_join)
 
-            SOURCES_ADMIN.update(source_name, new_conf)
-            SOURCES_ADMIN.save()
+                SOURCES_ADMIN.update(source_name, new_conf)
+                SOURCES_ADMIN.save()
 
-        else:
-            print 'Command %s not understood.' % admin[0]
-            exit(1)
+            except KeyboardInterrupt:
+                print '\nLoooooser :)'
+                exit(1)
+
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
