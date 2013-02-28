@@ -1495,20 +1495,22 @@ def main():
             if paths:
                 new_conf['paths'] = op.realpath(paths)
 
-                copy_in_cache = raw_input('Copy in cache %s [Y/N]?' % SOURCES_ADMIN.cache_dir)
+                copy_in_cache = raw_input('Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir)
                 if copy_in_cache == 'Y':
                     new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
                     new_conf['paths'] = op.realpath(new_path)
+                else:
+                    print 'Did not copy in %s, source still at %s' % (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
 
             delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
             if delimiter:
                 new_conf['delimiter'] = delimiter
 
-            headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', '')))
+            headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', ''))).split(SPLIT)
             if headers:
                 join, subdelimiters = clean_headers(headers)
-                new_conf['headers'] = headers.split(SPLIT)
+                new_conf['headers'] = headers
                 if join:
                     new_conf['join'] = join
                     print 'Detected join %s' % str(join)
@@ -1524,7 +1526,7 @@ def main():
             if indices:
                 new_conf['indices'] = [indices.split(SPLIT)]
 
-            m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', '')))
+            m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', ''))).split(SPLIT)
             if m_join:
                 m_join = clean_headers(m_join)[0]
                 m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
