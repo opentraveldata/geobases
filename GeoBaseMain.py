@@ -26,10 +26,9 @@ import SocketServer
 from termcolor import colored
 import colorama
 import argparse # in standard libraray for Python >= 2.7
-import yaml
 
 # Private
-from GeoBases import GeoBase, SOURCES, SOURCES_CONF_PATH, SOURCES_DIR
+from GeoBases import GeoBase, SOURCES_ADMIN
 
 IS_WINDOWS = platform.system() in ('Windows',)
 
@@ -720,92 +719,6 @@ def best_field(candidates, possibilities, default=None):
     return default
 
 
-
-def build_help_sources(sources, sources_conf_path, sources_dir):
-    """Display informations on available sources.
-    """
-    missing = '<none>'
-
-    def fmt_keys(l):
-        """Nice key_fields formatting."""
-        if l is None:
-            return missing
-        if isinstance(l, (list, tuple, set)):
-            return '+'.join(l)
-        return str(l)
-
-    def fmt_path(p):
-        """Nice path formatting."""
-        if isinstance(p, str):
-            return str(p)
-        if 'extract' not in p:
-            return p['file']
-        return '%s -> %s' % (p['file'], p['extract'])
-
-    tip = [dedent('''
-    * Data sources from %s [%s]
-    ''' % (sources_dir, op.basename(sources_conf_path)))]
-
-    tip.append('-' * 80)
-    tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT + FAILOVERS)'))
-    tip.append('-' * 80)
-
-    for data in sorted(sources.keys()):
-        config = sources[data]
-
-        if config is not None:
-            keys  = config.get('key_fields', missing)
-            paths = config.get('paths', missing)
-        else:
-            keys, paths = missing, missing
-
-        if isinstance(paths, (str, dict)):
-            paths = [paths]
-        tip.append('%-20s | %-25s | %s' % \
-                   (data, fmt_keys(keys), '.) %s' % fmt_path(paths[0])))
-
-        for n, path in enumerate(paths[1:], start=1):
-            tip.append('%-20s | %-25s | %s' % \
-                       ('-', '-', '%s) %s' % (n, fmt_path(path))))
-
-    tip.append('-' * 80)
-
-    return '\n'.join(tip)
-
-
-def help_permanent_add(sources_conf_path, options):
-    """Display help on how to make a data source permanent.
-    """
-    conf = {
-        'paths' : '<INSERT_ABSOLUTE_FILE_PATH>',
-        'local' : False
-    }
-
-    for option, value in options.iteritems():
-        # Source is not allowed in configuration, replaced by paths/local
-        if option not in ('source', 'verbose'):
-            conf[option] = value
-
-    print
-    print '* You can make this data source permanent!'
-    print '* Edit %s with:' % sources_conf_path
-    print
-    print '$ cat >> %s << EOF' % sources_conf_path
-    print '# ================ BEGIN ==============='
-    print
-    print yaml.dump({
-        '<INSERT_ANY_NAME>' : conf
-    }, indent=4, default_flow_style=None)
-
-    print '# ================  END  ==============='
-    print 'EOF'
-    print
-    print '* Replace the placeholders <INSERT_...> with:'
-    print '$ vim %s' % sources_conf_path
-    print
-
-
-
 def warn(name, *args):
     """
     Display a warning on stderr.
@@ -878,7 +791,7 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = build_help_sources(SOURCES, SOURCES_CONF_PATH, SOURCES_DIR)
+HELP_SOURCES = SOURCES_ADMIN.build_help()
 CLI_EXAMPLES = '''
 * Command line examples
 
@@ -1490,8 +1403,8 @@ def main():
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
         exit(0)
 
-    if args['base'] not in SOURCES:
-        error('data', args['base'], sorted(SOURCES.keys()))
+    if args['base'] not in SOURCES_ADMIN:
+        error('data', args['base'], sorted(SOURCES_ADMIN))
 
     # Updating file
     if args['update']:
@@ -1569,8 +1482,8 @@ def main():
 
         # Checking join bases
         for e in join:
-            if e['with'][0] not in SOURCES:
-                error('data', e['with'][0], sorted(SOURCES.keys()))
+            if e['with'][0] not in SOURCES_ADMIN:
+                error('data', e['with'][0], sorted(SOURCES_ADMIN))
 
         if verbose:
             print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s" "%s"' % \
@@ -1596,7 +1509,7 @@ def main():
         g = GeoBase(data='feed', **options)
 
         if logorrhea:
-            help_permanent_add(SOURCES_CONF_PATH, options)
+            SOURCES_ADMIN.help_permanent_add(options)
 
     else:
         # -i options overrides default

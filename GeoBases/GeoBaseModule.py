@@ -62,13 +62,13 @@ from urllib import urlretrieve
 from zipfile import ZipFile
 
 # Not in standard library
-import yaml
 from fuzzy import DMetaphone, nysiis
 dmeta = DMetaphone()
 
-from .GeoUtils         import haversine
-from .LevenshteinUtils import mod_leven, clean
-from .GeoGridModule    import GeoGrid
+from .GeoUtils           import haversine
+from .LevenshteinUtils   import mod_leven, clean
+from .GeoGridModule      import GeoGrid
+from .SourcesAdminModule import SourcesAdmin
 
 
 try:
@@ -94,14 +94,12 @@ def relative(rel_path, root=DIRNAME):
     return op.join(op.realpath(root), rel_path)
 
 
-# Path to global configuration
+# 1) Path to global configuration
+# 2) Root folder where we find data
 SOURCES_CONF_PATH = relative('DataSources/Sources.yaml')
+SOURCES_DIR       = op.dirname(SOURCES_CONF_PATH)
 
-with open(SOURCES_CONF_PATH) as fl:
-    SOURCES = yaml.load(fl)
-
-# Root folder where we find data
-SOURCES_DIR = op.dirname(SOURCES_CONF_PATH)
+SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR)
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -223,7 +221,7 @@ DEFAULTS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase', 'SOURCES', 'SOURCES_CONF_PATH', 'SOURCES_DIR']
+__all__ = ['GeoBase', 'SOURCES_ADMIN']
 
 
 class GeoBase(object):
@@ -335,12 +333,12 @@ class GeoBase(object):
         allowed_conf = set(props.keys()) - set(['source'])
         allowed_args = set(props.keys()) - set(['local'])
 
-        if data not in SOURCES:
+        if data not in SOURCES_ADMIN:
             raise ValueError('Wrong data type "%s". Not in %s' % \
-                             (data, sorted(SOURCES.keys())))
+                             (data, sorted(SOURCES_ADMIN)))
 
         # The configuration may be empty
-        conf = SOURCES[data]
+        conf = SOURCES_ADMIN.get(data)
         if conf is None:
             conf = {}
 
@@ -494,7 +492,7 @@ class GeoBase(object):
                 # "local" is only used for sources from configuration
                 # to have a relative path from the configuration file
                 if not is_remote(path) and self._local is True:
-                    path['file'] = relative(path['file'], root=SOURCES_DIR)
+                    path['file'] = relative(path['file'], root=SOURCES_ADMIN.sources_dir)
 
             self._paths = tuple(self._paths)
 
@@ -540,9 +538,9 @@ class GeoBase(object):
             raise ValueError('"%s" should be the same length has "%s" as join fields.' % \
                             (fields, join_fields))
 
-        if join_base not in SOURCES:
+        if join_base not in SOURCES_ADMIN:
             raise ValueError('Wrong join data type "%s". Not in %s' % \
-                             (join_base, sorted(SOURCES.keys())))
+                             (join_base, sorted(SOURCES_ADMIN)))
 
         if join_base in self._ext_bases:
             if self._verbose:

@@ -41,3 +41,11 @@ Indices and tables
     :undoc-members:
     :show-inheritance:
 
+:mod:`SourcesAdminModule` Module
+--------------------------------
+
+.. automodule:: GeoBases.SourcesAdminModule
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
