@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + admin mode with -A/--admin to configure sources (persistent changes)
  + -A/--any is now -O/--or to control multiple --exact filters behavior
  + CLI: possibility to add a join clause on multiple fields with new -i argument (and possibility to --show it)
  + Added map visualization possibilities on join clauses (another arg. for -M on CLI)
