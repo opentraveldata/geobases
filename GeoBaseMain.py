@@ -1753,12 +1753,13 @@ def ask_mode():
     print '-----------------------------------------------------'
     print
     print '              Congrats! You choosed:                 '
+    print 
     for k, v in parameters.iteritems():
         print '(*) %-10s => %-10s' % (str(k), str(v))
 
     # One liner
     print
-    print '          Equivalent one-liner command:              '
+    print '      Equivalent one-liner command (run it !):       '
     print
 
     base_part         = '--base %s' % base
@@ -1769,19 +1770,17 @@ def ask_mode():
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '--%s-field %s' % (search, field)
     elif search in ['near', 'closest']:
-        search_field_part = '--%s-limit %s' % (search, field)
+        search_field_part = '--%s-limit %s' % (search, limit)
     else:
         search_field_part = ''
 
-    print '$ %s' % ' '.join(e for e in [SCRIPT_NAME,
-                                        from_keys_part,
-                                        base_part,
-                                        search_field_part,
-                                        search_part,
-                                        frontend_part] if e)
+    print '%s' % ' '.join(e for e in [SCRIPT_NAME,
+                                      from_keys_part,
+                                      base_part,
+                                      search_field_part,
+                                      search_part,
+                                      frontend_part] if e)
     print '-----------------------------------------------------'
-
-    ask_input('\nPress any key to continue...')
 
     return parameters
 
@@ -1877,9 +1876,11 @@ def main():
 
     if args['ask']:
         try:
-            ask_mode()
+            _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
-            error('aborting', 'Ending session :S.')
+            error('aborting', 'Ending learning session :S.')
+        else:
+            exit(0)
 
 
     if not stdin.isatty() and not interactive_query_mode:
