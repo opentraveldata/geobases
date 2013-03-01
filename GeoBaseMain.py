@@ -1638,7 +1638,7 @@ def admin_mode(admin):
                 else:
                     print '\n===== Aborted'
 
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             error('aborting')
 
 
