@@ -102,6 +102,11 @@ class SourcesAdmin(object):
         self.sources[source] = config
 
 
+    def is_in_cache(self, filename):
+        """Is filename already in cache.
+        """
+        return op.isfile(op.join(self.cache_dir, filename))
+
     def copy_in_cache(self, path):
         """Move source file in cache directory.
         """

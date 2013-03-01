@@ -1511,18 +1511,20 @@ def admin_mode(admin):
 
                 filename = SOURCES_ADMIN.handle_path(paths[0], verbose=True)
 
-                copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
-                if copy_in_cache == 'Y':
-                    filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
-                    if filename_copied is not None:
-                        new_conf['paths'] = op.realpath(filename_copied)
+                if not SOURCES_ADMIN.is_in_cache(filename):
+                    copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
+
+                    if copy_in_cache == 'Y':
+                        filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
+                        if filename_copied is not None:
+                            new_conf['paths'] = op.realpath(filename_copied)
+                        else:
+                            new_conf['paths'] = op.realpath(filename)
+                            print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
                     else:
                         new_conf['paths'] = op.realpath(filename)
-                        print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
-                else:
-                    new_conf['paths'] = op.realpath(filename)
-                    #print '----- Did not copy in %s, source still at %s' % \
-                    #        (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+                        #print '----- Did not copy in %s, source still at %s' % \
+                        #        (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
                 with open(filename) as fl:
                     first_l = fl.next().rstrip()
@@ -1606,10 +1608,10 @@ def admin_mode(admin):
                 print '\n===== No changes'
             else:
                 if old_conf:
-                    print '----- Before'
+                    print '\n----- Before'
                     print SOURCES_ADMIN.convert(old_conf)
 
-                print '+++++ After'
+                print '\n+++++ After'
                 print SOURCES_ADMIN.convert(new_conf)
 
                 confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
