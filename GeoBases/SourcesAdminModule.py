@@ -12,6 +12,7 @@ import os.path as op
 from textwrap import dedent
 from urllib import urlretrieve
 from zipfile import ZipFile
+import shutil
 from shutil import copy
 
 # Not in standard library
@@ -114,9 +115,12 @@ class SourcesAdmin(object):
             print 'File %s does not exist' % path
             return
 
-        copy(path, self.cache_dir)
-
-        return op.join(self.cache_dir, op.basename(path))
+        try:
+            copy(path, self.cache_dir)
+        except shutil.Error:
+            return
+        else:
+            return op.join(self.cache_dir, op.basename(path))
 
 
     def drop(self, source=None):

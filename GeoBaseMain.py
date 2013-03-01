@@ -18,6 +18,7 @@ import signal
 import platform
 import json
 import re
+import glob
 
 import SimpleHTTPServer
 import SocketServer
@@ -37,6 +38,41 @@ if not IS_WINDOWS:
     # Do not produce broken pipes when head and tail are used
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
+
+try:
+    # readline is not available on every platform
+    import readline
+
+    def complete(text, state):
+        """Activate autocomplete on raw_input.
+        """
+        return (glob.glob(text + '*') + [None])[state]
+
+    readline.set_completer_delims(' \t\n;')
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(complete)
+
+
+    def ask_input(prompt, prefill=''):
+        """Custom default when asking for input.
+        """
+        readline.set_startup_hook(lambda: readline.insert_text(prefill))
+        try:
+            return raw_input(prompt)
+        finally:
+            readline.set_startup_hook()
+
+except ImportError:
+
+    def ask_input(prompt, prefill=''):
+        """Fallback.
+        """
+        answer = raw_input('%s[%s] ' % (prompt, prefill))
+        if answer:
+            return answer
+        else:
+            # No answer, returning default
+            return prefill
 
 
 def is_in_path(command):
@@ -1482,12 +1518,12 @@ def main():
         elif admin[0] == 'edit':
             try:
                 if len(admin) == 1 or admin[1] is None:
-                    source_name = raw_input('Source name : ')
+                    source_name = ask_input('[1/7] Source name : ')
                 else:
                     source_name = admin[1]
 
                 if source_name not in SOURCES_ADMIN:
-                    print 'New source!'
+                    print '----- New source!'
                     SOURCES_ADMIN.add(source_name, {
                         'local' : False
                     })
@@ -1497,42 +1533,46 @@ def main():
                 # We will non empty values here
                 new_conf = {}
 
-                paths = raw_input('Paths       : [%s] ' % fmt_list(conf.get('paths', '')))
-                if paths:
+                paths = ask_input('[2/7] Paths       : ', fmt_list(conf.get('paths', '')))
+                if paths or 1:
                     new_conf['paths'] = op.realpath(paths)
 
-                    copy_in_cache = raw_input('Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir)
+                    copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
                     if copy_in_cache == 'Y':
                         new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
-                        new_conf['paths'] = op.realpath(new_path)
+                        if new_path is not None:
+                            new_conf['paths'] = op.realpath(new_path)
+                        else:
+                            print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
                     else:
-                        print 'Did not copy in %s, source still at %s' % (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+                        print '----- Did not copy in %s, source still at %s' % \
+                                (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
 
-                delimiter = raw_input('Delimiter   : [%s] ' % conf.get('delimiter', ''))
+                delimiter = ask_input('[3/7] Delimiter   : ', conf.get('delimiter', ''))
                 if delimiter:
                     new_conf['delimiter'] = delimiter
 
-                headers = raw_input('Headers     : [%s] ' % fmt_list(conf.get('headers', ''))).split(SPLIT)
+                headers = ask_input('[4/7] Headers     : ', fmt_list(conf.get('headers', ''))).split(SPLIT)
                 if headers:
                     join, subdelimiters = clean_headers(headers)
                     new_conf['headers'] = headers
                     if join:
                         new_conf['join'] = join
-                        print 'Detected join %s' % str(join)
+                        print '----- Detected join %s' % str(join)
                     if subdelimiters:
                         new_conf['subdelimiters'] = subdelimiters
-                        print 'Detected subdelimiters %s' % str(subdelimiters)
+                        print '----- Detected subdelimiters %s' % str(subdelimiters)
 
-                key_fields = raw_input('Key fields  : [%s] ' % fmt_list(conf.get('key_fields', '')))
+                key_fields = ask_input('[5/7] Key fields  : ', fmt_list(conf.get('key_fields', '')))
                 if key_fields:
                     new_conf['key_fields'] = key_fields.split(SPLIT)
 
-                indices = raw_input('Indices     : [%s] ' % fmt_list(conf.get('indices', '')))
+                indices = ask_input('[6/7] Indices     : ', fmt_list(conf.get('indices', '')))
                 if indices:
                     new_conf['indices'] = [indices.split(SPLIT)]
 
-                m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', '')))
+                m_join = ask_input('[7/7] Join        : ', fmt_list(conf.get('join', '')))
                 m_join = clean_headers(m_join.split(SPLIT))[0]
 
                 if m_join:
@@ -1548,7 +1588,7 @@ def main():
                 SOURCES_ADMIN.save()
 
             except KeyboardInterrupt:
-                print '\nLoooooser :)'
+                print '\nAborting, will not save changes.'
                 exit(1)
 
         exit(0)
