@@ -804,10 +804,13 @@ def error(name, *args):
         print >> stderr, '\n/!\ Stdin was empty'
 
     elif name == 'wrong_value':
-        print >> stderr, '\n/!\ Wrong value "%s", should be in "%s".' % (args[0], args[1])
+        print >> stderr, '\n/!\ Wrong value "%s", should be in %s.' % (args[0], args[1])
 
     elif name == 'type':
-        print >> stderr, '\n/!\ Wrong type for "%s", should be %s.' % (args[0], args[1])
+        print >> stderr, '\n/!\ Wrong type for "%s", should be "%s".' % (args[0], args[1])
+
+    elif name == 'aborting':
+        print >> stderr, '\n/!\ Aborting, changes will not be saved.'
 
     exit(1)
 
@@ -1409,6 +1412,106 @@ def handle_args():
     return vars(parser.parse_args())
 
 
+def admin_mode(admin):
+    """Handle admin commands.
+    """
+    if len(admin) < 1:
+        admin[0] = DEF_ADMIN_COMMAND[0]
+
+    if len(admin) < 2:
+        admin.append(DEF_ADMIN_COMMAND[1])
+
+    if admin[0] not in ALLOWED_COMMANDS:
+        error('wrong_value', admin[0], ALLOWED_COMMANDS)
+
+    if admin[0] == 'status':
+        print SOURCES_ADMIN.build_status(admin[1])
+
+    elif admin[0] == 'fullstatus':
+        SOURCES_ADMIN.full_status(admin[1])
+
+    elif admin[0] == 'drop':
+        SOURCES_ADMIN.drop(admin[1])
+        SOURCES_ADMIN.save()
+
+    elif admin[0] == 'restore':
+        SOURCES_ADMIN.restore()
+
+    elif admin[0] == 'edit':
+        try:
+            if admin[1] is None:
+                source_name = ask_input('[1/7] Source name : ')
+            else:
+                source_name = admin[1]
+
+            if source_name not in SOURCES_ADMIN:
+                print '----- New source!'
+                SOURCES_ADMIN.add(source_name, {
+                    'local' : False
+                })
+
+            conf = SOURCES_ADMIN.get(source_name)
+
+            # We will non empty values here
+            new_conf = {}
+
+            paths = ask_input('[2/7] Paths       : ', fmt_list(conf.get('paths', '')))
+            if paths or 1:
+                new_conf['paths'] = op.realpath(paths)
+
+                copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
+                if copy_in_cache == 'Y':
+                    new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
+                    if new_path is not None:
+                        new_conf['paths'] = op.realpath(new_path)
+                    else:
+                        print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
+                else:
+                    print '----- Did not copy in %s, source still at %s' % \
+                            (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+
+
+            delimiter = ask_input('[3/7] Delimiter   : ', conf.get('delimiter', ''))
+            if delimiter:
+                new_conf['delimiter'] = delimiter
+
+            headers = ask_input('[4/7] Headers     : ', fmt_list(conf.get('headers', ''))).split(SPLIT)
+            if headers:
+                join, subdelimiters = clean_headers(headers)
+                new_conf['headers'] = headers
+                if join:
+                    new_conf['join'] = join
+                    print '----- Detected join %s' % str(join)
+                if subdelimiters:
+                    new_conf['subdelimiters'] = subdelimiters
+                    print '----- Detected subdelimiters %s' % str(subdelimiters)
+
+            key_fields = ask_input('[5/7] Key fields  : ', fmt_list(conf.get('key_fields', '')))
+            if key_fields:
+                new_conf['key_fields'] = key_fields.split(SPLIT)
+
+            indices = ask_input('[6/7] Indices     : ', fmt_list(conf.get('indices', '')))
+            if indices:
+                new_conf['indices'] = [indices.split(SPLIT)]
+
+            m_join = ask_input('[7/7] Join        : ', fmt_list(conf.get('join', '')))
+            m_join = clean_headers(m_join.split(SPLIT))[0]
+
+            if m_join:
+                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+
+                if len(m_join[0]['with']) > 1:
+                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
+
+                new_conf['join'] = m_join
+                print 'Adding join %s' % str(m_join)
+
+            SOURCES_ADMIN.update(source_name, new_conf)
+            SOURCES_ADMIN.save()
+
+        except KeyboardInterrupt:
+            error('aborting')
+
 
 # How to profile: execute this and uncomment @profile
 # $ kernprof.py --line-by-line --view file.py ORY
@@ -1489,108 +1592,7 @@ def main():
         exit(0)
 
     if args['admin'] is not None:
-        admin = args['admin']
-
-        if len(admin) < 1:
-            admin[0] = DEF_ADMIN_COMMAND[0]
-
-        if len(admin) < 2:
-            admin.append(DEF_ADMIN_COMMAND[1])
-
-        if admin[0] not in ALLOWED_COMMANDS:
-            print 'Command "%s" not understood, should be in %s.' % \
-                    (admin[0], str(ALLOWED_COMMANDS))
-            exit(1)
-
-        if admin[0] == 'status':
-            print SOURCES_ADMIN.build_status(admin[1])
-
-        elif admin[0] == 'fullstatus':
-            SOURCES_ADMIN.full_status(admin[1])
-
-        elif admin[0] == 'drop':
-            SOURCES_ADMIN.drop(admin[1])
-            SOURCES_ADMIN.save()
-
-        elif admin[0] == 'restore':
-            SOURCES_ADMIN.restore()
-
-        elif admin[0] == 'edit':
-            try:
-                if len(admin) == 1 or admin[1] is None:
-                    source_name = ask_input('[1/7] Source name : ')
-                else:
-                    source_name = admin[1]
-
-                if source_name not in SOURCES_ADMIN:
-                    print '----- New source!'
-                    SOURCES_ADMIN.add(source_name, {
-                        'local' : False
-                    })
-
-                conf = SOURCES_ADMIN.get(source_name)
-
-                # We will non empty values here
-                new_conf = {}
-
-                paths = ask_input('[2/7] Paths       : ', fmt_list(conf.get('paths', '')))
-                if paths or 1:
-                    new_conf['paths'] = op.realpath(paths)
-
-                    copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
-                    if copy_in_cache == 'Y':
-                        new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
-                        if new_path is not None:
-                            new_conf['paths'] = op.realpath(new_path)
-                        else:
-                            print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
-                    else:
-                        print '----- Did not copy in %s, source still at %s' % \
-                                (SOURCES_ADMIN.cache_dir, new_conf['paths'])
-
-
-                delimiter = ask_input('[3/7] Delimiter   : ', conf.get('delimiter', ''))
-                if delimiter:
-                    new_conf['delimiter'] = delimiter
-
-                headers = ask_input('[4/7] Headers     : ', fmt_list(conf.get('headers', ''))).split(SPLIT)
-                if headers:
-                    join, subdelimiters = clean_headers(headers)
-                    new_conf['headers'] = headers
-                    if join:
-                        new_conf['join'] = join
-                        print '----- Detected join %s' % str(join)
-                    if subdelimiters:
-                        new_conf['subdelimiters'] = subdelimiters
-                        print '----- Detected subdelimiters %s' % str(subdelimiters)
-
-                key_fields = ask_input('[5/7] Key fields  : ', fmt_list(conf.get('key_fields', '')))
-                if key_fields:
-                    new_conf['key_fields'] = key_fields.split(SPLIT)
-
-                indices = ask_input('[6/7] Indices     : ', fmt_list(conf.get('indices', '')))
-                if indices:
-                    new_conf['indices'] = [indices.split(SPLIT)]
-
-                m_join = ask_input('[7/7] Join        : ', fmt_list(conf.get('join', '')))
-                m_join = clean_headers(m_join.split(SPLIT))[0]
-
-                if m_join:
-                    m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
-
-                    if len(m_join[0]['with']) > 1:
-                        m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
-
-                    new_conf['join'] = m_join
-                    print 'Adding join %s' % str(m_join)
-
-                SOURCES_ADMIN.update(source_name, new_conf)
-                SOURCES_ADMIN.save()
-
-            except KeyboardInterrupt:
-                print '\nAborting, will not save changes.'
-                exit(1)
-
+        admin_mode(args['admin'])
         exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
