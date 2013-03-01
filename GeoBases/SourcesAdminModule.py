@@ -145,9 +145,9 @@ class SourcesAdmin(object):
     def convert(obj):
         """YAML formatting.
         """
-        return yaml.dump(obj,
-                         indent=4,
-                         default_flow_style=False)
+        return yaml.safe_dump(obj,
+                              indent=4,
+                              default_flow_style=False)
 
 
     def full_status(self, source=None):

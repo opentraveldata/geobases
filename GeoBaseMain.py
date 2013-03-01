@@ -745,6 +745,16 @@ def build_pairs(L, layout='v'):
     raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
 
+def split_if_several(value):
+    """Only split if several elements.
+    """
+    value = value.split(SPLIT)
+
+    if len(value) == 1:
+        return value[0]
+    return value
+
+
 def fmt_stuff(option, value):
     """Format stuff from the configuration file.
     """
@@ -756,6 +766,17 @@ def fmt_stuff(option, value):
 
     if option == 'key_fields':
         return flatten(value)
+
+    if option == 'one_indices':
+        return flatten(value)
+
+    if option == 'one_join':
+        if len(value['with']) < 2:
+            if not value['with'][0]:
+                return flatten(value['fields'])
+            return '%s{%s}' % (flatten(value['fields']), value['with'][0])
+        else:
+            return '%s{%s:%s}' % (flatten(value['fields']), value['with'][0], flatten(value['with'][1]))
 
     raise ValueError('Did not understand option "%s".' % option)
 
@@ -979,7 +1000,7 @@ def handle_args():
     """Command line parsing.
     """
     # or list formatter
-    fmt_or = lambda L : ' or '.join('"%s"' % e if e is not None else 'None' for e in L)
+    fmt_or = lambda L : ' or '.join('"%s"' % str(e) for e in L)
 
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      formatter_class=argparse.RawTextHelpFormatter)
@@ -1451,13 +1472,13 @@ def admin_mode(admin):
 
     elif admin[0] == 'edit':
         try:
-            if admin[1] is None:
-                source_name = ask_input('[1/6] Source name : ')
+            if admin[1] is not None:
+                source_name = admin[1]
+            else:
+                source_name = ask_input('[1/8] Source name : ')
                 while not source_name:
                     print '/!\ Cannot be empty'
-                    source_name = ask_input('[1/6] Source name : ')
-            else:
-                source_name = admin[1]
+                    source_name = ask_input('[1/8] Source name : ')
 
             if source_name not in SOURCES_ADMIN:
                 print '----- New source!'
@@ -1465,9 +1486,10 @@ def admin_mode(admin):
                     'local' : False
                 })
 
-            conf = SOURCES_ADMIN.get(source_name)
-
             # We will non empty values here
+            conf = SOURCES_ADMIN.get(source_name)
+            if conf is None:
+                conf = {}
             new_conf = {}
 
             if 'paths' in conf:
@@ -1476,9 +1498,14 @@ def admin_mode(admin):
                 paths = [{ 'file' : '' }]
 
             default_paths = paths[0]['file']
-            paths = ask_input('[2/6] Paths       : ', default_paths)
+            paths = ask_input('[2/8] Paths       : ', default_paths)
 
-            if paths != default_paths:
+            if paths == default_paths:
+                def_delimiter  = conf.get('delimiter',  '^')
+                def_headers    = conf.get('headers',    [])
+                def_key_fields = conf.get('key_fields', [])
+
+            else:
                 new_conf['paths'] = paths
                 paths = SOURCES_ADMIN.convert_paths_format(paths, local=conf.get('local', False))
 
@@ -1494,8 +1521,8 @@ def admin_mode(admin):
                         print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
                 else:
                     new_conf['paths'] = op.realpath(filename)
-                    print '----- Did not copy in %s, source still at %s' % \
-                            (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+                    #print '----- Did not copy in %s, source still at %s' % \
+                    #        (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
                 with open(filename) as fl:
                     first_l = fl.next().rstrip()
@@ -1504,18 +1531,19 @@ def admin_mode(admin):
                 def_delimiter  = guess_delimiter(first_l)
                 def_headers    = guess_headers(first_l.split(def_delimiter))
                 def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
-            else:
-                def_delimiter  = conf.get('delimiter', '')
-                def_headers    = conf.get('headers', '')
-                def_key_fields = conf.get('key_fields', '')
 
 
-            delimiter = ask_input('[3/6] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
+            delimiter = ask_input('[3/8] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
             if delimiter:
                 new_conf['delimiter'] = delimiter
 
-            headers = ask_input('[4/6] Headers     : ', fmt_stuff('headers', def_headers))
-            headers = headers.split(SPLIT)
+
+            headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers))
+            if not headers:
+                headers = []
+            else:
+                headers = headers.split(SPLIT)
+
             if headers:
                 join, subdelimiters = clean_headers(headers)
                 new_conf['headers'] = headers
@@ -1526,27 +1554,65 @@ def admin_mode(admin):
                     new_conf['subdelimiters'] = subdelimiters
                     print '----- Detected subdelimiters %s' % str(subdelimiters)
 
-            key_fields = ask_input('[5/6] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
+
+            key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
             if key_fields:
-                key_fields = key_fields.split(SPLIT)
-                if len(key_fields) == 1:
-                    key_fields = key_fields[0]
+                key_fields = split_if_several(key_fields)
                 new_conf['key_fields'] = key_fields
 
+
+            def_indices = conf.get('indices', [])
+            if not def_indices:
+                def_indices = ['']
+            new_conf['indices'] = []
+
+            for ind in def_indices:
+                indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind))
+                if indices:
+                    indices = split_if_several(indices)
+                    new_conf['indices'].append(indices)
+
+
+            def_join = conf.get('join', [])
+            if not def_join:
+                def_join = [{
+                    'fields' : [],
+                    'with'   : ['']
+                }]
+            new_conf['join'] = []
+
+            for j in def_join:
+                m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j))
+                m_join = clean_headers(m_join.split(SPLIT))[0]
+
+                if m_join:
+                    m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
+
+                    if len(m_join[0]['with']) > 1:
+                        m_join[0]['with'][1] = split_if_several(m_join[0]['with'][1])
+
+                    new_conf['join'].extend(m_join)
+
             # Removing non-changes
-            old_conf = SOURCES_ADMIN.get(source_name)
+            old_conf = {}
             for option, config in new_conf.items():
-                if option in old_conf:
-                    if config == old_conf[option]:
+                if option in conf:
+                    if config == conf[option]:
                         del new_conf[option]
+                    else:
+                        old_conf[option] = conf[option]
 
             if not new_conf:
-                print '\n===== No staged changes'
+                print '\n===== No changes'
             else:
-                print '\n===== Staged changes'
+                if old_conf:
+                    print '----- Before'
+                    print SOURCES_ADMIN.convert(old_conf)
+
+                print '+++++ After'
                 print SOURCES_ADMIN.convert(new_conf)
 
-                confirm = ask_input('[8/6] Confirm [Y/N]? ', 'Y')
+                confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
 
                 if confirm == 'Y':
                     SOURCES_ADMIN.update(source_name, new_conf)
