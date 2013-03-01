@@ -872,7 +872,6 @@ CLI_EXAMPLES = '''
  $ cat data.csv | %s             # with your data
 ''' % ((op.basename(argv[0]),) * 6)
 
-DEF_ADMIN_COMMAND   = ('status', None)
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
 DEF_NEAR_LIMIT      = 50.
@@ -1021,11 +1020,17 @@ def handle_args():
         It accepts a two arguments: command, base.
         As command argument, you may use either
         %s.
-        Defaults are %s.
-        ''' % (', '.join(ALLOWED_COMMANDS), ', '.join(str(c) for c in DEF_ADMIN_COMMAND))),
+        ''' % ', '.join(ALLOWED_COMMANDS)),
         nargs = '*',
         metavar = 'COMMAND',
         default = None)
+
+    parser.add_argument('-a', '--ask',
+        help = dedent('''\
+        This option turns on learning mode, where you just
+        answer questions about what you want to do.
+        '''),
+        action = 'store_true')
 
     parser.add_argument('-b', '--base',
         help = dedent('''\
@@ -1444,13 +1449,26 @@ def admin_mode(admin):
     """Handle admin commands.
     """
     if len(admin) < 1:
-        admin[0] = DEF_ADMIN_COMMAND[0]
+        admin_command = ask_input('[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS))
+        while not admin_command:
+            print '/!\ Cannot be empty'
+            admin_command = ask_input('[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS))
 
-    if len(admin) < 2:
-        admin.append(DEF_ADMIN_COMMAND[1])
+        admin.append(admin_command)
 
     if admin[0] not in ALLOWED_COMMANDS:
         error('wrong_value', admin[0], ALLOWED_COMMANDS)
+
+    if admin[0] == 'restore':
+        SOURCES_ADMIN.restore()
+        return
+
+    if len(admin) < 2:
+        source_name = ask_input('[ 1 ] Source name : ', '')
+        admin.append(source_name)
+
+    if admin[1] == '':
+        admin[1] = None
 
     if admin[0] == 'status':
         print SOURCES_ADMIN.build_status(admin[1])
@@ -1459,187 +1477,182 @@ def admin_mode(admin):
         SOURCES_ADMIN.full_status(admin[1])
 
     elif admin[0] == 'drop':
-        if admin[1] is not None:
-            # We avoid the drop everything thing
-            SOURCES_ADMIN.drop(admin[1])
-        else:
-            source_name = ask_input('Source name: ')
-            SOURCES_ADMIN.drop(source_name)
+        source_name = ''
+        while not source_name:
+            print '/!\ Cannot be empty'
+            source_name = ask_input('[ 1 ] Source name : ')
+
+        SOURCES_ADMIN.drop(source_name)
         SOURCES_ADMIN.save()
 
-    elif admin[0] == 'restore':
-        SOURCES_ADMIN.restore()
-
     elif admin[0] == 'edit':
-        try:
-            if admin[1] is not None:
-                source_name = admin[1]
-            else:
-                source_name = ask_input('[1/8] Source name : ')
-                while not source_name:
-                    print '/!\ Cannot be empty'
-                    source_name = ask_input('[1/8] Source name : ')
 
-            if source_name not in SOURCES_ADMIN:
-                print '----- New source!'
-                SOURCES_ADMIN.add(source_name, {
-                    'local' : False
-                })
-
-            # We will non empty values here
-            conf = SOURCES_ADMIN.get(source_name)
-            if conf is None:
-                conf = {}
-            new_conf = {}
+        if admin[1] is not None:
+            source_name = admin[1]
+        else:
+            source_name = ''
+            while not source_name:
+                print '/!\ Cannot be empty'
+                source_name = ask_input('[ 1 ] Source name : ')
 
 
-            def_paths = conf.get('paths', [])
-            if not def_paths:
-                def_paths = [{ 'file' : '' }]
-            else:
-                def_paths = SOURCES_ADMIN.convert_paths_format(def_paths, local=conf.get('local', True))
+        if source_name not in SOURCES_ADMIN:
+            print '----- New source!'
+            SOURCES_ADMIN.add(source_name, {
+                'local' : False
+            })
 
-            new_conf['paths'] = []
-
-            def_delimiter  = conf.get('delimiter',  '^')
-            def_headers    = conf.get('headers',    [])
-            def_key_fields = conf.get('key_fields', [])
-
-            for path in def_paths:
-                ref_path = dict(path.items())
-                path = ask_input('[2/8] Paths       : ', path['file'])
-                path = SOURCES_ADMIN.convert_paths_format(path, local=conf.get('local', False))[0]
-
-                if path['file'].endswith('.zip'):
-                    extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
-                    path['extract'] = extract
-
-                if not path['file']:
-                    # Empty path mean we want to delete it
-                    continue
-
-                if not path['file'].startswith('http://') and \
-                   not path['file'].startswith('https://'):
-                    path['file'] = op.realpath(path['file'])
-
-                new_conf['paths'].append(path)
-
-                if path == ref_path:
-                    # No need to download and check the first lines for known files
-                    continue
-
-                filename = SOURCES_ADMIN.handle_path(path, verbose=True)
-
-                if not SOURCES_ADMIN.is_in_cache(filename):
-                    copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
-
-                    if copy_in_cache == 'Y':
-                        filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
-
-                        if filename_copied is None:
-                            print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
-                        else:
-                            new_conf['paths'][-1] = op.realpath(filename_copied)
-
-                with open(filename) as fl:
-                    first_l = fl.next().rstrip()
-
-                print '\n===== First line: "%s"\n' % first_l
-                def_delimiter  = guess_delimiter(first_l)
-                def_headers    = guess_headers(first_l.split(def_delimiter))
-                def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
+        # We will non empty values here
+        conf = SOURCES_ADMIN.get(source_name)
+        if conf is None:
+            conf = {}
+        new_conf = {}
 
 
-            delimiter = ask_input('[3/8] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
-            if delimiter:
-                new_conf['delimiter'] = delimiter
+        def_paths = conf.get('paths', [])
+        if not def_paths:
+            def_paths = [{ 'file' : '' }]
+        else:
+            def_paths = SOURCES_ADMIN.convert_paths_format(def_paths, local=conf.get('local', True))
 
+        new_conf['paths'] = []
 
-            headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers))
-            if not headers:
-                headers = []
-            else:
-                headers = headers.split(SPLIT)
+        def_delimiter  = conf.get('delimiter',  '^')
+        def_headers    = conf.get('headers',    [])
+        def_key_fields = conf.get('key_fields', [])
 
-            if headers:
-                join, subdelimiters = clean_headers(headers)
-                new_conf['headers'] = headers
-                if join:
-                    new_conf['join'] = join
-                    print '----- Detected join %s' % str(join)
-                if subdelimiters:
-                    new_conf['subdelimiters'] = subdelimiters
-                    print '----- Detected subdelimiters %s' % str(subdelimiters)
+        for path in def_paths:
+            ref_path = dict(path.items())
+            path = ask_input('[2/8] Paths       : ', path['file'])
+            path = SOURCES_ADMIN.convert_paths_format(path, local=conf.get('local', False))[0]
 
+            if path['file'].endswith('.zip'):
+                extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
+                path['extract'] = extract
 
-            key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
-            if key_fields:
-                key_fields = split_if_several(key_fields)
-                new_conf['key_fields'] = key_fields
+            if not path['file']:
+                # Empty path mean we want to delete it
+                continue
 
+            if not path['file'].startswith('http://') and \
+               not path['file'].startswith('https://'):
+                path['file'] = op.realpath(path['file'])
 
-            def_indices = conf.get('indices', [])
-            if not def_indices:
-                def_indices = ['']
-            new_conf['indices'] = []
+            new_conf['paths'].append(path)
 
-            for ind in def_indices:
-                indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind))
-                if indices:
-                    indices = split_if_several(indices)
-                    new_conf['indices'].append(indices)
+            if path == ref_path:
+                # No need to download and check the first lines for known files
+                continue
 
+            filename = SOURCES_ADMIN.handle_path(path, verbose=True)
 
-            def_join = conf.get('join', [])
-            if not def_join:
-                def_join = [{
-                    'fields' : [],
-                    'with'   : ['']
-                }]
-            new_conf['join'] = []
+            if not SOURCES_ADMIN.is_in_cache(filename):
+                copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
 
-            for j in def_join:
-                m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j))
-                m_join = clean_headers(m_join.split(SPLIT))[0]
+                if copy_in_cache == 'Y':
+                    filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
 
-                if m_join:
-                    m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
-
-                    if len(m_join[0]['with']) > 1:
-                        m_join[0]['with'][1] = split_if_several(m_join[0]['with'][1])
-
-                    new_conf['join'].extend(m_join)
-
-            # Removing non-changes
-            old_conf = {}
-            for option, config in new_conf.items():
-                if option in conf:
-                    if config == conf[option]:
-                        del new_conf[option]
+                    if filename_copied is None:
+                        print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
                     else:
-                        old_conf[option] = conf[option]
+                        new_conf['paths'][-1] = op.realpath(filename_copied)
 
-            if not new_conf:
-                print '\n===== No changes'
-            else:
-                if old_conf:
-                    print '\n----- Before'
-                    print SOURCES_ADMIN.convert(old_conf)
+            with open(filename) as fl:
+                first_l = fl.next().rstrip()
 
-                print '\n+++++ After'
-                print SOURCES_ADMIN.convert(new_conf)
+            print '\n===== First line: "%s"\n' % first_l
+            def_delimiter  = guess_delimiter(first_l)
+            def_headers    = guess_headers(first_l.split(def_delimiter))
+            def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
 
-                confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
 
-                if confirm == 'Y':
-                    SOURCES_ADMIN.update(source_name, new_conf)
-                    SOURCES_ADMIN.save()
-                    print '\n===== Changes saved to %s' % SOURCES_ADMIN.sources_conf_path
+        delimiter = ask_input('[3/8] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
+        if delimiter:
+            new_conf['delimiter'] = delimiter
+
+
+        headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers))
+        if not headers:
+            headers = []
+        else:
+            headers = headers.split(SPLIT)
+
+        if headers:
+            join, subdelimiters = clean_headers(headers)
+            new_conf['headers'] = headers
+            if join:
+                new_conf['join'] = join
+                print '----- Detected join %s' % str(join)
+            if subdelimiters:
+                new_conf['subdelimiters'] = subdelimiters
+                print '----- Detected subdelimiters %s' % str(subdelimiters)
+
+
+        key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
+        if key_fields:
+            key_fields = split_if_several(key_fields)
+            new_conf['key_fields'] = key_fields
+
+
+        def_indices = conf.get('indices', [])
+        if not def_indices:
+            def_indices = ['']
+        new_conf['indices'] = []
+
+        for ind in def_indices:
+            indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind))
+            if indices:
+                indices = split_if_several(indices)
+                new_conf['indices'].append(indices)
+
+
+        def_join = conf.get('join', [])
+        if not def_join:
+            def_join = [{
+                'fields' : [],
+                'with'   : ['']
+            }]
+        new_conf['join'] = []
+
+        for j in def_join:
+            m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j))
+            m_join = clean_headers(m_join.split(SPLIT))[0]
+
+            if m_join:
+                m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
+
+                if len(m_join[0]['with']) > 1:
+                    m_join[0]['with'][1] = split_if_several(m_join[0]['with'][1])
+
+                new_conf['join'].extend(m_join)
+
+        # Removing non-changes
+        old_conf = {}
+        for option, config in new_conf.items():
+            if option in conf:
+                if config == conf[option]:
+                    del new_conf[option]
                 else:
-                    print '\n===== Aborted'
+                    old_conf[option] = conf[option]
 
-        except (KeyboardInterrupt, EOFError):
-            error('aborting')
+        if not new_conf:
+            print '\n===== No changes'
+        else:
+            if old_conf:
+                print '\n----- Before'
+                print SOURCES_ADMIN.convert(old_conf)
+
+            print '\n+++++ After'
+            print SOURCES_ADMIN.convert(new_conf)
+
+            confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
+
+            if confirm == 'Y':
+                SOURCES_ADMIN.update(source_name, new_conf)
+                SOURCES_ADMIN.save()
+                print '\n===== Changes saved to %s' % SOURCES_ADMIN.sources_conf_path
+            else:
+                print '\n===== Aborted'
 
 
 # How to profile: execute this and uncomment @profile
@@ -1721,8 +1734,12 @@ def main():
         exit(0)
 
     if args['admin'] is not None:
-        admin_mode(args['admin'])
-        exit(0)
+        try:
+            admin_mode(args['admin'])
+        except (KeyboardInterrupt, EOFError):
+            error('aborting')
+        else:
+            exit(0)
 
     if not stdin.isatty() and not interactive_query_mode:
         try:
