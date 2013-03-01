@@ -838,7 +838,7 @@ def error(name, *args):
         print >> stderr, '\n/!\ Wrong type for "%s", should be "%s".' % (args[0], args[1])
 
     elif name == 'aborting':
-        print >> stderr, '\n/!\ Aborting, changes will not be saved.'
+        print >> stderr, '\n/!\ %s' % args[0]
 
     exit(1)
 
@@ -1017,9 +1017,10 @@ def handle_args():
     parser.add_argument('-A', '--admin',
         help = dedent('''\
         This option can be used to administrate sources.
-        It accepts a two arguments: command, base.
+        It accepts a two optional arguments: command, base.
         As command argument, you may use either
         %s.
+        Leave empty and answer questions otherwise.
         ''' % ', '.join(ALLOWED_COMMANDS)),
         nargs = '*',
         metavar = 'COMMAND',
@@ -1526,7 +1527,8 @@ def admin_mode(admin):
         if not def_paths:
             def_paths = [{ 'file' : '' }]
         else:
-            def_paths = SOURCES_ADMIN.convert_paths_format(def_paths, local=conf.get('local', True))
+            def_paths = SOURCES_ADMIN.convert_paths_format(def_paths,
+                                                           local=conf.get('local', True))
 
         new_conf['paths'] = []
 
@@ -1537,7 +1539,8 @@ def admin_mode(admin):
         for path in def_paths:
             ref_path = dict(path.items())
             path = ask_input('[2/8] Paths       : ', path['file'])
-            path = SOURCES_ADMIN.convert_paths_format(path, local=conf.get('local', False))[0]
+            path = SOURCES_ADMIN.convert_paths_format(path,
+                                                      local=conf.get('local', False))[0]
 
             if path['file'].endswith('.zip'):
                 extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
@@ -1668,6 +1671,122 @@ def admin_mode(admin):
                 print '\n===== Aborted'
 
 
+def ask_mode():
+    """Learning mode.
+    """
+
+    print dedent("""\
+    -----------------------------------------------------
+                   WELCOME TO LEARNING MODE
+
+                You will be guided through the
+               possibilities by answering a few
+                         questions.
+    -----------------------------------------------------
+    """)
+
+    # 1. Choose base
+    allowed = sorted(SOURCES_ADMIN)
+    print '\n'.join(allowed)
+
+    base = ask_input('[1/5] Which data source do you want to work with? ').strip()
+    while base not in allowed:
+        base = ask_input('[1/5] Which data source do you want to work with? ').strip()
+
+    # 2. Choose from keys
+    all_keys = ask_input('[2/5] Consider all data for this source [Y/N]? ', 'Y').strip()
+
+    if all_keys == 'Y':
+        from_keys = None
+    else:
+        from_keys = ask_input('[   ] Which keys should we consider (separated with " ")? ').strip()
+        from_keys = from_keys.split()
+
+    # 3. Choose search type
+    allowed = ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest']
+    print '\n'.join(allowed)
+
+    search = ask_input('[3/5] What kind of filter? ').strip()
+    while search not in allowed:
+        search = ask_input('[3/5] What kind of filter? ').strip()
+
+    if search.strip().lower() in ('none',):
+        search = None
+
+    # 4. Search parameters
+    field, value, limit = None, None, None
+
+    if search in ['exact', 'fuzzy', 'phonetic']:
+        allowed = sorted(SOURCES_ADMIN.get(base)['headers'])
+        print '\n'.join(allowed)
+
+        field = ask_input('[4/5] On which field? ')
+        while field not in allowed:
+            field = ask_input('[4/5] On which field? ').strip()
+
+        value = ask_input('[   ] Which value to look for? ').strip()
+
+    elif search in ['near', 'closest']:
+        value = ask_input('[4/5] From which point (key or geocode)? ').strip()
+        limit = ask_input('[   ] Which limit for the search (kms or number)? ').strip()
+
+    # 5. Frontend
+    allowed = ['terminal', 'quiet', 'map', 'graph']
+    print '\n'.join(allowed)
+
+    frontend = ask_input('[5/5] Which display? ').strip()
+    while frontend not in allowed:
+        frontend = ask_input('[5/5] Which display? ').strip()
+
+    # 6. Conclusion
+    parameters = {
+        'base'      : base,
+        'from_keys' : from_keys,
+        'search'    : search,
+        'field'     : field,
+        'limit'     : limit,
+        'value'     : value,
+        'frontend'  : frontend
+    }
+
+    print
+    print '-----------------------------------------------------'
+    print
+    print '              Congrats! You choosed:                 '
+    for k, v in parameters.iteritems():
+        print '(*) %-10s => %-10s' % (str(k), str(v))
+
+    # One liner
+    print
+    print '          Equivalent one-liner command:              '
+    print
+
+    base_part         = '--base %s' % base
+    from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
+    search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
+    frontend_part     = ('--%s' % frontend) if frontend != 'terminal' else ''
+
+    if search in ['exact', 'fuzzy', 'phonetic']:
+        search_field_part = '--%s-field %s' % (search, field)
+    elif search in ['near', 'closest']:
+        search_field_part = '--%s-limit %s' % (search, field)
+    else:
+        search_field_part = ''
+
+    print '$ %s' % ' '.join(e for e in [SCRIPT_NAME,
+                                        from_keys_part,
+                                        base_part,
+                                        search_field_part,
+                                        search_part,
+                                        frontend_part] if e)
+    print '-----------------------------------------------------'
+
+    ask_input('\nPress any key to continue...')
+
+    return parameters
+
+
+
 # How to profile: execute this and uncomment @profile
 # $ kernprof.py --line-by-line --view file.py ORY
 #@profile
@@ -1746,13 +1865,22 @@ def main():
         SOURCES_ADMIN.check_data_updates(force=True)
         exit(0)
 
+
     if args['admin'] is not None:
         try:
             admin_mode(args['admin'])
         except (KeyboardInterrupt, EOFError):
-            error('aborting')
+            error('aborting', 'Aborting, changes will not be saved.')
         else:
             exit(0)
+
+
+    if args['ask']:
+        try:
+            ask_mode()
+        except (KeyboardInterrupt, EOFError):
+            error('aborting', 'Ending session :S.')
+
 
     if not stdin.isatty() and not interactive_query_mode:
         try:
