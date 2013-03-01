@@ -745,13 +745,20 @@ def build_pairs(L, layout='v'):
     raise ValueError('Layout must be "h" or "v", but was "%s"' % layout)
 
 
-def fmt_list(L):
+def fmt_stuff(option, value):
     """Format stuff from the configuration file.
     """
-    if isinstance(L, str):
-        return L
+    if option == 'delimiter':
+        return str(value)
 
-    return SPLIT.join(str(e) for e in L)
+    if option == 'headers':
+        return flatten(value)
+
+    if option == 'key_fields':
+        return flatten(value)
+
+    raise ValueError('Did not understand option "%s".' % option)
+
 
 
 def best_field(candidates, possibilities, default=None):
@@ -1431,7 +1438,12 @@ def admin_mode(admin):
         SOURCES_ADMIN.full_status(admin[1])
 
     elif admin[0] == 'drop':
-        SOURCES_ADMIN.drop(admin[1])
+        if admin[1] is not None:
+            # We avoid the drop everything thing
+            SOURCES_ADMIN.drop(admin[1])
+        else:
+            source_name = ask_input('Source name: ')
+            SOURCES_ADMIN.drop(source_name)
         SOURCES_ADMIN.save()
 
     elif admin[0] == 'restore':
@@ -1440,7 +1452,10 @@ def admin_mode(admin):
     elif admin[0] == 'edit':
         try:
             if admin[1] is None:
-                source_name = ask_input('[1/7] Source name : ')
+                source_name = ask_input('[1/6] Source name : ')
+                while not source_name:
+                    print '/!\ Cannot be empty'
+                    source_name = ask_input('[1/6] Source name : ')
             else:
                 source_name = admin[1]
 
@@ -1455,27 +1470,52 @@ def admin_mode(admin):
             # We will non empty values here
             new_conf = {}
 
-            paths = ask_input('[2/7] Paths       : ', fmt_list(conf.get('paths', '')))
-            if paths or 1:
-                new_conf['paths'] = op.realpath(paths)
+            if 'paths' in conf:
+                paths = SOURCES_ADMIN.convert_paths_format(conf['paths'], local=conf.get('local', True))
+            else:
+                paths = [{ 'file' : '' }]
+
+            default_paths = paths[0]['file']
+            paths = ask_input('[2/6] Paths       : ', default_paths)
+
+            if paths != default_paths:
+                new_conf['paths'] = paths
+                paths = SOURCES_ADMIN.convert_paths_format(paths, local=conf.get('local', False))
+
+                filename = SOURCES_ADMIN.handle_path(paths[0], verbose=True)
 
                 copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
                 if copy_in_cache == 'Y':
-                    new_path = SOURCES_ADMIN.copy_in_cache(new_conf['paths'])
-                    if new_path is not None:
-                        new_conf['paths'] = op.realpath(new_path)
+                    filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
+                    if filename_copied is not None:
+                        new_conf['paths'] = op.realpath(filename_copied)
                     else:
+                        new_conf['paths'] = op.realpath(filename)
                         print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
                 else:
+                    new_conf['paths'] = op.realpath(filename)
                     print '----- Did not copy in %s, source still at %s' % \
                             (SOURCES_ADMIN.cache_dir, new_conf['paths'])
 
+                with open(filename) as fl:
+                    first_l = fl.next().rstrip()
 
-            delimiter = ask_input('[3/7] Delimiter   : ', conf.get('delimiter', ''))
+                print '\n===== First line: "%s"\n' % first_l
+                def_delimiter  = guess_delimiter(first_l)
+                def_headers    = guess_headers(first_l.split(def_delimiter))
+                def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
+            else:
+                def_delimiter  = conf.get('delimiter', '')
+                def_headers    = conf.get('headers', '')
+                def_key_fields = conf.get('key_fields', '')
+
+
+            delimiter = ask_input('[3/6] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
             if delimiter:
                 new_conf['delimiter'] = delimiter
 
-            headers = ask_input('[4/7] Headers     : ', fmt_list(conf.get('headers', ''))).split(SPLIT)
+            headers = ask_input('[4/6] Headers     : ', fmt_stuff('headers', def_headers))
+            headers = headers.split(SPLIT)
             if headers:
                 join, subdelimiters = clean_headers(headers)
                 new_conf['headers'] = headers
@@ -1486,28 +1526,34 @@ def admin_mode(admin):
                     new_conf['subdelimiters'] = subdelimiters
                     print '----- Detected subdelimiters %s' % str(subdelimiters)
 
-            key_fields = ask_input('[5/7] Key fields  : ', fmt_list(conf.get('key_fields', '')))
+            key_fields = ask_input('[5/6] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
             if key_fields:
-                new_conf['key_fields'] = key_fields.split(SPLIT)
+                key_fields = key_fields.split(SPLIT)
+                if len(key_fields) == 1:
+                    key_fields = key_fields[0]
+                new_conf['key_fields'] = key_fields
 
-            indices = ask_input('[6/7] Indices     : ', fmt_list(conf.get('indices', '')))
-            if indices:
-                new_conf['indices'] = [indices.split(SPLIT)]
+            # Removing non-changes
+            old_conf = SOURCES_ADMIN.get(source_name)
+            for option, config in new_conf.items():
+                if option in old_conf:
+                    if config == old_conf[option]:
+                        del new_conf[option]
 
-            m_join = ask_input('[7/7] Join        : ', fmt_list(conf.get('join', '')))
-            m_join = clean_headers(m_join.split(SPLIT))[0]
+            if not new_conf:
+                print '\n===== No staged changes'
+            else:
+                print '\n===== Staged changes'
+                print SOURCES_ADMIN.convert(new_conf)
 
-            if m_join:
-                m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
+                confirm = ask_input('[8/6] Confirm [Y/N]? ', 'Y')
 
-                if len(m_join[0]['with']) > 1:
-                    m_join[0]['with'][1] = tuple(m_join[0]['with'][1].split(SPLIT))
-
-                new_conf['join'] = m_join
-                print 'Adding join %s' % str(m_join)
-
-            SOURCES_ADMIN.update(source_name, new_conf)
-            SOURCES_ADMIN.save()
+                if confirm == 'Y':
+                    SOURCES_ADMIN.update(source_name, new_conf)
+                    SOURCES_ADMIN.save()
+                    print '\n===== Changes saved to %s' % SOURCES_ADMIN.sources_conf_path
+                else:
+                    print '\n===== Aborted'
 
         except KeyboardInterrupt:
             error('aborting')

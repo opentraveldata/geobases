@@ -18,12 +18,6 @@ from shutil import copy
 # Not in standard library
 import yaml
 
-# YAML formatting
-DUMP_STYLE = {
-    'indent'             : 4,
-    'default_flow_style' : False
-}
-
 backup_name = lambda p: p.replace('.yaml', '.orig.yaml')
 
 
@@ -102,7 +96,7 @@ class SourcesAdmin(object):
         """Add new source.
         """
         if source in self.sources:
-            print 'Source %s already exists.' % source
+            print 'Source "%s" already exists.' % source
             return
 
         self.sources[source] = config
@@ -130,7 +124,7 @@ class SourcesAdmin(object):
             self.sources = {}
 
         if source not in self.sources:
-            print 'Source %s already exists.' % source
+            print 'Source "%s" does not exist.' % source
             return
 
         del self.sources[source]
@@ -140,27 +134,36 @@ class SourcesAdmin(object):
         """Update source.
         """
         if source not in self.sources:
-            print 'Source %s not in sources.' % source
+            print 'Source "%s" not in sources.' % source
             return
 
         for option, option_config in config.iteritems():
             self.sources[source][option] = option_config
 
 
+    @staticmethod
+    def convert(obj):
+        """YAML formatting.
+        """
+        return yaml.dump(obj,
+                         indent=4,
+                         default_flow_style=False)
+
+
     def full_status(self, source=None):
         """Show source full status.
         """
         if source is None:
-            print yaml.dump(self.sources, **DUMP_STYLE)
+            print self.convert(self.sources)
             return
 
         if source not in self.sources:
             print 'Source %s not in sources.' % source
             return
 
-        print yaml.dump({
+        print self.convert({
             source : self.get(source)
-        }, **DUMP_STYLE)
+        })
 
 
     def save(self, filename=None):
@@ -170,7 +173,7 @@ class SourcesAdmin(object):
             filename = self.sources_conf_path
 
         with open(filename, 'w') as f:
-            f.write(yaml.dump(self.sources, **DUMP_STYLE))
+            f.write(self.convert(self.sources))
 
 
     def restore(self, load=False):
@@ -190,7 +193,7 @@ class SourcesAdmin(object):
             displayed = sorted(self.sources)
         else:
             if source not in self.sources:
-                return 'Source %s not in sources.' % source
+                return 'Source "%s" not in sources.' % source
             displayed = [source]
 
         missing = '<none>'
@@ -262,9 +265,9 @@ class SourcesAdmin(object):
         print '$ cat >> %s << EOF' % self.sources_conf_path
         print '# ================ BEGIN ==============='
         print
-        print yaml.dump({
+        print self.convert({
             '<INSERT_ANY_NAME>' : conf
-        }, **DUMP_STYLE)
+        })
 
         print '# ================  END  ==============='
         print 'EOF'
