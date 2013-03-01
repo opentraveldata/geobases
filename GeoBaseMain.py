@@ -1552,26 +1552,37 @@ def admin_mode(admin):
 
             if not path['file'].startswith('http://') and \
                not path['file'].startswith('https://'):
+                # For local paths we propose copy in cache dir
                 path['file'] = op.realpath(path['file'])
+
+                if 'extract' in path:
+                    # We propose to store the root archive in cache
+                    if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(path['file'])):
+                        # Is the path file in the cache dir?
+                        copy_in_cache = ask_input('[   ] Use %s as primary source in %s [Y/N]? ' % \
+                                                  (path['file'], SOURCES_ADMIN.cache_dir), 'Y')
+
+                        if copy_in_cache == 'Y':
+                            _, copied = SOURCES_ADMIN.copy_in_cache(path['file'])
+                            path['file'] = op.realpath(copied)
+
+            # We propose for tmp files to be used as primary sources
+            filename = SOURCES_ADMIN.handle_path(path, verbose=True)
+
+            if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(filename)):
+                # Is the path file in the cache dir?
+                copy_in_cache = ask_input('[   ] Use %s as primary source in %s [Y/N]? ' % \
+                                          (filename, SOURCES_ADMIN.cache_dir), 'Y')
+
+                if copy_in_cache == 'Y':
+                    _, copied = SOURCES_ADMIN.copy_in_cache(filename)
+                    path['file'] = op.realpath(copied)
 
             new_conf['paths'].append(path)
 
             if path == ref_path:
                 # No need to download and check the first lines for known files
                 continue
-
-            filename = SOURCES_ADMIN.handle_path(path, verbose=True)
-
-            if not SOURCES_ADMIN.is_in_cache(filename):
-                copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
-
-                if copy_in_cache == 'Y':
-                    filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
-
-                    if filename_copied is None:
-                        print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
-                    else:
-                        new_conf['paths'][-1] = op.realpath(filename_copied)
 
             with open(filename) as fl:
                 first_l = fl.next().rstrip()

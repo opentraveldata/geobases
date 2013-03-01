@@ -112,14 +112,15 @@ class SourcesAdmin(object):
         """
         if not op.isfile(path):
             print 'File %s does not exist' % path
-            return
+            return False, None
 
         try:
             copy(path, self.cache_dir)
         except shutil.Error:
-            return
+            # Copy did not happen because the two files are the same
+            return False, path
         else:
-            return op.join(self.cache_dir, op.basename(path))
+            return True, op.join(self.cache_dir, op.basename(path))
 
 
     def drop(self, source=None):
