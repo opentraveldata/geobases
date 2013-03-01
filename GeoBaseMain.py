@@ -1532,9 +1532,10 @@ def main():
                 if indices:
                     new_conf['indices'] = [indices.split(SPLIT)]
 
-                m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', ''))).split(SPLIT)
+                m_join = raw_input('Join        : [%s] ' % fmt_list(conf.get('join', '')))
+                m_join = clean_headers(m_join.split(SPLIT))[0]
+
                 if m_join:
-                    m_join = clean_headers(m_join)[0]
                     m_join[0]['fields'] = tuple(m_join[0]['fields'].split(SPLIT))
 
                     if len(m_join[0]['with']) > 1:
