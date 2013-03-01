@@ -1537,7 +1537,9 @@ def admin_mode(admin):
         def_key_fields = conf.get('key_fields', [])
 
         for path in def_paths:
+            # Cheap copy
             ref_path = dict(path.items())
+
             path = ask_input('[2/8] Paths       : ', path['file'])
             path = SOURCES_ADMIN.convert_paths_format(path,
                                                       local=conf.get('local', False))[0]
@@ -1766,13 +1768,16 @@ def ask_mode():
     print '              Congrats! You choosed:                 '
     print 
     for k, v in parameters.iteritems():
-        print '(*) %-10s => %-10s' % (str(k), str(v))
+        print '(*) %-10s => %-10s' % (str(k), str(v) if v is not None else '(unused)')
 
     # One liner
     print
-    print '      Equivalent one-liner command (run it !):       '
+    print '            Equivalent one-liner command             '
+    print '        with long options and short options          '
+    print '                      Run it!                        '
     print
 
+    # Long version
     base_part         = '--base %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
@@ -1782,6 +1787,27 @@ def ask_mode():
         search_field_part = '--%s-field %s' % (search, field)
     elif search in ['near', 'closest']:
         search_field_part = '--%s-limit %s' % (search, limit)
+    else:
+        search_field_part = ''
+
+    print '%s' % ' '.join(e for e in [SCRIPT_NAME,
+                                      from_keys_part,
+                                      base_part,
+                                      search_field_part,
+                                      search_part,
+                                      frontend_part] if e)
+
+
+    # Short version
+    base_part         = '-b %s' % base
+    from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
+    search_part       = ('-%s "%s"' % (search[0], value)) if search is not None else ''
+    frontend_part     = ('-%s' % frontend[0]) if frontend != 'terminal' else ''
+
+    if search in ['exact', 'fuzzy', 'phonetic']:
+        search_field_part = '-%s %s' % (search[0].upper(), field)
+    elif search in ['near', 'closest']:
+        search_field_part = '-%s %s' % (search[0].upper(), limit)
     else:
         search_field_part = ''
 
