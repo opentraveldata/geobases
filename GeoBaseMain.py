@@ -1559,8 +1559,8 @@ def admin_mode(admin):
                     # We propose to store the root archive in cache
                     if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(path['file'])):
                         # Is the path file in the cache dir?
-                        copy_in_cache = ask_input('[   ] Use %s as primary source in %s [Y/N]? ' % \
-                                                  (path['file'], SOURCES_ADMIN.cache_dir), 'Y')
+                        copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
+                                                  (op.basename(path['file']), SOURCES_ADMIN.cache_dir), 'Y')
 
                         if copy_in_cache == 'Y':
                             _, copied = SOURCES_ADMIN.copy_in_cache(path['file'])
@@ -1571,8 +1571,8 @@ def admin_mode(admin):
 
             if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(filename)):
                 # Is the path file in the cache dir?
-                copy_in_cache = ask_input('[   ] Use %s as primary source in %s [Y/N]? ' % \
-                                          (filename, SOURCES_ADMIN.cache_dir), 'Y')
+                copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
+                                          (op.basename(filename), SOURCES_ADMIN.cache_dir), 'Y')
 
                 if copy_in_cache == 'Y':
                     _, copied = SOURCES_ADMIN.copy_in_cache(filename)
@@ -1666,10 +1666,10 @@ def admin_mode(admin):
             print '\n===== No changes'
         else:
             if old_conf:
-                print '\n----- Before'
+                print '\n----- [changes: before]'
                 print SOURCES_ADMIN.convert(old_conf)
 
-            print '\n+++++ After'
+            print '\n+++++ [changes: after]'
             print SOURCES_ADMIN.convert(new_conf)
 
             confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
