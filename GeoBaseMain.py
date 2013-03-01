@@ -1492,39 +1492,54 @@ def admin_mode(admin):
                 conf = {}
             new_conf = {}
 
-            if 'paths' in conf:
-                paths = SOURCES_ADMIN.convert_paths_format(conf['paths'], local=conf.get('local', True))
+
+            def_paths = conf.get('paths', [])
+            if not def_paths:
+                def_paths = [{ 'file' : '' }]
             else:
-                paths = [{ 'file' : '' }]
+                def_paths = SOURCES_ADMIN.convert_paths_format(def_paths, local=conf.get('local', True))
 
-            default_paths = paths[0]['file']
-            paths = ask_input('[2/8] Paths       : ', default_paths)
+            new_conf['paths'] = []
 
-            if paths == default_paths:
-                def_delimiter  = conf.get('delimiter',  '^')
-                def_headers    = conf.get('headers',    [])
-                def_key_fields = conf.get('key_fields', [])
+            def_delimiter  = conf.get('delimiter',  '^')
+            def_headers    = conf.get('headers',    [])
+            def_key_fields = conf.get('key_fields', [])
 
-            else:
-                new_conf['paths'] = paths
-                paths = SOURCES_ADMIN.convert_paths_format(paths, local=conf.get('local', False))
+            for path in def_paths:
+                ref_path = dict(path.items())
+                path = ask_input('[2/8] Paths       : ', path['file'])
+                path = SOURCES_ADMIN.convert_paths_format(path, local=conf.get('local', False))[0]
 
-                filename = SOURCES_ADMIN.handle_path(paths[0], verbose=True)
+                if path['file'].endswith('.zip'):
+                    extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
+                    path['extract'] = extract
+
+                if not path['file']:
+                    # Empty path mean we want to delete it
+                    continue
+
+                if not path['file'].startswith('http://') and \
+                   not path['file'].startswith('https://'):
+                    path['file'] = op.realpath(path['file'])
+
+                new_conf['paths'].append(path)
+
+                if path == ref_path:
+                    # No need to download and check the first lines for known files
+                    continue
+
+                filename = SOURCES_ADMIN.handle_path(path, verbose=True)
 
                 if not SOURCES_ADMIN.is_in_cache(filename):
                     copy_in_cache = ask_input('[   ] Copy in cache %s [Y/N]? ' % SOURCES_ADMIN.cache_dir, 'Y')
 
                     if copy_in_cache == 'Y':
                         filename_copied = SOURCES_ADMIN.copy_in_cache(filename)
-                        if filename_copied is not None:
-                            new_conf['paths'] = op.realpath(filename_copied)
-                        else:
-                            new_conf['paths'] = op.realpath(filename)
+
+                        if filename_copied is None:
                             print '----- Did not copy in %s' % SOURCES_ADMIN.cache_dir
-                    else:
-                        new_conf['paths'] = op.realpath(filename)
-                        #print '----- Did not copy in %s, source still at %s' % \
-                        #        (SOURCES_ADMIN.cache_dir, new_conf['paths'])
+                        else:
+                            new_conf['paths'][-1] = op.realpath(filename_copied)
 
                 with open(filename) as fl:
                     first_l = fl.next().rstrip()
