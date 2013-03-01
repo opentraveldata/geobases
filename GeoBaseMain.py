@@ -1448,12 +1448,23 @@ def handle_args():
 def admin_mode(admin):
     """Handle admin commands.
     """
-    if len(admin) < 1:
-        admin_command = ask_input('[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS))
-        while not admin_command:
-            print '/!\ Cannot be empty'
-            admin_command = ask_input('[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS))
+    help_ = dedent("""\
+    ---------------------------------------------------------------
+    (*) status     : display short data source status
+    (*) fullstatus : display full data source configuration
+    (*) drop       : drop all information for one data source
+    (*) restore    : factory reset of all data sources information
+    (*) edit       : add or edit an existing data source
+    ------------------------------------------------------- SUMMARY
+    """)
 
+    if len(admin) < 1:
+        print help_
+        msg = '[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS)
+        admin_command = ask_input(msg)
+
+        while not admin_command:
+            admin_command = ask_input(msg)
         admin.append(admin_command)
 
     if admin[0] not in ALLOWED_COMMANDS:
@@ -1464,10 +1475,12 @@ def admin_mode(admin):
         return
 
     if len(admin) < 2:
-        source_name = ask_input('[ 1 ] Source name : ', '')
+        print '\n'.join(sorted(SOURCES_ADMIN))
+
+        source_name = ask_input('[ 1 ] Source name : ')
         admin.append(source_name)
 
-    if admin[1] == '':
+    if admin[1] in ('', '*'):
         admin[1] = None
 
     if admin[0] == 'status':
@@ -1479,7 +1492,7 @@ def admin_mode(admin):
     elif admin[0] == 'drop':
         source_name = ''
         while not source_name:
-            print '/!\ Cannot be empty'
+            print '/!\ Cannot be all sources'
             source_name = ask_input('[ 1 ] Source name : ')
 
         SOURCES_ADMIN.drop(source_name)
@@ -1492,7 +1505,7 @@ def admin_mode(admin):
         else:
             source_name = ''
             while not source_name:
-                print '/!\ Cannot be empty'
+                print '/!\ Cannot be all sources'
                 source_name = ask_input('[ 1 ] Source name : ')
 
 
