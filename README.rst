@@ -38,7 +38,7 @@ You can perform all types of queries:
 
  $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 
-And of course, you can use your own data for map display:
+Of course, you can use your own data for map display:
 
 .. code-block:: bash
 
@@ -59,6 +59,12 @@ And for every other thing as well:
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png
    :align: center
+
+Administrate the data sources:
+
+.. code-block:: bash
+
+ $ GeoBase --admin
 
 We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
 
@@ -350,6 +356,8 @@ Installation of the package will also deploy a standalone script named ``GeoBase
  $ GeoBase --closest CDG        # closest from CDG
  $ GeoBase --near LIG           # near LIG
  $ GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
+ $ GeoBase --admin              # to administrate data sources
+ $ GeoBase --ask                # interactive learning mode
  $ GeoBase --help               # your best friend
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png
