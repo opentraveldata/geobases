@@ -1118,7 +1118,7 @@ def handle_args():
         When performing an exact search, specify the field to be chosen.
         Default is %s. Give unadmissible field and available
         values will be displayed.
-        You can give multiple properties delimited by "%s". Make sure
+        You can give multiple fields delimited by "%s". Make sure
         you give the same number of values delimited also by "%s" for -e then.
         ''' % (fmt_or(DEF_EXACT_FIELDS), SPLIT, SPLIT)),
         metavar = 'FIELD',
@@ -2032,7 +2032,7 @@ def main():
     if args['exact_field'] is None or args['exact_field'] == SKIP:
         args['exact_field'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
-    exact_properties = args['exact_field'].split(SPLIT)
+    exact_fields = args['exact_field'].split(SPLIT)
 
     if args['fuzzy_field'] is None or args['fuzzy_field'] == SKIP:
         args['fuzzy_field'] = best_field(DEF_FUZZY_FIELDS, g.fields)
@@ -2129,7 +2129,7 @@ def main():
 
     # Failing on wrong headers
     if args['exact'] is not None:
-        for field in exact_properties:
+        for field in exact_fields:
             if field not in g.fields:
                 error('field', field, g.data, sorted(g.fields))
 
@@ -2249,8 +2249,8 @@ def main():
     if args['exact'] is not None:
         args['exact'] = ' '.join(args['exact'])
 
-        exact_values = args['exact'].split(SPLIT, len(exact_properties) - 1)
-        conditions = list(izip_longest(exact_properties, exact_values, fillvalue=''))
+        exact_values = args['exact'].split(SPLIT, len(exact_fields) - 1)
+        conditions = list(izip_longest(exact_fields, exact_values, fillvalue=''))
         mode = 'or' if args['or'] else 'and'
 
         if verbose:
@@ -2339,7 +2339,7 @@ def main():
     important = set(['__key__'])
 
     if args['exact'] is not None:
-        for prop in exact_properties:
+        for prop in exact_fields:
             important.add(prop)
 
     if args['fuzzy'] is not None:
