@@ -29,7 +29,8 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase, SOURCES_ADMIN
+from GeoBases import GeoBase, SourcesManager
+
 
 IS_WINDOWS = platform.system() in ('Windows',)
 
@@ -852,6 +853,9 @@ def error(name, *args):
 # Global defaults
 PACKAGE_NAME = 'GeoBasesDev'
 SCRIPT_NAME  = 'GeoBase'
+
+# Sources manager
+SOURCES_ADMIN = SourcesManager()
 
 DESCRIPTION  = 'Data services and visualization'
 CONTACT_INFO = '''

@@ -51,7 +51,6 @@ even with ``('iata_code', 'location_type')`` key:
 
 from __future__ import with_statement
 
-import os
 import os.path as op
 import heapq
 from itertools import izip_longest, count, product
@@ -66,7 +65,7 @@ dmeta = DMetaphone()
 from .GeoUtils           import haversine
 from .LevenshteinUtils   import mod_leven, clean
 from .GeoGridModule      import GeoGrid
-from .SourcesAdminModule import SourcesAdmin
+from .SourcesAdminModule import SourcesManager
 
 
 try:
@@ -91,19 +90,8 @@ def relative(rel_path, root=DIRNAME):
     """
     return op.join(op.realpath(root), rel_path)
 
-
-# 1) Path to global configuration
-# 2) Root folder where we find data
-# 3) Cache directory
-UPDATE_SCRIPT_PATH = relative('DataSources/CheckDataUpdates.sh')
-SOURCES_CONF_PATH  = relative('DataSources/Sources.yaml')
-SOURCES_DIR        = op.dirname(SOURCES_CONF_PATH)
-CACHE_DIR          = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
-
-if not op.isdir(CACHE_DIR):
-    os.mkdir(CACHE_DIR)
-
-SOURCES_ADMIN = SourcesAdmin(SOURCES_CONF_PATH, SOURCES_DIR, CACHE_DIR, UPDATE_SCRIPT_PATH)
+# The sources manager
+SOURCES_ADMIN = SourcesManager()
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -196,7 +184,7 @@ DEFAULTS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase', 'SOURCES_ADMIN']
+__all__ = ['GeoBase']
 
 
 class GeoBase(object):

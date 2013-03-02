@@ -18,17 +18,43 @@ from shutil import copy
 # Not in standard library
 import yaml
 
-backup_name = lambda p: p.replace('.yaml', '.orig.yaml')
+# Relative paths handling
+DIRNAME = op.dirname(__file__)
+
+def relative(rel_path, root=DIRNAME):
+    """Handle relative paths.
+    """
+    return op.join(op.realpath(root), rel_path)
 
 
-class SourcesAdmin(object):
+# 1) Path to global configuration
+# 2) Root folder where we find data
+# 3) Cache directory
+UPDATE_SCRIPT_PATH  = relative('DataSources/CheckDataUpdates.sh')
+SOURCES_CONF_PATH   = relative('DataSources/Sources.yaml')
+SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
+CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
+
+if not op.isdir(CACHE_DIR):
+    os.mkdir(CACHE_DIR)
+
+
+# We only export the main class
+__all__ = ['SourcesManager']
+
+
+class SourcesManager(object):
     """
     This class is used to administrate sources.
     """
-    def __init__(self, sources_conf_path, sources_dir, cache_dir, update_script_path):
+    def __init__(self,
+                 sources_conf_path_origin=SOURCES_CONF_PATH,
+                 sources_dir=SOURCES_DIR,
+                 cache_dir=CACHE_DIR,
+                 update_script_path=UPDATE_SCRIPT_PATH):
 
         # Path to the configuration file origin file
-        self.sources_conf_path_origin = sources_conf_path
+        self.sources_conf_path_origin = sources_conf_path_origin
 
         # Creating use space file
         self.sources_conf_path = op.join(cache_dir,
