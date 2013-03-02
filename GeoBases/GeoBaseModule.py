@@ -109,61 +109,6 @@ NB_CLOSEST = 1
 # Loading indicator
 NB_LINES_STEP = 100000
 
-# Assets for map and table
-ASSETS = {
-    'map' : {
-        'template' : {
-            # source : v_target
-            relative('MapAssets/template.html') : '%s_map.html',
-        },
-        'static' : {
-            # source : target
-            relative('MapAssets/map.js')            : 'map.js',
-            relative('MapAssets/point.png')         : 'point.png',
-            relative('MapAssets/marker.png')        : 'marker.png',
-            relative('MapAssets/red_point.png')     : 'red_point.png',
-            relative('MapAssets/red_marker.png')    : 'red_marker.png',
-            relative('MapAssets/orange_point.png')  : 'orange_point.png',
-            relative('MapAssets/orange_marker.png') : 'orange_marker.png',
-            relative('MapAssets/yellow_point.png')  : 'yellow_point.png',
-            relative('MapAssets/yellow_marker.png') : 'yellow_marker.png',
-            relative('MapAssets/green_point.png')   : 'green_point.png',
-            relative('MapAssets/green_marker.png')  : 'green_marker.png',
-            relative('MapAssets/cyan_point.png')    : 'cyan_point.png',
-            relative('MapAssets/cyan_marker.png')   : 'cyan_marker.png',
-            relative('MapAssets/blue_point.png')    : 'blue_point.png',
-            relative('MapAssets/blue_marker.png')   : 'blue_marker.png',
-            relative('MapAssets/purple_point.png')  : 'purple_point.png',
-            relative('MapAssets/purple_marker.png') : 'purple_marker.png',
-            relative('MapAssets/black_point.png')   : 'black_point.png',
-            relative('MapAssets/black_marker.png')  : 'black_marker.png',
-        }
-    },
-    'table' : {
-        'template' : {
-            # source : v_target
-            relative('TableAssets/template.html') : '%s_table.html',
-        },
-        'static' : {
-            # source : target
-            relative('TableAssets/table.js') : 'table.js',
-        }
-    },
-    'graph' : {
-        'template' : {
-            # source : v_target
-            relative('GraphAssets/template.html') : '%s_graph.html',
-        },
-        'static' : {
-            # source : target
-            relative('GraphAssets/graph.js')  : 'graph.js',
-            relative('GraphAssets/jit.js')    : 'jit.js',
-            relative('GraphAssets/jit-yc.js') : 'jit-yc.js',
-        }
-    }
-}
-
-
 # Defaults
 DEFAULTS = {
     'source'        : None,  # not for configuration file, use path/local
@@ -3270,6 +3215,60 @@ def build_categories(data, with_icons, with_circles, catalog, verbose):
 
     return categories
 
+
+# Assets for map and table
+ASSETS = {
+    'map' : {
+        'template' : {
+            # source : v_target
+            relative('MapAssets/template.html') : '%s_map.html',
+        },
+        'static' : {
+            # source : target
+            relative('MapAssets/map.js')            : 'map.js',
+            relative('MapAssets/point.png')         : 'point.png',
+            relative('MapAssets/marker.png')        : 'marker.png',
+            relative('MapAssets/red_point.png')     : 'red_point.png',
+            relative('MapAssets/red_marker.png')    : 'red_marker.png',
+            relative('MapAssets/orange_point.png')  : 'orange_point.png',
+            relative('MapAssets/orange_marker.png') : 'orange_marker.png',
+            relative('MapAssets/yellow_point.png')  : 'yellow_point.png',
+            relative('MapAssets/yellow_marker.png') : 'yellow_marker.png',
+            relative('MapAssets/green_point.png')   : 'green_point.png',
+            relative('MapAssets/green_marker.png')  : 'green_marker.png',
+            relative('MapAssets/cyan_point.png')    : 'cyan_point.png',
+            relative('MapAssets/cyan_marker.png')   : 'cyan_marker.png',
+            relative('MapAssets/blue_point.png')    : 'blue_point.png',
+            relative('MapAssets/blue_marker.png')   : 'blue_marker.png',
+            relative('MapAssets/purple_point.png')  : 'purple_point.png',
+            relative('MapAssets/purple_marker.png') : 'purple_marker.png',
+            relative('MapAssets/black_point.png')   : 'black_point.png',
+            relative('MapAssets/black_marker.png')  : 'black_marker.png',
+        }
+    },
+    'table' : {
+        'template' : {
+            # source : v_target
+            relative('TableAssets/template.html') : '%s_table.html',
+        },
+        'static' : {
+            # source : target
+            relative('TableAssets/table.js') : 'table.js',
+        }
+    },
+    'graph' : {
+        'template' : {
+            # source : v_target
+            relative('GraphAssets/template.html') : '%s_graph.html',
+        },
+        'static' : {
+            # source : target
+            relative('GraphAssets/graph.js')  : 'graph.js',
+            relative('GraphAssets/jit.js')    : 'jit.js',
+            relative('GraphAssets/jit-yc.js') : 'jit-yc.js',
+        }
+    }
+}
 
 
 def render_templates(names, output, json_name, verbose):
