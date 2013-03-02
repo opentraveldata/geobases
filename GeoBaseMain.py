@@ -1899,13 +1899,11 @@ def main():
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
         exit(0)
 
-    if args['base'] not in S_MANAGER:
-        error('data', args['base'], sorted(S_MANAGER))
-
     # Updating file
     if args['update']:
         S_MANAGER.check_data_updates()
         exit(0)
+
 
     if args['update_forced']:
         S_MANAGER.check_data_updates(force=True)
@@ -1925,9 +1923,13 @@ def main():
         try:
             _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
-            error('aborting', 'Ending learning session :S.')
+            error('aborting', 'Learning session is over :S.')
         else:
             exit(0)
+
+
+    if args['base'] not in S_MANAGER:
+        error('data', args['base'], sorted(S_MANAGER))
 
 
     if not stdin.isatty() and not interactive_query_mode:
