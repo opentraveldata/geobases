@@ -851,7 +851,7 @@ def error(name, *args):
 #######
 
 # Global defaults
-PACKAGE_NAME = 'GeoBases'
+PACKAGE_NAME = 'GeoBasesDev'
 SCRIPT_NAME  = 'GeoBase'
 
 # Sources manager
