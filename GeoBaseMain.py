@@ -1558,15 +1558,17 @@ def admin_mode(admin, verbose=True):
             ref_path = dict(path.items())
 
             path = ask_input('[2/8] Paths       : ', path['file'])
+
+            if not path:
+                # Empty path mean we want to delete it
+                continue
+
             path = S_MANAGER.convert_paths_format(path, local=def_local)[0]
 
             if path['file'].endswith('.zip'):
                 extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
                 path['extract'] = extract
 
-            if not path['file']:
-                # Empty path mean we want to delete it
-                continue
 
             if not is_remote(path):
                 # For local paths we propose copy in cache dir
