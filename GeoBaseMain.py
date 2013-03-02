@@ -1585,6 +1585,10 @@ def admin_mode(admin, verbose=True):
 
             # We propose for tmp files to be used as primary sources
             filename = S_MANAGER.handle_path(path, verbose=verbose)
+            if filename is None:
+                print '/!\ An error occurred when handling "%s".' % str(path)
+                continue
+
             use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
                                    (op.basename(filename), S_MANAGER.cache_dir), 'Y')
 

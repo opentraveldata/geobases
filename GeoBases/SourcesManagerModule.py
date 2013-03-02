@@ -474,6 +474,10 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
         extracted = ZipFile(archive).extract(filename, op.dirname(filename_test))
     except IOError:
         return None, False
+    except KeyError:
+        if verbose:
+            print '/!\ "%s" not in "%s"' % (filename, archive)
+        return None, False
     else:
         return extracted, True
 
