@@ -27,16 +27,26 @@ class SourcesAdmin(object):
     """
     def __init__(self, sources_conf_path, sources_dir, cache_dir, update_script_path):
 
-        # Path to the configuration file
-        self.sources_conf_path = sources_conf_path
+        # Path to the configuration file origin file
+        self.sources_conf_path_origin = sources_conf_path
 
-        # Creating backup
-        self.sources_conf_path_backup = backup_name(self.sources_conf_path)
+        # Creating use space file
+        self.sources_conf_path = op.join(cache_dir,
+                                         op.basename(self.sources_conf_path_origin))
 
-        # We backup noly on the first run and never override
-        if not op.isfile(self.sources_conf_path_backup):
-            copy(self.sources_conf_path,
-                 self.sources_conf_path_backup)
+        # We copy in user space the origin conf file
+        if not op.isfile(self.sources_conf_path):
+            try:
+                copy(self.sources_conf_path_origin,
+                     self.sources_conf_path)
+
+            except shutil.Error:
+                # Copy did not happen because the two files are the same
+                print 'Did not copy %s to %s' % (self.sources_conf_path_origin, 
+                                                 self.sources_conf_path)
+                # We will use the origin file
+                self.sources_conf_path = self.sources_conf_path_origin
+
 
         # Root folder where we find data
         self.sources_dir = sources_dir
@@ -185,8 +195,14 @@ class SourcesAdmin(object):
     def restore(self, load=False):
         """Restore original file.
         """
-        copy(self.sources_conf_path_backup,
-             self.sources_conf_path)
+        try:
+            copy(self.sources_conf_path_origin,
+                 self.sources_conf_path)
+
+        except shutil.Error:
+            # Copy did not happen because the two files are the same
+            print 'Did not copy %s to %s' % (self.sources_conf_path_origin,
+                                             self.sources_conf_path)
 
         if load:
             self.load()
@@ -221,8 +237,9 @@ class SourcesAdmin(object):
             return '%s -> %s' % (p['file'], p['extract'])
 
         tip = [dedent('''
-        * Data sources from %s [%s]
-        ''' % (self.sources_dir, op.basename(self.sources_conf_path)))]
+        * Data sources  from %s
+        * Configuration from %s
+        ''' % (self.sources_dir, self.sources_conf_path))]
 
         tip.append('-' * 80)
         tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT + FAILOVERS)'))
