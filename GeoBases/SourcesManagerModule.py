@@ -51,7 +51,8 @@ class SourcesManager(object):
                  sources_conf_path_origin=SOURCES_CONF_PATH,
                  sources_dir=SOURCES_DIR,
                  cache_dir=CACHE_DIR,
-                 update_script_path=UPDATE_SCRIPT_PATH):
+                 update_script_path=UPDATE_SCRIPT_PATH,
+                 override=False):
 
         # Path to the configuration file origin file
         self.sources_conf_path_origin = sources_conf_path_origin
@@ -61,7 +62,7 @@ class SourcesManager(object):
                                          op.basename(self.sources_conf_path_origin))
 
         # We copy in user space the origin conf file
-        if not op.isfile(self.sources_conf_path):
+        if not op.isfile(self.sources_conf_path) or override is True:
             try:
                 copy(self.sources_conf_path_origin,
                      self.sources_conf_path)
