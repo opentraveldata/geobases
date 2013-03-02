@@ -1528,26 +1528,25 @@ def admin_mode(admin, verbose=True):
         new_conf = {}
 
 
-        def_paths = conf.get('paths', [])
-        if not def_paths:
-            def_paths = [{ 'file' : '' }]
-        else:
-            def_paths = S_MANAGER.convert_paths_format(def_paths,
-                                                       local=conf.get('local', True))
-
-        new_conf['paths'] = []
-
+        def_paths      = conf.get('paths', [])
         def_delimiter  = conf.get('delimiter',  '^')
         def_headers    = conf.get('headers',    [])
         def_key_fields = conf.get('key_fields', [])
+        def_local      = conf.get('local', True)
+
+        if not def_paths:
+            def_paths = [{ 'file' : '' }]
+        else:
+            def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
+
+        new_conf['paths'] = []
 
         for path in def_paths:
             # Cheap copy
             ref_path = dict(path.items())
 
             path = ask_input('[2/8] Paths       : ', path['file'])
-            path = S_MANAGER.convert_paths_format(path,
-                                                  local=conf.get('local', False))[0]
+            path = S_MANAGER.convert_paths_format(path, local=def_local)[0]
 
             if path['file'].endswith('.zip'):
                 extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
@@ -1667,12 +1666,13 @@ def admin_mode(admin, verbose=True):
                     old_conf[option] = conf[option]
 
         if not new_conf:
-            print '\n===== No changes'
+            print '===== No changes'
         else:
-            print '\n--- [before]'
+            print
+            print '--- [before]'
             print S_MANAGER.convert({ source_name : old_conf })
 
-            print '\n+++ [after]'
+            print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
             confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
