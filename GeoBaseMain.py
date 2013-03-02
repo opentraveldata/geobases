@@ -1667,12 +1667,11 @@ def admin_mode(admin):
         if not new_conf:
             print '\n===== No changes'
         else:
-            if old_conf:
-                print '\n----- [changes: before]'
-                print SOURCES_ADMIN.convert(old_conf)
+            print '\n----- [changes: before]'
+            print SOURCES_ADMIN.convert({ source_name : old_conf })
 
             print '\n+++++ [changes: after]'
-            print SOURCES_ADMIN.convert(new_conf)
+            print SOURCES_ADMIN.convert({ source_name : new_conf })
 
             confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
 
