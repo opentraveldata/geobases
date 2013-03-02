@@ -91,7 +91,7 @@ def relative(rel_path, root=DIRNAME):
     return op.join(op.realpath(root), rel_path)
 
 # The sources manager
-SOURCES_ADMIN = SourcesManager()
+S_MANAGER = SourcesManager()
 
 # Special fields for latitude and longitude recognition
 LAT_FIELD  = 'lat'
@@ -296,12 +296,12 @@ class GeoBase(object):
         allowed_conf = set(props.keys()) - set(['source'])
         allowed_args = set(props.keys()) - set(['local'])
 
-        if data not in SOURCES_ADMIN:
+        if data not in S_MANAGER:
             raise ValueError('Wrong data type "%s". Not in %s' % \
-                             (data, sorted(SOURCES_ADMIN)))
+                             (data, sorted(S_MANAGER)))
 
         # The configuration may be empty
-        conf = SOURCES_ADMIN.get(data)
+        conf = S_MANAGER.get(data)
         if conf is None:
             conf = {}
 
@@ -353,7 +353,7 @@ class GeoBase(object):
         elif self._paths is not None:
             # Here we read the source from the configuration file
             for path in self._paths:
-                file_ = SOURCES_ADMIN.handle_path(path, self._verbose)
+                file_ = S_MANAGER.handle_path(path, self._verbose)
 
                 if file_ is None:
                     continue
@@ -422,7 +422,7 @@ class GeoBase(object):
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
         # Paths conversion to dict, local paths handling
-        self._paths = SOURCES_ADMIN.convert_paths_format(self._paths, self._local)
+        self._paths = S_MANAGER.convert_paths_format(self._paths, self._local)
 
         # Some headers are not accepted
         for h in self._headers:
@@ -465,9 +465,9 @@ class GeoBase(object):
             raise ValueError('"%s" should be the same length has "%s" as join fields.' % \
                             (fields, join_fields))
 
-        if join_base not in SOURCES_ADMIN:
+        if join_base not in S_MANAGER:
             raise ValueError('Wrong join data type "%s". Not in %s' % \
-                             (join_base, sorted(SOURCES_ADMIN)))
+                             (join_base, sorted(S_MANAGER)))
 
         if join_base in self._ext_bases:
             if self._verbose:

@@ -855,7 +855,7 @@ PACKAGE_NAME = 'GeoBasesDev'
 SCRIPT_NAME  = 'GeoBase'
 
 # Sources manager
-SOURCES_ADMIN = SourcesManager()
+S_MANAGER = SourcesManager()
 
 DESCRIPTION  = 'Data services and visualization'
 CONTACT_INFO = '''
@@ -864,7 +864,7 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = SOURCES_ADMIN.build_status()
+HELP_SOURCES = S_MANAGER.build_status()
 CLI_EXAMPLES = '''
 * Command line examples
 
@@ -1476,11 +1476,11 @@ def admin_mode(admin):
         error('wrong_value', admin[0], ALLOWED_COMMANDS)
 
     if admin[0] == 'restore':
-        SOURCES_ADMIN.restore()
+        S_MANAGER.restore()
         return
 
     if len(admin) < 2:
-        two_col_print(sorted(SOURCES_ADMIN))
+        two_col_print(sorted(S_MANAGER))
 
         source_name = ask_input('[ 1 ] Source name : ')
         admin.append(source_name)
@@ -1489,10 +1489,10 @@ def admin_mode(admin):
         admin[1] = None
 
     if admin[0] == 'status':
-        print SOURCES_ADMIN.build_status(admin[1])
+        print S_MANAGER.build_status(admin[1])
 
     elif admin[0] == 'fullstatus':
-        SOURCES_ADMIN.full_status(admin[1])
+        S_MANAGER.full_status(admin[1])
 
     elif admin[0] == 'drop':
         source_name = ''
@@ -1500,8 +1500,8 @@ def admin_mode(admin):
             print '/!\ Cannot be all sources'
             source_name = ask_input('[ 1 ] Source name : ')
 
-        SOURCES_ADMIN.drop(source_name)
-        SOURCES_ADMIN.save()
+        S_MANAGER.drop(source_name)
+        S_MANAGER.save()
 
     elif admin[0] == 'edit':
 
@@ -1514,14 +1514,14 @@ def admin_mode(admin):
                 source_name = ask_input('[ 1 ] Source name : ')
 
 
-        if source_name not in SOURCES_ADMIN:
+        if source_name not in S_MANAGER:
             print '----- New source!'
-            SOURCES_ADMIN.add(source_name, {
+            S_MANAGER.add(source_name, {
                 'local' : False
             })
 
         # We will non empty values here
-        conf = SOURCES_ADMIN.get(source_name)
+        conf = S_MANAGER.get(source_name)
         if conf is None:
             conf = {}
         new_conf = {}
@@ -1531,7 +1531,7 @@ def admin_mode(admin):
         if not def_paths:
             def_paths = [{ 'file' : '' }]
         else:
-            def_paths = SOURCES_ADMIN.convert_paths_format(def_paths,
+            def_paths = S_MANAGER.convert_paths_format(def_paths,
                                                            local=conf.get('local', True))
 
         new_conf['paths'] = []
@@ -1545,7 +1545,7 @@ def admin_mode(admin):
             ref_path = dict(path.items())
 
             path = ask_input('[2/8] Paths       : ', path['file'])
-            path = SOURCES_ADMIN.convert_paths_format(path,
+            path = S_MANAGER.convert_paths_format(path,
                                                       local=conf.get('local', False))[0]
 
             if path['file'].endswith('.zip'):
@@ -1563,25 +1563,25 @@ def admin_mode(admin):
 
                 if 'extract' in path:
                     # We propose to store the root archive in cache
-                    if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(path['file'])):
+                    if path['file'] != op.join(S_MANAGER.cache_dir, op.basename(path['file'])):
                         # Is the path file in the cache dir?
                         copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                                  (op.basename(path['file']), SOURCES_ADMIN.cache_dir), 'Y')
+                                                  (op.basename(path['file']), S_MANAGER.cache_dir), 'Y')
 
                         if copy_in_cache == 'Y':
-                            _, copied = SOURCES_ADMIN.copy_in_cache(path['file'])
+                            _, copied = S_MANAGER.copy_in_cache(path['file'])
                             path['file'] = op.realpath(copied)
 
             # We propose for tmp files to be used as primary sources
-            filename = SOURCES_ADMIN.handle_path(path, verbose=True)
+            filename = S_MANAGER.handle_path(path, verbose=True)
 
-            if path['file'] != op.join(SOURCES_ADMIN.cache_dir, op.basename(filename)):
+            if path['file'] != op.join(S_MANAGER.cache_dir, op.basename(filename)):
                 # Is the path file in the cache dir?
                 copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                          (op.basename(filename), SOURCES_ADMIN.cache_dir), 'Y')
+                                          (op.basename(filename), S_MANAGER.cache_dir), 'Y')
 
                 if copy_in_cache == 'Y':
-                    _, copied = SOURCES_ADMIN.copy_in_cache(filename)
+                    _, copied = S_MANAGER.copy_in_cache(filename)
                     path['file'] = op.realpath(copied)
 
             new_conf['paths'].append(path)
@@ -1672,17 +1672,17 @@ def admin_mode(admin):
             print '\n===== No changes'
         else:
             print '\n----- [changes: before]'
-            print SOURCES_ADMIN.convert({ source_name : old_conf })
+            print S_MANAGER.convert({ source_name : old_conf })
 
             print '\n+++++ [changes: after]'
-            print SOURCES_ADMIN.convert({ source_name : new_conf })
+            print S_MANAGER.convert({ source_name : new_conf })
 
             confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
 
             if confirm == 'Y':
-                SOURCES_ADMIN.update(source_name, new_conf)
-                SOURCES_ADMIN.save()
-                print '\n===== Changes saved to %s' % SOURCES_ADMIN.sources_conf_path
+                S_MANAGER.update(source_name, new_conf)
+                S_MANAGER.save()
+                print '\n===== Changes saved to %s' % S_MANAGER.sources_conf_path
             else:
                 print '\n===== Aborted'
 
@@ -1711,7 +1711,7 @@ def ask_mode():
     """)
 
     # 1. Choose base
-    allowed = sorted(SOURCES_ADMIN)
+    allowed = sorted(S_MANAGER)
     two_col_print(allowed)
 
     base = ask_input('[1/5] Which data source do you want to work with? ').strip()
@@ -1742,7 +1742,7 @@ def ask_mode():
     field, value, limit = None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        allowed = sorted(SOURCES_ADMIN.get(base)['headers'])
+        allowed = sorted(S_MANAGER.get(base)['headers'])
         two_col_print(allowed)
 
         field = ask_input('[4/5] On which field? ')
@@ -1901,16 +1901,16 @@ def main():
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
         exit(0)
 
-    if args['base'] not in SOURCES_ADMIN:
-        error('data', args['base'], sorted(SOURCES_ADMIN))
+    if args['base'] not in S_MANAGER:
+        error('data', args['base'], sorted(S_MANAGER))
 
     # Updating file
     if args['update']:
-        SOURCES_ADMIN.check_data_updates()
+        S_MANAGER.check_data_updates()
         exit(0)
 
     if args['update_forced']:
-        SOURCES_ADMIN.check_data_updates(force=True)
+        S_MANAGER.check_data_updates(force=True)
         exit(0)
 
 
@@ -1999,8 +1999,8 @@ def main():
 
         # Checking join bases
         for e in join:
-            if e['with'][0] not in SOURCES_ADMIN:
-                error('data', e['with'][0], sorted(SOURCES_ADMIN))
+            if e['with'][0] not in S_MANAGER:
+                error('data', e['with'][0], sorted(S_MANAGER))
 
         if verbose:
             print 'Loading from stdin with [sniffed] option: -i "%s" "%s" "%s" "%s" "%s" "%s"' % \
@@ -2026,7 +2026,7 @@ def main():
         g = GeoBase(data='feed', **options)
 
         if logorrhea:
-            SOURCES_ADMIN.help_permanent_add(options)
+            S_MANAGER.help_permanent_add(options)
 
     else:
         # -i options overrides default
