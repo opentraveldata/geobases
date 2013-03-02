@@ -29,7 +29,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase, SourcesManager, is_remote, is_archive
+from GeoBases import GeoBase, DEFAULTS, SourcesManager, is_remote, is_archive
 
 
 IS_WINDOWS = platform.system() in ('Windows',)
@@ -1514,31 +1514,43 @@ def admin_mode(admin, verbose=True):
                 print '/!\ Cannot be all sources'
                 source_name = ask_input('[ 1 ] Source name : ')
 
-
         if source_name not in S_MANAGER:
             print '----- New source!'
             S_MANAGER.add(source_name, {
                 'local' : False
             })
 
-        # We will non empty values here
+        # We get existing conf
         conf = S_MANAGER.get(source_name)
         if conf is None:
             conf = {}
-        new_conf = {}
 
-
-        def_paths      = conf.get('paths', [])
-        def_delimiter  = conf.get('delimiter',  '^')
-        def_headers    = conf.get('headers',    [])
-        def_key_fields = conf.get('key_fields', [])
-        def_local      = conf.get('local', True)
+        def_paths      = conf.get('paths',      DEFAULTS['paths'])
+        def_delimiter  = conf.get('delimiter',  DEFAULTS['delimiter'])
+        def_headers    = conf.get('headers',    DEFAULTS['headers'])
+        def_key_fields = conf.get('key_fields', DEFAULTS['key_fields'])
+        def_local      = conf.get('local',      DEFAULTS['local'])
+        def_indices    = conf.get('indices',    DEFAULTS['indices'])
+        def_join       = conf.get('join',       DEFAULTS['join'])
 
         if not def_paths:
             def_paths = [{ 'file' : '' }]
         else:
             def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
 
+        if not def_indices:
+            def_indices = ['']
+
+        if not def_join:
+            def_join = [{
+                'fields' : [],
+                'with'   : ['']
+            }]
+
+
+        # We will add non empty values here
+        new_conf = {}
+        # 1. Paths
         new_conf['paths'] = []
 
         for path in def_paths:
@@ -1596,11 +1608,13 @@ def admin_mode(admin, verbose=True):
             def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
 
 
+        # 2. Delimiter
         delimiter = ask_input('[3/8] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
         if delimiter:
             new_conf['delimiter'] = delimiter
 
 
+        # 3. Headers
         headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers))
         if not headers:
             headers = []
@@ -1618,15 +1632,14 @@ def admin_mode(admin, verbose=True):
                 print '----- Detected subdelimiters %s' % str(subdelimiters)
 
 
+        # 4. Key fields
         key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
         if key_fields:
             key_fields = split_if_several(key_fields)
             new_conf['key_fields'] = key_fields
 
 
-        def_indices = conf.get('indices', [])
-        if not def_indices:
-            def_indices = ['']
+        # 5. Indices
         new_conf['indices'] = []
 
         for ind in def_indices:
@@ -1636,12 +1649,7 @@ def admin_mode(admin, verbose=True):
                 new_conf['indices'].append(indices)
 
 
-        def_join = conf.get('join', [])
-        if not def_join:
-            def_join = [{
-                'fields' : [],
-                'with'   : ['']
-            }]
+        # 6. Join
         new_conf['join'] = []
 
         for j in def_join:

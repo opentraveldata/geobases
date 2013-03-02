@@ -184,7 +184,7 @@ DEFAULTS = {
 
 
 # We only export the main class
-__all__ = ['GeoBase']
+__all__ = ['GeoBase', 'DEFAULTS']
 
 
 class GeoBase(object):
