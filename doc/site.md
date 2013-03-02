@@ -32,7 +32,7 @@ You can perform all types of queries:
 $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 ```
 
-And of course, you can use your own data for map display:
+Of course, you can use your own data for map display:
 ```shell
 $ cat coords.csv
 p1,48.22,2.33
@@ -50,6 +50,11 @@ $ cat edges.csv | GeoBase --graph
 ```
 
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png)
+
+Administrate the data sources:
+```shell
+$ GeoBase --admin
+```
 
 We are currently gathering input from the community to define the next
 version features, so do not hesitate to open issues on the [github
