@@ -1476,7 +1476,7 @@ def admin_mode(admin):
         return
 
     if len(admin) < 2:
-        print '\n'.join(sorted(SOURCES_ADMIN))
+        two_col_print(sorted(SOURCES_ADMIN))
 
         source_name = ask_input('[ 1 ] Source name : ')
         admin.append(source_name)
@@ -1683,6 +1683,15 @@ def admin_mode(admin):
                 print '\n===== Aborted'
 
 
+def two_col_print(L):
+    """Display enumerable on two columns.
+    """
+    print
+    for p in build_pairs(L):
+        print '\t%-20s\t%-20s' % p
+    print
+
+
 def ask_mode():
     """Learning mode.
     """
@@ -1694,12 +1703,12 @@ def ask_mode():
                 You will be guided through the
                possibilities by answering a few
                          questions.
-    -----------------------------------------------------
+    -----------------------------------------------------\
     """)
 
     # 1. Choose base
     allowed = sorted(SOURCES_ADMIN)
-    print '\n'.join(allowed)
+    two_col_print(allowed)
 
     base = ask_input('[1/5] Which data source do you want to work with? ').strip()
     while base not in allowed:
@@ -1716,7 +1725,7 @@ def ask_mode():
 
     # 3. Choose search type
     allowed = ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest']
-    print '\n'.join(allowed)
+    two_col_print(allowed)
 
     search = ask_input('[3/5] What kind of filter? ').strip()
     while search not in allowed:
@@ -1730,7 +1739,7 @@ def ask_mode():
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         allowed = sorted(SOURCES_ADMIN.get(base)['headers'])
-        print '\n'.join(allowed)
+        two_col_print(allowed)
 
         field = ask_input('[4/5] On which field? ')
         while field not in allowed:
@@ -1744,7 +1753,7 @@ def ask_mode():
 
     # 5. Frontend
     allowed = ['terminal', 'quiet', 'map', 'graph']
-    print '\n'.join(allowed)
+    two_col_print(allowed)
 
     frontend = ask_input('[5/5] Which display? ').strip()
     while frontend not in allowed:
