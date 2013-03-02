@@ -875,7 +875,7 @@ CLI_EXAMPLES = '''
  $ %s --admin                    # administrate the data sources
  $ %s --help                     # your best friend
  $ cat data.csv | %s             # with your data
-''' % ((op.basename(argv[0]),) * 6)
+''' % ((op.basename(argv[0]),) * 7)
 
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
