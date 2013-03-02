@@ -63,7 +63,7 @@ then you can see where are airports with <em>international</em> in their name:</
 <div class="highlight"><pre><span class="nv">$ </span>GeoBase --base cities --fuzzy <span class="s2">"san francisko"</span> <span class="c"># typo here :)</span>
 </pre></div>
 
-<p>And of course, you can use your own data for map display:</p>
+<p>Of course, you can use your own data for map display:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>cat coords.csv
 p1,48.22,2.33
@@ -81,6 +81,11 @@ D,A
 </pre></div>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png" alt=""></p>
+
+<p>Administrate the data sources:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --admin
+</pre></div>
 
 <p>We are currently gathering input from the community to define the next
 version features, so do not hesitate to open issues on the <a href="https://github.com/opentraveldata/geobases">github
@@ -244,11 +249,11 @@ and using the <code>set</code> method.</p>
 <h3>Find things with properties</h3>
 
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'location_type'</span><span class="p">,</span> <span class="s">'H'</span><span class="p">)]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">getKeysWhere</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'and'</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">findWith</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'and'</span><span class="p">))</span>
 <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JDP'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JPU'</span><span class="p">)]</span>
 <span class="o">&gt;&gt;&gt;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'LON'</span><span class="p">)]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">getKeysWhere</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'or'</span><span class="p">)))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">findWith</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'or'</span><span class="p">)))</span>
 <span class="mi">36</span>
 </pre></div>
 
@@ -299,8 +304,8 @@ and using the <code>set</code> method.</p>
 <h3>Map display</h3>
 
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">geo_t</span><span class="o">.</span><span class="n">visualize</span><span class="p">()</span>
-<span class="o">*</span> <span class="n">Added</span> <span class="n">lines</span> <span class="k">for</span> <span class="n">duplicates</span> <span class="n">linking</span><span class="p">,</span> <span class="n">total</span> <span class="mi">0</span>
 <span class="o">&gt;</span> <span class="n">Affecting</span> <span class="n">category</span> <span class="bp">None</span>     <span class="n">to</span> <span class="n">color</span> <span class="n">blue</span>    <span class="o">|</span> <span class="n">volume</span> <span class="mi">3190</span>
+<span class="o">*</span> <span class="n">Added</span> <span class="n">lines</span> <span class="k">for</span> <span class="n">duplicates</span> <span class="n">linking</span><span class="p">,</span> <span class="n">total</span> <span class="mi">0</span>
 
 <span class="o">*</span> <span class="n">Now</span> <span class="n">you</span> <span class="n">may</span> <span class="n">use</span> <span class="n">your</span> <span class="n">browser</span> <span class="n">to</span> <span class="n">visualize</span><span class="p">:</span>
 <span class="n">example_map</span><span class="o">.</span><span class="n">html</span> <span class="n">example_table</span><span class="o">.</span><span class="n">html</span>
