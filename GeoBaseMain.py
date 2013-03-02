@@ -872,6 +872,7 @@ CLI_EXAMPLES = '''
  $ %s --closest CDG              # find closest from CDG
  $ %s --near '48.853, 2.348'     # find near some geocode
  $ %s --fuzzy "san francisko"    # fuzzy search, with typo ;)
+ $ %s --admin                    # administrate the data sources
  $ %s --help                     # your best friend
  $ cat data.csv | %s             # with your data
 ''' % ((op.basename(argv[0]),) * 6)
