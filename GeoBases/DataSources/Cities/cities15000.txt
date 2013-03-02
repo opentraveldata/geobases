@@ -890,7 +890,7 @@
 726174	Tŭrgovishte	Turgovishte	Eski Djoumaia,Eski Djoumaïa,Eski Dschumaja,Eski Dzhumaya,Eski Dzuma,Eski Dzumaja,Eski Dzumaya,Eski Džuma,Eski Džumaja,Targovishte,Targowischte,Trgovishte,Turgovishhe,Turgovishte,Turgoviste,Tărgowischte,Tŭrgovishte,Tŭrgovište,Търговище	43.25917	26.58917	P	PPLA	BG		60	TGV35			37774		171	Europe/Sofia	2012-01-18
 726320	Troyan	Troyan	Troian,Trojan,Troïan,Троян	42.89427	24.71589	P	PPL	BG		46	LOV34			21162		389	Europe/Sofia	2007-07-10
 726418	Dobrich	Dobrich	Bazargic,Dobric,Dobrich,Dobricz,Dobritch,Dobritj,Dobrits,Dobritsch,Dobritsj,Dobritš,Dobrič,Hacioglu Pazarcik,Hacıoğlu Pazarcık,Hadzi-Oghlu-Pazardzik,Hadži-Oghlu-Pazardžik,Khadzhioglu Bazardzhik,Khadzhioglu Pazardzhik,Tolbuhin,Tolbukhin,dobeulichi,Добрич,도브리치	43.56667	27.83333	P	PPLA	BG		40	DOB28			94831		214	Europe/Sofia	2012-01-18
-726534	Svishtov	Svishtov	Novae,Novensis Moesia Civitas,Sistov,Sistova,Staklen,Steklen,Sveyestov,Svisclov,Svishhov,Svishtov,Svislova,Svistov,Svišlova,Svištov,Swischtow,Свищов	43.62306	25.35389	P	PPL	BG		62	VTR28			32256		15	Europe/Sofia	2012-01-18
+726534	Svishtov	Svishtov	Novae,Novensis Moesia Civitas,Sistov,Sistova,Staklen,Steklen,Sveyestov,Svisclov,Svishhov,Svishtov,Svislova,Svistov,Svišlova,Svištov,Swischtow,Свищов	43.61959	25.35044	P	PPL	BG		62	VTR28			32256		1	Europe/Sofia	2013-02-28
 726546	Svilengrad	Svilengrad	Mustafa-Pasha,Mustafapasa,Mustafapaşa,Slivengrad,Svilen,Svilengrad,Svilengrade,Swilengrad,Свиленград	41.76667	26.2	P	PPL	BG		43	HKV28			19279		58	Europe/Sofia	2012-01-18
 726848	Stara Zagora	Stara Zagora	Eski Zagra,Eski Zağra,SZR,Stara Sagora,Stara Zagora,Stara-Zagora,Стара Загора,Стара-Загора	42.43278	25.64194	P	PPLA	BG		59	SZR31			143431		205	Europe/Sofia	2012-01-18
 726872	Dupnitsa	Dupnitsa	Doupnitza,Dubnica,Dupnica,Dupnitsa,Dupnitza,Dupniza,Marek,Stanke Dimitrov,Stanke Dimitrovo,Дупница	42.26667	23.11667	P	PPL	BG		45	KNL48			34764		512	Europe/Sofia	2012-01-18
@@ -2442,7 +2442,7 @@
 6138374	Saint-Hyacinthe	Saint-Hyacinthe	Sankt-Giacint,Санкт-Гиацинт	45.61678	-72.94914	P	PPL	CA		10	16			50326		30	America/Montreal	2010-01-29
 6138495	Saint-Jean-sur-Richelieu	Saint-Jean-sur-Richelieu	Saint-Jean-sur-Richelieu,Sen-Zhan-sjur-Rishel'e,Сен-Жан-сюр-Ришелье	45.31678	-73.26586	P	PPL	CA		10	16			71613		29	America/Montreal	2010-01-29
 6138501	Saint-Jérôme	Saint-Jerome		45.78036	-74.00365	P	PPL	CA		10	15			54948		95	America/Montreal	2008-04-11
-6138517	Saint John	Saint John	Saint John,Saint-Jean,Sent-Dzhon,St. John,YSJ,seinteujon,sentojon,Сент-Джон,セントジョン,セント・ジョン,세인트존	45.27271	-66.06766	P	PPL	CA		04				87857		5	America/Moncton	2012-02-20
+6138517	Saint John	Saint John	Saint John,Saint-Jean,Sent-Dzhon,YSJ,seinteujon,sentojon,Сент-Джон,セントジョン,セント・ジョン,세인트존	45.27271	-66.06766	P	PPL	CA		04				87857		5	America/Moncton	2013-02-27
 6138599	Saint-Lambert	Saint-Lambert		48.95272	-79.4593	P	PPL	CA		10	08			21599		301	America/Montreal	2010-09-23
 6138610	Saint-Laurent	Saint-Laurent	Saint-Laurent,Sen-Loran,St Laurent,Ville Saint-Laurent,Ville St Laurent,Сен-Лоран	45.50008	-73.66585	P	PPLX	CA		10				77391		41	America/Montreal	2010-03-11
 6138617	Saint-Lazare	Saint-Lazare		45.40008	-74.13256	P	PPL	CA		10	16			17016		56	America/Montreal	2010-09-23
@@ -2609,17 +2609,17 @@
 2260535	Brazzaville	Brazzaville	BZV,Braza,Brazavil,Brazavilis,Brazavilo,Brazzavil',Brazzaville,Maya-Maya,Mprazabil,N'Tamo,beulajabil,brazafyl,brazawyl,brzwwyl,bu la chai wei er,burazavu~iru,Μπραζαβίλ,Браззавиль,ברזוויל,برازافيل,برازاویل,ብራዛቪል,ブラザヴィル,布拉柴维尔,브라자빌	-4.26613	15.28318	P	PPLC	CG		12				1284609		204	Africa/Brazzaville	2012-04-25
 2657896	Zürich	Zurich	Cirihe,Cirikh,Ciurichas,Ciūrichas,Cjurikh,Cjurykh,Curych,Cīrihe,Lungsod ng Zuerich,Lungsod ng Zürich,Tsurique,Turicum,Turitg,ZRH,Zuerich,Zuerih,Zuric,Zurich,Zuricu,Zurigo,Zuriko,Zurique,Zurych,Zurìcu,Zyriche,Zúrich,Zürich,Zürih,churihhi,chwilihi,su li shi,sywrsh,zyryk,zyurikha,zywrh,zywrkh,Ζυρίχη,Цирих,Цюрих,Цюрых,ציריך,زيورخ,سيۇرىخ,ܙܝܘܪܚ,ܨܝܘܪܫ,ज़्यूरिख,チューリッヒ,苏黎世,취리히	47.36667	8.55	P	PPLA	CH		ZH	112	261		341730		429	Europe/Zurich	2012-01-17
 2657908	Zug	Zug	Cug,Tugium,ZLM,Zoug,Zug,Zugo,Цуг	47.17242	8.51744	P	PPLA	CH		ZG	900	1711		23435	425	424	Europe/Zurich	2013-01-17
-2657941	Yverdon-les-Bains	Yverdon-les-Bains	Aebura,Eburodunum,Iverdon-le-Ben,Yverden,Yverdon,ZLJ,Ивердон-ле-Бен	46.77852	6.64115	P	PPL	CH		VD	2224	5938		23702		438	Europe/Zurich	2012-03-30
+2657941	Yverdon-les-Bains	Yverdon-les-Bains	Aebura,Eburodunum,Iverdon-le-Ben,Yverden,Yverdon,ZLJ,Ивердон-ле-Бен	46.77852	6.64115	P	PPL	CH		VD	2224	5938		23702		438	Europe/Zurich	2013-02-26
 2657970	Winterthur	Winterthur	Eulachstadt,Gorad Vintehrtur,Vintertur,Vintertura,Vinterturas,Vinterturo,Vintertūra,Vintertūras,Vitudurum,Winterthour,Winterthur,ZLI,binteotueo,fyntrtwr,vu~intato~uru,wen te tu er,wntrtwr,Винтертур,Вінтертур,Горад Вінтэртур,فينترتور,ونترتور,ونٹرتھر,ヴィンタートゥール,温特图尔,빈터투어	47.5	8.75	P	PPLA2	CH		ZH	110	230		91908		449	Europe/Zurich	2012-06-25
 2657996	Wil	Wil		47.46152	9.04552	P	PPL	CH		SG	1728	3425		16808		569	Europe/Zurich	2010-04-05
 2658011	Wettingen	Wettingen	Wettingen,ZLF	47.4705	8.31636	P	PPL	CH		AG	1902	4045		18191		386	Europe/Zurich	2012-01-17
-2658145	Vevey	Vevey	Lungsod ng Vevey,V'ove,Veve,Vevey,Vevê,Vibiscum,ZKZ,vu~evu~ei,Веве,Вьове,ヴェヴェイ	46.46299	6.84345	P	PPL	CH		VD	2230	5890		15812		412	Europe/Zurich	2013-02-20
+2658145	Vevey	Vevey	Lungsod ng Vevey,V'ove,Veve,Vevey,Vevê,Vibiscum,ZKZ,vu~evu~ei,Веве,Вьове,ヴェヴェイ	46.46299	6.84345	P	PPL	CH		VD	2230	5890		15812		412	Europe/Zurich	2013-02-26
 2658154	Vernier	Vernier		46.21702	6.08497	P	PPL	CH		GE	2500	6643		30086		440	Europe/Zurich	2013-02-19
 2658216	Uster	Uster		47.34713	8.72091	P	PPLA2	CH		ZH	109	198		23279		469	Europe/Zurich	2011-03-01
-2658377	Thun	Thun	Thoune,Thun,Tun,ZTK,to~un,tu en,twn,Тун,תון,トゥーン,图恩	46.75118	7.62166	P	PPL	CH		BE	247	942		42136	560	565	Europe/Zurich	2012-04-21
-2658494	Steffisburg	Steffisburg	Steffisburg	46.77807	7.63249	P	PPL	CH		BE	247	939		15191		584	Europe/Zurich	2012-04-21
-2658576	Sion	Sion	S'on,SIR,Sedunum,Sion,Sionas,Sitten,Сьон	46.22908	7.35942	P	PPLA	CH		VS	2312	6266		28045	500	503	Europe/Zurich	2013-01-15
-2658606	Sierre	Sierre		46.29192	7.53559	P	PPL	CH		VS	2311	6248		15752		528	Europe/Zurich	2012-09-19
+2658377	Thun	Thun	Thoune,Thun,Tun,ZTK,to~un,tu en,twn,Тун,תון,トゥーン,图恩	46.75118	7.62166	P	PPL	CH		BE	247	942		42136	560	565	Europe/Zurich	2013-02-28
+2658494	Steffisburg	Steffisburg	Steffisburg	46.77807	7.63249	P	PPL	CH		BE	247	939		15191		584	Europe/Zurich	2013-02-28
+2658576	Sion	Sion	S'on,SIR,Sedunum,Sion,Sionas,Sitten,Сьон	46.22908	7.35942	P	PPLA	CH		VS	2312	6266		28045	500	503	Europe/Zurich	2013-02-27
+2658606	Sierre	Sierre		46.29192	7.53559	P	PPL	CH		VS	2311	6248		15752		528	Europe/Zurich	2013-02-28
 2658656	Zürich (Kreis 11) / Seebach	Zuerich (Kreis 11) / Seebach	Seebach	47.42181	8.54779	P	PPLX	CH		ZH	112	261		17851		436	Europe/Zurich	2006-10-21
 2658761	Schaffhausen	Schaffhausen	Safhauzo,Scafusa,Schaffhausen,Schaffhouse,Schaffusa,Schofhausen,Sciaffusa,Shaffkhauzen,Szafuza,ZKJ,shafuhauzen,Ŝafhaŭzo,Шаффхаузен,シャフハウゼン	47.69732	8.63493	P	PPLA	CH		SH	1403	2939		33863	403	403	Europe/Zurich	2012-02-21
 2658822	Sankt Gallen	Sankt Gallen	Saint Gallen,Saint-Gall,San Gallo,San Gallu,San Galo,Sanctogallum,Sankt Gallen,Sankt-Gallen,Sankt-Galo,Son Gagl,St. Gallen,Санкт-Галлен	47.42391	9.37477	P	PPLA	CH		SG	1721	3203		70572		684	Europe/Zurich	2012-06-25
@@ -2627,49 +2627,49 @@
 2659099	Rapperswil	Rapperswil	Raperswil,Rappersvil',Rapperswil,Rapperswil SG,Рапперсвиль	47.22557	8.82228	P	PPL	CH		SG	1726	3340		34776		408	Europe/Zurich	2010-04-05
 2659127	Pully	Pully		46.51027	6.66183	P	PPL	CH		VD	2226	5590		16263		428	Europe/Zurich	2013-02-19
 2659296	Onex	Onex	Onex	46.18391	6.10181	P	PPL	CH		GE	2500	6631		17302		419	Europe/Zurich	2013-02-19
-2659297	Olten	Olten	Olten,ZJU	47.34999	7.90329	P	PPLA2	CH		SO	1108	2581		16411		406	Europe/Zurich	2011-03-01
+2659297	Olten	Olten	Olten,ZJU	47.34999	7.90329	P	PPLA2	CH		SO	1108	2581		16411		406	Europe/Zurich	2013-03-01
 2659310	Zürich (Kreis 11) / Oerlikon	Zuerich (Kreis 11) / Oerlikon	Oerlikon	47.40823	8.54258	P	PPLX	CH		ZH	112	261		17922		459	Europe/Zurich	2006-10-21
-2659422	Nyon	Nyon	Noviodunum,Nyon,ZRN,n'on,Ньон	46.38318	6.23955	P	PPL	CH		VD	2228	5724		16797		401	Europe/Zurich	2010-04-05
+2659422	Nyon	Nyon	Noviodunum,Nyon,ZRN,n'on,Ньон	46.38318	6.23955	P	PPL	CH		VD	2228	5724		16797		401	Europe/Zurich	2013-02-26
 2659496	Neuchâtel	Neuchatel	Neuenburg,Nevshatel',Невшатель	46.99179	6.931	P	PPLA	CH		NE	2404	6458		31270		441	Europe/Zurich	2011-05-04
-2659522	Muttenz	Muttenz		47.52271	7.64511	P	PPL	CH		BL	1301	2770		16927		293	Europe/Zurich	2010-04-05
-2659601	Montreux	Montreux	Montr'o,Montreux,Montrjo,ZJP,montoru,Монтрьо,Монтрё,მონტრე,モントルー	46.43301	6.91143	P	PPL	CH		VD	2230	5886		22897		403	Europe/Zurich	2010-04-05
-2659613	Monthey	Monthey	Monthey	46.25546	6.96066	P	PPL	CH		VS	2308	6153		15106		408	Europe/Zurich	2012-01-17
+2659522	Muttenz	Muttenz		47.52271	7.64511	P	PPL	CH		BL	1301	2770		16927		293	Europe/Zurich	2013-02-28
+2659601	Montreux	Montreux	Montr'o,Montreux,Montrjo,ZJP,montoru,Монтрьо,Монтрё,მონტრე,モントルー	46.43301	6.91143	P	PPL	CH		VD	2230	5886		22897		403	Europe/Zurich	2013-02-27
+2659613	Monthey	Monthey	Monthey	46.25546	6.96066	P	PPL	CH		VS	2308	6153		15106		408	Europe/Zurich	2013-02-27
 2659667	Meyrin	Meyrin		46.23424	6.08025	P	PPL	CH		GE	2500	6630		19772		445	Europe/Zurich	2013-02-19
 2659811	Luzern	Luzern	Liucerna,Ljucern,Loukerne,Lucerna,Lucerne,Lucerno,Luzern,Medicago sativa,lu sai en,lwzrn,rutsu~erun,Λουκέρνη,Люцерн,לוצרן,ルツェルン,卢塞恩	47.05048	8.30635	P	PPLA	CH		LU	303	1061		57066		437	Europe/Zurich	2012-06-25
 2659836	Lugano	Lugano	LUG,Lugano,Luganum,lwghanw,Лугано,לוגאנו,لوغانو	46.01008	8.96004	P	PPLA2	CH		TI	2105	5192		26365		284	Europe/Zurich	2012-06-07
 2659873	Littau	Littau	Littau	47.05	8.26274	P	PPL	CH		LU	303	1061		16121		509	Europe/Zurich	2012-04-21
 2659977	Le Châtelard	Le Chatelard	Chatelard,Châtelard,Le Chatelard,Le Chatelard-Montreux,Le Châtelard,Le Châtelard-Montreux,Shatlar,Шатлар	46.44527	6.89908	P	PPL	CH		VD	2230	5886		23192		424	Europe/Zurich	2012-01-17
 2659994	Lausanne	Lausanne	Lausana,Lausanne,Lausonium,Lauzano,Laŭzano,Losanna,Losena,Lozan,Lozana,Lozane,Lozanna,QLS,lo san,luo sang,rozan'nu,Λωζάνη,Лозана,Лозанна,לוזאן,โลซาน,ローザンヌ,洛桑	46.516	6.63282	P	PPLA	CH		VD	2225	5586		116751		453	Europe/Zurich	2013-02-19
-2660076	La Chaux-de-Fonds	La Chaux-de-Fonds	Chaux-de-Fonds,La Chaux de Fonda,La Chaux-de-Fonds,ZHV	47.09993	6.82586	P	PPL	CH		NE	2402	6421		36825		995	Europe/Zurich	2010-04-05
+2660076	La Chaux-de-Fonds	La Chaux-de-Fonds	Chaux-de-Fonds,La Chaux de Fonda,La Chaux-de-Fonds,ZHV	47.09993	6.82586	P	PPL	CH		NE	2402	6421		36825		995	Europe/Zurich	2013-02-27
 2660104	Kriens	Kriens	Kriens,Krienz,Krins,Кринс	47.03537	8.27631	P	PPL	CH		LU	303	1059		25010		493	Europe/Zurich	2012-01-17
 2660108	Kreuzlingen	Kreuzlingen	Kreuzlingen,ZHU	47.65	9.18333	P	PPLA2	CH		TG	2013	4671		17655		402	Europe/Zurich	2012-04-21
-2660119	Köniz	Koniz	Koeniz,Köniz	46.92436	7.41457	P	PPL	CH		BE	246	355		37196		577	Europe/Zurich	2012-04-21
+2660119	Köniz	Koniz	Koeniz,Köniz	46.92436	7.41457	P	PPL	CH		BE	246	355		37196		577	Europe/Zurich	2013-02-27
 2660127	Kloten	Kloten	Kloten	47.45152	8.58491	P	PPL	CH		ZH	103	62		16289		439	Europe/Zurich	2012-04-21
 2660221	Jona	Jona		47.22983	8.83884	P	PPL	CH		SG	1726	3340		17655		424	Europe/Zurich	2010-04-05
 2660305	Horgen	Horgen		47.25579	8.60027	P	PPLA2	CH		ZH	106	133		15973		471	Europe/Zurich	2011-03-01
 2660306	Zürich (Kreis 10) / Höngg	Zuerich (Kreis 10) / Hoengg	Hoengg,Höngg	47.40313	8.4971	P	PPLX	CH		ZH	112	261		17117		468	Europe/Zurich	2006-10-21
 2660365	Herisau	Herisau	Herisan,Herisau	47.38615	9.27916	P	PPLA	CH		AR	1501	3001		15438		780	Europe/Zurich	2010-04-05
-2660512	Grenchen	Grenchen	ZHI	47.1921	7.39586	P	PPL	CH		SO	1107	2546		15927		454	Europe/Zurich	2010-04-05
+2660512	Grenchen	Grenchen	ZHI	47.1921	7.39586	P	PPL	CH		SO	1107	2546		15927		454	Europe/Zurich	2013-02-27
 2660549	Gossau	Gossau	Gossau	47.41694	9.25125	P	PPL	CH		SG	1721	3443		17043		639	Europe/Zurich	2012-01-17
 2660646	Genève	Geneve	Cenevre,GVA,Genava,Genebe,Genebra,Geneue,Geneva,Geneve,Genevi,Genevo,Genevra,Genewa,Genf,Genève,Ginebra,Ginevra,Gorad Zhehneva,Jenewa,Jenwe,Xenebra,Zeneva,Zheneva,Znev,jeneba,jineva,jnyf,jnywa,junevu,ri nei wa,z'nbh,zheneva,Ĝenevo,Ženeva,Ženēva,Γενέβη,Γενευη,Γενεύη,Горад Жэнева,Женева,Ժնև,ז'נבה,جنيف,جنیوا,जिनेवा,ჟენევა,ジュネーヴ,日内瓦,제네바	46.20222	6.14569	P	PPLA	CH		GE	2500	6621		183981		400	Europe/Zurich	2013-02-19
-2660718	Fribourg	Fribourg	Freiburg,Freiburg im UEechtland,Freiburg im Uechtland,Freiburg im Üechtland,Friborg,Friborgo,Fribourg,Fribur,Friburas,Friburg,Friburgo,Friburgo im UEechtland,Friburgo im Üechtland,Friburgum,Fribôrg,Fribūras,Fryburg,ZHF,furiburu,Фрибур,フリブール	46.80237	7.15128	P	PPLA	CH		FR	1004	2196		32827	610	627	Europe/Zurich	2012-03-09
+2660718	Fribourg	Fribourg	Freiburg,Freiburg im UEechtland,Freiburg im Uechtland,Freiburg im Üechtland,Friborg,Friborgo,Fribourg,Fribur,Friburas,Friburg,Friburgo,Friburgo im UEechtland,Friburgo im Üechtland,Friburgum,Fribôrg,Fribūras,Fryburg,ZHF,furiburu,Фрибур,フリブール	46.80237	7.15128	P	PPLA	CH		FR	1004	2196		32827	610	627	Europe/Zurich	2013-02-26
 2660727	Frauenfeld	Frauenfeld	Frauenfeld,ZHE,Фрауенфелд	47.55816	8.89854	P	PPLA	CH		TG	2012	4566		21979	417	405	Europe/Zurich	2012-04-21
 2660911	Emmen	Emmen	EML,Emmen	47.0811	8.30477	P	PPL	CH		LU	302	1024		26889		427	Europe/Zurich	2012-01-17
 2660971	Dübendorf	Dubendorf	Duebendorf	47.39724	8.61872	P	PPL	CH		ZH	109	191		19882		436	Europe/Zurich	2012-06-11
 2661015	Dietikon	Dietikon	ZDX	47.40165	8.40015	P	PPL	CH		ZH	111	243		20893		397	Europe/Zurich	2012-05-24
 2661169	Chur	Chur	Chur,Coira,Coire,Couere,Couère,Cuera,Cuira,Curia Raetorum,Kur,ZDT,ku er,Кур,庫爾	46.84986	9.53287	P	PPLA	CH		GR	1829	3901		32429		601	Europe/Zurich	2012-07-04
 2661265	Carouge	Carouge		46.18096	6.13921	P	PPL	CH		GE	2500	6608		19344		388	Europe/Zurich	2010-04-05
-2661513	Biel	Biel	Biel,Biel-Bienne,Biel/Bienne,Bienna,Bienne,Bil',Биль	47.1324	7.24411	P	PPL	CH		BE	242	371		48614	434	439	Europe/Zurich	2012-04-21
-2661552	Bern	Bern	BRN,Bann,Beirn,Ben,Bern,Berna,Bernas,Berne,Berno,Bundesstadt,Bèn,Bèrna,Gorad Bern,atharvaveda,ban he na,barna,beirn,beleun,berna,berni,berun,bo en,bo er ni,brn,byrn,pern,Βέρνη,Берн,Горад Берн,Բեռն,בערן,ברן,برن,بيرن,بێرن,بېرن,ܒܪܢ,अथर्ववेद,बर्न,বের্ন,பேர்ன்,ബേൺ,เบิร์น,པེར་ནེ།,ბერნი,ቤርን,ベルン,伯尔尼,伯恩,办合纳,베른	46.94809	7.44744	P	PPLC	CH		BE	246	351		121631		549	Europe/Zurich	2013-01-07
+2661513	Biel	Biel	Biel,Biel-Bienne,Biel/Bienne,Bienna,Bienne,Bil',Биль	47.1324	7.24411	P	PPL	CH		BE	242	371		48614	434	439	Europe/Zurich	2013-02-27
+2661552	Bern	Bern	BRN,Bann,Beirn,Ben,Bern,Berna,Bernas,Berne,Berno,Bundesstadt,Bèn,Bèrna,Gorad Bern,atharvaveda,ban he na,barna,beirn,beleun,berna,berni,berun,bo en,bo er ni,brn,byrn,pern,Βέρνη,Берн,Горад Берн,Բեռն,בערן,ברן,برن,بيرن,بێرن,بېرن,ܒܪܢ,अथर्ववेद,बर्न,বের্ন,பேர்ன்,ബേൺ,เบิร์น,པེར་ནེ།,ბერნი,ቤርን,ベルン,伯尔尼,伯恩,办合纳,베른	46.94809	7.44744	P	PPLC	CH		BE	246	351		121631		549	Europe/Zurich	2013-02-27
 2661567	Bellinzona	Bellinzona	Belinzona,Bellincona,Bellinzona,Bellinzone,Bilitio,ZDI,berrintsu~ona,Беллинцона,ベッリンツォーナ	46.19278	9.01703	P	PPLA	CH		TI	2101	5002		16572		230	Europe/Zurich	2012-12-18
-2661604	Basel	Basel	Bala,Bale,Basel,Basilea,Basileia,Basilej,Basilia,Basiléia,Basle,Bazel,Bazel',Bazelis,Bazelo,Bazilej,Bazylea,Bâla,Bâle,EAP,Robur,ba sai er,bajel,bazeru,bazl,Базел,Базель,Բազել,באזל,بازل,バーゼル,巴塞尔,바젤	47.5584	7.57327	P	PPLA	CH		BS	1200	2701		164488		279	Europe/Zurich	2012-11-30
+2661604	Basel	Basel	Bala,Bale,Basel,Basilea,Basileia,Basilej,Basilia,Basiléia,Basle,Bazel,Bazel',Bazelis,Bazelo,Bazilej,Bazylea,Bâla,Bâle,EAP,Robur,ba sai er,bajel,bazeru,bazl,Базел,Базель,Բազել,באזל,بازل,バーゼル,巴塞尔,바젤	47.5584	7.57327	P	PPLA	CH		BS	1200	2701		164488		279	Europe/Zurich	2013-02-28
 2661646	Baden	Baden	Aquae Helveticae,Baden,Baden AG,ZDG	47.47333	8.30592	P	PPLA2	CH		AG	1902	4021		16118		418	Europe/Zurich	2011-03-01
 2661653	Baar	Baar	Baar,Bar,Бар	47.19625	8.52954	P	PPL	CH		ZG	900	1701		20546		447	Europe/Zurich	2012-01-17
 2661666	Zürich (Kreis 4)	Aussersihl	Aussersihl,Zuerich (Kreis 4),Zürich (Kreis 4)	47.37752	8.52127	P	PPLX	CH		ZH	112	261		27273		416	Europe/Zurich	2010-04-05
-2661810	Allschwil	Allschwil	Allschwil	47.55074	7.53599	P	PPL	CH		BL	1301	2762		18189		288	Europe/Zurich	2012-01-17
+2661810	Allschwil	Allschwil	Allschwil	47.55074	7.53599	P	PPL	CH		BL	1301	2762		18189		288	Europe/Zurich	2013-02-28
 2661861	Adliswil	Adliswil		47.30997	8.52462	P	PPL	CH		ZH	106	131		15230		450	Europe/Zurich	2012-04-21
-2661881	Aarau	Aarau	Aarau,Aaray,Aravia,ZDA,a lao,alau,arau,aravia,Аарау,アーラウ,阿劳,아라우	47.39254	8.04422	P	PPLA	CH		AG	1901	4001		15501		389	Europe/Zurich	2012-06-25
-3206590	Riehen	Riehen		47.57884	7.64683	P	PPL	CH		BS	1200	2703		20000		280	Europe/Zurich	2010-04-05
+2661881	Aarau	Aarau	Aarau,Aaray,Aravia,ZDA,a lao,alau,arau,aravia,Аарау,アーラウ,阿劳,아라우	47.39254	8.04422	P	PPLA	CH		AG	1901	4001		15501		389	Europe/Zurich	2013-03-01
+3206590	Riehen	Riehen		47.57884	7.64683	P	PPL	CH		BS	1200	2703		20000		280	Europe/Zurich	2013-02-28
 6295475	Zürich (Kreis 10) / Wipkingen	Zuerich (Kreis 10) / Wipkingen	Wipkingen	47.39503	8.52529	P	PPLX	CH		ZH	112	261		15718		434	Europe/Zurich	2006-10-21
 6295484	Zürich (Kreis 11) / Affoltern	Zuerich (Kreis 11) / Affoltern	Affoltern	47.41814	8.5122	P	PPLX	CH		ZH	112	261		17241		466	Europe/Zurich	2006-10-21
 6295495	Zürich (Kreis 2) / Wollishofen	Zuerich (Kreis 2) / Wollishofen	Wollishofen	47.3401	8.53134	P	PPLX	CH		ZH	112	261		16073		447	Europe/Zurich	2006-10-21
@@ -4694,7 +4694,7 @@
 2882440	Künzell	Kunzell		50.5442	9.71792	P	PPLA4	DE		05	066	06631	06631017	16124		307	Europe/Berlin	2011-04-25
 2882588	Kulmbach	Kulmbach	Culmbach,Kul'mbakh,Kulmbach,Stadt Kulmbach,kurumubahha,Кульмбах,クルムバッハ	50.10068	11.45032	P	PPL	DE		02	094	09477	09477128	27565		327	Europe/Berlin	2013-02-19
 2883754	Kronberg	Kronberg	Cronberg in Taunus	50.17745	8.51252	P	PPL	DE		05	064			17730		243	Europe/Berlin	2010-11-15
-2883784	Kronach	Kronach		50.23963	11.33308	P	PPL	DE		02	094	09476	09476145	18248		313	Europe/Berlin	2013-02-19
+2883784	Kronach	Kronach		50.23963	11.33308	P	PPLA3	DE		02	094	09476	09476145	18248		313	Europe/Berlin	2013-02-26
 2884050	Kreuztal	Kreuztal	Kreuztal,Kreuzthal	50.96775	7.98848	P	PPL	DE		07				31772		334	Europe/Berlin	2012-09-06
 2884161	Kreuzberg	Bezirk Kreuzberg		52.49973	13.40338	P	PPLX	DE		16	00	11000	11000000	147532		40	Europe/Berlin	2012-06-09
 2884245	Kreuzau	Kreuzau	Kreuzau,Kreuzau uber Duren,Kreuzau über Düren	50.75	6.48333	P	PPLA4	DE		07	053	05358	05358028	18400		145	Europe/Berlin	2011-07-31
@@ -4814,7 +4814,7 @@
 2907669	Heilbronn	Heilbronn	Chailmpron,Hajlbrono,Heilbronn,Heilbronn Neckar,Khajl'bronn,Khajlbron,hairuburon,haylbrwn,Χαϊλμπρόν,Хайльбронн,Хајлброн,هايلبرون,هایلبرون,ハイルブロン	49.13995	9.22054	P	PPL	DE		01	081	08121	08121000	120733		170	Europe/Berlin	2013-02-16
 2907851	Heidenheim an der Brenz	Heidenheim an der Brenz	Heidenheim,Heidenheim an der Brenz,Heidenheim in Wurttemberg,Heidenheim in Württemberg,Hoana	48.67798	10.15162	P	PPL	DE		01	081	08135	08135019	50067		494	Europe/Berlin	2013-02-16
 2907887	Heidenau	Heidenau		50.97221	13.86741	P	PPL	DE		13	146	14628		16756		120	Europe/Berlin	2011-12-26
-2907911	Heidelberg	Heidelberg	Chaidelvergi,Gejdel'berg,Gorad Gejdehl'berg,Haidelbergu,Haidlbaersch,Haidlbärsch,Heidelbarg,Heidelberch,Heidelberg,Heidelberga,Heidelbergas,Heidelburg,Heidlberg,Hejdelbergo,Heydelberg,Heydelberq,Héydélbérg,Khajdel'berg,Khajdelberg,hai de bao,haidelbeleukeu,haidelbergi,haideruberuku,haydlbrg,haydlbrgh,hyydlbrg,Χαϊδελβέργη,Гейдельберг,Горад Гейдэльберг,Хайделберг,Хайдельберг,Хајделберг,היידלבערג,היידלברג,هايدلبرغ,هایدلبرگ,ہائیڈلبرگ,ჰაიდელბერგი,ハイデルベルク,海德堡,하이델베르크	49.40768	8.69079	P	PPL	DE		01	082	08221	08221000	143345		115	Europe/Berlin	2013-02-16
+2907911	Heidelberg	Heidelberg	Chaidelvergi,Gejdel'berg,Gorad Gejdehl'berg,Haidelbergu,Haidlbaersch,Haidlbärsch,Heidelbarg,Heidelberch,Heidelberg,Heidelberga,Heidelbergas,Heidelburg,Heidlberg,Hejdelbergo,Heydelberg,Heydelberq,Héydélbérg,Khajdel'berg,Khajdelberg,hai de bao,haidelbeleukeu,haidelbergi,haideruberuku,haydlbrg,haydlbrgh,hyydlbrg,Χαϊδελβέργη,Гейдельберг,Горад Гейдэльберг,Хайделберг,Хайдельберг,Хајделберг,היידלבערג,היידלברג,هايدلبرغ,هایدلبرگ,ہائیڈلبرگ,ჰაიდელბერგი,ハイデルベルク,海德堡,하이델베르크	49.40768	8.69079	P	PPLA3	DE		01	082	08221	08221000	143345		115	Europe/Berlin	2013-02-26
 2908032	Heide	Heide	Heide	54.19579	9.0988	P	PPL	DE		10				20599		13	Europe/Berlin	2012-07-04
 2908495	Hechingen	Hechingen		48.35149	8.96317	P	PPL	DE		01	084	08417	08417031	19400		531	Europe/Berlin	2013-02-16
 2909230	Hattingen	Hattingen	Hattingen	51.39894	7.18557	P	PPL	DE		07				56866		94	Europe/Berlin	2012-08-04
@@ -6401,7 +6401,7 @@
 632978	Vaasa	Vaasa	Nikolainkaupunki,Nikolaistad,VAA,Vaasa,Vasa,Wasa,basa,wa sa,Вааса,バーサ,瓦萨	63.096	21.61577	P	PPLA2	FI		15	15	905		57014		7	Europe/Helsinki	2012-02-14
 633221	Uusikaupunki	Uusikaupunki	Nystad,Nyustad,Usikaupunki,Uusikaupunki,uusikaupunki,Уусикаупунки	60.80043	21.40841	P	PPLA3	FI		15	02	895		16226		16	Europe/Helsinki	2011-07-31
 633591	Tuusula	Tuusula	Thusby,Tusby,Tuusula,Туусула	60.40368	25.02638	P	PPLA3	FI		13	01	858		34725		58	Europe/Helsinki	2011-07-31
-633679	Turku	Turku	Abo,Aboa,TKU,Turcu,Turku,Turu,Túrcú,to~uruku,tu er ku,twrqw,Åbo,Турку,טורקו,トゥルク,圖爾庫	60.45148	22.26869	P	PPLA	FI		15	02	853		175945		22	Europe/Helsinki	2011-12-31
+633679	Turku	Turku	Abo,Aboa,TKU,Turcu,Turku,Turu,Túrcú,to~uruku,tu er ku,twrqw,Åbo,Турку,טורקו,トゥルク,圖爾庫	60.45148	22.26869	P	PPLA	FI		15	02	853		175945		22	Europe/Helsinki	2013-03-01
 634093	Tornio	Tornio	Duortnus,Tornea,Torneå,Tornio,Торнио	65.84811	24.14662	P	PPLA3	FI		06	19	851		21236		6	Europe/Helsinki	2011-08-12
 634963	Tampere	Tampere	TMP,Tammerfors,Tampere,Tamperė,tanpere,tmprh,Тампере,טמפרה,タンペレ	61.49911	23.78712	P	PPLA2	FI		15	06	837		202687		114	Europe/Helsinki	2012-02-14
 636947	Siilinjärvi	Siilinjarvi	Siilinjaervi,Siilinjärvi,Silin"jarvi,Силинъярви	63.08333	27.66667	P	PPLA3	FI		14	11	749		20209		83	Europe/Helsinki	2011-07-31
@@ -6430,7 +6430,7 @@
 649630	Kirkkonummi	Kirkkonummi	Kirkkonummi,Kyrkslaett,Kyrkslatt,Kyrkslätt	60.12381	24.43853	P	PPLA3	FI		13	01	257		32920		17	Europe/Helsinki	2011-07-31
 649919	Kuusankoski	Kuusankoski	KUUSANKOSKI,Kuusankoski,КУУСАНКОСКИ	60.9	26.63333	P	PPLA3	FI		13	08	286		19986		85	Europe/Helsinki	2011-12-31
 649924	Kuusamo	Kuusamo	KAO,Kuusamo,Куусамо	65.96667	29.18333	P	PPLA3	FI		08	17	305		17400		262	Europe/Helsinki	2011-07-31
-650224	Kuopio	Kuopio	KUO,Kouopio,Kuopijas,Kuopio,kuopio,Κουόπιο,Куопио,クオピオ	62.89238	27.67703	P	PPLA2	FI		14	11	297		89104		90	Europe/Helsinki	2012-02-14
+650224	Kuopio	Kuopio	KUO,Kouopio,Kuopijas,Kuopio,kuopio,Κουόπιο,Куопио,クオピオ	62.89238	27.67703	P	PPLA2	FI		14	11	297		89104		90	Europe/Helsinki	2013-03-01
 650859	Kouvola	Kouvola	KOUVOLA,Kouvola,КОУВОЛА	60.86667	26.7	P	PPLA2	FI		13	08	286		31133		81	Europe/Helsinki	2012-02-14
 650946	Kotka	Kotka	Kotka,Kotko,Ruotsinsalmi,Svensksund,Котка	60.46667	26.91667	P	PPLA3	FI		13	08	285		54616		1	Europe/Helsinki	2011-07-31
 651299	Korsholm	Korsholm	Korsholm,Mustasaari	63.11418	21.68216	P	PPL	FI		15	15	499		17176		15	Europe/Helsinki	2011-12-31
@@ -13063,7 +13063,7 @@
 1835447	Taisen-ri	Taisen-ri	Daisen,Hannae-ri,Poryong,Poryŏng,Taech'on,Taech'on-ni,Taech’ŏn,Taech’ŏn-ni,Taisen,Taisen-ri,bolyeong,보령	36.34931	126.59772	P	PPL	KR		17				62039		11	Asia/Seoul	2012-01-18
 1835515	T’aebaek	T'aebaek	T'aebaek,Tkhehbehk,T’aebaek,taebaeg,Тхэбэк,태백	37.1759	128.9889	P	PPL	KR		06				48962		691	Asia/Seoul	2012-01-18
 1835553	Suigen	Suigen	Suigen,Suvon,Suwon,Suwŏn,shui yuan shi,suwon,suwonsi,Сувон,水原市,수원,수원시	37.29111	127.00889	P	PPL	KR		13				1242724		58	Asia/Seoul	2012-01-18
-1835648	Suncheon	Suncheon	Junten,SYS,Sunch'on,Suncheon,Sunchun,Sunch’ŏn,suncheon,순천	34.94808	127.48947	P	PPL	KR		16				230796		16	Asia/Seoul	2013-02-16
+1835648	Suncheon	Suncheon	Junten,SYS,Sunch'on,Suncheon,Sunchun,Sunch’ŏn,suncheon,순천	34.94808	127.48947	P	PPL	KR		16				230796		16	Asia/Seoul	2013-02-26
 1835848	Seoul	Seoul	Choei-yuen,Gorad Seul,Ha-seng,Han-yang,Hang-yang-tcheng,Hansong,Hansŏng,Hā-seng,Hān-yang,Kan-yo-jo,Kan-yō-jō,Keijo,Keizyoe,Keizyōe,Kiung,Kyongsong,Kyŏngsŏng,SEL,Seoel,Seol,Seoul,Seuel,Seul,Seula,Seulas,Seulo,Seulum,Seúl,Seül,Siul,Soeul,Sol,Soul,Suigen,Sye-ul,Syou-ouen,Szoeul,Szöul,Séoul,Sêûl,Söul,Sŏul,Wang-ching,Wo-jo,Wō-jō,ciyol,saul,seoul,seoulteugbyeolsi,seuli,shou er,si'ula,siyola,sol,sola,souru te bie shi,sywl,Σεούλ,Горад Сеул,Сеул,Соул,Сөүл,Սեուլ,סאול,סיאול,סעאל,سئول,سيول,سیول,سێئول,سېئول,सियोल,सोल,সিউল,சியோல்,ಸೌಲ್,സോൾ,โซล,སེ་ཨུལ།,ဆိုးလ်မြို့,სეული,ሶል,សេអ៊ូល,ソウル特別市,首尔,首爾,서울,서울특별시	37.56826	126.97783	P	PPLC	KR		11				10349312		74	Asia/Seoul	2011-03-06
 1835895	Suisan	Suisan	Seosan,Seosan City,Sosan,Suisan,Sŏsan,rui shan shi,seosan,seosansi,Сосан,瑞山市,서산,서산시	36.78167	126.45222	P	PPL	KR		17				74208		33	Asia/Seoul	2012-01-18
 1835967	Jenzan	Jenzan	Jenzan,Sonsan,Sŏnsan,seonsan,선산	36.24083	128.2975	P	PPL	KR		14				20673		48	Asia/Seoul	2012-01-18
@@ -17006,7 +17006,7 @@
 515012	Orël	Orel	Orel,Oriol,Oriolas,Orjol,Oryol,Orzel,Orzeł,Orël,olyol,oryoru,Орел,Орёл,オリョール,오룔	52.96508	36.0785	P	PPLA	RU		56				324200		154	Europe/Moscow	2012-01-17
 515024	Orekhovo-Zuyevo	Orekhovo-Zuyevo	OREKHOVO-ZUEVO,Orechowo-Sujewo,Orehhovo-Zujevo,Orehovo-Zujevo,Orekhovo,Orekhovo-Zuevo,Orekhovo-Zuyevo,Oreĥovo-Zujevo,Oriechowo-Zujewo,Orjechowo Sujewo,Oryekhovo,ОРЕХОВО-ЗУЕВО,Орехово-Зуево	55.80672	38.96178	P	PPL	RU		47				120000		123	Europe/Moscow	2012-01-17
 515083	Ordzhonikidzevskaya	Ordzhonikidzevskaya	Ordshonikidsewskaja,Ordzhonikidzevskaja,Ordzhonikidzevskaya,Ordzhonikidzevskoye,Ordzjonikidzevskaja,Sleptsovskaya,Slyeptsovskaya,Орджоникидзевская	43.3195	45.04911	P	PPL	RU		19				71841		326	Europe/Moscow	2012-08-04
-515246	Onega	Onega	ONEGA,Onega,ОНЕГА,Онега	63.90607	38.14035	P	PPL	RU		06				22693		55	Europe/Moscow	2012-01-17
+515246	Onega	Onega	AEaeninen,ONEGA,Onega,Ääninen,ОНЕГА,Онега	63.90607	38.14035	P	PPL	RU		06				22693		55	Europe/Moscow	2013-03-01
 515267	Omutninsk	Omutninsk	OMUTNINSK,Omutinisk,Omutninsk,ОМУТНИНСК,Омутнинск	58.67001	52.1932	P	PPL	RU		33				25364		184	Europe/Volgograd	2012-01-17
 515698	Olenegorsk	Olenegorsk	OLENEGORSK,Olen'ya,Olenegorsk,Olenja,ОЛЕНЕГОРСК	68.1432	33.25287	P	PPL	RU		49				23670		170	Europe/Moscow	2009-12-02
 515804	Tsotsin-Yurt	Tsotsin-Yurt	Cacan-Jurt,Cacan-Yurt,Chochin-Jurt,Coci-Jurt,Coci-Yurt,Cocin-Avl,Cocin-Avla,Cocin-Ehvl,Cocin-Evl,Cocin-Jurt,Cocin-Əvl,Cocin-Əvla,Oktjabr'skoe,Oktjabr’skoe,Oktyabr'skoye,Oktyabr’skoye,Tsatsan-Yurt,Tsotsin-Yurt,Çaçan-Yurt,Çoçi-Yurt,Октябрьское,Цацан-Юрт,Цоци-Юрт,Цоцин-Эвл,Цоцин-Юрт,Чочин-Юрт	43.24206	46.00013	P	PPL	RU		12				15970		131	Europe/Moscow	2012-08-04
@@ -17869,7 +17869,7 @@
 2704620	Huddinge	Huddinge		59.23705	17.98192	P	PPLA2	SE		26	0126			90182		33	Europe/Stockholm	2011-12-20
 2706767	Helsingborg	Helsingborg	Chelsin'nkmpornk,Gel'sinborg,Haelsingborg,Helsingborg,Helsingborgas,Helsingjaborg,Helsingoburgum,Hälsingborg,Khel'singborg,Khelsingborg,Khelsingbori,he er xin bao,helsingboli,herushinbori,hlsyngbwrg,Χέλσινγκμποργκ,Гельсінборг,Хелсингборг,Хелсингбори,Хельсингборг,هلسینگبورگ,ہلسنگبورگ,ヘルシンボリ,赫尔辛堡,헬싱보리	56.04673	12.69437	P	PPLA2	SE		27	1283			91025		13	Europe/Stockholm	2011-12-20
 2707399	Hässleholm	Hassleholm		56.15905	13.76638	P	PPLA2	SE		27	1293			17050		58	Europe/Stockholm	2011-12-20
-2707684	Härnösand	Harnosand	Haernoesand,Hernoesand,Hernösand,Härnösand	62.63228	17.93794	P	PPLA	SE		24	2280			17016		25	Europe/Stockholm	2011-12-13
+2707684	Härnösand	Haernoesand	Haernoesand,Härnösand	62.63228	17.93794	P	PPLA	SE		24	2280			17016		25	Europe/Stockholm	2013-02-28
 2707953	Haninge	Haninge		59.16775	18.14478	P	PPL	SE		26	0136			74968		67	Europe/Stockholm	2011-10-30
 2708365	Halmstad	Halmstad	HAD,Halmostadium,Halmstad,Hamstad,Khalmstad,Халмстад	56.67446	12.85676	P	PPLA	SE		06	1380			55657		11	Europe/Stockholm	2010-03-28
 2711537	Göteborg	Goeteborg	G'oteborg,GOT,Gautaborg,Geteborg,Geteborga,Geteborgas,Gjoteborg,Goeteborg,Goeteborq,Gorad Gjotehborg,Goteborg,Goteburg,Gotemburgo,Gotenburg,Gothembourg,Gothenburg,Gothoburgum,Gotnburg,Gottenborg,Göteborg,Göteborq,Gøteborg,Gēteborga,Nketempornk,ge de bao,ghwtnbrgh,gtbwrg,gwtnbwrg,jwtnbrj,yeteboli,yohateborya,yotebori,Γκέτεμποργκ,Гетеборг,Горад Гётэборг,Гьотеборг,Гётеборг,גטבורג,געטעבארג,جوتنبرج,غوتنبرغ,گوتنبورگ,گووتھنبرگ,योहतेबोर्य,გეტებორგი,ዬተቦርይ,ᐃᐅᑕᐳᕆ,ヨーテボリ,哥德堡,예테보리	57.70716	11.96679	P	PPLA	SE		28	1480			504084		10	Europe/Stockholm	2011-06-16
@@ -18816,7 +18816,7 @@
 744873	Kağızman	Kagizman	KAGYZMAN,Kagizman,Kağızman,КАГЫЗМАН	40.15669	43.13424	P	PPLA2	TR		84				25157		1276	Europe/Istanbul	2012-01-18
 745026	İznik	Iznik	Isnik,Iznik,Nicaea,Nicea,Nicee,Nicée,Nikaia,izuniku,nikaia,İznik,Изник,イズニク,ニカイア	40.42861	29.72111	P	PPL	TR		16				22230		99	Europe/Istanbul	2012-01-18
 745028	İzmit	Izmit	Astacus,Cocaeli,Ismid,Ismit,Isnimid,Izmid,Izmit,Kocaeli,Kodja-Eli,Kodzhaehli,Koja-Ili,Nicomedia,Nikomedeia,izumitto,yi zi mi te,İzmit,Коджаэли,イズミット,伊兹密特	40.76694	29.91694	P	PPLA	TR		41				196571		66	Europe/Istanbul	2010-05-26
-745044	İstanbul	Istanbul	Bizanc,Bizánc,Byzance,Byzantion,Byzantium,Byzanz,Constantinoble,Constantinopla,Constantinople,Constantinopoli,Constantinopolis,Costantinopoli,Estambul,IST,Istamboul,Istambul,Istambuł,Istampoul,Istanbul,Istanbúl,Isztambul,Konstantinapoly,Konstantinopel,Konstantinopolo,Konstantinoupole,Konstantinoupoli,Konstantinoupolis,Konstantinápoly,Kustantiniyah,Micklagard,Micklagård,Mikligardur,Mikligarður,Stamboul,Stambul,Stambula,Stambuł,Tsarigrad,Vizantija,Vyzantio,bijantion,byuzantion,byzntywn,isutanburu,yi si tan bu er,İstanbul,Βυζάντιο,Βυζαντιο,Ισταμπουλ,Ισταμπούλ,Κωνσταντινουπολη,Κωνσταντινούπολη,Κωνσταντινούπολις,Византија,Истанбул,Стамбул,ביזנטיון,イスタンブール,ビュザンティオン,伊斯坦布尔,비잔티온	41.01384	28.94966	P	PPLA	TR		34				11174257		39	Europe/Istanbul	2012-11-22
+745044	İstanbul	Istanbul	Bizanc,Bizánc,Byzance,Byzantion,Byzantium,Byzanz,Constantinoble,Constantinopla,Constantinople,Constantinopoli,Constantinopolis,Costantinopoli,Estambul,IST,Istamboul,Istambul,Istambuł,Istampoul,Istanbul,Istanbúl,Isztambul,Konstantinapoly,Konstantinopel,Konstantinopolo,Konstantinoupole,Konstantinoupoli,Konstantinoupolis,Konstantinápoly,Kustantiniyah,Micklagard,Micklagård,Mikligardur,Mikligarður,Stamboul,Stambul,Stambula,Stambuł,Tsarigrad,Vizantija,Vyzantio,astnbwl,bijantion,byuzantion,byzntywn,isutanburu,yi si tan bu er,İstanbul,Βυζάντιο,Βυζαντιο,Ισταμπουλ,Ισταμπούλ,Κωνσταντινουπολη,Κωνσταντινούπολη,Κωνσταντινούπολις,Византија,Истанбул,Стамбул,ביזנטיון,اسطنبول,イスタンブール,ビュザンティオン,伊斯坦布尔,비잔티온	41.01384	28.94966	P	PPLA	TR		34				11174257		39	Europe/Istanbul	2013-02-28
 745076	İskilip	Iskilip	Andrapa,Iskelib,Iskilip,Neapolis,Neoclaudiopolis,İskilip	40.73528	34.47389	P	PPLA2	TR		19				19829		778	Europe/Istanbul	2012-01-18
 745169	Inegeul	Inegeul	Inegeul,Inegoel,Inegol,İnegöl	40.07806	29.51333	P	PPL	TR		16	7732332			133959		293	Europe/Istanbul	2013-01-03
 745527	Horasan	Horasan	Horasan,KHORASAN,ХОРАСАН	40.04583	42.17278	P	PPL	TR		25				17067		1561	Europe/Istanbul	2012-01-18
@@ -18851,7 +18851,7 @@
 748870	Çubuk	Cubuk	Cubuk,Çubuk	40.23861	33.03222	P	PPLA2	TR		68				62602		999	Europe/Istanbul	2012-01-18
 748879	Çorum	Corum	Chorum,Corum,Euchaita,Çorum,Чорум	40.54889	34.95333	P	PPLA	TR		19				183418		808	Europe/Istanbul	2012-01-18
 748893	Çorlu	Corlu	Chorlu,Corlu,Tzirallum,Tzurullum,Çorlu	41.15917	27.8	P	PPL	TR		59				202578		172	Europe/Istanbul	2012-01-18
-749274	Çerkezköy	Cerkezkoy	Cerkeskoy,Cerkezkoey,Cerkezkoy,Hayrabolu,Çerkesköy,Çerkezköy	41.285	28.00028	P	PPL	TR		59				67078		161	Europe/Istanbul	2012-04-29
+749274	Çerkezköy	Cerkezkoey	Cerkezkoey,Çerkezköy	41.28629	27.99939	P	PPL	TR		59				84234	152	152	Europe/Istanbul	2013-02-25
 749279	Çerkeş	Cerkes	Cerkes,Cherkes,Cherkesh,Mecidiye,Çerkeş	40.81164	32.89358	P	PPLA2	TR		82				17802		1133	Europe/Istanbul	2012-01-18
 749502	Çayeli	Cayeli	Caybasi,Cayeli,Mapavri,Mapavrı,Çaybaşı,Çayeli	41.09228	40.72924	P	PPLA2	TR		53				24556		13	Europe/Istanbul	2012-01-18
 749508	Çaycuma	Caycuma	Caycuma,Çaycuma	41.42639	32.07556	P	PPLA2	TR		85				21773		43	Europe/Istanbul	2012-01-18
