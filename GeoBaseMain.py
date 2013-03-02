@@ -29,7 +29,7 @@ import colorama
 import argparse # in standard libraray for Python >= 2.7
 
 # Private
-from GeoBases import GeoBase, SourcesManager
+from GeoBases import GeoBase, SourcesManager, is_remote, is_archive
 
 
 IS_WINDOWS = platform.system() in ('Windows',)
@@ -1451,7 +1451,7 @@ def handle_args():
     return vars(parser.parse_args())
 
 
-def admin_mode(admin):
+def admin_mode(admin, verbose=True):
     """Handle admin commands.
     """
     help_ = dedent("""\
@@ -1533,7 +1533,7 @@ def admin_mode(admin):
             def_paths = [{ 'file' : '' }]
         else:
             def_paths = S_MANAGER.convert_paths_format(def_paths,
-                                                           local=conf.get('local', True))
+                                                       local=conf.get('local', True))
 
         new_conf['paths'] = []
 
@@ -1547,7 +1547,7 @@ def admin_mode(admin):
 
             path = ask_input('[2/8] Paths       : ', path['file'])
             path = S_MANAGER.convert_paths_format(path,
-                                                      local=conf.get('local', False))[0]
+                                                  local=conf.get('local', False))[0]
 
             if path['file'].endswith('.zip'):
                 extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
@@ -1557,33 +1557,27 @@ def admin_mode(admin):
                 # Empty path mean we want to delete it
                 continue
 
-            if not path['file'].startswith('http://') and \
-               not path['file'].startswith('https://'):
+            if not is_remote(path):
                 # For local paths we propose copy in cache dir
                 path['file'] = op.realpath(path['file'])
 
-                if 'extract' in path:
+                if is_archive(path):
                     # We propose to store the root archive in cache
-                    if path['file'] != op.join(S_MANAGER.cache_dir, op.basename(path['file'])):
-                        # Is the path file in the cache dir?
-                        copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                                  (op.basename(path['file']), S_MANAGER.cache_dir), 'Y')
+                    use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
+                                           (op.basename(path['file']), S_MANAGER.cache_dir), 'Y')
 
-                        if copy_in_cache == 'Y':
-                            _, copied = S_MANAGER.copy_in_cache(path['file'])
-                            path['file'] = op.realpath(copied)
+                    if use_cached == 'Y':
+                        _, copied = S_MANAGER.copy_to_cache(path['file'])
+                        path['file'] = op.realpath(copied)
 
             # We propose for tmp files to be used as primary sources
-            filename = S_MANAGER.handle_path(path, verbose=True)
+            filename = S_MANAGER.handle_path(path, verbose=verbose)
+            use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
+                                   (op.basename(filename), S_MANAGER.cache_dir), 'Y')
 
-            if path['file'] != op.join(S_MANAGER.cache_dir, op.basename(filename)):
-                # Is the path file in the cache dir?
-                copy_in_cache = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                          (op.basename(filename), S_MANAGER.cache_dir), 'Y')
-
-                if copy_in_cache == 'Y':
-                    _, copied = S_MANAGER.copy_in_cache(filename)
-                    path['file'] = op.realpath(copied)
+            if use_cached == 'Y':
+                _, copied = S_MANAGER.copy_to_cache(filename)
+                path['file'] = op.realpath(copied)
 
             new_conf['paths'].append(path)
 
@@ -1594,7 +1588,10 @@ def admin_mode(admin):
             with open(filename) as fl:
                 first_l = fl.next().rstrip()
 
-            print '\n===== First line: "%s"\n' % first_l
+            print '\n>>>>> header'
+            print first_l
+            print '<<<<<'
+
             def_delimiter  = guess_delimiter(first_l)
             def_headers    = guess_headers(first_l.split(def_delimiter))
             def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
@@ -1672,10 +1669,10 @@ def admin_mode(admin):
         if not new_conf:
             print '\n===== No changes'
         else:
-            print '\n----- [changes: before]'
+            print '\n--- [before]'
             print S_MANAGER.convert({ source_name : old_conf })
 
-            print '\n+++++ [changes: after]'
+            print '\n+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
             confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
@@ -1683,9 +1680,9 @@ def admin_mode(admin):
             if confirm == 'Y':
                 S_MANAGER.update(source_name, new_conf)
                 S_MANAGER.save()
-                print '\n===== Changes saved to %s' % S_MANAGER.sources_conf_path
+                print '===== Changes saved to %s' % S_MANAGER.sources_conf_path
             else:
-                print '\n===== Aborted'
+                print '===== Aborted'
 
 
 def two_col_print(L):
@@ -1917,7 +1914,7 @@ def main():
 
     if args['admin'] is not None:
         try:
-            admin_mode(args['admin'])
+            admin_mode(args['admin'], verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
         else:

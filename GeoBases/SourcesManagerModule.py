@@ -40,7 +40,7 @@ if not op.isdir(CACHE_DIR):
 
 
 # We only export the main class
-__all__ = ['SourcesManager']
+__all__ = ['SourcesManager', 'is_remote', 'is_archive']
 
 
 class SourcesManager(object):
@@ -140,11 +140,18 @@ class SourcesManager(object):
 
 
     def is_in_cache(self, filename):
-        """Is filename already in cache.
+        """Is filename already in cache?
         """
         return op.isfile(op.join(self.cache_dir, filename))
 
-    def copy_in_cache(self, path):
+
+    def is_path_from_cache(self, path):
+        """Is a path from the cache?.
+        """
+        return path == op.join(self.cache_dir, op.basename(path))
+
+
+    def copy_to_cache(self, path):
         """Move source file in cache directory.
         """
         if not op.isfile(path):
