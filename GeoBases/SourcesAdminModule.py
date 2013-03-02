@@ -234,6 +234,8 @@ class SourcesAdmin(object):
             if config is not None:
                 keys  = config.get('key_fields', missing)
                 paths = config.get('paths', missing)
+                if not paths:
+                    paths = missing
             else:
                 keys, paths = missing, missing
 
