@@ -62,10 +62,10 @@ from shutil import copy
 from fuzzy import DMetaphone, nysiis
 dmeta = DMetaphone()
 
-from .GeoUtils           import haversine
-from .LevenshteinUtils   import mod_leven, clean
-from .GeoGridModule      import GeoGrid
-from .SourcesAdminModule import SourcesManager
+from .GeoUtils             import haversine
+from .LevenshteinUtils     import mod_leven, clean
+from .GeoGridModule        import GeoGrid
+from .SourcesManagerModule import SourcesManager
 
 
 try:
