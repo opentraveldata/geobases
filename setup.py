@@ -81,7 +81,7 @@ with open(local('LICENSE')) as fl:
     LICENSE = fl.read()
 
 setup(
-    name = 'GeoBasesDev',
+    name = 'GeoBases',
     version = VERSION,
     author = 'Alex Prengère',
     author_email = 'geobases.dev@gmail.com',
