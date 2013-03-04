@@ -1253,14 +1253,19 @@ class GeoBase(object):
 
         >>> geo_a.getLocation('AGN')
         (57.50..., -134.585...)
+        >>> geo_a.getLocation('UNKNOWN')
+        Traceback (most recent call last):
+        KeyError: 'Thing not found: UNKNOWN'
         """
+        if key not in self:
+            raise KeyError("Thing not found: %s" % str(key))
+
         try:
             loc = tuple(float(self.get(key, f)) for f in GEO_FIELDS)
 
         except (ValueError, TypeError):
             # Decode geocode, if error, returns None
-            # TypeError: input type is not even a string,
-            # probably NoneType
+            # TypeError : input type is not a string, probably None
             # ValueError: could not convert to float
             return
         else:
