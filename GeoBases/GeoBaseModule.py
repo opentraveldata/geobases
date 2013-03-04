@@ -679,17 +679,23 @@ class GeoBase(object):
 
 
     @staticmethod
-    def _buildRowData(row, headers, delimiter, subdelimiters, key, lno):
-        """Building all data associated to this row.
+    def _emptyData(key, lno):
+        """Generate empty data for a key.
         """
-        # Erase everything, except duplicates counter
-        data = {
+        return {
             '__key__' : key,  # special field for key
             '__dup__' : [],   # special field for duplicates
             '__par__' : [],   # special field for parent
             '__lno__' : lno,  # special field for line number
             '__gar__' : [],   # special field for garbage
         }
+
+
+    def _buildRowData(self, row, headers, delimiter, subdelimiters, key, lno):
+        """Building all data associated to this row.
+        """
+        # Erase everything, except duplicates counter
+        data = self._emptyData(key, lno=lno)
 
         # headers represents the meaning of each column.
         # Using izip_longest here will replace missing fields
