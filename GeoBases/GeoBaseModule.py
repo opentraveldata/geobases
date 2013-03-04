@@ -2304,12 +2304,15 @@ class GeoBase(object):
             self.fields.append(field)
 
 
-    def set(self, key, field=None, value=None):
+
+    def set(self, key, field=None, value=None, update_fields=False):
         """Method to manually change a value in the base.
 
         :param key:   the key we want to change a value of
         :param field: the concerned field, like ``'name'``
         :param value: the new value
+        :param update_fields: boolean to toggle general fields updating \
+                or not after data update
         :returns:     ``None``
 
         >>> geo_t.get('frnic', 'name')
@@ -2343,13 +2346,16 @@ class GeoBase(object):
                 '__gar__' : [],       # special field for garbage
             }
 
-        if field is not None:
-            self._things[key][field] = value
+        if field is None:
+            # field cannot be None, None is used to get all fields
+            return
 
+        self._things[key][field] = value
+
+        if update_fields:
             # If the field was not referenced in the headers
             # we add it to the headers
-            if field not in self.fields:
-                self.fields.append(field)
+            self.updateFields(field)
 
 
     def setFromDict(self, key, dictionary):
