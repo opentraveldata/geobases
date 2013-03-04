@@ -984,7 +984,7 @@ class GeoBase(object):
                     else:
                         # We could not even display the lat/lng
                         # This can happen if incomplete key information
-                        # has been supplied after loading, with set or setFromDict
+                        # has been supplied after loading
                         print 'No geocode support for %s: "%s", skipping point...' % \
                                 (key, self.get(key))
             else:
@@ -2350,8 +2350,7 @@ class GeoBase(object):
             self._things[key][field] = value
 
             if update_fields:
-                # If the field was not referenced in the headers
-                # we add it to the headers
+                # If the field was not in the headers we add it
                 self.updateFields(field)
 
 
