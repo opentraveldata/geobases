@@ -747,10 +747,10 @@ class GeoBase(object):
         We iterate until we find an available key
         """
         for n in count(nb_dups):
-            d_key = '%s@%s' % (key, n)
+            dup_key = '%s@%s' % (key, n)
 
-            if d_key not in self:
-                return d_key
+            if dup_key not in self:
+                return dup_key
 
 
     @staticmethod
@@ -837,30 +837,30 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            row_data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
+            data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
-                self._things[key] = row_data
+                self._things[key] = data
 
             else:
                 if discard_dups is False:
                     # We compute a new key for the duplicate
                     nb_dups = 1 + len(self._things[key]['__dup__'])
-                    d_key   = self._buildDuplicatedKey(key, nb_dups)
+                    dup_key = self._buildDuplicatedKey(key, nb_dups)
 
                     # We update the data with this info
-                    row_data['__key__'] = d_key
-                    row_data['__dup__'] = self._things[key]['__dup__']
-                    row_data['__par__'] = [key]
+                    data['__key__'] = dup_key
+                    data['__dup__'] = self._things[key]['__dup__']
+                    data['__par__'] = [key]
 
-                    # We add the d_key as a new duplicate, and store the duplicate in the main _things
-                    self._things[key]['__dup__'].append(d_key)
-                    self._things[d_key] = row_data
+                    # We add the dup_key as a new duplicate, and store the duplicate in the main _things
+                    self._things[key]['__dup__'].append(dup_key)
+                    self._things[dup_key] = data
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
-                                (lno, key, nb_dups, self._things[key]['__lno__'], d_key)
+                                (lno, key, nb_dups, self._things[key]['__lno__'], dup_key)
                 else:
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
