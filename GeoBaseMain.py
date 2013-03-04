@@ -847,6 +847,9 @@ def error(name, *args):
     elif name == 'aborting':
         print >> stderr, '\n/!\ %s' % args[0]
 
+    elif name == 'not_allowed':
+        print >> stderr, '\n/!\ Value "%s" not allowed.' % args[0]
+
     exit(1)
 
 
@@ -1457,6 +1460,31 @@ def handle_args():
     return vars(parser.parse_args())
 
 
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None):
+    """Ask a question and only accept a list of possibilities as response.
+    """
+    if is_ok is None:
+        is_ok = lambda r: True
+
+    if allowed is None:
+        is_allowed = lambda r: True
+    else:
+        is_allowed = lambda r: r in allowed
+
+    # Start
+    if show and allowed is not None:
+        two_col_print(allowed)
+
+    response = ask_input(msg).strip()
+
+    while not is_ok(response) or not is_allowed(response):
+        if fail_message is not None:
+            print fail_message
+        response = ask_input(msg).strip()
+
+    return response
+
+
 def admin_mode(admin, verbose=True):
     """Handle admin commands.
     """
@@ -1467,56 +1495,74 @@ def admin_mode(admin, verbose=True):
     (*) drop       : drop all information for one data source
     (*) restore    : factory reset of all data sources information
     (*) edit       : edit an existing data source, or add a new one
-    ------------------------------------------------------- SUMMARY
+    ------------------------------------------------------- SUMMARY\
     """)
+
+    questions = [
+        '[ 0 ] Command: ',
+        '[ 1 ] Source name : ',
+        '[2/8] Paths       : ',
+        '[   ] Which file in archive? ',
+        '[   ] Copy %s in %s and use from there [yN]? ',
+        '[3/8] Delimiter   : ',
+        '[4/8] Headers     : ',
+        '[5/8] Key fields  : ',
+        '[6/8] Indices     : ',
+        '[7/8] Join        : ',
+        '[8/8] Confirm [Yn]? ',
+    ]
 
     if len(admin) < 1:
         print help_
-        msg = '[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS)
+        command = ask_till_ok(questions[0], ALLOWED_COMMANDS)
+    else:
+        command = admin[0]
 
-        admin_command = ask_input(msg).strip()
-        while admin_command not in ALLOWED_COMMANDS:
-            admin_command = ask_input(msg).strip()
-        admin.append(admin_command)
+    if command not in ALLOWED_COMMANDS:
+        error('wrong_value', command, ALLOWED_COMMANDS)
 
-    if admin[0] not in ALLOWED_COMMANDS:
-        error('wrong_value', admin[0], ALLOWED_COMMANDS)
-
-    if admin[0] == 'restore':
+    if command == 'restore':
+        # This one does not need the second argument source_name
         S_MANAGER.restore()
         return
 
     if len(admin) < 2:
         two_col_print(sorted(S_MANAGER))
 
-        source_name = ask_input('[ 1 ] Source name : ').strip()
-        admin.append(source_name)
+        if command in ['status', 'fullstatus']:
+            source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
 
-    if admin[1] in ('', '*'):
-        admin[1] = None
+        elif command in ['drop']:
+            source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
-    if admin[0] == 'status':
-        print S_MANAGER.build_status(admin[1])
-        return
-
-    if admin[0] == 'fullstatus':
-        S_MANAGER.full_status(admin[1])
-        return
-
-    if admin[1] is not None:
-        source_name = admin[1]
+        else:
+            source_name = ask_till_ok(questions[1],
+                                      is_ok = lambda r: r,
+                                      fail_message='/!\ Cannot be empty')
     else:
-        source_name = ''
-        while not source_name:
-            print '/!\ Cannot be empty'
-            source_name = ask_input('[ 1 ] Source name : ').strip()
+        source_name = admin[1]
 
-    if admin[0] == 'drop':
+    # None is not allowed for drop and edit
+    if source_name in ('', '*'):
+        source_name = None
+
+    if command == 'status':
+        print S_MANAGER.build_status(source_name)
+        return
+
+    if command == 'fullstatus':
+        S_MANAGER.full_status(source_name)
+        return
+
+    if source_name is None:
+        error('not_allowed', None)
+
+    if command == 'drop':
         S_MANAGER.drop(source_name)
         S_MANAGER.save()
         return
 
-    if admin[0] == 'edit':
+    if command == 'edit':
         if source_name not in S_MANAGER:
             S_MANAGER.add(source_name, {
                 'local' : False
@@ -1560,7 +1606,7 @@ def admin_mode(admin, verbose=True):
             # Cheap copy
             ref_path = dict(path.items())
 
-            path = ask_input('[2/8] Paths       : ', to_CLI('one_paths', path)).strip()
+            path = ask_input(questions[2], to_CLI('one_paths', path)).strip()
 
             if not path:
                 # Empty path mean we want to delete it
@@ -1569,7 +1615,7 @@ def admin_mode(admin, verbose=True):
             path = S_MANAGER.convert_paths_format(path, local=def_local)[0]
 
             if path['file'].endswith('.zip'):
-                extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', '')).strip()
+                extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
                 path['extract'] = extract
 
 
@@ -1579,10 +1625,10 @@ def admin_mode(admin, verbose=True):
 
                 if is_archive(path):
                     # We propose to store the root archive in cache
-                    use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                           (op.basename(path['file']), S_MANAGER.cache_dir), 'Y').strip()
+                    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                                             ('Y', 'y', 'N', 'n', ''), show=False)
 
-                    if use_cached == 'Y':
+                    if use_cached in ('Y', 'y'):
                         _, copied = S_MANAGER.copy_to_cache(path['file'])
                         path['file'] = op.realpath(copied)
 
@@ -1592,10 +1638,10 @@ def admin_mode(admin, verbose=True):
                 print '/!\ An error occurred when handling "%s".' % str(path)
                 continue
 
-            use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                   (op.basename(filename), S_MANAGER.cache_dir), 'Y').strip()
+            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                                     ('Y', 'y', 'N', 'n', ''), show=False)
 
-            if use_cached == 'Y':
+            if use_cached in ('Y', 'y'):
                 _, copied = S_MANAGER.copy_to_cache(filename)
                 path['file'] = op.realpath(copied)
 
@@ -1618,13 +1664,13 @@ def admin_mode(admin, verbose=True):
 
 
         # 2. Delimiter
-        delimiter = ask_input('[3/8] Delimiter   : ', to_CLI('delimiter', def_delimiter))
+        delimiter = ask_input(questions[5], to_CLI('delimiter', def_delimiter))
         if delimiter:
             new_conf['delimiter'] = delimiter
 
 
         # 3. Headers
-        headers = ask_input('[4/8] Headers     : ', to_CLI('headers', def_headers)).strip()
+        headers = ask_input(questions[6], to_CLI('headers', def_headers)).strip()
         if not headers:
             headers = []
         else:
@@ -1642,7 +1688,7 @@ def admin_mode(admin, verbose=True):
 
 
         # 4. Key fields
-        key_fields = ask_input('[5/8] Key fields  : ', to_CLI('key_fields', def_key_fields)).strip()
+        key_fields = ask_input(questions[7], to_CLI('key_fields', def_key_fields)).strip()
         if key_fields:
             key_fields = split_if_several(key_fields)
             new_conf['key_fields'] = key_fields
@@ -1652,7 +1698,7 @@ def admin_mode(admin, verbose=True):
         new_conf['indices'] = []
 
         for ind in def_indices:
-            indices = ask_input('[6/8] Indices     : ', to_CLI('one_indices', ind)).strip()
+            indices = ask_input(questions[8], to_CLI('one_indices', ind)).strip()
             if indices:
                 indices = split_if_several(indices)
                 new_conf['indices'].append(indices)
@@ -1662,7 +1708,7 @@ def admin_mode(admin, verbose=True):
         new_conf['join'] = []
 
         for j in def_join:
-            m_join = ask_input('[7/8] Join        : ', to_CLI('one_join', j)).strip()
+            m_join = ask_input(questions[9], to_CLI('one_join', j)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if m_join:
@@ -1692,9 +1738,10 @@ def admin_mode(admin, verbose=True):
             print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
-            confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y').strip()
+            confirm = ask_till_ok(questions[10],
+                                  ('Y', 'y', 'N', 'n', ''), show=False)
 
-            if confirm == 'Y':
+            if confirm in ('Y', 'y', ''):
                 S_MANAGER.update(source_name, new_conf)
                 S_MANAGER.save()
                 print '===== Changes saved to %s' % S_MANAGER.sources_conf_path
@@ -1725,30 +1772,30 @@ def ask_mode():
     -----------------------------------------------------\
     """)
 
+    questions = [
+        '[1/5] Which data source do you want to work with? ',
+        '[2/5] Consider all data for this source [Yn]? ',
+        '[   ] Which keys should we consider (separated with " ")? ',
+        '[3/5] What kind of search? ',
+        '[4/5] On which field? ',
+        '[   ] Which value to look for? ',
+        '[4/5] From which point (key or geocode)? ',
+        '[   ] Which limit for the search (kms or number)? ',
+        '[5/5] Which display? ',
+    ]
     # 1. Choose base
-    allowed = sorted(S_MANAGER)
-    two_col_print(allowed)
-
-    base = ask_input('[1/5] Which data source do you want to work with? ').strip()
-    while base not in allowed:
-        base = ask_input('[1/5] Which data source do you want to work with? ').strip()
+    base = ask_till_ok(questions[0], sorted(S_MANAGER))
 
     # 2. Choose from keys
-    all_keys = ask_input('[2/5] Consider all data for this source [Y/N]? ', 'Y').strip()
+    all_keys = ask_till_ok(questions[1], ('Y', 'y', 'N', 'n', ''), show=False)
 
-    if all_keys == 'Y':
+    if all_keys in ('Y', 'y', ''):
         from_keys = None
     else:
-        from_keys = ask_input('[   ] Which keys should we consider (separated with " ")? ').strip()
-        from_keys = from_keys.split()
+        from_keys = ask_input(questions[2]).strip().split()
 
     # 3. Choose search type
-    allowed = ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest']
-    two_col_print(allowed)
-
-    search = ask_input('[3/5] What kind of filter? ').strip()
-    while search not in allowed:
-        search = ask_input('[3/5] What kind of filter? ').strip()
+    search = ask_till_ok(questions[3], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
 
     if search.strip().lower() in ('none',):
         search = None
@@ -1757,26 +1804,15 @@ def ask_mode():
     field, value, limit = None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        allowed = sorted(S_MANAGER.get(base)['headers'])
-        two_col_print(allowed)
-
-        field = ask_input('[4/5] On which field? ').strip()
-        while field not in allowed:
-            field = ask_input('[4/5] On which field? ').strip()
-
-        value = ask_input('[   ] Which value to look for? ').strip()
+        field = ask_till_ok(questions[4], sorted(S_MANAGER.get(base)['headers']))
+        value = ask_input(questions[5]).strip()
 
     elif search in ['near', 'closest']:
-        value = ask_input('[4/5] From which point (key or geocode)? ').strip()
-        limit = ask_input('[   ] Which limit for the search (kms or number)? ').strip()
+        value = ask_input(questions[6]).strip()
+        limit = ask_input(questions[7]).strip()
 
     # 5. Frontend
-    allowed = ['terminal', 'quiet', 'map', 'graph']
-    two_col_print(allowed)
-
-    frontend = ask_input('[5/5] Which display? ').strip()
-    while frontend not in allowed:
-        frontend = ask_input('[5/5] Which display? ').strip()
+    frontend = ask_till_ok(questions[8], ['terminal', 'quiet', 'map', 'graph'])
 
     # 6. Conclusion
     parameters = {
@@ -1793,9 +1829,10 @@ def ask_mode():
     print '-----------------------------------------------------'
     print
     print '              Congrats! You choosed:                 '
-    print 
+    print
     for k, v in parameters.iteritems():
-        print '(*) %-10s => %-10s' % (str(k), str(v) if v is not None else '(unused)')
+        if v is not None:
+            print '(*) %-10s => %-10s' % (str(k), str(v))
 
     # One liner
     print
