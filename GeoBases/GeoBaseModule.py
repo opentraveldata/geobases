@@ -1576,16 +1576,16 @@ class GeoBase(object):
                              (str(['and', 'or']), mode))
 
         for key in from_keys:
-            try:
-                matches = [pass_one(self.get(key, f), v) for f, v in conditions]
-                if pass_all(matches):
-                    yield sum(matches), key
-
-            except KeyError:
+            if key not in self:
                 # This means from_keys parameters contained unknown keys
                 if verbose:
                     print 'Key %-10s and conditions %s failed in findWith, moving on...' % \
                             (key, conditions)
+                continue
+
+            matches = [pass_one(self.get(key, f), v) for f, v in conditions]
+            if pass_all(matches):
+                yield sum(matches), key
 
 
 
@@ -1966,6 +1966,9 @@ class GeoBase(object):
         [(0.9..., 'MRS')]
         """
         for key in keys:
+            # Do not fail on unkwown keys
+            if key not in self:
+                continue
 
             r = mod_leven(fuzzy_value, self.get(key, field))
 
@@ -2266,6 +2269,10 @@ class GeoBase(object):
             print 'Looking for phonemes like %s (for "%s")' % (str(exp_phonemes), value)
 
         for key in from_keys:
+            # Do not fail on unkown keys
+            if key not in self:
+                continue
+
             phonemes = get_phonemes(self.get(key, field))
 
             if matcher(phonemes, exp_phonemes):
