@@ -841,30 +841,31 @@ class GeoBase(object):
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
-                self._things[key] = data
+                self.setFromDict(key, data)
 
             else:
                 if discard_dups is False:
                     # We compute a new key for the duplicate
-                    nb_dups = 1 + len(self._things[key]['__dup__'])
+                    nb_dups = 1 + len(self.get(key, '__dup__'))
                     dup_key = self._buildDuplicatedKey(key, nb_dups)
 
                     # We update the data with this info
                     data['__key__'] = dup_key
-                    data['__dup__'] = self._things[key]['__dup__']
+                    data['__dup__'] = self.get(key, '__dup__')
                     data['__par__'] = [key]
 
-                    # We add the dup_key as a new duplicate, and store the duplicate in the main _things
-                    self._things[key]['__dup__'].append(dup_key)
-                    self._things[dup_key] = data
+                    # We add the dup_key as a new duplicate,
+                    # store the duplicate in the main structure
+                    self.get(key, '__dup__').append(dup_key)
+                    self.setFromDict(dup_key, data)
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
-                                (lno, key, nb_dups, self._things[key]['__lno__'], dup_key)
+                                (lno, key, nb_dups, self.get(key, '__lno__'), dup_key)
                 else:
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
-                                (lno, key, self._things[key]['__lno__'])
+                                (lno, key, self.get(key, '__lno__'))
 
 
         # We remove None headers, which are not-loaded-columns
@@ -2304,7 +2305,6 @@ class GeoBase(object):
             self.fields.append(field)
 
 
-
     def set(self, key, field=None, value=None, update_fields=False):
         """Method to manually change a value in the base.
 
@@ -2827,7 +2827,7 @@ class GeoBase(object):
             # in self._join.keys()
             geo_join_fields_list = []
 
-            for fields in self.fields + self._join.keys():
+            for fields in self.fields + self._join:
                 fields = tuplify(fields)
 
                 if fields in geo_join_fields_list:
