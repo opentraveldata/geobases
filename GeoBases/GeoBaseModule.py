@@ -847,7 +847,7 @@ class GeoBase(object):
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
-                self._replaceFromDict(key, data)
+                self._createFromDict(key, data)
 
             else:
                 if discard_dups is False:
@@ -863,7 +863,7 @@ class GeoBase(object):
                     # We add the dup_key as a new duplicate,
                     # store the duplicate in the main structure
                     self.get(key, '__dup__').append(dup_key)
-                    self._replaceFromDict(dup_key, data)
+                    self._createFromDict(dup_key, data)
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
@@ -2354,11 +2354,12 @@ class GeoBase(object):
                 self.updateFields(field)
 
 
-    def _replaceFromDict(self, key, dictionary):
-        """Update from dict.
+    def _createFromDict(self, key, dictionary):
+        """Create key entry from dict.
 
         This method is hidden, because there if no check on
-        key existence or fields types.
+        fields types, and no check on dict formatting, which
+        may lack the special fields like __key__ or __lno__.
         """
         self._things[key] = dictionary
 
