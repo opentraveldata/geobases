@@ -14,8 +14,8 @@ BAU^SBBU^^Y^6300606^1^Bauru Airport^Bauru Airport^-22.345042^-49.0538^S^AIRP^^^2
 BBE^ZZZZ^^Y^2076656^1^Big Bell^Big Bell^-27.35^117.66667^S^AIRP^^^^^AU^^Australia^08^Western Australia^Western Australia^52380^Cue^Cue^^^0^0^443^Australia/Perth^8.0^8.0^8.0^2012-01-18^CUY^Cue^Cue^^WA^A^^
 TODO:BGG^UNKNOWN738^UNKNOWN738^UNKNOWN738/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^6.65^-4.2^0^N^CA
 TODO:BGN^UNKNOWN745^UNKNOWN745^UNKNOWN745/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.2^6.133^0^N^CA
-BPE^ZZZZ^^Y^8260718^1^Bagan^Bagan^24^96^S^AIRP^^^2013-02-01^IATA Notification #41 (2012) - Same location as NYU^MM^^Myanmar^Asia^10^Sagain^Sagain^^^^^^0^^166^Asia/Rangoon^6.5^6.5^6.5^2012-04-29^BPE^Bagan^Bagan^^^A^^
-BPE^ZZZZ^^Y^1328630^1^Bagan^Bagan^21.36667^95.46667^P^PPL^^^2013-02-01^IATA Notification #41 (2012) - Same location as NYU^MM^MM^Myanmar^Asia^08^Mandalay^Mandalay^^^^^^0^^146^Asia/Rangoon^6.5^6.5^6.5^2011-01-19^BPE^Bagan^Bagan^BPE^^C^^|Bagan|
+BPE^ZZZZ^^Y^8260718^1^Bagan^Bagan^24^96^S^AIRP^^^2013-02-01^IATA Notification #41 (2013) - Same location as NYU^MM^^Myanmar^Asia^10^Sagain^Sagain^^^^^^0^^166^Asia/Rangoon^6.5^6.5^6.5^2012-04-29^BPE^Bagan^Bagan^^^A^^
+BPE^ZZZZ^^Y^1328630^1^Bagan^Bagan^21.36667^95.46667^P^PPL^^^2013-02-01^IATA Notification #41 (2013) - Same location as NYU^MM^MM^Myanmar^Asia^08^Mandalay^Mandalay^^^^^^0^^146^Asia/Rangoon^6.5^6.5^6.5^2011-01-19^BPE^Bagan^Bagan^BPE^^C^^|Bagan|
 TODO:BRZ^UNKNOWN1028^UNKNOWN1028^UNKNOWN1028/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^8.733^-7.5^0^N^CA
 BTZ^ZZZZ^^N^0^1^Bursa Dummy^Bursa Dummy^40.23^29.02^S^AIRP^^^^^TR^^Turkey^16^Bursa^Bursa^7732338^Osmangazi^Osmangazi^^^1412701^^184^Europe/Istanbul^2.0^3.0^2.0^2012-11-28^YEI^Bursa^Bursa^YEI^^CA^^
 TODO:BUT^UNKNOWN1100^UNKNOWN1100^UNKNOWN1100/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^53.42^-2.583^0^N^CA
@@ -53,17 +53,18 @@ TODO:HEW^UNKNOWN3162^UNKNOWN3162^UNKNOWN3162/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^37.95^23
 HHA^ZGCS^^Y^6301358^1^Changsha Datuopu Airport^Changsha Datuopu Airport^28.19^113.2^S^AIRB^^^2012-10-27^IATA Notification #35 (2012)^CN^^China^11^Hunan^Hunan^^^^^^0^46^52^Asia/Chongqing^8.0^8.0^8.0^2011-02-21^CSX^Changsa^Changsa^^^A^^
 TODO:HIC^PRETORIA HIC^PRETORIA HIC^PRETORIA/ZA:ISCOR HPT^PRY^Y^^ZA^AFRIC^ITC2^ZA^-25.82^28.17^0^N^H
 HIX^ZZZZ^^N^0^1^Hiva Oa Airport^Hiva Oa Airport^-9.75^-139^S^AIRP^^^^Same airport as AUQ^PF^^French Polynesia^^^^^^^^^0^451^589^Pacific/Marquesas^-9.5^-9.5^-9.5^2012-08-21^AUQ^Atuona^Atuona^^^CA^^
-HLU^NWWH^^Y^7730723^1^Nesson Airport^Nesson Airport^-21.25^165.6^S^AIRP^^^2013-02-01^IATA Notification #41 (2012) - Airport abandoned^NC^^New Caledonia^Oceania^^^^^^^^^0^^6^Pacific/Noumea^11.0^11.0^11.0^2011-03-17^HLU^Nesson Airport^Nesson Airport^HLU^^CA^^
-HNG^NWWI^^Y^8298968^1^Hienghene Airport^Hienghene Airport^-20.6833^164.933^S^AIRP^^^2013-02-01^IATA Notification #41 (2012) - Airport not found^NC^^New Caledonia^Oceania^^^^^^^^^0^^121^Pacific/Noumea^11.0^11.0^11.0^2012-05-19^HNG^Hienghene Airport^Hienghene Airport^HNG^^CA^^
+HLU^NWWH^^Y^7730723^1^Nesson Airport^Nesson Airport^-21.25^165.6^S^AIRP^^^2013-02-01^IATA Notification #41 (2013) - Airport abandoned^NC^^New Caledonia^Oceania^^^^^^^^^0^^6^Pacific/Noumea^11.0^11.0^11.0^2011-03-17^HLU^Nesson Airport^Nesson Airport^HLU^^CA^^
+HNG^NWWI^^Y^8298968^1^Hienghene Airport^Hienghene Airport^-20.6833^164.933^S^AIRP^^^2013-02-01^IATA Notification #41 (2013) - Airport not found^NC^^New Caledonia^Oceania^^^^^^^^^0^^121^Pacific/Noumea^11.0^11.0^11.0^2012-05-19^HNG^Hienghene Airport^Hienghene Airport^HNG^^CA^^
 HNK^ZZZZ^^N^0^1^Hinchinbrook Island Airport^Hinchinbrook Island Airport^-18.38^146.3^S^AIRP^^^^^AU^^Australia^04^Queensland^Queensland^33800^Hinchinbrook^Hinchinbrook^^^0^^14^Australia/Brisbane^10.0^10.0^10.0^2011-06-04^HNK^Hinchinbrook Island^Hinchinbrook Island^^QL^A^^
 HPP^ZZZZ^^Y^8298820^1^Poipet^Poipet^13.65^102.7^S^AIRP^^^2012-10-27^IATA Notification #33 (2012) - Airport not operational^KH^^Cambodia^01^^^^^^^^0^^35^Asia/Phnom_Penh^7.0^7.0^7.0^2012-05-18^HPP^Poipet^Poipet^^^CA^^
 TODO:HPR^PRETORIA HPR^PRETORIA HPR^PRETORIA/ZA:CENTRAL HPR^PRY^Y^^ZA^AFRIC^ITC2^ZA^-25.98^28.15^0^N^H
+HRJ^ZZZZ^^Y^8299075^1^Chaurjhari^Chaurjhari^28^83.83^S^AIRP^^^2013-03-01^IATA Notification #41 (2013) - Same location as RUK^NP^^Nepal^Asia^WR^Western Region^Western Region^04^Gandakī Zone^Gandaki Zone^^^0^^1474^Asia/Kathmandu^5.75^5.75^5.75^2012-05-18^HRJ^Chaurjhari^Chaurjhari^HRJ^^CA^^
 TODO:HTF^UNKNOWN3352^UNKNOWN3352^UNKNOWN3352/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.75^-0.2333^0^N^CA
 HTT^ZZZZ^^Y^8299225^1^Hambantota International Airport^Hambantota International Airport^6.28389^81.1239^S^AIRP^^^2013-01-01^IATA Monthly Amendment Bulletin December 2012 (HTT is now HRI)^LK^^Sri Lanka^^^^^^^^^0^^52^Asia/Colombo^5.5^5.5^5.5^2013-01-18^HTT^Hambantota^Hambantota^^^CA^http://en.wikipedia.org/wiki/Hambantota_International_Airport^si|හම්බන්තොට ජාත්‍යන්තර ගුවන්තොටුපල|=en|Hambantota International Airport|
 IBM^KIBM^^Y^5696733^1^Kimball Municipal Airport-Robert E Arraj Field^Kimball Municipal Airport-Robert E Arraj Field^41.18804^-103.67772^S^AIRP^^^^Confusion with the FAA code^US^^United States^NE^Nebraska^Nebraska^105^Kimball County^Kimball County^^^0^1496^1497^America/Denver^-7.0^-6.0^-7.0^2006-10-29^IBM^Kimball Municipal Airport-Robert E Arraj Field^Kimball Municipal Airport-Robert E Arraj Field^IBM^NE^CA^^
 IIN^ZZZZ^^Y^1855203^1^Nishinoomote Airport^Nishinoomote Airport^30.83^131^P^PPL^^^2012-11-01^IATA Notification #39 (2012) - Same location as TNE^JP^^Japan^18^Kagoshima^Kagoshima^^^^^^17832^^38^Asia/Tokyo^9.0^9.0^9.0^2006-01-17^IIN^Nishinoomote^Nishinoomote^^^CA^http://en.wikipedia.org/wiki/Nishinoomote%2C_Kagoshima^|Nisinoomote|
 TODO:IMZ^UNKNOWN9000^UNKNOWN9000^UNKNOWN9000/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^31.1^61.93^0^N^CA
-IOU^NWWO^^Y^7730724^1^Edmond Cané Airport^Edmond Cane Airport^-22.42^166.8^S^AIRP^^^2013-02-01^IATA Notification #41 (2012) - Airport abandoned^NC^^New Caledonia^Oceania^^^^^^^^^0^^0^Pacific/Noumea^11.0^11.0^11.0^2011-03-17^IOU^Edmond Cané Airport^Edmond Cane Airport^IOU^^CA^^
+IOU^NWWO^^Y^7730724^1^Edmond Cané Airport^Edmond Cane Airport^-22.42^166.8^S^AIRP^^^2013-02-01^IATA Notification #41 (2013) - Airport abandoned^NC^^New Caledonia^Oceania^^^^^^^^^0^^0^Pacific/Noumea^11.0^11.0^11.0^2011-03-17^IOU^Edmond Cané Airport^Edmond Cane Airport^IOU^^CA^^
 TODO:JLO^UNKNOWN3843^UNKNOWN3843^UNKNOWN3843/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^45.5^12.6^0^N^CA
 TODO:KDG^UNKNOWN4035^UNKNOWN4035^UNKNOWN4035/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^41.62^25.33^0^N^CA
 KEA^ZZZZ^^Y^7731164^1^Keisah Airport^Keisah Airport^-7.667^140.5^S^AIRP^^^2012-10-04^IATA Notification #38 (2012) - Duplicate of DIB ([NDLR: DIB is in India; IATA certainly made an error, as usual; DOB or MUF are closer)^ID^^Indonesia^36^Papua^Papua^^^^^^0^^30^Asia/Jayapura^9.0^9.0^9.0^2011-03-17^KEA^Keisah^Keisah^^^CA^^
@@ -160,10 +161,14 @@ TODO:VCC^LIMBE^LIMBE^LIMBE/CM^VCC^Y^^CM^AFRIC^ITC2^CM^4.017^9.2^0^N^CA
 TODO:VDD^UNKNOWN9312^UNKNOWN9312^UNKNOWN9312/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^48.13^16.53^0^N^CA
 TODO:VEJ^UNKNOWN9325^UNKNOWN9325^UNKNOWN9325/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.75^9.333^0^N^CA
 VIF^ZZZZ^^Y^3164387^1^Vieste^Vieste^41.8824500^16.1749600^P^PPLA3^^^^^IT^^Italy^13^Apulia^Apulia^BR^Province of Brindisi^Province of Brindisi^071060^^13430^0^18^Europe/Rome^1.0^2.0^1.0^2012-02-15^VIF^Vieste^Vieste^^^C^^
+VGG^ZZZZ^^N^0^1^Vangrieng LA^Vangrieng LA^17.97^102.6^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Defunct airport^LA^^LA^Asia^^^^^^^^^^^^Asia/Vientiane^^^^-1^VGG^Vangrieng LA^Vangrieng LA^VGG^^CA^^
 TODO:VIZ^UNKNOWN9367^UNKNOWN9367^UNKNOWN9367/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^23.18^75.77^0^N^CA
+VNG^ZZZZ^^Y^8260951^1^Viengxay^Viengxay^18.93^102.5^S^AIRP^^^2013-03-01^IATA code no longer referenced by IATA^LA^^Laos^Asia^27^Khouèng Viangchan^Khoueng Viangchan^^^^^^0^^488^Asia/Vientiane^7.0^7.0^7.0^2012-04-29^VNG^Viengxay^Viengxay^^^A^^
+VNG^ZZZZ^^Y^7648323^1^Viengxay^Viengxay^20.34222^104.34464^P^PPLA2^^^2013-03-01^IATA code no longer referenced by IATA^LA^^Laos^Asia^03^Houaphan^Houaphan^^^^^^0^^662^Asia/Vientiane^7.0^7.0^7.0^2011-01-31^VNG^Viengxay^Viengxay^VNG^^C^^
 VVV^ZZZZ^^N^0^1^Pseudo message arrival^Pseudo message arrival^0.00028^-0.00028^S^AIRP^^^^^ZZ^^ZZ^^^^^^^^^^^^^^^^^-1^VVV^Pseudo message^Pseudo message^VVV^^CA^^
 WEM^ZZZZ^^N^0^1^West Malling Airport^West Malling Airport^51.3^0.4167^S^AIRP^^^^^GB^^United Kingdom^ENG^England^England^GLA^Greater London^Greater London^B8^^0^182^171^Europe/London^0.0^1.0^0.0^2011-03-28^LON^London^London^^^CA^^
 WGL^ZZZZ^^N^0^1^Baltra Island^Baltra Island^-0.453758^-90.265914^S^AIRP^^^^^EC^^Ecuador^01^Galápagos^Galapagos^^^^^^0^63^54^Pacific/Galapagos^-6.0^-6.0^-6.0^2007-03-30^WGL^Baltra Island^Baltra Island^^^CA^^
+WGN^ZZZZ^^Y^8299229^1^Waitangi^Waitangi^-35.17^174^S^AIRP^^^2013-03-01^IATA Notification #41 (2013) - Airport not found^NZ^^New Zealand^Oceania^F6^Northland^Northland^001^Far North District^Far North District^^^0^^59^Pacific/Auckland^13.0^12.0^12.0^2012-05-18^WGN^Waitangi^Waitangi^WGN^^CA^^
 TODO:WID^UNKNOWN9562^UNKNOWN9562^UNKNOWN9562/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.1^6.217^0^N^CA
 WOI^ZZZZ^^Y^8299198^1^Wologissi Airport^Wologissi Airport^8.267^-9.75^S^AIRP^^^2012-10-04^No airport can be found at that location^LR^^Liberia^20^Lofa^Lofa^^^^^^0^^531^Africa/Monrovia^0.0^0.0^0.0^2012-09-22^WOI^Wologissi^Wologissi^^^CA^^
 XDT^ZZZZ^^N^0^1^Paris CDG TGV^Paris CDG TGV^49.02^2.55^S^RSTN^^^^^FR^^France^A8^Île-de-France^Ile-de-France^95^Département du Val-d'Oise^Departement du Val-d'Oise^^^0^119^106^Europe/Paris^1.0^2.0^1.0^2008-07-09^PAR^Paris^Paris^^^R^^
