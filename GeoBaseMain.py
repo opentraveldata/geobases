@@ -1467,9 +1467,9 @@ def admin_mode(admin, verbose=True):
     if len(admin) < 1:
         print help_
         msg = '[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS)
-        admin_command = ask_input(msg).strip()
 
-        while not admin_command:
+        admin_command = ask_input(msg).strip()
+        while admin_command not in ALLOWED_COMMANDS:
             admin_command = ask_input(msg).strip()
         admin.append(admin_command)
 
