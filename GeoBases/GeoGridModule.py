@@ -126,7 +126,7 @@ class GeoGrid(object):
 
         except (TypeError, Exception):
             # TypeError for wrong type (NoneType, str)
-            # Exception for invalid coordinates
+            # Exception for invalid coordinates (raised by geohash module)
             if verbose:
                 print 'Wrong coordinates %s for key %s, skipping point.' % \
                         (str(lat_lng), key)

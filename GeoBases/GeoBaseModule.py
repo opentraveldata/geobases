@@ -1662,6 +1662,9 @@ class GeoBase(object):
             raise StopIteration
 
         for key in keys:
+            # Do not fail on unknown keys
+            if key not in self:
+                continue
 
             lat_lng = self.getLocation(key)
 
@@ -1780,6 +1783,9 @@ class GeoBase(object):
 
         if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
+
+        if key not in self:
+            raise StopIteration
 
         if grid:
             # Using grid, from_keys if just a post-filter
@@ -1920,6 +1926,9 @@ class GeoBase(object):
 
         if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
+
+        if key not in self:
+            raise StopIteration
 
         if grid:
             for dist, thing in self._ggrid.findClosestFromKey(key=key,
