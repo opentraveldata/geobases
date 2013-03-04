@@ -1654,6 +1654,22 @@ class GeoBase(object):
         return self._things.keys()
 
 
+    def distance(self, key0, key1):
+        """Compute distance between two elements.
+
+        This is just a wrapper between the original haversine
+        function, but it is probably one of the most used feature :)
+
+        :param key0: the first key
+        :param key1: the second key
+        :returns:    the distance (km)
+
+        >>> geo_t.distance('frnic', 'frpaz')
+        683.526...
+        """
+        return haversine(self.getLocation(key0), self.getLocation(key1))
+
+
     def _buildDistances(self, lat_lng_ref, keys):
         """
         Compute the iterable of ``(dist, keys)`` of a reference
@@ -2279,20 +2295,6 @@ class GeoBase(object):
 
 
 
-    def distance(self, key0, key1):
-        """Compute distance between two elements.
-
-        This is just a wrapper between the original haversine
-        function, but it is probably one of the most used feature :)
-
-        :param key0: the first key
-        :param key1: the second key
-        :returns:    the distance (km)
-
-        >>> geo_t.distance('frnic', 'frpaz')
-        683.526...
-        """
-        return haversine(self.getLocation(key0), self.getLocation(key1))
 
 
     def set(self, key, field=None, value=None):
