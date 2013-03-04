@@ -1460,17 +1460,17 @@ def admin_mode(admin, verbose=True):
     (*) fullstatus : display full data source configuration
     (*) drop       : drop all information for one data source
     (*) restore    : factory reset of all data sources information
-    (*) edit       : add or edit an existing data source
+    (*) edit       : edit an existing data source, or add a new one
     ------------------------------------------------------- SUMMARY
     """)
 
     if len(admin) < 1:
         print help_
         msg = '[ 0 ] Command (%s): ' % SPLIT.join(ALLOWED_COMMANDS)
-        admin_command = ask_input(msg)
+        admin_command = ask_input(msg).strip()
 
         while not admin_command:
-            admin_command = ask_input(msg)
+            admin_command = ask_input(msg).strip()
         admin.append(admin_command)
 
     if admin[0] not in ALLOWED_COMMANDS:
@@ -1483,7 +1483,7 @@ def admin_mode(admin, verbose=True):
     if len(admin) < 2:
         two_col_print(sorted(S_MANAGER))
 
-        source_name = ask_input('[ 1 ] Source name : ')
+        source_name = ask_input('[ 1 ] Source name : ').strip()
         admin.append(source_name)
 
     if admin[1] in ('', '*'):
@@ -1499,7 +1499,7 @@ def admin_mode(admin, verbose=True):
         source_name = ''
         while not source_name:
             print '/!\ Cannot be all sources'
-            source_name = ask_input('[ 1 ] Source name : ')
+            source_name = ask_input('[ 1 ] Source name : ').strip()
 
         S_MANAGER.drop(source_name)
         S_MANAGER.save()
@@ -1512,7 +1512,7 @@ def admin_mode(admin, verbose=True):
             source_name = ''
             while not source_name:
                 print '/!\ Cannot be all sources'
-                source_name = ask_input('[ 1 ] Source name : ')
+                source_name = ask_input('[ 1 ] Source name : ').strip()
 
         if source_name not in S_MANAGER:
             print '----- New source!'
@@ -1557,7 +1557,7 @@ def admin_mode(admin, verbose=True):
             # Cheap copy
             ref_path = dict(path.items())
 
-            path = ask_input('[2/8] Paths       : ', path['file'])
+            path = ask_input('[2/8] Paths       : ', path['file']).strip()
 
             if not path:
                 # Empty path mean we want to delete it
@@ -1566,7 +1566,7 @@ def admin_mode(admin, verbose=True):
             path = S_MANAGER.convert_paths_format(path, local=def_local)[0]
 
             if path['file'].endswith('.zip'):
-                extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', ''))
+                extract = ask_input('[   ] Which file in archive? ', ref_path.get('extract', '')).strip()
                 path['extract'] = extract
 
 
@@ -1577,7 +1577,7 @@ def admin_mode(admin, verbose=True):
                 if is_archive(path):
                     # We propose to store the root archive in cache
                     use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                           (op.basename(path['file']), S_MANAGER.cache_dir), 'Y')
+                                           (op.basename(path['file']), S_MANAGER.cache_dir), 'Y').strip()
 
                     if use_cached == 'Y':
                         _, copied = S_MANAGER.copy_to_cache(path['file'])
@@ -1590,7 +1590,7 @@ def admin_mode(admin, verbose=True):
                 continue
 
             use_cached = ask_input('[   ] Copy %s in %s and use from there [Y/N]? ' % \
-                                   (op.basename(filename), S_MANAGER.cache_dir), 'Y')
+                                   (op.basename(filename), S_MANAGER.cache_dir), 'Y').strip()
 
             if use_cached == 'Y':
                 _, copied = S_MANAGER.copy_to_cache(filename)
@@ -1621,7 +1621,7 @@ def admin_mode(admin, verbose=True):
 
 
         # 3. Headers
-        headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers))
+        headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers)).strip()
         if not headers:
             headers = []
         else:
@@ -1639,7 +1639,7 @@ def admin_mode(admin, verbose=True):
 
 
         # 4. Key fields
-        key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields))
+        key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields)).strip()
         if key_fields:
             key_fields = split_if_several(key_fields)
             new_conf['key_fields'] = key_fields
@@ -1649,7 +1649,7 @@ def admin_mode(admin, verbose=True):
         new_conf['indices'] = []
 
         for ind in def_indices:
-            indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind))
+            indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind)).strip()
             if indices:
                 indices = split_if_several(indices)
                 new_conf['indices'].append(indices)
@@ -1659,7 +1659,7 @@ def admin_mode(admin, verbose=True):
         new_conf['join'] = []
 
         for j in def_join:
-            m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j))
+            m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if m_join:
@@ -1689,7 +1689,7 @@ def admin_mode(admin, verbose=True):
             print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
-            confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y')
+            confirm = ask_input('[8/8] Confirm [Y/N]? ', 'Y').strip()
 
             if confirm == 'Y':
                 S_MANAGER.update(source_name, new_conf)
@@ -1757,7 +1757,7 @@ def ask_mode():
         allowed = sorted(S_MANAGER.get(base)['headers'])
         two_col_print(allowed)
 
-        field = ask_input('[4/5] On which field? ')
+        field = ask_input('[4/5] On which field? ').strip()
         while field not in allowed:
             field = ask_input('[4/5] On which field? ').strip()
 
