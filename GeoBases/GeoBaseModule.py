@@ -2294,7 +2294,14 @@ class GeoBase(object):
                 yield phonemes, key
 
 
+    def updateFields(self, field):
+        """Update fields list.
 
+        :param field: the field to add
+        :returns:     ``None``
+        """
+        if field not in self.fields:
+            self.fields.append(field)
 
 
     def set(self, key, field=None, value=None):
