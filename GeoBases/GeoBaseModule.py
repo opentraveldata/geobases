@@ -2780,7 +2780,7 @@ class GeoBase(object):
         # Storing json data
         data = [
             self._buildIconData(key, get_label, get_weight, get_category)
-            for key in from_keys
+            for key in from_keys if key in self
         ] + [
             self._buildAnonymousIconData(lat_lng)
             for lat_lng in add_anonymous_icons
@@ -2954,6 +2954,10 @@ class GeoBase(object):
         data_line = []
 
         for l_key in line:
+
+            if l_key not in self:
+                continue
+
             lat_lng = self.getLocation(l_key)
 
             if lat_lng is None:
