@@ -1491,34 +1491,31 @@ def admin_mode(admin, verbose=True):
 
     if admin[0] == 'status':
         print S_MANAGER.build_status(admin[1])
+        return
 
-    elif admin[0] == 'fullstatus':
+    if admin[0] == 'fullstatus':
         S_MANAGER.full_status(admin[1])
+        return
 
-    elif admin[0] == 'drop':
+    if admin[1] is not None:
+        source_name = admin[1]
+    else:
         source_name = ''
         while not source_name:
-            print '/!\ Cannot be all sources'
+            print '/!\ Cannot be empty'
             source_name = ask_input('[ 1 ] Source name : ').strip()
 
+    if admin[0] == 'drop':
         S_MANAGER.drop(source_name)
         S_MANAGER.save()
+        return
 
-    elif admin[0] == 'edit':
-
-        if admin[1] is not None:
-            source_name = admin[1]
-        else:
-            source_name = ''
-            while not source_name:
-                print '/!\ Cannot be all sources'
-                source_name = ask_input('[ 1 ] Source name : ').strip()
-
+    if admin[0] == 'edit':
         if source_name not in S_MANAGER:
-            print '----- New source!'
             S_MANAGER.add(source_name, {
                 'local' : False
             })
+            print '----- New source "%s" created!' % source_name
 
         # We get existing conf
         conf = S_MANAGER.get(source_name)
