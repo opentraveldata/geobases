@@ -759,6 +759,9 @@ def split_if_several(value):
 def fmt_stuff(option, value):
     """Format stuff from the configuration file.
     """
+    if option == 'one_paths':
+        return value['file']
+
     if option == 'delimiter':
         return str(value)
 
@@ -775,9 +778,12 @@ def fmt_stuff(option, value):
         if len(value['with']) < 2:
             if not value['with'][0]:
                 return flatten(value['fields'])
-            return '%s{%s}' % (flatten(value['fields']), value['with'][0])
+            return '%s{%s}' % (flatten(value['fields']),
+                               value['with'][0])
         else:
-            return '%s{%s:%s}' % (flatten(value['fields']), value['with'][0], flatten(value['with'][1]))
+            return '%s{%s:%s}' % (flatten(value['fields']),
+                                  value['with'][0],
+                                  flatten(value['with'][1]))
 
     raise ValueError('Did not understand option "%s".' % option)
 
@@ -1554,7 +1560,7 @@ def admin_mode(admin, verbose=True):
             # Cheap copy
             ref_path = dict(path.items())
 
-            path = ask_input('[2/8] Paths       : ', path['file']).strip()
+            path = ask_input('[2/8] Paths       : ', fmt_stuff('one_paths', path)).strip()
 
             if not path:
                 # Empty path mean we want to delete it
