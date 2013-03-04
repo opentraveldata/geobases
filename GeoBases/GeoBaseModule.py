@@ -2346,25 +2346,25 @@ class GeoBase(object):
                 '__gar__' : [],       # special field for garbage
             }
 
-        if field is None:
+        if field is not None:
             # field cannot be None, None is used to get all fields
-            return
+            self._things[key][field] = value
 
-        self._things[key][field] = value
-
-        if update_fields:
-            # If the field was not referenced in the headers
-            # we add it to the headers
-            self.updateFields(field)
+            if update_fields:
+                # If the field was not referenced in the headers
+                # we add it to the headers
+                self.updateFields(field)
 
 
-    def setFromDict(self, key, dictionary):
+    def setFromDict(self, key, dictionary, update_fields=False):
         """
         Same as ``set`` method, except we perform
         the input with a whole dictionary.
 
         :param key:         the key we want to change a value of
         :param dictionary:  the dict containing the new data
+        :param update_fields: boolean to toggle general fields updating \
+                or not after data update
         :returns:           ``None``
 
         >>> geo_f.keys()
@@ -2373,8 +2373,29 @@ class GeoBase(object):
         >>> geo_f.keys()
         ['frnic']
         """
-        for field, val in dictionary.iteritems():
-            self.set(key, field, val)
+        # If the key is not in the base,
+        # we simply add it
+        if key not in self:
+            self._things[key] = {
+                '__key__' : key,      # special field for key
+                '__dup__' : [],       # special field for duplicates
+                '__par__' : [],       # special field for parent
+                '__lno__' : 0,        # special field for line number
+                '__gar__' : [],       # special field for garbage
+            }
+
+        for field, value in dictionary.iteritems():
+            if field is not None:
+                # field cannot be None, None is used to get all fields
+                self._things[key][field] = value
+
+        if update_fields:
+            # If the field was not referenced in the headers
+            # we add it to the headers
+            for field in dictionary:
+                if field is not None:
+                    self.updateFields(field)
+
 
 
     def delete(self, key, field=None):
