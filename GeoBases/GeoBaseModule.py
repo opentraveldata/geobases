@@ -749,7 +749,7 @@ class GeoBase(object):
         for n in count(nb_dups):
             d_key = '%s@%s' % (key, n)
 
-            if d_key not in self._things:
+            if d_key not in self:
                 return d_key
 
 
@@ -840,7 +840,7 @@ class GeoBase(object):
             row_data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
-            if key not in self._things:
+            if key not in self:
                 self._things[key] = row_data
 
             else:
@@ -1113,7 +1113,7 @@ class GeoBase(object):
         Traceback (most recent call last):
         KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['info', 'code', 'name', 'lines@raw', 'lines', '__gar__', '__par__', '__dup__', '__key__', 'lat', 'lng', '__lno__']"
         """
-        if key not in self._things:
+        if key not in self:
             # Unless default is set, we raise an Exception
             if 'default' in kwargs:
                 return kwargs['default']
@@ -1344,7 +1344,7 @@ class GeoBase(object):
         >>> [e['__key__'] for e in it]
         ['THA', 'THA@1']
         """
-        if key not in self._things:
+        if key not in self:
             # Unless default is set, we raise an Exception
             if 'default' in kwargs:
                 return kwargs['default']
@@ -2331,7 +2331,7 @@ class GeoBase(object):
         """
         # If the key is not in the base,
         # we simply add it
-        if key not in self._things:
+        if key not in self:
             self._things[key] = {
                 '__key__' : key,      # special field for key
                 '__dup__' : [],       # special field for duplicates
