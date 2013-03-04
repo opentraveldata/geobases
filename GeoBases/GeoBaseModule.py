@@ -2341,16 +2341,9 @@ class GeoBase(object):
         {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'NEW_KEY_1'}
         >>> geo_t.delete('NEW_KEY_1') # tearDown
         """
-        # If the key is not in the base,
-        # we simply add it
+        # If the key is not in the base, we add it
         if key not in self:
-            self._things[key] = {
-                '__key__' : key,      # special field for key
-                '__dup__' : [],       # special field for duplicates
-                '__par__' : [],       # special field for parent
-                '__lno__' : 0,        # special field for line number
-                '__gar__' : [],       # special field for garbage
-            }
+            self._things[key] = self._emptyData(key, lno=0)
 
         if field is not None:
             # field cannot be None, None is used to get all fields
@@ -2388,16 +2381,9 @@ class GeoBase(object):
         >>> geo_f.keys()
         ['frnic']
         """
-        # If the key is not in the base,
-        # we simply add it
+        # If the key is not in the base, we add it
         if key not in self:
-            self._things[key] = {
-                '__key__' : key,      # special field for key
-                '__dup__' : [],       # special field for duplicates
-                '__par__' : [],       # special field for parent
-                '__lno__' : 0,        # special field for line number
-                '__gar__' : [],       # special field for garbage
-            }
+            self._things[key] = self._emptyData(key, lno=0)
 
         for field, value in dictionary.iteritems():
             if field is not None:
