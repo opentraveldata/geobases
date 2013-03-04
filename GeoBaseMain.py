@@ -1495,7 +1495,7 @@ def admin_mode(admin, verbose=True):
     (*) drop       : drop all information for one data source
     (*) restore    : factory reset of all data sources information
     (*) edit       : edit an existing data source, or add a new one
-    ------------------------------------------------------- SUMMARY\
+    ------------------------------------------------------- SUMMARY
     """)
 
     questions = [
@@ -1514,7 +1514,7 @@ def admin_mode(admin, verbose=True):
 
     if len(admin) < 1:
         print help_
-        command = ask_till_ok(questions[0], ALLOWED_COMMANDS)
+        command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
     else:
         command = admin[0]
 
