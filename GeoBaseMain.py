@@ -1554,6 +1554,7 @@ def admin_mode(admin, verbose=True):
         S_MANAGER.full_status(source_name)
         return
 
+    # Source name cannot be None past that point
     if source_name is None:
         error('not_allowed', None)
 
