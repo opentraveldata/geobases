@@ -2827,7 +2827,7 @@ class GeoBase(object):
             # in self._join.keys()
             geo_join_fields_list = []
 
-            for fields in self.fields + self._join:
+            for fields in self.fields + self._join.keys():
                 fields = tuplify(fields)
 
                 if fields in geo_join_fields_list:
