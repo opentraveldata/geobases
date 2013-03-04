@@ -780,7 +780,7 @@ class GeoBase(object):
 
 
     def _load(self, source_fl, verbose=True):
-        """Load the file and feed the self._things.
+        """Load the file and feed the main structure.
 
         :param source_fl: file-like input
         :param verbose:   toggle verbosity during data loading
@@ -908,7 +908,7 @@ class GeoBase(object):
         if key is None:
             fields = set(self.fields)
         else:
-            fields = set(self._things[key].keys())
+            fields = set(self.get(key).keys())
 
         for required in GEO_FIELDS:
             if required not in fields:
@@ -1215,7 +1215,7 @@ class GeoBase(object):
             join_base, join_fields = self._join[fields]
             ext_b = self._ext_bases[join_base]
 
-            values = tuple(self._things[key][f] for f in fields)
+            values = tuple(self.get(key, f) for f in fields)
 
             if ext_field == '__loc__':
                 ext_get = ext_b.getLocation
@@ -1286,7 +1286,7 @@ class GeoBase(object):
         >>> geo_o.hasParents('PAR')
         0
         """
-        return len(self._things[key]['__par__'])
+        return len(self.get(key, '__par__'))
 
 
     def hasDuplicates(self, key):
@@ -1302,7 +1302,7 @@ class GeoBase(object):
         >>> geo_o.hasDuplicates('PAR')
         0
         """
-        return len(self._things[key]['__dup__'])
+        return len(self.get(key, '__dup__'))
 
 
 
@@ -1353,19 +1353,19 @@ class GeoBase(object):
 
         # Building the list of all duplicates
         keys = [key]
-        for k in self._things[key]['__dup__'] + self._things[key]['__par__']:
+        for k in self.get(key, '__dup__') + self.get(key, '__par__'):
             if k not in keys:
                 keys.append(k)
 
         # Key is in geobase here
         if field is None:
-            return [self._things[k] for k in keys]
+            return [self.get(k) for k in keys]
 
         try:
-            res = [self._things[k][field] for k in keys]
+            res = [self.get(k, field) for k in keys]
         except KeyError:
             raise KeyError("Field '%s' [for key '%s'] not in %s" % \
-                           (field, key, self._things[key].keys()))
+                           (field, key, self.get(key).keys()))
         else:
             return res
 
@@ -1910,10 +1910,6 @@ class GeoBase(object):
         []
         >>> list(geo_t.findClosestFromKey(None, N=2))
         []
-        >>> #from datetime import datetime
-        >>> #before = datetime.now()
-        >>> #for _ in range(100): s = geo_a.findClosestFromKey('NCE', N=3)
-        >>> #print(datetime.now() - before)
 
         No grid.
 
@@ -2024,8 +2020,6 @@ class GeoBase(object):
         []
         """
         if from_keys is None:
-            # iter(self), since __iter__ is defined is equivalent to
-            # self._things.iterkeys()
             from_keys = iter(self)
 
         # All 'intelligence' is performed in the Levenshtein
