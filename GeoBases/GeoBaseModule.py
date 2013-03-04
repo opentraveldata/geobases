@@ -2384,17 +2384,15 @@ class GeoBase(object):
         if key not in self:
             self._things[key] = self._emptyData(key, lno=0)
 
-        for field, value in dictionary.iteritems():
-            if field is not None:
-                # field cannot be None, None is used to get all fields
-                self._things[key][field] = value
+        # Sud dict of not-None keys
+        sub_dict = dict(filter(lambda kv: kv[0] is not None,
+                               dictionary.iteritems()))
+
+        self._things[key].update(sub_dict)
 
         if update_fields:
-            # If the field was not referenced in the headers
-            # we add it to the headers
-            for field in dictionary:
-                if field is not None:
-                    self.updateFields(field)
+            for field in sub_dict:
+                self.updateFields(field)
 
 
 
