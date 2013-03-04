@@ -1257,16 +1257,12 @@ class GeoBase(object):
         try:
             loc = tuple(float(self.get(key, f)) for f in GEO_FIELDS)
 
-        except ValueError:
+        except (ValueError, TypeError):
             # Decode geocode, if error, returns None
+            # TypeError: input type is not even a string,
+            # probably NoneType
+            # ValueError: could not convert to float
             return
-
-        except KeyError:
-            # Probably means that there is not geocode support
-            # But could be that key is unkwown
-            return
-        # Note that TypeError would mean that the input
-        # type was not even a string, probably NoneType
         else:
             return loc
 
