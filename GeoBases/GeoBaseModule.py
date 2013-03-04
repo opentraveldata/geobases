@@ -1218,36 +1218,29 @@ class GeoBase(object):
             raise ValueError('Fields "%s" has no join information, available: %s' % \
                              (str(fields), self._join.keys()))
 
-        try:
-            join_base, join_fields = self._join[fields]
-            ext_b = self._ext_bases[join_base]
+        join_base, join_fields = self._join[fields]
+        ext_b = self._ext_bases[join_base]
 
-            values = tuple(self.get(key, f) for f in fields)
+        values = tuple(self.get(key, f) for f in fields)
 
-            if ext_field == '__loc__':
-                ext_get = ext_b.getLocation
-            else:
-                ext_get = lambda k : ext_b.get(k, ext_field)
-
-            if any(f in self._subdelimiters for f in fields):
-                # This is the cartesian product of all possible combinations
-                # of sub-delimited values
-                # *iter_over_subdel* is here to create the lists from values which are
-                # not embedded in a container, before given it to *product*
-                comb = product(*(iter_over_subdel(v, deep=False) for v in values))
-
-                res = tuple(tuple(ext_get(k) for _, k in
-                                  ext_b.findWith(zip(join_fields, c)))
-                            for c in comb)
-            else:
-                res = tuple(ext_get(k) for _, k in
-                            ext_b.findWith(zip(join_fields, values)))
-
-        except KeyError:
-            # We keep the context exception from external base
-            raise
+        if ext_field == '__loc__':
+            ext_get = ext_b.getLocation
         else:
-            return res
+            ext_get = lambda k : ext_b.get(k, ext_field)
+
+        if any(f in self._subdelimiters for f in fields):
+            # This is the cartesian product of all possible combinations
+            # of sub-delimited values
+            # *iter_over_subdel* is here to create the lists from values which are
+            # not embedded in a container, before given it to *product*
+            comb = product(*(iter_over_subdel(v, deep=False) for v in values))
+
+            return tuple(tuple(ext_get(k) for _, k in
+                               ext_b.findWith(zip(join_fields, c)))
+                         for c in comb)
+        else:
+            return tuple(ext_get(k) for _, k in
+                         ext_b.findWith(zip(join_fields, values)))
 
 
 
