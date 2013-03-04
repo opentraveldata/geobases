@@ -756,7 +756,7 @@ def split_if_several(value):
     return value
 
 
-def fmt_stuff(option, value):
+def to_CLI(option, value):
     """Format stuff from the configuration file.
     """
     if option == 'one_paths':
@@ -1560,7 +1560,7 @@ def admin_mode(admin, verbose=True):
             # Cheap copy
             ref_path = dict(path.items())
 
-            path = ask_input('[2/8] Paths       : ', fmt_stuff('one_paths', path)).strip()
+            path = ask_input('[2/8] Paths       : ', to_CLI('one_paths', path)).strip()
 
             if not path:
                 # Empty path mean we want to delete it
@@ -1618,13 +1618,13 @@ def admin_mode(admin, verbose=True):
 
 
         # 2. Delimiter
-        delimiter = ask_input('[3/8] Delimiter   : ', fmt_stuff('delimiter', def_delimiter))
+        delimiter = ask_input('[3/8] Delimiter   : ', to_CLI('delimiter', def_delimiter))
         if delimiter:
             new_conf['delimiter'] = delimiter
 
 
         # 3. Headers
-        headers = ask_input('[4/8] Headers     : ', fmt_stuff('headers', def_headers)).strip()
+        headers = ask_input('[4/8] Headers     : ', to_CLI('headers', def_headers)).strip()
         if not headers:
             headers = []
         else:
@@ -1642,7 +1642,7 @@ def admin_mode(admin, verbose=True):
 
 
         # 4. Key fields
-        key_fields = ask_input('[5/8] Key fields  : ', fmt_stuff('key_fields', def_key_fields)).strip()
+        key_fields = ask_input('[5/8] Key fields  : ', to_CLI('key_fields', def_key_fields)).strip()
         if key_fields:
             key_fields = split_if_several(key_fields)
             new_conf['key_fields'] = key_fields
@@ -1652,7 +1652,7 @@ def admin_mode(admin, verbose=True):
         new_conf['indices'] = []
 
         for ind in def_indices:
-            indices = ask_input('[6/8] Indices     : ', fmt_stuff('one_indices', ind)).strip()
+            indices = ask_input('[6/8] Indices     : ', to_CLI('one_indices', ind)).strip()
             if indices:
                 indices = split_if_several(indices)
                 new_conf['indices'].append(indices)
@@ -1662,7 +1662,7 @@ def admin_mode(admin, verbose=True):
         new_conf['join'] = []
 
         for j in def_join:
-            m_join = ask_input('[7/8] Join        : ', fmt_stuff('one_join', j)).strip()
+            m_join = ask_input('[7/8] Join        : ', to_CLI('one_join', j)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if m_join:
