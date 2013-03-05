@@ -1092,7 +1092,8 @@ class GeoBase(object):
         :param key:     the key of the thing (like ``'SFO'``)
         :param field:   the field (like ``'name'`` or ``'iata_code'``)
         :param kwargs:  other named arguments, use 'default' to avoid \
-                ``KeyError`` on ``key`` (not ``KeyError`` on ``field``)
+                ``KeyError`` on ``key`` (not ``KeyError`` on ``field``). \
+                Use 'ext_field' to field data from join base.
         :raises:        ``KeyError`` if the key is not in the base
         :returns:       the needed information
 
