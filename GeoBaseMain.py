@@ -1657,7 +1657,7 @@ def admin_mode(admin, verbose=True):
         new_conf = {
             'paths'   : [],
             'indices' : [],
-            'join' :    [],
+            'join'    : [],
         }
 
         # 1. Paths
@@ -1689,7 +1689,8 @@ def admin_mode(admin, verbose=True):
             with open(filename) as fl:
                 first_l = fl.next().rstrip()
 
-            print '\n>>>>> header'
+            print
+            print '>>>>> header'
             print first_l
             print '<<<<<'
 
@@ -1889,7 +1890,9 @@ def ask_mode():
     print
     for k, v in parameters.iteritems():
         if v is not None:
-            print '(*) %-10s => %-10s' % (str(k), str(v))
+            print '(*) %-10s => "%s"' % (str(k), str(v))
+        #else:
+        #    print '(*) %-10s => None' % str(k)
 
     # One liner
     print
