@@ -2307,7 +2307,7 @@ class GeoBase(object):
                 yield phonemes, key
 
 
-    def updateFields(self, field):
+    def _updateFields(self, field):
         """Update fields list.
 
         :param field: the field to add
@@ -2357,7 +2357,7 @@ class GeoBase(object):
 
             if update_fields:
                 # If the field was not in the headers we add it
-                self.updateFields(field)
+                self._updateFields(field)
 
 
     def _createFromDict(self, key, dictionary):
@@ -2420,7 +2420,7 @@ class GeoBase(object):
 
         if update_fields:
             for field in dictionary:
-                self.updateFields(field)
+                self._updateFields(field)
 
 
 
