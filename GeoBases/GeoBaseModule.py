@@ -1244,20 +1244,32 @@ class GeoBase(object):
 
 
 
-    def getLocation(self, key):
+    def getLocation(self, key, **kwargs):
         """Returns geocode as (float, float) or None.
 
         :param key:     the key of the thing (like ``'SFO'``)
+        :param kwargs:  other named arguments, use 'default' to avoid \
+                ``KeyError`` on ``key`` (not ``None`` on wrong value).
         :returns:       the location, a tuple of floats like ``(lat, lng)``, or \
                 ``None`` if any problem happened during execution
 
-        >>> geo_a.getLocation('AGN')
-        (57.50..., -134.585...)
-        >>> geo_a.getLocation('UNKNOWN')
+        >>> geo_o.getLocation('AGN')
+        (57.5..., -134.6...)
+        >>> geo_o.getLocation('WPS') # no usable geocode => None
+
+        Behavior on unkwown key.
+
+        >>> geo_o.getLocation('UNKNOWN')
         Traceback (most recent call last):
         KeyError: 'Thing not found: UNKNOWN'
+        >>> geo_o.getLocation('UNKNOWN', default=(0, 0))
+        (0, 0)
         """
         if key not in self:
+            # Unless default is set, we raise an Exception
+            if 'default' in kwargs:
+                return kwargs['default']
+
             raise KeyError("Thing not found: %s" % str(key))
 
         try:
