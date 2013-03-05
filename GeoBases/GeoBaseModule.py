@@ -966,6 +966,23 @@ class GeoBase(object):
 
 
 
+    def hasGrid(self):
+        """Tells if an iterable of fields is indexed.
+
+        :param fields:  the iterable of fields
+        :returns:       a boolean
+
+        >>> geo_t.hasGrid()
+        True
+        >>> geo_t.dropGrid()
+        >>> geo_t.hasGrid()
+        False
+        >>> geo_t.addGrid()
+        """
+        return self._ggrid is not None
+
+
+
     def get(self, key, field=None, **kwargs):
         """Simple get on the base.
 
