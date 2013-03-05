@@ -2400,8 +2400,8 @@ class GeoBase(object):
         >>> geo_f.setFromDict('frnic', d)
         >>> geo_f.keys()
         ['frnic']
-        >>> geo_f.get('frnic')
-        {'__gar__': [], '__par__': [], 'code': 'frnic', '__dup__': [], '__key__': 'frnic', '__lno__': 0, 'name': 'Nice'}
+        >>> geo_f.get('frnic', 'name')
+        'Nice'
 
         Here the base fields did not change.
 
