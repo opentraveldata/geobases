@@ -1460,9 +1460,14 @@ def handle_args():
     return vars(parser.parse_args())
 
 
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None):
+
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False):
     """Ask a question and only accept a list of possibilities as response.
     """
+    if boolean:
+        allowed = ('Y', 'y', 'N', 'n', '')
+        show = False
+
     if is_ok is None:
         is_ok = lambda r: True
 
@@ -1482,7 +1487,13 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None):
             print fail_message
         response = ask_input(msg).strip()
 
-    return response
+    if not boolean:
+        return response
+    else:
+        if default is True:
+            return response in ('Y', 'y', '')
+        else:
+            return response in ('Y', 'y')
 
 
 def admin_path(ref_path, local, questions, verbose):
@@ -1506,11 +1517,9 @@ def admin_path(ref_path, local, questions, verbose):
 
         if is_archive(path):
             # We propose to store the root archive in cache
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
-                                     ('Y', 'y', 'N', 'n', ''),
-                                     show=False)
+            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
 
-            if use_cached in ('Y', 'y'):
+            if use_cached:
                 _, copied = S_MANAGER.copy_to_cache(path['file'])
                 path['file'] = op.realpath(copied)
 
@@ -1521,11 +1530,9 @@ def admin_path(ref_path, local, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
-                             ('Y', 'y', 'N', 'n', ''),
-                             show=False)
+    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
 
-    if use_cached in ('Y', 'y'):
+    if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
         path['file'] = op.realpath(copied)
 
@@ -1661,10 +1668,9 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'path',
-                                          ('Y', 'y', 'N', 'n', ''),
-                                          show=False)
-                if add_another in ('Y', 'y'):
+                add_another = ask_till_ok(questions[11] % 'path', boolean=True)
+
+                if add_another:
                     ref_path = get_empty_path()
                 else:
                     break
@@ -1728,10 +1734,9 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'index',
-                                          ('Y', 'y', 'N', 'n', ''),
-                                          show=False)
-                if add_another in ('Y', 'y'):
+                add_another = ask_till_ok(questions[11] % 'index', boolean=True)
+
+                if add_another:
                     ref_index = get_empty_index()
                 else:
                     break
@@ -1752,10 +1757,9 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'join',
-                                          ('Y', 'y', 'N', 'n', ''),
-                                          show=False)
-                if add_another in ('Y', 'y'):
+                add_another = ask_till_ok(questions[11] % 'join', boolean=True)
+
+                if add_another:
                     ref_join = get_empty_join()
                 else:
                     break
@@ -1792,10 +1796,9 @@ def admin_mode(admin, verbose=True):
             print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
-            confirm = ask_till_ok(questions[10],
-                                  ('Y', 'y', 'N', 'n', ''), show=False)
+            confirm = ask_till_ok(questions[10], boolean=True, default=True)
 
-            if confirm in ('Y', 'y', ''):
+            if confirm:
                 S_MANAGER.update(source_name, new_conf)
                 S_MANAGER.save()
                 print '===== Changes saved to %s' % S_MANAGER.sources_conf_path
@@ -1841,9 +1844,9 @@ def ask_mode():
     base = ask_till_ok(questions[0], sorted(S_MANAGER))
 
     # 2. Choose from keys
-    all_keys = ask_till_ok(questions[1], ('Y', 'y', 'N', 'n', ''), show=False)
+    all_keys = ask_till_ok(questions[1], boolean=True, default=True)
 
-    if all_keys in ('Y', 'y', ''):
+    if all_keys:
         from_keys = None
     else:
         from_keys = ask_input(questions[2]).strip().split()
