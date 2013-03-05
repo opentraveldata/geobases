@@ -81,12 +81,12 @@ with open(local('LICENSE')) as fl:
     LICENSE = fl.read()
 
 setup(
-    name = 'GeoBasesDev',
+    name = 'GeoBases',
     version = VERSION,
     author = 'Alex Prengère',
     author_email = 'geobases.dev@gmail.com',
     url = 'http://opentraveldata.github.com/geobases',
-    description = 'Data services and visualization - development version',
+    description = 'Data services and visualization',
     long_description = LONG_DESCRIPTION,
     license = LICENSE,
     #
