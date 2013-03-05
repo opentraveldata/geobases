@@ -28,21 +28,15 @@ import GeoBases.GeoUtils         as GeoU
 
 
 class GeoBaseTest(unittest.TestCase):
-    '''
-    This class tests the GeoBase class.
+    '''This class tests the GeoBase class.
     '''
     def setUp(self):
-
         self.g = GeoM.GeoBase(data='ori_por', verbose=False)
-
 
     def tearDown(self):
         pass
 
-
     def test_get(self):
-        '''Testing get method.
-        '''
         self.assertEqual(self.g.get('CDG', 'city_code'), 'PAR')
         self.assertEqual(self.g.get('BVE', 'alt_name_section'),
                          (('', 'Brive-Souillac', ''),))
@@ -54,15 +48,41 @@ class GeoBaseTest(unittest.TestCase):
         self.assertAlmostEqual(self.g.distance('ORY', 'CDG'), 34.8747, places=3)
 
 
+class GeoBaseFeedTest(unittest.TestCase):
+    '''This class tests the feed mode with line number indexation.
+    '''
+    def setUp(self):
+        self.g = GeoM.GeoBase('feed',
+                              source=['A^2', 'B^3'],
+                              key_fields=None,
+                              headers=['name', 'vol'],
+                              verbose=False)
+
+    def tearDown(self):
+        pass
+
+    def test_get(self):
+        self.assertEqual(self.g.get('1'),
+                         {'name': 'A',
+                          'vol': '2',
+                          '__gar__': '',
+                          '__par__': [],
+                          '__dup__': [],
+                          '__key__': '1',
+                          '__lno__': 1})
+
+    def test_keys(self):
+        self.assertEqual(self.g.keys(), ['1', '2'])
+
 
 def test_suite():
-    '''
-    Create a test suite of all doctests.
+    '''Create a test suite of all doctests.
     '''
     tests = unittest.TestSuite()
 
     # Adding unittests
     tests.addTests(unittest.makeSuite(GeoBaseTest))
+    tests.addTests(unittest.makeSuite(GeoBaseFeedTest))
 
     # Standard options for DocTests
     opt =  (doctest.ELLIPSIS |

@@ -32,7 +32,7 @@ You can perform all types of queries:
 $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 ```
 
-And of course, you can use your own data for map display:
+Of course, you can use your own data for map display:
 ```shell
 $ cat coords.csv
 p1,48.22,2.33
@@ -50,6 +50,11 @@ $ cat edges.csv | GeoBase --graph
 ```
 
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png)
+
+Administrate the data sources:
+```shell
+$ GeoBase --admin
+```
 
 We are currently gathering input from the community to define the next
 version features, so do not hesitate to open issues on the [github
@@ -226,11 +231,11 @@ and using the `set` method.
 
 ```python
 >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
->>> list(geo_o.getKeysWhere(conditions, mode='and'))
+>>> list(geo_o.findWith(conditions, mode='and'))
 [(2, 'JDP'), (2, 'JPU')]
 >>>
 >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
->>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
+>>> len(list(geo_o.findWith(conditions, mode='or')))
 36
 ```
 
@@ -287,8 +292,8 @@ and using the `set` method.
 
 ```python
 >>> geo_t.visualize()
-* Added lines for duplicates linking, total 0
 > Affecting category None     to color blue    | volume 3190
+* Added lines for duplicates linking, total 0
 
 * Now you may use your browser to visualize:
 example_map.html example_table.html

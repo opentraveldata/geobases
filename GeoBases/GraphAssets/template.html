@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="{{file_name}}" content="{{file_name}}" />
+
+        <title>Graph of "{{file_name}}"</title>
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" />
+
+        <style type="text/css">
+            html, body {
+                margin:0;
+                padding:0;
+                font-family: "Lucida Grande", Verdana;
+                font-size: 0.9em;
+                text-align: center;
+                background-color:#F2F2F2;
+            }
+
+            #infovis {
+                display          : inline-block;
+                background-color : #000000;
+            }
+
+            ul, li {
+                margin  : 0px 5px 0px 5px;
+                padding : 0px 5px 0px 5px;
+            }
+
+            input, select {
+                font-size:0.9em;
+            }
+
+            h4 {
+                font-size:1.1em;
+                text-decoration:none;
+                font-weight:normal;
+                color:#23A4FF;
+            }
+
+            a {
+                color:#23A4FF;
+            }
+
+            body {
+                font-family : 'trebuchet ms',helvetica,sans-serif;
+            }
+
+            /*TOOLTIPS*/
+            .tip {
+                color: #111;
+                width: 139px;
+                background-color: white;
+                border:1px solid #ccc;
+                -moz-box-shadow:#555 2px 2px 8px;
+                -webkit-box-shadow:#555 2px 2px 8px;
+                -o-box-shadow:#555 2px 2px 8px;
+                box-shadow:#555 2px 2px 8px;
+                opacity:0.9;
+                filter:alpha(opacity=90);
+                font-size:10px;
+                font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+                padding:7px;
+            }
+
+            span.close {
+                closeolor:#FF5555;
+                cursor:pointer;
+                font-weight:bold;
+                margin-left:3px;
+            }
+
+            span.name {
+                cursor: pointer;
+            }
+
+            /*TOOLTIPS*/
+            .tip {
+                text-align: left;
+                width:auto;
+                max-width:500px;
+            }
+
+            .tip-title {
+                font-size: 11px;
+                font-weight:bold;
+                text-align:center;
+                margin-bottom:1px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <h2 class="large"><span id="log"></span> Graph for <span id="fields"></span></h2>
+        </div>
+
+        <div id="infovis"></div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" src="jit-yc.js"></script>
+
+        <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
+        <script type="text/javascript" src='graph.js'></script>
+    </body>
+</html>
+

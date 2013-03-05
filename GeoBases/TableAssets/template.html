@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="{{file_name}}" content="{{file_name}}" />
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
+        <title>Table of "{{file_name}}"</title>
+    </head>
+
+    <body>
+        <div id="canvas" style="width:1000px; height:700px">
+            <table>
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+        <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
+        <script type="text/javascript" src='table.js'></script>
+    </body>
+</html>
+

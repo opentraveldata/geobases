@@ -2,6 +2,60 @@
 Release notes
 =============
 
+V5
+==
+
++ 5.0 :
+
+ + getLocation has a new *default* keyword argument to avoid key failure
+ + learning mode with -a/--ask to learn of the CLI works
+ + admin mode with -A/--admin to configure sources (persistent changes)
+ + -A/--any is now -O/--or to control multiple --exact filters behavior
+ + CLI: possibility to add a join clause on multiple fields with new -i argument (and possibility to --show it)
+ + Added map visualization possibilities on join clauses (another arg. for -M on CLI)
+ + new -S/--show-additional method to add fields to the current display
+ + Python: new getJoinBase method to give access to external base properties
+ + CLI: cache fields analysis to speed up quiet mode
+ + CLI: properly flatten all nested structure in quiet mode
+ + CLI: possibility to show external fields from --show using field:external_field syntax
+ + CLI: display join fields wih a different color
+ + autoreference for autojoin to avoid loading ori_por twice
+ + new hasJoin method, hasIndexOn is renamed hasIndex
+ + CLI: possibility to add subdelimiters and join clauses with header{base:field}{subdel} syntax
+ + multiple join clause implementation on multiple fields, integrated with subdelimiters
+ + subdelimiters are no longer filled with None values
+ + new updateIndex and updateGrid methods
+ + addIndex does not update index, addGrid does not update grid
+ + cache directory instead of local directory for download and extraction
+ + allow ``paths`` as GeoBase init argument (same behavior as configuration file)
+ + configure graph weight with -W/--graph-weight for CLI
+ + type system when graph building, -w/--with-types to toggle from CLI
+ + if available, launch google-chrome instead of firefox for HTML display
+ + CLI: --graph and --graph-fields to draw graphs
+ + graph visualization in Python API
+ + handle local and remote archives
+ + make addGrid/dropGrid public method to allow geographical re-indexation
+ + HTTP failover in configuration file
+ + simpler bash maintenance script now that skip is handled during loading
+ + add skip directive to skip first lines
+ + CLI: display sources and examples on --help
+ + CLI: display tips on --verbose when stdin data
+ + -I is now slightly different: default is exact search on a default field (no longer key search, use __key__ for that)
+ + clever autocomplete for zsh on displayed fields for the different options
+ + new GeoBase.fuzzyClean and GeoBase.phonemes static methods
+ + possiblity to draw on the map things that are not in the GeoBase
+ + urls input for YAML configuration
+ + new loaded attribute to describe loaded data, depends on source and paths
+ + accepts list of paths in configuration file, failover mechanism
+ + make a difference between source at __init__ and path in YAML file
+ + phonetic searches with dmetaphone (-p/-P/-y for CLI)
+ + options: -w/--warnings is now -v/--verbose, -v/--version is -V/--version, -g/--gridless is -d/--disable-grid
+ + more tests
+ + consistent verbosity handling
+ + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods (access with -i for CLI)
+ + line number indexation when key_fields is None
+ + changes in methods names for better consistency: find vs get
+
 V4
 ==
 

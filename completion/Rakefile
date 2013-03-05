@@ -5,33 +5,59 @@ require 'pathname'
 
 ROOT_PATH = File.expand_path File.dirname(__FILE__)
 
-CONFIG_FILE_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
+SOURCES_CONF_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
 
 BUILD_PATH = File.join ROOT_PATH, '.'
 ASSETS_PATH = File.join ROOT_PATH, '.'
 
 # Read YAML configuration
-#File.open(CONFIG_FILE_PATH) { |f| YAML.load f }.each do |param, val|
+#File.open(SOURCES_CONF_PATH) { |f| YAML.load f }.each do |param, val|
 #  Object.const_set "CONF_#{param.upcase}", val
 #end
-CONFIG = YAML.load File.open(CONFIG_FILE_PATH)
+SOURCES = YAML.load File.open(SOURCES_CONF_PATH)
 
 ASSET_FILES = {
   '_GeoBase.erb' => '_GeoBase'
 }
 
-BASES  = CONFIG.keys.sort
-
-FIELDS = ['__key__', '__dup__', '__dad__', '__lno__'] + CONFIG['ori_por']['headers']
-
-CONFIG['ori_por']['subdelimiters'].each do |key, val|
-    if not val.nil?
-        FIELDS << key + '@raw'
+# Config enhancements
+SOURCES.each do |data, config|
+    if config.nil?
+        SOURCES[data] = { 'headers' => [] }
+    end
+    if SOURCES[data]['headers'].nil?
+        SOURCES[data]['headers'] = []
+    end
+    if SOURCES[data]['join'].nil?
+        SOURCES[data]['join'] = []
     end
 end
 
-FIELDS << '__gar__'
+SOURCES.each do |data, config|
+    headers = []
 
+    config['headers'].each do |h|
+        headers << h
+        if not config['subdelimiters'].nil? and
+           not config['subdelimiters'][h].nil?
+            headers << h + '@raw'
+        end
+    end
+    config['headers'] = headers
+end
+
+SOURCES.each do |data, config|
+    config['join'].each do |d|
+        if d['fields'].is_a? String
+            d['fields'] = d['fields'] + ':'
+        else
+            d['fields'] = d['fields'].join('/') + ':'
+        end
+    end
+end
+
+# Special autocomplete for feed
+SOURCES['feed']['headers'] = ['H0', 'H1', 'H2', 'H3']
 
 namespace :build do
 

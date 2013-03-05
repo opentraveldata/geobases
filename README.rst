@@ -4,7 +4,6 @@ GeoBases |travis|_
 .. _travis : https://travis-ci.org/opentraveldata/geobases
 .. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=pypy
 
-
 Introduction
 ------------
 
@@ -38,7 +37,7 @@ You can perform all types of queries:
 
  $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 
-And of course, you can use your own data for map display:
+Of course, you can use your own data for map display:
 
 .. code-block:: bash
 
@@ -59,6 +58,12 @@ And for every other thing as well:
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png
    :align: center
+
+Administrate the data sources:
+
+.. code-block:: bash
+
+ $ GeoBase --admin
 
 We are currently gathering input from the community to define the next version features, so do not hesitate to open issues on the `github page <https://github.com/opentraveldata/geobases>`_.
 
@@ -257,11 +262,11 @@ Find things with properties
 .. code-block:: python
 
  >>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
- >>> list(geo_o.getKeysWhere(conditions, mode='and'))
+ >>> list(geo_o.findWith(conditions, mode='and'))
  [(2, 'JDP'), (2, 'JPU')]
  >>>
  >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
- >>> len(list(geo_o.getKeysWhere(conditions, mode='or')))
+ >>> len(list(geo_o.findWith(conditions, mode='or')))
  36
 
 Distance computation
@@ -313,9 +318,9 @@ Approximate name matching
 
 .. code-block:: python
 
- >>> geo_t.fuzzyGet('Marseille Charles', 'name')[0]
- (0.91..., 'frmsc')
- >>> geo_a.fuzzyGet('paris de gaulle', 'name')[0]
+ >>> geo_t.fuzzyFind('Marseille Charles', 'name')[0]
+ (0.9..., 'frmsc')
+ >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
  (0.78..., 'CDG')
 
 Map display
@@ -331,9 +336,9 @@ Map display
  example_map.html example_table.html
  <BLANKLINE>
  * If you want to clean the temporary files:
- rm example.json ...
+ rm example_map.json ...
  <BLANKLINE>
- (['example_map.html', 'example_table.html'], 2)
+ (['map', 'table'], (['example_map.html', 'example_table.html'], ['example_map.json', ...]))
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
@@ -350,6 +355,8 @@ Installation of the package will also deploy a standalone script named ``GeoBase
  $ GeoBase --closest CDG        # closest from CDG
  $ GeoBase --near LIG           # near LIG
  $ GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
+ $ GeoBase --admin              # to administrate data sources
+ $ GeoBase --ask                # interactive learning mode
  $ GeoBase --help               # your best friend
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI.png

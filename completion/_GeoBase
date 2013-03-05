@@ -1,46 +1,810 @@
 #compdef GeoBase
 
-B_BASES="(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
-F_FIELDS="(__key__ __dup__ __dad__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list state_code location_type wiki_link alt_name_section alt_name_section@raw tvl_por_list@raw __gar__)"
-N_RADIUS="(10 20 30 40 50)"
-C_CLOSEST="(10 20 30 40 50)"
-F_FUZZY="(0.5 0.6 0.7 0.8 0.9)"
-T_TREP="(F S I J)"
-L_LIMIT="(1 2 5)"
-I_INT="()"
-Q_QUIET="()"
+# Examples for delimiters
+DELIMITERS="(_ ',' '^' ';')"
 
-_arguments \
- "(-h --help)"{-h,--help}"[Show this help message and exit]" \
- "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]:base:$B_BASES" \
- "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-property field. Default property is \"name\"]:*:fuzzy value:()" \
- "(-F --fuzzy-property)"{-F,--fuzzy-property}"[Specify a property for fuzzy searches]:fuzzy property:$F_FIELDS" \
- "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.80". This is a Levenshtein ratio.]:fuzzy limit (%%):$F_FUZZY" \
- "(-e --exact)"{-e,--exact}"[Exact search on --exact-property. Default property is \"__key__\"]:*:exact value:()" \
- "(-E --exact-property)"{-E,--exact-property}"[Specify a property for exact searches]:*:exact property:$F_FIELDS" \
- "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
- "(-A --any)"{-A,--any}"[Change *and* behavior to *or* behavior for multiple --exact]" \
- "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]:*:near point:()" \
- "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]:near limit (km):$N_RADIUS" \
- "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]:*:from point:()" \
- "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]:closest limit (nb):$C_CLOSEST" \
- "(-t --trep)"{-t,--trep}"[OpenTrep mode]:*:value:()" \
- "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]:trep format:$T_TREP" \
- "(-g --gridless)"{-g,--gridless}"[Disabling grid for nearby searches]" \
- "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*:fields:$F_FIELDS" \
- "(-s --show)"{-s,--show}"[Only display some fields in output]:*:fields:$F_FIELDS" \
- "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]:limit (nb):$L_LIMIT" \
- "(-i --indexes)"{-i,--indexes}"[Specify metadata for stdin data input.]:*:delimiter headers indexes discard_dups:$I_INT" \
- "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not considered as data input]:*:field __exact__/__fuzzy__:$F_FIELDS" \
- "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
- "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*:delimiter header:$Q_QUIET" \
- "(-m --map)"{-m,--map}"[Display points on a map]" \
- "(-M --map-data)"{-M,--map-data}"[Custom map display]:*:label size color icon duplicates:$F_FIELDS" \
- "(-w --warnings)"{-w,--warnings}"[Provide additional informations from data loading]" \
- "(-u --update)"{-u,--update}"[Try to update the data files]" \
- "(-U --update-forced)"{-U,--update-forced}"[Force the update of all data files]" \
- "(-v --version)"{-v,--version}"[Display version information]" \
- "*:keys:()"
+
+_headers() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __head__ H0 H1 H2 H3)"
+        ;;
+    airports)
+        _arguments \
+            "*:$help for airports:(_ __head__ iata_code name city_code country_code country_name lat lng)"
+        ;;
+    countries)
+        _arguments \
+            "*:$help for countries:(_ __head__ code iso_alpha3 iso_numeric fips_code name capital area_in_sq_km population continent tld currency_code currency_name phone postal_code_format postal_code_regex languages languages@raw geoname_id neighbors neighbors@raw)"
+        ;;
+    capitals)
+        _arguments \
+            "*:$help for capitals:(_ __head__ country_code capital_name country_name area_in_sq_km population lat lng)"
+        ;;
+    continents)
+        _arguments \
+            "*:$help for continents:(_ __head__ code name geoname_id)"
+        ;;
+    stations)
+        _arguments \
+            "*:$help for stations:(_ __head__ code lines lines@raw name info lat lng)"
+        ;;
+    stations_nls)
+        _arguments \
+            "*:$help for stations_nls:(_ __head__ uic_code name nls_code physical)"
+        ;;
+    stations_uic)
+        _arguments \
+            "*:$help for stations_uic:(_ __head__ uic_code name lat lng)"
+        ;;
+    languages)
+        _arguments \
+            "*:$help for languages:(_ __head__ code code_iso_2 code_iso_1 name)"
+        ;;
+    timezones)
+        _arguments \
+            "*:$help for timezones:(_ __head__ country_code code gmt_offset dst_offset raw_offset)"
+        ;;
+    cities)
+        _arguments \
+            "*:$help for cities:(_ __head__ code name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 admin1 admin2 admin3 admin4 population elevation dem timezone modification)"
+        ;;
+    ori_por)
+        _arguments \
+            "*:$help for ori_por:(_ __head__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_multi)
+        _arguments \
+            "*:$help for ori_por_multi:(_ __head__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_non_iata)
+        _arguments \
+            "*:$help for ori_por_non_iata:(_ __head__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    currencies)
+        _arguments \
+            "*:$help for currencies:(_ __head__ currency_code numeric_code digits_number currency_name countries countries@raw)"
+        ;;
+    airlines)
+        _arguments \
+            "*:$help for airlines:(_ __head__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+        ;;
+    cabins)
+        _arguments \
+            "*:$help for cabins:(_ __head__ code name)"
+        ;;
+    locales)
+        _arguments \
+            "*:$help for locales:(_ __head__ locale title language territory revision date codeset)"
+        ;;
+    location_types)
+        _arguments \
+            "*:$help for location_types:(_ __head__ location_type name)"
+        ;;
+    feature_classes)
+        _arguments \
+            "*:$help for feature_classes:(_ __head__ fclass name)"
+        ;;
+    feature_codes)
+        _arguments \
+            "*:$help for feature_codes:(_ __head__ fclass fcode name description)"
+        ;;
+    geonames_FR)
+        _arguments \
+            "*:$help for geonames_FR:(_ __head__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    geonames_MC)
+        _arguments \
+            "*:$help for geonames_MC:(_ __head__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    postal_codes_FR)
+        _arguments \
+            "*:$help for postal_codes_FR:(_ __head__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    postal_codes_MC)
+        _arguments \
+            "*:$help for postal_codes_MC:(_ __head__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    *)
+        _arguments \
+            "*:$help for ori_por:(_ __head__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    esac
+}
+
+
+_key_fields() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __none__ H0 H1 H2 H3)"
+        ;;
+    airports)
+        _arguments \
+            "*:$help for airports:(_ __none__ iata_code name city_code country_code country_name lat lng)"
+        ;;
+    countries)
+        _arguments \
+            "*:$help for countries:(_ __none__ code iso_alpha3 iso_numeric fips_code name capital area_in_sq_km population continent tld currency_code currency_name phone postal_code_format postal_code_regex languages languages@raw geoname_id neighbors neighbors@raw)"
+        ;;
+    capitals)
+        _arguments \
+            "*:$help for capitals:(_ __none__ country_code capital_name country_name area_in_sq_km population lat lng)"
+        ;;
+    continents)
+        _arguments \
+            "*:$help for continents:(_ __none__ code name geoname_id)"
+        ;;
+    stations)
+        _arguments \
+            "*:$help for stations:(_ __none__ code lines lines@raw name info lat lng)"
+        ;;
+    stations_nls)
+        _arguments \
+            "*:$help for stations_nls:(_ __none__ uic_code name nls_code physical)"
+        ;;
+    stations_uic)
+        _arguments \
+            "*:$help for stations_uic:(_ __none__ uic_code name lat lng)"
+        ;;
+    languages)
+        _arguments \
+            "*:$help for languages:(_ __none__ code code_iso_2 code_iso_1 name)"
+        ;;
+    timezones)
+        _arguments \
+            "*:$help for timezones:(_ __none__ country_code code gmt_offset dst_offset raw_offset)"
+        ;;
+    cities)
+        _arguments \
+            "*:$help for cities:(_ __none__ code name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 admin1 admin2 admin3 admin4 population elevation dem timezone modification)"
+        ;;
+    ori_por)
+        _arguments \
+            "*:$help for ori_por:(_ __none__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_multi)
+        _arguments \
+            "*:$help for ori_por_multi:(_ __none__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_non_iata)
+        _arguments \
+            "*:$help for ori_por_non_iata:(_ __none__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    currencies)
+        _arguments \
+            "*:$help for currencies:(_ __none__ currency_code numeric_code digits_number currency_name countries countries@raw)"
+        ;;
+    airlines)
+        _arguments \
+            "*:$help for airlines:(_ __none__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+        ;;
+    cabins)
+        _arguments \
+            "*:$help for cabins:(_ __none__ code name)"
+        ;;
+    locales)
+        _arguments \
+            "*:$help for locales:(_ __none__ locale title language territory revision date codeset)"
+        ;;
+    location_types)
+        _arguments \
+            "*:$help for location_types:(_ __none__ location_type name)"
+        ;;
+    feature_classes)
+        _arguments \
+            "*:$help for feature_classes:(_ __none__ fclass name)"
+        ;;
+    feature_codes)
+        _arguments \
+            "*:$help for feature_codes:(_ __none__ fclass fcode name description)"
+        ;;
+    geonames_FR)
+        _arguments \
+            "*:$help for geonames_FR:(_ __none__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    geonames_MC)
+        _arguments \
+            "*:$help for geonames_MC:(_ __none__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    postal_codes_FR)
+        _arguments \
+            "*:$help for postal_codes_FR:(_ __none__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    postal_codes_MC)
+        _arguments \
+            "*:$help for postal_codes_MC:(_ __none__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    *)
+        _arguments \
+            "*:$help for ori_por:(_ __none__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    esac
+}
+
+
+_fields() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __key__ __lno__ H0 H1 H2 H3)"
+        ;;
+    airports)
+        _arguments \
+            "*:$help for airports:(_ __key__ __lno__ iata_code name city_code country_code country_name lat lng)"
+        ;;
+    countries)
+        _arguments \
+            "*:$help for countries:(_ __key__ __lno__ code iso_alpha3 iso_numeric fips_code name capital area_in_sq_km population continent tld currency_code currency_name phone postal_code_format postal_code_regex languages languages@raw geoname_id neighbors neighbors@raw)"
+        ;;
+    capitals)
+        _arguments \
+            "*:$help for capitals:(_ __key__ __lno__ country_code capital_name country_name area_in_sq_km population lat lng)"
+        ;;
+    continents)
+        _arguments \
+            "*:$help for continents:(_ __key__ __lno__ code name geoname_id)"
+        ;;
+    stations)
+        _arguments \
+            "*:$help for stations:(_ __key__ __lno__ code lines lines@raw name info lat lng)"
+        ;;
+    stations_nls)
+        _arguments \
+            "*:$help for stations_nls:(_ __key__ __lno__ uic_code name nls_code physical)"
+        ;;
+    stations_uic)
+        _arguments \
+            "*:$help for stations_uic:(_ __key__ __lno__ uic_code name lat lng)"
+        ;;
+    languages)
+        _arguments \
+            "*:$help for languages:(_ __key__ __lno__ code code_iso_2 code_iso_1 name)"
+        ;;
+    timezones)
+        _arguments \
+            "*:$help for timezones:(_ __key__ __lno__ country_code code gmt_offset dst_offset raw_offset)"
+        ;;
+    cities)
+        _arguments \
+            "*:$help for cities:(_ __key__ __lno__ code name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 admin1 admin2 admin3 admin4 population elevation dem timezone modification)"
+        ;;
+    ori_por)
+        _arguments \
+            "*:$help for ori_por:(_ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_multi)
+        _arguments \
+            "*:$help for ori_por_multi:(_ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_non_iata)
+        _arguments \
+            "*:$help for ori_por_non_iata:(_ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    currencies)
+        _arguments \
+            "*:$help for currencies:(_ __key__ __lno__ currency_code numeric_code digits_number currency_name countries countries@raw)"
+        ;;
+    airlines)
+        _arguments \
+            "*:$help for airlines:(_ __key__ __lno__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+        ;;
+    cabins)
+        _arguments \
+            "*:$help for cabins:(_ __key__ __lno__ code name)"
+        ;;
+    locales)
+        _arguments \
+            "*:$help for locales:(_ __key__ __lno__ locale title language territory revision date codeset)"
+        ;;
+    location_types)
+        _arguments \
+            "*:$help for location_types:(_ __key__ __lno__ location_type name)"
+        ;;
+    feature_classes)
+        _arguments \
+            "*:$help for feature_classes:(_ __key__ __lno__ fclass name)"
+        ;;
+    feature_codes)
+        _arguments \
+            "*:$help for feature_codes:(_ __key__ __lno__ fclass fcode name description)"
+        ;;
+    geonames_FR)
+        _arguments \
+            "*:$help for geonames_FR:(_ __key__ __lno__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    geonames_MC)
+        _arguments \
+            "*:$help for geonames_MC:(_ __key__ __lno__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    postal_codes_FR)
+        _arguments \
+            "*:$help for postal_codes_FR:(_ __key__ __lno__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    postal_codes_MC)
+        _arguments \
+            "*:$help for postal_codes_MC:(_ __key__ __lno__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    *)
+        _arguments \
+            "*:$help for ori_por:(_ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    esac
+}
+
+
+_fields_extended() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __none__ __key__ __lno__ H0 H1 H2 H3)"
+        ;;
+    airports)
+        _arguments \
+            "*:$help for airports:(_ __none__ __key__ __lno__ iata_code name city_code country_code country_name lat lng)"
+        ;;
+    countries)
+        _arguments \
+            "*:$help for countries:(_ __none__ __key__ __lno__ code iso_alpha3 iso_numeric fips_code name capital area_in_sq_km population continent tld currency_code currency_name phone postal_code_format postal_code_regex languages languages@raw geoname_id neighbors neighbors@raw)"
+        ;;
+    capitals)
+        _arguments \
+            "*:$help for capitals:(_ __none__ __key__ __lno__ country_code capital_name country_name area_in_sq_km population lat lng)"
+        ;;
+    continents)
+        _arguments \
+            "*:$help for continents:(_ __none__ __key__ __lno__ code name geoname_id)"
+        ;;
+    stations)
+        _arguments \
+            "*:$help for stations:(_ __none__ __key__ __lno__ code lines lines@raw name info lat lng)"
+        ;;
+    stations_nls)
+        _arguments \
+            "*:$help for stations_nls:(_ __none__ __key__ __lno__ uic_code name nls_code physical)"
+        ;;
+    stations_uic)
+        _arguments \
+            "*:$help for stations_uic:(_ __none__ __key__ __lno__ uic_code name lat lng)"
+        ;;
+    languages)
+        _arguments \
+            "*:$help for languages:(_ __none__ __key__ __lno__ code code_iso_2 code_iso_1 name)"
+        ;;
+    timezones)
+        _arguments \
+            "*:$help for timezones:(_ __none__ __key__ __lno__ country_code code gmt_offset dst_offset raw_offset)"
+        ;;
+    cities)
+        _arguments \
+            "*:$help for cities:(_ __none__ __key__ __lno__ code name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 admin1 admin2 admin3 admin4 population elevation dem timezone modification)"
+        ;;
+    ori_por)
+        _arguments \
+            "*:$help for ori_por:(_ __none__ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_multi)
+        _arguments \
+            "*:$help for ori_por_multi:(_ __none__ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_non_iata)
+        _arguments \
+            "*:$help for ori_por_non_iata:(_ __none__ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    currencies)
+        _arguments \
+            "*:$help for currencies:(_ __none__ __key__ __lno__ currency_code numeric_code digits_number currency_name countries countries@raw)"
+        ;;
+    airlines)
+        _arguments \
+            "*:$help for airlines:(_ __none__ __key__ __lno__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+        ;;
+    cabins)
+        _arguments \
+            "*:$help for cabins:(_ __none__ __key__ __lno__ code name)"
+        ;;
+    locales)
+        _arguments \
+            "*:$help for locales:(_ __none__ __key__ __lno__ locale title language territory revision date codeset)"
+        ;;
+    location_types)
+        _arguments \
+            "*:$help for location_types:(_ __none__ __key__ __lno__ location_type name)"
+        ;;
+    feature_classes)
+        _arguments \
+            "*:$help for feature_classes:(_ __none__ __key__ __lno__ fclass name)"
+        ;;
+    feature_codes)
+        _arguments \
+            "*:$help for feature_codes:(_ __none__ __key__ __lno__ fclass fcode name description)"
+        ;;
+    geonames_FR)
+        _arguments \
+            "*:$help for geonames_FR:(_ __none__ __key__ __lno__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    geonames_MC)
+        _arguments \
+            "*:$help for geonames_MC:(_ __none__ __key__ __lno__ geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    postal_codes_FR)
+        _arguments \
+            "*:$help for postal_codes_FR:(_ __none__ __key__ __lno__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    postal_codes_MC)
+        _arguments \
+            "*:$help for postal_codes_MC:(_ __none__ __key__ __lno__ country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    *)
+        _arguments \
+            "*:$help for ori_por:(_ __none__ __key__ __lno__ iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    esac
+}
+
+
+_fields_and_join() {
+
+    local base="$1"
+    local help="$2"
+
+    case "$base" in
+    feed)
+        _arguments \
+            "*:$help for feed:(_ __key__ __lno__  H0 H1 H2 H3)"
+        ;;
+    airports)
+        _arguments \
+            "*:$help for airports:(_ __key__ __lno__  iata_code name city_code country_code country_name lat lng)"
+        ;;
+    countries)
+        _arguments \
+            "*:$help for countries:(_ __key__ __lno__  code iso_alpha3 iso_numeric fips_code name capital area_in_sq_km population continent tld currency_code currency_name phone postal_code_format postal_code_regex languages languages@raw geoname_id neighbors neighbors@raw)"
+        ;;
+    capitals)
+        _arguments \
+            "*:$help for capitals:(_ __key__ __lno__  country_code capital_name country_name area_in_sq_km population lat lng)"
+        ;;
+    continents)
+        _arguments \
+            "*:$help for continents:(_ __key__ __lno__  code name geoname_id)"
+        ;;
+    stations)
+        _arguments \
+            "*:$help for stations:(_ __key__ __lno__  code lines lines@raw name info lat lng)"
+        ;;
+    stations_nls)
+        _arguments \
+            "*:$help for stations_nls:(_ __key__ __lno__  uic_code name nls_code physical)"
+        ;;
+    stations_uic)
+        _arguments \
+            "*:$help for stations_uic:(_ __key__ __lno__  uic_code name lat lng)"
+        ;;
+    languages)
+        _arguments \
+            "*:$help for languages:(_ __key__ __lno__  code code_iso_2 code_iso_1 name)"
+        ;;
+    timezones)
+        _arguments \
+            "*:$help for timezones:(_ __key__ __lno__  country_code code gmt_offset dst_offset raw_offset)"
+        ;;
+    cities)
+        _arguments \
+            "*:$help for cities:(_ __key__ __lno__  code name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 admin1 admin2 admin3 admin4 population elevation dem timezone modification)"
+        ;;
+    ori_por)
+        _arguments \
+            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_multi)
+        _arguments \
+            "*:$help for ori_por_multi:(_ __key__ __lno__  iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    ori_por_non_iata)
+        _arguments \
+            "*:$help for ori_por_non_iata:(_ __key__ __lno__  iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    currencies)
+        _arguments \
+            "*:$help for currencies:(_ __key__ __lno__  currency_code numeric_code digits_number currency_name countries countries@raw)"
+        ;;
+    airlines)
+        _arguments \
+            "*:$help for airlines:(_ __key__ __lno__  unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+        ;;
+    cabins)
+        _arguments \
+            "*:$help for cabins:(_ __key__ __lno__  code name)"
+        ;;
+    locales)
+        _arguments \
+            "*:$help for locales:(_ __key__ __lno__  locale title language territory revision date codeset)"
+        ;;
+    location_types)
+        _arguments \
+            "*:$help for location_types:(_ __key__ __lno__  location_type name)"
+        ;;
+    feature_classes)
+        _arguments \
+            "*:$help for feature_classes:(_ __key__ __lno__  fclass name)"
+        ;;
+    feature_codes)
+        _arguments \
+            "*:$help for feature_codes:(_ __key__ __lno__  fclass fcode name description)"
+        ;;
+    geonames_FR)
+        _arguments \
+            "*:$help for geonames_FR:(_ __key__ __lno__  geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    geonames_MC)
+        _arguments \
+            "*:$help for geonames_MC:(_ __key__ __lno__  geoname_id name asciiname alternatenames alternatenames@raw lat lng fclass fcode country_code cc2 adm1_code adm2_code adm3_code adm4_code population elevation dem timezone moddate)"
+        ;;
+    postal_codes_FR)
+        _arguments \
+            "*:$help for postal_codes_FR:(_ __key__ __lno__  country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    postal_codes_MC)
+        _arguments \
+            "*:$help for postal_codes_MC:(_ __key__ __lno__  country_code postal_code name adm1_name adm1_code adm2_name adm2_code adm3_name adm3_code lat lng accuracy)"
+        ;;
+    *)
+        _arguments \
+            "*:$help for ori_por:(_ __key__ __lno__ country_code: tvl_por_list: iata_code icao_code faa_code is_geonames geoname_id valid_id name asciiname lat lng fclass fcode page_rank date_from date_until comment country_code cc2 country_name continent_name adm1_code adm1_name_utf adm1_name_ascii adm2_code adm2_name_utf adm2_name_ascii adm3_code adm4_code population elevation gtopo30 timezone gmt_offset dst_offset raw_offset moddate city_code city_name_utf city_name_ascii tvl_por_list tvl_por_list@raw state_code location_type wiki_link alt_name_section alt_name_section@raw)"
+        ;;
+    esac
+}
+
+
+count_opt() {
+    echo $((`echo "$1" | sed 's/\\\\://g' | sed 's/[^:]//g' |wc -m` - 1))
+}
+
+get_opt_value() {
+
+    local short_value="$1"
+    local long_value="$2"
+
+    if [[ "$short_value" = "" ]]; then
+        echo "$long_value"
+    else
+        echo "$short_value"
+    fi
+}
+
+
+_hello() {
+
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    _arguments \
+     "(* -)"{-A,--admin}"[Administrate sources]:*: :->admin" \
+     "(* -)"{-a,--ask}"[Learning mode]" \
+     "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]: :->base" \
+     "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-field field. Default field is \"name\"]: :->fuzzy_value" \
+     "(-F --fuzzy-field)"{-F,--fuzzy-field}"[Specify a field for fuzzy searches]: :->fuzzy_field" \
+     "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.85" (this is a percentage)]: :->fuzzy_limit" \
+     "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-field field. Default field is \"name\"]: :->phonetic_value" \
+     "(-P --phonetic-field)"{-P,--phonetic-field}"[Specify a field for phonetic searches]: :->phonetic_field" \
+     "(-y --phonetic-method)"{-y,--phonetic-method}"[Change phonetic matching method]: :->phonetic_method" \
+     "(-e --exact)"{-e,--exact}"[Exact search on --exact-field. Default field is \"__key__\"]: :->exact_value" \
+     "(-E --exact-field)"{-E,--exact-field}"[Specify a field for exact searches]: :->exact_field" \
+     "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
+     "(-O --or)"{-O,--or}"[Change *and* behavior to *or* behavior for multiple --exact fields]" \
+     "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]: :->near_point" \
+     "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]: :->near_limit_km" \
+     "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]: :->from_point" \
+     "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]: :->closest_limit_nb" \
+     "(-d --disable-grid)"{-d,--disable-grid}"[Disable grid for geographical searches]" \
+     "(-t --trep)"{-t,--trep}"[OpenTrep mode]: :->trep_value" \
+     "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]: :->trep_format" \
+     "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
+     "(-s --show)"{-s,--show}"[Only display some fields in output]:*: :->show" \
+     "(-S --show-additional)"{-S,--show-additional}"[Display additional fields in output]:*: :->show_additional" \
+     "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]: :->limit" \
+     "(-i --indexation)"{-i,--indexation}"[Specify metadata for stdin data input.]:*: :->indexation" \
+     "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not data input]:*: :->interactive" \
+     "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
+     "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*: :->quiet_options" \
+     "(-m --map)"{-m,--map}"[Display points on a map]" \
+     "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
+     "(-g --graph)"{-g,--graph}"[Display data on a directed graph]" \
+     "(-G --graph-fields)"{-G,--graph-fields}"[Select fields to build the graph display]:*: :->graph_fields" \
+     "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
+     "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
+     "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
+     "(* -)"{-u,--update}"[Try to update the data files]" \
+     "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
+     "(* -)"{-h,--help}"[Show this help message and exit]" \
+     "(* -)"{-V,--version}"[Display version information]" \
+     "*:list of keys:()"
+
+    # Arguments value
+    admin=`get_opt_value "${opt_args[-A]}" "${opt_args[--admin]}"`
+    base=`get_opt_value "${opt_args[-b]}" "${opt_args[--base]}"`
+    indexation=`get_opt_value "${opt_args[-i]}" "${opt_args[--indexation]}"`
+    interactive=`get_opt_value "${opt_args[-I]}" "${opt_args[--interactive-query]}"`
+    quiet_options=`get_opt_value "${opt_args[-Q]}" "${opt_args[--quiet-options]}"`
+    map_options=`get_opt_value "${opt_args[-M]}" "${opt_args[--map-options]}"`
+    graph_fields=`get_opt_value "${opt_args[-G]}" "${opt_args[--graph-fields]}"`
+
+
+    case $state in
+    base)
+        _arguments \
+            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
+        ;;
+    fuzzy_value|exact_value|phonetic_value|trep_value|near_point|from_point)
+        _arguments \
+            "*:value"
+        ;;
+    exact_field|fuzzy_field|phonetic_field)
+        _fields "$base" "field"
+        ;;
+    show|show_additional|omit)
+        _fields_and_join "$base" "field"
+        ;;
+    phonetic_method)
+        _arguments \
+            "*:phonetic method:(dmetaphone dmetaphone-strict metaphone nysiis)"
+        ;;
+    near_limit_km)
+        _arguments \
+            "*:near limit (km):(10 20 30 40 50)"
+        ;;
+    closest_limit_nb)
+        _arguments \
+            "*:closest limit (nb):(10 20 30 40 50)"
+        ;;
+    fuzzy_limit)
+        _arguments \
+            "*:fuzzy limit (%%):(0.6 0.7 0.8 0.9 0.99)"
+        ;;
+    limit)
+        _arguments \
+            "*:limit (nb):(10 15 20 25 50)"
+        ;;
+    trep_format)
+        _arguments \
+            "*:trep format:(F S I J)"
+        ;;
+    admin)
+        case `count_opt $admin` in
+        0)
+            _arguments \
+                "*:command:(status fullstatus drop restore edit)"
+            ;;
+        1)
+            _arguments \
+                "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_multi ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -A"
+            ;;
+        esac
+        ;;
+    indexation)
+        case `count_opt $indexation` in
+        0)
+            _arguments \
+                "*:delimiter:$DELIMITERS"
+            ;;
+        1)
+            _headers "$base" "headers"
+            ;;
+        2)
+            _key_fields "$base" "key_fields"
+            ;;
+        3)
+            _arguments \
+                "*:discard duplicates:(_ Y N)"
+            ;;
+        4)
+            _fields "$base" "indices"
+            ;;
+        5)
+            _fields "$base" "join"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -i"
+            ;;
+        esac
+        ;;
+    interactive)
+        case `count_opt $interactive` in
+        0)
+            _fields "$base" "input field"
+            ;;
+        1)
+            _arguments \
+                "*:input type:(_ __key__ __exact__ __fuzzy__ __phonetic__)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -I"
+            ;;
+        esac
+        ;;
+    quiet_options)
+        case `count_opt $quiet_options` in
+        0)
+            _arguments \
+                "*:delimiter:$DELIMITERS"
+            ;;
+        1)
+            _arguments \
+                "*:header type:(_ RH CH N)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -Q"
+            ;;
+        esac
+        ;;
+    map_options)
+        case `count_opt $map_options` in
+        0)
+            _fields_extended "$base" "label field"
+            ;;
+        1)
+            _fields_extended "$base" "weigth field"
+            ;;
+        2)
+            _fields_extended "$base" "color field"
+            ;;
+        3)
+            _arguments \
+                "*:icon:(_ B S auto __none__)"
+            ;;
+        4)
+            _arguments \
+                "*:link duplicates:(_ Y N)"
+            ;;
+        5)
+            _arguments \
+                "*:draw join fields:(_ Y N)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -M"
+            ;;
+        esac
+        ;;
+    graph_fields)
+        _fields "$base" "graph field"
+        ;;
+    graph_weight)
+        _fields "$base" "graph weight"
+        ;;
+    #*)
+    #    _files
+    esac
+
+}
+
+
+_hello "$@"
 
 # Magic modeline option lo use zsh coloration in vim
 # vim: ft=zsh
