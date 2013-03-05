@@ -2381,13 +2381,34 @@ class GeoBase(object):
                 or not after data update
         :returns:           ``None``
 
+        Let's take an empty base.
+
         >>> geo_f.keys()
         []
-        >>> geo_f.setFromDict('frnic', {'code' : 'frnic', 'name': 'Nice', None: 'noo'})
+
+        Set a new key with a dict, then get the data back.
+
+        >>> d = {
+        ...     'code' : 'frnic',
+        ...     'name' : 'Nice',
+        ...     None   : 'noo'
+        ... }
+        >>> geo_f.setFromDict('frnic', d)
         >>> geo_f.keys()
         ['frnic']
         >>> geo_f.get('frnic')
         {'__gar__': [], '__par__': [], 'code': 'frnic', '__dup__': [], '__key__': 'frnic', '__lno__': 0, 'name': 'Nice'}
+
+        Here the base fields did not change.
+
+        >>> geo_f.fields
+        ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+
+        How to automatically update the base fields when setting data.
+
+        >>> geo_f.setFromDict('frnic', d, update_fields=True)
+        >>> geo_f.fields
+        ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'code', 'name']
         """
         # If the key is not in the base, we add it
         if key not in self:
