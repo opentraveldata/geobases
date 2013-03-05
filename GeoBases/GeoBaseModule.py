@@ -77,7 +77,9 @@ def soundex(name, length=4):
     fc = ''
 
     # translate alpha chars in name to soundex digits
-    for c in name.upper():
+    # we convert to ascii, get the code and then use chr
+    for code in name.upper().encode("ascii", "ignore"):
+        c = chr(code)
         if c.isalpha():
             if not fc:
                 fc = c # remember first letter
