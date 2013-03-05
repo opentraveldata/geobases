@@ -58,15 +58,14 @@ import csv
 import json
 from shutil import copy
 
-# Not in standard library
-from fuzzy import DMetaphone, nysiis
-dmeta = DMetaphone()
-
+from .SourcesManagerModule import SourcesManager
 from .GeoUtils             import haversine
 from .LevenshteinUtils     import mod_leven, clean
 from .GeoGridModule        import GeoGrid
-from .SourcesManagerModule import SourcesManager
 
+# Not in standard library
+from fuzzy import DMetaphone, nysiis
+dmeta = DMetaphone()
 
 try:
     # This wrapper will raise an ImportError
@@ -1416,6 +1415,9 @@ class GeoBase(object):
     def _findWithUsingMultipleIndex(self, conditions, from_keys, mode, verbose=False):
         """Perform findWith using several indexes.
         """
+        # In case conditions is an iterator
+        conditions = list(conditions)
+
         fields = tuple(f for f, _ in conditions)
         values = tuple(v for _, v in conditions)
 
@@ -1551,6 +1553,9 @@ class GeoBase(object):
         """
         if from_keys is None:
             from_keys = iter(self)
+
+        # In case conditions is an iterator
+        conditions = list(conditions)
 
         # We check here the fields in conditions
         # because KeyError are catched next
