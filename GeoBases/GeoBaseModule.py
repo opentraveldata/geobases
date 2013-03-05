@@ -1111,7 +1111,7 @@ class GeoBase(object):
                 ``None`` if any problem happened during execution
 
         >>> geo_o.getLocation('AGN')
-        (57.5..., -134....)
+        (57.5..., -134...)
         >>> geo_o.getLocation('WPS') # no usable geocode => None
 
         Behavior on unkwown key.
