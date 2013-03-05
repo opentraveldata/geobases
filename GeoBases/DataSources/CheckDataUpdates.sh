@@ -4,7 +4,10 @@
 # We could move to the installation directory if we knew it
 cd `dirname $0`
 
-TMP_CSV='/tmp/fsdlkghiueevlr_01.csv'
+TMP_DIR='/tmp'
+
+TMP_VIEW_1='/tmp/fsdlkghiueevlr_02.csv'
+TMP_VIEW_2='/tmp/fsdlkghiueevlr_03.csv'
 
 # By default, we will ask the user permission to replace
 # the old file, unless -f option is triggered
@@ -24,6 +27,27 @@ while getopts ":f" opt; do
 done
 
 
+view() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip -qca $1   ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           cat $1          ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
 extract_one() {
     unzip -q $1 $2
     mv $2 $1
@@ -40,29 +64,18 @@ split_fcodes() {
 
 do_a_file() {
 
+    local TMP_CSV
     local REF_URL="$1"
     local LOC_CSV="$2"
-    local NO_HEAD="$3"
-    local UNZIP_F="$4"
-    local CHOOSED="$5"
-    local SPECIAL="$6"
+    local SPECIAL="$3"
 
     echo -e "\n* Comparing local and source:"
     echo -e "1. $PWD/$LOC_CSV"
     echo -e "2. $REF_URL"
 
     # Downloading
+    TMP_CSV="$TMP_DIR"/`basename $REF_URL`
     wget $REF_URL -O $TMP_CSV -o /dev/null
-
-    # Unzip if necessary
-    if [ "$UNZIP_F" = "1" ]; then
-        extract_one $TMP_CSV $CHOOSED
-    fi
-
-    # Commenting header
-    if [ "$NO_HEAD" = "1" ]; then
-        comment_head $TMP_CSV
-    fi
 
     # Special process
     if [ "$SPECIAL" = "1" ]; then
@@ -75,7 +88,9 @@ do_a_file() {
     fi
 
     # Computing diff
-    DIFF=`diff -u $LOC_CSV $TMP_CSV`
+    view $LOC_CSV > $TMP_VIEW_1
+    view $TMP_CSV > $TMP_VIEW_2
+    DIFF=`diff -u $TMP_VIEW_1 $TMP_VIEW_2`
 
     if [ "$DIFF" = "" ]; then
         echo "* Nothing to do."
@@ -84,7 +99,7 @@ do_a_file() {
     fi
 
     echo -e "\n* Unified diff:"
-    diff -u $LOC_CSV $TMP_CSV
+    diff -u $TMP_VIEW_1 $TMP_VIEW_2
 
     if [ "$FORCE" = "0" ]; then
         echo -n "Replace? [Y/N]: "
@@ -113,15 +128,10 @@ REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_07='http://download.geonames.org/export/dump/iso-languagecodes.txt'
 REF_URL_08='http://download.geonames.org/export/dump/featureCodes_en.txt'
 REF_URL_09='http://download.geonames.org/export/dump/cities15000.zip'
-CHOOSED_09='cities15000.txt'
 REF_URL_10='http://download.geonames.org/export/dump/FR.zip'
-CHOOSED_10='FR.txt'
 REF_URL_11='http://download.geonames.org/export/dump/MC.zip'
-CHOOSED_11='MC.txt'
 REF_URL_12='http://download.geonames.org/export/zip/FR.zip'
-CHOOSED_12='FR.txt'
 REF_URL_13='http://download.geonames.org/export/zip/MC.zip'
-CHOOSED_13='MC.txt'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
 LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
@@ -131,27 +141,27 @@ LOC_CSV_05='Countries/countryInfo.txt'
 LOC_CSV_06='TimeZones/timeZones.txt'
 LOC_CSV_07='Languages/iso-languagecodes.txt'
 LOC_CSV_08='FeatureCodes/featureCodes_en.txt'
-LOC_CSV_09='Cities/cities15000.txt'
-LOC_CSV_10='Por/GeoNames/FR.txt'
-LOC_CSV_11='Por/GeoNames/MC.txt'
-LOC_CSV_12='PostalCodes/GeoNames/FR.txt'
-LOC_CSV_13='PostalCodes/GeoNames/MC.txt'
+LOC_CSV_09='Cities/cities15000.zip'
+LOC_CSV_10='Por/GeoNames/FR.zip'
+LOC_CSV_11='Por/GeoNames/MC.zip'
+LOC_CSV_12='PostalCodes/GeoNames/FR.zip'
+LOC_CSV_13='PostalCodes/GeoNames/MC.zip'
 
 
-#do_a_file REF_URL LOC_CSV NO_HEAD UNZIP_F
-do_a_file "$REF_URL_04" "$LOC_CSV_04" 1
-do_a_file "$REF_URL_05" "$LOC_CSV_05" 0
-do_a_file "$REF_URL_06" "$LOC_CSV_06" 1
-do_a_file "$REF_URL_07" "$LOC_CSV_07" 1
-do_a_file "$REF_URL_08" "$LOC_CSV_08" 0 0 ""            1
-do_a_file "$REF_URL_09" "$LOC_CSV_09" 0 1 "$CHOOSED_09"
-do_a_file "$REF_URL_10" "$LOC_CSV_10" 0 1 "$CHOOSED_10"
-do_a_file "$REF_URL_11" "$LOC_CSV_11" 0 1 "$CHOOSED_11"
-do_a_file "$REF_URL_12" "$LOC_CSV_12" 0 1 "$CHOOSED_12"
-do_a_file "$REF_URL_13" "$LOC_CSV_13" 0 1 "$CHOOSED_13"
+#do_a_file REF_URL LOC_CSV
+do_a_file "$REF_URL_04" "$LOC_CSV_04"
+do_a_file "$REF_URL_05" "$LOC_CSV_05"
+do_a_file "$REF_URL_06" "$LOC_CSV_06"
+do_a_file "$REF_URL_07" "$LOC_CSV_07"
+do_a_file "$REF_URL_08" "$LOC_CSV_08" 1
+do_a_file "$REF_URL_09" "$LOC_CSV_09"
+do_a_file "$REF_URL_10" "$LOC_CSV_10"
+do_a_file "$REF_URL_11" "$LOC_CSV_11"
+do_a_file "$REF_URL_12" "$LOC_CSV_12"
+do_a_file "$REF_URL_13" "$LOC_CSV_13"
 
 # The longest at the end
-do_a_file "$REF_URL_03" "$LOC_CSV_03" 1
-do_a_file "$REF_URL_02" "$LOC_CSV_02" 1
-do_a_file "$REF_URL_01" "$LOC_CSV_01" 1
+do_a_file "$REF_URL_03" "$LOC_CSV_03"
+do_a_file "$REF_URL_02" "$LOC_CSV_02"
+do_a_file "$REF_URL_01" "$LOC_CSV_01"
 

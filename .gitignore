@@ -28,3 +28,5 @@
 # Ignoring profiling reports
 /*.prof
 /*.lprof
+# Ignoring backuop files
+*.orig.*

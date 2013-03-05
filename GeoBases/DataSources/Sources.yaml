@@ -2,9 +2,13 @@
 # Sources description
 #
 
+# That one is completely empty on purpose
+feed:
+
+
 airports:
-    source    : Airports/GeoNames/airports_geonames_only_clean.csv
-    indexes   : iata_code
+    paths     : Airports/GeoNames/airports_geonames_only_clean.csv
+    key_fields: iata_code
     delimiter : ^
     headers   :
         - iata_code
@@ -17,8 +21,11 @@ airports:
 
 
 countries:
-    source    : Countries/countryInfo.txt
-    indexes   : code
+    paths     :
+        #- /thing/that/does/not/exist
+        - Countries/countryInfo.txt
+        - 'http://download.geonames.org/export/dump/countryInfo.txt'
+    key_fields: code
     delimiter : "\t"
     subdelimiters :
         languages : ','
@@ -45,8 +52,8 @@ countries:
 
 
 capitals:
-    source    : Countries/capitals.csv
-    indexes   : country_code
+    paths     : Countries/capitals.csv
+    key_fields: country_code
     delimiter : ^
     headers   :
         - country_code
@@ -59,8 +66,8 @@ capitals:
 
 
 continents:
-    source    : Continents/continentCodes.txt
-    indexes   : code
+    paths     : Continents/continentCodes.txt
+    key_fields: code
     delimiter : "\t"
     headers   :
         - code
@@ -69,8 +76,8 @@ continents:
 
 
 stations:
-    source    : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
-    indexes   : code
+    paths     : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
+    key_fields: code
     delimiter : ^
     subdelimiters :
         lines: ','
@@ -84,8 +91,8 @@ stations:
 
 
 stations_nls:
-    source    : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
-    indexes   : nls_code
+    paths     : TrainStations/NLS/NLS_CODES_RefDataSNCF.csv
+    key_fields: nls_code
     delimiter : ','
     headers   :
         - uic_code
@@ -95,8 +102,8 @@ stations_nls:
 
 
 stations_uic:
-    source    : TrainStations/UIC/sncfExtract_v1.0.csv
-    indexes   : uic_code
+    paths     : TrainStations/UIC/sncfExtract_v1.0.csv
+    key_fields: uic_code
     delimiter : ','
     headers   :
         - uic_code
@@ -106,9 +113,12 @@ stations_uic:
 
 
 languages:
-    source    : Languages/iso-languagecodes.txt
-    indexes   : code
+    paths     :
+        - Languages/iso-languagecodes.txt
+        - 'http://download.geonames.org/export/dump/iso-languagecodes.txt'
+    key_fields: code
     delimiter : "\t"
+    skip      : 1
     headers   :
         - code
         - code_iso_2
@@ -117,9 +127,12 @@ languages:
 
 
 timezones:
-    source    : TimeZones/timeZones.txt
-    indexes   : code
+    paths     :
+        - file : TimeZones/timeZones.txt
+        - file : 'http://download.geonames.org/export/dump/timeZones.txt'
+    key_fields: code
     delimiter : "\t"
+    skip      : 1
     headers   :
         - country_code
         - code
@@ -129,8 +142,12 @@ timezones:
 
 
 cities:
-    source    : Cities/cities15000.txt
-    indexes   : code
+    paths     :
+        - file    : Cities/cities15000.zip
+          extract : cities15000.txt
+        - file    : 'http://download.geonames.org/export/dump/cities15000.zip'
+          extract : cities15000.txt
+    key_fields: code
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -157,9 +174,15 @@ cities:
 
 
 ori_por:
-    source        : Por/Ori/ori_por_public.csv
-    indexes       : iata_code
+    paths         : &ori_por_paths
+        - Por/Ori/ori_por_public.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
+    key_fields    : iata_code
+    indices       :
+        - iata_code
+        - [iata_code, country_code]
     limit         : # put a number to load only the first lines
+    skip          : 1 # put a number to skip the first lines
     discard_dups  : false # This is the default behavior anyway
     delimiter     : ^
     subdelimiters : &ori_por_subdel
@@ -168,6 +191,15 @@ ori_por:
         #location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
+    join:
+        - fields: country_code
+          with  : [countries, code]
+        # Freaking auto join possibility
+        - fields: tvl_por_list
+          with  : [ori_por, iata_code]
+        # Join on multiple fields examples
+        #- fields: [city_code, location_type]
+        #  with  : [ori_por, [iata_code, location_type]]
     headers : &ori_por_headers
         - iata_code
         - icao_code
@@ -216,24 +248,28 @@ ori_por:
 
 
 ori_por_multi:
-    source        : Por/Ori/ori_por_public.csv
-    indexes       : [iata_code, location_type]
+    paths         : *ori_por_paths
+    key_fields    : [iata_code, location_type]
     delimiter     : ^
+    skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
 
 
 ori_por_non_iata:
-    source        : Por/Ori/ori_por_non_iata.csv
-    indexes       : iata_code
+    paths         :
+        - Por/Ori/ori_por_non_iata.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
+    key_fields    : iata_code
     delimiter     : ^
+    skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
 
 
 currencies:
-    source    : Currencies/wiki_source_ISO_4217.csv
-    indexes   : currency_code
+    paths     : Currencies/wiki_source_ISO_4217.csv
+    key_fields: currency_code
     delimiter : ;
     subdelimiters :
         countries : ','
@@ -246,9 +282,12 @@ currencies:
 
 
 airlines:
-    source    : Airlines/ori_airlines.csv
-    indexes   : unified_code
+    paths     :
+        - Airlines/ori_airlines.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
+    key_fields: unified_code
     delimiter : ^
+    skip      : 1
     headers   :
         - unified_code
         - 3char_code
@@ -261,8 +300,8 @@ airlines:
 
 
 cabins:
-    source    : Cabins/cabins.csv
-    indexes   : code
+    paths     : Cabins/cabins.csv
+    key_fields: code
     delimiter : ^
     headers   :
         - code
@@ -270,8 +309,8 @@ cabins:
 
 
 locales:
-    source    : Locales/locales.csv
-    indexes   : locale
+    paths     : Locales/locales.csv
+    key_fields: locale
     delimiter : ;
     headers   :
         - locale
@@ -284,8 +323,8 @@ locales:
 
 
 location_types:
-    source    : LocationTypes/location_types.csv
-    indexes   : location_type
+    paths     : LocationTypes/location_types.csv
+    key_fields: location_type
     delimiter : ^
     headers   :
         - location_type
@@ -293,8 +332,8 @@ location_types:
 
 
 feature_classes:
-    source    : FeatureClasses/feature_classes.csv
-    indexes   : fclass
+    paths     : FeatureClasses/feature_classes.csv
+    key_fields: fclass
     delimiter : ^
     headers   :
         - fclass
@@ -302,8 +341,8 @@ feature_classes:
 
 
 feature_codes:
-    source    : FeatureCodes/featureCodes_en.txt
-    indexes   : fcode
+    paths     : FeatureCodes/featureCodes_en.txt
+    key_fields: fcode
     delimiter : "\t"
     headers   :
         - fclass
@@ -313,8 +352,12 @@ feature_codes:
 
 
 geonames_FR:
-    source    : Por/GeoNames/FR.txt
-    indexes   : geoname_id
+    paths     :
+        - file    : Por/GeoNames/FR.zip
+          extract : FR.txt
+        - file    : 'http://download.geonames.org/export/dump/FR.zip'
+          extract : FR.txt
+    key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -341,8 +384,12 @@ geonames_FR:
 
 
 geonames_MC:
-    source    : Por/GeoNames/MC.txt
-    indexes   : geoname_id
+    paths     :
+        - file    : Por/GeoNames/MC.zip
+          extract : MC.txt
+        - file    : 'http://download.geonames.org/export/dump/MC.zip'
+          extract : MC.txt
+    key_fields: geoname_id
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
@@ -350,8 +397,12 @@ geonames_MC:
 
 
 postal_codes_FR:
-    source    : PostalCodes/GeoNames/FR.txt
-    indexes   : &postal_codes_ind postal_code
+    paths     :
+        - file    : PostalCodes/GeoNames/FR.zip
+          extract : FR.txt
+        - file    : 'http://download.geonames.org/export/zip/FR.zip'
+          extract : FR.txt
+    key_fields: &postal_codes_key postal_code
     delimiter : "\t"
     headers   : &postal_codes_headers
         - country_code
@@ -369,8 +420,12 @@ postal_codes_FR:
 
 
 postal_codes_MC:
-    source    : PostalCodes/GeoNames/MC.txt
-    indexes   : *postal_codes_ind
+    paths     :
+        - file    : PostalCodes/GeoNames/MC.zip
+          extract : MC.txt
+        - file    : 'http://download.geonames.org/export/zip/MC.zip'
+          extract : MC.txt
+    key_fields: *postal_codes_key
     delimiter : "\t"
     headers   : *postal_codes_headers
 

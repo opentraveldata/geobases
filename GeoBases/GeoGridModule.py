@@ -9,7 +9,7 @@ to provide geographical indexation features.
     Setting grid precision to 4, avg radius to 20km
     >>> a.add('ORY', (48.72, 2.359))
     >>> a.add('CDG', (48.75, 2.361))
-    >>> list(a._findInAdjacentCases(encode(48.72, 2.359, a._precision), N=2))
+    >>> list(a._findInAdjacentCases(encode(48.72, 2.359, a.precision), N=2))
     ['ORY', 'CDG']
     >>> a._keys['ORY']
     {'case': 'u09t', 'lat_lng': (48.7..., 2.359)}
@@ -37,6 +37,7 @@ to provide geographical indexation features.
 
 
 import itertools
+import heapq
 from geohash import encode, neighbors
 
 from .GeoUtils import haversine
@@ -63,21 +64,30 @@ class GeoGrid(object):
     """
     This is the main and only class.
     """
-    def __init__(self, precision=5, radius=None, verbose=True):
+    def __init__(self, radius=None, precision=5, verbose=True):
         """Creates grid.
 
-        :param radius:    the grid accuracy, in kilometers
-        :param precision: the hash length, if radius is given, this length is \
+        :param radius:    the grid accuracy, in kilometers. If ``None``, \
+                the ``precision`` parameter is used to define grid size
+        :param precision: the hash length. This is only used if ``radius`` \
+                is ``None``, otherwise this parameter (a hash length) is \
                 computed from the radius
         :param verbose:   toggle verbosity
         :returns:         None
         """
+        # True is considered an int but we do not want that
+        if radius is True or \
+           (radius is not None and not isinstance(radius, (float, int))):
+            raise ValueError('radius should be float, int or None, was "%s"' % str(radius))
+
         if radius is not None:
             get_error = lambda x: (x[1][4] < radius,  abs(radius - x[1][4]))
             # Tricky, min of values only positive here
             precision = min(HASH_TO_ERROR.items(), key=get_error)[0]
 
-        self._precision  = precision
+        self.radius    = radius
+        self.precision = precision
+
         self._avg_radius = HASH_TO_ERROR[precision][4]
 
         # Double mapping
@@ -85,7 +95,8 @@ class GeoGrid(object):
         self._grid = {}
 
         if verbose:
-            print('Setting grid precision to %s, avg radius to %skm' % (precision, self._avg_radius))
+            print('Setting grid precision to %s, avg radius to %skm' % \
+                    (precision, self._avg_radius))
 
 
     def _computeCaseId(self, lat_lng):
@@ -95,7 +106,7 @@ class GeoGrid(object):
         :param lat_lng: the lat_lng of the point (a tuple of (lat, lng))
         :returns:       the case_id
         """
-        return encode(*lat_lng, precision=self._precision)
+        return encode(*lat_lng, precision=self.precision)
 
 
 
@@ -113,9 +124,10 @@ class GeoGrid(object):
 
         except (TypeError, Exception):
             # TypeError for wrong type (NoneType, str)
-            # Exception for invalid coordinates
+            # Exception for invalid coordinates (raised by geohash module)
             if verbose:
-                print('Wrong coordinates %s for key %s, skipping point.' % (str(lat_lng), key))
+                print('Wrong coordinates %s for key %s, skipping point.' % \
+                        (str(lat_lng), key))
             return
 
         self._keys[key] = {
@@ -166,18 +178,21 @@ class GeoGrid(object):
 
 
 
-    def _check_distance(self, candidate, ref_lat_lng, radius):
+    def _check_distance(self, candidate, ref_lat_lng, radius=None):
         """
         Filter from a iterator of candidates, the ones 
         who are within a radius if a ref_lat_lng.
 
         Yields the good ones.
         """
-        for can in candidate:
-
-            dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
-
-            if dist <= radius:
+        if radius is not None:
+            for can in candidate:
+                dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
+                if dist <= radius:
+                    yield (dist, can)
+        else:
+            for can in candidate:
+                dist = haversine(ref_lat_lng, self._keys[can]['lat_lng'])
                 yield (dist, can)
 
 
@@ -231,18 +246,20 @@ class GeoGrid(object):
         at the surface of a sphere, here returns kilometers,
         so the radius should be in kms.
 
-        :param lat_lng: the lat_lng of the point (a tuple of (lat, lng))
-        :param radius:  the radius of the search (kilometers)
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
+        :param radius:    the radius of the search (kilometers)
+        :param double_check: when using grid, perform an additional check on \
+            results distance, this is useful because the grid is approximate, \
+            so the results are only as accurate as the grid size
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if lat_lng is None:
             # Case where the lat_lng was missing from base
             return iter([])
 
-        candidate = self._findNearCase(self._computeCaseId(lat_lng), radius)
+        candidate = self._findNearCase(case_id=self._computeCaseId(lat_lng),
+                                       radius=radius)
 
         if double_check:
             return self._check_distance(candidate, lat_lng, radius)
@@ -253,24 +270,27 @@ class GeoGrid(object):
 
     def findNearKey(self, key, radius=20, double_check=False):
         """
-        Same as findNearPoint, except the point is given
-        not by a lat/lng, but with its key, like ORY or SFO.
-        We just look up in the base to retrieve lat/lng, and
-        call findNearPoint.
+        Same as ``findNearPoint``, except the point is given
+        not by a ``(lat, lng)``, but with its key, like ``'ORY'`` or ``'SFO'``.
+        We just look up in the base to retrieve latitude and longitude, then
+        call ``findNearPoint``.
 
-        :param key:     the key
-        :param radius:  the radius of the search (kilometers)
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param key:       the key of the thing (like ``'SFO'``)
+        :param radius:    the radius of the search (kilometers)
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode
             # and as such was never indexed
             return iter([])
 
-        candidate = self._findNearCase(self._keys[key]['case'], radius)
+        candidate = self._findNearCase(case_id=self._keys[key]['case'],
+                                       radius=radius)
 
         if double_check:
             return self._check_distance(candidate, self._keys[key]['lat_lng'], radius)
@@ -300,7 +320,7 @@ class GeoGrid(object):
             # Heuristic
             # We have to compare the distance of the farthest found
             # against the distance really covered by the search
-            #print frontier
+            #print(frontier)
             if len(found) >= N and len(frontier) > 1:
                 break
 
@@ -310,24 +330,23 @@ class GeoGrid(object):
 
     def findClosestFromPoint(self, lat_lng, N=1, double_check=False, from_keys=None):
         """
-        Concept close to findNearPoint, but here we do not
+        Concept close to ``findNearPoint``, but here we do not
         look for the things radius-close to a point,
         we look for the closest thing from this point, given by
         latitude/longitude.
 
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
-
-        :param lat_lng:   the lat_lng of the point (a tuple of (lat, lng))
+        :param lat_lng:   the lat_lng of the point (a tuple ``(lat, lng)``)
         :param N:         the N closest results wanted
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param double_check: when using grid, perform an additional check on \
+            results distance, this is useful because the grid is \
+            approximate, so the results are only as accurate as the grid size
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromPoint``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
+        :returns:       an iterable of ``(distance, key)`` like \
+            ``[(3.2, 'SFO'), (4.5, 'LAX')]``
         """
         if lat_lng is None:
             # Case where the lat_lng was missing from base
@@ -349,34 +368,35 @@ class GeoGrid(object):
         N = min(N, len(self._keys))
 
         # The case of the point is computed by _computeCaseId
-        candidate = self._findClosestFromCase(self._computeCaseId(lat_lng), N, from_keys)
+        candidate = self._findClosestFromCase(case_id=self._computeCaseId(lat_lng),
+                                              N=N,
+                                              from_keys=from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, lat_lng, radius=float('inf')))[:N]
+            return heapq.nsmallest(N, self._check_distance(candidate, lat_lng))
         else:
             return ((0, f) for f in candidate)
 
 
     def findClosestFromKey(self, key, N=1, double_check=False, from_keys=None):
         """
-        Concept close to findNearPoint, but here we do not
-        look for the things radius-close to a point,
-        we look for the closest thing from this point, given by
-        latitude/longitude.
+        Same as ``findClosestFromPoint``, except the point is given
+        not by a ``(lat, lng)``, but with its key, like ``'ORY'`` or ``'SFO'``.
+        We just look up in the base to retrieve latitude and longitude, then
+        call ``findClosestFromPoint``.
 
-        Note that a similar implementation is done in
-        the LocalHelper, to find efficiently N closest point
-        in a graph, from a point (using heaps).
-
-        :param key:       the key
+        :param key:       the key of the thing (like ``'SFO'``)
         :param N:         the N closest results wanted
-        :param from_keys: if None, it takes all keys in consideration, else takes from_keys \
-            iterable of keys to perform findClosestFromPoint. This is useful when we have names \
-            and have to perform a matching based on name and location (see fuzzyGetAroundLatLng).
-        :param double_check: when using grid, perform an additional check on results distance, \
-            this is useful because the grid is approximate, so the results are only as accurate \
-            as the grid size
-        :returns:       an iterable of (distance, key) like [(3.2, 'SFO'), (4.5, 'LAX')]
+        :param double_check: when using grid, perform an additional check on \
+                results distance, this is useful because the grid is \
+                approximate, so the results are only as accurate as the \
+                grid size
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+            else takes ``from_keys`` iterable of keys to perform \
+            ``findClosestFromKey``. This is useful when we have names and \
+            have to perform a matching based on name and location \
+            (see ``fuzzyFindNearPoint``).
+        :returns:       an iterable of ``(distance, key)`` like \
         """
         if key not in self._keys:
             # Case where the key probably did not have a proper geocode
@@ -399,10 +419,12 @@ class GeoGrid(object):
         N = min(N, len(self._keys))
 
         # The case of the point is just retrieved
-        candidate = self._findClosestFromCase(self._keys[key]['case'], N, from_keys)
+        candidate = self._findClosestFromCase(case_id=self._keys[key]['case'],
+                                              N=N,
+                                              from_keys=from_keys)
 
         if double_check:
-            return sorted(self._check_distance(candidate, self._keys[key]['lat_lng'], radius=float('inf')))[:N]
+            return heapq.nsmallest(N, self._check_distance(candidate, self._keys[key]['lat_lng']))
         else:
             return ((0, f) for f in candidate)
 

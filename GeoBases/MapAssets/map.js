@@ -187,21 +187,21 @@ function initialize(jsonData) {
     var f = fields.length;
     var n = jsonData.points.length;
 
-    var point_color     = jsonData.meta.point_color;
-    var point_size      = jsonData.meta.point_size;
-    var base_icon       = jsonData.meta.base_icon;
+    var icon_color      = jsonData.meta.icon_color;
+    var icon_weight     = jsonData.meta.icon_weight;
     var icon_type       = jsonData.meta.icon_type;
+    var base_icon       = jsonData.meta.base_icon;
     //var link_duplicates = jsonData.meta.link_duplicates;
-    var nb_user_lines   = jsonData.meta.nb_user_lines;
+    var toggle_lines    = jsonData.meta.toggle_lines;
 
-    var with_markers = icon_type   !== null;
-    var with_circles = point_size  !== null;
-    var with_colors  = point_color !== null;
+    var with_icons   = icon_type   !== null;
+    var with_circles = icon_weight !== null;
+    var with_colors  = icon_color  !== null;
 
     var getMarkerIcon  = function (color) { return color + '_' + base_icon; };
     var getCircleColor;
 
-    if (with_markers || ! with_colors) {
+    if (with_icons || ! with_colors) {
         getCircleColor = function (color) { return 'black'; };
     } else {
         getCircleColor = function (color) { return color; };
@@ -221,14 +221,14 @@ function initialize(jsonData) {
         }
     }
 
-    var i, j, c, e, s, latlng, marker, circle, circle_col, has_circle;
+    var i, j, c, e, w, latlng, marker, circle, circle_col, has_circle;
     var max_value = 0;
 
     // Load the data
     for (i=0 ; i<n ; i++) {
 
         e = jsonData.points[i];
-        s = parseFloat(e.__siz__);
+        w = parseFloat(e.__wei__);
 
         latlng = new google.maps.LatLng(e.lat, e.lng);
 
@@ -237,10 +237,10 @@ function initialize(jsonData) {
             continue;
         }
 
-        has_circle = (! isNaN(s)) && s > 0;
+        has_circle = (! isNaN(w)) && w > 0;
         circle_col = getCircleColor(e.__col__);
 
-        if (! with_markers && ! has_circle) {
+        if (! with_icons && ! has_circle) {
             // If no markers, only circles are displayed.
             // If no circle too, let's move on
             // Note that lines will not go through these
@@ -255,7 +255,7 @@ function initialize(jsonData) {
             draggable   : false
         });
 
-        if (with_markers) {
+        if (with_icons) {
             marker.setMap(map);
             marker.setIcon(getMarkerIcon(e.__col__));
         }
@@ -294,9 +294,9 @@ function initialize(jsonData) {
         centersArray.push(latlng);
 
         if (has_circle) {
-            // We compute the biggest __siz__ value
-            if (s > max_value) {
-                max_value = s;
+            // We compute the biggest __wei__ value
+            if (w > max_value) {
+                max_value = w;
             }
             circle = new google.maps.Circle({
                 center          : latlng,
@@ -311,14 +311,14 @@ function initialize(jsonData) {
             });
 
             // Augmenting the marker type
-            circle.size = s;
+            circle.weight = w;
             circle.help = ' ' +
-            '<div class="infowindow large">' +
+            '<div class="infowindow medium">' +
                 '<h3>{0}</h3>'.fmt(e.__lab__) +
-                '<i>{0}</i> {1}<br/>'.fmt(point_size, s);
+                '<i>{0}</i> {1}<br/>'.fmt(icon_weight, w);
 
             if (with_colors) {
-                circle.help += '<i>{0}</i> {1} ({2})'.fmt(point_color, e.__cat__, e.__col__);
+                circle.help += '<i>{0}</i> {1} ({2})'.fmt(icon_color, e.__cat__, e.__col__);
             }
 
             circle.help += ' ' +
@@ -335,7 +335,7 @@ function initialize(jsonData) {
         }
     }
 
-    // Ratio of map size for circles on the map
+    // Ratio for circles surface on the map
     //var R = 100;
     var r = 0.15;
 
@@ -345,7 +345,7 @@ function initialize(jsonData) {
     }
 
     function updateCircles(value) {
-        // We compute the top radius given the map size
+        // We compute the top radius given the map surface
         var mapBounds = map.getBounds();
         var sw = mapBounds.getSouthWest();
         var ne = mapBounds.getNorthEast();
@@ -355,7 +355,7 @@ function initialize(jsonData) {
 
         for (i=0, c=circlesArray.length; i<c; i++) {
             circle = circlesArray[i];
-            circle.setRadius(Math.sqrt(circle.size / max_value) * biggest);
+            circle.setRadius(Math.sqrt(circle.weight / max_value) * biggest);
         }
     }
 
@@ -384,29 +384,32 @@ function initialize(jsonData) {
 
     // If no markers, we avoid a big
     // drift to the pacific ocean :)
-    if (n >= 2 && (with_markers || with_circles)) {
+    if (n >= 2 && (with_icons || with_circles)) {
         map.fitBounds(bounds);
     }
 
     // Add specified lines
-    var od, coords, line, d, help;
+    var ods, name, lcol, coords, line, d, help;
     var linesArray = [];
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
-        od = jsonData.lines[i];
+        ods  = jsonData.lines[i].path;
+        name = jsonData.lines[i].__lab__;
+        lcol = jsonData.lines[i].__col__;
 
         coords = [];
-        help   = '<div class="infowindow large">' +
-                     '<h3>Line</h3><table>';
+        help   = '<div class="infowindow medium">' +
+                     '<h3>{0}</h3><table>'.fmt(name) +
+                     '<tr><td><i>{0}</i></td><td><i>{1}</i></td></tr>'.fmt('Key', 'Label');
 
-        for (j=0, d=od.length; j<d; j++) {
+        for (j=0, d=ods.length; j<d; j++) {
 
-            latlng = new google.maps.LatLng(od[j].lat, od[j].lng);
+            latlng = new google.maps.LatLng(ods[j].lat, ods[j].lng);
 
             if (! isNaN(latlng.lat()) && ! isNaN(latlng.lng())) {
                 coords.push(latlng);
-                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(od[j]['__key__'], od[j]['__lab__']);
+                help += '<tr><td>{0}</td><td>{1}</td></tr>'.fmt(ods[j].__key__, ods[j].__lab__);
             }
         }
 
@@ -417,8 +420,8 @@ function initialize(jsonData) {
             geodesic        : true,
             clickable       : true,
             path            : coords,
-            strokeColor     : 'blue',
-            strokeOpacity   : 0.5,
+            strokeColor     : lcol,
+            strokeOpacity   : 0.4,
             strokeWeight    : 5
         });
 
@@ -449,7 +452,7 @@ function initialize(jsonData) {
 
     $('#lines').click(toggleLines);
 
-    if (nb_user_lines !== 0) {
+    if (toggle_lines) {
         // If the user defined some lines in input
         // We do not wait for him to click on the button
         toggleLines();
@@ -519,10 +522,10 @@ function initialize(jsonData) {
     '<table id="legendcontent" class="medium">' +
         '<tr><th><i>Icon</i></th><th><i>Color</i></th><th><i>Circle</i></th><th><i>Category</i></th><th><i>Volume</i></th></th>';
 
-    if (with_markers) {
+    if (with_icons) {
         row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>{5} points</td></tr>';
     } else {
-        row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>' + point_size + ' {5}</td></tr>';
+        row = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3} "{4}"</td><td>' + icon_weight + ' {5}</td></tr>';
     }
 
     for (i=0, c=jsonData.categories.length; i<c ;i++) {
@@ -530,18 +533,18 @@ function initialize(jsonData) {
         col  = jsonData.categories[i][1].color;
         vol  = jsonData.categories[i][1].volume;
 
-        if (with_markers) {
+        if (with_icons) {
             icon = '<img src="{0}" alt="icon"/>'.fmt(getMarkerIcon(col));
         } else {
             icon = '(none)';
         }
-        msg += row.fmt(icon, col, getCircleColor(col), point_color, cat, vol);
+        msg += row.fmt(icon, col, getCircleColor(col), icon_color, cat, vol);
     }
     msg += '</table>';
 
     // General information
     $('#legendPopup').html(msg);
-    $('#info').html('{0} <i>point(s) on map</i> (out of {1}), {2} <i>line(s)</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, point_color, point_size, max_value));
+    $('#info').html('{0} <i>point(s) on map</i> (out of {1}), {2} <i>line(s)</i>, {3} <i>{4}</i> categorie(s), <i>{5}</i> max: {6}'.fmt(markersArray.length, n, jsonData.lines.length, jsonData.categories.length, icon_color, icon_weight, max_value));
 
     // Press Escape event!
     // Use keydown instead of keypress for webkit-based browsers
