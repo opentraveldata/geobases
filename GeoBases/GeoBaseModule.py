@@ -85,12 +85,12 @@ def mod_leven(a, b):
 
 # Stubs for fuzzy
 #
-def soundex(name, len=4):
-    """ soundex module conforming to Knuth's algorithm
-        implementation 2000-12-24 by Gregory Jorgensen
-        public domain
+def soundex(name, length=4):
     """
-
+    Soundex module conforming to Knuth's algorithm
+    implementation 2000-12-24 by Gregory Jorgensen
+    public domain
+    """
     # digits holds the soundex values for the alphabet
     digits = '01230120022455012623010202'
     sndx = ''
@@ -99,8 +99,9 @@ def soundex(name, len=4):
     # translate alpha chars in name to soundex digits
     for c in name.upper():
         if c.isalpha():
-            if not fc: fc = c   # remember first letter
-            d = digits[ord(c)-ord('A')]
+            if not fc:
+                fc = c # remember first letter
+            d = digits[ord(c) - ord('A')]
             # duplicate consecutive soundex digits are skipped
             if not sndx or (d != sndx[-1]):
                 sndx += d
@@ -109,14 +110,14 @@ def soundex(name, len=4):
     sndx = fc + sndx[1:]
 
     # remove all 0s from the soundex code
-    sndx = sndx.replace('0','')
+    sndx = sndx.replace('0', '')
 
     # return soundex code padded to len characters
-    return (sndx + (len * '0'))[:len]
+    return (sndx + (length * '0'))[:length]
 
 # We stub mysiis and dmetaphone to the soundex algorithm
 nysiis = soundex
-dmeta  = lambda s: (soundex(s), None)
+dmeta  = lambda s: [soundex(s), None]
 
 try:
     # This wrapper will raise an ImportError
@@ -973,11 +974,7 @@ class GeoBase(object):
         :returns:       a boolean
 
         >>> geo_t.hasGrid()
-        True
-        >>> geo_t.dropGrid()
-        >>> geo_t.hasGrid()
         False
-        >>> geo_t.addGrid()
         """
         return self._ggrid is not None
 
@@ -2110,9 +2107,9 @@ class GeoBase(object):
         :returns:         the phonemes
 
         >>> GeoBase.phonemes('sheekago')
-        ['XKK', None]
+        ['S220', None]
         >>> GeoBase.phonemes('sheekago', 'nysiis')
-        'SACAG'
+        'S220'
         """
         get_phonemes, _ = build_get_phonemes(method)
 
@@ -2131,21 +2128,20 @@ class GeoBase(object):
         :returns:         an iterable of (phonemes, key) matching
 
         >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
-        ['Chicago']
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
         >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
-        ['Chicago']
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
 
         Alternate methods.
 
         >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
-        Looking for phonemes like ['XKK', None] (for "chicago")
-        [(['XKK', None], 'CHI')]
+        Looking for phonemes like ['C220', None] (for "chicago")
+        [(['C220', None], 'CHK@1'), (['C220', None], 'CCC'), (['C220', None], 'CHI'), (['C220', None], 'CUV@1'), (['C220', None], 'CAQ@1')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
-        [('XKK', 'CHI')]
+        [('C220', 'CHK@1'), ('C220', 'CCC'), ('C220', 'CHI'), ('C220', 'CUV@1'), ('C220', 'CAQ@1')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
-        [('CACAG', 'CHI')]
+        [('C220', 'CHK@1'), ('C220', 'CCC'), ('C220', 'CHI'), ('C220', 'CUV@1'), ('C220', 'CAQ@1')]
         """
-
         get_phonemes, matcher = build_get_phonemes(method)
 
         if from_keys is None:
