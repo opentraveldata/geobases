@@ -20,7 +20,7 @@ V5
  + CLI: possibility to show external fields from --show using field:external_field syntax
  + CLI: display join fields wih a different color
  + autoreference for autojoin to avoid loading ori_por twice
- + new hasJoin method, hasIndexOn is renamed hasIndex
+ + new hasJoin method
  + CLI: possibility to add subdelimiters and join clauses with header{base:field}{subdel} syntax
  + multiple join clause implementation on multiple fields, integrated with subdelimiters
  + subdelimiters are no longer filled with None values
@@ -52,7 +52,7 @@ V5
  + options: -w/--warnings is now -v/--verbose, -v/--version is -V/--version, -g/--gridless is -d/--disable-grid
  + more tests
  + consistent verbosity handling
- + multiple index possibility on every field, addIndex, dropIndex, hasIndexOn methods (access with -i for CLI)
+ + multiple index possibility on every field, addIndex, dropIndex, hasIndex methods (access with -i for CLI)
  + line number indexation when key_fields is None
  + changes in methods names for better consistency: find vs get
 
