@@ -58,15 +58,14 @@ import csv
 import json
 from shutil import copy
 
-# Not in standard library
-from fuzzy import DMetaphone, nysiis
-dmeta = DMetaphone()
-
 from .GeoUtils             import haversine
 from .LevenshteinUtils     import mod_leven, clean
 from .GeoGridModule        import GeoGrid
 from .SourcesManagerModule import SourcesManager
 
+# Not in standard library
+from fuzzy import DMetaphone, nysiis
+dmeta = DMetaphone()
 
 try:
     # This wrapper will raise an ImportError
