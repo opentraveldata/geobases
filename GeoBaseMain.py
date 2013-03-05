@@ -68,7 +68,11 @@ except ImportError:
     def ask_input(prompt, prefill=''):
         """Fallback.
         """
-        answer = raw_input('%s[%s] ' % (prompt, prefill))
+        if prefill:
+            answer = raw_input('%s[%s] ' % (prompt, prefill))
+        else:
+            answer = raw_input('%s' % prompt)
+
         if answer:
             return answer
         else:
