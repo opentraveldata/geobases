@@ -1631,26 +1631,29 @@ def admin_mode(admin, verbose=True):
         def_indices    = conf.get('indices',    DEFAULTS['indices'])
         def_join       = conf.get('join',       DEFAULTS['join'])
 
+        get_empty_path  = lambda : { 'file': '' }
+        get_empty_index = lambda : ''
+        get_empty_join  = lambda : { 'fields' : [], 'with' : [''] }
+
         if not def_paths:
-            def_paths = [{ 'file' : '' }]
+            def_paths = [get_empty_path()]
         else:
-            def_paths = list(S_MANAGER.convert_paths_format(def_paths, local=def_local))
+            def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
 
         if not def_indices:
-            def_indices = ['']
+            def_indices = [get_empty_index()]
 
         if not def_join:
-            def_join = [{
-                'fields' : [],
-                'with'   : ['']
-            }]
-
+            def_join = [get_empty_join()]
 
         # We will add non empty values here
-        new_conf = {}
-        # 1. Paths
-        new_conf['paths'] = []
+        new_conf = {
+            'paths'   : [],
+            'indices' : [],
+            'join' :    [],
+        }
 
+        # 1. Paths
         i = 0
         while True:
             if i < len(def_paths):
@@ -1662,7 +1665,7 @@ def admin_mode(admin, verbose=True):
                                           ('Y', 'y', 'N', 'n', ''),
                                           show=False)
                 if add_another in ('Y', 'y'):
-                    ref_path = { 'file' : '' }
+                    ref_path = get_empty_path()
                 else:
                     break
 
@@ -1698,12 +1701,8 @@ def admin_mode(admin, verbose=True):
 
         # 3. Headers
         headers = ask_input(questions[6], to_CLI('headers', def_headers)).strip()
-        if not headers:
-            headers = []
-        else:
-            headers = headers.split(SPLIT)
-
         if headers:
+            headers = headers.split(SPLIT)
             join, subdelimiters = clean_headers(headers)
             new_conf['headers'] = headers
             if join:
@@ -1722,23 +1721,51 @@ def admin_mode(admin, verbose=True):
 
 
         # 5. Indices
-        new_conf['indices'] = []
+        i = 0
+        while True:
+            if i < len(def_indices):
+                ref_index = def_indices[i]
+                i += 1
+            else:
+                # We add a new empty path if the user wants to add another one
+                add_another = ask_till_ok(questions[11] % 'index',
+                                          ('Y', 'y', 'N', 'n', ''),
+                                          show=False)
+                if add_another in ('Y', 'y'):
+                    ref_index = get_empty_index()
+                else:
+                    break
 
-        for ind in def_indices:
-            indices = ask_input(questions[8], to_CLI('one_indices', ind)).strip()
-            if indices:
-                indices = split_if_several(indices)
-                new_conf['indices'].append(indices)
+            index = ask_input(questions[8], to_CLI('one_indices', ref_index)).strip()
+            if not index:
+                print '/!\ Empty index, deleted'
+            else:
+                index = split_if_several(index)
+                new_conf['indices'].append(index)
 
 
         # 6. Join
-        new_conf['join'] = []
+        i = 0
+        while True:
+            if i < len(def_join):
+                ref_join = def_join[i]
+                i += 1
+            else:
+                # We add a new empty path if the user wants to add another one
+                add_another = ask_till_ok(questions[11] % 'join',
+                                          ('Y', 'y', 'N', 'n', ''),
+                                          show=False)
+                if add_another in ('Y', 'y'):
+                    ref_join = get_empty_join()
+                else:
+                    break
 
-        for j in def_join:
-            m_join = ask_input(questions[9], to_CLI('one_join', j)).strip()
+            m_join = ask_input(questions[9], to_CLI('one_join', ref_join)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
-            if m_join:
+            if not m_join:
+                print '/!\ Empty join, deleted'
+            else:
                 m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
 
                 if len(m_join[0]['with']) > 1:
