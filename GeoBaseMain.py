@@ -1485,6 +1485,52 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None):
     return response
 
 
+def admin_paths(ref_path, local, questions, verbose):
+    """Admin paths for a source.
+    """
+    path = ask_input(questions[2], to_CLI('one_paths', ref_path)).strip()
+
+    if not path:
+        # Empty path mean we want to delete it
+        return None, None
+
+    path = S_MANAGER.convert_paths_format(path, local=local)[0]
+
+    if path['file'].endswith('.zip'):
+        extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
+        path['extract'] = extract
+
+    if not is_remote(path):
+        # For local paths we propose copy in cache dir
+        path['file'] = op.realpath(path['file'])
+
+        if is_archive(path):
+            # We propose to store the root archive in cache
+            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                                     ('Y', 'y', 'N', 'n', ''),
+                                     show=False)
+
+            if use_cached in ('Y', 'y'):
+                _, copied = S_MANAGER.copy_to_cache(path['file'])
+                path['file'] = op.realpath(copied)
+
+    # We propose for tmp files to be used as primary sources
+    filename = S_MANAGER.handle_path(path, verbose=verbose)
+    if filename is None:
+        print '/!\ An error occurred when handling "%s".' % str(path)
+        return None, None
+
+    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                             ('Y', 'y', 'N', 'n', ''),
+                             show=False)
+
+    if use_cached in ('Y', 'y'):
+        _, copied = S_MANAGER.copy_to_cache(filename)
+        path['file'] = op.realpath(copied)
+
+    return path, filename
+
+
 def admin_mode(admin, verbose=True):
     """Handle admin commands.
     """
@@ -1603,48 +1649,12 @@ def admin_mode(admin, verbose=True):
         # 1. Paths
         new_conf['paths'] = []
 
-        for path in def_paths:
-            # Cheap copy
-            ref_path = dict(path.items())
+        for ref_path in def_paths:
 
-            path = ask_input(questions[2], to_CLI('one_paths', path)).strip()
+            path, filename = admin_paths(ref_path, def_local, questions, verbose)
 
-            if not path:
-                # Empty path mean we want to delete it
+            if path is None:
                 continue
-
-            path = S_MANAGER.convert_paths_format(path, local=def_local)[0]
-
-            if path['file'].endswith('.zip'):
-                extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
-                path['extract'] = extract
-
-
-            if not is_remote(path):
-                # For local paths we propose copy in cache dir
-                path['file'] = op.realpath(path['file'])
-
-                if is_archive(path):
-                    # We propose to store the root archive in cache
-                    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
-                                             ('Y', 'y', 'N', 'n', ''), show=False)
-
-                    if use_cached in ('Y', 'y'):
-                        _, copied = S_MANAGER.copy_to_cache(path['file'])
-                        path['file'] = op.realpath(copied)
-
-            # We propose for tmp files to be used as primary sources
-            filename = S_MANAGER.handle_path(path, verbose=verbose)
-            if filename is None:
-                print '/!\ An error occurred when handling "%s".' % str(path)
-                continue
-
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
-                                     ('Y', 'y', 'N', 'n', ''), show=False)
-
-            if use_cached in ('Y', 'y'):
-                _, copied = S_MANAGER.copy_to_cache(filename)
-                path['file'] = op.realpath(copied)
 
             new_conf['paths'].append(path)
 
