@@ -1485,13 +1485,13 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None):
     return response
 
 
-def admin_paths(ref_path, local, questions, verbose):
-    """Admin paths for a source.
+def admin_path(ref_path, local, questions, verbose):
+    """Admin path for a source.
     """
     path = ask_input(questions[2], to_CLI('one_paths', ref_path)).strip()
 
     if not path:
-        # Empty path mean we want to delete it
+        print '/!\ Empty path, deleted'
         return None, None
 
     path = S_MANAGER.convert_paths_format(path, local=local)[0]
@@ -1516,6 +1516,7 @@ def admin_paths(ref_path, local, questions, verbose):
 
     # We propose for tmp files to be used as primary sources
     filename = S_MANAGER.handle_path(path, verbose=verbose)
+
     if filename is None:
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
@@ -1556,6 +1557,7 @@ def admin_mode(admin, verbose=True):
         '[6/8] Indices     : ',
         '[7/8] Join        : ',
         '[8/8] Confirm [Yn]? ',
+        '[   ] Add another %s [yN]? ',
     ]
 
     if len(admin) < 1:
@@ -1632,7 +1634,7 @@ def admin_mode(admin, verbose=True):
         if not def_paths:
             def_paths = [{ 'file' : '' }]
         else:
-            def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
+            def_paths = list(S_MANAGER.convert_paths_format(def_paths, local=def_local))
 
         if not def_indices:
             def_indices = ['']
@@ -1649,17 +1651,30 @@ def admin_mode(admin, verbose=True):
         # 1. Paths
         new_conf['paths'] = []
 
-        for ref_path in def_paths:
+        i = 0
+        while True:
+            if i < len(def_paths):
+                ref_path = def_paths[i]
+                i += 1
+            else:
+                # We add a new empty path if the user wants to add another one
+                add_another = ask_till_ok(questions[11] % 'path',
+                                          ('Y', 'y', 'N', 'n', ''),
+                                          show=False)
+                if add_another in ('Y', 'y'):
+                    ref_path = { 'file' : '' }
+                else:
+                    break
 
-            path, filename = admin_paths(ref_path, def_local, questions, verbose)
+            path, filename = admin_path(ref_path, def_local, questions, verbose)
 
             if path is None:
                 continue
 
             new_conf['paths'].append(path)
 
+            # No need to download and check the first lines for known files
             if path == ref_path:
-                # No need to download and check the first lines for known files
                 continue
 
             with open(filename) as fl:
@@ -1672,6 +1687,7 @@ def admin_mode(admin, verbose=True):
             def_delimiter  = guess_delimiter(first_l)
             def_headers    = guess_headers(first_l.split(def_delimiter))
             def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
+
 
 
         # 2. Delimiter
