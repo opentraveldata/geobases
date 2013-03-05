@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + getLocation has a new *default* keyword argument to avoid key failure
  + learning mode with -a/--ask to learn of the CLI works
  + admin mode with -A/--admin to configure sources (persistent changes)
  + -A/--any is now -O/--or to control multiple --exact filters behavior
