@@ -58,11 +58,46 @@ import csv
 import json
 from shutil import copy
 
+from .SourcesManagerModule import SourcesManager
 from .GeoUtils             import haversine
 from .LevenshteinUtils     import mod_leven, clean
 from .GeoGridModule        import GeoGrid
-from .SourcesManagerModule import SourcesManager
 
+# Stubs for fuzzy
+#
+def soundex(name, length=4):
+    """
+    Soundex module conforming to Knuth's algorithm
+    implementation 2000-12-24 by Gregory Jorgensen
+    public domain
+    """
+    # digits holds the soundex values for the alphabet
+    digits = '01230120022455012623010202'
+    sndx = ''
+    fc = ''
+
+    # translate alpha chars in name to soundex digits
+    for c in name.upper():
+        if c.isalpha():
+            if not fc:
+                fc = c # remember first letter
+            d = digits[ord(c) - ord('A')]
+            # duplicate consecutive soundex digits are skipped
+            if not sndx or (d != sndx[-1]):
+                sndx += d
+
+    # replace first digit with first alpha character
+    sndx = fc + sndx[1:]
+
+    # remove all 0s from the soundex code
+    sndx = sndx.replace('0', '')
+
+    # return soundex code padded to len characters
+    return (sndx + (length * '0'))[:length]
+
+# We stub mysiis and dmetaphone to the soundex algorithm
+nysiis = soundex
+dmeta  = lambda s: [soundex(s), None]
 
 try:
     # This wrapper will raise an ImportError
@@ -2243,6 +2278,71 @@ class GeoBase(object):
                      key))
 
 
+    @staticmethod
+    def phonemes(value, method='dmetaphone'):
+        """Compute phonemes for any value.
+
+        :param value:     the input value
+        :param method:    change the phonetic method used
+        :returns:         the phonemes
+
+        >>> GeoBase.phonemes('sheekago')
+        ['S220', None]
+        >>> GeoBase.phonemes('sheekago', 'nysiis')
+        'S220'
+        """
+        get_phonemes, _ = build_get_phonemes(method)
+
+        return get_phonemes(value)
+
+
+    def phoneticFind(self, value, field, method='dmetaphone', from_keys=None, verbose=False):
+        """Phonetic search.
+
+        :param value:     the value for which we look for a match
+        :param field:     the field, like ``'name'``
+        :param method:    change the phonetic method used
+        :param from_keys: if ``None``, it takes all keys in consideration, \
+                else takes ``from_keys`` iterable of keys to perform search.
+        :param verbose:   toggle verbosity
+        :returns:         an iterable of (phonemes, key) matching
+
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
+        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
+
+        Alternate methods.
+
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        Looking for phonemes like ['C220', None] (for "chicago")
+        [(['C220', None], 'CHK@1'), (['C220', None], 'CCC'), (['C220', None], 'CHI'), (['C220', None], 'CUV@1'), (['C220', None], 'CAQ@1')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
+        [('C220', 'CHK@1'), ('C220', 'CCC'), ('C220', 'CHI'), ('C220', 'CUV@1'), ('C220', 'CAQ@1')]
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        [('C220', 'CHK@1'), ('C220', 'CCC'), ('C220', 'CHI'), ('C220', 'CUV@1'), ('C220', 'CAQ@1')]
+        """
+        get_phonemes, matcher = build_get_phonemes(method)
+
+        if from_keys is None:
+            from_keys = iter(self)
+
+        exp_phonemes = get_phonemes(value)
+
+        if verbose:
+            print('Looking for phonemes like %s (for "%s")' % (str(exp_phonemes), value))
+
+        for key in from_keys:
+            # Do not fail on unkown keys
+            if key not in self:
+                continue
+
+            phonemes = get_phonemes(self.get(key, field))
+
+            if matcher(phonemes, exp_phonemes):
+                yield phonemes, key
+
+
 
     def _updateFields(self, field):
         """Update fields list.
@@ -3440,6 +3540,33 @@ def tuplify(s):
         return (s,)
     else:
         return tuple(s)
+
+
+
+def build_get_phonemes(method):
+    """Compute phonemes method and matching phonemes method.
+    """
+    if method == 'metaphone':
+        get_phonemes = lambda s: dmeta(s)[0]
+        matcher = lambda s1, s2: s1 == s2
+
+    elif method == 'dmetaphone-strict':
+        get_phonemes = dmeta
+        matcher = lambda s1, s2: s1 == s2
+
+    elif method == 'dmetaphone':
+        get_phonemes = dmeta
+        matcher = lambda s1, s2: set(s1) & set(s2) - set([None])
+
+    elif method == 'nysiis':
+        get_phonemes = nysiis
+        matcher = lambda s1, s2: s1 == s2
+
+    else:
+        raise ValueError('Accepted methods are %s' % \
+                         ['metaphone', 'dmetaphone-strict', 'dmetaphone', 'nysiis'])
+
+    return get_phonemes, matcher
 
 
 
