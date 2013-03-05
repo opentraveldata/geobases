@@ -9,18 +9,11 @@ from sys import stdin, stderr, argv
 import os
 import os.path as op
 
-import pkg_resources
-from datetime import datetime
 from math import ceil, log
 from itertools import zip_longest, chain
 from textwrap import dedent
-import signal
 import platform
-import json
 import re
-import glob
-
-from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 # Not in standard library
 from termcolor import colored
@@ -34,6 +27,7 @@ from GeoBases import GeoBase, DEFAULTS, SourcesManager, is_remote, is_archive
 IS_WINDOWS = platform.system() in ('Windows',)
 
 if not IS_WINDOWS:
+    import signal
     # On windows, SIGPIPE does not exist
     # Do not produce broken pipes when head and tail are used
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -42,6 +36,7 @@ if not IS_WINDOWS:
 try:
     # readline is not available on every platform
     import readline
+    import glob
 
     def complete(text, state):
         """Activate autocomplete on input.
@@ -483,6 +478,8 @@ def launch_http_server(address, port):
     """
     # Note that in Python 3 we do not have to overload the class
     # with allow_address_reuse
+    from http.server import HTTPServer, SimpleHTTPRequestHandler
+
     httpd = HTTPServer((address, port), SimpleHTTPRequestHandler)
 
     try:
@@ -927,7 +924,7 @@ DEF_INDICES     = []
 DEF_JOIN_RAW = SKIP
 DEF_JOIN     = []
 
-# Port for SimpleHTTPServer
+# Globals for http server
 ADDRESS = '0.0.0.0'
 PORT    = 8000
 BROWSER = 'firefox'
@@ -2006,9 +2003,11 @@ def main():
     # CREATION
     #
     if logorrhea:
+        from datetime import datetime
         before_init = datetime.now()
 
     if args['version']:
+        import pkg_resources
         r = pkg_resources.require(PACKAGE_NAME)[0]
         print('Project  : %s' % r.project_name)
         print('Version  : %s' % r.version)
@@ -2580,6 +2579,7 @@ def main():
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
+            import json
             print(json.dumps(g.buildGraphData(graph_fields=graph_fields,
                                               graph_weight=graph_weight,
                                               with_types=args['with_types'],
