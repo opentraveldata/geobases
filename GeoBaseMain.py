@@ -68,7 +68,11 @@ except ImportError:
     def ask_input(prompt, prefill=''):
         """Fallback.
         """
-        answer = raw_input('%s[%s] ' % (prompt, prefill))
+        if prefill:
+            answer = raw_input('%s[%s] ' % (prompt, prefill))
+        else:
+            answer = raw_input('%s' % prompt)
+
         if answer:
             return answer
         else:
@@ -2036,7 +2040,9 @@ def main():
             admin_mode(args['admin'], verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
-        else:
+        finally:
+            # On Windows, you have to use finally because
+            # several KeyboardInterrupt seems to be raised
             exit(0)
 
 
@@ -2045,7 +2051,7 @@ def main():
             _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
-        else:
+        finally:
             exit(0)
 
 
