@@ -1416,6 +1416,9 @@ class GeoBase(object):
     def _findWithUsingMultipleIndex(self, conditions, from_keys, mode, verbose=False):
         """Perform findWith using several indexes.
         """
+        # In case conditions is an iterator
+        conditions = list(conditions)
+
         fields = tuple(f for f, _ in conditions)
         values = tuple(v for _, v in conditions)
 
@@ -1551,6 +1554,9 @@ class GeoBase(object):
         """
         if from_keys is None:
             from_keys = iter(self)
+
+        # In case conditions is an iterator
+        conditions = list(conditions)
 
         # We check here the fields in conditions
         # because KeyError are catched next
