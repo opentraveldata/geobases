@@ -2391,7 +2391,6 @@ class GeoBase(object):
         >>> d = {
         ...     'code' : 'frnic',
         ...     'name' : 'Nice',
-        ...     None   : 'noo'
         ... }
         >>> geo_f.setFromDict('frnic', d)
         >>> geo_f.keys()
@@ -2414,14 +2413,13 @@ class GeoBase(object):
         if key not in self:
             self._things[key] = self._emptyData(key, lno=0)
 
-        # Sud dict of not-None keys
-        sub_dict = dict(filter(lambda kv: kv[0] is not None,
-                               dictionary.iteritems()))
+        if None in dictionary:
+            raise ValueError('None is not accepted as field (in %s).' % dictionary)
 
-        self._things[key].update(sub_dict)
+        self._things[key].update(dictionary)
 
         if update_fields:
-            for field in sub_dict:
+            for field in dictionary:
                 self.updateFields(field)
 
 
