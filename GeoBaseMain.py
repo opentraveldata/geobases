@@ -845,7 +845,7 @@ def error(name, *args):
         print >> stderr, '\n/!\ Wrong type for "%s", should be "%s".' % (args[0], args[1])
 
     elif name == 'aborting':
-        print >> stderr, '\n/!\ %s' % args[0]
+        print >> stderr, '\n\n/!\ %s' % args[0]
 
     elif name == 'not_allowed':
         print >> stderr, '\n/!\ Value "%s" not allowed.' % args[0]
@@ -1840,6 +1840,7 @@ def ask_mode():
         '[4/5] From which point (key or geocode)? ',
         '[   ] Which limit for the search (kms or number)? ',
         '[5/5] Which display? ',
+        '[   ] Execute the command [yN]? ',
     ]
     # 1. Choose base
     base = ask_till_ok(questions[0], sorted(S_MANAGER))
@@ -1898,7 +1899,6 @@ def ask_mode():
     print
     print '            Equivalent one-liner command             '
     print '        with long options and short options          '
-    print '                      Run it!                        '
     print
 
     # Long version
@@ -1914,12 +1914,13 @@ def ask_mode():
     else:
         search_field_part = ''
 
-    print '%s' % ' '.join(e for e in [SCRIPT_NAME,
-                                      from_keys_part,
-                                      base_part,
-                                      search_field_part,
-                                      search_part,
-                                      frontend_part] if e)
+    command = ' '.join(e for e in [SCRIPT_NAME,
+                                   from_keys_part,
+                                   base_part,
+                                   search_field_part,
+                                   search_part,
+                                   frontend_part] if e)
+    print command
 
 
     # Short version
@@ -1935,13 +1936,19 @@ def ask_mode():
     else:
         search_field_part = ''
 
-    print '%s' % ' '.join(e for e in [SCRIPT_NAME,
-                                      from_keys_part,
-                                      base_part,
-                                      search_field_part,
-                                      search_part,
-                                      frontend_part] if e)
+    command = ' '.join(e for e in [SCRIPT_NAME,
+                                   from_keys_part,
+                                   base_part,
+                                   search_field_part,
+                                   search_part,
+                                   frontend_part] if e)
+    print command
     print '-----------------------------------------------------'
+    print
+
+    execute = ask_till_ok(questions[9], boolean=True)
+    if execute:
+        os.system(command)
 
     return parameters
 
