@@ -44,7 +44,7 @@ try:
     import readline
 
     def complete(text, state):
-        """Activate autocomplete on raw_input.
+        """Activate autocomplete on input.
         """
         return (glob.glob(text + '*') + [None])[state]
 
@@ -58,7 +58,7 @@ try:
         """
         readline.set_startup_hook(lambda: readline.insert_text(prefill))
         try:
-            return raw_input(prompt)
+            return input(prompt)
         finally:
             readline.set_startup_hook()
 
@@ -67,7 +67,7 @@ except ImportError:
     def ask_input(prompt, prefill=''):
         """Fallback.
         """
-        answer = raw_input('%s[%s] ' % (prompt, prefill))
+        answer = input('%s[%s] ' % (prompt, prefill))
         if answer:
             return answer
         else:
