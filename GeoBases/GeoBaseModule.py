@@ -1233,11 +1233,11 @@ class GeoBase(object):
             comb = product(*(iter_over_subdel(v, deep=False) for v in values))
 
             return tuple(tuple(ext_get(k) for _, k in
-                               ext_b.findWith(list(zip(join_fields, c))))
+                               ext_b.findWith(zip(join_fields, c)))
                          for c in comb)
         else:
             return tuple(ext_get(k) for _, k in
-                         ext_b.findWith(list(zip(join_fields, values))))
+                         ext_b.findWith(zip(join_fields, values)))
 
 
 
