@@ -470,7 +470,7 @@ def display_browser(templates, nb_res):
 
     if to_be_launched:
         urls = ['%s:%s/%s' % (ADDRESS, PORT, tpl) for tpl in to_be_launched]
-        os.system('%s %s &' % (BROWSER, ' '.join(urls)))
+        os.system('%s %s 2>/dev/null &' % (BROWSER, ' '.join(urls)))
 
 
 
