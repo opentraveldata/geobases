@@ -942,7 +942,7 @@ Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
 try:
     HELP_SOURCES = S_MANAGER.build_status()
-except:
+except (KeyError, ValueError, TypeError):
     # Here we have a broken source file
     panic_mode()
     exit(1)
