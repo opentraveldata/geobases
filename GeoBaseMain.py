@@ -808,7 +808,10 @@ def to_CLI(option, value):
         return flatten(value)
 
     if option == 'key_fields':
-        return flatten(value)
+        if value is None:
+            return ''
+        else:
+            return flatten(value)
 
     if option == 'index':
         return flatten(value)
