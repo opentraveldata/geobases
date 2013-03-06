@@ -1532,8 +1532,7 @@ def admin_path(ref_path, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
-                             boolean=True)
+    use_cached = ask_till_ok(questions[5] % filename, boolean=True)
 
     if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
