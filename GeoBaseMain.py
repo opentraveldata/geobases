@@ -742,6 +742,9 @@ def score_key(v):
 def guess_key_fields(headers, s_row):
     """Heuristic to guess key_fields from headers and first row.
     """
+    if not headers:
+        return []
+
     discarded  = set(['lat', 'lng'])
     candidates = []
 
@@ -805,7 +808,10 @@ def to_CLI(option, value):
         return flatten(value)
 
     if option == 'key_fields':
-        return flatten(value)
+        if value is None:
+            return ''
+        else:
+            return flatten(value)
 
     if option == 'index':
         return flatten(value)
@@ -1753,6 +1759,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
             'join'    : [],
         }
 
+        # Fake first line for sources without paths
+        first_l = ''
+
         # 1. Paths
         if with_hints:
             print hints[1]
@@ -1793,11 +1802,13 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
 
         # 2. Delimiter
-        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+        delimiter = ask_till_ok(questions[6],
+                                is_ok = lambda r: r,
+                                fail_message='-/!\- Cannot be empty',
+                                prefill=to_CLI('delimiter', def_delimiter))
+        new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
-            new_conf['delimiter'] = delimiter
-
             def_headers    = guess_headers(first_l.split(delimiter))
             def_key_fields = guess_key_fields(def_headers, first_l.split(delimiter))
 
@@ -1806,20 +1817,23 @@ def admin_mode(admin, with_hints=True, verbose=True):
         if with_hints:
             print hints[2]
         headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
+        if not headers:
+            headers = []
+        else:
+            headers = headers.split(SPLIT)
+
+        join, subdelimiters = clean_headers(headers)
+        new_conf['headers'] = headers
+
+        if join:
+            new_conf['join'] = join
+            print '----- Detected join %s' % str(join)
+
+        if subdelimiters:
+            new_conf['subdelimiters'] = subdelimiters
+            print '----- Detected subdelimiters %s' % str(subdelimiters)
 
         if to_CLI('headers', def_headers) != to_CLI('headers', headers):
-            headers = headers.split(SPLIT)
-            join, subdelimiters = clean_headers(headers)
-            new_conf['headers'] = headers
-
-            if join:
-                new_conf['join'] = join
-                print '----- Detected join %s' % str(join)
-
-            if subdelimiters:
-                new_conf['subdelimiters'] = subdelimiters
-                print '----- Detected subdelimiters %s' % str(subdelimiters)
-
             def_key_fields = guess_key_fields(headers, first_l.split(delimiter))
 
 
@@ -1827,14 +1841,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
         if with_hints:
             print hints[3]
         key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
+        key_fields = split_if_several(key_fields)
 
-        if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
-            key_fields = split_if_several(key_fields)
-
-            if not key_fields:
-                new_conf['key_fields'] = None
-            else:
-                new_conf['key_fields'] = key_fields
+        if not key_fields:
+            new_conf['key_fields'] = None
+        else:
+            new_conf['key_fields'] = key_fields
 
 
         # 5. Indices
