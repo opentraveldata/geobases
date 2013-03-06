@@ -889,6 +889,31 @@ def error(name, *args):
     exit(1)
 
 
+def panic_mode():
+    """Panic mode.
+    """
+    # Here we have a broken source file
+    print '\n/!\ Source file seems broken.\n'
+
+    try:
+        restore = ask_till_ok('Restore file %s\nFrom origin  %s [yN]? ' % \
+                              (S_MANAGER.sources_conf_path,
+                               S_MANAGER.sources_conf_path_origin),
+                              boolean=True,
+                              default=False)
+
+    except (KeyboardInterrupt, EOFError):
+        print '\n\nYou should have said "Yes" :).'
+
+    else:
+        if restore:
+            S_MANAGER.restore()
+            print '\nRestored.'
+        else:
+            print '\nDid not restore.'
+
+
+
 #######
 #
 #  MAIN
@@ -909,7 +934,14 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = S_MANAGER.build_status()
+try:
+    HELP_SOURCES = S_MANAGER.build_status()
+except:
+    # Here we have a broken source file
+    panic_mode()
+    exit(1)
+
+
 CLI_EXAMPLES = '''
 * Command line examples
 
