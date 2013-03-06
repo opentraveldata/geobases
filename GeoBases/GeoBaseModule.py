@@ -1941,7 +1941,9 @@ class GeoBase(object):
         Custom keys as search domain.
 
         >>> keys = ('frpaz', 'frply', 'frbve')
-        >>> list(geo_t.findClosestFromPoint(point, N=2, grid=False,
+        >>> list(geo_t.findClosestFromPoint(point,
+        ...                                 N=2,
+        ...                                 grid=False,
         ...                                 from_keys=keys))
         [(482.84..., 'frbve'), (683.89..., 'frpaz')]
         """
@@ -2010,7 +2012,9 @@ class GeoBase(object):
         Custom keys as search domain.
 
         >>> keys = ('frpaz', 'frply', 'frbve')
-        >>> list(geo_t.findClosestFromKey('frnic', N=2, grid=False,
+        >>> list(geo_t.findClosestFromKey('frnic',
+        ...                               N=2,
+        ...                               grid=False,
         ...                               from_keys=keys))
         [(482.79..., 'frbve'), (683.52..., 'frpaz')]
         """
@@ -2055,7 +2059,10 @@ class GeoBase(object):
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._buildFuzzyRatios('marseille', 'name', 0.80, ['ORY', 'MRS', 'CDG']))
+        >>> list(geo_a._buildFuzzyRatios(fuzzy_value='marseille',
+        ...                              field='name',
+        ...                              min_match=0.80,
+        ...                              keys=['ORY', 'MRS', 'CDG']))
         [(0.9..., 'MRS')]
         """
         for key in keys:
@@ -2099,12 +2106,11 @@ class GeoBase(object):
         (0.8..., 'frmsc')
         >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
-        ...                 max_results=3, min_match=0.55)
+        >>> geo_a.fuzzyFind('paris de gaulle',
+        ...                 field='name',
+        ...                 max_results=3,
+        ...                 min_match=0.55)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
-        ...                 max_results=3, min_match=0.75)
-        [(0.78..., 'CDG')]
 
         Some corner cases.
 
@@ -2212,28 +2218,40 @@ class GeoBase(object):
 
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       verbose=True, d_range=(0, 1))[0]
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       min_match=0.60, max_results=2,
-        ...                       verbose=True, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       min_match=0.60,
+        ...                       max_results=2,
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name',
+        >>> geo_a.biasFuzzyCache('paris de gaulle',
+        ...                      field='name',
         ...                      biased_result=[(0.5, 'Biased result')])
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       max_results=None, verbose=True, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       max_results=None,
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         >>> geo_a.clearFuzzyBiasCache()
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       max_results=None, min_match=0.75)
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       max_results=None,
+        ...                       verbose=True,
+        ...                       min_match=0.75)
         [(0.78..., 'CDG')]
         """
         if d_range is None:
@@ -2356,7 +2374,10 @@ class GeoBase(object):
         :returns:         an iterable of (phonemes, key) matching
 
         >>> list(geo_o.get(k, 'name') for _, k in
-        ...      geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        ...      geo_o.phoneticFind(value='chicago',
+        ...                         field='name',
+        ...                         method='dmetaphone',
+        ...                         verbose=True))
         Looking for phonemes like ['C220', None] (for "chicago")
         ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
         >>> list(geo_o.get(k, 'name') for _, k in
@@ -2380,7 +2401,8 @@ class GeoBase(object):
         exp_phonemes = get_phonemes(value)
 
         if verbose:
-            print('Looking for phonemes like %s (for "%s")' % (str(exp_phonemes), value))
+            print('Looking for phonemes like %s (for "%s")' % \
+                  (str(exp_phonemes), value))
 
         for key in from_keys:
             # Do not fail on unkown keys
@@ -3623,9 +3645,17 @@ def build_get_phonemes(method):
 def build_cache_key(*args, **kwargs):
     """Build key for the cache of fuzzyFind, based on parameters.
 
-    >>> build_cache_key(GeoBase.fuzzyClean('paris de gaulle'), 'name', max_results=None, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('paris de gaulle'),
+    ...                 'name',
+    ...                 max_results=None,
+    ...                 min_match=0,
+    ...                 from_keys=None)
     ('paris+de+gaulle', 'name', None, None, 0)
-    >>> build_cache_key(GeoBase.fuzzyClean('Antibes SNCF 2'), 'name', max_results=3, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('Antibes SNCF 2'),
+    ...                 'name',
+    ...                 max_results=3,
+    ...                 min_match=0,
+    ...                 from_keys=None)
     ('antibes', 'name', None, 3, 0)
     """
     # We handle the fact that dictionary are not sorted, but this
