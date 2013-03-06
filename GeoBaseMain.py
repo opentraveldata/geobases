@@ -1546,7 +1546,7 @@ def admin_path(ref_path, questions, verbose):
     return path, filename
 
 
-def admin_mode(admin, verbose=True):
+def admin_mode(admin, with_hints=True, verbose=True):
     """Handle admin commands.
     """
     print dedent("""\
@@ -1639,7 +1639,8 @@ def admin_mode(admin, verbose=True):
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
         else:
-            print hints[0]
+            if with_hints:
+                print hints[0]
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
@@ -1707,7 +1708,8 @@ def admin_mode(admin, verbose=True):
         }
 
         # 1. Paths
-        print hints[1]
+        if with_hints:
+            print hints[1]
         i = 0
         while True:
             if i < len(def_paths):
@@ -1755,7 +1757,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 3. Headers
-        print hints[2]
+        if with_hints:
+            print hints[2]
         headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
 
         if to_CLI('headers', def_headers) != to_CLI('headers', headers):
@@ -1775,7 +1778,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 4. Key fields
-        print hints[3]
+        if with_hints:
+            print hints[3]
         key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
 
         if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
@@ -1788,7 +1792,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 5. Indices
-        print hints[4]
+        if with_hints:
+            print hints[4]
         i = 0
         while True:
             if i < len(def_indices):
@@ -1812,7 +1817,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 6. Join
-        print hints[5]
+        if with_hints:
+            print hints[5]
         i = 0
         while True:
             if i < len(def_join):
@@ -2097,7 +2103,7 @@ def main():
 
     if args['admin'] is not None:
         try:
-            admin_mode(args['admin'], verbose=logorrhea)
+            admin_mode(args['admin'], with_hints=verbose, verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
         finally:
