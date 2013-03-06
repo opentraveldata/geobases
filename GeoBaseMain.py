@@ -1572,27 +1572,30 @@ def admin_mode(admin, verbose=True):
 
     hints = [
         dedent("""
-        HINT* Enter a new name to define a new source.\
+        HINT * Enter a new name to define a new source.
         """),
         dedent("""
-        HINT* Paths can be http urls or zip archives.
-            * Empty to remove.\
+        HINT * Paths can be http urls or zip archives.
+             * Leave empty to delete path.
         """),
         dedent("""
-        HINT* Headers are column names, separated with "%s".\
+        HINT * Headers are column names, separated with "%s".
         """ % SPLIT),
         dedent("""
-        HINT* Key fields are fields used to generate keys,
-            * use "%s" if several fields.\
+        HINT * Key fields are fields used to generate keys,
+             * use "%s" if several fields.
+             * Leave empty to use line numbers as keys.
         """ % SPLIT),
         dedent("""
-        HINT* Indices are a list of index to speed up some queries.
-            * For multiple fields index, separate with "%s".
-            * Empty to remove.""" % SPLIT),
+        HINT * Indices are a list of index to speed up some queries.
+             * For multiple fields index, separate with "%s".
+             * Leave empty to delete index.
+        """ % SPLIT),
         dedent("""
-        HINT* Join clauses are useful to say that a key can be found
-            * in another data source. Use the "field{base:external_field}"
-            * syntax to define one. Empty to remove.\
+        HINT * Join clauses are useful to say that a key can be found
+             * in another data source. Use the "field{base:external_field}"
+             * syntax to define one.
+             * Leave empty to delete join clause.
         """),
     ]
 
@@ -1761,7 +1764,11 @@ def admin_mode(admin, verbose=True):
 
         if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
             key_fields = split_if_several(key_fields)
-            new_conf['key_fields'] = key_fields
+
+            if not key_fields:
+                new_conf['key_fields'] = None
+            else:
+                new_conf['key_fields'] = key_fields
 
 
         # 5. Indices
