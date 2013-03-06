@@ -112,7 +112,7 @@ NB_LINES_STEP = 100000
 
 # Defaults
 DEFAULTS = {
-    'source'        : None,  # not for configuration file, use path/local
+    'source'        : None,  # not for configuration file, use path
     'paths'         : None,
     'headers'       : [],
     'key_fields'    : None,
@@ -125,7 +125,6 @@ DEFAULTS = {
     'skip'          : None,
     'discard_dups'  : False,
     'verbose'       : True,
-    'local'         : True,  # only for configuration file
 }
 
 
@@ -191,7 +190,7 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type "odd". Not in ['airlines', ...]
 
-        Import of local data.
+        Import some custom data.
 
         >>> p = 'DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'
         >>> fl = open(relative(p))
@@ -234,14 +233,16 @@ class GeoBase(object):
         for k, v in DEFAULTS.iteritems():
             props[k] = v
 
-        # The default for "local" is True if paths are read
-        # from the configuration file, False if paths are read
-        # as a keyword argument
+        # paths read from the configuration file are by default
+        # relative to the sources dir, if paths are read
+        # as a keyword argument, the default is there are absolute paths
         if 'paths' in kwargs:
-            props['local'] = False
+            default_is_relative = False
+        else:
+            default_is_relative = True
 
         allowed_conf = set(props.keys()) - set(['source'])
-        allowed_args = set(props.keys()) - set(['local'])
+        allowed_args = set(props.keys())
 
         if data not in S_MANAGER:
             raise ValueError('Wrong data type "%s". Not in %s' % \
@@ -286,10 +287,9 @@ class GeoBase(object):
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
         self._paths         = props['paths']
-        self._local         = props['local']
 
         # Tweaks on types, fail on wrong values
-        self._checkProperties()
+        self._checkProperties(default_is_relative)
 
         # Loading data
         if self._source is not None:
@@ -348,7 +348,7 @@ class GeoBase(object):
             self._loadExtBase(fields, join_data)
 
 
-    def _checkProperties(self):
+    def _checkProperties(self, default_is_relative):
         """Some check on parameters.
         """
         # Tuplification
@@ -368,8 +368,9 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # Paths conversion to dict, local paths handling
-        self._paths = S_MANAGER.convert_paths_format(self._paths, self._local)
+        # Paths conversion to dict
+        self._paths = S_MANAGER.convert_paths_format(self._paths,
+                                                     default_is_relative)
 
         # Some headers are not accepted
         for h in self._headers:
@@ -1907,7 +1908,9 @@ class GeoBase(object):
         Custom keys as search domain.
 
         >>> keys = ('frpaz', 'frply', 'frbve')
-        >>> list(geo_t.findClosestFromPoint(point, N=2, grid=False,
+        >>> list(geo_t.findClosestFromPoint(point,
+        ...                                 N=2,
+        ...                                 grid=False,
         ...                                 from_keys=keys))
         [(482.84..., 'frbve'), (683.89..., 'frpaz')]
         """
@@ -1976,7 +1979,9 @@ class GeoBase(object):
         Custom keys as search domain.
 
         >>> keys = ('frpaz', 'frply', 'frbve')
-        >>> list(geo_t.findClosestFromKey('frnic', N=2, grid=False,
+        >>> list(geo_t.findClosestFromKey('frnic',
+        ...                               N=2,
+        ...                               grid=False,
         ...                               from_keys=keys))
         [(482.79..., 'frbve'), (683.52..., 'frpaz')]
         """
@@ -2021,7 +2026,10 @@ class GeoBase(object):
         Compute the iterable of (dist, keys) of a reference
         fuzzy_value and a list of keys.
 
-        >>> list(geo_a._buildFuzzyRatios('marseille', 'name', 0.80, ['ORY', 'MRS', 'CDG']))
+        >>> list(geo_a._buildFuzzyRatios(fuzzy_value='marseille',
+        ...                              field='name',
+        ...                              min_match=0.80,
+        ...                              keys=['ORY', 'MRS', 'CDG']))
         [(0.9..., 'MRS')]
         """
         for key in keys:
@@ -2065,12 +2073,11 @@ class GeoBase(object):
         (0.8..., 'frmsc')
         >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
-        ...                 max_results=3, min_match=0.55)
+        >>> geo_a.fuzzyFind('paris de gaulle',
+        ...                 field='name',
+        ...                 max_results=3,
+        ...                 min_match=0.55)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
-        ...                 max_results=3, min_match=0.75)
-        [(0.78..., 'CDG')]
 
         Some corner cases.
 
@@ -2178,28 +2185,40 @@ class GeoBase(object):
 
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       verbose=True, d_range=(0, 1))[0]
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       min_match=0.60, max_results=2,
-        ...                       verbose=True, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       min_match=0.60,
+        ...                       max_results=2,
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name',
+        >>> geo_a.biasFuzzyCache('paris de gaulle',
+        ...                      field='name',
         ...                      biased_result=[(0.5, 'Biased result')])
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       max_results=None, verbose=True, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       max_results=None,
+        ...                       verbose=True,
+        ...                       d_range=(0, 1))
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         >>> geo_a.clearFuzzyBiasCache()
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
-        ...                       max_results=None, min_match=0.75)
+        >>> geo_a.fuzzyFindCached('paris de gaulle',
+        ...                       field='name',
+        ...                       max_results=None,
+        ...                       verbose=True,
+        ...                       min_match=0.75)
         [(0.78..., 'CDG')]
         """
         if d_range is None:
@@ -2322,7 +2341,10 @@ class GeoBase(object):
         :returns:         an iterable of (phonemes, key) matching
 
         >>> list(geo_o.get(k, 'name') for _, k in
-        ...      geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        ...      geo_o.phoneticFind(value='chicago',
+        ...                         field='name',
+        ...                         method='dmetaphone',
+        ...                         verbose=True))
         Looking for phonemes like ['XKK', None] (for "chicago")
         ['Chicago']
         >>> list(geo_o.get(k, 'name') for _, k in
@@ -2347,7 +2369,8 @@ class GeoBase(object):
         exp_phonemes = get_phonemes(value)
 
         if verbose:
-            print 'Looking for phonemes like %s (for "%s")' % (str(exp_phonemes), value)
+            print 'Looking for phonemes like %s (for "%s")' % \
+                    (str(exp_phonemes), value)
 
         for key in from_keys:
             # Do not fail on unkown keys
@@ -3589,9 +3612,17 @@ def build_get_phonemes(method):
 def build_cache_key(*args, **kwargs):
     """Build key for the cache of fuzzyFind, based on parameters.
 
-    >>> build_cache_key(GeoBase.fuzzyClean('paris de gaulle'), 'name', max_results=None, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('paris de gaulle'),
+    ...                 'name',
+    ...                 max_results=None,
+    ...                 min_match=0,
+    ...                 from_keys=None)
     ('paris+de+gaulle', 'name', None, None, 0)
-    >>> build_cache_key(GeoBase.fuzzyClean('Antibes SNCF 2'), 'name', max_results=3, min_match=0, from_keys=None)
+    >>> build_cache_key(GeoBase.fuzzyClean('Antibes SNCF 2'),
+    ...                 'name',
+    ...                 max_results=3,
+    ...                 min_match=0,
+    ...                 from_keys=None)
     ('antibes', 'name', None, 3, 0)
     """
     # We handle the fact that dictionary are not sorted, but this
