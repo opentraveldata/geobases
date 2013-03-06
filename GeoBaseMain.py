@@ -808,7 +808,10 @@ def to_CLI(option, value):
         return flatten(value)
 
     if option == 'key_fields':
-        return flatten(value)
+        if value is None:
+            return ''
+        else:
+            return flatten(value)
 
     if option == 'index':
         return flatten(value)
@@ -1756,6 +1759,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
             'join'    : [],
         }
 
+        # Fake first line for sources without paths
+        first_l = ''
+
         # 1. Paths
         if with_hints:
             print hints[1]
@@ -1796,7 +1802,10 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
 
         # 2. Delimiter
-        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+        delimiter = ask_till_ok(questions[6],
+                                is_ok = lambda r: r,
+                                fail_message='-/!\- Cannot be empty',
+                                prefill=to_CLI('delimiter', def_delimiter))
         new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):

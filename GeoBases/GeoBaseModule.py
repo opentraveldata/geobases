@@ -770,8 +770,22 @@ class GeoBase(object):
         #quotechar = csv_opt['quotechar']
         delimiter = csv_opt['delimiter']
 
+
         if len(delimiter) == 1:
             return lambda source_fl : csv.reader(source_fl, **csv_opt)
+
+        if len(delimiter) == 0:
+            if verbose:
+                print '/!\ Delimiter was empty.'
+                print '/!\ Fallback on splitting-every-char, but quoting is disabled.'
+
+            def _reader(source_fl):
+                """Custom reader splitting every char.
+                """
+                for row in source_fl:
+                    yield list(row.rstrip('\r\n'))
+
+            return _reader
 
         if verbose:
             print '/!\ Delimiter "%s" was not 1-character.' % delimiter
