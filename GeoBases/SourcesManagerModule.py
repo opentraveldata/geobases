@@ -131,14 +131,17 @@ class SourcesManager(object):
         return self.sources[source]
 
 
-    def add(self, source, config):
+    def add(self, source, config=None):
         """Add new source.
         """
         if source in self.sources:
             print 'Source "%s" already exists.' % source
             return
 
-        self.sources[source] = config
+        if config is None:
+            self.sources[source] = {}
+        else:
+            self.sources[source] = config
 
 
     def is_in_cache(self, filename):
