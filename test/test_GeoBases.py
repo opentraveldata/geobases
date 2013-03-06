@@ -68,7 +68,7 @@ class GeoBaseFeedTest(unittest.TestCase):
         self.assertEqual(self.g.get('1'),
                          {'name': 'A',
                           'vol': '2',
-                          '__gar__': '',
+                          '__gar__': [],
                           '__par__': [],
                           '__dup__': [],
                           '__key__': '1',
