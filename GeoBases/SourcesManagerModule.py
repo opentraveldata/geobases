@@ -38,6 +38,8 @@ CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 if not op.isdir(CACHE_DIR):
     os.mkdir(CACHE_DIR)
 
+# Poorly documented paths are relative from the sources dir
+DEFAULT_IS_RELATIVE = True
 
 # We only export the main class
 __all__ = ['SourcesManager', 'is_remote', 'is_archive']
@@ -129,14 +131,17 @@ class SourcesManager(object):
         return self.sources[source]
 
 
-    def add(self, source, config):
+    def add(self, source, config=None):
         """Add new source.
         """
         if source in self.sources:
             print('Source "%s" already exists.' % source)
             return
 
-        self.sources[source] = config
+        if config is None:
+            self.sources[source] = {}
+        else:
+            self.sources[source] = config
 
 
     def is_in_cache(self, filename):
@@ -308,12 +313,14 @@ class SourcesManager(object):
         """Display help on how to make a data source permanent.
         """
         conf = {
-            'paths' : '<INSERT_ABSOLUTE_FILE_PATH>',
-            'local' : False
+            'paths' : {
+                'file'  : '<INSERT_ABSOLUTE_FILE_PATH>',
+                'local' : False,
+            }
         }
 
         for option, value in options.items():
-            # Source is not allowed in configuration, replaced by paths/local
+            # Source is not allowed in configuration, replaced by paths
             if option not in ('source', 'verbose'):
                 conf[option] = value
 
@@ -364,30 +371,42 @@ class SourcesManager(object):
         return file_
 
 
-    def convert_paths_format(self, paths, local):
+    def convert_paths_format(self, paths, default_is_relative=DEFAULT_IS_RELATIVE):
         """Convert all paths to the same format.
         """
         if paths is None:
             return
 
+        # If paths is just *one* archive or *one* file
         if isinstance(paths, (str, dict)):
-            # If paths is just *one* archive or *one* file
             paths = [paths]
 
-        for i, path in enumerate(paths):
-            # We normalize all path as a dict structure
+        # We normalize all path as a dict structure
+        new_paths = []
+
+        for path in paths:
             if isinstance(path, str):
-                paths[i] = {
-                    'file' : path
+                path = {
+                    'file' : path,
                 }
 
-        for i, path in enumerate(paths):
-            # "local" is only used for sources from configuration
-            # to have a relative path from the configuration file
-            if not is_remote(path) and local is True:
-                path['file'] = op.join(op.realpath(self.sources_dir), path['file'])
+            # We append a copy
+            new_paths.append(dict(path.items()))
 
-        return tuple(paths)
+
+        for npath in new_paths:
+            # 'local' is only used for sources from configuration
+            # to have a relative path from the configuration file
+            if 'local' not in npath:
+                npath['local'] = default_is_relative
+
+            if is_remote(npath):
+                npath['local'] = False
+
+            if not is_remote(npath) and npath['local'] is True:
+                npath['file'] = op.join(op.realpath(self.sources_dir), npath['file'])
+
+        return tuple(new_paths)
 
 
 

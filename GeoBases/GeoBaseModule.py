@@ -146,7 +146,7 @@ NB_LINES_STEP = 100000
 
 # Defaults
 DEFAULTS = {
-    'source'        : None,  # not for configuration file, use path/local
+    'source'        : None,  # not for configuration file, use path
     'paths'         : None,
     'headers'       : [],
     'key_fields'    : None,
@@ -159,7 +159,6 @@ DEFAULTS = {
     'skip'          : None,
     'discard_dups'  : False,
     'verbose'       : True,
-    'local'         : True,  # only for configuration file
 }
 
 
@@ -225,7 +224,7 @@ class GeoBase(object):
         Traceback (most recent call last):
         ValueError: Wrong data type "odd". Not in ['airlines', ...]
 
-        Import of local data.
+        Import some custom data.
 
         >>> p = 'DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'
         >>> fl = open(relative(p))
@@ -268,14 +267,16 @@ class GeoBase(object):
         for k, v in DEFAULTS.items():
             props[k] = v
 
-        # The default for "local" is True if paths are read
-        # from the configuration file, False if paths are read
-        # as a keyword argument
+        # paths read from the configuration file are by default
+        # relative to the sources dir, if paths are read
+        # as a keyword argument, the default is there are absolute paths
         if 'paths' in kwargs:
-            props['local'] = False
+            default_is_relative = False
+        else:
+            default_is_relative = True
 
         allowed_conf = set(props.keys()) - set(['source'])
-        allowed_args = set(props.keys()) - set(['local'])
+        allowed_args = set(props.keys())
 
         if data not in S_MANAGER:
             raise ValueError('Wrong data type "%s". Not in %s' % \
@@ -320,10 +321,9 @@ class GeoBase(object):
         self._discard_dups  = props['discard_dups']
         self._verbose       = props['verbose']
         self._paths         = props['paths']
-        self._local         = props['local']
 
         # Tweaks on types, fail on wrong values
-        self._checkProperties()
+        self._checkProperties(default_is_relative)
 
         # Loading data
         if self._source is not None:
@@ -382,7 +382,7 @@ class GeoBase(object):
             self._loadExtBase(fields, join_data)
 
 
-    def _checkProperties(self):
+    def _checkProperties(self, default_is_relative):
         """Some check on parameters.
         """
         # Tuplification
@@ -402,8 +402,9 @@ class GeoBase(object):
             else:
                 self._subdelimiters[h] = tuplify(self._subdelimiters[h])
 
-        # Paths conversion to dict, local paths handling
-        self._paths = S_MANAGER.convert_paths_format(self._paths, self._local)
+        # Paths conversion to dict
+        self._paths = S_MANAGER.convert_paths_format(self._paths,
+                                                     default_is_relative)
 
         # Some headers are not accepted
         for h in self._headers:
