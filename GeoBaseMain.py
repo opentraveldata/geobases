@@ -1629,17 +1629,19 @@ def admin_mode(admin, with_hints=True, verbose=True):
         return
 
     if len(admin) < 2:
-        two_col_print(sorted(S_MANAGER))
 
         if command in ['status', 'fullstatus']:
+            two_col_print(sorted(S_MANAGER) + ['*'])
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
 
         elif command in ['drop']:
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
         else:
             if with_hints:
-                print(hints[0])
+                print(hints[0], end="")
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
