@@ -1591,9 +1591,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
         HINT * Enter a new name to define a new source.
         """),
         dedent("""
-        HINT * Paths can be http urls or zip archives.
+        HINT * Paths can be urls or normal file paths.
+             * zip archives are supported.
+             * For remote files and archives, temporary
+             * files will be put in the cache directory:
+             * %s
+             * These files may be used as primary sources.
              * Leave empty to delete path.
-        """),
+        """ % S_MANAGER.cache_dir),
         dedent("""
         HINT * Headers are column names, separated with "%s".
         """ % SPLIT),
