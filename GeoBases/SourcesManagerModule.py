@@ -386,18 +386,25 @@ class SourcesManager(object):
 
         for path in paths:
             if isinstance(path, str):
-                new_paths.append({
-                    'file'  : path,
-                    'local' : default_is_relative
-                })
-            else:
-                new_paths.append(path)
+                path = {
+                    'file' : path,
+                }
 
-        for path in new_paths:
+            # We append a copy
+            new_paths.append(dict(path.items()))
+
+
+        for npath in new_paths:
             # 'local' is only used for sources from configuration
             # to have a relative path from the configuration file
-            if not is_remote(path) and path['local'] is True:
-                path['file'] = op.join(op.realpath(self.sources_dir), path['file'])
+            if 'local' not in npath:
+                npath['local'] = default_is_relative
+
+            if is_remote(npath):
+                npath['local'] = False
+
+            if not is_remote(npath) and npath['local'] is True:
+                npath['file'] = op.join(op.realpath(self.sources_dir), npath['file'])
 
         return tuple(new_paths)
 
