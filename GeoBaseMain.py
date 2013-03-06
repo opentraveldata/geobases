@@ -1682,47 +1682,54 @@ def admin_mode(admin, verbose=True):
 
             new_conf['paths'].append(path)
 
-            # No need to download and check the first lines for known files
-            if path == ref_path:
-                continue
-
             with open(filename) as fl:
                 first_l = fl.next().rstrip()
 
-            print
-            print '>>>>> header'
-            print first_l
-            print '<<<<<'
+            # No need to download and check the first lines for known files
+            if to_CLI('one_paths', ref_path) != to_CLI('one_paths', path):
+                print
+                print '>>>>> header'
+                print first_l
+                print '<<<<<'
 
-            def_delimiter  = guess_delimiter(first_l)
-            def_headers    = guess_headers(first_l.split(def_delimiter))
-            def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
-
+                def_delimiter  = guess_delimiter(first_l)
+                def_headers    = guess_headers(first_l.split(def_delimiter))
+                def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
 
 
         # 2. Delimiter
         delimiter = ask_input(questions[5], to_CLI('delimiter', def_delimiter))
-        if delimiter:
+
+        if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
             new_conf['delimiter'] = delimiter
+
+            def_headers    = guess_headers(first_l.split(delimiter))
+            def_key_fields = guess_key_fields(def_headers, first_l.split(delimiter))
 
 
         # 3. Headers
         headers = ask_input(questions[6], to_CLI('headers', def_headers)).strip()
-        if headers:
+
+        if to_CLI('headers', def_headers) != to_CLI('headers', headers):
             headers = headers.split(SPLIT)
             join, subdelimiters = clean_headers(headers)
             new_conf['headers'] = headers
+
             if join:
                 new_conf['join'] = join
                 print '----- Detected join %s' % str(join)
+
             if subdelimiters:
                 new_conf['subdelimiters'] = subdelimiters
                 print '----- Detected subdelimiters %s' % str(subdelimiters)
 
+            def_key_fields = guess_key_fields(headers, first_l.split(delimiter))
+
 
         # 4. Key fields
         key_fields = ask_input(questions[7], to_CLI('key_fields', def_key_fields)).strip()
-        if key_fields:
+
+        if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
             key_fields = split_if_several(key_fields)
             new_conf['key_fields'] = key_fields
 
