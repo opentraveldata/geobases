@@ -1536,7 +1536,8 @@ def admin_path(ref_path, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[5] % filename, boolean=True)
+    use_cached = ask_till_ok(questions[5] % (op.basename(filename), S_MANAGER.cache_dir),
+                             boolean=True)
 
     if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
@@ -1563,8 +1564,8 @@ def admin_mode(admin, verbose=True):
         '[ 1 ] Source name : ',
         '[2/8] Path : ',
         '[   ] Which file in archive? ',
-        '[   ] Copy %s in %s and use from there [yN]? ',
-        '[   ] Use %s as primary source [yN]? ',
+        '[   ] Copy %s in %s and use as primary source from there [yN]? ',
+        '[   ] Use %s as primary source from %s [yN]? ',
         '[3/8] Delimiter : ',
         '[4/8] Headers : ',
         '[5/8] Key fields : ',
