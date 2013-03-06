@@ -2164,7 +2164,9 @@ def main():
             admin_mode(args['admin'], with_hints=verbose, verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
-        exit(0)
+        finally:
+            # Useful to exit properly on Windows
+            exit(0)
 
 
     if args['ask']:
@@ -2172,7 +2174,8 @@ def main():
             _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
-        exit(0)
+        finally:
+            exit(0)
 
 
     if args['base'] not in S_MANAGER:
