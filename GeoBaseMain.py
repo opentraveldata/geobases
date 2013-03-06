@@ -1462,7 +1462,7 @@ def handle_args():
 
 
 
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False):
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
     """Ask a question and only accept a list of possibilities as response.
     """
     if boolean:
@@ -1481,12 +1481,12 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boo
     if show and allowed is not None:
         two_col_print(allowed)
 
-    response = ask_input(msg).strip()
+    response = ask_input(msg, prefill).strip()
 
     while not is_ok(response) or not is_allowed(response):
         if fail_message is not None:
             print fail_message
-        response = ask_input(msg).strip()
+        response = ask_input(msg, prefill).strip()
 
     if not boolean:
         return response
