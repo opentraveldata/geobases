@@ -760,7 +760,7 @@ def split_if_several(value):
 def to_CLI(option, value):
     """Format stuff from the configuration file.
     """
-    if option == 'one_paths':
+    if option == 'path':
         return value['file']
 
     if option == 'delimiter':
@@ -772,10 +772,10 @@ def to_CLI(option, value):
     if option == 'key_fields':
         return flatten(value)
 
-    if option == 'one_indices':
+    if option == 'index':
         return flatten(value)
 
-    if option == 'one_join':
+    if option == 'join':
         if len(value['with']) < 2:
             if not value['with'][0]:
                 return flatten(value['fields'])
@@ -1500,7 +1500,7 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boo
 def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
-    path = ask_input(questions[2], to_CLI('one_paths', ref_path)).strip()
+    path = ask_input(questions[2], to_CLI('path', ref_path)).strip()
 
     if not path:
         print '/!\ Empty path, deleted'
@@ -1562,10 +1562,10 @@ def admin_mode(admin, verbose=True):
         '[   ] Which file in archive? ',
         '[   ] Copy %s in %s and use from there [yN]? ',
         '[3/8] Delimiter   : ',
-        '[4/8] Headers     : ',
-        '[5/8] Key fields  : ',
-        '[6/8] Indices     : ',
-        '[7/8] Join        : ',
+        '[4/8] Headers (column names, separated with "%s")             : ' % SPLIT,
+        '[5/8] Fields used for key generation, use "%s" if several     : ' % SPLIT,
+        '[6/8] Indices (for multiple fields index, separate with "%s") : ' % SPLIT,
+        '[7/8] Join (use the "field{base:external_field}" syntax)      : ',
         '[8/8] Confirm [Yn]? ',
         '[   ] Add another %s [yN]? ',
     ]
@@ -1686,7 +1686,7 @@ def admin_mode(admin, verbose=True):
                 first_l = fl.next().rstrip()
 
             # No need to download and check the first lines for known files
-            if to_CLI('one_paths', ref_path) != to_CLI('one_paths', path):
+            if to_CLI('path', ref_path) != to_CLI('path', path):
                 print
                 print '>>>>> header'
                 print first_l
@@ -1749,7 +1749,7 @@ def admin_mode(admin, verbose=True):
                 else:
                     break
 
-            index = ask_input(questions[8], to_CLI('one_indices', ref_index)).strip()
+            index = ask_input(questions[8], to_CLI('index', ref_index)).strip()
             if not index:
                 print '/!\ Empty index, deleted'
             else:
@@ -1772,7 +1772,7 @@ def admin_mode(admin, verbose=True):
                 else:
                     break
 
-            m_join = ask_input(questions[9], to_CLI('one_join', ref_join)).strip()
+            m_join = ask_input(questions[9], to_CLI('join', ref_join)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if not m_join:
