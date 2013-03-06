@@ -1764,7 +1764,11 @@ def admin_mode(admin, verbose=True):
 
         if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
             key_fields = split_if_several(key_fields)
-            new_conf['key_fields'] = key_fields
+
+            if not key_fields:
+                new_conf['key_fields'] = None
+            else:
+                new_conf['key_fields'] = key_fields
 
 
         # 5. Indices
