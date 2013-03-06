@@ -1462,7 +1462,7 @@ def handle_args():
 
 
 
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False):
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
     """Ask a question and only accept a list of possibilities as response.
     """
     if boolean:
@@ -1481,12 +1481,12 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boo
     if show and allowed is not None:
         two_col_print(allowed)
 
-    response = ask_input(msg).strip()
+    response = ask_input(msg, prefill).strip()
 
     while not is_ok(response) or not is_allowed(response):
         if fail_message is not None:
             print fail_message
-        response = ask_input(msg).strip()
+        response = ask_input(msg, prefill).strip()
 
     if not boolean:
         return response
@@ -1509,7 +1509,11 @@ def admin_path(ref_path, questions, verbose):
     path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
-        extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
+        extract = ask_till_ok(questions[3],
+                              is_ok = lambda r: r,
+                              fail_message='-/!\- Cannot be empty',
+                              prefill=ref_path.get('extract', ''))
+
         path['extract'] = extract
 
     if not is_remote(path):
@@ -1532,7 +1536,8 @@ def admin_path(ref_path, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[5] % filename, boolean=True)
+    use_cached = ask_till_ok(questions[5] % (op.basename(filename), S_MANAGER.cache_dir),
+                             boolean=True)
 
     if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
@@ -1541,11 +1546,22 @@ def admin_path(ref_path, questions, verbose):
     return path, filename
 
 
-def admin_mode(admin, verbose=True):
+def admin_mode(admin, with_hints=True, verbose=True):
     """Handle admin commands.
     """
-    help_ = dedent("""\
+    print dedent("""\
     ---------------------------------------------------------------
+                         WELCOME TO ADMIN MODE
+
+                     You will be guided through the
+                    possibilities by answering a few
+                   questions. This mode will help you
+                          configure the file:
+              %s
+    ---------------------------------------------------------------\
+    """ % S_MANAGER.sources_conf_path)
+
+    help_ = dedent("""
     (*) status     : display short data source status
     (*) fullstatus : display full data source configuration
     (*) drop       : drop all information for one data source
@@ -1559,8 +1575,8 @@ def admin_mode(admin, verbose=True):
         '[ 1 ] Source name : ',
         '[2/8] Path : ',
         '[   ] Which file in archive? ',
-        '[   ] Copy %s in %s and use from there [yN]? ',
-        '[   ] Use %s as primary source [yN]? ',
+        '[   ] Copy %s in %s and use as primary source from there [yN]? ',
+        '[   ] Use %s as primary source from %s [yN]? ',
         '[3/8] Delimiter : ',
         '[4/8] Headers : ',
         '[5/8] Key fields : ',
@@ -1575,9 +1591,14 @@ def admin_mode(admin, verbose=True):
         HINT * Enter a new name to define a new source.
         """),
         dedent("""
-        HINT * Paths can be http urls or zip archives.
+        HINT * Paths can be urls or normal file paths.
+             * zip archives are supported.
+             * For remote files and archives, temporary
+             * files will be put in the cache directory:
+             * %s
+             * These files may be used as primary sources.
              * Leave empty to delete path.
-        """),
+        """ % S_MANAGER.cache_dir),
         dedent("""
         HINT * Headers are column names, separated with "%s".
         """ % SPLIT),
@@ -1623,7 +1644,8 @@ def admin_mode(admin, verbose=True):
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
         else:
-            print hints[0]
+            if with_hints:
+                print hints[0]
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
@@ -1691,7 +1713,8 @@ def admin_mode(admin, verbose=True):
         }
 
         # 1. Paths
-        print hints[1]
+        if with_hints:
+            print hints[1]
         i = 0
         while True:
             if i < len(def_paths):
@@ -1739,7 +1762,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 3. Headers
-        print hints[2]
+        if with_hints:
+            print hints[2]
         headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
 
         if to_CLI('headers', def_headers) != to_CLI('headers', headers):
@@ -1759,7 +1783,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 4. Key fields
-        print hints[3]
+        if with_hints:
+            print hints[3]
         key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
 
         if to_CLI('key_fields', def_key_fields) != to_CLI('key_fields', key_fields):
@@ -1772,7 +1797,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 5. Indices
-        print hints[4]
+        if with_hints:
+            print hints[4]
         i = 0
         while True:
             if i < len(def_indices):
@@ -1796,7 +1822,8 @@ def admin_mode(admin, verbose=True):
 
 
         # 6. Join
-        print hints[5]
+        if with_hints:
+            print hints[5]
         i = 0
         while True:
             if i < len(def_join):
@@ -2081,7 +2108,7 @@ def main():
 
     if args['admin'] is not None:
         try:
-            admin_mode(args['admin'], verbose=logorrhea)
+            admin_mode(args['admin'], with_hints=verbose, verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
         finally:
