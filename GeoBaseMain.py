@@ -1581,7 +1581,7 @@ def admin_path(ref_path, questions, verbose):
 def admin_mode(admin, with_hints=True, verbose=True):
     """Handle admin commands.
     """
-    print dedent("""\
+    banner = dedent("""\
     ---------------------------------------------------------------
                          WELCOME TO ADMIN MODE
 
@@ -1652,7 +1652,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
         """),
     ]
 
+    # Was banner displayed
+    bannered = False
+
     if len(admin) < 1:
+        print banner
+        bannered = True
         print help_
         command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
     else:
@@ -1667,7 +1672,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
         return
 
     if len(admin) < 2:
-
+        if not bannered:
+            print banner
+            bannered = True
         if command in ['status', 'fullstatus']:
             two_col_print(sorted(S_MANAGER) + ['*'])
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
