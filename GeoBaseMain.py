@@ -1509,7 +1509,11 @@ def admin_path(ref_path, questions, verbose):
     path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
-        extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
+        extract = ask_till_ok(questions[3],
+                              is_ok = lambda r: r,
+                              fail_message='-/!\- Cannot be empty',
+                              prefill=ref_path.get('extract', ''))
+
         path['extract'] = extract
 
     if not is_remote(path):
