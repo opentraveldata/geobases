@@ -1759,6 +1759,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
             'join'    : [],
         }
 
+        # Fake first line for sources without paths
+        first_l = ''
+
         # 1. Paths
         if with_hints:
             print hints[1]
