@@ -737,7 +737,7 @@ class GeoBase(object):
         }
 
 
-    def _buildRowData(self, row, headers, delimiter, subdelimiters, key, lno):
+    def _buildRowData(self, row, headers, subdelimiters, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
@@ -746,15 +746,12 @@ class GeoBase(object):
         # headers represents the meaning of each column.
         # Using izip_longest here will replace missing fields
         # with empty strings ''
-        for h, v in izip_longest(headers, row, fillvalue=''):
-            # if h is None, it means the conf file explicitely
-            # specified not to load the column
+        for h, v in izip_longest(headers, row, fillvalue=None):
+            # if h is None, it means either:
+            # 1) the conf file explicitely specified not to load the column
+            # 2) there was more data than the headers said
+            # Either way, we store it in the __gar__ special field
             if h is None:
-                continue
-            # if h is an empty string, it means there was more
-            # data than the headers said, we store it in the
-            # __gar__ special field
-            if not h:
                 data['__gar__'].append(v)
             else:
                 if h not in subdelimiters:
@@ -762,9 +759,6 @@ class GeoBase(object):
                 else:
                     data['%s@raw' % h] = v
                     data[h] = recursive_split(v, subdelimiters[h])
-
-        # Flattening the __gar__ list
-        data['__gar__'] = delimiter.join(data['__gar__'])
 
         return data
 
@@ -889,7 +883,7 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
+            data = self._buildRowData(row, headers, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
