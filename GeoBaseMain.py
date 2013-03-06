@@ -74,6 +74,41 @@ except ImportError:
             return prefill
 
 
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
+    """Ask a question and only accept a list of possibilities as response.
+    """
+    if boolean:
+        allowed = ('Y', 'y', 'N', 'n', '')
+        show = False
+
+    if is_ok is None:
+        is_ok = lambda r: True
+
+    if allowed is None:
+        is_allowed = lambda r: True
+    else:
+        is_allowed = lambda r: r in allowed
+
+    # Start
+    if show and allowed is not None:
+        two_col_print(allowed)
+
+    response = ask_input(msg, prefill).strip()
+
+    while not is_ok(response) or not is_allowed(response):
+        if fail_message is not None:
+            print fail_message
+        response = ask_input(msg, prefill).strip()
+
+    if not boolean:
+        return response
+    else:
+        if default is True:
+            return response in ('Y', 'y', '')
+        else:
+            return response in ('Y', 'y')
+
+
 def is_in_path(command):
     """
     This checks if a command is in the PATH.
@@ -854,6 +889,31 @@ def error(name, *args):
     exit(1)
 
 
+def panic_mode():
+    """Panic mode.
+    """
+    # Here we have a broken source file
+    print '\n/!\ Source file seems broken.\n'
+
+    try:
+        restore = ask_till_ok('Restore file %s\nFrom origin  %s [yN]? ' % \
+                              (S_MANAGER.sources_conf_path,
+                               S_MANAGER.sources_conf_path_origin),
+                              boolean=True,
+                              default=False)
+
+    except (KeyboardInterrupt, EOFError):
+        print '\n\nYou should have said "Yes" :).'
+
+    else:
+        if restore:
+            S_MANAGER.restore()
+            print '\nRestored.'
+        else:
+            print '\nDid not restore.'
+
+
+
 #######
 #
 #  MAIN
@@ -874,7 +934,14 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = S_MANAGER.build_status()
+try:
+    HELP_SOURCES = S_MANAGER.build_status()
+except:
+    # Here we have a broken source file
+    panic_mode()
+    exit(1)
+
+
 CLI_EXAMPLES = '''
 * Command line examples
 
@@ -1462,41 +1529,6 @@ def handle_args():
 
 
 
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
-    """Ask a question and only accept a list of possibilities as response.
-    """
-    if boolean:
-        allowed = ('Y', 'y', 'N', 'n', '')
-        show = False
-
-    if is_ok is None:
-        is_ok = lambda r: True
-
-    if allowed is None:
-        is_allowed = lambda r: True
-    else:
-        is_allowed = lambda r: r in allowed
-
-    # Start
-    if show and allowed is not None:
-        two_col_print(allowed)
-
-    response = ask_input(msg, prefill).strip()
-
-    while not is_ok(response) or not is_allowed(response):
-        if fail_message is not None:
-            print fail_message
-        response = ask_input(msg, prefill).strip()
-
-    if not boolean:
-        return response
-    else:
-        if default is True:
-            return response in ('Y', 'y', '')
-        else:
-            return response in ('Y', 'y')
-
-
 def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
@@ -1549,7 +1581,7 @@ def admin_path(ref_path, questions, verbose):
 def admin_mode(admin, with_hints=True, verbose=True):
     """Handle admin commands.
     """
-    print dedent("""\
+    banner = dedent("""\
     ---------------------------------------------------------------
                          WELCOME TO ADMIN MODE
 
@@ -1620,7 +1652,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
         """),
     ]
 
+    # Was banner displayed
+    bannered = False
+
     if len(admin) < 1:
+        print banner
+        bannered = True
         print help_
         command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
     else:
@@ -1635,17 +1672,21 @@ def admin_mode(admin, with_hints=True, verbose=True):
         return
 
     if len(admin) < 2:
-        two_col_print(sorted(S_MANAGER))
-
+        if not bannered:
+            print banner
+            bannered = True
         if command in ['status', 'fullstatus']:
+            two_col_print(sorted(S_MANAGER) + ['*'])
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
 
         elif command in ['drop']:
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
         else:
             if with_hints:
-                print hints[0]
+                print hints[0],
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
