@@ -74,6 +74,41 @@ except ImportError:
             return prefill
 
 
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
+    """Ask a question and only accept a list of possibilities as response.
+    """
+    if boolean:
+        allowed = ('Y', 'y', 'N', 'n', '')
+        show = False
+
+    if is_ok is None:
+        is_ok = lambda r: True
+
+    if allowed is None:
+        is_allowed = lambda r: True
+    else:
+        is_allowed = lambda r: r in allowed
+
+    # Start
+    if show and allowed is not None:
+        two_col_print(allowed)
+
+    response = ask_input(msg, prefill).strip()
+
+    while not is_ok(response) or not is_allowed(response):
+        if fail_message is not None:
+            print fail_message
+        response = ask_input(msg, prefill).strip()
+
+    if not boolean:
+        return response
+    else:
+        if default is True:
+            return response in ('Y', 'y', '')
+        else:
+            return response in ('Y', 'y')
+
+
 def is_in_path(command):
     """
     This checks if a command is in the PATH.
@@ -642,10 +677,15 @@ def clean_headers(headers):
     return join, subdelimiters
 
 
-def guess_headers(s_row):
+def guess_headers(row, delimiter):
     """Heuristic to guess the lat/lng fields from first row.
     """
-    headers = list(generate_headers(len(s_row)))
+    if delimiter:
+        row = row.split(delimiter)
+    else:
+        row = list(row)
+
+    headers = list(generate_headers(len(row)))
 
     # Name candidates for lat/lng
     lat_candidates = set(['latitude',  'lat'])
@@ -653,7 +693,7 @@ def guess_headers(s_row):
 
     lat_found, lng_found = False, False
 
-    for i, f in enumerate(s_row):
+    for i, f in enumerate(row):
         try:
             val = float(f)
         except ValueError:
@@ -704,13 +744,21 @@ def score_key(v):
     return len(v) if len(v) >= 2 else 10
 
 
-def guess_key_fields(headers, s_row):
+def guess_key_fields(row, delimiter, headers):
     """Heuristic to guess key_fields from headers and first row.
     """
+    if not headers:
+        return []
+
+    if delimiter:
+        row = row.split(delimiter)
+    else:
+        row = list(row)
+
     discarded  = set(['lat', 'lng'])
     candidates = []
 
-    for h, v in zip(headers, s_row):
+    for h, v in zip(headers, row):
         # Skip discarded and empty values
         if h not in discarded and v:
             try:
@@ -760,7 +808,7 @@ def split_if_several(value):
 def to_CLI(option, value):
     """Format stuff from the configuration file.
     """
-    if option == 'one_paths':
+    if option == 'path':
         return value['file']
 
     if option == 'delimiter':
@@ -770,12 +818,15 @@ def to_CLI(option, value):
         return flatten(value)
 
     if option == 'key_fields':
+        if value is None:
+            return ''
+        else:
+            return flatten(value)
+
+    if option == 'index':
         return flatten(value)
 
-    if option == 'one_indices':
-        return flatten(value)
-
-    if option == 'one_join':
+    if option == 'join':
         if len(value['with']) < 2:
             if not value['with'][0]:
                 return flatten(value['fields'])
@@ -854,6 +905,31 @@ def error(name, *args):
     exit(1)
 
 
+def panic_mode():
+    """Panic mode.
+    """
+    # Here we have a broken source file
+    print '\n/!\ Source file seems broken.\n'
+
+    try:
+        restore = ask_till_ok('Restore file %s\nFrom origin  %s [yN]? ' % \
+                              (S_MANAGER.sources_conf_path,
+                               S_MANAGER.sources_conf_path_origin),
+                              boolean=True,
+                              default=False)
+
+    except (KeyboardInterrupt, EOFError):
+        print '\n\nYou should have said "Yes" :).'
+
+    else:
+        if restore:
+            S_MANAGER.restore()
+            print '\nRestored.'
+        else:
+            print '\nDid not restore.'
+
+
+
 #######
 #
 #  MAIN
@@ -874,7 +950,14 @@ Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
-HELP_SOURCES = S_MANAGER.build_status()
+try:
+    HELP_SOURCES = S_MANAGER.build_status()
+except (KeyError, ValueError, TypeError):
+    # Here we have a broken source file
+    panic_mode()
+    exit(1)
+
+
 CLI_EXAMPLES = '''
 * Command line examples
 
@@ -1462,63 +1545,33 @@ def handle_args():
 
 
 
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False):
-    """Ask a question and only accept a list of possibilities as response.
-    """
-    if boolean:
-        allowed = ('Y', 'y', 'N', 'n', '')
-        show = False
-
-    if is_ok is None:
-        is_ok = lambda r: True
-
-    if allowed is None:
-        is_allowed = lambda r: True
-    else:
-        is_allowed = lambda r: r in allowed
-
-    # Start
-    if show and allowed is not None:
-        two_col_print(allowed)
-
-    response = ask_input(msg).strip()
-
-    while not is_ok(response) or not is_allowed(response):
-        if fail_message is not None:
-            print fail_message
-        response = ask_input(msg).strip()
-
-    if not boolean:
-        return response
-    else:
-        if default is True:
-            return response in ('Y', 'y', '')
-        else:
-            return response in ('Y', 'y')
-
-
-def admin_path(ref_path, local, questions, verbose):
+def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
-    path = ask_input(questions[2], to_CLI('one_paths', ref_path)).strip()
+    path = ask_input(questions[2], to_CLI('path', ref_path)).strip()
 
     if not path:
-        print '/!\ Empty path, deleted'
+        print '----- Empty path, deleted'
         return None, None
 
-    path = S_MANAGER.convert_paths_format(path, local=local)[0]
+    path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
-        extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
+        extract = ask_till_ok(questions[3],
+                              is_ok = lambda r: r,
+                              fail_message='-/!\- Cannot be empty',
+                              prefill=ref_path.get('extract', ''))
+
         path['extract'] = extract
 
     if not is_remote(path):
-        # For local paths we propose copy in cache dir
+        # For non remote paths we propose copy in cache dir
         path['file'] = op.realpath(path['file'])
 
         if is_archive(path):
             # We propose to store the root archive in cache
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
+            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                                     boolean=True)
 
             if use_cached:
                 _, copied = S_MANAGER.copy_to_cache(path['file'])
@@ -1531,7 +1584,8 @@ def admin_path(ref_path, local, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
+    use_cached = ask_till_ok(questions[5] % (op.basename(filename), S_MANAGER.cache_dir),
+                             boolean=True)
 
     if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
@@ -1540,35 +1594,90 @@ def admin_path(ref_path, local, questions, verbose):
     return path, filename
 
 
-def admin_mode(admin, verbose=True):
+def admin_mode(admin, with_hints=True, verbose=True):
     """Handle admin commands.
     """
-    help_ = dedent("""\
+    banner = dedent("""\
     ---------------------------------------------------------------
+                         WELCOME TO ADMIN MODE
+
+                     You will be guided through the
+                    possibilities by answering a few
+                   questions. This mode will help you
+                          configure the file:
+              %s
+    ---------------------------------------------------------------\
+    """ % S_MANAGER.sources_conf_path)
+
+    help_ = dedent("""
     (*) status     : display short data source status
     (*) fullstatus : display full data source configuration
     (*) drop       : drop all information for one data source
     (*) restore    : factory reset of all data sources information
     (*) edit       : edit an existing data source, or add a new one
-    ------------------------------------------------------- SUMMARY
     """)
 
     questions = [
         '[ 0 ] Command: ',
         '[ 1 ] Source name : ',
-        '[2/8] Paths       : ',
+        '[2/8] Path : ',
         '[   ] Which file in archive? ',
-        '[   ] Copy %s in %s and use from there [yN]? ',
-        '[3/8] Delimiter   : ',
-        '[4/8] Headers     : ',
-        '[5/8] Key fields  : ',
-        '[6/8] Indices     : ',
-        '[7/8] Join        : ',
+        '[   ] Copy %s in %s and use as primary source from there [yN]? ',
+        '[   ] Use %s as primary source from %s [yN]? ',
+        '[3/8] Delimiter : ',
+        '[4/8] Headers : ',
+        '[5/8] Key fields : ',
+        '[6/8] Index : ',
+        '[7/8] Join clause : ',
         '[8/8] Confirm [Yn]? ',
         '[   ] Add another %s [yN]? ',
     ]
 
+    hints = [
+        dedent("""
+        HINT * Enter a new name to define a new source.
+        """),
+        dedent("""
+        HINT * Paths can be urls or normal file paths.
+             * zip archives are supported.
+             * For remote files and archives, temporary
+             * files will be put in the cache directory:
+             * %s
+             * These files may be used as primary sources.
+             * Leave empty to delete path.
+        """ % S_MANAGER.cache_dir),
+        dedent("""
+        HINT * The delimiter is the character delimiting fields.
+             * Leave empty to split every character.
+        """),
+        dedent("""
+        HINT * Headers are column names, separated with "%s".
+             * lat and lng will be guessed for new sources.
+        """ % SPLIT),
+        dedent("""
+        HINT * Key fields are fields used to generate keys,
+             * use "%s" if several fields.
+             * Leave empty to use line numbers as keys.
+        """ % SPLIT),
+        dedent("""
+        HINT * Indices are a list of index to speed up some queries.
+             * For multiple fields index, separate with "%s".
+             * Leave empty to delete index.
+        """ % SPLIT),
+        dedent("""
+        HINT * Join clauses are useful to say that a key can be found
+             * in another data source. Use the "field{base:external_field}"
+             * syntax to define one.
+             * Leave empty to delete join clause.
+        """),
+    ]
+
+    # Was banner displayed
+    bannered = False
+
     if len(admin) < 1:
+        print banner
+        bannered = True
         print help_
         command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
     else:
@@ -1583,18 +1692,24 @@ def admin_mode(admin, verbose=True):
         return
 
     if len(admin) < 2:
-        two_col_print(sorted(S_MANAGER))
-
+        if not bannered:
+            print banner
+            bannered = True
         if command in ['status', 'fullstatus']:
+            two_col_print(sorted(S_MANAGER) + ['*'])
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
 
         elif command in ['drop']:
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
 
         else:
+            if with_hints:
+                print hints[0],
+            two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
-                                      fail_message='/!\ Cannot be empty')
+                                      fail_message='-/!\- Cannot be empty')
     else:
         source_name = admin[1]
 
@@ -1621,9 +1736,7 @@ def admin_mode(admin, verbose=True):
 
     if command == 'edit':
         if source_name not in S_MANAGER:
-            S_MANAGER.add(source_name, {
-                'local' : False
-            })
+            S_MANAGER.add(source_name)
             print '----- New source "%s" created!' % source_name
 
         # We get existing conf
@@ -1635,18 +1748,17 @@ def admin_mode(admin, verbose=True):
         def_delimiter  = conf.get('delimiter',  DEFAULTS['delimiter'])
         def_headers    = conf.get('headers',    DEFAULTS['headers'])
         def_key_fields = conf.get('key_fields', DEFAULTS['key_fields'])
-        def_local      = conf.get('local',      DEFAULTS['local'])
         def_indices    = conf.get('indices',    DEFAULTS['indices'])
         def_join       = conf.get('join',       DEFAULTS['join'])
 
-        get_empty_path  = lambda : { 'file': '' }
+        get_empty_path  = lambda : { 'file': '', 'local': False }
         get_empty_index = lambda : ''
         get_empty_join  = lambda : { 'fields' : [], 'with' : [''] }
 
         if not def_paths:
             def_paths = [get_empty_path()]
         else:
-            def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
+            def_paths = S_MANAGER.convert_paths_format(def_paths)
 
         if not def_indices:
             def_indices = [get_empty_index()]
@@ -1661,7 +1773,12 @@ def admin_mode(admin, verbose=True):
             'join'    : [],
         }
 
+        # Fake first line for sources without paths
+        first_l = ''
+
         # 1. Paths
+        if with_hints:
+            print hints[1]
         i = 0
         while True:
             if i < len(def_paths):
@@ -1669,66 +1786,85 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'path', boolean=True)
+                add_another = ask_till_ok(questions[12] % 'path', boolean=True)
 
                 if add_another:
                     ref_path = get_empty_path()
                 else:
                     break
 
-            path, filename = admin_path(ref_path, def_local, questions, verbose)
+            path, filename = admin_path(ref_path, questions, verbose)
 
             if path is None:
                 continue
 
             new_conf['paths'].append(path)
 
-            # No need to download and check the first lines for known files
-            if path == ref_path:
-                continue
-
             with open(filename) as fl:
                 first_l = fl.next().rstrip()
 
-            print
-            print '>>>>> header'
-            print first_l
-            print '<<<<<'
+            # No need to download and check the first lines for known files
+            if to_CLI('path', ref_path) != to_CLI('path', path):
+                print
+                print '>>>>> header >>>>>'
+                print first_l
+                print '<<<<<<<<<<<<<<<<<<'
 
-            def_delimiter  = guess_delimiter(first_l)
-            def_headers    = guess_headers(first_l.split(def_delimiter))
-            def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
-
+                def_delimiter  = guess_delimiter(first_l)
+                def_headers    = guess_headers(first_l, def_delimiter)
+                def_key_fields = guess_key_fields(first_l, def_delimiter, def_headers)
 
 
         # 2. Delimiter
-        delimiter = ask_input(questions[5], to_CLI('delimiter', def_delimiter))
-        if delimiter:
-            new_conf['delimiter'] = delimiter
+        if with_hints:
+            print hints[2]
+        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+        new_conf['delimiter'] = delimiter
+
+        if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
+            def_headers    = guess_headers(first_l, delimiter)
+            def_key_fields = guess_key_fields(first_l, delimiter, def_headers)
 
 
         # 3. Headers
-        headers = ask_input(questions[6], to_CLI('headers', def_headers)).strip()
-        if headers:
+        if with_hints:
+            print hints[3]
+        headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
+        if not headers:
+            headers = []
+        else:
             headers = headers.split(SPLIT)
-            join, subdelimiters = clean_headers(headers)
-            new_conf['headers'] = headers
-            if join:
-                new_conf['join'] = join
-                print '----- Detected join %s' % str(join)
-            if subdelimiters:
-                new_conf['subdelimiters'] = subdelimiters
-                print '----- Detected subdelimiters %s' % str(subdelimiters)
+
+        join, subdelimiters = clean_headers(headers)
+        new_conf['headers'] = headers
+
+        if join:
+            new_conf['join'] = join
+            print '----- Detected join %s' % str(join)
+
+        if subdelimiters:
+            new_conf['subdelimiters'] = subdelimiters
+            print '----- Detected subdelimiters %s' % str(subdelimiters)
+
+        if to_CLI('headers', def_headers) != to_CLI('headers', headers):
+            def_key_fields = guess_key_fields(first_l, delimiter, headers)
 
 
         # 4. Key fields
-        key_fields = ask_input(questions[7], to_CLI('key_fields', def_key_fields)).strip()
-        if key_fields:
-            key_fields = split_if_several(key_fields)
+        if with_hints:
+            print hints[4]
+        key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
+        key_fields = split_if_several(key_fields)
+
+        if not key_fields:
+            new_conf['key_fields'] = None
+        else:
             new_conf['key_fields'] = key_fields
 
 
         # 5. Indices
+        if with_hints:
+            print hints[5]
         i = 0
         while True:
             if i < len(def_indices):
@@ -1736,22 +1872,24 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'index', boolean=True)
+                add_another = ask_till_ok(questions[12] % 'index', boolean=True)
 
                 if add_another:
                     ref_index = get_empty_index()
                 else:
                     break
 
-            index = ask_input(questions[8], to_CLI('one_indices', ref_index)).strip()
+            index = ask_input(questions[9], to_CLI('index', ref_index)).strip()
             if not index:
-                print '/!\ Empty index, deleted'
+                print '----- Empty index, deleted'
             else:
                 index = split_if_several(index)
                 new_conf['indices'].append(index)
 
 
         # 6. Join
+        if with_hints:
+            print hints[6]
         i = 0
         while True:
             if i < len(def_join):
@@ -1759,18 +1897,18 @@ def admin_mode(admin, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[11] % 'join', boolean=True)
+                add_another = ask_till_ok(questions[12] % 'join', boolean=True)
 
                 if add_another:
                     ref_join = get_empty_join()
                 else:
                     break
 
-            m_join = ask_input(questions[9], to_CLI('one_join', ref_join)).strip()
+            m_join = ask_input(questions[10], to_CLI('join', ref_join)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if not m_join:
-                print '/!\ Empty join, deleted'
+                print '----- Empty join, deleted'
             else:
                 m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
 
@@ -1798,7 +1936,7 @@ def admin_mode(admin, verbose=True):
             print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
-            confirm = ask_till_ok(questions[10], boolean=True, default=True)
+            confirm = ask_till_ok(questions[11], boolean=True, default=True)
 
             if confirm:
                 S_MANAGER.update(source_name, new_conf)
@@ -2036,13 +2174,10 @@ def main():
 
     if args['admin'] is not None:
         try:
-            admin_mode(args['admin'], verbose=logorrhea)
+            admin_mode(args['admin'], with_hints=verbose, verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
-        finally:
-            # On Windows, you have to use finally because
-            # several KeyboardInterrupt seems to be raised
-            exit(0)
+        exit(0)
 
 
     if args['ask']:
@@ -2050,8 +2185,7 @@ def main():
             _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
-        finally:
-            exit(0)
+        exit(0)
 
 
     if args['base'] not in S_MANAGER:
@@ -2068,8 +2202,8 @@ def main():
         first_l = first_l.rstrip() # For sniffers, we rstrip
 
         delimiter  = guess_delimiter(first_l)
-        headers    = guess_headers(first_l.split(delimiter))
-        key_fields = guess_key_fields(headers, first_l.split(delimiter))
+        headers    = guess_headers(first_l, delimiter)
+        key_fields = guess_key_fields(first_l, delimiter, headers)
 
         headers_r     = None # to store raw headers given
         subdelimiters = {}
@@ -2096,13 +2230,13 @@ def main():
                 subdelimiters.update(l_subdelimiters)
         else:
             # Reprocessing the headers with custom delimiter
-            headers = guess_headers(first_l.split(delimiter))
+            headers = guess_headers(first_l, delimiter)
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
             key_fields = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
         else:
             # Reprocessing the key_fields with custom headers
-            key_fields = guess_key_fields(headers, first_l.split(delimiter))
+            key_fields = guess_key_fields(first_l, delimiter, headers)
 
         if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
             discard_dups_r = args['indexation'][3]

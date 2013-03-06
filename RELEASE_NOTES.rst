@@ -7,6 +7,8 @@ V5
 
 + 5.0 :
 
+ + empty delimiter is accepted, and means we split on every char
+ + __gar__ special attribute no longer flatten uncollected data (now a list)
  + getLocation has a new *default* keyword argument to avoid key failure
  + learning mode with -a/--ask to learn of the CLI works
  + admin mode with -A/--admin to configure sources (persistent changes)
