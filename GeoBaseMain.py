@@ -1503,7 +1503,7 @@ def admin_path(ref_path, questions, verbose):
     path = ask_input(questions[2], to_CLI('path', ref_path)).strip()
 
     if not path:
-        print '/!\ Empty path, deleted'
+        print '----- Empty path, deleted'
         return None, None
 
     path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
@@ -1572,27 +1572,27 @@ def admin_mode(admin, verbose=True):
 
     hints = [
         dedent("""
-        *HINT Enter a new name to define a new source.\
+        HINT* Enter a new name to define a new source.\
         """),
         dedent("""
-        *HINT Paths can be http urls or zip archives.
-              Empty to remove.\
+        HINT* Paths can be http urls or zip archives.
+            * Empty to remove.\
         """),
         dedent("""
-        *HINT Headers are column names, separated with "%s".\
+        HINT* Headers are column names, separated with "%s".\
         """ % SPLIT),
         dedent("""
-        *HINT Key fields are fields used to generate keys,
-              use "%s" if several fields.\
+        HINT* Key fields are fields used to generate keys,
+            * use "%s" if several fields.\
         """ % SPLIT),
         dedent("""
-        *HINT Indices are a list of index to speed up some queries.
-              For multiple fields index, separate with "%s".
-              Empty to remove.""" % SPLIT),
+        HINT* Indices are a list of index to speed up some queries.
+            * For multiple fields index, separate with "%s".
+            * Empty to remove.""" % SPLIT),
         dedent("""
-        *HINT Join clauses are useful to say that a key can be found
-              in another data source. Use the "field{base:external_field}"
-              syntax to define one. Empty to remove.\
+        HINT* Join clauses are useful to say that a key can be found
+            * in another data source. Use the "field{base:external_field}"
+            * syntax to define one. Empty to remove.\
         """),
     ]
 
@@ -1623,7 +1623,7 @@ def admin_mode(admin, verbose=True):
             print hints[0]
             source_name = ask_till_ok(questions[1],
                                       is_ok = lambda r: r,
-                                      fail_message='/!\ Cannot be empty')
+                                      fail_message='-/!\- Cannot be empty')
     else:
         source_name = admin[1]
 
@@ -1716,9 +1716,9 @@ def admin_mode(admin, verbose=True):
             # No need to download and check the first lines for known files
             if to_CLI('path', ref_path) != to_CLI('path', path):
                 print
-                print '>>>>> header'
+                print '>>>>> header >>>>>'
                 print first_l
-                print '<<<<<'
+                print '<<<<<<<<<<<<<<<<<<'
 
                 def_delimiter  = guess_delimiter(first_l)
                 def_headers    = guess_headers(first_l.split(def_delimiter))
@@ -1782,7 +1782,7 @@ def admin_mode(admin, verbose=True):
 
             index = ask_input(questions[9], to_CLI('index', ref_index)).strip()
             if not index:
-                print '/!\ Empty index, deleted'
+                print '----- Empty index, deleted'
             else:
                 index = split_if_several(index)
                 new_conf['indices'].append(index)
@@ -1808,7 +1808,7 @@ def admin_mode(admin, verbose=True):
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if not m_join:
-                print '/!\ Empty join, deleted'
+                print '----- Empty join, deleted'
             else:
                 m_join[0]['fields'] = split_if_several(m_join[0]['fields'])
 
