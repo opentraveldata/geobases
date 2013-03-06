@@ -74,6 +74,41 @@ except ImportError:
             return prefill
 
 
+def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
+    """Ask a question and only accept a list of possibilities as response.
+    """
+    if boolean:
+        allowed = ('Y', 'y', 'N', 'n', '')
+        show = False
+
+    if is_ok is None:
+        is_ok = lambda r: True
+
+    if allowed is None:
+        is_allowed = lambda r: True
+    else:
+        is_allowed = lambda r: r in allowed
+
+    # Start
+    if show and allowed is not None:
+        two_col_print(allowed)
+
+    response = ask_input(msg, prefill).strip()
+
+    while not is_ok(response) or not is_allowed(response):
+        if fail_message is not None:
+            print fail_message
+        response = ask_input(msg, prefill).strip()
+
+    if not boolean:
+        return response
+    else:
+        if default is True:
+            return response in ('Y', 'y', '')
+        else:
+            return response in ('Y', 'y')
+
+
 def is_in_path(command):
     """
     This checks if a command is in the PATH.
@@ -1460,41 +1495,6 @@ def handle_args():
 
     return vars(parser.parse_args())
 
-
-
-def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boolean=False, default=False, prefill=''):
-    """Ask a question and only accept a list of possibilities as response.
-    """
-    if boolean:
-        allowed = ('Y', 'y', 'N', 'n', '')
-        show = False
-
-    if is_ok is None:
-        is_ok = lambda r: True
-
-    if allowed is None:
-        is_allowed = lambda r: True
-    else:
-        is_allowed = lambda r: r in allowed
-
-    # Start
-    if show and allowed is not None:
-        two_col_print(allowed)
-
-    response = ask_input(msg, prefill).strip()
-
-    while not is_ok(response) or not is_allowed(response):
-        if fail_message is not None:
-            print fail_message
-        response = ask_input(msg, prefill).strip()
-
-    if not boolean:
-        return response
-    else:
-        if default is True:
-            return response in ('Y', 'y', '')
-        else:
-            return response in ('Y', 'y')
 
 
 def admin_path(ref_path, questions, verbose):
