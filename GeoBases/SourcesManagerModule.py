@@ -371,30 +371,35 @@ class SourcesManager(object):
         return file_
 
 
-    def convert_paths_format(self, paths, local):
+    def convert_paths_format(self, paths, default_is_relative=DEFAULT_IS_RELATIVE):
         """Convert all paths to the same format.
         """
         if paths is None:
             return
 
+        # If paths is just *one* archive or *one* file
         if isinstance(paths, (str, dict)):
-            # If paths is just *one* archive or *one* file
             paths = [paths]
 
-        for i, path in enumerate(paths):
-            # We normalize all path as a dict structure
-            if isinstance(path, str):
-                paths[i] = {
-                    'file' : path
-                }
+        # We normalize all path as a dict structure
+        new_paths = []
 
-        for i, path in enumerate(paths):
-            # "local" is only used for sources from configuration
+        for path in paths:
+            if isinstance(path, str):
+                new_paths.append({
+                    'file'  : path,
+                    'local' : default_is_relative
+                })
+            else:
+                new_paths.append(path)
+
+        for path in new_paths:
+            # 'local' is only used for sources from configuration
             # to have a relative path from the configuration file
-            if not is_remote(path) and local is True:
+            if not is_remote(path) and path['local'] is True:
                 path['file'] = op.join(op.realpath(self.sources_dir), path['file'])
 
-        return tuple(paths)
+        return tuple(new_paths)
 
 
 
