@@ -1549,8 +1549,19 @@ def admin_path(ref_path, questions, verbose):
 def admin_mode(admin, verbose=True):
     """Handle admin commands.
     """
-    help_ = dedent("""\
+    print dedent("""\
     ---------------------------------------------------------------
+                         WELCOME TO ADMIN MODE
+
+                     You will be guided through the
+                    possibilities by answering a few
+                   questions. This mode will help you
+                          configure the file:
+              %s
+    ---------------------------------------------------------------\
+    """ % S_MANAGER.sources_conf_path)
+
+    help_ = dedent("""
     (*) status     : display short data source status
     (*) fullstatus : display full data source configuration
     (*) drop       : drop all information for one data source
