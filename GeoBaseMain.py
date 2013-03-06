@@ -1802,7 +1802,10 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
 
         # 2. Delimiter
-        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+        delimiter = ask_till_ok(questions[6],
+                                is_ok = lambda r: r,
+                                fail_message='-/!\- Cannot be empty',
+                                prefill=to_CLI('delimiter', def_delimiter))
         new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
