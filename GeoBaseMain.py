@@ -742,6 +742,9 @@ def score_key(v):
 def guess_key_fields(headers, s_row):
     """Heuristic to guess key_fields from headers and first row.
     """
+    if not headers:
+        return []
+
     discarded  = set(['lat', 'lng'])
     candidates = []
 
