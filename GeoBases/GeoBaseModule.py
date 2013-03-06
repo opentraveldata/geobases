@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-This module is a general class *GeoBase* to manipulate geographical
-data. It loads static csv files containing data about
-airports or train stations, and then provides tools to browse it.
+This module defines a class *GeoBase* to manipulate geographical
+data (or not). It loads static files containing data, then provides
+tools to play with it.
 
-It relies on three other modules:
+It relies on four other modules:
 
 - *GeoUtils*: to compute haversine distances between points
 - *LevenshteinUtils*: to calculate distances between strings. Indeed, we need
   a good tool to do it, in order to recognize things like station names
   in schedule files where we do not have the station id
 - *GeoGridModule*: to handle geographical indexation
+- *SourcesManagerModule*: to handle data sources
 
 Examples for airports::
 
@@ -30,8 +31,9 @@ Examples for stations::
     >>> geo_t = GeoBase(data='stations', verbose=False)
     >>>
     >>> # Nice, stations <= 5km
-    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
-    ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+    >>> point = (43.70, 7.26)
+    >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint(point, 3))]
+    ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch']
     >>>
     >>> geo_t.get('frpaz', 'name')
     'Paris-Austerlitz'
@@ -155,9 +157,9 @@ class GeoBase(object):
         - subdelimiters : ``{}`` by default, a ``{ 'field' : 'delimiter' }`` \
                 dict to define subdelimiters
         - join          : ``[]`` by default, list of dict defining join \
-                clauses. A join clause is a dict ``{ 'fields' : fields, \
-                'with' : [base, fields]}``, for example ``{ 'fields' : \
-                'country_code', 'with' : ['countries', 'code']}``
+                clauses. A join clause is a dict \
+                ``{ 'fields' : fields, 'with' : [base, fields]}``, for example \
+                ``{ 'fields' : 'country_code', 'with' : ['countries', 'code']}``
         - quotechar     : ``'"'`` by default, this is the string defined for \
                 quoting
         - limit         : ``None`` by default, put an int if you want to \
@@ -191,19 +193,20 @@ class GeoBase(object):
 
         Import of local data.
 
-        >>> fl = open(relative('DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'))
+        >>> path = 'DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'
+        >>> fl = open(relative(path))
         >>> GeoBase(data='feed',
         ...         source=fl,
         ...         headers=['iata_code', 'name', 'city'],
         ...         key_fields='iata_code',
         ...         delimiter='^',
-        ...         verbose=False).get('ORY')
-        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
+        ...         verbose=False).get('ORY', 'name')
+        'Paris-Orly'
         >>> fl.close()
         >>> GeoBase(data='airports',
-        ...         headers=['iata_code', 'name', 'city'],
-        ...         verbose=False).get('ORY')
-        {'city': 'PAR', 'name': 'Paris-Orly', 'iata_code': 'ORY', '__gar__': 'FR^France^48.7252780^2.3594440', '__par__': [], '__dup__': [], '__key__': 'ORY', '__lno__': 798}
+        ...         headers=['iata_code', 'cname', 'city'],
+        ...         verbose=False).get('ORY', 'cname')
+        'Paris-Orly'
         """
         # Main structure in which everything will be loaded
         # Dictionary of dictionary
@@ -1118,7 +1121,7 @@ class GeoBase(object):
 
         >>> geo_t.get('frnic', 'not_a_field', default='There')
         Traceback (most recent call last):
-        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name']"
+        KeyError: "Field 'not_a_field' [for key 'frnic'] not in ['__dup__', ...
         """
         if key not in self:
             # Unless default is set, we raise an Exception
@@ -1493,7 +1496,8 @@ class GeoBase(object):
         69...
         >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True)))
         69...
-        >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # Counting duplicated keys, 4437 exactly
+        >>> # Counting duplicated keys
+        >>> len(list(geo_o.findWith([('__par__', [])], reverse=True)))
         44...
 
         Testing indexes.
@@ -1510,25 +1514,38 @@ class GeoBase(object):
         Now querying with simple indexes (dropping multiple index if it exists).
 
         >>> geo_o.dropIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
+        >>> list(geo_o.findWith([('iata_code', 'NCE'),
+        ...                      ('location_type', 'A')],
+        ...                     mode='and',
+        ...                     verbose=True))
         Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); ('A',)
         [(2, 'NCE')]
 
         Multiple index.
 
         >>> geo_o.addIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')], mode='and', verbose=True))
+        >>> list(geo_o.findWith([('iata_code', 'NCE'),
+        ...                      ('location_type', 'A')],
+        ...                     mode='and',
+        ...                     verbose=True))
         Using index for ('iata_code', 'location_type'): value(s) ('NCE', 'A')
         [(2, 'NCE')]
 
-        Or mode with index.
+        Mode "or" with index.
 
         >>> geo_o.addIndex('city_code')
         Built index for fields ('city_code',)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', verbose=True))
+        >>> list(geo_o.findWith([('iata_code', 'NCE'),
+        ...                      ('city_code', 'NCE')],
+        ...                     mode='or',
+        ...                     verbose=True))
         Using index for ('iata_code',) and ('city_code',): value(s) ('NCE',); ('NCE',)
         [(2, 'NCE@1'), (2, 'NCE')]
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')], mode='or', index=False, verbose=True))
+        >>> list(geo_o.findWith([('iata_code', 'NCE'),
+        ...                      ('city_code', 'NCE')],
+        ...                     mode='or',
+        ...                     index=False,
+        ...                     verbose=True))
         [(2, 'NCE'), (2, 'NCE@1')]
 
         Testing several conditions.
@@ -1543,13 +1560,6 @@ class GeoBase(object):
         2
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
         109
-
-        This works too \o/.
-
-        >>> len(list(geo_o.findWith([('city_code', 'PAR'), ('city_code', 'BVE')], mode='and')))
-        0
-        >>> len(list(geo_o.findWith([('city_code', 'PAR'), ('city_code', 'BVE')], mode='or')))
-        20
         """
         if from_keys is None:
             from_keys = iter(self)
@@ -1730,13 +1740,15 @@ class GeoBase(object):
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
-        >>> # Paris, airports <= 50km
-        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50))]
-        ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+        >>> # Paris, airports <= 20km
+        >>> [geo_a.get(k, 'name') for d, k in
+        ...  sorted(geo_a.findNearPoint((48.84, 2.367), 20))]
+        ['Paris-Orly', 'Paris-Le Bourget']
         >>>
-        >>> # Nice, stations <= 5km
-        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5))]
-        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        >>> # Nice, stations <= 3km
+        >>> [geo_t.get(k, 'name') for d, k in
+        ...  sorted(geo_t.findNearPoint((43.70, 7.26), 3))]
+        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch']
         >>>
         >>> # Wrong geocode
         >>> sorted(geo_t.findNearPoint(None, 5))
@@ -1744,16 +1756,19 @@ class GeoBase(object):
 
         No grid mode.
 
-        >>> # Paris, airports <= 50km
-        >>> [geo_a.get(k, 'name') for d, k in sorted(geo_a.findNearPoint((48.84, 2.367), 50, grid=False))]
-        ['Paris-Orly', 'Paris-Le Bourget', 'Toussus-le-Noble', 'Paris - Charles-de-Gaulle']
+        >>> # Paris, airports <= 20km
+        >>> [geo_a.get(k, 'name') for d, k in
+        ...  sorted(geo_a.findNearPoint((48.84, 2.367), 20, grid=False))]
+        ['Paris-Orly', 'Paris-Le Bourget']
         >>> 
-        >>> # Nice, stations <= 5km
-        >>> [geo_t.get(k, 'name') for d, k in sorted(geo_t.findNearPoint((43.70, 7.26), 5, grid=False))]
-        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch', 'Villefranche-sur-Mer', 'Nice-St-Augustin']
+        >>> # Nice, stations <= 3km
+        >>> [geo_t.get(k, 'name') for d, k in
+        ...  sorted(geo_t.findNearPoint((43.70, 7.26), 3, grid=False))]
+        ['Nice-Ville', 'Nice-Riquier', 'Nice-St-Roch']
         >>> 
         >>> # Paris, airports <= 50km with from_keys input list
-        >>> sorted(geo_a.findNearPoint((48.84, 2.367), 50, from_keys=['ORY', 'CDG', 'BVE'], grid=False))
+        >>> sorted(geo_a.findNearPoint((48.84, 2.367), 50,
+        ...                            from_keys=['ORY', 'CDG', 'BVE'], grid=False))
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
         """
         if from_keys is None:
@@ -1801,8 +1816,8 @@ class GeoBase(object):
         [(0.0, 'ORY'), (1.82..., 'JDP'), (8.06..., 'XJY'), (9.95..., 'QFC')]
         >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
         [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
-        >>> sorted(geo_t.findNearKey('frnic', 5)) # Nice station, stations <= 5km
-        [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+        >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations <= 3km
+        [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
 
         No grid.
 
@@ -1810,11 +1825,12 @@ class GeoBase(object):
         >>> sorted(geo_a.findNearKey('ORY', 50, grid=False))
         [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
         >>> 
-        >>> # Nice station, stations <= 5km
-        >>> sorted(geo_t.findNearKey('frnic', 5, grid=False))
-        [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737'), (4.1..., 'fr4708'), (4.5..., 'fr6017')]
+        >>> # Nice station, stations <= 3km
+        >>> sorted(geo_t.findNearKey('frnic', 3, grid=False))
+        [(0.0, 'frnic'), (2.2..., 'fr4342'), (2.3..., 'fr5737')]
         >>> 
-        >>> sorted(geo_a.findNearKey('ORY', 50, grid=False, from_keys=['ORY', 'CDG', 'SFO']))
+        >>> keys = ['ORY', 'CDG', 'SFO']
+        >>> sorted(geo_a.findNearKey('ORY', 50, grid=False, from_keys=keys))
         [(0.0, 'ORY'), (34.8..., 'CDG')]
         """
         if from_keys is None:
@@ -1867,29 +1883,35 @@ class GeoBase(object):
         :returns:       an iterable of ``(distance, key)`` like \
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
-        >>> list(geo_a.findClosestFromPoint((43.70, 7.26))) # Nice
+        >>> point = (43.70, 7.26) # Nice
+        >>> list(geo_a.findClosestFromPoint(point))
         [(5.82..., 'NCE')]
-        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3)) # Nice
+        >>> list(geo_a.findClosestFromPoint(point, N=3))
         [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1)) # Nice
+        >>> list(geo_t.findClosestFromPoint(point, N=1))
         [(0.56..., 'frnic')]
         >>> # Corner case, from_keys empty is not used
-        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, from_keys=()))
+        >>> list(geo_t.findClosestFromPoint(point, N=2, from_keys=()))
         []
         >>> list(geo_t.findClosestFromPoint(None, N=2))
         []
 
         No grid.
 
-        >>> list(geo_o.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
+        >>> list(geo_o.findClosestFromPoint(point, grid=False))
         [(0.60..., 'NCE@1')]
-        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), grid=False)) # Nice
+        >>> list(geo_a.findClosestFromPoint(point, grid=False))
         [(5.82..., 'NCE')]
-        >>> list(geo_a.findClosestFromPoint((43.70, 7.26), N=3, grid=False)) # Nice
+        >>> list(geo_a.findClosestFromPoint(point, N=3, grid=False))
         [(5.82..., 'NCE'), (30.28..., 'CEQ'), (79.71..., 'ALL')]
-        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=1, grid=False)) # Nice
+        >>> list(geo_t.findClosestFromPoint(point, N=1, grid=False))
         [(0.56..., 'frnic')]
-        >>> list(geo_t.findClosestFromPoint((43.70, 7.26), N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
+
+        Custom keys as search domain.
+
+        >>> keys = ('frpaz', 'frply', 'frbve')
+        >>> list(geo_t.findClosestFromPoint(point, N=2, grid=False,
+        ...                                 from_keys=keys))
         [(482.84..., 'frbve'), (683.89..., 'frpaz')]
         """
         if from_keys is None:
@@ -1947,13 +1969,18 @@ class GeoBase(object):
 
         No grid.
 
-        >>> list(geo_o.findClosestFromKey('ORY', grid=False)) # Nice
+        >>> list(geo_o.findClosestFromKey('ORY', grid=False))
         [(0.0, 'ORY')]
-        >>> list(geo_a.findClosestFromKey('ORY', N=3, grid=False)) # Nice
+        >>> list(geo_a.findClosestFromKey('ORY', N=3, grid=False))
         [(0.0, 'ORY'), (18.80..., 'TNF'), (27.80..., 'LBG')]
-        >>> list(geo_t.findClosestFromKey('frnic', N=1, grid=False)) # Nice
+        >>> list(geo_t.findClosestFromKey('frnic', N=1, grid=False))
         [(0.0, 'frnic')]
-        >>> list(geo_t.findClosestFromKey('frnic', N=2, grid=False, from_keys=('frpaz', 'frply', 'frbve')))
+
+        Custom keys as search domain.
+
+        >>> keys = ('frpaz', 'frply', 'frbve')
+        >>> list(geo_t.findClosestFromKey('frnic', N=2, grid=False,
+        ...                               from_keys=keys))
         [(482.79..., 'frbve'), (683.52..., 'frpaz')]
         """
         if from_keys is None:
@@ -2041,16 +2068,19 @@ class GeoBase(object):
         (0.8..., 'frmsc')
         >>> geo_a.fuzzyFind('paris de gaulle', 'name')[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=3, min_match=0.55)
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
+        ...                 max_results=3, min_match=0.55)
         [(0.78..., 'CDG'), (0.60..., 'HUX'), (0.57..., 'LBG')]
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=3, min_match=0.75)
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
+        ...                 max_results=3, min_match=0.75)
         [(0.78..., 'CDG')]
 
         Some corner cases.
 
         >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=None)[0]
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFind('paris de gaulle', 'name', max_results=1, from_keys=[])
+        >>> geo_a.fuzzyFind('paris de gaulle', 'name',
+        ...                 max_results=1, from_keys=[])
         []
         """
         if from_keys is None:
@@ -2097,11 +2127,22 @@ class GeoBase(object):
         'Bruxelles National'
         >>> 
         >>> # Now a request limited to a circle of 20km around BRU gives BRU
-        >>> geo_a.fuzzyFindNearPoint((50.9013890, 4.4844440), 20, 'Brussels', 'name', min_match=0.40)[0]
+        >>> point = (50.9013, 4.4844)
+        >>> geo_a.fuzzyFindNearPoint(point,
+        ...                          radius=20,
+        ...                          fuzzy_value='Brussels',
+        ...                          field='name',
+        ...                          min_match=0.40)[0]
         (0.46..., 'BRU')
         >>> 
         >>> # Now a request limited to some input keys
-        >>> geo_a.fuzzyFindNearPoint((50.9013890, 4.4844440), 2000, 'Brussels', 'name', max_results=1, min_match=0.30, from_keys=['CDG', 'ORY'])
+        >>> geo_a.fuzzyFindNearPoint(point,
+        ...                          radius=2000,
+        ...                          fuzzy_value='Brussels',
+        ...                          field='name',
+        ...                          max_results=1,
+        ...                          min_match=0.30,
+        ...                          from_keys=['ORY', 'CDG'])
         [(0.33..., 'ORY')]
         """
         if from_keys is None:
@@ -2140,22 +2181,28 @@ class GeoBase(object):
 
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', verbose=True, d_range=(0, 1))[0]
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
+        ...                       verbose=True, d_range=(0, 1))[0]
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         (0.78..., 'CDG')
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', min_match=0.60, max_results=2, verbose=True, d_range=(0, 1))
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
+        ...                       min_match=0.60, max_results=2,
+        ...                       verbose=True, d_range=(0, 1))
         [0.79]           paris+de+gaulle ->   paris+charles+de+gaulle (  CDG)
         [0.61]           paris+de+gaulle ->        bahias+de+huatulco (  HUX)
         [(0.78..., 'CDG'), (0.60..., 'HUX')]
 
         Some biasing:
 
-        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name', None, 0.75, None, [(0.5, 'Biased result')])
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, verbose=True, d_range=(0, 1))
+        >>> geo_a.biasFuzzyCache('paris de gaulle', 'name',
+        ...                      biased_result=[(0.5, 'Biased result')])
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
+        ...                       max_results=None, verbose=True, d_range=(0, 1))
         Using bias: ('paris+de+gaulle', 'name', None, 0.75, None)
         [(0.5, 'Biased result')]
         >>> geo_a.clearFuzzyBiasCache()
-        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name', max_results=None, min_match=0.75, verbose=True)
+        >>> geo_a.fuzzyFindCached('paris de gaulle', 'name',
+        ...                       max_results=None, min_match=0.75)
         [(0.78..., 'CDG')]
         """
         if d_range is None:
@@ -2205,7 +2252,9 @@ class GeoBase(object):
 
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (0.8..., 'frmsc')
-        >>> geo_t.biasFuzzyCache('Marseille Saint Ch.', 'name', biased_result=[(1.0, 'Me!')])
+        >>> geo_t.biasFuzzyCache('Marseille Saint Ch.',
+        ...                      field='name',
+        ...                      biased_result=[(1.0, 'Me!')])
         >>> geo_t.fuzzyFindCached('Marseille Saint Ch.', 'name')[0]
         (1.0, 'Me!')
         """
@@ -2275,15 +2324,17 @@ class GeoBase(object):
         :param verbose:   toggle verbosity
         :returns:         an iterable of (phonemes, key) matching
 
-        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
+        >>> list(geo_o.get(k, 'name') for _, k in
+        ...      geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
+        Looking for phonemes like ['XKK', None] (for "chicago")
         ['Chicago']
-        >>> list(geo_o.get(k, 'name') for _, k in geo_o.phoneticFind('chicago', 'name', 'nysiis'))
+        >>> list(geo_o.get(k, 'name') for _, k in
+        ...      geo_o.phoneticFind('chicago', 'name', 'nysiis'))
         ['Chicago']
 
         Alternate methods.
 
-        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone', verbose=True))
-        Looking for phonemes like ['XKK', None] (for "chicago")
+        >>> list(geo_o.phoneticFind('chicago', 'name', 'dmetaphone'))
         [(['XKK', None], 'CHI')]
         >>> list(geo_o.phoneticFind('chicago', 'name', 'metaphone'))
         [('XKK', 'CHI')]
@@ -2349,7 +2400,7 @@ class GeoBase(object):
 
         >>> geo_t.set('NEW_KEY_1')
         >>> geo_t.get('NEW_KEY_1')
-        {'__gar__': [], '__par__': [], '__dup__': [], '__lno__': 0, '__key__': 'NEW_KEY_1'}
+        {'__gar__': [], ..., '__lno__': 0, '__key__': 'NEW_KEY_1'}
         >>> geo_t.delete('NEW_KEY_1') # tearDown
         """
         # If the key is not in the base, we add it
