@@ -671,10 +671,15 @@ def clean_headers(headers):
     return join, subdelimiters
 
 
-def guess_headers(s_row):
+def guess_headers(row, delimiter):
     """Heuristic to guess the lat/lng fields from first row.
     """
-    headers = list(generate_headers(len(s_row)))
+    if delimiter:
+        row = row.split(delimiter)
+    else:
+        row = list(row)
+
+    headers = list(generate_headers(len(row)))
 
     # Name candidates for lat/lng
     lat_candidates = set(['latitude',  'lat'])
@@ -682,7 +687,7 @@ def guess_headers(s_row):
 
     lat_found, lng_found = False, False
 
-    for i, f in enumerate(s_row):
+    for i, f in enumerate(row):
         try:
             val = float(f)
         except ValueError:
@@ -733,16 +738,21 @@ def score_key(v):
     return len(v) if len(v) >= 2 else 10
 
 
-def guess_key_fields(headers, s_row):
+def guess_key_fields(row, delimiter, headers):
     """Heuristic to guess key_fields from headers and first row.
     """
     if not headers:
         return []
 
+    if delimiter:
+        row = row.split(delimiter)
+    else:
+        row = list(row)
+
     discarded  = set(['lat', 'lng'])
     candidates = []
 
-    for h, v in zip(headers, s_row):
+    for h, v in zip(headers, row):
         # Skip discarded and empty values
         if h not in discarded and v:
             try:
@@ -936,7 +946,7 @@ Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
 try:
     HELP_SOURCES = S_MANAGER.build_status()
-except:
+except (KeyError, ValueError, TypeError):
     # Here we have a broken source file
     panic_mode()
     exit(1)
@@ -1599,7 +1609,6 @@ def admin_mode(admin, with_hints=True, verbose=True):
     (*) drop       : drop all information for one data source
     (*) restore    : factory reset of all data sources information
     (*) edit       : edit an existing data source, or add a new one
-    ------------------------------------------------------- SUMMARY
     """)
 
     questions = [
@@ -1632,7 +1641,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
              * Leave empty to delete path.
         """ % S_MANAGER.cache_dir),
         dedent("""
+        HINT * The delimiter is the character delimiting fields.
+             * Leave empty to split every character.
+        """),
+        dedent("""
         HINT * Headers are column names, separated with "%s".
+             * lat and lng will be guessed for new sources.
         """ % SPLIT),
         dedent("""
         HINT * Key fields are fields used to generate keys,
@@ -1791,25 +1805,24 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 print('<<<<<<<<<<<<<<<<<<')
 
                 def_delimiter  = guess_delimiter(first_l)
-                def_headers    = guess_headers(first_l.split(def_delimiter))
-                def_key_fields = guess_key_fields(def_headers, first_l.split(def_delimiter))
+                def_headers    = guess_headers(first_l, def_delimiter)
+                def_key_fields = guess_key_fields(first_l, def_delimiter, def_headers)
 
 
         # 2. Delimiter
-        delimiter = ask_till_ok(questions[6],
-                                is_ok = lambda r: r,
-                                fail_message='-/!\- Cannot be empty',
-                                prefill=to_CLI('delimiter', def_delimiter))
+        if with_hints:
+            print(hints[2])
+        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
         new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
-            def_headers    = guess_headers(first_l.split(delimiter))
-            def_key_fields = guess_key_fields(def_headers, first_l.split(delimiter))
+            def_headers    = guess_headers(first_l, delimiter)
+            def_key_fields = guess_key_fields(first_l, delimiter, def_headers)
 
 
         # 3. Headers
         if with_hints:
-            print(hints[2])
+            print(hints[3])
         headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
         if not headers:
             headers = []
@@ -1828,12 +1841,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
             print('----- Detected subdelimiters %s' % str(subdelimiters))
 
         if to_CLI('headers', def_headers) != to_CLI('headers', headers):
-            def_key_fields = guess_key_fields(headers, first_l.split(delimiter))
+            def_key_fields = guess_key_fields(first_l, delimiter, headers)
 
 
         # 4. Key fields
         if with_hints:
-            print(hints[3])
+            print(hints[4])
         key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
         key_fields = split_if_several(key_fields)
 
@@ -1845,7 +1858,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 5. Indices
         if with_hints:
-            print(hints[4])
+            print(hints[5])
         i = 0
         while True:
             if i < len(def_indices):
@@ -1870,7 +1883,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 6. Join
         if with_hints:
-            print(hints[5])
+            print(hints[6])
         i = 0
         while True:
             if i < len(def_join):
@@ -2158,10 +2171,7 @@ def main():
             admin_mode(args['admin'], with_hints=verbose, verbose=logorrhea)
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Aborting, changes will not be saved.')
-        finally:
-            # On Windows, you have to use finally because
-            # several KeyboardInterrupt seems to be raised
-            exit(0)
+        exit(0)
 
 
     if args['ask']:
@@ -2169,8 +2179,7 @@ def main():
             _ = ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
-        finally:
-            exit(0)
+        exit(0)
 
 
     if args['base'] not in S_MANAGER:
@@ -2187,8 +2196,8 @@ def main():
         first_l = first_l.rstrip() # For sniffers, we rstrip
 
         delimiter  = guess_delimiter(first_l)
-        headers    = guess_headers(first_l.split(delimiter))
-        key_fields = guess_key_fields(headers, first_l.split(delimiter))
+        headers    = guess_headers(first_l, delimiter)
+        key_fields = guess_key_fields(first_l, delimiter, headers)
 
         headers_r     = None # to store raw headers given
         subdelimiters = {}
@@ -2215,13 +2224,13 @@ def main():
                 subdelimiters.update(l_subdelimiters)
         else:
             # Reprocessing the headers with custom delimiter
-            headers = guess_headers(first_l.split(delimiter))
+            headers = guess_headers(first_l, delimiter)
 
         if len(args['indexation']) >= 3 and args['indexation'][2] != SKIP:
             key_fields = None if args['indexation'][2] == DISABLE else args['indexation'][2].split(SPLIT)
         else:
             # Reprocessing the key_fields with custom headers
-            key_fields = guess_key_fields(headers, first_l.split(delimiter))
+            key_fields = guess_key_fields(first_l, delimiter, headers)
 
         if len(args['indexation']) >= 4 and args['indexation'][3] != SKIP:
             discard_dups_r = args['indexation'][3]
