@@ -694,7 +694,7 @@ class GeoBase(object):
         }
 
 
-    def _buildRowData(self, row, headers, delimiter, subdelimiters, key, lno):
+    def _buildRowData(self, row, headers, subdelimiters, key, lno):
         """Building all data associated to this row.
         """
         # Erase everything, except duplicates counter
@@ -716,9 +716,6 @@ class GeoBase(object):
                 else:
                     data['%s@raw' % h] = v
                     data[h] = recursive_split(v, subdelimiters[h])
-
-        # Flattening the __gar__ list
-        data['__gar__'] = delimiter.join(data['__gar__'])
 
         return data
 
@@ -843,7 +840,7 @@ class GeoBase(object):
                             (headers, key_fields, lno, row)
                 continue
 
-            data = self._buildRowData(row, headers, delimiter, subdelimiters, key, lno)
+            data = self._buildRowData(row, headers, subdelimiters, key, lno)
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
