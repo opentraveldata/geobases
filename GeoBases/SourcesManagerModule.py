@@ -38,6 +38,8 @@ CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 if not op.isdir(CACHE_DIR):
     os.mkdir(CACHE_DIR)
 
+# Poorly documented paths are relative from the sources dir
+DEFAULT_IS_RELATIVE = True
 
 # We only export the main class
 __all__ = ['SourcesManager', 'is_remote', 'is_archive']
@@ -308,12 +310,14 @@ class SourcesManager(object):
         """Display help on how to make a data source permanent.
         """
         conf = {
-            'paths' : '<INSERT_ABSOLUTE_FILE_PATH>',
-            'local' : False
+            'paths' : {
+                'file'  : '<INSERT_ABSOLUTE_FILE_PATH>',
+                'local' : False,
+            }
         }
 
         for option, value in options.iteritems():
-            # Source is not allowed in configuration, replaced by paths/local
+            # Source is not allowed in configuration, replaced by paths
             if option not in ('source', 'verbose'):
                 conf[option] = value
 

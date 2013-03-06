@@ -1497,7 +1497,7 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boo
             return response in ('Y', 'y')
 
 
-def admin_path(ref_path, local, questions, verbose):
+def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
     path = ask_input(questions[2], to_CLI('one_paths', ref_path)).strip()
@@ -1506,19 +1506,20 @@ def admin_path(ref_path, local, questions, verbose):
         print '/!\ Empty path, deleted'
         return None, None
 
-    path = S_MANAGER.convert_paths_format(path, local=local)[0]
+    path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
         extract = ask_input(questions[3], ref_path.get('extract', '')).strip()
         path['extract'] = extract
 
     if not is_remote(path):
-        # For local paths we propose copy in cache dir
+        # For non remote paths we propose copy in cache dir
         path['file'] = op.realpath(path['file'])
 
         if is_archive(path):
             # We propose to store the root archive in cache
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
+            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                                     boolean=True)
 
             if use_cached:
                 _, copied = S_MANAGER.copy_to_cache(path['file'])
@@ -1531,7 +1532,8 @@ def admin_path(ref_path, local, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir), boolean=True)
+    use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+                             boolean=True)
 
     if use_cached:
         _, copied = S_MANAGER.copy_to_cache(filename)
@@ -1621,9 +1623,7 @@ def admin_mode(admin, verbose=True):
 
     if command == 'edit':
         if source_name not in S_MANAGER:
-            S_MANAGER.add(source_name, {
-                'local' : False
-            })
+            S_MANAGER.add(source_name)
             print '----- New source "%s" created!' % source_name
 
         # We get existing conf
@@ -1635,18 +1635,17 @@ def admin_mode(admin, verbose=True):
         def_delimiter  = conf.get('delimiter',  DEFAULTS['delimiter'])
         def_headers    = conf.get('headers',    DEFAULTS['headers'])
         def_key_fields = conf.get('key_fields', DEFAULTS['key_fields'])
-        def_local      = conf.get('local',      DEFAULTS['local'])
         def_indices    = conf.get('indices',    DEFAULTS['indices'])
         def_join       = conf.get('join',       DEFAULTS['join'])
 
-        get_empty_path  = lambda : { 'file': '' }
+        get_empty_path  = lambda : { 'file': '', 'local': False }
         get_empty_index = lambda : ''
         get_empty_join  = lambda : { 'fields' : [], 'with' : [''] }
 
         if not def_paths:
             def_paths = [get_empty_path()]
         else:
-            def_paths = S_MANAGER.convert_paths_format(def_paths, local=def_local)
+            def_paths = S_MANAGER.convert_paths_format(def_paths)
 
         if not def_indices:
             def_indices = [get_empty_index()]
@@ -1676,7 +1675,7 @@ def admin_mode(admin, verbose=True):
                 else:
                     break
 
-            path, filename = admin_path(ref_path, def_local, questions, verbose)
+            path, filename = admin_path(ref_path, questions, verbose)
 
             if path is None:
                 continue
