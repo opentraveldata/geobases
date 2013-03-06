@@ -193,8 +193,8 @@ class GeoBase(object):
 
         Import of local data.
 
-        >>> path = 'DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'
-        >>> fl = open(relative(path))
+        >>> p = 'DataSources/Airports/GeoNames/airports_geonames_only_clean.csv'
+        >>> fl = open(relative(p))
         >>> GeoBase(data='feed',
         ...         source=fl,
         ...         headers=['iata_code', 'name', 'city'],
@@ -1514,8 +1514,7 @@ class GeoBase(object):
         Now querying with simple indexes (dropping multiple index if it exists).
 
         >>> geo_o.dropIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'),
-        ...                      ('location_type', 'A')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')],
         ...                     mode='and',
         ...                     verbose=True))
         Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); ('A',)
@@ -1524,8 +1523,7 @@ class GeoBase(object):
         Multiple index.
 
         >>> geo_o.addIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'),
-        ...                      ('location_type', 'A')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')],
         ...                     mode='and',
         ...                     verbose=True))
         Using index for ('iata_code', 'location_type'): value(s) ('NCE', 'A')
@@ -1535,14 +1533,12 @@ class GeoBase(object):
 
         >>> geo_o.addIndex('city_code')
         Built index for fields ('city_code',)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'),
-        ...                      ('city_code', 'NCE')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')],
         ...                     mode='or',
         ...                     verbose=True))
         Using index for ('iata_code',) and ('city_code',): value(s) ('NCE',); ('NCE',)
         [(2, 'NCE@1'), (2, 'NCE')]
-        >>> list(geo_o.findWith([('iata_code', 'NCE'),
-        ...                      ('city_code', 'NCE')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')],
         ...                     mode='or',
         ...                     index=False,
         ...                     verbose=True))
@@ -1550,8 +1546,8 @@ class GeoBase(object):
 
         Testing several conditions.
 
-        >>> c_1 = [('city_code'    , 'PAR')]
-        >>> c_2 = [('location_type', 'H'  )]
+        >>> c_1 = [('city_code', 'PAR')]
+        >>> c_2 = [('location_type', 'H')]
         >>> len(list(geo_o.findWith(c_1)))
         18
         >>> len(list(geo_o.findWith(c_2)))
@@ -1768,7 +1764,8 @@ class GeoBase(object):
         >>> 
         >>> # Paris, airports <= 50km with from_keys input list
         >>> sorted(geo_a.findNearPoint((48.84, 2.367), 50,
-        ...                            from_keys=['ORY', 'CDG', 'BVE'], grid=False))
+        ...                            from_keys=['ORY', 'CDG', 'BVE'],
+        ...                            grid=False))
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
         """
         if from_keys is None:
