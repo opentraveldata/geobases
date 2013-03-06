@@ -767,8 +767,8 @@ class GeoBase(object):
 
         if len(delimiter) == 0:
             if verbose:
-                print '/!\ Delimiter was empty.'
-                print '/!\ Fallback on splitting-every-char, but quoting is disabled.'
+                print('/!\ Delimiter was empty.')
+                print('/!\ Fallback on splitting-every-char, but quoting is disabled.')
 
             def _reader(source_fl):
                 """Custom reader splitting every char.
