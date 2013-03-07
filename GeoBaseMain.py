@@ -271,6 +271,11 @@ def flatten(value, level=0):
     'T2:T2/T1'
     >>> flatten([('T2', ['T3', 'T3']), 'T1'])
     'T2:T3,T3/T1'
+
+    None is flatten as ''.
+
+    >>> flatten([('T2', ['T3', None]), 'T1'])
+    'T2:T3,/T1'
     """
     splitters = ['/', ':', ',']
 
@@ -284,7 +289,7 @@ def flatten(value, level=0):
     if isinstance(value, (list, tuple, set)):
         return splitter.join(flatten(e, level) for e in value)
     else:
-        return str(value)
+        return str(value) if value is not None else ''
 
 
 def check_ext_field(geob, field):
@@ -475,7 +480,7 @@ def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
                 if isinstance(v, (list, tuple, set)):
                     l.append(flatten(v))
                 else:
-                    l.append(str(v))
+                    l.append(str(v) if v is not None else '')
 
         print delim.join(l)
 
