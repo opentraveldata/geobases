@@ -748,13 +748,13 @@ class GeoBase(object):
             print '/!\ Delimiter "%s" was not 1-character.' % delimiter
             print '/!\ Fallback on custom reader, but quoting is disabled.'
 
-        def _reader(source_fl):
+        def _m_reader(source_fl):
             """Custom reader supporting multiple characters split.
             """
             for row in source_fl:
                 yield row.rstrip('\r\n').split(delimiter)
 
-        return _reader
+        return _m_reader
 
 
     def _buildDuplicatedKey(self, key, nb_dups):

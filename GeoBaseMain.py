@@ -216,15 +216,16 @@ class RotatingColors(object):
         """Get special raw color. Only change foreground color.
         """
         current    = list(col)
-        current[0] = 'yellow' if self._background == 'black' else 'green'
+        current[0] = 'yellow' if self._background == 'black' else 'cyan'
         return tuple(current)
 
 
-    def convertJoin(self, col):
+    @staticmethod
+    def convertJoin(col):
         """Get special join color. Only change foreground color.
         """
         current    = list(col)
-        current[0] = 'green' if self._background == 'black' else 'cyan'
+        current[0] = 'green'
         return tuple(current)
 
 
@@ -343,7 +344,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
 
 
-def display(geob, list_of_things, shown_fields, ref_type, important):
+def display_terminal(geob, list_of_things, shown_fields, ref_type, important):
     """
     Main display function in Linux terminal, with
     nice color and everything.
@@ -1546,15 +1547,18 @@ def admin_path(ref_path, source, questions, verbose):
         print '----- Empty path, deleted'
         return None, None
 
-    local = ask_till_ok(questions['local'] % ('Yn' if ref_path['local'] else 'yN'),
-                        boolean=True,
-                        default=ref_path['local'])
-
-    # ref_path should have 'local' because of previous convert_paths_format
     path = {
-        'file'  : path,
-        'local' : local
+        'file' : path
     }
+
+    if is_remote(path):
+        path['local'] = False
+    else:
+        # ref_path has 'local' because of previous convert_paths_format
+        path['local'] = ask_till_ok(questions['local'] % \
+                                    ('Yn' if ref_path['local'] else 'yN'),
+                                    boolean=True,
+                                    default=ref_path['local'])
 
     if path['file'].endswith('.zip'):
         extract = ask_till_ok(questions['extract'],
@@ -1635,7 +1639,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
         'command'   : '[ 0 ] Command: ',
         'source'    : '[ 1 ] Source name: ',
         'path'      : '[2/8] Path: ',
-        'local'     : '[   ] Is the path local to the source directory [%s]? ',
+        'local'     : '[   ] Is the path local to the sources directory [%s]? ',
         'extract'   : '[   ] Which file in archive? ',
         'copy_1'    : '[   ] Copy %s in %s and use as primary source from there [yN]? ',
         'copy_2'    : '[   ] Use %s as primary source from %s [yN]? ',
@@ -2785,7 +2789,7 @@ def main():
                                       args['show_additional'])
 
         print
-        display(g, res, shown_fields, ref_type, important)
+        display_terminal(g, res, shown_fields, ref_type, important)
 
     if frontend == 'quiet':
         defaults = [f for f in g.fields if '%s@raw' % f not in g.fields]
