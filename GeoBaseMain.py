@@ -1700,7 +1700,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
     if command == 'zshautocomp':
         S_MANAGER.update_autocomplete(verbose=True)
-        print '===== Restart shell now.'
+        print '\n===== Restart shell now.'
         return
 
     if len(admin) < 2:
@@ -1979,9 +1979,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
             update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
             if update_zsh:
                 S_MANAGER.update_autocomplete(verbose=True)
-                print '===== Restart shell now.'
+                print '\n===== Restart shell now.'
         else:
-            print '===== Rake is not installed, could not update zsh autocomplete.'
+            print '\n===== Rake is not installed, could not update zsh autocomplete.'
 
 
 def two_col_print(L):
