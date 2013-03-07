@@ -998,7 +998,7 @@ ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 ALLOWED_COMMANDS         = ('status', 'fullstatus',
-                            'edit', 'zshautocomp',
+                            'add', 'edit', 'zshautocomp',
                             'drop', 'restore',
                             'update', 'forceupdate')
 
@@ -1602,7 +1602,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
     (*) fullstatus  : display full data source configuration
 
     Add/Edit sources definition
-    (*) edit        : edit an existing data source, or add a new one
+    (*) add         : add a new data source
+    (*) edit        : edit an existing data source
     (*) zshautocomp : update Zsh autocomplete file
 
     Danger Zone!
@@ -1713,10 +1714,17 @@ def admin_mode(admin, with_hints=True, verbose=True):
             two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions['source'], sorted(S_MANAGER), show=False)
 
-        else:
+        elif command in ['edit']:
             if with_hints:
                 print hints['source'],
             two_col_print(sorted(S_MANAGER))
+            source_name = ask_till_ok(questions['source'],
+                                      is_ok = lambda r: r,
+                                      fail_message='-/!\- Cannot be empty')
+        else:
+            # add
+            if with_hints:
+                print hints['source']
             source_name = ask_till_ok(questions['source'],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
@@ -1744,10 +1752,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.save()
         return
 
-    if command == 'edit':
+    if command in ('add', 'edit'):
         if source_name not in S_MANAGER:
             S_MANAGER.add(source_name)
-            print '----- New source "%s" created!' % source_name
+            if command == 'edit':
+                print '----- New source "%s" created!' % source_name
+        else:
+            if command == 'add':
+                print '----- Source "%s" exists! Now editing mode.' % source_name
 
         # We get existing conf
         conf = S_MANAGER.get(source_name)
