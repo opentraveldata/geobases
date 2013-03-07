@@ -39,7 +39,12 @@ CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 # 5) Path to dir where we build autocomplete stuff
 COMPLETION_TARGET_DIR = op.join(os.getenv('HOME', '.'), '.zsh/completion')
 COMPLETION_BUILD_DIR  = relative('completion')
-COMPLETION_BUILT_FILE = '/tmp/_GeoBase' # to allow user to use it
+
+# We build in user space to allow users to build
+if op.isdir('/tmp'):
+    COMPLETION_BUILT_FILE = '/tmp/_GeoBase'
+else:
+    COMPLETION_BUILT_FILE = op.join(os.getcwd(), '_GeoBase')
 
 if not op.isdir(CACHE_DIR):
     os.makedirs(CACHE_DIR)
