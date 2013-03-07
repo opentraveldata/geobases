@@ -392,7 +392,10 @@ class SourcesManager(object):
         path to file to be opened.
         """
         if not is_remote(path):
-            file_ = path['file']
+            if path['local'] is True:
+                file_ = op.join(op.realpath(self.sources_dir), path['file'])
+            else:
+                file_ = path['file']
         else:
             file_, success = download_lazy(path['file'], self.cache_dir, verbose)
 
@@ -445,9 +448,6 @@ class SourcesManager(object):
 
             if is_remote(npath):
                 npath['local'] = False
-
-            if not is_remote(npath) and npath['local'] is True:
-                npath['file'] = op.join(op.realpath(self.sources_dir), npath['file'])
 
         return tuple(new_paths)
 
