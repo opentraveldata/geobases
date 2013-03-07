@@ -1700,6 +1700,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
     if command == 'zshautocomp':
         S_MANAGER.update_autocomplete(verbose=True)
+        print '===== Restart shell now.'
         return
 
     if len(admin) < 2:

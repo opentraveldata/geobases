@@ -144,7 +144,7 @@ class SourcesManager(object):
 
         except shutil.Error:
             if verbose:
-                print 'Could not copy from/to:\n* %s\n* %s' % \
+                print '/!\ Could not copy from/to:\n* %s\n* %s' % \
                         (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
         else:
             if verbose:
