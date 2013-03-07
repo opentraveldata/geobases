@@ -37,9 +37,14 @@ SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
 CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 
 # 5) Path to dir where we build autocomplete stuff
+COMPLETION_SOURCE_DIR = relative('completion')
 COMPLETION_TARGET_DIR = op.join(os.getenv('HOME', '.'), '.zsh/completion')
-COMPLETION_BUILD_DIR  = relative('completion')
-COMPLETION_BUILT_FILE = '/tmp/_GeoBase' # to allow user to use it
+
+# We build in user space to allow users to build
+if op.isdir('/tmp'):
+    COMPLETION_BUILT_FILE = '/tmp/_GeoBase'
+else:
+    COMPLETION_BUILT_FILE = op.join(os.getcwd(), '_GeoBase')
 
 if not op.isdir(CACHE_DIR):
     os.makedirs(CACHE_DIR)
@@ -137,7 +142,7 @@ class SourcesManager(object):
         # -q option is to turn off fileutils messages
         # to avoid stout pollution we remove stdout
         os.system("cd %s ; rake -q source=%s target=%s >/dev/null" % \
-                  (COMPLETION_BUILD_DIR,
+                  (COMPLETION_SOURCE_DIR,
                    self.sources_conf_path,
                    COMPLETION_BUILT_FILE))
 
@@ -387,7 +392,10 @@ class SourcesManager(object):
         path to file to be opened.
         """
         if not is_remote(path):
-            file_ = path['file']
+            if path['local'] is True:
+                file_ = op.join(op.realpath(self.sources_dir), path['file'])
+            else:
+                file_ = path['file']
         else:
             file_, success = download_lazy(path['file'], self.cache_dir, verbose)
 
@@ -440,9 +448,6 @@ class SourcesManager(object):
 
             if is_remote(npath):
                 npath['local'] = False
-
-            if not is_remote(npath) and npath['local'] is True:
-                npath['file'] = op.join(op.realpath(self.sources_dir), npath['file'])
 
         return tuple(new_paths)
 

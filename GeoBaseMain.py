@@ -1535,7 +1535,15 @@ def admin_path(ref_path, questions, verbose):
         print('----- Empty path, deleted')
         return None, None
 
-    path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
+    local = ask_till_ok(questions['local'] % ('Yn' if ref_path['local'] else 'yN'),
+                        boolean=True,
+                        default=ref_path['local'])
+
+    # ref_path should have 'local' because of previous convert_paths_format
+    path = {
+        'file'  : path,
+        'local' : local
+    }
 
     if path['file'].endswith('.zip'):
         extract = ask_till_ok(questions['extract'],
@@ -1546,9 +1554,11 @@ def admin_path(ref_path, questions, verbose):
         path['extract'] = extract
 
     if not is_remote(path):
-        # For non remote paths we propose copy in cache dir
-        path['file'] = op.realpath(path['file'])
 
+        if path['local'] is False:
+            path['file'] = op.realpath(path['file'])
+
+        # For non remote paths we propose copy in cache dir
         if is_archive(path):
             # We propose to store the root archive in cache
             use_cached = ask_till_ok(questions['copy_1'] % (op.basename(path['file']), S_MANAGER.cache_dir),
@@ -1613,6 +1623,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
         'command'   : '[ 0 ] Command: ',
         'source'    : '[ 1 ] Source name: ',
         'path'      : '[2/8] Path: ',
+        'local'     : '[   ] Is the path local to the source directory [%s]? ',
         'extract'   : '[   ] Which file in archive? ',
         'copy_1'    : '[   ] Copy %s in %s and use as primary source from there [yN]? ',
         'copy_2'    : '[   ] Use %s as primary source from %s [yN]? ',
