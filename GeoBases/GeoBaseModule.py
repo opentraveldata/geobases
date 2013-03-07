@@ -331,7 +331,7 @@ class GeoBase(object):
             self._load(self._source, self._verbose)
             self.loaded = self._source
 
-        elif self._paths is not None:
+        elif self._paths:
             # Here we read the source from the configuration file
             for path in self._paths:
                 file_ = S_MANAGER.handle_path(path, self._verbose)
