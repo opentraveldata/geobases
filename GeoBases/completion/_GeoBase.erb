@@ -117,12 +117,12 @@ _hello() {
     typeset -A opt_args
 
     _arguments \
-     "(* -)"{-A,--admin}"[Administrate sources]:*: :->admin" \
-     "(* -)"{-a,--ask}"[Learning mode]" \
+     "(-A --admin)"{-A,--admin}"[Interactive administration of data sources]:*: :->admin" \
+     "(-a --ask)"{-a,--ask}"[Interactive learning mode]" \
      "(-b --base)"{-b,--base}"[Choose a different base, default is \"ori_por\"]: :->base" \
      "(-f --fuzzy)"{-f,--fuzzy}"[Fuzzy search on --fuzzy-field field. Default field is \"name\"]: :->fuzzy_value" \
      "(-F --fuzzy-field)"{-F,--fuzzy-field}"[Specify a field for fuzzy searches]: :->fuzzy_field" \
-     "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a min limit for fuzzy searches, default is "0.85" (this is a percentage)]: :->fuzzy_limit" \
+     "(-L --fuzzy-limit)"{-L,--fuzzy-limit}"[Specify a limit for fuzzy searches, default is "0.85" (percentage)]: :->fuzzy_limit" \
      "(-p --phonetic)"{-p,--phonetic}"[Phonetic search on --phonetic-field field. Default field is \"name\"]: :->phonetic_value" \
      "(-P --phonetic-field)"{-P,--phonetic-field}"[Specify a field for phonetic searches]: :->phonetic_field" \
      "(-y --phonetic-method)"{-y,--phonetic-method}"[Change phonetic matching method]: :->phonetic_method" \
@@ -131,29 +131,29 @@ _hello() {
      "(-r --reverse)"{-r,--reverse}"[When possible, reverse the logic of the filter]" \
      "(-O --or)"{-O,--or}"[Change *and* behavior to *or* behavior for multiple --exact fields]" \
      "(-n --near)"{-n,--near}"[Radius search, give an argument with \"lat, lng\" or key]: :->near_point" \
-     "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches.]: :->near_limit_km" \
+     "(-N --near-limit)"{-N,--near-limit}"[Specify a radius in km for radius searches]: :->near_limit_km" \
      "(-c --closest)"{-c,--closest}"[Closest entries search, give an argument with \"lat, lng\" or key]: :->from_point" \
-     "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest.]: :->closest_limit_nb" \
+     "(-C --closest-limit)"{-C,--closest-limit}"[Number of closest points searched with --closest]: :->closest_limit_nb" \
      "(-d --disable-grid)"{-d,--disable-grid}"[Disable grid for geographical searches]" \
-     "(-t --trep)"{-t,--trep}"[OpenTrep mode]: :->trep_value" \
-     "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\".]: :->trep_format" \
+     "(-t --trep)"{-t,--trep}"[OpenTrep query]: :->trep_value" \
+     "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\"]: :->trep_format" \
      "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
-     "(-s --show)"{-s,--show}"[Only display some fields in output]:*: :->show" \
-     "(-S --show-additional)"{-S,--show-additional}"[Display additional fields in output]:*: :->show_additional" \
+     "(-s --show)"{-s,--show}"[Only show some fields in output]:*: :->show" \
+     "(-S --show-additional)"{-S,--show-additional}"[Show additional fields in output]:*: :->show_additional" \
      "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]: :->limit" \
-     "(-i --indexation)"{-i,--indexation}"[Specify metadata for stdin data input.]:*: :->indexation" \
+     "(-i --indexation)"{-i,--indexation}"[Specify custom metadata for data source]:*: :->indexation" \
      "(-I --interactive-query)"{-I,--interactive-query}"[stdin data is keys for query, not data input]:*: :->interactive" \
-     "(-q --quiet)"{-q,--quiet}"[Programmer friendly output]" \
-     "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet mode]:*: :->quiet_options" \
-     "(-m --map)"{-m,--map}"[Display points on a map]" \
+     "(-q --quiet)"{-q,--quiet}"[Quiet display (csv like)]" \
+     "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet display]:*: :->quiet_options" \
+     "(-m --map)"{-m,--map}"[Map display]" \
      "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
-     "(-g --graph)"{-g,--graph}"[Display data on a directed graph]" \
+     "(-g --graph)"{-g,--graph}"[Graph display]" \
      "(-G --graph-fields)"{-G,--graph-fields}"[Select fields to build the graph display]:*: :->graph_fields" \
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
-     "(* -)"{-V,--version}"[Display version information]" \
+     "(* -)"{-V,--version}"[Show package and version information, then exit]" \
      "*:list of keys:()"
 
     # Arguments value
