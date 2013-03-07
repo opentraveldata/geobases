@@ -632,8 +632,6 @@ _hello() {
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
-     "(* -)"{-u,--update}"[Try to update the data files]" \
-     "(* -)"{-U,--update-forced}"[Force the update of all data files]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
      "(* -)"{-V,--version}"[Display version information]" \
      "*:list of keys:()"
