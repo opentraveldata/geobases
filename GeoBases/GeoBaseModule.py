@@ -1189,10 +1189,11 @@ class GeoBase(object):
         try:
             loc = tuple(float(self.get(key, f)) for f in GEO_FIELDS)
 
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, KeyError):
             # Decode geocode, if error, returns None
             # TypeError : input type is not a string, probably None
             # ValueError: could not convert to float
+            # KeyError  : could not find lat or lng 'fields'
             return
         else:
             return loc
