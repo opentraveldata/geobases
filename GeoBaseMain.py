@@ -1004,7 +1004,7 @@ ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 ALLOWED_COMMANDS         = ('status', 'fullstatus',
                             'add', 'edit', 'zshautocomp',
-                            'drop', 'restore',
+                            'drop', 'restore', 'fullrestore',
                             'update', 'forceupdate')
 
 DEF_INTER_FIELDS = ('iata_code', '__key__')
@@ -1624,11 +1624,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
     Danger Zone!
     (*) drop        : drop all information for one data source
     (*) restore     : factory reset of all data sources information
+    (*) fullrestore : restore, and clean the cache %s
 
     Update data
     (*) update      : download and show updates for data sources with remotes
     (*) forceupdate : download and force update of data sources with remotes
-    """)
+    """ % S_MANAGER.cache_dir)
 
     questions = {
         'command'   : '[ 0 ] Command: ',
@@ -1703,7 +1704,11 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
     # These ones do not need the second argument source_name
     if command == 'restore':
-        S_MANAGER.restore()
+        S_MANAGER.restore(clean_cache=False)
+        return
+
+    if command == 'fullrestore':
+        S_MANAGER.restore(clean_cache=True)
         return
 
     if command == 'update':
