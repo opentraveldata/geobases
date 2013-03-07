@@ -1969,31 +1969,32 @@ def ask_mode():
     -----------------------------------------------------\
     """)
 
-    questions = [
-        '[1/5] Which data source do you want to work with? ',
-        '[2/5] Consider all data for this source [Yn]? ',
-        '[   ] Which keys should we consider (separated with " ")? ',
-        '[3/5] What kind of search? ',
-        '[4/5] On which field? ',
-        '[   ] Which value to look for? ',
-        '[4/5] From which point (key or geocode)? ',
-        '[   ] Which limit for the search (kms or number)? ',
-        '[5/5] Which display? ',
-        '[   ] Execute the command [yN]? ',
-    ]
+    questions = {
+        'source'   : '[1/5] Which data source do you want to work with? ',
+        'all_keys' : '[2/5] Consider all data for this source [Yn]? ',
+        'from_keys': '[   ] Which keys should we consider (separated with " ")? ',
+        'search'   : '[3/5] What kind of search? ',
+        'field'    : '[4/5] On which field? ',
+        'value'    : '[   ] Which value to look for? ',
+        'point'    : '[4/5] From which point (key or geocode)? ',
+        'limit'    : '[   ] Which limit for the search (kms or number)? ',
+        'display'  : '[5/5] Which display? ',
+        'execute'  : '[   ] Execute the command [yN]? ',
+    }
+
     # 1. Choose base
-    base = ask_till_ok(questions[0], sorted(S_MANAGER))
+    base = ask_till_ok(questions['source'], sorted(S_MANAGER))
 
     # 2. Choose from keys
-    all_keys = ask_till_ok(questions[1], boolean=True, default=True)
+    all_keys = ask_till_ok(questions['all_keys'], boolean=True, default=True)
 
     if all_keys:
         from_keys = None
     else:
-        from_keys = ask_input(questions[2]).strip().split()
+        from_keys = ask_input(questions['from_keys']).strip().split()
 
     # 3. Choose search type
-    search = ask_till_ok(questions[3], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
+    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
 
     if search.strip().lower() in ('none',):
         search = None
@@ -2002,15 +2003,15 @@ def ask_mode():
     field, value, limit = None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        field = ask_till_ok(questions[4], sorted(S_MANAGER.get(base)['headers']))
-        value = ask_input(questions[5]).strip()
+        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']))
+        value = ask_input(questions['value']).strip()
 
     elif search in ['near', 'closest']:
-        value = ask_input(questions[6]).strip()
-        limit = ask_input(questions[7]).strip()
+        value = ask_input(questions['point']).strip()
+        limit = ask_input(questions['limit']).strip()
 
-    # 5. Frontend
-    frontend = ask_till_ok(questions[8], ['terminal', 'quiet', 'map', 'graph'])
+    # 5. Display
+    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'])
 
     # 6. Conclusion
     parameters = {
@@ -2020,7 +2021,7 @@ def ask_mode():
         'field'     : field,
         'limit'     : limit,
         'value'     : value,
-        'frontend'  : frontend
+        'display'   : display
     }
 
     print
@@ -2044,7 +2045,7 @@ def ask_mode():
     base_part         = '--base %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
-    frontend_part     = ('--%s' % frontend) if frontend != 'terminal' else ''
+    display_part     = ('--%s' % display) if display != 'terminal' else ''
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '--%s-field %s' % (search, field)
@@ -2058,7 +2059,7 @@ def ask_mode():
                                    base_part,
                                    search_field_part,
                                    search_part,
-                                   frontend_part] if e)
+                                   display_part] if e)
     print command
 
 
@@ -2066,7 +2067,7 @@ def ask_mode():
     base_part         = '-b %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('-%s "%s"' % (search[0], value)) if search is not None else ''
-    frontend_part     = ('-%s' % frontend[0]) if frontend != 'terminal' else ''
+    display_part      = ('-%s' % display[0]) if display != 'terminal' else ''
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '-%s %s' % (search[0].upper(), field)
@@ -2080,12 +2081,12 @@ def ask_mode():
                                    base_part,
                                    search_field_part,
                                    search_part,
-                                   frontend_part] if e)
+                                   display_part] if e)
     print command
     print '-----------------------------------------------------'
     print
 
-    execute = ask_till_ok(questions[9], boolean=True)
+    execute = ask_till_ok(questions['execute'], boolean=True)
     if execute:
         os.system(command)
 
