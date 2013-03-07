@@ -1548,7 +1548,7 @@ def handle_args():
 def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
-    path = ask_input(questions[2], to_CLI('path', ref_path)).strip()
+    path = ask_input(questions['path'], to_CLI('path', ref_path)).strip()
 
     if not path:
         print '----- Empty path, deleted'
@@ -1557,7 +1557,7 @@ def admin_path(ref_path, questions, verbose):
     path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
-        extract = ask_till_ok(questions[3],
+        extract = ask_till_ok(questions['extract'],
                               is_ok = lambda r: r,
                               fail_message='-/!\- Cannot be empty',
                               prefill=ref_path.get('extract', ''))
@@ -1570,7 +1570,7 @@ def admin_path(ref_path, questions, verbose):
 
         if is_archive(path):
             # We propose to store the root archive in cache
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+            use_cached = ask_till_ok(questions['copy_1'] % (op.basename(path['file']), S_MANAGER.cache_dir),
                                      boolean=True)
 
             if use_cached:
@@ -1584,7 +1584,7 @@ def admin_path(ref_path, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[5] % (op.basename(filename), S_MANAGER.cache_dir),
+    use_cached = ask_till_ok(questions['copy_2'] % (op.basename(filename), S_MANAGER.cache_dir),
                              boolean=True)
 
     if use_cached:
@@ -1617,60 +1617,60 @@ def admin_mode(admin, with_hints=True, verbose=True):
     (*) edit       : edit an existing data source, or add a new one
     """)
 
-    questions = [
-        '[ 0 ] Command: ',
-        '[ 1 ] Source name : ',
-        '[2/8] Path : ',
-        '[   ] Which file in archive? ',
-        '[   ] Copy %s in %s and use as primary source from there [yN]? ',
-        '[   ] Use %s as primary source from %s [yN]? ',
-        '[3/8] Delimiter : ',
-        '[4/8] Headers : ',
-        '[5/8] Key fields : ',
-        '[6/8] Index : ',
-        '[7/8] Join clause : ',
-        '[8/8] Confirm [Yn]? ',
-        '[   ] Add another %s [yN]? ',
-    ]
+    questions = {
+        'command'   : '[ 0 ] Command: ',
+        'source'    : '[ 1 ] Source name: ',
+        'path'      : '[2/8] Path: ',
+        'extract'   : '[   ] Which file in archive? ',
+        'copy_1'    : '[   ] Copy %s in %s and use as primary source from there [yN]? ',
+        'copy_2'    : '[   ] Use %s as primary source from %s [yN]? ',
+        'delimiter' : '[3/8] Delimiter: ',
+        'headers'   : '[4/8] Headers: ',
+        'key_fields': '[5/8] Key field(s): ',
+        'index'     : '[6/8] Index: ',
+        'join'      : '[7/8] Join clause: ',
+        'confirm'   : '[8/8] Confirm [Yn]? ',
+        'another'   : '[   ] Add another %s [yN]? ',
+    }
 
-    hints = [
-        dedent("""
-        HINT * Enter a new name to define a new source.
-        """),
-        dedent("""
-        HINT * Paths can be urls or normal file paths.
-             * zip archives are supported.
-             * For remote files and archives, temporary
-             * files will be put in the cache directory:
-             * %s
-             * These files may be used as primary sources.
-             * Leave empty to delete path.
-        """ % S_MANAGER.cache_dir),
-        dedent("""
-        HINT * The delimiter is the character delimiting fields.
-             * Leave empty to split every character.
-        """),
-        dedent("""
-        HINT * Headers are column names, separated with "%s".
-             * lat and lng will be guessed for new sources.
-        """ % SPLIT),
-        dedent("""
-        HINT * Key fields are fields used to generate keys,
-             * use "%s" if several fields.
-             * Leave empty to use line numbers as keys.
-        """ % SPLIT),
-        dedent("""
-        HINT * Indices are a list of index to speed up some queries.
-             * For multiple fields index, separate with "%s".
-             * Leave empty to delete index.
-        """ % SPLIT),
-        dedent("""
-        HINT * Join clauses are useful to say that a key can be found
-             * in another data source. Use the "field{base:external_field}"
-             * syntax to define one.
-             * Leave empty to delete join clause.
-        """),
-    ]
+    hints = {
+        'source'    : dedent("""
+                      HINT * Enter a new name to define a new source.
+                      """),
+        'paths'     : dedent("""
+                      HINT * Paths can be urls or normal file paths.
+                           * zip archives are supported.
+                           * For remote files and archives, temporary
+                           * files will be put in the cache directory:
+                           * %s
+                           * These files may be used as primary sources.
+                           * Leave empty to delete path.
+                      """ % S_MANAGER.cache_dir),
+        'delimiter' : dedent("""
+                      HINT * The delimiter is the character delimiting fields.
+                           * Leave empty to split every character.
+                      """),
+        'headers'   : dedent("""
+                      HINT * Headers are column names, separated with "%s".
+                           * lat and lng will be guessed for new sources.
+                      """ % SPLIT),
+        'key_fields': dedent("""
+                      HINT * Key fields are fields used to generate keys,
+                           * use "%s" if several fields.
+                           * Leave empty to use line numbers as keys.
+                      """ % SPLIT),
+        'indices'   : dedent("""
+                      HINT * Indices are a list of index to speed up some queries.
+                           * For multiple fields index, separate with "%s".
+                           * Leave empty to delete index.
+                      """ % SPLIT),
+        'join'      : dedent("""
+                      HINT * Join clauses are useful to say that a key can be found
+                           * in another data source. Use the "field{base:external_field}"
+                           * syntax to define one.
+                           * Leave empty to delete join clause.
+                      """),
+    }
 
     # Was banner displayed
     bannered = False
@@ -1679,7 +1679,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
         print banner
         bannered = True
         print help_
-        command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
+        command = ask_till_ok(questions['command'], ALLOWED_COMMANDS, show=False)
     else:
         command = admin[0]
 
@@ -1697,17 +1697,17 @@ def admin_mode(admin, with_hints=True, verbose=True):
             bannered = True
         if command in ['status', 'fullstatus']:
             two_col_print(sorted(S_MANAGER) + ['*'])
-            source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
+            source_name = ask_till_ok(questions['source'], sorted(S_MANAGER) + ['*', ''], show=False)
 
         elif command in ['drop']:
             two_col_print(sorted(S_MANAGER))
-            source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
+            source_name = ask_till_ok(questions['source'], sorted(S_MANAGER), show=False)
 
         else:
             if with_hints:
-                print hints[0],
+                print hints['source'],
             two_col_print(sorted(S_MANAGER))
-            source_name = ask_till_ok(questions[1],
+            source_name = ask_till_ok(questions['source'],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
     else:
@@ -1778,7 +1778,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 1. Paths
         if with_hints:
-            print hints[1]
+            print hints['paths']
         i = 0
         while True:
             if i < len(def_paths):
@@ -1786,7 +1786,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'path', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'path', boolean=True)
 
                 if add_another:
                     ref_path = get_empty_path()
@@ -1817,8 +1817,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 2. Delimiter
         if with_hints:
-            print hints[2]
-        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+            print hints['delimiter']
+        delimiter = ask_input(questions['delimiter'], to_CLI('delimiter', def_delimiter))
         new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
@@ -1828,8 +1828,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 3. Headers
         if with_hints:
-            print hints[3]
-        headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
+            print hints['headers']
+        headers = ask_input(questions['headers'], to_CLI('headers', def_headers)).strip()
         if not headers:
             headers = []
         else:
@@ -1852,8 +1852,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 4. Key fields
         if with_hints:
-            print hints[4]
-        key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
+            print hints['key_fields']
+        key_fields = ask_input(questions['key_fields'], to_CLI('key_fields', def_key_fields)).strip()
         key_fields = split_if_several(key_fields)
 
         if not key_fields:
@@ -1864,7 +1864,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 5. Indices
         if with_hints:
-            print hints[5]
+            print hints['indices']
         i = 0
         while True:
             if i < len(def_indices):
@@ -1872,14 +1872,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'index', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'index', boolean=True)
 
                 if add_another:
                     ref_index = get_empty_index()
                 else:
                     break
 
-            index = ask_input(questions[9], to_CLI('index', ref_index)).strip()
+            index = ask_input(questions['index'], to_CLI('index', ref_index)).strip()
             if not index:
                 print '----- Empty index, deleted'
             else:
@@ -1889,7 +1889,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 6. Join
         if with_hints:
-            print hints[6]
+            print hints['join']
         i = 0
         while True:
             if i < len(def_join):
@@ -1897,14 +1897,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'join', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'join', boolean=True)
 
                 if add_another:
                     ref_join = get_empty_join()
                 else:
                     break
 
-            m_join = ask_input(questions[10], to_CLI('join', ref_join)).strip()
+            m_join = ask_input(questions['join'], to_CLI('join', ref_join)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if not m_join:
@@ -1936,7 +1936,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
             print '+++ [after]'
             print S_MANAGER.convert({ source_name : new_conf })
 
-            confirm = ask_till_ok(questions[11], boolean=True, default=True)
+            confirm = ask_till_ok(questions['confirm'], boolean=True, default=True)
 
             if confirm:
                 S_MANAGER.update(source_name, new_conf)
