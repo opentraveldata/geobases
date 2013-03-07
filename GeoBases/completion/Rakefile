@@ -5,7 +5,11 @@ require 'pathname'
 
 ROOT_PATH = File.expand_path File.dirname(__FILE__)
 
-SOURCES_CONF_PATH = File.join ROOT_PATH, '../DataSources/Sources.yaml'
+if ENV['source'].nil?
+    SOURCES_CONF_PATH = File.join ROOT_PATH, '../DataSources/Sources.yaml'
+else
+    SOURCES_CONF_PATH = ENV['source']
+end
 
 BUILD_PATH = File.join ROOT_PATH, '.'
 ASSETS_PATH = File.join ROOT_PATH, '.'

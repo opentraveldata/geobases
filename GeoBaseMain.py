@@ -998,9 +998,9 @@ ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 ALLOWED_COMMANDS         = ('status', 'fullstatus',
-                            'update', 'forceupdate',
+                            'edit', 'updatezsh',
                             'drop', 'restore',
-                            'edit')
+                            'update', 'forceupdate')
 
 DEF_INTER_FIELDS = ('iata_code', '__key__')
 DEF_INTER_TYPE   = '__exact__'
@@ -1085,7 +1085,7 @@ if ENV_WARNINGS:
     **********************************************************************
     By the way, since you probably did not read the documentation :D,    *
     you should also add this for the completion to work with zsh.        *
-    You are using zsh right o_O?                                          *
+    You are using zsh right o_O?                                         *
                                                                          *
         # Add custom completion scripts
         fpath=(~/.zsh/completion $fpath)
@@ -1597,20 +1597,21 @@ def admin_mode(admin, with_hints=True, verbose=True):
     """ % S_MANAGER.sources_conf_path)
 
     help_ = dedent("""
-    Status
+    Sources status
     (*) status      : display short data source status
     (*) fullstatus  : display full data source configuration
 
-    Danger Zone
+    Add/Edit sources definition
+    (*) edit        : edit an existing data source, or add a new one
+    (*) updatezsh   : update Zsh autocomplete file
+
+    Danger Zone!
     (*) drop        : drop all information for one data source
     (*) restore     : factory reset of all data sources information
 
-    Update
-    (*) update      : propose updates for data sources with known master
-    (*) forceupdate : force update of data sources with known master
-
-    Add/Edit
-    (*) edit        : edit an existing data source, or add a new one
+    Update data
+    (*) update      : download and show updates for data sources with remotes
+    (*) forceupdate : download and force update of data sources with remotes
     """)
 
     questions = {
@@ -1627,6 +1628,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
         'join'      : '[7/8] Join clause: ',
         'confirm'   : '[8/8] Confirm [Yn]? ',
         'another'   : '[   ] Add another %s [yN]? ',
+        'update_zsh': '[   ] Update Zsh autocomplete [yN]? ',
     }
 
     hints = {
@@ -1695,6 +1697,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.check_data_updates(force=True)
         return
 
+    if command == 'updatezsh':
+        S_MANAGER.update_autocomplete(verbose=True)
+        return
 
     if len(admin) < 2:
         if not bannered:
@@ -1932,23 +1937,33 @@ def admin_mode(admin, with_hints=True, verbose=True):
                     old_conf[option] = conf[option]
 
         if not new_conf:
-            print '===== No changes'
+            print '\n===== No changes'
+            return
+
+        print
+        print '--- [before]'
+        print S_MANAGER.convert({ source_name : old_conf })
+
+        print '+++ [after]'
+        print S_MANAGER.convert({ source_name : new_conf })
+
+        confirm = ask_till_ok(questions['confirm'], boolean=True, default=True)
+
+        if not confirm:
+            print '\n===== Aborted'
+            return
+
+        S_MANAGER.update(source_name, new_conf)
+        S_MANAGER.save()
+        print '\n===== Changes saved to %s' % S_MANAGER.sources_conf_path
+
+        if is_in_path('rake'):
+            update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
+            if update_zsh:
+                S_MANAGER.update_autocomplete(verbose=True)
+                print '===== Restart shell now.'
         else:
-            print
-            print '--- [before]'
-            print S_MANAGER.convert({ source_name : old_conf })
-
-            print '+++ [after]'
-            print S_MANAGER.convert({ source_name : new_conf })
-
-            confirm = ask_till_ok(questions['confirm'], boolean=True, default=True)
-
-            if confirm:
-                S_MANAGER.update(source_name, new_conf)
-                S_MANAGER.save()
-                print '===== Changes saved to %s' % S_MANAGER.sources_conf_path
-            else:
-                print '===== Aborted'
+            print '===== Rake is not installed, could not update zsh autocomplete.'
 
 
 def two_col_print(L):
