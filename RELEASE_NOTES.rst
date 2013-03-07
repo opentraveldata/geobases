@@ -7,16 +7,17 @@ V5
 
 + 5.0 :
 
- + empty delimiter is accepted, and means we split on every char
- + __gar__ special attribute no longer flatten uncollected data (now a list)
- + getLocation has a new *default* keyword argument to avoid key failure
- + learning mode with -a/--ask to learn of the CLI works
- + admin mode with -A/--admin to configure sources (persistent changes)
- + -A/--any is now -O/--or to control multiple --exact filters behavior
+ + CLI: removed -u/--update and -U/--update-forced, now available with -A/--admin
+ + API: empty delimiter is accepted, and means we split on every char
+ + API: __gar__ special attribute no longer flatten uncollected data (now a list)
+ + API: getLocation has a new *default* keyword argument to avoid key failure
+ + CLI: learning mode with -a/--ask to learn of the CLI works
+ + CLI: admin mode with -A/--admin to configure sources (persistent changes)
+ + CLI: -A/--any is now -O/--or to control multiple --exact filters behavior
  + CLI: possibility to add a join clause on multiple fields with new -i argument (and possibility to --show it)
- + Added map visualization possibilities on join clauses (another arg. for -M on CLI)
- + new -S/--show-additional method to add fields to the current display
- + Python: new getJoinBase method to give access to external base properties
+ + API: Added map visualization possibilities on join clauses (another arg. for -M on CLI)
+ + API: new -S/--show-additional method to add fields to the current display
+ + API: new getJoinBase method to give access to external base properties
  + CLI: cache fields analysis to speed up quiet mode
  + CLI: properly flatten all nested structure in quiet mode
  + CLI: possibility to show external fields from --show using field:external_field syntax
