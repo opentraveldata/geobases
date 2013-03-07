@@ -13,7 +13,7 @@ from textwrap import dedent
 from urllib import urlretrieve
 from zipfile import ZipFile
 import shutil
-from shutil import copy
+from shutil import copy, rmtree
 
 # Not in standard library
 import yaml
@@ -268,9 +268,13 @@ class SourcesManager(object):
             f.write(self.convert(self.sources))
 
 
-    def restore(self, load=False):
+    def restore(self, clean_cache=False, load=False):
         """Restore original file.
         """
+        if clean_cache:
+            rmtree(CACHE_DIR)
+            os.makedirs(CACHE_DIR)
+
         try:
             copy(self.sources_conf_path_origin,
                  self.sources_conf_path)
