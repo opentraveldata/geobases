@@ -225,6 +225,9 @@ class SourcesManager(object):
             print 'Source "%s" not in sources.' % source
             return
 
+        if self.sources[source] is None:
+            self.sources[source] = {}
+
         for option, option_config in config.iteritems():
             self.sources[source][option] = option_config
 
