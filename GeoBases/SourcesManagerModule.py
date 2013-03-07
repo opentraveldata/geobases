@@ -184,32 +184,26 @@ class SourcesManager(object):
             self.sources[source] = config
 
 
-    def is_in_cache(self, filename):
-        """Is filename already in cache?
-        """
-        return op.isfile(op.join(self.cache_dir, filename))
 
-
-    def is_path_from_cache(self, path):
-        """Is a path from the cache?.
-        """
-        return path == op.join(self.cache_dir, op.basename(path))
-
-
-    def copy_to_cache(self, path):
+    def copy_to_cache(self, path, source):
         """Move source file in cache directory.
         """
         if not op.isfile(path):
             print 'File %s does not exist' % path
             return False, None
 
+        full_cache_dir = op.join(self.cache_dir, source)
+
+        if not op.isdir(full_cache_dir):
+            os.makedirs(full_cache_dir)
+
         try:
-            copy(path, self.cache_dir)
+            copy(path, full_cache_dir)
         except shutil.Error:
             # Copy did not happen because the two files are the same
             return False, path
         else:
-            return True, op.join(self.cache_dir, op.basename(path))
+            return True, op.join(full_cache_dir, op.basename(path))
 
 
     def drop(self, source=None):
@@ -386,18 +380,23 @@ class SourcesManager(object):
         print
 
 
-    def handle_path(self, path, verbose):
+    def handle_path(self, path, source, verbose):
         """
         Handle file downloading/uncompressing and returns
         path to file to be opened.
         """
+        full_cache_dir = op.join(self.cache_dir, source)
+
+        if not op.isdir(full_cache_dir):
+            os.makedirs(full_cache_dir)
+
         if not is_remote(path):
             if path['local'] is True:
                 file_ = op.join(op.realpath(self.sources_dir), path['file'])
             else:
                 file_ = path['file']
         else:
-            file_, success = download_lazy(path['file'], self.cache_dir, verbose)
+            file_, success = download_lazy(path['file'], full_cache_dir, verbose)
 
             if not success:
                 if verbose:
@@ -406,7 +405,7 @@ class SourcesManager(object):
 
         if is_archive(path):
             archive = file_
-            file_, success = extract_lazy(archive, path['extract'], self.cache_dir, verbose)
+            file_, success = extract_lazy(archive, path['extract'], full_cache_dir, verbose)
 
             if not success:
                 if verbose:
