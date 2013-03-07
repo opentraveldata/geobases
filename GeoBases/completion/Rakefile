@@ -11,6 +11,16 @@ else
     SOURCES_CONF_PATH = ENV['source']
 end
 
+if ENV['target'].nil?
+    ASSET_FILES = {
+      '_GeoBase.erb' => '_GeoBase'
+    }
+else
+    ASSET_FILES = {
+      '_GeoBase.erb' => ENV['target']
+    }
+end
+
 BUILD_PATH = File.join ROOT_PATH, '.'
 ASSETS_PATH = File.join ROOT_PATH, '.'
 
@@ -19,10 +29,6 @@ ASSETS_PATH = File.join ROOT_PATH, '.'
 #  Object.const_set "CONF_#{param.upcase}", val
 #end
 SOURCES = YAML.load File.open(SOURCES_CONF_PATH)
-
-ASSET_FILES = {
-  '_GeoBase.erb' => '_GeoBase'
-}
 
 # Config enhancements
 SOURCES.each do |data, config|
@@ -77,7 +83,11 @@ namespace :build do
 
   # Distribute asset files
   ASSET_FILES.each do |source, target|
-    dist_target = dist target
+    if ENV['target'].nil?
+        dist_target = dist target
+    else
+        dist_target = target
+    end
     asset_source = asset source
     # Forcing rm -f
     rm dist_target rescue nil

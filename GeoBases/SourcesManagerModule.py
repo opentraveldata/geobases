@@ -39,7 +39,7 @@ CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 # 5) Path to dir where we build autocomplete stuff
 COMPLETION_TARGET_DIR = op.join(os.getenv('HOME', '.'), '.zsh/completion')
 COMPLETION_BUILD_DIR  = relative('completion')
-COMPLETION_BUILT_FILE = relative('completion/_GeoBase')
+COMPLETION_BUILT_FILE = '/tmp/_GeoBase' # to allow user to use it
 
 if not op.isdir(CACHE_DIR):
     os.makedirs(CACHE_DIR)
@@ -136,8 +136,10 @@ class SourcesManager(object):
 
         # -q option is to turn off fileutils messages
         # to avoid stout pollution we remove stdout
-        os.system("cd %s ; rake -q source=%s >/dev/null" % \
-                  (COMPLETION_BUILD_DIR, self.sources_conf_path))
+        os.system("cd %s ; rake -q source=%s target=%s" % \
+                  (COMPLETION_BUILD_DIR,
+                   self.sources_conf_path,
+                   COMPLETION_BUILT_FILE))
 
         try:
             copy(COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
