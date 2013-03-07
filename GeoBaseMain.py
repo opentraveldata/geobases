@@ -997,7 +997,10 @@ FORCE_STR = False
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
-ALLOWED_COMMANDS         = ('status', 'fullstatus', 'drop', 'restore', 'edit')
+ALLOWED_COMMANDS         = ('status', 'fullstatus',
+                            'update', 'forceupdate',
+                            'drop', 'restore',
+                            'edit')
 
 DEF_INTER_FIELDS = ('iata_code', '__key__')
 DEF_INTER_TYPE   = '__exact__'
@@ -1519,22 +1522,6 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-u', '--update',
-        help = dedent('''\
-        If this option is set, instead of anything,
-        the script will try to update the data files.
-        Differences will be shown and the user has to answer
-        'Y' or 'N' for each file.
-        '''),
-        action = 'store_true')
-
-    parser.add_argument('-U', '--update-forced',
-        help = dedent('''\
-        If this option is set, instead of anything,
-        the script will force the update of all data files.
-        '''),
-        action = 'store_true')
-
     parser.add_argument('-V', '--version',
         help = dedent('''\
         Display version information.
@@ -1610,11 +1597,20 @@ def admin_mode(admin, with_hints=True, verbose=True):
     """ % S_MANAGER.sources_conf_path)
 
     help_ = dedent("""
-    (*) status     : display short data source status
-    (*) fullstatus : display full data source configuration
-    (*) drop       : drop all information for one data source
-    (*) restore    : factory reset of all data sources information
-    (*) edit       : edit an existing data source, or add a new one
+    Status
+    (*) status      : display short data source status
+    (*) fullstatus  : display full data source configuration
+
+    Danger Zone
+    (*) drop        : drop all information for one data source
+    (*) restore     : factory reset of all data sources information
+
+    Update
+    (*) update      : propose updates for data sources with known master
+    (*) forceupdate : force update of data sources with known master
+
+    Add/Edit
+    (*) edit        : edit an existing data source, or add a new one
     """)
 
     questions = {
@@ -1686,10 +1682,19 @@ def admin_mode(admin, with_hints=True, verbose=True):
     if command not in ALLOWED_COMMANDS:
         error('wrong_value', command, ALLOWED_COMMANDS)
 
+    # These ones do not need the second argument source_name
     if command == 'restore':
-        # This one does not need the second argument source_name
         S_MANAGER.restore()
         return
+
+    if command == 'update':
+        S_MANAGER.check_data_updates()
+        return
+
+    if command == 'forceupdate':
+        S_MANAGER.check_data_updates(force=True)
+        return
+
 
     if len(admin) < 2:
         if not bannered:
@@ -2160,16 +2165,6 @@ def main():
         print 'Location : %s' % r.location
         print 'Requires : %s' % ', '.join(str(e) for e in r.requires())
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
-        exit(0)
-
-    # Updating file
-    if args['update']:
-        S_MANAGER.check_data_updates()
-        exit(0)
-
-
-    if args['update_forced']:
-        S_MANAGER.check_data_updates(force=True)
         exit(0)
 
 
