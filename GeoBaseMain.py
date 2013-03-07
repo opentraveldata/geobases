@@ -220,7 +220,8 @@ class RotatingColors(object):
         return tuple(current)
 
 
-    def convertJoin(self, col):
+    @staticmethod
+    def convertJoin(col):
         """Get special join color. Only change foreground color.
         """
         current    = list(col)
@@ -343,7 +344,7 @@ def fmt_ref(ref, ref_type, no_symb=False):
 
 
 
-def display(geob, list_of_things, shown_fields, ref_type, important):
+def display_terminal(geob, list_of_things, shown_fields, ref_type, important):
     """
     Main display function in Linux terminal, with
     nice color and everything.
@@ -2785,7 +2786,7 @@ def main():
                                       args['show_additional'])
 
         print
-        display(g, res, shown_fields, ref_type, important)
+        display_terminal(g, res, shown_fields, ref_type, important)
 
     if frontend == 'quiet':
         defaults = [f for f in g.fields if '%s@raw' % f not in g.fields]

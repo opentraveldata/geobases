@@ -420,7 +420,8 @@ class SourcesManager(object):
         return file_
 
 
-    def convert_paths_format(self, paths, default_is_relative=DEFAULT_IS_RELATIVE):
+    @staticmethod
+    def convert_paths_format(paths, default_is_relative=DEFAULT_IS_RELATIVE):
         """Convert all paths to the same format.
         """
         if paths is None:
