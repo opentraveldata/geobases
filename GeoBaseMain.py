@@ -216,7 +216,7 @@ class RotatingColors(object):
         """Get special raw color. Only change foreground color.
         """
         current    = list(col)
-        current[0] = 'yellow' if self._background == 'black' else 'green'
+        current[0] = 'yellow' if self._background == 'black' else 'cyan'
         return tuple(current)
 
 
@@ -224,7 +224,7 @@ class RotatingColors(object):
         """Get special join color. Only change foreground color.
         """
         current    = list(col)
-        current[0] = 'green' if self._background == 'black' else 'cyan'
+        current[0] = 'green'
         return tuple(current)
 
 
