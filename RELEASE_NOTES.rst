@@ -7,6 +7,7 @@ V5
 
 + 5.0 :
 
+ + API/CLI: add possbility to update zsh autocomplete file
  + CLI: removed -u/--update and -U/--update-forced, now available with -A/--admin
  + API: empty delimiter is accepted, and means we split on every char
  + API: __gar__ special attribute no longer flatten uncollected data (now a list)
