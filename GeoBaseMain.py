@@ -1822,8 +1822,13 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
             new_conf['paths'].append(path)
 
-            with open(filename) as fl:
-                first_l = fl.next().rstrip()
+            try:
+                with open(filename) as fl:
+                    first_l = fl.next().rstrip()
+            except IOError:
+                print
+                print '!!!!! Could not open "%s". Check the path.' % filename
+                return
 
             # No need to download and check the first lines for known files
             if to_CLI('path', ref_path) != to_CLI('path', path):
