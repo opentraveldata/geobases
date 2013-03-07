@@ -59,7 +59,9 @@ end
 SOURCES.each do |data, config|
     config['join'].each do |d|
         if d['fields'].is_a? String
-            d['fields'] = d['fields'] + ':'
+            if d['fields'][-1] != ':'
+                d['fields'] = d['fields'] + ':'
+            end
         else
             d['fields'] = d['fields'].join('/') + ':'
         end
