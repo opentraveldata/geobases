@@ -5,7 +5,7 @@ require 'pathname'
 
 ROOT_PATH = File.expand_path File.dirname(__FILE__)
 
-SOURCES_CONF_PATH = File.join ROOT_PATH, '../GeoBases/DataSources/Sources.yaml'
+SOURCES_CONF_PATH = File.join ROOT_PATH, '../DataSources/Sources.yaml'
 
 BUILD_PATH = File.join ROOT_PATH, '.'
 ASSETS_PATH = File.join ROOT_PATH, '.'
