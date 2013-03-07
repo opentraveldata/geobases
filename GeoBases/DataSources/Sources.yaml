@@ -10,6 +10,9 @@ airports:
     paths     : Airports/GeoNames/airports_geonames_only_clean.csv
     key_fields: iata_code
     delimiter : ^
+    join:
+        - fields: country_code
+          with  : [countries, code]
     headers   :
         - iata_code
         - name
@@ -30,6 +33,9 @@ countries:
     subdelimiters :
         languages : ','
         neighbors : ','
+    join:
+        - fields: currency_code
+          with  : [currencies, currency_code]
     headers   :
         - code
         - iso_alpha3
@@ -55,6 +61,9 @@ capitals:
     paths     : Countries/capitals.csv
     key_fields: country_code
     delimiter : ^
+    join:
+        - fields: country_code
+          with  : [countries, code]
     headers   :
         - country_code
         - capital_name
@@ -133,6 +142,9 @@ timezones:
     key_fields: code
     delimiter : "\t"
     skip      : 1
+    join:
+        - fields: country_code
+          with  : [countries, code]
     headers   :
         - country_code
         - code
@@ -151,6 +163,11 @@ cities:
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
+    join:
+        - fields: country_code
+          with  : [countries, code]
+        - fields: timezone
+          with  : [timezones, code]
     headers   :
         - code
         - name
@@ -180,7 +197,7 @@ ori_por:
     key_fields    : iata_code
     indices       :
         - iata_code
-        - [iata_code, country_code]
+        #- [iata_code, country_code]
     limit         : # put a number to load only the first lines
     skip          : 1 # put a number to skip the first lines
     discard_dups  : false # This is the default behavior anyway
@@ -191,15 +208,27 @@ ori_por:
         #location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
-    join:
+    join          : &ori_por_join
         - fields: country_code
           with  : [countries, code]
+        - fields: timezone
+          with  : [timezones, code]
         # Freaking auto join possibility
         - fields: tvl_por_list
           with  : [ori_por, iata_code]
         # Join on multiple fields examples
         #- fields: [city_code, location_type]
         #  with  : [ori_por, [iata_code, location_type]]
+        - fields: city_code
+          with  : [ori_por, iata_code]
+        - fields: continent_name
+          with  : [continents, name]
+        - fields: location_type
+          with  : [location_types, location_type]
+        - fields: fclass
+          with  : [feature_classes, fclass]
+        - fields: fcode
+          with  : [feature_codes, fcode]
     headers : &ori_por_headers
         - iata_code
         - icao_code
@@ -254,6 +283,7 @@ ori_por_multi:
     skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
+    join          : *ori_por_join
 
 
 ori_por_non_iata:
@@ -265,6 +295,7 @@ ori_por_non_iata:
     skip          : 1
     subdelimiters : *ori_por_subdel
     headers       : *ori_por_headers
+    join          : *ori_por_join
 
 
 currencies:
@@ -361,6 +392,11 @@ geonames_FR:
     delimiter : "\t"
     subdelimiters :
         alternatenames : ','
+    join: &geonames_join
+        - fields: country_code
+          with  : [countries, code]
+        - fields: timezone
+          with  : [timezones, code]
     headers   : &geonames_headers
         - geoname_id
         - name
@@ -394,6 +430,7 @@ geonames_MC:
     subdelimiters :
         alternatenames : ','
     headers   : *geonames_headers
+    join      : *geonames_join
 
 
 postal_codes_FR:
@@ -404,6 +441,9 @@ postal_codes_FR:
           extract : FR.txt
     key_fields: &postal_codes_key postal_code
     delimiter : "\t"
+    join      : &postal_code_join
+        - fields: country_code
+          with  : [countries, code]
     headers   : &postal_codes_headers
         - country_code
         - postal_code
@@ -428,4 +468,5 @@ postal_codes_MC:
     key_fields: *postal_codes_key
     delimiter : "\t"
     headers   : *postal_codes_headers
+    join      : *postal_code_join
 

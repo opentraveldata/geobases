@@ -334,7 +334,7 @@ class GeoBase(object):
         elif self._paths:
             # Here we read the source from the configuration file
             for path in self._paths:
-                file_ = S_MANAGER.handle_path(path, self._verbose)
+                file_ = S_MANAGER.handle_path(path, data, self._verbose)
 
                 if file_ is None:
                     continue
@@ -1253,9 +1253,9 @@ class GeoBase(object):
         ('FR',)
         >>> geo_o._joinGet('CDG', 'country_code', 'name')
         ('France',)
-        >>> geo_o._joinGet('CDG', 'city_code')
+        >>> geo_o._joinGet('CDG', 'name')
         Traceback (most recent call last):
-        ValueError: Fields "('city_code',)" has no join information, available: ...
+        ValueError: Fields "('name',)" has no join information, available: ...
         """
         # We only work with tuple of fields for joining
         fields = tuplify(fields)
