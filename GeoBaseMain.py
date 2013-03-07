@@ -997,7 +997,10 @@ FORCE_STR = False
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
-ALLOWED_COMMANDS         = ('status', 'fullstatus', 'drop', 'restore', 'edit')
+ALLOWED_COMMANDS         = ('status', 'fullstatus',
+                            'add', 'edit', 'zshautocomp',
+                            'drop', 'restore',
+                            'update', 'forceupdate')
 
 DEF_INTER_FIELDS = ('iata_code', '__key__')
 DEF_INTER_TYPE   = '__exact__'
@@ -1082,7 +1085,7 @@ if ENV_WARNINGS:
     **********************************************************************
     By the way, since you probably did not read the documentation :D,    *
     you should also add this for the completion to work with zsh.        *
-    You are using zsh right o_O?                                          *
+    You are using zsh right o_O?                                         *
                                                                          *
         # Add custom completion scripts
         fpath=(~/.zsh/completion $fpath)
@@ -1519,22 +1522,6 @@ def handle_args():
         '''),
         action = 'store_true')
 
-    parser.add_argument('-u', '--update',
-        help = dedent('''\
-        If this option is set, instead of anything,
-        the script will try to update the data files.
-        Differences will be shown and the user has to answer
-        'Y' or 'N' for each file.
-        '''),
-        action = 'store_true')
-
-    parser.add_argument('-U', '--update-forced',
-        help = dedent('''\
-        If this option is set, instead of anything,
-        the script will force the update of all data files.
-        '''),
-        action = 'store_true')
-
     parser.add_argument('-V', '--version',
         help = dedent('''\
         Display version information.
@@ -1548,7 +1535,7 @@ def handle_args():
 def admin_path(ref_path, questions, verbose):
     """Admin path for a source.
     """
-    path = ask_input(questions[2], to_CLI('path', ref_path)).strip()
+    path = ask_input(questions['path'], to_CLI('path', ref_path)).strip()
 
     if not path:
         print '----- Empty path, deleted'
@@ -1557,7 +1544,7 @@ def admin_path(ref_path, questions, verbose):
     path = S_MANAGER.convert_paths_format(path, default_is_relative=False)[0]
 
     if path['file'].endswith('.zip'):
-        extract = ask_till_ok(questions[3],
+        extract = ask_till_ok(questions['extract'],
                               is_ok = lambda r: r,
                               fail_message='-/!\- Cannot be empty',
                               prefill=ref_path.get('extract', ''))
@@ -1570,7 +1557,7 @@ def admin_path(ref_path, questions, verbose):
 
         if is_archive(path):
             # We propose to store the root archive in cache
-            use_cached = ask_till_ok(questions[4] % (op.basename(path['file']), S_MANAGER.cache_dir),
+            use_cached = ask_till_ok(questions['copy_1'] % (op.basename(path['file']), S_MANAGER.cache_dir),
                                      boolean=True)
 
             if use_cached:
@@ -1584,7 +1571,7 @@ def admin_path(ref_path, questions, verbose):
         print '/!\ An error occurred when handling "%s".' % str(path)
         return None, None
 
-    use_cached = ask_till_ok(questions[5] % (op.basename(filename), S_MANAGER.cache_dir),
+    use_cached = ask_till_ok(questions['copy_2'] % (op.basename(filename), S_MANAGER.cache_dir),
                              boolean=True)
 
     if use_cached:
@@ -1610,67 +1597,79 @@ def admin_mode(admin, with_hints=True, verbose=True):
     """ % S_MANAGER.sources_conf_path)
 
     help_ = dedent("""
-    (*) status     : display short data source status
-    (*) fullstatus : display full data source configuration
-    (*) drop       : drop all information for one data source
-    (*) restore    : factory reset of all data sources information
-    (*) edit       : edit an existing data source, or add a new one
+    Sources status
+    (*) status      : display short data source status
+    (*) fullstatus  : display full data source configuration
+
+    Add/Edit sources definition
+    (*) add         : add a new data source
+    (*) edit        : edit an existing data source
+    (*) zshautocomp : update Zsh autocomplete file
+
+    Danger Zone!
+    (*) drop        : drop all information for one data source
+    (*) restore     : factory reset of all data sources information
+
+    Update data
+    (*) update      : download and show updates for data sources with remotes
+    (*) forceupdate : download and force update of data sources with remotes
     """)
 
-    questions = [
-        '[ 0 ] Command: ',
-        '[ 1 ] Source name : ',
-        '[2/8] Path : ',
-        '[   ] Which file in archive? ',
-        '[   ] Copy %s in %s and use as primary source from there [yN]? ',
-        '[   ] Use %s as primary source from %s [yN]? ',
-        '[3/8] Delimiter : ',
-        '[4/8] Headers : ',
-        '[5/8] Key fields : ',
-        '[6/8] Index : ',
-        '[7/8] Join clause : ',
-        '[8/8] Confirm [Yn]? ',
-        '[   ] Add another %s [yN]? ',
-    ]
+    questions = {
+        'command'   : '[ 0 ] Command: ',
+        'source'    : '[ 1 ] Source name: ',
+        'path'      : '[2/8] Path: ',
+        'extract'   : '[   ] Which file in archive? ',
+        'copy_1'    : '[   ] Copy %s in %s and use as primary source from there [yN]? ',
+        'copy_2'    : '[   ] Use %s as primary source from %s [yN]? ',
+        'delimiter' : '[3/8] Delimiter: ',
+        'headers'   : '[4/8] Headers: ',
+        'key_fields': '[5/8] Key field(s): ',
+        'index'     : '[6/8] Index: ',
+        'join'      : '[7/8] Join clause: ',
+        'confirm'   : '[8/8] Confirm [Yn]? ',
+        'another'   : '[   ] Add another %s [yN]? ',
+        'update_zsh': '[   ] Update Zsh autocomplete [yN]? ',
+    }
 
-    hints = [
-        dedent("""
-        HINT * Enter a new name to define a new source.
-        """),
-        dedent("""
-        HINT * Paths can be urls or normal file paths.
-             * zip archives are supported.
-             * For remote files and archives, temporary
-             * files will be put in the cache directory:
-             * %s
-             * These files may be used as primary sources.
-             * Leave empty to delete path.
-        """ % S_MANAGER.cache_dir),
-        dedent("""
-        HINT * The delimiter is the character delimiting fields.
-             * Leave empty to split every character.
-        """),
-        dedent("""
-        HINT * Headers are column names, separated with "%s".
-             * lat and lng will be guessed for new sources.
-        """ % SPLIT),
-        dedent("""
-        HINT * Key fields are fields used to generate keys,
-             * use "%s" if several fields.
-             * Leave empty to use line numbers as keys.
-        """ % SPLIT),
-        dedent("""
-        HINT * Indices are a list of index to speed up some queries.
-             * For multiple fields index, separate with "%s".
-             * Leave empty to delete index.
-        """ % SPLIT),
-        dedent("""
-        HINT * Join clauses are useful to say that a key can be found
-             * in another data source. Use the "field{base:external_field}"
-             * syntax to define one.
-             * Leave empty to delete join clause.
-        """),
-    ]
+    hints = {
+        'source'    : dedent("""
+                      HINT * Enter a new name to define a new source.
+                      """),
+        'paths'     : dedent("""
+                      HINT * Paths can be urls or normal file paths.
+                           * zip archives are supported.
+                           * For remote files and archives, temporary
+                           * files will be put in the cache directory:
+                           * %s
+                           * These files may be used as primary sources.
+                           * Leave empty to delete path.
+                      """ % S_MANAGER.cache_dir),
+        'delimiter' : dedent("""
+                      HINT * The delimiter is the character delimiting fields.
+                           * Leave empty to split every character.
+                      """),
+        'headers'   : dedent("""
+                      HINT * Headers are column names, separated with "%s".
+                           * lat and lng will be guessed for new sources.
+                      """ % SPLIT),
+        'key_fields': dedent("""
+                      HINT * Key fields are fields used to generate keys,
+                           * use "%s" if several fields.
+                           * Leave empty to use line numbers as keys.
+                      """ % SPLIT),
+        'indices'   : dedent("""
+                      HINT * Indices are a list of index to speed up some queries.
+                           * For multiple fields index, separate with "%s".
+                           * Leave empty to delete index.
+                      """ % SPLIT),
+        'join'      : dedent("""
+                      HINT * Join clauses are useful to say that a key can be found
+                           * in another data source. Use the "field{base:external_field}"
+                           * syntax to define one.
+                           * Leave empty to delete join clause.
+                      """),
+    }
 
     # Was banner displayed
     bannered = False
@@ -1679,16 +1678,29 @@ def admin_mode(admin, with_hints=True, verbose=True):
         print banner
         bannered = True
         print help_
-        command = ask_till_ok(questions[0], ALLOWED_COMMANDS, show=False)
+        command = ask_till_ok(questions['command'], ALLOWED_COMMANDS, show=False)
     else:
         command = admin[0]
 
     if command not in ALLOWED_COMMANDS:
         error('wrong_value', command, ALLOWED_COMMANDS)
 
+    # These ones do not need the second argument source_name
     if command == 'restore':
-        # This one does not need the second argument source_name
         S_MANAGER.restore()
+        return
+
+    if command == 'update':
+        S_MANAGER.check_data_updates()
+        return
+
+    if command == 'forceupdate':
+        S_MANAGER.check_data_updates(force=True)
+        return
+
+    if command == 'zshautocomp':
+        S_MANAGER.update_autocomplete(verbose=True)
+        print '\n===== Restart shell now.'
         return
 
     if len(admin) < 2:
@@ -1697,17 +1709,24 @@ def admin_mode(admin, with_hints=True, verbose=True):
             bannered = True
         if command in ['status', 'fullstatus']:
             two_col_print(sorted(S_MANAGER) + ['*'])
-            source_name = ask_till_ok(questions[1], sorted(S_MANAGER) + ['*', ''], show=False)
+            source_name = ask_till_ok(questions['source'], sorted(S_MANAGER) + ['*', ''], show=False)
 
         elif command in ['drop']:
             two_col_print(sorted(S_MANAGER))
-            source_name = ask_till_ok(questions[1], sorted(S_MANAGER), show=False)
+            source_name = ask_till_ok(questions['source'], sorted(S_MANAGER), show=False)
 
-        else:
+        elif command in ['edit']:
             if with_hints:
-                print hints[0],
+                print hints['source'],
             two_col_print(sorted(S_MANAGER))
-            source_name = ask_till_ok(questions[1],
+            source_name = ask_till_ok(questions['source'],
+                                      is_ok = lambda r: r,
+                                      fail_message='-/!\- Cannot be empty')
+        else:
+            # add
+            if with_hints:
+                print hints['source']
+            source_name = ask_till_ok(questions['source'],
                                       is_ok = lambda r: r,
                                       fail_message='-/!\- Cannot be empty')
     else:
@@ -1734,10 +1753,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.save()
         return
 
-    if command == 'edit':
+    if command in ('add', 'edit'):
         if source_name not in S_MANAGER:
             S_MANAGER.add(source_name)
-            print '----- New source "%s" created!' % source_name
+            if command == 'edit':
+                print '----- New source "%s" created!' % source_name
+        else:
+            if command == 'add':
+                print '----- Source "%s" exists! Now editing mode.' % source_name
 
         # We get existing conf
         conf = S_MANAGER.get(source_name)
@@ -1778,7 +1801,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 1. Paths
         if with_hints:
-            print hints[1]
+            print hints['paths']
         i = 0
         while True:
             if i < len(def_paths):
@@ -1786,7 +1809,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'path', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'path', boolean=True)
 
                 if add_another:
                     ref_path = get_empty_path()
@@ -1800,8 +1823,13 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
             new_conf['paths'].append(path)
 
-            with open(filename) as fl:
-                first_l = fl.next().rstrip()
+            try:
+                with open(filename) as fl:
+                    first_l = fl.next().rstrip()
+            except IOError:
+                print
+                print '!!!!! Could not open "%s". Check the path.' % filename
+                return
 
             # No need to download and check the first lines for known files
             if to_CLI('path', ref_path) != to_CLI('path', path):
@@ -1817,8 +1845,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 2. Delimiter
         if with_hints:
-            print hints[2]
-        delimiter = ask_input(questions[6], to_CLI('delimiter', def_delimiter))
+            print hints['delimiter']
+        delimiter = ask_input(questions['delimiter'], to_CLI('delimiter', def_delimiter))
         new_conf['delimiter'] = delimiter
 
         if to_CLI('delimiter', def_delimiter) != to_CLI('delimiter', delimiter):
@@ -1828,8 +1856,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 3. Headers
         if with_hints:
-            print hints[3]
-        headers = ask_input(questions[7], to_CLI('headers', def_headers)).strip()
+            print hints['headers']
+        headers = ask_input(questions['headers'], to_CLI('headers', def_headers)).strip()
         if not headers:
             headers = []
         else:
@@ -1852,8 +1880,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 4. Key fields
         if with_hints:
-            print hints[4]
-        key_fields = ask_input(questions[8], to_CLI('key_fields', def_key_fields)).strip()
+            print hints['key_fields']
+        key_fields = ask_input(questions['key_fields'], to_CLI('key_fields', def_key_fields)).strip()
         key_fields = split_if_several(key_fields)
 
         if not key_fields:
@@ -1864,7 +1892,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 5. Indices
         if with_hints:
-            print hints[5]
+            print hints['indices']
         i = 0
         while True:
             if i < len(def_indices):
@@ -1872,14 +1900,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'index', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'index', boolean=True)
 
                 if add_another:
                     ref_index = get_empty_index()
                 else:
                     break
 
-            index = ask_input(questions[9], to_CLI('index', ref_index)).strip()
+            index = ask_input(questions['index'], to_CLI('index', ref_index)).strip()
             if not index:
                 print '----- Empty index, deleted'
             else:
@@ -1889,7 +1917,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         # 6. Join
         if with_hints:
-            print hints[6]
+            print hints['join']
         i = 0
         while True:
             if i < len(def_join):
@@ -1897,14 +1925,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions[12] % 'join', boolean=True)
+                add_another = ask_till_ok(questions['another'] % 'join', boolean=True)
 
                 if add_another:
                     ref_join = get_empty_join()
                 else:
                     break
 
-            m_join = ask_input(questions[10], to_CLI('join', ref_join)).strip()
+            m_join = ask_input(questions['join'], to_CLI('join', ref_join)).strip()
             m_join = clean_headers(m_join.split(SPLIT))[0]
 
             if not m_join:
@@ -1927,23 +1955,33 @@ def admin_mode(admin, with_hints=True, verbose=True):
                     old_conf[option] = conf[option]
 
         if not new_conf:
-            print '===== No changes'
+            print '\n===== No changes'
+            return
+
+        print
+        print '--- [before]'
+        print S_MANAGER.convert({ source_name : old_conf })
+
+        print '+++ [after]'
+        print S_MANAGER.convert({ source_name : new_conf })
+
+        confirm = ask_till_ok(questions['confirm'], boolean=True, default=True)
+
+        if not confirm:
+            print '\n===== Aborted'
+            return
+
+        S_MANAGER.update(source_name, new_conf)
+        S_MANAGER.save()
+        print '\n===== Changes saved to %s' % S_MANAGER.sources_conf_path
+
+        if is_in_path('rake'):
+            update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
+            if update_zsh:
+                S_MANAGER.update_autocomplete(verbose=True)
+                print '\n===== Restart shell now.'
         else:
-            print
-            print '--- [before]'
-            print S_MANAGER.convert({ source_name : old_conf })
-
-            print '+++ [after]'
-            print S_MANAGER.convert({ source_name : new_conf })
-
-            confirm = ask_till_ok(questions[11], boolean=True, default=True)
-
-            if confirm:
-                S_MANAGER.update(source_name, new_conf)
-                S_MANAGER.save()
-                print '===== Changes saved to %s' % S_MANAGER.sources_conf_path
-            else:
-                print '===== Aborted'
+            print '\n===== Rake is not installed, could not update zsh autocomplete.'
 
 
 def two_col_print(L):
@@ -1969,31 +2007,32 @@ def ask_mode():
     -----------------------------------------------------\
     """)
 
-    questions = [
-        '[1/5] Which data source do you want to work with? ',
-        '[2/5] Consider all data for this source [Yn]? ',
-        '[   ] Which keys should we consider (separated with " ")? ',
-        '[3/5] What kind of search? ',
-        '[4/5] On which field? ',
-        '[   ] Which value to look for? ',
-        '[4/5] From which point (key or geocode)? ',
-        '[   ] Which limit for the search (kms or number)? ',
-        '[5/5] Which display? ',
-        '[   ] Execute the command [yN]? ',
-    ]
+    questions = {
+        'source'   : '[1/5] Which data source do you want to work with? ',
+        'all_keys' : '[2/5] Consider all data for this source [Yn]? ',
+        'from_keys': '[   ] Which keys should we consider (separated with " ")? ',
+        'search'   : '[3/5] What kind of search? ',
+        'field'    : '[4/5] On which field? ',
+        'value'    : '[   ] Which value to look for? ',
+        'point'    : '[4/5] From which point (key or geocode)? ',
+        'limit'    : '[   ] Which limit for the search (kms or number)? ',
+        'display'  : '[5/5] Which display? ',
+        'execute'  : '[   ] Execute the command [yN]? ',
+    }
+
     # 1. Choose base
-    base = ask_till_ok(questions[0], sorted(S_MANAGER))
+    base = ask_till_ok(questions['source'], sorted(S_MANAGER))
 
     # 2. Choose from keys
-    all_keys = ask_till_ok(questions[1], boolean=True, default=True)
+    all_keys = ask_till_ok(questions['all_keys'], boolean=True, default=True)
 
     if all_keys:
         from_keys = None
     else:
-        from_keys = ask_input(questions[2]).strip().split()
+        from_keys = ask_input(questions['from_keys']).strip().split()
 
     # 3. Choose search type
-    search = ask_till_ok(questions[3], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
+    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
 
     if search.strip().lower() in ('none',):
         search = None
@@ -2002,15 +2041,15 @@ def ask_mode():
     field, value, limit = None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        field = ask_till_ok(questions[4], sorted(S_MANAGER.get(base)['headers']))
-        value = ask_input(questions[5]).strip()
+        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']))
+        value = ask_input(questions['value']).strip()
 
     elif search in ['near', 'closest']:
-        value = ask_input(questions[6]).strip()
-        limit = ask_input(questions[7]).strip()
+        value = ask_input(questions['point']).strip()
+        limit = ask_input(questions['limit']).strip()
 
-    # 5. Frontend
-    frontend = ask_till_ok(questions[8], ['terminal', 'quiet', 'map', 'graph'])
+    # 5. Display
+    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'])
 
     # 6. Conclusion
     parameters = {
@@ -2020,7 +2059,7 @@ def ask_mode():
         'field'     : field,
         'limit'     : limit,
         'value'     : value,
-        'frontend'  : frontend
+        'display'   : display
     }
 
     print
@@ -2044,7 +2083,7 @@ def ask_mode():
     base_part         = '--base %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
-    frontend_part     = ('--%s' % frontend) if frontend != 'terminal' else ''
+    display_part     = ('--%s' % display) if display != 'terminal' else ''
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '--%s-field %s' % (search, field)
@@ -2058,7 +2097,7 @@ def ask_mode():
                                    base_part,
                                    search_field_part,
                                    search_part,
-                                   frontend_part] if e)
+                                   display_part] if e)
     print command
 
 
@@ -2066,7 +2105,7 @@ def ask_mode():
     base_part         = '-b %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('-%s "%s"' % (search[0], value)) if search is not None else ''
-    frontend_part     = ('-%s' % frontend[0]) if frontend != 'terminal' else ''
+    display_part      = ('-%s' % display[0]) if display != 'terminal' else ''
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '-%s %s' % (search[0].upper(), field)
@@ -2080,12 +2119,12 @@ def ask_mode():
                                    base_part,
                                    search_field_part,
                                    search_part,
-                                   frontend_part] if e)
+                                   display_part] if e)
     print command
     print '-----------------------------------------------------'
     print
 
-    execute = ask_till_ok(questions[9], boolean=True)
+    execute = ask_till_ok(questions['execute'], boolean=True)
     if execute:
         os.system(command)
 
@@ -2159,16 +2198,6 @@ def main():
         print 'Location : %s' % r.location
         print 'Requires : %s' % ', '.join(str(e) for e in r.requires())
         print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
-        exit(0)
-
-    # Updating file
-    if args['update']:
-        S_MANAGER.check_data_updates()
-        exit(0)
-
-
-    if args['update_forced']:
-        S_MANAGER.check_data_updates(force=True)
         exit(0)
 
 

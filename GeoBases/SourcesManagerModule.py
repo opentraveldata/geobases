@@ -27,16 +27,25 @@ def relative(rel_path, root=DIRNAME):
     return op.join(op.realpath(root), rel_path)
 
 
-# 1) Path to global configuration
-# 2) Root folder where we find data
-# 3) Cache directory
+# 1) Update script file
+# 2) Path to global configuration
+# 3) Root folder where we find data
+# 4) Cache directory
 UPDATE_SCRIPT_PATH  = relative('DataSources/CheckDataUpdates.sh')
 SOURCES_CONF_PATH   = relative('DataSources/Sources.yaml')
 SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
 CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 
+# 5) Path to dir where we build autocomplete stuff
+COMPLETION_TARGET_DIR = op.join(os.getenv('HOME', '.'), '.zsh/completion')
+COMPLETION_BUILD_DIR  = relative('completion')
+COMPLETION_BUILT_FILE = '/tmp/_GeoBase' # to allow user to use it
+
 if not op.isdir(CACHE_DIR):
-    os.mkdir(CACHE_DIR)
+    os.makedirs(CACHE_DIR)
+
+if not op.isdir(COMPLETION_TARGET_DIR):
+    os.makedirs(COMPLETION_TARGET_DIR)
 
 # Poorly documented paths are relative from the sources dir
 DEFAULT_IS_RELATIVE = True
@@ -119,6 +128,32 @@ class SourcesManager(object):
         os.system('bash %s %s' % (self.update_script_path, force_option))
 
 
+    def update_autocomplete(self, verbose=True):
+        """Update autocomplete file.
+        """
+        if verbose:
+            print 'Realizing template with %s' % self.sources_conf_path
+
+        # -q option is to turn off fileutils messages
+        # to avoid stout pollution we remove stdout
+        os.system("cd %s ; rake -q source=%s target=%s >/dev/null" % \
+                  (COMPLETION_BUILD_DIR,
+                   self.sources_conf_path,
+                   COMPLETION_BUILT_FILE))
+
+        try:
+            copy(COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+
+        except shutil.Error:
+            if verbose:
+                print '/!\ Could not copy from/to:\n* %s\n* %s' % \
+                        (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+        else:
+            if verbose:
+                print 'Copied from/to:\n* %s\n* %s' % \
+                        (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+
+
     def get(self, source=None):
         """Get source information.
         """
@@ -191,6 +226,9 @@ class SourcesManager(object):
         if source not in self.sources:
             print 'Source "%s" not in sources.' % source
             return
+
+        if self.sources[source] is None:
+            self.sources[source] = {}
 
         for option, option_config in config.iteritems():
             self.sources[source][option] = option_config
