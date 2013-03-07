@@ -113,6 +113,7 @@ setup(
         'GeoBases': [
             "DataSources/Sources.yaml",
             "DataSources/CheckDataUpdates.sh",
+            "completion/*",
             "MapAssets/*",
             "TableAssets/*",
             "GraphAssets/*",
@@ -134,7 +135,7 @@ setup(
         #]),
         # Will create dir if needed
         (op.join(getenv('HOME', '.'), '.zsh/completion'), [
-            'completion/_GeoBase'
+            'GeoBases/completion/_GeoBase'
         ])
     ],
     classifiers=[
