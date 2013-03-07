@@ -136,7 +136,7 @@ class SourcesManager(object):
 
         # -q option is to turn off fileutils messages
         # to avoid stout pollution we remove stdout
-        os.system("cd %s ; rake -q source=%s target=%s" % \
+        os.system("cd %s ; rake -q source=%s target=%s >/dev/null" % \
                   (COMPLETION_BUILD_DIR,
                    self.sources_conf_path,
                    COMPLETION_BUILT_FILE))
