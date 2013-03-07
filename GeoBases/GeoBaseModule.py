@@ -348,10 +348,10 @@ class GeoBase(object):
             self._load(self._source, self._verbose)
             self.loaded = self._source
 
-        elif self._paths is not None:
+        elif self._paths:
             # Here we read the source from the configuration file
             for path in self._paths:
-                file_ = S_MANAGER.handle_path(path, self._verbose)
+                file_ = S_MANAGER.handle_path(path, data, self._verbose)
 
                 if file_ is None:
                     continue
@@ -791,13 +791,13 @@ class GeoBase(object):
             print '/!\ Delimiter "%s" was not 1-character.' % delimiter
             print '/!\ Fallback on custom reader, but quoting is disabled.'
 
-        def _reader(source_fl):
+        def _m_reader(source_fl):
             """Custom reader supporting multiple characters split.
             """
             for row in source_fl:
                 yield row.rstrip('\r\n').split(delimiter)
 
-        return _reader
+        return _m_reader
 
 
     def _buildDuplicatedKey(self, key, nb_dups):
@@ -1121,9 +1121,9 @@ class GeoBase(object):
         ('FR',)
         >>> geo_o._joinGet('CDG', 'country_code', 'name')
         ('France',)
-        >>> geo_o._joinGet('CDG', 'city_code')
+        >>> geo_o._joinGet('CDG', 'name')
         Traceback (most recent call last):
-        ValueError: Fields "('city_code',)" has no join information, available: ...
+        ValueError: Fields "('name',)" has no join information, available: ...
         """
         # We only work with tuple of fields for joining
         fields = tuplify(fields)

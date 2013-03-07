@@ -13,7 +13,7 @@ from textwrap import dedent
 from urllib import urlretrieve
 from zipfile import ZipFile
 import shutil
-from shutil import copy
+from shutil import copy, rmtree
 
 # Not in standard library
 import yaml
@@ -27,16 +27,30 @@ def relative(rel_path, root=DIRNAME):
     return op.join(op.realpath(root), rel_path)
 
 
-# 1) Path to global configuration
-# 2) Root folder where we find data
-# 3) Cache directory
+# 1) Update script file
+# 2) Path to global configuration
+# 3) Root folder where we find data
+# 4) Cache directory
 UPDATE_SCRIPT_PATH  = relative('DataSources/CheckDataUpdates.sh')
 SOURCES_CONF_PATH   = relative('DataSources/Sources.yaml')
 SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
 CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
 
+# 5) Path to dir where we build autocomplete stuff
+COMPLETION_SOURCE_DIR = relative('completion')
+COMPLETION_TARGET_DIR = op.join(os.getenv('HOME', '.'), '.zsh/completion')
+
+# We build in user space to allow users to build
+if op.isdir('/tmp'):
+    COMPLETION_BUILT_FILE = '/tmp/_GeoBase'
+else:
+    COMPLETION_BUILT_FILE = op.join(os.getcwd(), '_GeoBase')
+
 if not op.isdir(CACHE_DIR):
-    os.mkdir(CACHE_DIR)
+    os.makedirs(CACHE_DIR)
+
+if not op.isdir(COMPLETION_TARGET_DIR):
+    os.makedirs(COMPLETION_TARGET_DIR)
 
 # Poorly documented paths are relative from the sources dir
 DEFAULT_IS_RELATIVE = True
@@ -119,6 +133,32 @@ class SourcesManager(object):
         os.system('bash %s %s' % (self.update_script_path, force_option))
 
 
+    def update_autocomplete(self, verbose=True):
+        """Update autocomplete file.
+        """
+        if verbose:
+            print 'Realizing template with %s' % self.sources_conf_path
+
+        # -q option is to turn off fileutils messages
+        # to avoid stout pollution we remove stdout
+        os.system("cd %s ; rake -q source=%s target=%s >/dev/null" % \
+                  (COMPLETION_SOURCE_DIR,
+                   self.sources_conf_path,
+                   COMPLETION_BUILT_FILE))
+
+        try:
+            copy(COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+
+        except shutil.Error:
+            if verbose:
+                print '/!\ Could not copy from/to:\n* %s\n* %s' % \
+                        (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+        else:
+            if verbose:
+                print 'Copied from/to:\n* %s\n* %s' % \
+                        (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
+
+
     def get(self, source=None):
         """Get source information.
         """
@@ -144,32 +184,26 @@ class SourcesManager(object):
             self.sources[source] = config
 
 
-    def is_in_cache(self, filename):
-        """Is filename already in cache?
-        """
-        return op.isfile(op.join(self.cache_dir, filename))
 
-
-    def is_path_from_cache(self, path):
-        """Is a path from the cache?.
-        """
-        return path == op.join(self.cache_dir, op.basename(path))
-
-
-    def copy_to_cache(self, path):
+    def copy_to_cache(self, path, source):
         """Move source file in cache directory.
         """
         if not op.isfile(path):
             print 'File %s does not exist' % path
             return False, None
 
+        full_cache_dir = op.join(self.cache_dir, source)
+
+        if not op.isdir(full_cache_dir):
+            os.makedirs(full_cache_dir)
+
         try:
-            copy(path, self.cache_dir)
+            copy(path, full_cache_dir)
         except shutil.Error:
             # Copy did not happen because the two files are the same
             return False, path
         else:
-            return True, op.join(self.cache_dir, op.basename(path))
+            return True, op.join(full_cache_dir, op.basename(path))
 
 
     def drop(self, source=None):
@@ -191,6 +225,9 @@ class SourcesManager(object):
         if source not in self.sources:
             print 'Source "%s" not in sources.' % source
             return
+
+        if self.sources[source] is None:
+            self.sources[source] = {}
 
         for option, option_config in config.iteritems():
             self.sources[source][option] = option_config
@@ -231,9 +268,13 @@ class SourcesManager(object):
             f.write(self.convert(self.sources))
 
 
-    def restore(self, load=False):
+    def restore(self, clean_cache=False, load=False):
         """Restore original file.
         """
+        if clean_cache:
+            rmtree(CACHE_DIR)
+            os.makedirs(CACHE_DIR)
+
         try:
             copy(self.sources_conf_path_origin,
                  self.sources_conf_path)
@@ -343,15 +384,23 @@ class SourcesManager(object):
         print
 
 
-    def handle_path(self, path, verbose):
+    def handle_path(self, path, source, verbose):
         """
         Handle file downloading/uncompressing and returns
         path to file to be opened.
         """
+        full_cache_dir = op.join(self.cache_dir, source)
+
+        if not op.isdir(full_cache_dir):
+            os.makedirs(full_cache_dir)
+
         if not is_remote(path):
-            file_ = path['file']
+            if path['local'] is True:
+                file_ = op.join(op.realpath(self.sources_dir), path['file'])
+            else:
+                file_ = path['file']
         else:
-            file_, success = download_lazy(path['file'], self.cache_dir, verbose)
+            file_, success = download_lazy(path['file'], full_cache_dir, verbose)
 
             if not success:
                 if verbose:
@@ -360,7 +409,7 @@ class SourcesManager(object):
 
         if is_archive(path):
             archive = file_
-            file_, success = extract_lazy(archive, path['extract'], self.cache_dir, verbose)
+            file_, success = extract_lazy(archive, path['extract'], full_cache_dir, verbose)
 
             if not success:
                 if verbose:
@@ -371,7 +420,8 @@ class SourcesManager(object):
         return file_
 
 
-    def convert_paths_format(self, paths, default_is_relative=DEFAULT_IS_RELATIVE):
+    @staticmethod
+    def convert_paths_format(paths, default_is_relative=DEFAULT_IS_RELATIVE):
         """Convert all paths to the same format.
         """
         if paths is None:
@@ -402,9 +452,6 @@ class SourcesManager(object):
 
             if is_remote(npath):
                 npath['local'] = False
-
-            if not is_remote(npath) and npath['local'] is True:
-                npath['file'] = op.join(op.realpath(self.sources_dir), npath['file'])
 
         return tuple(new_paths)
 
