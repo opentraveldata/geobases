@@ -998,7 +998,7 @@ ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
 ALLOWED_COMMANDS         = ('status', 'fullstatus',
-                            'edit', 'updatezsh',
+                            'edit', 'zshautocomp',
                             'drop', 'restore',
                             'update', 'forceupdate')
 
@@ -1603,7 +1603,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
     Add/Edit sources definition
     (*) edit        : edit an existing data source, or add a new one
-    (*) updatezsh   : update Zsh autocomplete file
+    (*) zshautocomp : update Zsh autocomplete file
 
     Danger Zone!
     (*) drop        : drop all information for one data source
@@ -1697,7 +1697,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.check_data_updates(force=True)
         return
 
-    if command == 'updatezsh':
+    if command == 'zshautocomp':
         S_MANAGER.update_autocomplete(verbose=True)
         return
 
