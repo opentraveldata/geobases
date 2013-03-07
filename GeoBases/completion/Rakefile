@@ -79,8 +79,8 @@ namespace :build do
   ASSET_FILES.each do |source, target|
     dist_target = dist target
     asset_source = asset source
-    # Forcing
-    rm dist_target
+    # Forcing rm -f
+    rm dist_target rescue nil
     file dist_target => asset_source do
       if asset_source =~ /\.erb$/
         puts "Realize template #{asset_source} to #{dist_target}"
