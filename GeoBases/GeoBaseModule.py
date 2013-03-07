@@ -300,7 +300,7 @@ class GeoBase(object):
         elif self._paths:
             # Here we read the source from the configuration file
             for path in self._paths:
-                file_ = S_MANAGER.handle_path(path, self._verbose)
+                file_ = S_MANAGER.handle_path(path, data, self._verbose)
 
                 if file_ is None:
                     continue

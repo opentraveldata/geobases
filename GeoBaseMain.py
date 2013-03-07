@@ -1537,7 +1537,7 @@ def handle_args():
 
 
 
-def admin_path(ref_path, questions, verbose):
+def admin_path(ref_path, source, questions, verbose):
     """Admin path for a source.
     """
     path = ask_input(questions['path'], to_CLI('path', ref_path)).strip()
@@ -1576,11 +1576,11 @@ def admin_path(ref_path, questions, verbose):
                                      boolean=True)
 
             if use_cached:
-                _, copied = S_MANAGER.copy_to_cache(path['file'])
+                _, copied = S_MANAGER.copy_to_cache(path['file'], source)
                 path['file'] = op.realpath(copied)
 
     # We propose for tmp files to be used as primary sources
-    filename = S_MANAGER.handle_path(path, verbose=verbose)
+    filename = S_MANAGER.handle_path(path, source, verbose=verbose)
 
     if filename is None:
         print '/!\ An error occurred when handling "%s".' % str(path)
@@ -1590,7 +1590,7 @@ def admin_path(ref_path, questions, verbose):
                              boolean=True)
 
     if use_cached:
-        _, copied = S_MANAGER.copy_to_cache(filename)
+        _, copied = S_MANAGER.copy_to_cache(filename, source)
         path['file'] = op.realpath(copied)
 
     return path, filename
@@ -1832,7 +1832,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 else:
                     break
 
-            path, filename = admin_path(ref_path, questions, verbose)
+            path, filename = admin_path(ref_path, source_name, questions, verbose)
 
             if path is None:
                 continue
