@@ -1219,9 +1219,9 @@ class GeoBase(object):
         ('FR',)
         >>> geo_o._joinGet('CDG', 'country_code', 'name')
         ('France',)
-        >>> geo_o._joinGet('CDG', 'city_code')
+        >>> geo_o._joinGet('CDG', 'name')
         Traceback (most recent call last):
-        ValueError: Fields "('city_code',)" has no join information, available: ...
+        ValueError: Fields "('name',)" has no join information, available: ...
         """
         # We only work with tuple of fields for joining
         fields = tuplify(fields)
