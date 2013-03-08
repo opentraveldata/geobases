@@ -84,11 +84,11 @@ _fields_and_join() {
     case "$base" in<% SOURCES.each do |source, config| %>
     <%= source %>)
         _arguments \
-            "*:$help for <%= source %>:(<%= (['_', '__key__', '__lno__'] + [config['join'].map{ |d| d['fields'] }] + config['headers']).join(' ') %>)"
+            "*:$help for <%= source %>:(<%= (['_', '__key__', '__lno__'] + config['add_headers'] + config['headers']).join(' ') %>)"
         ;;<% end %>
     *)
         _arguments \
-            "*:$help for ori_por:(<%= (['_', '__key__', '__lno__'] + [SOURCES['ori_por']['join'].map{ |d| d['fields'] }] + SOURCES['ori_por']['headers']).join(' ') %>)"
+            "*:$help for ori_por:(<%= (['_', '__key__', '__lno__'] + SOURCES['ori_por']['add_headers'] + SOURCES['ori_por']['headers']).join(' ') %>)"
         ;;
     esac
 }

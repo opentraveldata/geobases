@@ -57,13 +57,13 @@ SOURCES.each do |data, config|
 end
 
 SOURCES.each do |data, config|
+    SOURCES[data]['add_headers'] = []
     config['join'].each do |d|
-        if d['fields'].is_a? String
-            if d['fields'][-1] != ':'
-                d['fields'] = d['fields'] + ':'
-            end
-        else
-            d['fields'] = d['fields'].join('/') + ':'
+        if not d['fields'].is_a? String
+            d['fields'] = d['fields'].join('/')
+        end
+        SOURCES[d['with'][0]]['headers'].each do |h|
+            SOURCES[data]['add_headers'] << d['fields'] + ':' + h
         end
     end
 end
