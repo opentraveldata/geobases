@@ -1816,13 +1816,15 @@ def admin_mode(admin, with_hints=True, verbose=True):
 
         if not def_indices:
             if command == 'add':
-                def_indices = [get_empty_index()]
+                def_indices = []
+                #def_indices = [get_empty_index()]
             else:
                 def_indices = []
 
         if not def_join:
             if command == 'add':
-                def_join = [get_empty_join()]
+                def_join = []
+                #def_join = [get_empty_join()]
             else:
                 def_join = []
 
