@@ -1,3 +1,8 @@
+News!
+-----
+
+Version 5 has just been released. Check out the [release notes](https://github.com/opentraveldata/geobases/wiki/News)!
+
 Introduction
 ------------
 
