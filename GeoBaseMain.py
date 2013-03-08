@@ -430,7 +430,7 @@ def fields_to_show(defaults, omit, show, show_additional):
     already_inserted = 0
     for af, p in zip(show_additional, positions):
         if p == -1:
-            shown_fields.insert(-1, af)
+            shown_fields.append(af)
         else:
             shown_fields.insert(p + already_inserted, af)
             already_inserted += 1
