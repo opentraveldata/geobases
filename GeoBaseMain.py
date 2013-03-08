@@ -1583,7 +1583,7 @@ def admin_path(ref_path, source, questions, verbose):
                 _, copied = S_MANAGER.copy_to_cache(path['file'], source)
                 path['file'] = op.realpath(copied)
 
-    # We propose for tmp files to be used as primary sources
+    # We propose for tmp files to be used as source path
     filename = S_MANAGER.handle_path(path, source, verbose=verbose)
 
     if filename is None:
@@ -1625,31 +1625,31 @@ def admin_mode(admin, with_hints=True, verbose=True):
     (*) edit        : edit an existing data source
     (*) zshautocomp : update Zsh autocomplete file
 
+    Update data
+    (*) update      : download and show updates for sources with master remotes
+    (*) forceupdate : download and force update of sources with master remotes
+
     Danger Zone!
     (*) drop        : drop all information for one data source
     (*) restore     : factory reset of all data sources information
     (*) fullrestore : restore, and clean the cache %s
-
-    Update data
-    (*) update      : download and show updates for data sources with remotes
-    (*) forceupdate : download and force update of data sources with remotes
     """ % S_MANAGER.cache_dir)
 
     questions = {
         'command'   : '[ 0 ] Command: ',
         'source'    : '[ 1 ] Source name: ',
         'path'      : '[2/8] Path: ',
-        'local'     : '[   ] Is the path local to the sources directory [%s]? ',
+        'local'     : '[   ] Is the path local to the installation directory [%s]? ',
         'extract'   : '[   ] Which file in archive? ',
-        'copy_1'    : '[   ] Copy %s in %s and use as primary source from there [yN]? ',
-        'copy_2'    : '[   ] Use %s as primary source from %s [yN]? ',
+        'copy_1'    : '[   ] Copy %s in %s and use as source path from there [yN]? ',
+        'copy_2'    : '[   ] Use %s as source path from %s [yN]? ',
         'delimiter' : '[3/8] Delimiter: ',
         'headers'   : '[4/8] Headers: ',
         'key_fields': '[5/8] Key field(s): ',
         'index'     : '[6/8] Index: ',
         'join'      : '[7/8] Join clause: ',
         'confirm'   : '[8/8] Confirm [Yn]? ',
-        'another'   : '[   ] Add another %s [yN]? ',
+        'new'       : '[   ] Add new %s [yN]? ',
         'update_zsh': '[   ] Update Zsh autocomplete [yN]? ',
     }
 
@@ -1663,7 +1663,8 @@ def admin_mode(admin, with_hints=True, verbose=True):
                            * For remote files and archives, temporary
                            * files will be put in the cache directory:
                            * %s
-                           * These files may be used as primary sources.
+                           * These files may be used as data sources paths.
+                           * Add several paths to have a failover mechanism.
                            * Leave empty to delete path.
                       """ % S_MANAGER.cache_dir),
         'delimiter' : dedent("""
@@ -1782,10 +1783,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
         if source_name not in S_MANAGER:
             S_MANAGER.add(source_name)
             if command == 'edit':
-                print '----- New source "%s" created!' % source_name
+                print '----- New source "%s" created! Switching to "add" mode.' % source_name
+                command = 'add'
         else:
             if command == 'add':
-                print '----- Source "%s" exists! Now editing mode.' % source_name
+                print '----- Source "%s" exists! Switch to "edit" mode.' % source_name
+                command = 'edit'
 
         # We get existing conf
         conf = S_MANAGER.get(source_name)
@@ -1804,15 +1807,26 @@ def admin_mode(admin, with_hints=True, verbose=True):
         get_empty_join  = lambda : { 'fields' : [], 'with' : [''] }
 
         if not def_paths:
-            def_paths = [get_empty_path()]
+            if command == 'add':
+                def_paths = [get_empty_path()]
+            else:
+                def_paths = []
         else:
             def_paths = S_MANAGER.convert_paths_format(def_paths)
 
         if not def_indices:
-            def_indices = [get_empty_index()]
+            if command == 'add':
+                def_indices = []
+                #def_indices = [get_empty_index()]
+            else:
+                def_indices = []
 
         if not def_join:
-            def_join = [get_empty_join()]
+            if command == 'add':
+                def_join = []
+                #def_join = [get_empty_join()]
+            else:
+                def_join = []
 
         # We will add non empty values here
         new_conf = {
@@ -1834,7 +1848,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions['another'] % 'path', boolean=True)
+                add_another = ask_till_ok(questions['new'] % 'path', boolean=True)
 
                 if add_another:
                     ref_path = get_empty_path()
@@ -1859,9 +1873,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
             # No need to download and check the first lines for known files
             if to_CLI('path', ref_path) != to_CLI('path', path):
                 print
-                print '>>>>> header >>>>>'
+                print '>>>> first line >>>>'
                 print first_l
-                print '<<<<<<<<<<<<<<<<<<'
+                print '<<<<<<<<<<<<<<<<<<<<'
 
                 def_delimiter  = guess_delimiter(first_l)
                 def_headers    = guess_headers(first_l, def_delimiter)
@@ -1925,7 +1939,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions['another'] % 'index', boolean=True)
+                add_another = ask_till_ok(questions['new'] % 'index', boolean=True)
 
                 if add_another:
                     ref_index = get_empty_index()
@@ -1950,7 +1964,7 @@ def admin_mode(admin, with_hints=True, verbose=True):
                 i += 1
             else:
                 # We add a new empty path if the user wants to add another one
-                add_another = ask_till_ok(questions['another'] % 'join', boolean=True)
+                add_another = ask_till_ok(questions['new'] % 'join', boolean=True)
 
                 if add_another:
                     ref_join = get_empty_join()
