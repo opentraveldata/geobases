@@ -412,7 +412,7 @@ def fields_to_show(defaults, omit, show, show_additional):
     """Process fields to show.
     """
     if not show:
-        show = [REF] + defaults[:]
+        show = defaults
 
     # Building final shown headers
     shown_fields = [f for f in show if f not in omit]
@@ -430,7 +430,7 @@ def fields_to_show(defaults, omit, show, show_additional):
     already_inserted = 0
     for af, p in zip(show_additional, positions):
         if p == -1:
-            shown_fields.insert(-1, af)
+            shown_fields.append(af)
         else:
             shown_fields.insert(p + already_inserted, af)
             already_inserted += 1
@@ -2786,7 +2786,7 @@ def main():
 
 
     if frontend == 'terminal':
-        shown_fields = fields_to_show(g.fields,
+        shown_fields = fields_to_show([REF] + g.fields[:],
                                       set(args['omit']),
                                       args['show'],
                                       args['show_additional'])
@@ -2795,7 +2795,14 @@ def main():
         display_terminal(g, res, shown_fields, ref_type, important)
 
     if frontend == 'quiet':
-        defaults = [f for f in g.fields if '%s@raw' % f not in g.fields]
+        # As default, we do not put special fields
+        # and for subdelimited fields, we put the @raw version
+        defaults = [REF] + [
+            f for f in g.fields
+            if '%s@raw' % f not in g.fields
+            and not f.startswith('__')
+            or f == '__key__'
+        ]
 
         shown_fields = fields_to_show(defaults,
                                       set(args['omit']),
