@@ -1783,10 +1783,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
         if source_name not in S_MANAGER:
             S_MANAGER.add(source_name)
             if command == 'edit':
-                print '----- New source "%s" created!' % source_name
+                print '----- New source "%s" created! Switching to "add" mode.' % source_name
+                command = 'add'
         else:
             if command == 'add':
-                print '----- Source "%s" exists! Now editing mode.' % source_name
+                print '----- Source "%s" exists! Switch to "edit" mode.' % source_name
+                command = 'edit'
 
         # We get existing conf
         conf = S_MANAGER.get(source_name)
