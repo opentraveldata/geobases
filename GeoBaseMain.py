@@ -2054,13 +2054,14 @@ def ask_mode():
         'field'    : '[4/5] On which field? ',
         'value'    : '[   ] Which value to look for? ',
         'point'    : '[4/5] From which point (key or geocode)? ',
-        'limit'    : '[   ] Which limit for the search (kms or number)? ',
+        'radius'   : '[   ] Which radius for the search (kms)? ',
+        'limit'    : '[   ] Which limit for the search (number of results)? ',
         'display'  : '[5/5] Which display? ',
-        'execute'  : '[   ] Execute the command [yN]? ',
+        'execute'  : '[   ] Execute the command [Yn]? ',
     }
 
     # 1. Choose base
-    base = ask_till_ok(questions['source'], sorted(S_MANAGER))
+    base = ask_till_ok(questions['source'], sorted(S_MANAGER), prefill='ori_por')
 
     # 2. Choose from keys
     all_keys = ask_till_ok(questions['all_keys'], boolean=True, default=True)
@@ -2077,18 +2078,28 @@ def ask_mode():
         search = None
 
     # 4. Search parameters
-    field, value, limit = None, None, None
+    field, value, radius, limit = None, None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']))
-        value = ask_input(questions['value']).strip()
+        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']), prefill='name')
+        value = ask_till_ok(questions['value'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
 
-    elif search in ['near', 'closest']:
-        value = ask_input(questions['point']).strip()
-        limit = ask_input(questions['limit']).strip()
+    elif search in ['near']:
+        value = ask_till_ok(questions['point'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
+        radius = ask_input(questions['radius'], prefill='50').strip()
+
+    elif search in ['closest']:
+        value = ask_till_ok(questions['point'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
+        limit = ask_input(questions['limit'], prefill='5').strip()
 
     # 5. Display
-    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'])
+    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'], prefill='terminal')
 
     # 6. Conclusion
     parameters = {
@@ -2096,6 +2107,7 @@ def ask_mode():
         'from_keys' : from_keys,
         'search'    : search,
         'field'     : field,
+        'radius'    : radius,
         'limit'     : limit,
         'value'     : value,
         'display'   : display
@@ -2126,7 +2138,9 @@ def ask_mode():
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '--%s-field %s' % (search, field)
-    elif search in ['near', 'closest']:
+    elif search in ['near']:
+        search_field_part = '--%s-limit %s' % (search, radius)
+    elif search in ['closest']:
         search_field_part = '--%s-limit %s' % (search, limit)
     else:
         search_field_part = ''
@@ -2148,7 +2162,9 @@ def ask_mode():
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '-%s %s' % (search[0].upper(), field)
-    elif search in ['near', 'closest']:
+    elif search in ['near']:
+        search_field_part = '-%s %s' % (search[0].upper(), radius)
+    elif search in ['closest']:
         search_field_part = '-%s %s' % (search[0].upper(), limit)
     else:
         search_field_part = ''
@@ -2163,7 +2179,7 @@ def ask_mode():
     print '-----------------------------------------------------'
     print
 
-    execute = ask_till_ok(questions['execute'], boolean=True)
+    execute = ask_till_ok(questions['execute'], boolean=True, default=True)
     if execute:
         os.system(command)
 
