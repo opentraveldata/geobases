@@ -51,7 +51,7 @@ try:
     def ask_input(prompt, prefill=''):
         """Custom default when asking for input.
         """
-        readline.set_startup_hook(lambda: readline.insert_text(prefill))
+        readline.set_startup_hook(lambda: readline.insert_text(str(prefill)))
         try:
             return raw_input(prompt)
         finally:
@@ -63,7 +63,7 @@ except ImportError:
         """Fallback.
         """
         if prefill:
-            answer = raw_input('%s[%s] ' % (prompt, prefill))
+            answer = raw_input('%s[%s] ' % (prompt, str(prefill)))
         else:
             answer = raw_input('%s' % prompt)
 
