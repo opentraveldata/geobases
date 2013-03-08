@@ -2072,7 +2072,15 @@ def ask_mode():
         from_keys = ask_input(questions['from_keys']).strip().split()
 
     # 3. Choose search type
-    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
+    print dedent("""
+    (*) none     : no search done, all data used
+    (*) exact    : make an exact search on a specific field
+    (*) fuzzy    : make a fuzzy search on a specific field
+    (*) phonetic : make a phonetic search on a specific field
+    (*) near     : make a geographical search from a point with a radius
+    (*) closest  : make a geographical search from a point with a number of results
+    """)
+    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'], show=False)
 
     if search.strip().lower() in ('none',):
         search = None
@@ -2099,7 +2107,13 @@ def ask_mode():
         limit = ask_input(questions['limit'], prefill='5').strip()
 
     # 5. Display
-    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'], prefill='terminal')
+    print dedent("""
+    (*) terminal : fancy display in the terminal
+    (*) quiet    : csv-like display
+    (*) map      : map display
+    (*) graph    : graph display
+    """)
+    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'], prefill='terminal', show=False)
 
     # 6. Conclusion
     parameters = {
