@@ -166,7 +166,7 @@ Quickstart
 ```
 
 You can provide other values for the *data* parameter. All data sources
-are documented in a single *yaml* file:
+are documented in a [single *YAML* file](https://github.com/opentraveldata/geobases/blob/public/GeoBases/DataSources/Sources.yaml):
 
 -   *data="ori\_por"* will load a local version of [this
     file](https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv),
