@@ -74,8 +74,8 @@ Here are some useful links:
 -   the [wiki pages](https://github.com/opentraveldata/geobases/wiki/_pages) for any question!
 -   the [twitter account](https://twitter.com/geobasesdev) for the latest news
 
-Project
--------
+Installation
+------------
 
 ### Prerequisites
 
@@ -97,9 +97,7 @@ $ apt-get install python-dev g++    # for debian
 $ yum install python-devel gcc-c++  # for fedora
 ```
 
-### Installation
-
-#### From PyPI
+### From PyPI
 
 You can install it from [PyPI](https://crate.io/packages/GeoBases):
 
@@ -113,7 +111,7 @@ There is a development version also on [PyPI](https://crate.io/packages/GeoBases
 $ easy_install --user -U GeoBasesDev
 ```
 
-#### From Github
+### From Github
 
 You can clone the project from
 [github](https://github.com/opentraveldata/geobases.git):
@@ -129,7 +127,7 @@ $ cd geobases
 $ python setup.py install --user # for user space
 ```
 
-#### Final steps
+### Final steps
 
 A script is put in `~/.local/bin`, to be able to use it, put
 that in your `~/.bashrc` or `~/.zshrc`:
