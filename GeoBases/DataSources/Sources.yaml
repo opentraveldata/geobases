@@ -388,6 +388,9 @@ feature_codes:
     paths     : FeatureCodes/featureCodes_en.txt
     key_fields: fcode
     delimiter : "\t"
+    join:
+        - fields: fclass
+          with  : [feature_classes, fclass]
     headers   :
         - fclass
         - fcode
