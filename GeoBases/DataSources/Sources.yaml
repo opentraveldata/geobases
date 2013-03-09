@@ -286,16 +286,6 @@ ori_por:
         - alt_name_section
 
 
-ori_por_multi:
-    paths         : *ori_por_paths
-    key_fields    : [iata_code, location_type]
-    delimiter     : ^
-    skip          : 1
-    subdelimiters : *ori_por_subdel
-    headers       : *ori_por_headers
-    join          : *ori_por_join
-
-
 ori_por_non_iata:
     paths         :
         - Por/Ori/ori_por_non_iata.csv
