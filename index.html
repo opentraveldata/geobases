@@ -57,39 +57,39 @@ object</li>
 but there is a command line tool as well! Get it with <em>easy_install</em>,
 then you can see where are airports with <em>international</em> in their name:</p>
 
-<pre lang="shell"><code>$ GeoBase --fuzzy international --map
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --fuzzy international --map
+</pre></div>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png" alt=""></p>
 
 <p>You can perform all types of queries:</p>
 
-<pre lang="shell"><code>$ GeoBase --base cities --fuzzy "san francisko" # typo here :)
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --base cities --fuzzy <span class="s2">"san francisko"</span> <span class="c"># typo here :)</span>
+</pre></div>
 
 <p>Of course, you can use your own data for map display:</p>
 
-<pre lang="shell"><code>$ cat coords.csv
+<div class="highlight"><pre><span class="nv">$ </span>cat coords.csv
 p1,48.22,2.33
 p2,49.33,2.24
-$ cat coords.csv | GeoBase --map
-</code></pre>
+<span class="nv">$ </span>cat coords.csv | GeoBase --map
+</pre></div>
 
 <p>And for every other thing as well:</p>
 
-<pre lang="shell"><code>$ cat edges.csv
+<div class="highlight"><pre><span class="nv">$ </span>cat edges.csv
 A,B
 A,C
 D,A
-$ cat edges.csv | GeoBase --graph
-</code></pre>
+<span class="nv">$ </span>cat edges.csv | GeoBase --graph
+</pre></div>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png" alt=""></p>
 
 <p>Administrate the data sources:</p>
 
-<pre lang="shell"><code>$ GeoBase --admin
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --admin
+</pre></div>
 
 <p>We are currently gathering input from the community to define the next
 version features, so do not hesitate to open issues on the <a href="https://github.com/opentraveldata/geobases">github
@@ -112,42 +112,42 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 
 <p>First you need to install <em>setuptools</em> (as <em>root</em>):</p>
 
-<pre lang="shell"><code>$ apt-get install python-setuptools    # for debian
-$ yum install python-setuptools.noarch # for fedora
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>apt-get install python-setuptools    <span class="c"># for debian</span>
+<span class="nv">$ </span>yum install python-setuptools.noarch <span class="c"># for fedora</span>
+</pre></div>
 
 <p>Then you need some basics compilation stuff to compile dependencies
 (also as <em>root</em>):</p>
 
-<pre lang="shell"><code>$ apt-get install python-dev g++    # for debian
-$ yum install python-devel gcc-c++  # for fedora
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>apt-get install python-dev g++    <span class="c"># for debian</span>
+<span class="nv">$ </span>yum install python-devel gcc-c++  <span class="c"># for fedora</span>
+</pre></div>
 
 <h3>Installation</h3>
 
 <p>You can install it from <a href="http://pypi.python.org/pypi">PyPI</a> with:</p>
 
-<pre lang="shell"><code>$ easy_install --user -U GeoBases
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>easy_install --user -U GeoBases
+</pre></div>
 
 <p>If you want the development version, clone the project from
 <a href="https://github.com/opentraveldata/geobases.git">github</a>:</p>
 
-<pre lang="shell"><code>$ git clone https://github.com/opentraveldata/geobases.git
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/opentraveldata/geobases.git
+</pre></div>
 
 <p>Then install the package and its dependencies:</p>
 
-<pre lang="shell"><code>$ cd geobases
-$ python setup.py install --user # for user space
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>geobases
+<span class="nv">$ </span>python setup.py install --user <span class="c"># for user space</span>
+</pre></div>
 
 <p>A standalone script is put in <code>~/.local/bin</code>, to benefit from it, put
 that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 
-<pre lang="shell"><code>export PATH=$PATH:$HOME/.local/bin
-export BACKGROUND_COLOR=black # or 'white', your call
-</code></pre>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
+<span class="nb">export </span><span class="nv">BACKGROUND_COLOR</span><span class="o">=</span>black <span class="c"># or 'white', your call</span>
+</pre></div>
 
 <h3>Python 3 support</h3>
 
@@ -155,25 +155,25 @@ export BACKGROUND_COLOR=black # or 'white', your call
 try it by <em>changing branch</em> before installation. Install setuptools and python3-dev as
 prerequisites, then:</p>
 
-<pre lang="shell"><code>$ git checkout 3000
-$ python3 setup.py install --user
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>git checkout 3000
+<span class="nv">$ </span>python3 setup.py install --user
+</pre></div>
 
 <p>You can also install the package from <a href="http://pypi.python.org/">PyPI</a>:</p>
 
-<pre lang="shell"><code>$ easy_install-3.2 --user -U GeoBases3K
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>easy_install-3.2 --user -U GeoBases3K
+</pre></div>
 
 <h3>Autocomplete</h3>
 
 <p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
 your <code>~/.zshrc</code>:</p>
 
-<pre lang="shell"><code># Add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
+<div class="highlight"><pre><span class="c"># Add custom completion scripts</span>
+<span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
 autoload -U compinit
 compinit
-</code></pre>
+</pre></div>
 
 <h2>Quickstart</h2>
 
@@ -184,16 +184,12 @@ compinit
 </pre></div>
 
 <p>You can provide other values for the <em>data</em> parameter. All data sources
-are documented in a single <em>yaml</em> file:</p>
+are documented in a <a href="https://github.com/opentraveldata/geobases/blob/public/GeoBases/DataSources/Sources.yaml">single <em>YAML</em> file</a>:</p>
 
 <ul>
 <li>  <em>data="ori_por"</em> will load a local version of <a href="https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv">this
 file</a>,
 this is the most complete source for airports, use it!</li>
-<li>  <em>data="ori_por_multi"</em> is the same as previous, but the key for a
-line is not the iata_code, but the concatenation of iata_code and
-location_type. This feature makes every line unique, whereas
-<em>ori_por</em> can have several lines for one iata_code</li>
 <li>  <em>data="airports"</em> will use geonames as data source for airports</li>
 <li>  <em>data="stations"</em> will use RFF data, from <a href="http://www.data.gouv.fr">the open data
 website</a>, as data source for french train
@@ -327,12 +323,12 @@ and using the <code>set</code> method.</p>
 <p>Installation of the package will also deploy a standalone script named
 <code>GeoBase</code>:</p>
 
-<pre lang="shell"><code>$ GeoBase ORY CDG              # query on the keys ORY and CDG
-$ GeoBase --closest CDG        # closest from CDG
-$ GeoBase --near LIG           # near LIG
-$ GeoBase --fuzzy marseille    # fuzzy search on 'marseille'
-$ GeoBase --help               # your best friend
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase ORY CDG              <span class="c"># query on the keys ORY and CDG</span>
+<span class="nv">$ </span>GeoBase --closest CDG        <span class="c"># closest from CDG</span>
+<span class="nv">$ </span>GeoBase --near LIG           <span class="c"># near LIG</span>
+<span class="nv">$ </span>GeoBase --fuzzy marseille    <span class="c"># fuzzy search on 'marseille'</span>
+<span class="nv">$ </span>GeoBase --help               <span class="c"># your best friend</span>
+</pre></div>
 
 <p><img src="https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-CLI-2.png" alt=""></p>
 
@@ -366,33 +362,33 @@ because there were missing headers).</li>
 </ul><p>More examples here, for example how to do a search on a field, like
 admin_code (<code>B8</code> is french riviera):</p>
 
-<pre lang="shell"><code>$ GeoBase -E adm1_code -e B8
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8
+</pre></div>
 
 <p>Same with csv output (customize with <code>--show</code>):</p>
 
-<pre lang="shell"><code>$ GeoBase -E adm1_code -e B8 --quiet
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E adm1_code -e B8 --quiet
+</pre></div>
 
 <p>Make a fuzzy search:</p>
 
-<pre lang="shell"><code>$ GeoBase --fuzzy sur mer
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --fuzzy sur mer
+</pre></div>
 
 <p>All data under 200 km from Paris:</p>
 
-<pre lang="shell"><code>$ GeoBase --near PAR -N 200
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase --near PAR -N 200
+</pre></div>
 
 <p>Map display for a specific GMT offset:</p>
 
-<pre lang="shell"><code>$ GeoBase -E gmt_offset -e 1.0 --map
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span>GeoBase -E gmt_offset -e 1.0 --map
+</pre></div>
 
 <p>Reading data input directly on stdin:</p>
 
-<pre lang="shell"><code>$ echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
-</code></pre>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> -e <span class="s1">'ORY^Orly\nCDG^Charles'</span> | GeoBase
+</pre></div>
       </section>
     </div>
 
