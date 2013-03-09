@@ -99,7 +99,7 @@ $ yum install python-devel gcc-c++  # for fedora
 
 ### Installation
 
-You can install it from [PyPI](http://pypi.python.org/pypi) with:
+You can install it from [PyPI](https://crate.io/packages/GeoBases) with:
 
 ```bash
 $ easy_install --user -U GeoBases
@@ -138,7 +138,7 @@ $ git checkout 3000
 $ python3 setup.py install --user
 ```
 
-You can also install the package from [PyPI](http://pypi.python.org/):
+You can also install the package from [PyPI](https://crate.io/packages/GeoBases3K):
 ```bash
 $ easy_install-3.2 --user -U GeoBases3K
 ```

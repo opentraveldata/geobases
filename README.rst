@@ -103,7 +103,7 @@ Then you need some basics compilation stuff to compile dependencies (also as *ro
 Installation
 ~~~~~~~~~~~~
 
-You can install it from `PyPI <http://pypi.python.org/pypi>`_ with:
+You can install it from `PyPI <https://crate.io/packages/GeoBases>`_:
 
 .. code-block:: bash
 
@@ -144,7 +144,7 @@ For Python 3, you have to install setuptools and python3-dev as prerequisites, t
  $ git checkout 3000
  $ python3 setup.py install --user
 
-You can also install the package for Python 3:
+You can also install the package for Python 3 from `PyPI <https://crate.io/packages/GeoBases3K>`_:
 
 .. code-block:: bash
 
@@ -174,7 +174,7 @@ your ``~/.zshrc``:
 Tests
 ~~~~~
 
-Run the tests with:
+Run the tests:
 
 .. code-block:: bash
 
