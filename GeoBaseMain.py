@@ -1727,8 +1727,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
         return
 
     if command == 'zshautocomp':
-        S_MANAGER.update_autocomplete(verbose=True)
-        print '\n===== Restart shell now.'
+        status = S_MANAGER.update_autocomplete(verbose=True)
+        if status:
+            print '\n===== Restart shell now.'
         return
 
     if len(admin) < 2:
@@ -2016,13 +2017,11 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.save()
         print '\n===== Changes saved to %s' % S_MANAGER.sources_conf_path
 
-        if is_in_path('rake'):
-            update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
-            if update_zsh:
-                S_MANAGER.update_autocomplete(verbose=True)
+        update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
+        if update_zsh:
+            status = S_MANAGER.update_autocomplete(verbose=True)
+            if status:
                 print '\n===== Restart shell now.'
-        else:
-            print '\n===== Rake is not installed, could not update zsh autocomplete.'
 
 
 def two_col_print(L):
