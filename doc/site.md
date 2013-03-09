@@ -99,13 +99,23 @@ $ yum install python-devel gcc-c++  # for fedora
 
 ### Installation
 
-You can install it from [PyPI](https://crate.io/packages/GeoBases) with:
+#### From PyPI
+
+You can install it from [PyPI](https://crate.io/packages/GeoBases):
 
 ```bash
 $ easy_install --user -U GeoBases
 ```
 
-If you want the development version, clone the project from
+There is a development version also on [PyPI](https://crate.io/packages/GeoBasesDev):
+
+```bash
+$ easy_install --user -U GeoBasesDev
+```
+
+#### From Github
+
+You can clone the project from
 [github](https://github.com/opentraveldata/geobases.git):
 
 ```bash
@@ -119,7 +129,9 @@ $ cd geobases
 $ python setup.py install --user # for user space
 ```
 
-A standalone script is put in `~/.local/bin`, to benefit from it, put
+#### Final steps
+
+A script is put in `~/.local/bin`, to be able to use it, put
 that in your `~/.bashrc` or `~/.zshrc`:
 
 ```bash
@@ -129,7 +141,7 @@ export BACKGROUND_COLOR=black # or 'white', your call
 
 ### Python 3 support
 
-There is *Python 3* (not so) experimental support, you can
+There is *Python 3* support, you can
 try it by *changing branch* before installation. Install setuptools and python3-dev as
 prerequisites, then:
 
