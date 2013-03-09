@@ -171,10 +171,6 @@ are documented in a single *yaml* file:
 -   *data="ori\_por"* will load a local version of [this
     file](https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv),
     this is the most complete source for airports, use it!
--   *data="ori\_por\_multi"* is the same as previous, but the key for a
-    line is not the iata\_code, but the concatenation of iata\_code and
-    location\_type. This feature makes every line unique, whereas
-    *ori\_por* can have several lines for one iata\_code
 -   *data="airports"* will use geonames as data source for airports
 -   *data="stations"* will use RFF data, from [the open data
     website](http://www.data.gouv.fr), as data source for french train
