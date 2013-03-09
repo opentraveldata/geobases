@@ -103,7 +103,7 @@ page</a>.</p>
 <li>  the <a href="https://geobases.readthedocs.org">API documentation</a> for the Python package</li>
 <li>  the <a href="https://github.com/opentraveldata/geobases/wiki/_pages">wiki pages</a> for any question!</li>
 <li>  the <a href="https://twitter.com/geobasesdev">twitter account</a> for the latest news</li>
-</ul><h2>Project</h2>
+</ul><h2>Installation</h2>
 
 <h3>Prerequisites</h3>
 
@@ -123,14 +123,21 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 <span class="nv">$ </span>yum install python-devel gcc-c++  <span class="c"># for fedora</span>
 </pre></div>
 
-<h3>Installation</h3>
+<h3>From PyPI</h3>
 
-<p>You can install it from <a href="https://crate.io/packages/GeoBases">PyPI</a> with:</p>
+<p>You can install it from <a href="https://crate.io/packages/GeoBases">PyPI</a>:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>easy_install --user -U GeoBases
 </pre></div>
 
-<p>If you want the development version, clone the project from
+<p>There is a development version also on <a href="https://crate.io/packages/GeoBasesDev">PyPI</a>:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>easy_install --user -U GeoBasesDev
+</pre></div>
+
+<h3>From Github</h3>
+
+<p>You can clone the project from
 <a href="https://github.com/opentraveldata/geobases.git">github</a>:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/opentraveldata/geobases.git
@@ -142,16 +149,27 @@ by default on Linux distributions. But make sure you have them anyway.</p>
 <span class="nv">$ </span>python setup.py install --user <span class="c"># for user space</span>
 </pre></div>
 
-<p>A standalone script is put in <code>~/.local/bin</code>, to benefit from it, put
+<h3>Final steps</h3>
+
+<p>A script is put in <code>~/.local/bin</code>, to be able to use it, put
 that in your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
 
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
 <span class="nb">export </span><span class="nv">BACKGROUND_COLOR</span><span class="o">=</span>black <span class="c"># or 'white', your call</span>
 </pre></div>
 
+<p>If you use zsh and want to have awesome <em>autocomplete</em> for the main script, add this to
+your <code>~/.zshrc</code>:</p>
+
+<div class="highlight"><pre><span class="c"># Add custom completion scripts</span>
+<span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
+autoload -U compinit
+compinit
+</pre></div>
+
 <h3>Python 3 support</h3>
 
-<p>There is <em>Python 3</em> (not so) experimental support, you can
+<p>There is <em>Python 3</em> support, you can
 try it by <em>changing branch</em> before installation. Install setuptools and python3-dev as
 prerequisites, then:</p>
 
@@ -162,17 +180,6 @@ prerequisites, then:</p>
 <p>You can also install the package from <a href="https://crate.io/packages/GeoBases3K">PyPI</a>:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>easy_install-3.2 --user -U GeoBases3K
-</pre></div>
-
-<h3>Autocomplete</h3>
-
-<p>If you use zsh and want to benefit from the <em>autocomplete</em>, add this to
-your <code>~/.zshrc</code>:</p>
-
-<div class="highlight"><pre><span class="c"># Add custom completion scripts</span>
-<span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
-autoload -U compinit
-compinit
 </pre></div>
 
 <h2>Quickstart</h2>
