@@ -38,6 +38,10 @@ countries:
     join:
         - fields: currency_code
           with  : [currencies, currency_code]
+        - fields: continent
+          with  : [continents, code]
+        - fields: neighbors
+          with  : [countries, code]
     headers   :
         - code
         - iso_alpha3
