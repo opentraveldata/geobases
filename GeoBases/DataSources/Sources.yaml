@@ -314,6 +314,9 @@ currencies:
     delimiter : ;
     subdelimiters :
         countries : ','
+    join:
+        - fields: countries
+          with  : [countries, name]
     headers   :
         - currency_code
         - numeric_code
