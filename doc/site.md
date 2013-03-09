@@ -26,19 +26,19 @@ This is entirely written in Python. The core part is a Python package,
 but there is a command line tool as well! Get it with *easy\_install*,
 then you can see where are airports with *international* in their name:
 
-```shell
+```bash
 $ GeoBase --fuzzy international --map
 ```
 
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-points.png)
 
 You can perform all types of queries:
-```shell
+```bash
 $ GeoBase --base cities --fuzzy "san francisko" # typo here :)
 ```
 
 Of course, you can use your own data for map display:
-```shell
+```bash
 $ cat coords.csv
 p1,48.22,2.33
 p2,49.33,2.24
@@ -46,7 +46,7 @@ $ cat coords.csv | GeoBase --map
 ```
 
 And for every other thing as well:
-```shell
+```bash
 $ cat edges.csv
 A,B
 A,C
@@ -57,7 +57,7 @@ $ cat edges.csv | GeoBase --graph
 ![](https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-graph.png)
 
 Administrate the data sources:
-```shell
+```bash
 $ GeoBase --admin
 ```
 
@@ -84,7 +84,7 @@ by default on Linux distributions. But make sure you have them anyway.
 
 First you need to install *setuptools* (as *root*):
 
-```shell
+```bash
 $ apt-get install python-setuptools    # for debian
 $ yum install python-setuptools.noarch # for fedora
 ```
@@ -92,7 +92,7 @@ $ yum install python-setuptools.noarch # for fedora
 Then you need some basics compilation stuff to compile dependencies
 (also as *root*):
 
-```shell
+```bash
 $ apt-get install python-dev g++    # for debian
 $ yum install python-devel gcc-c++  # for fedora
 ```
@@ -101,20 +101,20 @@ $ yum install python-devel gcc-c++  # for fedora
 
 You can install it from [PyPI](http://pypi.python.org/pypi) with:
 
-```shell
+```bash
 $ easy_install --user -U GeoBases
 ```
 
 If you want the development version, clone the project from
 [github](https://github.com/opentraveldata/geobases.git):
 
-```shell
+```bash
 $ git clone https://github.com/opentraveldata/geobases.git
 ```
 
 Then install the package and its dependencies:
 
-```shell
+```bash
 $ cd geobases
 $ python setup.py install --user # for user space
 ```
@@ -122,7 +122,7 @@ $ python setup.py install --user # for user space
 A standalone script is put in `~/.local/bin`, to benefit from it, put
 that in your `~/.bashrc` or `~/.zshrc`:
 
-```shell
+```bash
 export PATH=$PATH:$HOME/.local/bin
 export BACKGROUND_COLOR=black # or 'white', your call
 ```
@@ -133,13 +133,13 @@ There is *Python 3* (not so) experimental support, you can
 try it by *changing branch* before installation. Install setuptools and python3-dev as
 prerequisites, then:
 
-```shell
+```bash
 $ git checkout 3000
 $ python3 setup.py install --user
 ```
 
 You can also install the package from [PyPI](http://pypi.python.org/):
-```shell
+```bash
 $ easy_install-3.2 --user -U GeoBases3K
 ```
 
@@ -148,7 +148,7 @@ $ easy_install-3.2 --user -U GeoBases3K
 If you use zsh and want to benefit from the *autocomplete*, add this to
 your `~/.zshrc`:
 
-```shell
+```bash
 # Add custom completion scripts
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
@@ -313,7 +313,7 @@ Standalone script
 Installation of the package will also deploy a standalone script named
 `GeoBase`:
 
-```shell
+```bash
 $ GeoBase ORY CDG              # query on the keys ORY and CDG
 $ GeoBase --closest CDG        # closest from CDG
 $ GeoBase --near LIG           # near LIG
@@ -350,36 +350,36 @@ available fields on each line. Fields starting with `__` like
 More examples here, for example how to do a search on a field, like
 admin\_code (`B8` is french riviera):
 
-```shell
+```bash
 $ GeoBase -E adm1_code -e B8
 ```
 
 Same with csv output (customize with `--show`):
 
-```shell
+```bash
 $ GeoBase -E adm1_code -e B8 --quiet
 ```
 
 Make a fuzzy search:
 
-```shell
+```bash
 $ GeoBase --fuzzy sur mer
 ```
 
 All data under 200 km from Paris:
 
-```shell
+```bash
 $ GeoBase --near PAR -N 200
 ```
 
 Map display for a specific GMT offset:
 
-```shell
+```bash
 $ GeoBase -E gmt_offset -e 1.0 --map
 ```
 
 Reading data input directly on stdin:
 
-```shell
+```bash
 $ echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
 ```
