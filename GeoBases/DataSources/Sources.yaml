@@ -13,6 +13,8 @@ airports:
     join:
         - fields: country_code
           with  : [countries, code]
+        - fields: city_code
+          with  : [ori_por, iata_code]
     headers   :
         - iata_code
         - name
