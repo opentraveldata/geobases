@@ -413,6 +413,10 @@ geonames_FR:
           with  : [countries, code]
         - fields: timezone
           with  : [timezones, code]
+        - fields: fclass
+          with  : [feature_classes, fclass]
+        - fields: fcode
+          with  : [feature_codes, fcode]
     headers   : &geonames_headers
         - geoname_id
         - name
