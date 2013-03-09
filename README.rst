@@ -190,15 +190,11 @@ Quickstart
  >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You can provide other values for the *data* parameter.
-All data sources are documented in a single *yaml* file:
+All data sources are documented in a `single YAML file <https://github.com/opentraveldata/geobases/blob/public/GeoBases/DataSources/Sources.yaml>`_:
 
 -  *data="ori\_por"* will load a local version of
    `this file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`_,
    this is the most complete source for airports, use it!
--  *data="ori\_por\_multi"* is the same as previous, but the key for a
-   line is not the iata\_code, but the concatenation of iata\_code and
-   location\_type. This feature makes every line unique, whereas
-   *ori\_por* can have several lines for one iata\_code
 -  *data="airports"* will use geonames as data source for airports
 -  *data="stations"* will use RFF data, from `the open data
    website <http://www.data.gouv.fr>`_, as data source for french train
