@@ -43,7 +43,7 @@ Examples for stations::
 From any point of reference, we have a few duplicates
 even with ``('iata_code', 'location_type')`` key:
 
-    >>> geo = GeoBase(data='ori_por_multi')
+    >>> geo = GeoBase(data='ori_por', key_fields=['iata_code', 'location_type'])
     In skipped zone, dropping line 1: "iata_code...".
     /!\ [lno ...] CRK+A is duplicated #1, first found lno ...
     /!\ [lno ...] RDU+A is duplicated #1, first found lno ...

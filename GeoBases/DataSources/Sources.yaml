@@ -13,6 +13,8 @@ airports:
     join:
         - fields: country_code
           with  : [countries, code]
+        - fields: city_code
+          with  : [ori_por, iata_code]
     headers   :
         - iata_code
         - name
@@ -36,6 +38,10 @@ countries:
     join:
         - fields: currency_code
           with  : [currencies, currency_code]
+        - fields: continent
+          with  : [continents, code]
+        - fields: neighbors
+          with  : [countries, code]
     headers   :
         - code
         - iso_alpha3
@@ -168,6 +174,10 @@ cities:
           with  : [countries, code]
         - fields: timezone
           with  : [timezones, code]
+        - fields: fclass
+          with  : [feature_classes, fclass]
+        - fields: fcode
+          with  : [feature_codes, fcode]
     headers   :
         - code
         - name
@@ -276,16 +286,6 @@ ori_por:
         - alt_name_section
 
 
-ori_por_multi:
-    paths         : *ori_por_paths
-    key_fields    : [iata_code, location_type]
-    delimiter     : ^
-    skip          : 1
-    subdelimiters : *ori_por_subdel
-    headers       : *ori_por_headers
-    join          : *ori_por_join
-
-
 ori_por_non_iata:
     paths         :
         - Por/Ori/ori_por_non_iata.csv
@@ -304,6 +304,9 @@ currencies:
     delimiter : ;
     subdelimiters :
         countries : ','
+    join:
+        - fields: countries
+          with  : [countries, name]
     headers   :
         - currency_code
         - numeric_code
@@ -375,6 +378,9 @@ feature_codes:
     paths     : FeatureCodes/featureCodes_en.txt
     key_fields: fcode
     delimiter : "\t"
+    join:
+        - fields: fclass
+          with  : [feature_classes, fclass]
     headers   :
         - fclass
         - fcode
@@ -397,6 +403,10 @@ geonames_FR:
           with  : [countries, code]
         - fields: timezone
           with  : [timezones, code]
+        - fields: fclass
+          with  : [feature_classes, fclass]
+        - fields: fcode
+          with  : [feature_codes, fcode]
     headers   : &geonames_headers
         - geoname_id
         - name

@@ -136,6 +136,11 @@ class SourcesManager(object):
     def update_autocomplete(self, verbose=True):
         """Update autocomplete file.
         """
+        if not is_in_path('rake'):
+            if verbose:
+                print('"rake" is not installed, could not update zsh autocomplete.')
+            return False
+
         if verbose:
             print('Realizing template with %s' % self.sources_conf_path)
 
@@ -153,10 +158,12 @@ class SourcesManager(object):
             if verbose:
                 print('/!\ Could not copy from/to:\n* %s\n* %s' % \
                         (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR))
+            return False
         else:
             if verbose:
                 print('Copied from/to:\n* %s\n* %s' % \
                         (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR))
+            return True
 
 
     def get(self, source=None):
@@ -548,6 +555,16 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
         return extracted, True
 
 
+def is_in_path(command):
+    """
+    This checks if a command is in the PATH.
+    """
+    path = os.popen('which %s 2> /dev/null' % command, 'r').read()
+
+    if path:
+        return True
+    else:
+        return False
 
 
 def _test():

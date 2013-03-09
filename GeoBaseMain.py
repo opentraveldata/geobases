@@ -51,7 +51,7 @@ try:
     def ask_input(prompt, prefill=''):
         """Custom default when asking for input.
         """
-        readline.set_startup_hook(lambda: readline.insert_text(prefill))
+        readline.set_startup_hook(lambda: readline.insert_text(str(prefill)))
         try:
             return input(prompt)
         finally:
@@ -63,7 +63,7 @@ except ImportError:
         """Fallback.
         """
         if prefill:
-            answer = input('%s[%s] ' % (prompt, prefill))
+            answer = input('%s[%s] ' % (prompt, str(prefill)))
         else:
             answer = input('%s' % prompt)
 
@@ -1704,10 +1704,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
     # These ones do not need the second argument source_name
     if command == 'restore':
         S_MANAGER.restore(clean_cache=False)
+        _ = S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'fullrestore':
         S_MANAGER.restore(clean_cache=True)
+        _ = S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'update':
@@ -1719,8 +1721,9 @@ def admin_mode(admin, with_hints=True, verbose=True):
         return
 
     if command == 'zshautocomp':
-        S_MANAGER.update_autocomplete(verbose=True)
-        print('\n===== Restart shell now.')
+        status = S_MANAGER.update_autocomplete(verbose=True)
+        if status:
+            print('\n===== Restart shell now.')
         return
 
     if len(admin) < 2:
@@ -2008,13 +2011,11 @@ def admin_mode(admin, with_hints=True, verbose=True):
         S_MANAGER.save()
         print('\n===== Changes saved to %s' % S_MANAGER.sources_conf_path)
 
-        if is_in_path('rake'):
-            update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
-            if update_zsh:
-                S_MANAGER.update_autocomplete(verbose=True)
+        update_zsh = ask_till_ok(questions['update_zsh'], boolean=True, default=False)
+        if update_zsh:
+            status = S_MANAGER.update_autocomplete(verbose=True)
+            if status:
                 print('\n===== Restart shell now.')
-        else:
-            print('\n===== Rake is not installed, could not update zsh autocomplete.')
 
 
 def two_col_print(L):
@@ -2048,13 +2049,14 @@ def ask_mode():
         'field'    : '[4/5] On which field? ',
         'value'    : '[   ] Which value to look for? ',
         'point'    : '[4/5] From which point (key or geocode)? ',
-        'limit'    : '[   ] Which limit for the search (kms or number)? ',
+        'radius'   : '[   ] Which radius for the search (kms)? ',
+        'limit'    : '[   ] Which limit for the search (number of results)? ',
         'display'  : '[5/5] Which display? ',
-        'execute'  : '[   ] Execute the command [yN]? ',
+        'execute'  : '[   ] Execute the command [Yn]? ',
     }
 
     # 1. Choose base
-    base = ask_till_ok(questions['source'], sorted(S_MANAGER))
+    base = ask_till_ok(questions['source'], sorted(S_MANAGER), prefill='ori_por')
 
     # 2. Choose from keys
     all_keys = ask_till_ok(questions['all_keys'], boolean=True, default=True)
@@ -2065,24 +2067,48 @@ def ask_mode():
         from_keys = ask_input(questions['from_keys']).strip().split()
 
     # 3. Choose search type
-    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'])
+    print(dedent("""
+    (*) none     : no search done, all data used
+    (*) exact    : make an exact search on a specific field
+    (*) fuzzy    : make a fuzzy search on a specific field
+    (*) phonetic : make a phonetic search on a specific field
+    (*) near     : make a geographical search from a point with a radius
+    (*) closest  : make a geographical search from a point with a number of results
+    """))
+    search = ask_till_ok(questions['search'], ['none', 'exact', 'fuzzy', 'phonetic', 'near', 'closest'], show=False)
 
     if search.strip().lower() in ('none',):
         search = None
 
     # 4. Search parameters
-    field, value, limit = None, None, None
+    field, value, radius, limit = None, None, None, None
 
     if search in ['exact', 'fuzzy', 'phonetic']:
-        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']))
-        value = ask_input(questions['value']).strip()
+        field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']), prefill='name')
+        value = ask_till_ok(questions['value'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
 
-    elif search in ['near', 'closest']:
-        value = ask_input(questions['point']).strip()
-        limit = ask_input(questions['limit']).strip()
+    elif search in ['near']:
+        value = ask_till_ok(questions['point'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
+        radius = ask_input(questions['radius'], prefill='50').strip()
+
+    elif search in ['closest']:
+        value = ask_till_ok(questions['point'],
+                            is_ok = lambda r: r,
+                            fail_message='-/!\- Cannot be empty')
+        limit = ask_input(questions['limit'], prefill='5').strip()
 
     # 5. Display
-    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'])
+    print(dedent("""
+    (*) terminal : fancy display in the terminal
+    (*) quiet    : csv-like display
+    (*) map      : map display
+    (*) graph    : graph display
+    """))
+    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'], prefill='terminal', show=False)
 
     # 6. Conclusion
     parameters = {
@@ -2090,6 +2116,7 @@ def ask_mode():
         'from_keys' : from_keys,
         'search'    : search,
         'field'     : field,
+        'radius'    : radius,
         'limit'     : limit,
         'value'     : value,
         'display'   : display
@@ -2120,7 +2147,9 @@ def ask_mode():
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '--%s-field %s' % (search, field)
-    elif search in ['near', 'closest']:
+    elif search in ['near']:
+        search_field_part = '--%s-limit %s' % (search, radius)
+    elif search in ['closest']:
         search_field_part = '--%s-limit %s' % (search, limit)
     else:
         search_field_part = ''
@@ -2142,7 +2171,9 @@ def ask_mode():
 
     if search in ['exact', 'fuzzy', 'phonetic']:
         search_field_part = '-%s %s' % (search[0].upper(), field)
-    elif search in ['near', 'closest']:
+    elif search in ['near']:
+        search_field_part = '-%s %s' % (search[0].upper(), radius)
+    elif search in ['closest']:
         search_field_part = '-%s %s' % (search[0].upper(), limit)
     else:
         search_field_part = ''
@@ -2157,7 +2188,7 @@ def ask_mode():
     print('-----------------------------------------------------')
     print()
 
-    execute = ask_till_ok(questions['execute'], boolean=True)
+    execute = ask_till_ok(questions['execute'], boolean=True, default=True)
     if execute:
         os.system(command)
 
