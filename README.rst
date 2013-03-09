@@ -146,6 +146,17 @@ that in your ``~/.bashrc`` or ``~/.zshrc``:
  export PATH=$PATH:$HOME/.local/bin
  export BACKGROUND_COLOR=black # or 'white', your call
 
+If you use zsh and want to get awesome *autocomplete* for the main script, add this to
+your ``~/.zshrc``:
+
+.. code-block:: bash
+
+ # Add custom completion scripts
+ fpath=(~/.zsh/completion $fpath)
+ autoload -U compinit
+ compinit
+
+
 Python 3 and Pypy support
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -177,20 +188,6 @@ You can also install the package for Pypy 3 from `PyPI <https://crate.io/package
 .. code-block:: bash
 
  $ easy_install --user -U GeoBasesPypy
-
-Autocomplete
-~~~~~~~~~~~~
-
-If you use zsh and want to benefit from the *autocomplete*, add this to
-your ``~/.zshrc``:
-
-.. code-block:: bash
-
- # Add custom completion scripts
- fpath=(~/.zsh/completion $fpath)
- autoload -U compinit
- compinit
-
 
 Tests
 ~~~~~

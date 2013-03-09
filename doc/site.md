@@ -139,6 +139,16 @@ export PATH=$PATH:$HOME/.local/bin
 export BACKGROUND_COLOR=black # or 'white', your call
 ```
 
+If you use zsh and want to have awesome *autocomplete* for the main script, add this to
+your `~/.zshrc`:
+
+```bash
+# Add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
+```
+
 ### Python 3 support
 
 There is *Python 3* support, you can
@@ -153,18 +163,6 @@ $ python3 setup.py install --user
 You can also install the package from [PyPI](https://crate.io/packages/GeoBases3K):
 ```bash
 $ easy_install-3.2 --user -U GeoBases3K
-```
-
-### Autocomplete
-
-If you use zsh and want to benefit from the *autocomplete*, add this to
-your `~/.zshrc`:
-
-```bash
-# Add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
-autoload -U compinit
-compinit
 ```
 
 Quickstart
