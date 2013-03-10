@@ -74,8 +74,8 @@ Here are some useful links:
 -   the [wiki pages](https://github.com/opentraveldata/geobases/wiki/_pages) for any question!
 -   the [twitter account](https://twitter.com/geobasesdev) for the latest news
 
-Project
--------
+Installation
+------------
 
 ### Prerequisites
 
@@ -97,15 +97,23 @@ $ apt-get install python-dev g++    # for debian
 $ yum install python-devel gcc-c++  # for fedora
 ```
 
-### Installation
+### From PyPI
 
-You can install it from [PyPI](http://pypi.python.org/pypi) with:
+You can install it from [PyPI](https://crate.io/packages/GeoBases):
 
 ```bash
 $ easy_install --user -U GeoBases
 ```
 
-If you want the development version, clone the project from
+There is a development version also on [PyPI](https://crate.io/packages/GeoBasesDev):
+
+```bash
+$ easy_install --user -U GeoBasesDev
+```
+
+### From Github
+
+You can clone the project from
 [github](https://github.com/opentraveldata/geobases.git):
 
 ```bash
@@ -119,7 +127,9 @@ $ cd geobases
 $ python setup.py install --user # for user space
 ```
 
-A standalone script is put in `~/.local/bin`, to benefit from it, put
+### Final steps
+
+A script is put in `~/.local/bin`, to be able to use it, put
 that in your `~/.bashrc` or `~/.zshrc`:
 
 ```bash
@@ -127,9 +137,19 @@ export PATH=$PATH:$HOME/.local/bin
 export BACKGROUND_COLOR=black # or 'white', your call
 ```
 
+If you use zsh and want to have awesome *autocomplete* for the main script, add this to
+your `~/.zshrc`:
+
+```bash
+# Add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
+```
+
 ### Python 3 support
 
-There is *Python 3* (not so) experimental support, you can
+There is *Python 3* support, you can
 try it by *changing branch* before installation. Install setuptools and python3-dev as
 prerequisites, then:
 
@@ -138,21 +158,9 @@ $ git checkout 3000
 $ python3 setup.py install --user
 ```
 
-You can also install the package from [PyPI](http://pypi.python.org/):
+You can also install the package from [PyPI](https://crate.io/packages/GeoBases3K):
 ```bash
 $ easy_install-3.2 --user -U GeoBases3K
-```
-
-### Autocomplete
-
-If you use zsh and want to benefit from the *autocomplete*, add this to
-your `~/.zshrc`:
-
-```bash
-# Add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
-autoload -U compinit
-compinit
 ```
 
 Quickstart
