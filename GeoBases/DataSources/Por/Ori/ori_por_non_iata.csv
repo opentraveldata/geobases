@@ -27,6 +27,7 @@ CHW^ZZZZ^^Y^6301372^1^Jiuquan^Jiuquan^39.85^98.42^S^AIRP^^^2012-07-01^IATA Notif
 TODO:CJI^UNKNOWN1446^UNKNOWN1446^UNKNOWN1446/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^38.98^-3.917^0^N^CA
 TODO:CRN^UNKNOWN1625^UNKNOWN1625^UNKNOWN1625/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^57.65^-4.05^0^N^CA
 DAE^VEDZ^^Y^7668589^1^Daporijo Airport^Daporijo Airport^27.5^94.33^S^AIRP^^^2012-09-01^IATA Notification #37 (2012) - Same location as DEP^IN^^India^30^Arunāchal Pradesh^Arunachal Pradesh^^^^^^0^^246^Asia/Kolkata^5.5^5.5^5.5^2011-02-17^DAE^Daporijo^Daporijo^^^CA^http://en.wikipedia.org/wiki/Daporijo_Airport^en|Daporijo Airport|
+DGM^ZZZZ^^Y^8299022^1^Dongguan^Dongguan^23.03^113.7^S^AIRP^^^2012-07-01^IATA Notification #34 (2012) - Airport not found^CN^^China^Asia^30^Guangdong Province^Guangdong Province^^^^^^0^^24^Asia/Shanghai^8.0^8.0^8.0^2012-05-18^DGM^Dongguan^Dongguan^DGM^^CA^^
 TODO:DIC^UNKNOWN1911^UNKNOWN1911^UNKNOWN1911/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^-8.55^125.6^0^N^CA
 TODO:DNC^UNKNOWN1980^UNKNOWN1980^UNKNOWN1980/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^7.267^-8.15^0^N^CA
 TODO:DRM^UNKNOWN2043^UNKNOWN2043^UNKNOWN2043/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^41.15^24.13^0^N^CA
@@ -39,12 +40,17 @@ TODO:EWY^UNKNOWN2408^UNKNOWN2408^UNKNOWN2408/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.42^-0
 FER^ZZZZ^^N^0^1^FERGUSONS GULF/KE^FERGUSONS GULF/KE^3.51667^35.91667^S^RSTN^^^2012-10-04^That place corresponds to a lagoon; there is no railway station here^KE^^Kenya^08^Rift Valley^Rift Valley^^^^^^0^^396^Africa/Nairobi^3.0^3.0^3.0^2012-09-22^FER^Fergusons Gulf^Fergusons Gulf^^^CA^^
 TODO:FKA^UNKNOWN2521^UNKNOWN2521^UNKNOWN2521/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^43.6763500^-92.1796100^0^N^CA
 TODO:FKH^UNKNOWN2523^UNKNOWN2523^UNKNOWN2523/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^52.83^0.85^0^N^CA
+FYN^ZZZZ^^Y^8260741^1^Fuyun^Fuyun^45^90^S^AIRP^^2012-07-01^IATA Notification #34 (2012) - Airport closed^CN^^China^Asia^13^Xinjiang Uygur Zizhiqu^Xinjiang Uygur Zizhiqu^^^^^^0^^1008^Asia/Urumqi^8.0^8.0^8.0^2012-04-29^FYN^Fuyun^Fuyun^^13^A^^
+FYN^ZZZZ^^Y^1529504^1^Fuyun^Fuyun^47^89.46667^P^PPL^^^2012-07-01^IATA Notification #34 (2012) - Airport closed^CN^CN^China^Asia^13^Xinjiang Uygur Zizhiqu^Xinjiang Uygur Zizhiqu^^^^^^0^^820^Asia/Urumqi^8.0^8.0^8.0^2012-01-18^FYN^Fuyun^Fuyun^FYN^13^C^^|Koktokay|=|Fuyun|
 TODO:FZY^UNKNOWN2690^UNKNOWN2690^UNKNOWN2690/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^43.3506200^-76.3874400^0^N^CA
 TODO:GBN^UNKNOWN2730^UNKNOWN2730^UNKNOWN2730/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^41.7^15.73^0^N^CA
 TODO:GHD^GHIMBI^GHIMBI^GHIMBI/ET^GHD^Y^^ET^AFRIC^ITC2^ET^9.4^39.27^0^N^CA
 TODO:GHK^UNKNOWN2820^UNKNOWN2820^UNKNOWN2820/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^32.12^34.78^0^N^CA
 TODO:GMY^UNKNOWN2895^UNKNOWN2895^UNKNOWN2895/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^52.35^14.55^0^N^CA
 TODO:GQJ^UNKNOWN2945^UNKNOWN2945^UNKNOWN2945/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.437222^-5.686389^0^N^CA
+GTB^ZZZZ^^Y^7731073^1^Genting Airport^Genting Airport^2.11667^111.7^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^0^^3^Asia/Kuching^8.0^8.0^8.0^2012-03-25^GTB^Genting^Genting^^^A^http://en.wikipedia.org/wiki/Genting_Airport^ms|Lapangan Terbang Genting|
+GTB^ZZZZ^^Y^1735882^1^Genting^Genting^2.11667^111.7^P^PPL^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^0^^3^Asia/Kuching^8.0^8.0^8.0^2012-05-05^GTB^Genting^Genting^GTB^^C^^|Genting|
+GTK^ZZZZ^^Y^7731074^1^Sungei Tekai Airport^Sungei Tekai Airport^2.6^102.9^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^01^Johor^Johor^^^^^^0^^56^Asia/Kuala_Lumpur^8.0^8.0^8.0^2011-03-17^GTK^Sungei Tekai Airport^Sungei Tekai Airport^GTK^^CA^^
 TODO:GWW^UNKNOWN3053^UNKNOWN3053^UNKNOWN3053/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^52.57^13.3^0^N^CA
 TODO:GXH^UNKNOWN3057^UNKNOWN3057^UNKNOWN3057/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^52.2^0.5167^0^N^CA
 HBL^ZZZZ^^Y^1105747^1^Babelegi^Babelegi^-25.35756^28.27737^P^PPL^^^^^ZA^^South Africa^10^North-West^North-West^DC37^Bojanala Platinum District Municipality^Bojanala Platinum District Municipality^NW375^^0^^1067^Africa/Johannesburg^2.0^2.0^2.0^2011-04-19^HBL^Babelegi^Babelegi^^^C^^
@@ -78,11 +84,14 @@ KYB^ZZZZ^^N^0^1^Yangoonabie Airport^Yangoonabie Airport^-34.75^138.7^S^AIRP^^^^^
 KZK^ZZZZ^^N^0^1^Kompong Thom^Kompong Thom^12.72^104.9^S^AIRP^^^2012-12-01^IATA Notification #33 (2012) - Airport not found^KH^^Cambodia^05^Kompong Thom^Kompong Thom^^^^^^0^^17^Asia/Phnom_Penh^7.0^7.0^7.0^2012-12-01^KZD^Kompong Thom^Kompong Thom^^^CA^^
 TODO:LIU^UNKNOWN4676^UNKNOWN4676^UNKNOWN4676/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^35.83^12.83^0^N^CA
 TODO:LKT^UNKNOWN4702^UNKNOWN4702^UNKNOWN4702/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^5.85^-5.683^0^N^CA
+LLM^ZZZZ^^Y^7731229^1^Long Lama Airport^Long Lama Airport^3.767^114.4^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^0^^123^Asia/Kuching^8.0^8.0^8.0^2011-03-17^LLM^Long Lama^Long Lama^^^A^^
+LLM^ZZZZ^^Y^1737957^1^Long Lama^Long Lama^3.76667^114.4^P^PPL^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^0^^16^Asia/Kuching^8.0^8.0^8.0^2012-05-05^LLM^Long Lama^Long Lama^LLM^^C^^|Long Lama|
 TODO:LPH^UNKNOWN4802^UNKNOWN4802^UNKNOWN4802/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^56.05^-5.433^0^N^CA
 TODO:LRC^UNKNOWN4824^UNKNOWN4824^UNKNOWN4824/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^48.53^12.15^0^N^CA
 LUJ^ZZZZ^^Y^981294^1^Lusikisiki^Lusikisiki^-31.36199^29.57328^P^PPL^^^^^ZA^ZA^South Africa^05^Eastern Cape^Eastern Cape^DC15^OR Tambo District Municipality^OR Tambo District Municipality^EC153^^0^^572^Africa/Johannesburg^2.0^2.0^2.0^2011-06-06^LUJ^Lusikisiki^Lusikisiki^^^C^^
-TODO:LUZ^UNKNOWN4824^UNKNOWN4824^UNKNOWN4824/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^29.63^116^0^N^CA
-TODO:LZD^UNKNOWN4824^UNKNOWN4824^UNKNOWN4824/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^36.02^103.7^0^N^CA
+LUZ^ZZZZ^^N^0^1^Lushan Airport^Lushan Airport^29.63^116^S^AIRP^^^2012-07-01^IATA Notification #34 (2012) - Same location as JIU^CN^^China^Asia^03^Jiangxi^Jiangxi^^^^^^0^^10^Asia/Shanghai^8.0^8.0^8.0^2011-03-17^JIU^Jiujiang^Jiujiang^^^A^http://en.wikipedia.org/wiki/Jiujiang_Lushan_Airport^
+LXI^ZZZZ^^Y^8260853^1^Linxi^Linxi^43.6^118^S^AIRP^^^2012-07-01^IATA Notification #34 (2012) - Airport not found^CN^^China^Asia^20^Inner Mongolia^Inner Mongolia^^^^^^0^^943^Asia/Shanghai^8.0^8.0^8.0^2012-04-29^LXI^Linxi^Linxi^LXI^20^CA^^
+LZD^ZZZZ^^N^0^1^Lanzhoudong Airport^Lanzhoudong Airport^36.02^103.7^S^AIRP^^^2012-07-01^IATA Notification #34 (2012) - Airport not found^CN^^China^Asia^^^^^^^^^0^1947^1946^Asia/Chongqing^8.0^8.0^8.0^2012-05-17^LHW^Lanzhou^Lanzhou^^^A^^
 MHC^ZZZZ^^N^0^1^MacMahon Camp 4^MacMahon Camp 4^-32.03^137.6^S^AIRP^^^^^AU^^Australia^05^South Australia^South Australia^41830^Flinders Ranges^Flinders Ranges^^^0^^319^Australia/Adelaide^10.5^9.5^9.5^2011-06-04^MHC^MacMahon Camp 4^MacMahon Camp 4^^SA^CA^^
 TODO:MHJ^MISRAK GASHAMO^MISRAK GASHAMO^MISRAK GASHAMO/ET^MHJ^Y^^ET^AFRIC^ITC2^ET^8.133^45.28^0^N^CA
 MJY^ZZZZ^^Y^7731277^1^Mangunjaya Airport^Mangunjaya Airport^-2.733^103.6^S^AIRP^^^2012-10-12^^ID^^Indonesia^32^South Sumatra^South Sumatra^^^^^^0^^18^Asia/Jakarta^7.0^7.0^7.0^2011-03-17^MJY^Mangunjaya^Mangunjaya^^^CA^^
@@ -94,12 +103,14 @@ MUM^ZZZZ^^N^0^1^MUMIAS/KE^MUMIAS/KE^0.3333^34.48^S^AIRP^^^2012-10-04^^KE^^Kenya^
 MXQ^ZZZZ^^N^0^1^Mitchell River Airport^Mitchell River Airport^-15.67^141.8^S^AIRP^^^^Duplicate of RTP^AU^^Australia^04^Queensland^Queensland^32250^Carpentaria^Carpentaria^^^0^^19^Australia/Brisbane^10.0^10.0^10.0^2011-06-04^MXQ^Mitchell River^Mitchell River^^QL^CA^^
 TODO:MYS^MOYALE^MOYALE^MOYALE/ET^MYS^Y^^ET^AFRIC^ITC2^ET^3.467^39.1^0^N^CA
 MZA^ZZZZ^^Y^8260952^1^Muzaffarnagar^Muzaffarnagar^29.48^77.7^S^AIRP^0.0046660565392^^2012-09-01^IATA Notification #37 (2012) - Airport not found^IN^^India^36^Uttar Pradesh^Uttar Pradesh^^^^^^0^^249^Asia/Kolkata^5.5^5.5^5.5^2012-04-29^DED^Dehradun Airport^Dehradun Airport^MZA^^CA^^
+MZS^ZZZZ^^Y^7731320^1^Mostyn Airport^Mostyn Airport^3.8^103.3^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Airport not found^MY^^Malaysia^Asia^16^Sabah^Sabah^^^^^^0^^65^Asia/Kuching^8.0^8.0^8.0^2011-03-17^MZS^Mostyn Airport^Mostyn Airport^MZS^^CA^^
 NBR^ZZZZ^^N^0^1^Nambour Airport^Nambour Airport^-26.603333^153.091111^S^AIRP^^^^Duplicate of MCY?^AU^^Australia^04^Queensland^Queensland^36710^Sunshine Coast^Sunshine Coast^^^0^^3^Australia/Brisbane^10.0^10.0^10.0^2012-04-29^NBR^Nambour^Nambour^^QL^CA^^
 NCP^ZZZZ^^N^0^1^Luzon Is Cubi Pt NAS^Luzon Is Cubi Pt NAS^10.0^121.0^S^AIRP^^^2013-02-01^IATA Notification #43 (2013) - Same location as SFS^PH^^PH^Asia^^^^^^^^^^^^Asia/Manila^^^^-1^NCP^Luzon Is^Luzon Is^^^A^^
 NCP^ZZZZ^^N^0^1^Luzon Is^Luzon Is^10.0^121.0^P^PPLC^0.0208373879372^^2013-02-01^IATA Notification #43 (2013) - With deletion of NCP airport, the city no longer meets criteria for Metropolitan Area^PH^^PH^Asia^^^^^^^^^^^^Asia/Manila^^^^-1^NCP^Luzon Is^Luzon Is^CRK,NCP^^C^^
 NET^ZZZZ^^N^0^1^New Bight Airport^New Bight Airport^24.31425^-75.45882^S^AIRP^^^^Duplicate of TBI^BS^^Bahamas^06^Cat Island^Cat Island^^^^^^0^^7^America/Nassau^-5.0^-4.0^-5.0^2012-04-29^NET^New Bight^New Bight^^^CA^^
 NGM^ZZZZ^^N^0^1^GUAM/GU:AGANA NAS^GUAM/GU:AGANA NAS^13.49^144.7^S^AIRP^^^2012-06-01^IATA Notification #36 (2012) - Same location as GUM - Naval Air Station closed in 1993^GU^^Guam^BA^Barrigada Municipality^Barrigada Municipality^^^^^^0^82^84^Pacific/Guam^10.0^10.0^10.0^2011-06-25^GUM^Guam^Guam^^^A^^
 TODO:NGV^UNKNOWN5770^UNKNOWN5770^UNKNOWN5770/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^-17.043464^15.683822^0^N^CA
+NMU^ZZZZ^^Y^8299165^1^Namu^Namu^8^168.2^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Same location as MJE^MH^^Marshall Islands^Oceania^^^^^^^^^0^^-9999^Pacific/Kwajalein^12.0^12.0^12.0^2012-05-18^NMU^Namu^Namu^NMU^^CA^^
 NNN^ZZZZ^^N^0^1^Pseudo message departure^Pseudo message departure^0.00028^-0.00028^S^AIRP^^^^^ZZ^^ZZ^^^^^^^^^^^^^^^^^-1^NNN^Pseudo message^Pseudo message^NNN^^CA^^
 TODO:NOE^UNKNOWN5867^UNKNOWN5867^UNKNOWN5867/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^53.62^7.15^0^N^CA
 TODO:NRQ^UNKNOWN5913^UNKNOWN5913^UNKNOWN5913/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^42.52^1.517^0^N^CA
@@ -135,6 +146,8 @@ TODO:SDW^UNKNOWN7939^UNKNOWN7939^UNKNOWN7939/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^22.67^91
 SEJ^ZZZZ^^N^0^1^Egilsstaðir Airport^Egilsstadir Airport^65.27^-14^S^AIRP^0.0158218683088^^^^IS^^Iceland^38^East^East^^^^^^0^23^32^Atlantic/Reykjavik^0.0^0.0^0.0^2011-03-28^SEJ^Egilsstaðir^Egilsstadir^^^CA^
 SEK^ZZZZ^^N^0^1^Errachidia^Errachidia^31.93^-4.433^S^AIRP^^^^^MA^^Morocco^48^Meknès-Tafilalet^Meknes-Tafilalet^^^^^^0^^1038^Africa/Casablanca^0.0^1.0^0.0^2011-03-17^SEK^Errachidia^Errachidia^^^CA^
 SEX^ZZZZ^^N^0^1^Ramstein^Ramstein^49.5^7.867^S^AIRP^^^^^DE^^Germany^^^^^^^^^0^236^232^Europe/Berlin^1.0^2.0^1.0^2007-01-03^SEX^Ramstein^Ramstein^^^CA^^
+SGG^WBGY^^Y^1735800^1^Simanggang^Simanggang^1.217^111.5^S^AIRF^^^2013-03-01^IATA Notification #40 (2012) - Airport closed^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^0^^14^Asia/Kuching^8.0^8.0^8.0^2012-01-17^SGG^Simanggang^Simanggang^^^A^^|Simanggang|
+SGG^ZZZZ^^Y^1735799^1^Simanggang^Simanggang^1.24722^111.45278^P^PPL^^^2013-03-01^IATA Notification #40 (2012) - Airport closed^MY^^Malaysia^Asia^11^Sarawak^Sarawak^^^^^^27207^^11^Asia/Kuching^8.0^8.0^8.0^2012-01-17^SGG^Simanggang^Simanggang^SGG^^C^^|Bandar Sri Aman|=|Simmangang|=|Sri Aman|=|Simmanggang|=|Simanggang|
 SHO^RKND^^Y^7668418^1^Sokcho Airport^Sokcho Airport^38.142614^128.598556^S^AIRP^^^2012-12-14^IATA Notification #39 (2012) - Airport closed, replaced by Yangyang airport (YNY).^KR^^South Korea^06^Gangwon^Gangwon^^^^^^0^^21^Asia/Seoul^9.0^9.0^9.0^2011-02-17^SHO^Sokcho^Sokcho^^^CA^http://en.wikipedia.org/wiki/Sokcho_Airport^
 SND^ZZZZ^^Y^8299043^1^Seno^Seno^16.67^105^S^AIRP^^^2012-12-14^IATA Notification #40 (2012) - Defunct airport^LA^^Laos^20^Savannahkhét^Savannahkhet^^^^^^0^^190^Asia/Vientiane^7.0^7.0^7.0^2012-05-18^SND^Seno^Seno^^^CA^^
 SQD^ZZZZ^^Y^739600^1^Sinop^Sinop^42.0333^35.15^P^PPLA^0.013800567425^^2011-01-01^IATA Notification #12 (2011) - At the time, deleted duplicate with SIC (now, in 2012, NOP)^TR^^Turkey^57^Sinop^Sinop^^^^^^34834^^100^Europe/Istanbul^2.0^3.0^2.0^2012-01-18^SIC^Sinop^Sinop^^^CA^^
@@ -171,6 +184,7 @@ WGL^ZZZZ^^N^0^1^Baltra Island^Baltra Island^-0.453758^-90.265914^S^AIRP^^^^^EC^^
 WGN^ZZZZ^^Y^8299229^1^Waitangi^Waitangi^-35.17^174^S^AIRP^^^2013-03-01^IATA Notification #41 (2013) - Airport not found^NZ^^New Zealand^Oceania^F6^Northland^Northland^001^Far North District^Far North District^^^0^^59^Pacific/Auckland^13.0^12.0^12.0^2012-05-18^WGN^Waitangi^Waitangi^WGN^^CA^^
 TODO:WID^UNKNOWN9562^UNKNOWN9562^UNKNOWN9562/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.1^6.217^0^N^CA
 WOI^ZZZZ^^Y^8299198^1^Wologissi Airport^Wologissi Airport^8.267^-9.75^S^AIRP^^^2012-10-04^No airport can be found at that location^LR^^Liberia^20^Lofa^Lofa^^^^^^0^^531^Africa/Monrovia^0.0^0.0^0.0^2012-09-22^WOI^Wologissi^Wologissi^^^CA^^
+XAY^ZZZZ^^Y^8260948^1^Xayabury^Xayabury^18.67^104.7^S^AIRP^^^2013-03-01^IATA Notification #40 (2012) - Same location as ZBY^LA^^Laos^Asia^23^Bolikhamxai^Bolikhamxai^^^^^^0^^762^Asia/Vientiane^7.0^7.0^7.0^2012-04-29^XAY^Xayabury^Xayabury^XAY^^CA^^
 XDT^ZZZZ^^N^0^1^Paris CDG TGV^Paris CDG TGV^49.02^2.55^S^RSTN^^^^^FR^^France^A8^Île-de-France^Ile-de-France^95^Département du Val-d'Oise^Departement du Val-d'Oise^^^0^119^106^Europe/Paris^1.0^2.0^1.0^2008-07-09^PAR^Paris^Paris^^^R^^
 TODO:XNW^UNKNOWN10061^UNKNOWN10061^UNKNOWN10061/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^51.88^0.2333^0^N^CA
 XSA^ZZZZ^^N^0^1^SINOE/LR:AFC^SINOE/LR:AFC^5.036^-9.052^S^AIRP^^^2012-10-04^No airport can be found at that location^LR^^Liberia^10^Sinoe^Sinoe^^^^^^0^^9^Africa/Monrovia^0.0^0.0^0.0^2012-09-22^SNI^Greenville^Greenville^^^CA^^
@@ -180,6 +194,7 @@ TODO:XYV^UNKNOWN10321^UNKNOWN10321^UNKNOWN10321/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^45.73
 YEH^OIBI^^Y^6904766^1^Asalouyeh Airport^Asalouyeh Airport^27.4812400^52.6150700^S^AIRP^^^^^IR^^Iran^00^^^^^^^^0^5^248^Asia/Tehran^3.5^4.5^3.5^2011-07-20^YEH^Asalouyeh^Asalouyeh^^^CA^^
 ZCU^ZZZZ^^N^0^1^SHE KOU/CN:SHE KOU FERRY^SHE KOU/CN:SHE KOU FERRY^22.48^113.9^S^BUSTN^^^2013-01-01^IATA Notification #36 (2012) - Same location as ZYK^CN^^China^30^Guangdong Province^Guangdong Province^^^^^^0^^24^Asia/Shanghai^8.0^8.0^8.0^2012-05-18^ZCU^She Kou^She Kou^^^CB^^
 TODO:ZDY^UNKNOWN10976^UNKNOWN10976^UNKNOWN10976/ZZ^ZZZ^Y^^ZZ^ZZZZZ^ITZ1^ZZ^55.1^14.68^0^N^CA
+ZGC^ZLLL^^Y^6301373^1^Lanzhou Zhongchuan Airport^Lanzhou Zhongchuan Airport^36.515242^103.620775^S^AIRP^^^2012-07-01^IATA Notification #34 (2012) - Same location as LHW^CN^^China^Asia^^^^^^^^^0^1947^1946^Asia/Chongqing^8.0^8.0^8.0^2012-05-17^LHW^Lanzhou^Lanzhou^^^A^http://en.wikipedia.org/wiki/Lanzhou_Zhongchuan_Airport^zh|兰州中川机场|=|Lánzhōu Zhōng​chuān​ Jīchǎng|
 ZIS^ZZZZ^^N^0^1^Zhongshan Railway Station^Zhongshan Railway Station^^^S^RSTN^^^^^CN^^China^11^Hunan^Hunan^^^^^^0^^264^Asia/Shanghai^8.0^8.0^8.0^2012-03-11^ZIS^Zhongshan^Zhongshan^^^CA^^
 ZIZ^ZZZZ^^N^0^1^Zamzama Airport^Zamzama Airport^30.0^71.0^S^AIRP^^^^^PK^^Pakistan^04^Punjab^Punjab^^^^^^0^^119^Asia/Karachi^5.0^5.0^5.0^2011-02-17^ZIZ^Zamzama^Zamzama^^^CA^^
 ZKL^ZZZZ^^N^0^1^STEENKOOL/ID^STEENKOOL/ID^-2.1^133.5^S^AIRP^^^2012-10-12^^ID^^Indonesia^39^West Papua^West Papua^^^^^^0^^26^Asia/Jayapura^9.0^9.0^9.0^2012-01-17^ZKL^Steenkool^Steenkool^^^CA^^
