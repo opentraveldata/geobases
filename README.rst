@@ -77,8 +77,8 @@ Here are some useful links:
 - the `wiki pages <https://github.com/opentraveldata/geobases/wiki/_pages>`_ for any question!
 - the `twitter account <https://twitter.com/geobasesdev>`_ for the latest news
 
-Project
--------
+Installation
+------------
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -100,16 +100,25 @@ Then you need some basics compilation stuff to compile dependencies (also as *ro
  $ apt-get install python-dev g++    # for debian
  $ yum install python-devel gcc-c++  # for fedora
 
-Installation
-~~~~~~~~~~~~
+From PyPI
+~~~~~~~~~
 
-You can install it from `PyPI <http://pypi.python.org/pypi>`_ with:
+You can install it from `PyPI <https://crate.io/packages/GeoBases>`_:
 
 .. code-block:: bash
 
  $ easy_install --user -U GeoBases
 
-If you want the development version, clone the project from
+There is a development version also on `PyPI <https://crate.io/packages/GeoBasesDev>`_:
+
+.. code-block:: bash
+
+ $ easy_install --user -U GeoBasesDev
+
+From Github
+~~~~~~~~~~~
+
+You can clone the project from
 `github <https://github.com/opentraveldata/geobases.git>`_:
 
 .. code-block:: bash
@@ -123,7 +132,10 @@ Then install the package and its dependencies:
  $ cd geobases
  $ python setup.py install --user # for user space
 
-A standalone script is put in ``~/.local/bin``, to benefit from it, put
+Final steps
+~~~~~~~~~~~
+
+A script is put in ``~/.local/bin``, to be able to use it, put
 that in your ``~/.bashrc`` or ``~/.zshrc``:
 
 .. code-block:: bash
@@ -131,36 +143,7 @@ that in your ``~/.bashrc`` or ``~/.zshrc``:
  export PATH=$PATH:$HOME/.local/bin
  export BACKGROUND_COLOR=black # or 'white', your call
 
-Python 3 and Pypy support
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-There is *Python 3* and *Pypy* (not so) experimental support, you can try it
-by *changing branch* before installation.
-
-For Python 3, you have to install setuptools and python3-dev as prerequisites, then:
-
-.. code-block:: bash
-
- $ git checkout 3000
- $ python3 setup.py install --user
-
-You can also install the package for Python 3:
-
-.. code-block:: bash
-
- $ easy_install-3.2 --user -U GeoBases3K
-
-For Pypy, after pypy and pypy-dev installation:
-
-.. code-block:: bash
-
- $ git checkout pypy
- $ sudo pypy setup.py install
-
-Autocomplete
-~~~~~~~~~~~~
-
-If you use zsh and want to benefit from the *autocomplete*, add this to
+If you use zsh and want to get awesome *autocomplete* for the main script, add this to
 your ``~/.zshrc``:
 
 .. code-block:: bash
@@ -171,10 +154,42 @@ your ``~/.zshrc``:
  compinit
 
 
+Python 3 and Pypy support
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There is *Python 3* and *Pypy* support, you can try it
+by *changing branch* before installation.
+
+For Python 3, you have to install *setuptools* and *python3-dev* as prerequisites, then:
+
+.. code-block:: bash
+
+ $ git checkout 3000
+ $ python3 setup.py install --user
+
+You can also install the package for Python 3 from `PyPI <https://crate.io/packages/GeoBases3K>`_:
+
+.. code-block:: bash
+
+ $ easy_install-3.2 --user -U GeoBases3K
+
+For Pypy, after *pypy* and *pypy-dev* installation:
+
+.. code-block:: bash
+
+ $ git checkout pypy
+ $ sudo pypy setup.py install
+
+You can also install the package for Pypy from `PyPI <https://crate.io/packages/GeoBasesPypy>`_:
+
+.. code-block:: bash
+
+ $ easy_install --user -U GeoBasesPypy
+
 Tests
 ~~~~~
 
-Run the tests with:
+Run the tests:
 
 .. code-block:: bash
 

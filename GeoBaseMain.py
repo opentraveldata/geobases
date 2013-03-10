@@ -897,7 +897,9 @@ def error(name, *args):
         print >> stderr, '\n/!\ Stdin was empty'
 
     elif name == 'wrong_value':
-        print >> stderr, '\n/!\ Wrong value "%s", should be in %s.' % (args[0], args[1])
+        print >> stderr, '\n/!\ Wrong value "%s", should be in:' % args[0]
+        for p in build_pairs(args[1]):
+            print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'type':
         print >> stderr, '\n/!\ Wrong type for "%s", should be "%s".' % (args[0], args[1])
