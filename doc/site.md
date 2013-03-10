@@ -150,7 +150,7 @@ compinit
 ### Python 3 support
 
 There is *Python 3* support, you can
-try it by *changing branch* before installation. Install setuptools and python3-dev as
+try it by *changing branch* before installation. Install *setuptools* and *python3-dev* as
 prerequisites, then:
 
 ```bash
