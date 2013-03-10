@@ -160,7 +160,7 @@ Python 3 and Pypy support
 There is *Python 3* and *Pypy* support, you can try it
 by *changing branch* before installation.
 
-For Python 3, you have to install setuptools and python3-dev as prerequisites, then:
+For Python 3, you have to install *setuptools* and *python3-dev* as prerequisites, then:
 
 .. code-block:: bash
 
@@ -173,7 +173,7 @@ You can also install the package for Python 3 from `PyPI <https://crate.io/packa
 
  $ easy_install-3.2 --user -U GeoBases3K
 
-For Pypy, after pypy and pypy-dev installation:
+For Pypy, after *pypy* and *pypy-dev* installation:
 
 .. code-block:: bash
 
