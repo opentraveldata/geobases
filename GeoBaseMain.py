@@ -864,6 +864,10 @@ def warn(name, *args):
         print >> stderr, '/!\ Key %s was not in base, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
+    if name == 'installation':
+        print >> stderr, '/!\ %s is not installed, no package information available.' % \
+                args[0]
+
 
 def error(name, *args):
     """
@@ -2275,7 +2279,7 @@ def main():
             print 'Extras     : %s' % ', '.join(str(e) for e in r.extras)
 
         except pkg_resources.DistributionNotFound:
-            print '/!\ %s is not installed, no package information.' % PACKAGE_NAME
+            warn('installation', PACKAGE_NAME)
 
         if logorrhea:
             print
