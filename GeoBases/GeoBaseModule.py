@@ -260,6 +260,7 @@ class GeoBase(object):
         >>> fl.close()
         >>> GeoBase(data='airports',
         ...         headers=['iata_code', 'cname', 'city'],
+        ...         join=[],
         ...         verbose=False).get('ORY', 'cname')
         'Paris-Orly'
         """
@@ -440,6 +441,10 @@ class GeoBase(object):
     def _loadExtBase(self, fields, join_data):
         """External bases for join fields handling.
         """
+        for f in fields:
+            if f not in self.fields:
+                raise ValueError('Wrong field "%s". Not in %s' % (f, self.fields))
+
         if len(join_data) == 0:
             raise ValueError('Empty join_data for fields "%s" (was "%s").' % \
                             (fields, join_data))
@@ -490,8 +495,7 @@ class GeoBase(object):
 
         for f in join_fields:
             if f not in ext_b.fields:
-                raise ValueError('Wrong join field "%s". Not in %s' % \
-                                 (f, ext_b.fields))
+                raise ValueError('Wrong join field "%s". Not in %s' % (f, ext_b.fields))
 
         # We index the field to optimize further findWith
         ext_b.addIndex(join_fields, verbose=self._verbose)
