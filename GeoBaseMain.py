@@ -947,17 +947,19 @@ def panic_mode():
 # Global defaults
 PACKAGE_NAME = 'GeoBasesDev'
 SCRIPT_NAME  = 'GeoBase'
+DESCRIPTION  = 'Data services and visualization'
 
 # Sources manager
 S_MANAGER = SourcesManager()
 
-DESCRIPTION  = 'Data services and visualization'
+# Contact info
 CONTACT_INFO = '''
 Report bugs to    : geobases.dev@gmail.com
 Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
+
 try:
     HELP_SOURCES = S_MANAGER.build_status()
 except (KeyError, ValueError, TypeError):
@@ -1712,12 +1714,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
     # These ones do not need the second argument source_name
     if command == 'restore':
         S_MANAGER.restore(clean_cache=False)
-        _ = S_MANAGER.update_autocomplete(verbose=False)
+        S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'fullrestore':
         S_MANAGER.restore(clean_cache=True)
-        _ = S_MANAGER.update_autocomplete(verbose=False)
+        S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'update':
@@ -2147,7 +2149,7 @@ def ask_mode():
     print '        with long options and short options          '
     print
 
-    # Long version
+    # Long options
     base_part         = '--base %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
@@ -2171,7 +2173,7 @@ def ask_mode():
     print command
 
 
-    # Short version
+    # Short options
     base_part         = '-b %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('-%s "%s"' % (search[0], value)) if search is not None else ''
@@ -2263,13 +2265,25 @@ def main():
 
     if args['version']:
         import pkg_resources
-        r = pkg_resources.require(PACKAGE_NAME)[0]
-        print 'Project  : %s' % r.project_name
-        print 'Version  : %s' % r.version
-        print 'Egg name : %s' % r.egg_name()
-        print 'Location : %s' % r.location
-        print 'Requires : %s' % ', '.join(str(e) for e in r.requires())
-        print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
+        try:
+            r = pkg_resources.require(PACKAGE_NAME)[0]
+            print 'Project    : %s' % r.project_name
+            print 'Version    : %s' % r.version
+            print 'Egg name   : %s' % r.egg_name()
+            print 'Location   : %s' % r.location
+            print 'Requires   : %s' % ', '.join(str(e) for e in r.requires())
+            print 'Extras     : %s' % ', '.join(str(e) for e in r.extras)
+
+        except pkg_resources.DistributionNotFound:
+            print '/!\ %s is not installed, no package information.' % PACKAGE_NAME
+
+        if logorrhea:
+            print
+            print 'Package    : %s' % PACKAGE_NAME
+            print 'Script     : %s' % SCRIPT_NAME
+            print 'Description: %s' % DESCRIPTION
+            print 'Cache dir  : %s' % S_MANAGER.cache_dir
+            print 'Config     : %s' % S_MANAGER.sources_conf_path
         exit(0)
 
 
@@ -2283,7 +2297,7 @@ def main():
 
     if args['ask']:
         try:
-            _ = ask_mode()
+            ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
         exit(0)
