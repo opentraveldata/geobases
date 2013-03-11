@@ -215,7 +215,7 @@ ori_por:
     subdelimiters : &ori_por_subdel
         # Here you may put '' to
         # split every char 'AB' -> ['A', 'B']
-        #location_type    : ''
+        location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
     join          : &ori_por_join
