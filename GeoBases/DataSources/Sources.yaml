@@ -226,9 +226,6 @@ ori_por:
         # Freaking auto join possibility
         - fields: tvl_por_list
           with  : [ori_por, iata_code]
-        # Join on multiple fields examples
-        #- fields: [city_code, location_type]
-        #  with  : [ori_por, [iata_code, location_type]]
         - fields: city_code
           with  : [ori_por, iata_code]
         - fields: continent_name
@@ -239,6 +236,9 @@ ori_por:
           with  : [feature_classes, fclass]
         - fields: fcode
           with  : [feature_codes, fcode]
+        # Join on multiple fields examples
+        #- fields: [country_code, country_name]
+        #  with  : [countries, [code, name]]
     headers : &ori_por_headers
         - iata_code
         - icao_code
