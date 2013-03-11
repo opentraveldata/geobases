@@ -2276,6 +2276,14 @@ def main():
 
         except pkg_resources.DistributionNotFound:
             print '/!\ %s is not installed, no package information.' % PACKAGE_NAME
+
+        if logorrhea:
+            print
+            print 'Package    : %s' % PACKAGE_NAME
+            print 'Script     : %s' % SCRIPT_NAME
+            print 'Description: %s' % DESCRIPTION
+            print 'Cache dir  : %s' % S_MANAGER.cache_dir
+            print 'Config     : %s' % S_MANAGER.sources_conf_path
         exit(0)
 
 
