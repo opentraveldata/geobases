@@ -1712,12 +1712,12 @@ def admin_mode(admin, with_hints=True, verbose=True):
     # These ones do not need the second argument source_name
     if command == 'restore':
         S_MANAGER.restore(clean_cache=False)
-        _ = S_MANAGER.update_autocomplete(verbose=False)
+        S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'fullrestore':
         S_MANAGER.restore(clean_cache=True)
-        _ = S_MANAGER.update_autocomplete(verbose=False)
+        S_MANAGER.update_autocomplete(verbose=False)
         return
 
     if command == 'update':
@@ -2283,7 +2283,7 @@ def main():
 
     if args['ask']:
         try:
-            _ = ask_mode()
+            ask_mode()
         except (KeyboardInterrupt, EOFError):
             error('aborting', 'Learning session is over :S.')
         exit(0)
