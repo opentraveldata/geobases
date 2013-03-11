@@ -2265,13 +2265,17 @@ def main():
 
     if args['version']:
         import pkg_resources
-        r = pkg_resources.require(PACKAGE_NAME)[0]
-        print 'Project  : %s' % r.project_name
-        print 'Version  : %s' % r.version
-        print 'Egg name : %s' % r.egg_name()
-        print 'Location : %s' % r.location
-        print 'Requires : %s' % ', '.join(str(e) for e in r.requires())
-        print 'Extras   : %s' % ', '.join(str(e) for e in r.extras)
+        try:
+            r = pkg_resources.require(PACKAGE_NAME)[0]
+            print 'Project    : %s' % r.project_name
+            print 'Version    : %s' % r.version
+            print 'Egg name   : %s' % r.egg_name()
+            print 'Location   : %s' % r.location
+            print 'Requires   : %s' % ', '.join(str(e) for e in r.requires())
+            print 'Extras     : %s' % ', '.join(str(e) for e in r.extras)
+
+        except pkg_resources.DistributionNotFound:
+            print '/!\ %s is not installed, no package information.' % PACKAGE_NAME
         exit(0)
 
 
