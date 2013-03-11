@@ -209,6 +209,7 @@ class GeoBase(object):
         >>> fl.close()
         >>> GeoBase(data='airports',
         ...         headers=['iata_code', 'cname', 'city'],
+        ...         join=[],
         ...         verbose=False).get('ORY', 'cname')
         'Paris-Orly'
         """
