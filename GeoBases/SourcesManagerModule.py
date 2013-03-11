@@ -35,7 +35,7 @@ SOURCES_CONF_PATH   = relative('DataSources/Sources.yaml')
 SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
 
 # 4) Cache directory, with root tag to isolate installations
-CACHE_TAG = 'public'
+CACHE_TAG = 'pypy'
 CACHE_DIR = op.join(os.getenv('HOME', '.'), '.GeoBases.d/%s' % CACHE_TAG)
 
 # 5) Path to dir where we build autocomplete stuff
