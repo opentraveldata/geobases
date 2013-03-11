@@ -60,8 +60,7 @@ __all__ = ['SourcesManager', 'is_remote', 'is_archive']
 
 
 class SourcesManager(object):
-    """
-    This class is used to administrate sources.
+    """Main class used to administrate sources.
     """
     def __init__(self,
                  sources_conf_path_origin=SOURCES_CONF_PATH,
