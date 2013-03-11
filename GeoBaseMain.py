@@ -947,17 +947,19 @@ def panic_mode():
 # Global defaults
 PACKAGE_NAME = 'GeoBases'
 SCRIPT_NAME  = 'GeoBase'
+DESCRIPTION  = 'Data services and visualization'
 
 # Sources manager
 S_MANAGER = SourcesManager()
 
-DESCRIPTION  = 'Data services and visualization'
+# Contact info
 CONTACT_INFO = '''
 Report bugs to    : geobases.dev@gmail.com
 Home page         : <http://opentraveldata.github.com/geobases/>
 API documentation : <https://geobases.readthedocs.org/>
 Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
 '''
+
 try:
     HELP_SOURCES = S_MANAGER.build_status()
 except (KeyError, ValueError, TypeError):
@@ -2147,7 +2149,7 @@ def ask_mode():
     print '        with long options and short options          '
     print
 
-    # Long version
+    # Long options
     base_part         = '--base %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('--%s "%s"' % (search, value)) if search is not None else ''
@@ -2171,7 +2173,7 @@ def ask_mode():
     print command
 
 
-    # Short version
+    # Short options
     base_part         = '-b %s' % base
     from_keys_part    = '' if from_keys is None else ' '.join(from_keys)
     search_part       = ('-%s "%s"' % (search[0], value)) if search is not None else ''
