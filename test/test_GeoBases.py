@@ -86,6 +86,10 @@ def test_suite():
     """
     tests = unittest.TestSuite()
 
+    # First: full restore to avoid interferences
+    manager = GeoS.SourcesManager()
+    manager.restore(clean_cache=True)
+
     # Adding unittests
     tests.addTests(unittest.makeSuite(GeoBaseTest))
     tests.addTests(unittest.makeSuite(GeoBaseFeedTest))
