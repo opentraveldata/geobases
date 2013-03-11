@@ -1,16 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Main installation file for GeoBases.
-'''
+"""
 
 from __future__ import with_statement
 
-from setuptools import setup
+from sys import stderr
 from os import getenv
 import os.path as op
-from sys import stderr
+
+from setuptools import setup
 
 INSTALL_REQUIRES = [
     # Public - core

@@ -30,11 +30,13 @@ def relative(rel_path, root=DIRNAME):
 # 1) Update script file
 # 2) Path to global configuration
 # 3) Root folder where we find data
-# 4) Cache directory
 UPDATE_SCRIPT_PATH  = relative('DataSources/CheckDataUpdates.sh')
 SOURCES_CONF_PATH   = relative('DataSources/Sources.yaml')
 SOURCES_DIR         = op.dirname(SOURCES_CONF_PATH)
-CACHE_DIR           = op.join(os.getenv('HOME', '.'), '.GeoBases.d')
+
+# 4) Cache directory, with root tag to isolate installations
+CACHE_TAG = 'public'
+CACHE_DIR = op.join(os.getenv('HOME', '.'), '.GeoBases.d/%s' % CACHE_TAG)
 
 # 5) Path to dir where we build autocomplete stuff
 COMPLETION_SOURCE_DIR = relative('completion')
@@ -60,8 +62,7 @@ __all__ = ['SourcesManager', 'is_remote', 'is_archive']
 
 
 class SourcesManager(object):
-    """
-    This class is used to administrate sources.
+    """Main class used to administrate sources.
     """
     def __init__(self,
                  sources_conf_path_origin=SOURCES_CONF_PATH,
