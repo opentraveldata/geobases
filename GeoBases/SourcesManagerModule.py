@@ -557,8 +557,7 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
 
 
 def is_in_path(command):
-    """
-    This checks if a command is in the PATH.
+    """This checks if a command is in the PATH.
     """
     path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
