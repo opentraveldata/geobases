@@ -1563,19 +1563,19 @@ class GeoBase(object):
         Now querying with simple indexes (dropping multiple index if it exists).
 
         >>> geo_o.dropIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', ('A',))],
         ...                     mode='and',
         ...                     verbose=True))
-        Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); ('A',)
+        Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); (('A',),)
         [(2, 'NCE')]
 
         Multiple index.
 
         >>> geo_o.addIndex(('iata_code', 'location_type'), verbose=False)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', 'A')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', ('A',))],
         ...                     mode='and',
         ...                     verbose=True))
-        Using index for ('iata_code', 'location_type'): value(s) ('NCE', 'A')
+        Using index for ('iata_code', 'location_type'): value(s) ('NCE', ('A',))
         [(2, 'NCE')]
 
         Mode "or" with index.
@@ -1596,7 +1596,7 @@ class GeoBase(object):
         Testing several conditions.
 
         >>> c_1 = [('city_code', 'PAR')]
-        >>> c_2 = [('location_type', 'H')]
+        >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
         18
         >>> len(list(geo_o.findWith(c_2)))
