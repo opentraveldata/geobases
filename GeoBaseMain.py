@@ -945,7 +945,7 @@ def panic_mode():
 # Global defaults
 PACKAGE_NAME = 'GeoBases3K'
 SCRIPT_NAME  = 'GeoBase'
-DESCRIPTION  = 'Data services and visualization'
+DESCRIPTION  = 'Data services and visualization - Python 3 version'
 
 # Sources manager
 S_MANAGER = SourcesManager()
