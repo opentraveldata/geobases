@@ -3,6 +3,22 @@
 
 """
 This module provides tools to administrate sources.
+
+Example::
+
+    >>> manager = SourcesManager()
+
+Get source information::
+
+    >>> manager.get('airlines')['paths'][0]
+    'Airlines/ori_airlines.csv'
+
+Get source full status::
+
+    >>> manager.full_status('airlines')
+    airlines:
+        delimiter: ^
+    ...
 """
 
 from __future__ import with_statement

@@ -108,6 +108,7 @@ def test_suite():
     tests.addTests(doctest.DocTestSuite(GeoG, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoU, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoL, optionflags=opt))
+    tests.addTests(doctest.DocTestSuite(GeoS, optionflags=opt))
 
     tests.addTests(doctest.DocFileSuite('../README.rst', optionflags=opt))
 
