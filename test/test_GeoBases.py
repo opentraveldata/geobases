@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 This module is the main launcher for tests.
-'''
+"""
 
 import unittest
 import doctest
@@ -25,11 +25,12 @@ if UPDIR not in sys.path:
 
 import GeoBases.GeoBaseModule    as GeoM
 import GeoBases.GeoUtils         as GeoU
+import GeoBases.SourcesManagerModule as GeoS
 
 
 class GeoBaseTest(unittest.TestCase):
-    '''This class tests the GeoBase class.
-    '''
+    """This class tests the GeoBase class.
+    """
     def setUp(self):
         self.g = GeoM.GeoBase(data='ori_por', verbose=False)
 
@@ -43,14 +44,16 @@ class GeoBaseTest(unittest.TestCase):
 
 
     def test_distance(self):
-        '''Test distance method.
-        '''
-        self.assertAlmostEqual(self.g.distance('ORY', 'CDG'), 34.8747, places=3)
+        """Test distance method.
+        """
+        self.assertAlmostEqual(self.g.distance('ORY', 'CDG'),
+                               34.8747,
+                               places=3)
 
 
 class GeoBaseFeedTest(unittest.TestCase):
-    '''This class tests the feed mode with line number indexation.
-    '''
+    """This class tests the feed mode with line number indexation.
+    """
     def setUp(self):
         self.g = GeoM.GeoBase('feed',
                               source=['A^2', 'B^3'],
@@ -76,9 +79,13 @@ class GeoBaseFeedTest(unittest.TestCase):
 
 
 def test_suite():
-    '''Create a test suite of all doctests.
-    '''
+    """Create a test suite of all doctests.
+    """
     tests = unittest.TestSuite()
+
+    # First: full restore to avoid interferences
+    manager = GeoS.SourcesManager()
+    manager.restore(clean_cache=True)
 
     # Adding unittests
     tests.addTests(unittest.makeSuite(GeoBaseTest))
@@ -100,6 +107,7 @@ def test_suite():
     # Adding doctests
     tests.addTests(doctest.DocTestSuite(GeoM, optionflags=opt, extraglobs=globsGeo))
     tests.addTests(doctest.DocTestSuite(GeoU, optionflags=opt))
+    tests.addTests(doctest.DocTestSuite(GeoS, optionflags=opt))
 
     tests.addTests(doctest.DocFileSuite('../README.rst', optionflags=opt))
 

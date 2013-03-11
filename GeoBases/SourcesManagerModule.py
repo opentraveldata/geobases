@@ -3,6 +3,22 @@
 
 """
 This module provides tools to administrate sources.
+
+Example::
+
+    >>> manager = SourcesManager()
+
+Get source information::
+
+    >>> manager.get('airlines')['paths'][0]
+    'Airlines/ori_airlines.csv'
+
+Get source full status::
+
+    >>> manager.full_status('airlines')
+    airlines:
+        delimiter: ^
+    ...
 """
 
 from __future__ import with_statement
@@ -557,8 +573,7 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
 
 
 def is_in_path(command):
-    """
-    This checks if a command is in the PATH.
+    """This checks if a command is in the PATH.
     """
     path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
