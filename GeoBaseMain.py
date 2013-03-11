@@ -110,8 +110,7 @@ def ask_till_ok(msg, allowed=None, show=True, is_ok=None, fail_message=None, boo
 
 
 def is_in_path(command):
-    """
-    This checks if a command is in the PATH.
+    """This checks if a command is in the PATH.
     """
     path = os.popen('which %s 2> /dev/null' % command, 'r').read()
 
