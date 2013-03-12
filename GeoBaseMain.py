@@ -1529,8 +1529,8 @@ def handle_args():
         This option defines the field used to compute weights
         when drawing graphs. Put "%s" (which will be None) not
         to use any fields, but just count the number of lines.
-        Default is "%s".
-        ''' % (DISABLE, DEF_GRAPH_WEIGHT)),
+        Default is counting the number of lines.
+        ''' % DISABLE),
         metavar = 'FIELD',
         default = DEF_GRAPH_WEIGHT)
 
@@ -1549,8 +1549,8 @@ def handle_args():
         help = dedent('''\
         This option defines the output directory for
         temporary files generated with --map and --graph.
-        Default is "%s".
-        ''' % DEF_OUTPUT_DIR),
+        Default is the current directory.
+        '''),
         metavar = 'DIR',
         default = DEF_OUTPUT_DIR)
 
