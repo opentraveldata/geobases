@@ -3510,7 +3510,7 @@ def render_templates(names, output, output_dir, json_name, verbose):
 
         assets = ASSETS[name]
 
-        for template, v_target in assets['template'].iteritems():
+        for template, v_target in assets['template'].items():
             target = op.join(output_dir, v_target % output)
 
             with open(template) as temp:
