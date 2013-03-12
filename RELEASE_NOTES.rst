@@ -7,6 +7,8 @@ V5
 
 + 5.0 :
 
+    + *CLI*: add ``-D/--output-dir`` option to configure directory output
+    + *API*: add ``output_dir`` option to ``visualize`` and ``graphVisualize``
     + *API*: split the cache directory for each source and each version
     + *API/CLI*: add possibility to update zsh autocomplete file
     + *CLI*: removed ``-u/--update`` and ``-U/--update-forced``, now available with ``-A/--admin``
