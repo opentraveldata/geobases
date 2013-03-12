@@ -58,6 +58,7 @@ even with ``('iata_code', 'location_type')`` key:
 
 
 
+import os
 import os.path as op
 import heapq
 from itertools import zip_longest, count, product
@@ -2799,6 +2800,7 @@ class GeoBase(object):
                        with_types=False,
                        from_keys=None,
                        output='example',
+                       output_dir=None,
                        verbose=True):
         """Graph display.
 
@@ -2814,6 +2816,8 @@ class GeoBase(object):
                 Default is ``False``, meaning untyped graphs.
         :param from_keys:   only display this iterable of keys if not None
         :param output:      set the name of the rendered files
+        :param output_dir:  set the directory of the rendered files, will \
+                be created if it does not exist
         :param verbose:     toggle verbosity
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
@@ -2826,8 +2830,14 @@ class GeoBase(object):
                                     directed=False,
                                     from_keys=from_keys)
 
+        # Handle output directory
+        if output_dir is None:
+            output_dir = ''
+        elif not op.isdir(output_dir):
+            os.makedirs(output_dir)
+
         # Dump the json geocodes
-        json_name = '%s_graph.json' % output
+        json_name = '%s_graph.json' % op.join(output_dir, output)
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
@@ -2839,12 +2849,13 @@ class GeoBase(object):
                 },
             }))
 
-        return ['graph'], render_templates(['graph'], output, json_name, verbose=verbose)
+        return ['graph'], render_templates(['graph'], output, output_dir, json_name, verbose=verbose)
 
 
 
     def visualize(self,
                   output='example',
+                  output_dir=None,
                   icon_label=None,
                   icon_weight=None,
                   icon_color=None,
@@ -2861,6 +2872,8 @@ class GeoBase(object):
         """Creates map and other visualizations.
 
         :param output:      set the name of the rendered files
+        :param output_dir:  set the directory of the rendered files, will \
+                be created if it does not exist
         :param icon_label:  set the field which will appear as map icons title
         :param icon_weight: set the field defining the map icons circle \
                 surface
@@ -2954,12 +2967,15 @@ class GeoBase(object):
                 '@' : 'yellow',
             }
 
-        if line_colors is None:
-            line_colors = 'blue', 'orange', 'yellow', 'purple'
+        # line colors
+        def_line_colors = 'blue', 'orange', 'yellow', 'purple'
 
-        if len(line_colors) != 4:
-            raise ValueError('line_colors must a tuple of 4 colors, was %s.' % \
-                             str(line_colors))
+        if line_colors is None:
+            line_colors = def_line_colors
+
+        if len(line_colors) != len(def_line_colors):
+            raise ValueError('line_colors must a tuple of %s colors, was %s.' % \
+                             (len(def_line_colors), str(line_colors)))
 
         # Storing json data
         data = [
@@ -3049,8 +3065,14 @@ class GeoBase(object):
         for elem in data:
             elem['__col__'] = categories[elem['__cat__']]['color']
 
+        # Handle output directory
+        if output_dir is None:
+            output_dir = ''
+        elif not op.isdir(output_dir):
+            os.makedirs(output_dir)
+
         # Dump the json geocodes
-        json_name = '%s_map.json' % output
+        json_name = '%s_map.json' % op.join(output_dir, output)
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
@@ -3083,7 +3105,7 @@ class GeoBase(object):
         else:
             rendered = ['table']
 
-        return rendered, render_templates(rendered, output, json_name, verbose=verbose)
+        return rendered, render_templates(rendered, output, output_dir, json_name, verbose=verbose)
 
 
 
@@ -3476,7 +3498,7 @@ ASSETS = {
 }
 
 
-def render_templates(names, output, json_name, verbose):
+def render_templates(names, output, output_dir, json_name, verbose):
     """Render HTML templates.
     """
     tmp_template = []
@@ -3488,19 +3510,20 @@ def render_templates(names, output, json_name, verbose):
 
         assets = ASSETS[name]
 
-        for template, v_target in assets['template'].items():
-            target = v_target % output
+        for template, v_target in assets['template'].iteritems():
+            target = op.join(output_dir, v_target % output)
 
             with open(template) as temp:
                 with open(target, 'w') as out:
                     for row in temp:
                         row = row.replace('{{file_name}}', output)
-                        row = row.replace('{{json_file}}', json_name)
+                        row = row.replace('{{json_file}}', op.basename(json_name))
                         out.write(row)
 
             tmp_template.append(target)
 
         for source, target in assets['static'].items():
+            target = op.join(output_dir, target)
             copy(source, target)
             tmp_static.append(target)
 
