@@ -7,59 +7,59 @@ V5
 
 + 5.0 :
 
-    + API: split the cache directory for each source and each version
-    + API/CLI: add possibility to update zsh autocomplete file
-    + CLI: removed ``-u/--update`` and ``-U/--update-forced``, now available with ``-A/--admin``
-    + API: empty delimiter is accepted, and means we split on every char
-    + API: ``__gar__`` special attribute no longer flatten uncollected data (now a list)
-    + API: getLocation has a new *default* keyword argument to avoid key failure
-    + CLI: learning mode with ``-a/--ask`` to learn of the CLI works
-    + CLI: admin mode with ``-A/--admin`` to configure sources (persistent changes)
-    + CLI: ``-A/--any`` is now ``-O/--or`` to control multiple ``--exact`` filters behavior
-    + CLI: possibility to add a join clause on multiple fields with new ``-i`` argument (and possibility to ``--show`` it)
-    + API: Added map visualization possibilities on join clauses (another arg. for ``-M`` on CLI)
-    + API: new ``-S/--show-additional`` method to add fields to the current display
-    + API: new getJoinBase method to give access to external base properties
-    + CLI: cache fields analysis to speed up quiet mode
-    + CLI: properly flatten all nested structure in quiet mode
-    + CLI: possibility to show external fields from ``--show`` using ``field:external_field`` syntax
-    + CLI: display join fields wih a different color
-    + API: autoreference for autojoin to avoid loading ori_por twice
-    + API: new ``hasJoin`` method
-    + CLI: possibility to add subdelimiters and join clauses with ``header{base:field}{subdel}`` syntax
-    + API: multiple join clause implementation on multiple fields, integrated with subdelimiters
-    + API: subdelimiters are no longer filled with ``None``
-    + API: new ``updateIndex`` and ``updateGrid`` methods
-    + API: ``addIndex`` does not update index, ``addGrid`` does not update grid
-    + API/CLI: cache directory instead of local directory for download and extraction
-    + API: allow ``paths`` as *GeoBase* init argument (same behavior as configuration file)
-    + CLI: configure graph weight with ``-W/--graph-weight`` for CLI
-    + API/CLI: typing system when graph building, ``-w/--with-types`` to toggle from CLI
-    + CLI: if available, launch *google-chrome* instead of firefox for HTML display
-    + CLI: ``--graph`` and ``--graph-fields`` to draw graphs
-    + API: add graph visualization with ``graphVisualize``
-    + API: handle local and remote archives as sources
-    + API: make ``addGrid`` and ``dropGrid`` public methods to allow geographical re-indexation
-    + API: HTTP failover in configuration file
-    + API: simpler bash maintenance script now that skip is handled during loading
-    + API: add ``skip`` directive to skip first lines
-    + CLI: display sources and examples on ``--help``
-    + CLI: display tips on ``--verbose`` when stdin data
-    + CLI: ``-I`` is now slightly different, default is exact search on a default field (no longer key search, use ``__key__`` for that)
-    + CLI: clever autocomplete for zsh on displayed fields for the different options
-    + API: new ``fuzzyClean`` and ``phonemes`` static methods
-    + API: possiblity to draw on the map things that are not in the *GeoBase*
-    + API: urls input for YAML configuration
-    + API: new ``loaded`` attribute to describe loaded data, depends on ``source`` and ``paths``
-    + API: accepts list of paths in configuration file, failover mechanism
-    + API: make a difference between source at ``__init__`` and path in YAML file
-    + API/CLI: phonetic searches with dmetaphone (``-p/-P/-y`` for CLI)
-    + CLI: ``-w/--warnings`` is now ``-v/--verbose,`` ``-v/--version`` is ``-V/--version,`` ``-g/--gridless`` is ``-d/--disable-grid``
-    + API: more tests
-    + API: consistent verbosity handling
-    + API: multiple index possibility on every field with ``addIndex``, ``dropIndex``, ``hasIndex`` (use ``-i`` for CLI)
-    + API: line number indexation when ``key_fields`` is ``None``
-    + API: changes in methods names for better consistency, ``find*`` (iterating through data) vs ``get*`` (fetching information)
+    + *API*: split the cache directory for each source and each version
+    + *API/CLI*: add possibility to update zsh autocomplete file
+    + *CLI*: removed ``-u/--update`` and ``-U/--update-forced``, now available with ``-A/--admin``
+    + *API*: empty delimiter is accepted, and means we split on every char
+    + *API*: ``__gar__`` special attribute no longer flatten uncollected data (now a list)
+    + *API*: getLocation has a new *default* keyword argument to avoid key failure
+    + *CLI*: learning mode with ``-a/--ask`` to learn of the CLI works
+    + *CLI*: admin mode with ``-A/--admin`` to configure sources (persistent changes)
+    + *CLI*: ``-A/--any`` is now ``-O/--or`` to control multiple ``--exact`` filters behavior
+    + *CLI*: possibility to add a join clause on multiple fields with new ``-i`` argument (and possibility to ``--show`` it)
+    + *API*: Added map visualization possibilities on join clauses (another arg. for ``-M`` on CLI)
+    + *API*: new ``-S/--show-additional`` method to add fields to the current display
+    + *API*: new getJoinBase method to give access to external base properties
+    + *CLI*: cache fields analysis to speed up quiet mode
+    + *CLI*: properly flatten all nested structure in quiet mode
+    + *CLI*: possibility to show external fields from ``--show`` using ``field:external_field`` syntax
+    + *CLI*: display join fields wih a different color
+    + *API*: autoreference for autojoin to avoid loading ori_por twice
+    + *API*: new ``hasJoin`` method
+    + *CLI*: possibility to add subdelimiters and join clauses with ``header{base:field{subdel}`` syntax
+    + *API*: multiple join clause implementation on multiple fields, integrated with subdelimiters
+    + *API*: subdelimiters are no longer filled with ``None``
+    + *API*: new ``updateIndex`` and ``updateGrid`` methods
+    + *API*: ``addIndex`` does not update index, ``addGrid`` does not update grid
+    + *API/CLI*: cache directory instead of local directory for download and extraction
+    + *API*: allow ``paths`` as *GeoBase* init argument (same behavior as configuration file)
+    + *CLI*: configure graph weight with ``-W/--graph-weight`` for CLI
+    + *API/CLI*: typing system when graph building, ``-w/--with-types`` to toggle from CLI
+    + *CLI*: if available, launch *google-chrome* instead of firefox for HTML display
+    + *CLI*: ``--graph`` and ``--graph-fields`` to draw graphs
+    + *API*: add graph visualization with ``graphVisualize``
+    + *API*: handle local and remote archives as sources
+    + *API*: make ``addGrid`` and ``dropGrid`` public methods to allow geographical re-indexation
+    + *API*: HTTP failover in configuration file
+    + *API*: simpler bash maintenance script now that skip is handled during loading
+    + *API*: add ``skip`` directive to skip first lines
+    + *CLI*: display sources and examples on ``--help``
+    + *CLI*: display tips on ``--verbose`` when stdin data
+    + *CLI*: ``-I`` is now slightly different, default is exact search on a default field (no longer key search, use ``__key__`` for that)
+    + *CLI*: clever autocomplete for zsh on displayed fields for the different options
+    + *API*: new ``fuzzyClean`` and ``phonemes`` static methods
+    + *API*: possiblity to draw on the map things that are not in the *GeoBase*
+    + *API*: urls input for YAML configuration
+    + *API*: new ``loaded`` attribute to describe loaded data, depends on ``source`` and ``paths``
+    + *API*: accepts list of paths in configuration file, failover mechanism
+    + *API*: make a difference between source at ``__init__`` and path in YAML file
+    + *API/CLI*: phonetic searches with dmetaphone (``-p/-P/-y`` for CLI)
+    + *CLI*: ``-w/--warnings`` is now ``-v/--verbose,`` ``-v/--version`` is ``-V/--version,`` ``-g/--gridless`` is ``-d/--disable-grid``
+    + *API*: more tests
+    + *API*: consistent verbosity handling
+    + *API*: multiple index possibility on every field with ``addIndex``, ``dropIndex``, ``hasIndex`` (use ``-i`` for CLI)
+    + *API*: line number indexation when ``key_fields`` is ``None``
+    + *API*: changes in methods names for better consistency, ``find*`` (iterating through data) vs ``get*`` (fetching information)
 
 V4
 ==
@@ -108,7 +108,7 @@ V3
 + 3.27 : adding two new data source
 + 3.26 : autocomplete file is generated with Rake and reading YAML conf
 + 3.25 : added sub delimiters options; some refactoring
-+ 3.24 : added ``--version`` for CLI; new option *limit* in conf to partially load the file
++ 3.24 : added ``--version``, new option *limit* in conf to partially load the file
 + 3.23 : added partial autocomplete support for CLI
 + 3.22 : added new base for geonames_head and geonames_full, and lines tracking when loading
 + 3.21 : added new base for ori_por (and multi version)
@@ -144,7 +144,7 @@ V2
 V1
 ==
 
-+ 1.0  : API changes: unification of grid and not grid methods
++ 1.0  : unification of grid and not grid methods for geographical searches
 
 
 V0
