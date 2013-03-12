@@ -485,13 +485,25 @@ def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
         print delim.join(l)
 
 
-def display_browser(templates, nb_res):
+def display_browser(templates, output_dir, nb_res):
     """Display templates in the browser.
     """
+    # Save current working directory
+    previous_wd = os.getcwd()
+
+    if not output_dir:
+        output_dir = '.'
+
+    # Moving where files are
+    os.chdir(output_dir)
+
     # We manually launch browser, unless we risk a crash
     to_be_launched = []
 
     for template in templates:
+        # Getting relative path for current working dir
+        template = op.relpath(template, output_dir)
+
         if template.endswith('_table.html'):
             if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
@@ -512,6 +524,11 @@ def display_browser(templates, nb_res):
         urls = ['%s:%s/%s' % (ADDRESS, PORT, tpl) for tpl in to_be_launched]
         os.system('%s %s 2>/dev/null &' % (BROWSER, ' '.join(urls)))
 
+    # Serving the output_dir, where we are
+    launch_http_server(ADDRESS, PORT)
+
+    # Moving back
+    os.chdir(previous_wd)
 
 
 def launch_http_server(address, port):
@@ -1512,8 +1529,8 @@ def handle_args():
         This option defines the field used to compute weights
         when drawing graphs. Put "%s" (which will be None) not
         to use any fields, but just count the number of lines.
-        Default is "%s".
-        ''' % (DISABLE, DEF_GRAPH_WEIGHT)),
+        Default is counting the number of lines.
+        ''' % DISABLE),
         metavar = 'FIELD',
         default = DEF_GRAPH_WEIGHT)
 
@@ -1532,8 +1549,8 @@ def handle_args():
         help = dedent('''\
         This option defines the output directory for
         temporary files generated with --map and --graph.
-        Default is "%s".
-        ''' % DEF_OUTPUT_DIR),
+        Default is the current directory.
+        '''),
         metavar = 'DIR',
         default = DEF_OUTPUT_DIR)
 
@@ -2831,8 +2848,7 @@ def main():
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
-            display_browser(templates, nb_res)
-            launch_http_server(ADDRESS, PORT)
+            display_browser(templates, output_dir, nb_res)
 
         if 'map' not in rendered:
             # Happens if you try to use --map
@@ -2855,8 +2871,7 @@ def main():
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
-            display_browser(templates, nb_res)
-            launch_http_server(ADDRESS, PORT)
+            display_browser(templates, output_dir, nb_res)
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
