@@ -45,7 +45,7 @@ V5
     + *API*: add ``skip`` directive to skip first lines
     + *CLI*: display sources and examples on ``--help``
     + *CLI*: display tips on ``--verbose`` when stdin data
-    + *CLI*: ``-I`` is now slightly different, default is exact search on a default field (no longer key search, use ``__key__`` for that)
+    + *CLI*: change for ``-I``, default is exact search on a default field (no longer key search, use ``__key__`` for that)
     + *CLI*: clever autocomplete for zsh on displayed fields for the different options
     + *API*: new ``fuzzyClean`` and ``phonemes`` static methods
     + *API*: possiblity to draw on the map things that are not in the *GeoBase*
@@ -54,7 +54,7 @@ V5
     + *API*: accepts list of paths in configuration file, failover mechanism
     + *API*: make a difference between source at ``__init__`` and path in YAML file
     + *API/CLI*: phonetic searches with dmetaphone (``-p/-P/-y`` for CLI)
-    + *CLI*: ``-w/--warnings`` is now ``-v/--verbose,`` ``-v/--version`` is ``-V/--version,`` ``-g/--gridless`` is ``-d/--disable-grid``
+    + *CLI*: ``-w/--warnings => -v/--verbose``, ``-v/--version => -V/--version``, ``-g/--gridless => -d/--disable-grid``
     + *API*: more tests
     + *API*: consistent verbosity handling
     + *API*: multiple index possibility on every field with ``addIndex``, ``dropIndex``, ``hasIndex`` (use ``-i`` for CLI)
@@ -85,8 +85,8 @@ V4
 + 4.5  : big icons system, legend and lines buttons
 + 4.4  : map coloring system with third option of ``-M``
 + 4.3  : SimpleHTTPServer is now used to serve html files
-+ 4.2  : ``-I`` (uppercase i)option now accepts arguments to support different fields on input, and exact or fuzzy
-+ 4.1  : map update with circle drawings from any field with ``-M,`` new ``-Q`` header control
++ 4.2  : ``-I`` (uppercase ``i``) option now accepts arguments to support different fields on input, and exact or fuzzy
++ 4.1  : map update with circle drawings from any field with ``-M`` new ``-Q`` header control
 + 4.0  : ori_por major update with correct city_names and full deduplication
 
 V3
