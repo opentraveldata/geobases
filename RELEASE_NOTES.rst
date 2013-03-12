@@ -7,7 +7,7 @@ V5
 
 + 5.0 :
 
-    + API: split the cache directory for each source
+    + API: split the cache directory for each source and each version
     + API/CLI: add possibility to update zsh autocomplete file
     + CLI: removed -u/--update and -U/--update-forced, now available with -A/--admin
     + API: empty delimiter is accepted, and means we split on every char
