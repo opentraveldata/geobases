@@ -484,7 +484,7 @@ You will also find a `Rakefile <http://rake.rubyforge.org/>`_ at the
 root of the project. This can be used to build and deploy the packages.
 Deployment can be done using webdav, and the Rakefile expects ``nd`` to be
 installed (this is a webdav client).
-To install ``nd``, fetch the `sources <http://www.gohome.org/nd/>`_ and compile them.
+To install ``nd``, fetch the `sources https://launchpad.net/ubuntu/+source/nd/0.8.2-2`_ and compile them.
 
 Virtualenv still has some bugs on 64 bits systems, if you are using such a system,
 you absolutely need to upgrade to the very last unreleased version of
