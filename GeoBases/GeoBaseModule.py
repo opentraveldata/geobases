@@ -2797,8 +2797,8 @@ class GeoBase(object):
                                     from_keys=from_keys)
 
         # Handle output directory
-        if output_dir is None:
-            output_dir = ''
+        if not output_dir:
+            output_dir = '.'
         elif not op.isdir(output_dir):
             os.makedirs(output_dir)
 
@@ -3032,8 +3032,8 @@ class GeoBase(object):
             elem['__col__'] = categories[elem['__cat__']]['color']
 
         # Handle output directory
-        if output_dir is None:
-            output_dir = ''
+        if not output_dir:
+            output_dir = '.'
         elif not op.isdir(output_dir):
             os.makedirs(output_dir)
 
