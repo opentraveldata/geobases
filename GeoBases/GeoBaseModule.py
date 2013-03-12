@@ -2920,12 +2920,15 @@ class GeoBase(object):
                 '@' : 'yellow',
             }
 
-        if line_colors is None:
-            line_colors = 'blue', 'orange', 'yellow', 'purple'
+        # line colors
+        def_line_colors = 'blue', 'orange', 'yellow', 'purple'
 
-        if len(line_colors) != 4:
-            raise ValueError('line_colors must a tuple of 4 colors, was %s.' % \
-                             str(line_colors))
+        if line_colors is None:
+            line_colors = def_line_colors
+
+        if len(line_colors) != len(def_line_colors):
+            raise ValueError('line_colors must a tuple of %s colors, was %s.' % \
+                             (len(def_line_colors), str(line_colors)))
 
         # Storing json data
         data = [
