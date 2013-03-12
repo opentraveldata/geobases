@@ -1037,6 +1037,9 @@ BROWSER = 'firefox'
 if is_in_path('google-chrome'):
     BROWSER = 'google-chrome'
 
+# For temporary files
+DEF_OUTPUT_DIR = None
+
 # Defaults for map
 DEF_LABEL_FIELDS     = ('name',       'country_name', '__key__')
 DEF_WEIGHT_FIELDS    = ('page_rank',  'population',   None)
@@ -1524,6 +1527,15 @@ def handle_args():
         nodes.
         '''),
         action = 'store_true')
+
+    parser.add_argument('-D', '--output-dir',
+        help = dedent('''\
+        This option defines the output directory for
+        temporary files generated with --map and --graph.
+        Default is "%s".
+        ''' % DEF_OUTPUT_DIR),
+        metavar = 'DIR',
+        default = DEF_OUTPUT_DIR)
 
     parser.add_argument('-v', '--verbose',
         help = dedent('''\
@@ -2468,6 +2480,12 @@ def main():
     if args['phonetic_field'] is None or args['phonetic_field'] == SKIP:
         args['phonetic_field'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
+    # Temporary file folder
+    output_dir = DEF_OUTPUT_DIR
+
+    if args['output_dir'] != SKIP:
+        output_dir = args['output_dir']
+
     # Reading map options
     icon_label       = best_field(DEF_LABEL_FIELDS,  g.fields)
     icon_weight      = best_field(DEF_WEIGHT_FIELDS, g.fields)
@@ -2792,6 +2810,7 @@ def main():
     # Display
     if frontend == 'map':
         visu_info = g.visualize(output=g.data,
+                                output_dir=output_dir,
                                 icon_label=icon_label,
                                 icon_weight=icon_weight,
                                 icon_color=icon_color,
@@ -2827,6 +2846,7 @@ def main():
                                      with_types=args['with_types'],
                                      from_keys=ex_keys(res),
                                      output=g.data,
+                                     output_dir=output_dir,
                                      verbose=verbose)
 
         rendered, (templates, _) = visu_info
