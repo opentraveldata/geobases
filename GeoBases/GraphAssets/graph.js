@@ -232,7 +232,7 @@ function initialize(jsonData) {
                 tip.innerHTML = "" +
                     "<div class=\"tip-title\">{0}</div>".fmt(node.name) +
                     "<div class=\"tip-text\"><b>Weight</b> {0}</div>".fmt(node.data.weight) +
-                    "<div class=\"tip-text\"><b>Types</b> {0}</div>".fmt(node.data.types) +
+                    "<div class=\"tip-text\"><b>Type(s)</b> {0}</div>".fmt(node.data.types) +
                     "<div class=\"tip-text\"><b>{0} link(s):</b> [link w.] node (node w.){1}</div>".fmt(count, html);
             }
         },
