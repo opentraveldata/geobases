@@ -438,7 +438,7 @@ Reading data input on stdin:
 
  $ echo -e 'ORY^Orly\nCDG^Charles' | GeoBase
 
-Display on map:
+Display on a map:
 
 .. code-block:: bash
 
