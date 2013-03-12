@@ -345,12 +345,12 @@ Map display
  > Affecting category None     to color blue    | volume 3190
  <BLANKLINE>
  * Now you may use your browser to visualize:
- example_map.html example_table.html
+ ./example_map.html ./example_table.html
  <BLANKLINE>
  * If you want to clean the temporary files:
- rm example_map.json ...
+ rm ./example_map.json ...
  <BLANKLINE>
- (['map', 'table'], (['example_map.html', 'example_table.html'], ['example_map.json', ...]))
+ (['map', 'table'], (['./example_map.html', './example_table.html'], ['./example_map.json', ...]))
 
 .. figure:: https://raw.github.com/opentraveldata/geobases/public/examples/GeoBases-map-circles.png
    :align: center
