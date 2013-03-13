@@ -2294,10 +2294,10 @@ class GeoBase(object):
          'lat',
          'lng',
          '__gar__']
-        >>> geo_t.set('frnic', new_field='Nice Gare SNCF')
 
         Fields synchronisation, common fields for all keys.
 
+        >>> geo_t.set('frnic', new_field='Nice Gare SNCF')
         >>> geo_t.syncFields(mode='all')
         >>> pprint(geo_t.fields) # did not change, except order
         ['__dup__',
