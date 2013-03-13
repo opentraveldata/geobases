@@ -2411,7 +2411,7 @@ class GeoBase(object):
         self._things[key] = data
 
 
-    def _updateFields(self, field):
+    def updateFields(self, field):
         """Update fields list.
 
         :param field: the field to add
