@@ -2429,28 +2429,74 @@ class GeoBase(object):
         :param sort: sort the fields found
         :returns:    ``None``
 
-        >>> geo_t.fields
-        ['__key__', '__dup__', '__par__', '__lno__', 'code', 'lines@raw', 'lines', 'name', 'info', 'lat', 'lng', '__gar__']
+        >>> from pprint import pprint
+        >>> pprint(geo_t.fields)
+        ['__key__',
+         '__dup__',
+         '__par__',
+         '__lno__',
+         'code',
+         'lines@raw',
+         'lines',
+         'name',
+         'info',
+         'lat',
+         'lng',
+         '__gar__']
         >>> geo_t.set('frnic', new_field='Nice Gare SNCF')
 
         Fields synchronisation, common fields for all keys.
 
         >>> geo_t.syncFields(mode='all')
-        >>> geo_t.fields # did not change, except order
-        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name']
+        >>> pprint(geo_t.fields) # did not change, except order
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name']
 
         Fields synchronisation, all fields for all keys.
 
         >>> geo_t.syncFields(mode='any')
-        >>> geo_t.fields # notice the new field 'new_field'
-        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name', 'new_field']
+        >>> pprint(geo_t.fields) # notice the new field 'new_field'
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name',
+         'new_field']
 
         Restore previous state, drop new field and synchronize fields again.
 
         >>> geo_t.delete('frnic', 'new_field')
         >>> geo_t.syncFields()
-        >>> geo_t.fields
-        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name']
+        >>> pprint(geo_t.fields)
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name']
         """
         if mode not in ('all', 'any'):
             raise ValueError('mode shoud be in %s, was "%s".' % \
