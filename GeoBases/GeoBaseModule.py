@@ -3595,14 +3595,15 @@ def ext_split(value, split):
     if split is None:
         return value
 
+    # Python split function has ''.split(';') -> ['']
+    # But in this case we prefer having [] as a result
+    # Also, this handles None cases, where data is missing
+    if not value:
+        return ()
+
     if split == '':
         # Here we convert a string like 'CA' into ('C', 'A')
         return tuple(value)
-
-    # Python split function has ''.split(';') -> ['']
-    # But in this case we prefer having [] as a result
-    if not value:
-        return ()
 
     return tuple(value.split(split))
 
