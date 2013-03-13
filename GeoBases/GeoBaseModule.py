@@ -2417,19 +2417,43 @@ class GeoBase(object):
         """
         Iterate through the collection to look for all available fields.
         Then affect the result to ``self.fields``.
+
         If you execute this method, be aware that fields order may
         change depending on how dictionaries return their keys.
         To have better consistency, we automatically sort the found
-        fields.
+        fields. You can change this behavior with the ``sort`` parameter.
 
         :param mode: ``'all'`` or ``'any'``, ``'all'`` will look for \
-                fields shared by all keys, ``'any'`` will look for fields \
-                shared by at least one key
+                fields shared by all keys, ``'any'`` will look for all \
+                fields from all keys
         :param sort: sort the fields found
         :returns:    ``None``
+
+        >>> geo_t.fields
+        ['__key__', '__dup__', '__par__', '__lno__', 'code', 'lines@raw', 'lines', 'name', 'info', 'lat', 'lng', '__gar__']
+        >>> geo_t.set('frnic', new_field='Nice Gare SNCF')
+
+        Fields synchronisation, common fields for all keys.
+
+        >>> geo_t.syncFields(mode='all')
+        >>> geo_t.fields # did not change, except order
+        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name']
+
+        Fields synchronisation, all fields for all keys.
+
+        >>> geo_t.syncFields(mode='any')
+        >>> geo_t.fields # notice the new field 'new_field'
+        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name', 'new_field']
+
+        Restore previous state, drop new field and synchronize fields again.
+
+        >>> geo_t.delete('frnic', 'new_field')
+        >>> geo_t.syncFields()
+        >>> geo_t.fields
+        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'info', 'lat', 'lines', 'lines@raw', 'lng', 'name']
         """
         if mode not in ('all', 'any'):
-            raise ValueError('mode shoud be in %s, was %s' % \
+            raise ValueError('mode shoud be in %s, was "%s".' % \
                              (str(('all', 'any')), mode))
 
         if mode == 'any':
