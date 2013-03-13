@@ -572,7 +572,7 @@ class GeoBase(object):
 
         Now we add a new key to the data.
 
-        >>> geo_o.setFromDict('NEW_KEY_2', {
+        >>> geo_o.set('NEW_KEY_2', **{
         ...     'iata_code' : 'NCE',
         ... })
 
@@ -1059,7 +1059,7 @@ class GeoBase(object):
 
         Now we add a new key to the data.
 
-        >>> geo_t.setFromDict('NEW_KEY_3', {
+        >>> geo_t.set('NEW_KEY_3', **{
         ...     'lat' : '45.152',
         ...     'lng' : '1.528',
         ... })
@@ -2419,26 +2419,26 @@ class GeoBase(object):
         self._things[key] = kwargs
 
 
-    def set(self, key, field=None, value=None, update_fields=False):
+
+    def set(self, key, **kwargs):
         """Method to manually change a value in the base.
 
-        :param key:   the key we want to change a value of
-        :param field: the concerned field, like ``'name'``
-        :param value: the new value
-        :param update_fields: boolean to toggle general fields updating \
-                or not after data update
-        :returns:     ``None``
+        :param key:     the key we want to change a value of
+        :param kwargs:  the keyword arguments containing new data
+        :returns:      ``None``
+
+        Here are a few examples.
 
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
-        >>> geo_t.set('frnic', 'name', 'Nice Gare SNCF')
+        >>> geo_t.set('frnic', name='Nice Gare SNCF')
         >>> geo_t.get('frnic', 'name')
         'Nice Gare SNCF'
-        >>> geo_t.set('frnic', 'name', 'Nice-Ville') # tearDown
+        >>> geo_t.set('frnic', name='Nice-Ville') # tearDown
 
         We may even add new fields.
 
-        >>> geo_t.set('frnic', 'new_field', 'some_value')
+        >>> geo_t.set('frnic', new_field='some_value')
         >>> geo_t.get('frnic', 'new_field')
         'some_value'
 
@@ -2448,32 +2448,8 @@ class GeoBase(object):
         >>> geo_t.get('NEW_KEY_1')
         {'__gar__': [], ..., '__lno__': 0, '__key__': 'NEW_KEY_1'}
         >>> geo_t.delete('NEW_KEY_1') # tearDown
-        """
-        # If the key is not in the base, we add it
-        if key not in self:
-            self._things[key] = self._emptyData(key, lno=0)
 
-        if field is not None:
-            # field cannot be None, None is used to get all fields
-            self._things[key][field] = value
-
-            if update_fields:
-                # If the field was not in the headers we add it
-                self._updateFields(field)
-
-
-    def setFromDict(self, key, dictionary, update_fields=False):
-        """
-        Same as ``set`` method, except we perform
-        the input with a whole dictionary.
-
-        :param key:         the key we want to change a value of
-        :param dictionary:  the dict containing the new data
-        :param update_fields: boolean to toggle general fields updating \
-                or not after data update
-        :returns:           ``None``
-
-        Let's take an empty base.
+        Examples with an empty base.
 
         >>> geo_f.keys()
         []
@@ -2484,20 +2460,14 @@ class GeoBase(object):
         ...     'code' : 'frnic',
         ...     'name' : 'Nice',
         ... }
-        >>> geo_f.setFromDict('frnic', d)
+        >>> geo_f.set('frnic', **d)
         >>> geo_f.keys()
         ['frnic']
         >>> geo_f.get('frnic', 'name')
         'Nice'
 
-        Here the base fields did not change.
+        The base fields are automatically updated when setting data.
 
-        >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
-
-        How to automatically update the base fields when setting data.
-
-        >>> geo_f.setFromDict('frnic', d, update_fields=True)
         >>> geo_f.fields
         ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'code', 'name']
         """
@@ -2505,14 +2475,10 @@ class GeoBase(object):
         if key not in self:
             self._things[key] = self._emptyData(key, lno=0)
 
-        if None in dictionary:
-            raise ValueError('None is not accepted as field (in %s).' % dictionary)
+        self._things[key].update(kwargs)
 
-        self._things[key].update(dictionary)
-
-        if update_fields:
-            for field in dictionary:
-                self._updateFields(field)
+        for field in kwargs:
+            self._updateFields(field)
 
 
 
@@ -2530,7 +2496,7 @@ class GeoBase(object):
 
         How to reverse the delete if data has been stored:
 
-        >>> geo_t.setFromDict('frxrn', data)
+        >>> geo_t.set('frxrn', **data)
         >>> geo_t.get('frxrn', 'name')
         'Redon'
 
@@ -2545,7 +2511,7 @@ class GeoBase(object):
 
         And put it back again.
 
-        >>> geo_t.set('frxrn', 'lat', '47.65179')
+        >>> geo_t.set('frxrn', lat='47.65179')
         >>> geo_t.get('frxrn', 'lat')
         '47.65179'
         """
