@@ -893,6 +893,8 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
+        # We do not use the field synchronisation method to gain speed
+        # and to preserve a consistent order of first (from headers)
         self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
