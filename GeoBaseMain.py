@@ -2492,7 +2492,11 @@ def main():
     if args['exact_field'] is None or args['exact_field'] == SKIP:
         args['exact_field'] = best_field(DEF_EXACT_FIELDS, g.fields)
 
-    exact_fields = args['exact_field'].split(SPLIT)
+    if args['exact_field'] is None:
+        # Can happen if no match with best_field (happens with data="feed")
+        exact_fields = None
+    else:
+        exact_fields = args['exact_field'].split(SPLIT)
 
     if args['fuzzy_field'] is None or args['fuzzy_field'] == SKIP:
         args['fuzzy_field'] = best_field(DEF_FUZZY_FIELDS, g.fields)
