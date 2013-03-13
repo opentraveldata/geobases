@@ -865,7 +865,7 @@ class GeoBase(object):
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
-                self._resetData(key, **data)
+                self._resetData(key, data)
 
             else:
                 if discard_dups is False:
@@ -881,7 +881,7 @@ class GeoBase(object):
                     # We add the dup_key as a new duplicate,
                     # store the duplicate in the main structure
                     self.get(key, '__dup__').append(dup_key)
-                    self._resetData(dup_key, **data)
+                    self._resetData(dup_key, data)
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
@@ -2409,14 +2409,15 @@ class GeoBase(object):
             self.fields.append(field)
 
 
-    def _resetData(self, key, **kwargs):
-        """Reset key entry with keyword arguments.
+    def _resetData(self, key, data):
+        """Reset key entry with dictionary of data.
 
         This method is hidden, because there if no check on
-        fields types, and no check on arguments formatting, which
-        may lack the special fields like __key__ or __lno__.
+        fields types, and no check on data, which may lack
+        the special fields like __key__ or __lno__, or
+        contain illegal fields like ``None``.
         """
-        self._things[key] = kwargs
+        self._things[key] = data
 
 
 
