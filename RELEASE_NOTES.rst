@@ -7,6 +7,8 @@ V5
 
 + 5.0 :
 
+    + *API*: new ``syncFields`` method to synchronize global fields from underlying data
+    + *API*: ``set`` and ``setFromDict`` have been combined into one ``set`` method, using the keyword argument syntax
     + *CLI*: add ``-D/--output-dir`` option to configure directory output
     + *API*: add ``output_dir`` option to ``visualize`` and ``graphVisualize``
     + *API*: split the cache directory for each source and each version

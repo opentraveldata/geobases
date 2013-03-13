@@ -47,9 +47,6 @@ even with ``('iata_code', 'location_type')`` key:
     In skipped zone, dropping line 1: "iata_code...".
     /!\ [lno ...] CRK+C is duplicated #1, first found lno ...: creation of ...
     /!\ [lno ...] EAP+C is duplicated #1, first found lno ...: creation of ...
-    /!\ [lno ...] EAP+C is duplicated #2, first found lno ...: creation of ...
-    /!\ [lno ...] EAP+C is duplicated #3, first found lno ...: creation of ...
-    /!\ [lno ...] EAP+C is duplicated #4, first found lno ...: creation of ...
     /!\ [lno ...] OSF+C is duplicated #1, first found lno ...: creation of ...
     /!\ [lno ...] RDU+C is duplicated #1, first found lno ...: creation of ...
     Import successful from ...
@@ -282,7 +279,7 @@ class GeoBase(object):
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
-        self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+        self.fields = []
         self.data   = data
         self.loaded = None # loaded stuff information, depends on sources and paths
 
@@ -618,7 +615,7 @@ class GeoBase(object):
 
         Now we add a new key to the data.
 
-        >>> geo_o.setFromDict('NEW_KEY_2', {
+        >>> geo_o.set('NEW_KEY_2', **{
         ...     'iata_code' : 'NCE',
         ... })
 
@@ -911,7 +908,7 @@ class GeoBase(object):
 
             # No duplicates ever, we will erase all data after if it is
             if key not in self:
-                self._createFromDict(key, data)
+                self._resetData(key, data)
 
             else:
                 if discard_dups is False:
@@ -927,7 +924,7 @@ class GeoBase(object):
                     # We add the dup_key as a new duplicate,
                     # store the duplicate in the main structure
                     self.get(key, '__dup__').append(dup_key)
-                    self._createFromDict(dup_key, data)
+                    self._resetData(dup_key, data)
 
                     if verbose:
                         print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
@@ -939,6 +936,8 @@ class GeoBase(object):
 
 
         # We remove None headers, which are not-loaded-columns
+        # We do not use the field synchronisation method to gain speed
+        # and to preserve a consistent order of first (from headers)
         self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
@@ -2253,36 +2252,148 @@ class GeoBase(object):
                 yield phonemes, key
 
 
-    def _updateFields(self, field):
-        """Update fields list.
 
-        :param field: the field to add
-        :returns:     ``None``
+    def _resetData(self, key, data):
+        """Reset key entry with dictionary of data.
+
+        This method is hidden, because there if no check on
+        fields types, and no check on data, which may lack
+        the special fields like __key__ or __lno__, or
+        contain illegal fields like ``None``.
         """
-        if field not in self.fields:
-            self.fields.append(field)
+        self._things[key] = data
 
 
-    def set(self, key, field=None, value=None, update_fields=False):
+    def syncFields(self, mode='all', sort=True):
+        """
+        Iterate through the collection to look for all available fields.
+        Then affect the result to ``self.fields``.
+
+        If you execute this method, be aware that fields order may
+        change depending on how dictionaries return their keys.
+        To have better consistency, we automatically sort the found
+        fields. You can change this behavior with the ``sort`` parameter.
+
+        :param mode: ``'all'`` or ``'any'``, ``'all'`` will look for \
+                fields shared by all keys, ``'any'`` will look for all \
+                fields from all keys
+        :param sort: sort the fields found
+        :returns:    ``None``
+
+        >>> from pprint import pprint
+        >>> pprint(geo_t.fields)
+        ['__key__',
+         '__dup__',
+         '__par__',
+         '__lno__',
+         'code',
+         'lines@raw',
+         'lines',
+         'name',
+         'info',
+         'lat',
+         'lng',
+         '__gar__']
+        >>> geo_t.set('frnic', new_field='Nice Gare SNCF')
+
+        Fields synchronisation, common fields for all keys.
+
+        >>> geo_t.syncFields(mode='all')
+        >>> pprint(geo_t.fields) # did not change, except order
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name']
+
+        Fields synchronisation, all fields for all keys.
+
+        >>> geo_t.syncFields(mode='any')
+        >>> pprint(geo_t.fields) # notice the new field 'new_field'
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name',
+         'new_field']
+
+        Restore previous state, drop new field and synchronize fields again.
+
+        >>> geo_t.delete('frnic', 'new_field')
+        >>> geo_t.syncFields()
+        >>> pprint(geo_t.fields)
+        ['__dup__',
+         '__gar__',
+         '__key__',
+         '__lno__',
+         '__par__',
+         'code',
+         'info',
+         'lat',
+         'lines',
+         'lines@raw',
+         'lng',
+         'name']
+        """
+        if mode not in ('all', 'any'):
+            raise ValueError('mode shoud be in %s, was "%s".' % \
+                             (str(('all', 'any')), mode))
+
+        if mode == 'any':
+            found = set()
+            for key in self:
+                found = found | set(self.get(key).keys())
+
+        else:
+            # Fetching first
+            for key in self:
+                found = set(self.get(key).keys())
+                break
+            else:
+                found = set()
+
+            for key in self:
+                found = found & set(self.get(key).keys())
+
+        if sort:
+            self.fields = sorted(found)
+        else:
+            self.fields = list(found)
+
+
+    def set(self, key, **kwargs):
         """Method to manually change a value in the base.
 
-        :param key:   the key we want to change a value of
-        :param field: the concerned field, like ``'name'``
-        :param value: the new value
-        :param update_fields: boolean to toggle general fields updating \
-                or not after data update
-        :returns:     ``None``
+        :param key:     the key we want to change a value of
+        :param kwargs:  the keyword arguments containing new data
+        :returns:      ``None``
+
+        Here are a few examples.
 
         >>> geo_t.get('frnic', 'name')
         'Nice-Ville'
-        >>> geo_t.set('frnic', 'name', 'Nice Gare SNCF')
+        >>> geo_t.set('frnic', name='Nice Gare SNCF')
         >>> geo_t.get('frnic', 'name')
         'Nice Gare SNCF'
-        >>> geo_t.set('frnic', 'name', 'Nice-Ville') # tearDown
+        >>> geo_t.set('frnic', name='Nice-Ville') # tearDown
 
         We may even add new fields.
 
-        >>> geo_t.set('frnic', 'new_field', 'some_value')
+        >>> geo_t.set('frnic', new_field='some_value')
         >>> geo_t.get('frnic', 'new_field')
         'some_value'
 
@@ -2292,42 +2403,8 @@ class GeoBase(object):
         >>> geo_t.get('NEW_KEY_1')
         {'__gar__': [], ..., '__lno__': 0, '__key__': 'NEW_KEY_1'}
         >>> geo_t.delete('NEW_KEY_1') # tearDown
-        """
-        # If the key is not in the base, we add it
-        if key not in self:
-            self._things[key] = self._emptyData(key, lno=0)
 
-        if field is not None:
-            # field cannot be None, None is used to get all fields
-            self._things[key][field] = value
-
-            if update_fields:
-                # If the field was not in the headers we add it
-                self._updateFields(field)
-
-
-    def _createFromDict(self, key, dictionary):
-        """Create key entry from dict.
-
-        This method is hidden, because there if no check on
-        fields types, and no check on dict formatting, which
-        may lack the special fields like __key__ or __lno__.
-        """
-        self._things[key] = dictionary
-
-
-    def setFromDict(self, key, dictionary, update_fields=False):
-        """
-        Same as ``set`` method, except we perform
-        the input with a whole dictionary.
-
-        :param key:         the key we want to change a value of
-        :param dictionary:  the dict containing the new data
-        :param update_fields: boolean to toggle general fields updating \
-                or not after data update
-        :returns:           ``None``
-
-        Let's take an empty base.
+        Examples with an empty base.
 
         >>> geo_f.keys()
         []
@@ -2338,35 +2415,28 @@ class GeoBase(object):
         ...     'code' : 'frnic',
         ...     'name' : 'Nice',
         ... }
-        >>> geo_f.setFromDict('frnic', d)
+        >>> geo_f.set('frnic', **d)
         >>> geo_f.keys()
         ['frnic']
         >>> geo_f.get('frnic', 'name')
         'Nice'
 
-        Here the base fields did not change.
+        The base fields are *not* automatically updated when setting data.
 
         >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+        []
 
-        How to automatically update the base fields when setting data.
+        You can manually update the fields.
 
-        >>> geo_f.setFromDict('frnic', d, update_fields=True)
+        >>> geo_f.syncFields()
         >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'code', 'name']
+        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'name']
         """
         # If the key is not in the base, we add it
         if key not in self:
             self._things[key] = self._emptyData(key, lno=0)
 
-        if None in dictionary:
-            raise ValueError('None is not accepted as field (in %s).' % dictionary)
-
-        self._things[key].update(dictionary)
-
-        if update_fields:
-            for field in dictionary:
-                self._updateFields(field)
+        self._things[key].update(kwargs)
 
 
 
@@ -2384,7 +2454,7 @@ class GeoBase(object):
 
         How to reverse the delete if data has been stored:
 
-        >>> geo_t.setFromDict('frxrn', data)
+        >>> geo_t.set('frxrn', **data)
         >>> geo_t.get('frxrn', 'name')
         'Redon'
 
@@ -2399,7 +2469,7 @@ class GeoBase(object):
 
         And put it back again.
 
-        >>> geo_t.set('frxrn', 'lat', '47.65179')
+        >>> geo_t.set('frxrn', lat='47.65179')
         >>> geo_t.get('frxrn', 'lat')
         '47.65179'
         """
