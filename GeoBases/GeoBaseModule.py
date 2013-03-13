@@ -2409,6 +2409,16 @@ class GeoBase(object):
             self.fields.append(field)
 
 
+    def _reset(self, key, dictionary):
+        """Create key entry from dict.
+
+        This method is hidden, because there if no check on
+        fields types, and no check on dict formatting, which
+        may lack the special fields like __key__ or __lno__.
+        """
+        self._things[key] = dictionary
+
+
     def set(self, key, field=None, value=None, update_fields=False):
         """Method to manually change a value in the base.
 
@@ -2450,16 +2460,6 @@ class GeoBase(object):
             if update_fields:
                 # If the field was not in the headers we add it
                 self._updateFields(field)
-
-
-    def _reset(self, key, dictionary):
-        """Create key entry from dict.
-
-        This method is hidden, because there if no check on
-        fields types, and no check on dict formatting, which
-        may lack the special fields like __key__ or __lno__.
-        """
-        self._things[key] = dictionary
 
 
     def setFromDict(self, key, dictionary, update_fields=False):
