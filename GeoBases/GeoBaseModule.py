@@ -2478,9 +2478,6 @@ class GeoBase(object):
 
         self._things[key].update(kwargs)
 
-        for field in kwargs:
-            self._updateFields(field)
-
 
 
     def delete(self, key, field=None):
