@@ -3583,14 +3583,19 @@ def ext_split(value, split):
     :param split:  the splitter
     :returns:      the split value
 
-    >>> ext_split('', ',')
-    ()
     >>> ext_split('PAR', 'A')
     ('P', 'R')
     >>> ext_split('PAR', '')
     ('P', 'A', 'R')
     >>> ext_split('PAR', None)
     'PAR'
+
+    Corner cases, weird input still returns iterable.
+
+    >>> ext_split(None, ',')
+    ()
+    >>> ext_split('', ',')
+    ()
     """
     if split is None:
         return value
