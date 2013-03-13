@@ -108,7 +108,7 @@ You can install it from `PyPI <https://crate.io/packages/GeoBases>`_:
 
  $ easy_install --user -U GeoBases
 
-There is a development version also on `PyPI <https://crate.io/packages/GeoBasesDev>`_:
+There is a development version also on `PyPI (dev) <https://crate.io/packages/GeoBasesDev>`_:
 
 .. code-block:: bash
 
@@ -166,7 +166,7 @@ For Python 3, you have to install *setuptools* and *python3-dev* as prerequisite
  $ git checkout 3000
  $ python3 setup.py install --user
 
-You can also install the package for Python 3 from `PyPI <https://crate.io/packages/GeoBases3K>`_:
+You can also install the package for Python 3 from `PyPI (3K) <https://crate.io/packages/GeoBases3K>`_:
 
 .. code-block:: bash
 
@@ -179,7 +179,7 @@ For Pypy, after *pypy* and *pypy-dev* installation:
  $ git checkout pypy
  $ sudo pypy setup.py install
 
-You can also install the package for Pypy from `PyPI <https://crate.io/packages/GeoBasesPypy>`_:
+You can also install the package for Pypy from `PyPI (pypy) <https://crate.io/packages/GeoBasesPypy>`_:
 
 .. code-block:: bash
 
