@@ -228,7 +228,7 @@ class GeoBase(object):
 
         # This will be similar as _headers, but can be modified after loading
         # _headers is just for data loading
-        self.fields = ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+        self.fields = []
         self.data   = data
         self.loaded = None # loaded stuff information, depends on sources and paths
 
@@ -2501,7 +2501,7 @@ class GeoBase(object):
         The base fields are *not* automatically updated when setting data.
 
         >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+        []
 
         You can manually update the fields.
 
