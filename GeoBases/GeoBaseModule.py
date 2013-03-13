@@ -2399,15 +2399,6 @@ class GeoBase(object):
                 yield phonemes, key
 
 
-    def _updateFields(self, field):
-        """Update fields list.
-
-        :param field: the field to add
-        :returns:     ``None``
-        """
-        if field not in self.fields:
-            self.fields.append(field)
-
 
     def _resetData(self, key, data):
         """Reset key entry with dictionary of data.
@@ -2419,6 +2410,15 @@ class GeoBase(object):
         """
         self._things[key] = data
 
+
+    def _updateFields(self, field):
+        """Update fields list.
+
+        :param field: the field to add
+        :returns:     ``None``
+        """
+        if field not in self.fields:
+            self.fields.append(field)
 
 
     def set(self, key, **kwargs):
