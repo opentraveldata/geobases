@@ -2411,14 +2411,45 @@ class GeoBase(object):
         self._things[key] = data
 
 
-    def updateFields(self, field):
-        """Update fields list.
-
-        :param field: the field to add
-        :returns:     ``None``
+    def syncFields(self, mode='all', sort=True):
         """
-        if field not in self.fields:
-            self.fields.append(field)
+        Iterate through the collection to look for all available fields.
+        Then affect the result to ``self.fields``.
+        If you execute this method, be aware that fields order may
+        change depending on how dictionaries return their keys.
+        To have better consistency, we automatically sort the found
+        fields.
+
+        :param mode: ``'all'`` or ``'any'``, ``'all'`` will look for \
+                fields shared by all keys, ``'any'`` will look for fields \
+                shared by at least one key
+        :param sort: sort the fields found
+        :returns:    ``None``
+        """
+        if mode not in ('all', 'any'):
+            raise ValueError('mode shoud be in %s, was %s' % \
+                             (str(('all', 'any')), mode))
+
+        if mode == 'any':
+            found = set()
+            for key in self:
+                found = found | set(self.get(key).keys())
+
+        else:
+            # Fetching first
+            for key in self:
+                found = set(self.get(key).keys())
+                break
+            else:
+                found = set()
+
+            for key in self:
+                found = found & set(self.get(key).keys())
+
+        if sort:
+            self.fields = sorted(found)
+        else:
+            self.fields = list(found)
 
 
     def set(self, key, **kwargs):
@@ -2474,9 +2505,9 @@ class GeoBase(object):
 
         You can manually update the fields.
 
-        >>> geo_f.updateFields('name')
+        >>> geo_f.syncFields()
         >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'name']
+        ['__dup__', '__gar__', '__key__', '__lno__', '__par__', 'code', 'name']
         """
         # If the key is not in the base, we add it
         if key not in self:
