@@ -2467,10 +2467,16 @@ class GeoBase(object):
         >>> geo_f.get('frnic', 'name')
         'Nice'
 
-        The base fields are automatically updated when setting data.
+        The base fields are *not* automatically updated when setting data.
 
         >>> geo_f.fields
-        ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'code', 'name']
+        ['__key__', '__dup__', '__par__', '__lno__', '__gar__']
+
+        You can manually update the fields.
+
+        >>> geo_f.updateFields('name')
+        >>> geo_f.fields
+        ['__key__', '__dup__', '__par__', '__lno__', '__gar__', 'name']
         """
         # If the key is not in the base, we add it
         if key not in self:
