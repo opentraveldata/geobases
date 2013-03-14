@@ -1063,7 +1063,7 @@ DEF_WEIGHT_FIELDS    = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS     = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE        = 'auto' # icon type: small, big, auto, ...
 DEF_LINK_DUPLICATES  = True
-DEF_DRAW_JOIN_FIELDS = False
+DEF_DRAW_JOIN_FIELDS = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
