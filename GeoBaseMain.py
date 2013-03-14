@@ -2844,7 +2844,8 @@ def main():
                                 draw_join_fields=draw_join_fields,
                                 catalog=None,
                                 line_colors=None,
-                                verbose=True)
+                                verbose=True,
+                                warnings=logorrhea)
 
         rendered, (templates, _) = visu_info
 
