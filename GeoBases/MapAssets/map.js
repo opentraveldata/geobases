@@ -442,27 +442,51 @@ function initialize(jsonData) {
         linesArray.push(line);
     }
 
-    var toggled = false;
+    // Lines handling
+    var lineTypesArray = [];
+    for (type in lineTypes){
+        if (lineTypes.hasOwnProperty(type)) {
+            lineTypesArray.push([type, lineTypes[type]]);
+        }
+    }
+    // Pushing null type to have a mode where lines are not displayed
+    lineTypesArray.push([null, 0]);
 
-    function toggleLines() {
+    // Sorting with decreasing volumes
+    lineTypesArray.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    var toggled = false;
+    var lines_state = 0;
+    var drawn_type;
+
+    function drawLines() {
+
+        if (lineTypesArray.length === 0){
+            return;
+        }
+        drawn_type = lineTypesArray[lines_state][0];
+        $('#lines').text('Lines ({0})'.fmt(drawn_type === null ? 'none' : drawn_type.toLowerCase()));
+
         var i, c;
         for (i=0, c=linesArray.length; i<c; i++) {
-            if (linesArray[i].getMap() === null) {
+            if (linesArray[i].type === drawn_type) {
                 linesArray[i].setMap(map);
             } else {
                 linesArray[i].setMap(null);
             }
         }
-        toggled = ! toggled;
-        $('#lines').text('Lines ({0})'.fmt(toggled ? '1' : '0'));
+        lines_state += 1;
+        lines_state = lines_state === lineTypesArray.length ? 0 : lines_state;
     }
 
-    $('#lines').click(toggleLines);
+    $('#lines').click(drawLines);
 
     if (toggle_lines) {
         // If the user defined some lines in input
         // We do not wait for him to click on the button
-        toggleLines();
+        drawLines();
     }
 
     if (jsonData.lines.length === 0) {
