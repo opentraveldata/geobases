@@ -3337,15 +3337,27 @@ class GeoBase(object):
 
                         values = [str(self.get(key, f)) for f in fields]
 
-                        join_icons[jkey] = {
-                            '__key__' : jkey,
-                            '__lab__' : '%-6s [line %s, join on field(s) %s for value(s) %s]' % \
-                                    (jkey, key, '/'.join(fields), '/'.join(values)),
-                            '__wei__' : get_weight(key),   # *key*, not *jkey*
-                            '__cat__' : get_category(key), # *key*, not *jkey*
-                            'lat'     : lat_lng[0],
-                            'lng'     : lat_lng[1]
-                        }
+                        if jkey not in join_icons and jkey != key:
+                            # We do not override key icon and
+                            # joined icons do not inherit color and size
+                            join_icons[jkey] = {
+                                '__key__' : jkey,
+                                '__lab__' : '%-6s [line %s, join on field(s) %s for value(s) %s]' % \
+                                        (jkey, key, '/'.join(fields), '/'.join(values)),
+                                '__wei__' : 0,
+                                '__cat__' : None,
+                                'lat'     : lat_lng[0],
+                                'lng'     : lat_lng[1]
+                            }
+
+                            for ext_f in self.getJoinBase(fields).fields:
+                                # Keeping only important fields
+                                if not str(ext_f).startswith('__') and \
+                                   not str(ext_f).endswith('@raw') and \
+                                   ext_f not in join_icons[jkey]:
+
+                                   join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
+
 
                         data_line.append({
                             '__key__' : jkey,
