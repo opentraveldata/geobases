@@ -3098,7 +3098,7 @@ class GeoBase(object):
         # Building categories
         with_icons   = icon_type is not None
         with_circles = icon_weight is not None
-        categories   = build_categories(data, with_icons, with_circles, catalog, verbose)
+        categories   = build_categories(data, with_icons, with_circles, catalog, verbose=verbose)
 
         # Finally, we write the colors as an element attribute
         for elem in data:
@@ -3402,7 +3402,7 @@ def compute_base_icon(icon_type, has_many):
                      (icon_type, ('auto', 'S', 'B', None)))
 
 
-def build_categories(data, with_icons, with_circles, catalog, verbose):
+def build_categories(data, with_icons, with_circles, catalog, verbose=True):
     """Build categories from data and catalog
     """
     # Count the categories for coloring
