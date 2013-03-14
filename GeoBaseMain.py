@@ -2491,7 +2491,7 @@ def main():
 
     if args['exact_field'] is None:
         # Can happen if no match with best_field (happens with data="feed")
-        exact_fields = None
+        exact_fields = [None]
     else:
         exact_fields = args['exact_field'].split(SPLIT)
 
