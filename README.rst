@@ -342,6 +342,7 @@ Map display
 
  >>> geo_t.visualize()
  * Added lines for duplicates linking, total 0
+ * Could not detect geocode support in join fields.
  > Affecting category None     to color blue    | volume 3190
  <BLANKLINE>
  * Now you may use your browser to visualize:
