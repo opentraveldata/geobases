@@ -2934,10 +2934,11 @@ class GeoBase(object):
                   add_anonymous_icons=None,
                   add_anonymous_lines=None,
                   link_duplicates=True,
-                  draw_join_fields=False,
+                  draw_join_fields=True,
                   catalog=None,
                   line_colors=None,
-                  verbose=True):
+                  verbose=True,
+                  warnings=False):
         """Creates map and other visualizations.
 
         :param output:      set the name of the rendered files
@@ -2961,7 +2962,7 @@ class GeoBase(object):
         :param link_duplicates: boolean toggling lines between duplicated \
                 keys, default ``True``
         :param draw_join_fields: boolean toggling drawing of join fields \
-                containing geocode information, default ``False``
+                containing geocode information, default ``True``
         :param catalog:     dictionary of ``{'value': 'color'}`` to have \
                 specific colors for some categories, which is computed with \
                 the ``icon_color`` field
@@ -2971,6 +2972,7 @@ class GeoBase(object):
                 ``add_lines``, those given with ``add_anonymous_lines``, \
                 those computed with ``draw_join_fields``
         :param verbose:     toggle verbosity
+        :param warnings:    toggle warnings, even more verbose
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
         """
@@ -3056,6 +3058,14 @@ class GeoBase(object):
         ]
 
 
+        # Duplicates data
+        dup_lines = []
+        if link_duplicates:
+            dup_lines = self._buildLinksForDuplicates(data)
+            if verbose:
+                print('* Added lines for duplicates linking, total %s' % len(dup_lines))
+
+
         # Join data
         join_icons, join_lines = [], []
 
@@ -3088,25 +3098,18 @@ class GeoBase(object):
             else:
                 join_icons, join_lines = self._buildJoinLinesData(geo_join_fields_list,
                                                                   data,
-                                                                  'Join line',
+                                                                  'Joined',
                                                                   line_colors[3],
                                                                   get_label,
                                                                   get_weight,
                                                                   get_category,
-                                                                  verbose)
+                                                                  verbose=warnings)
                 if verbose:
                     print('* Added icons for join fields, total %s' % len(join_icons))
                     print('* Added lines for join fields, total %s' % len(join_lines))
 
         # Adding join icons on already computed data
         data = data + join_icons
-
-        # Duplicates data
-        dup_lines = []
-        if link_duplicates:
-            dup_lines = self._buildLinksForDuplicates(data)
-            if verbose:
-                print('* Added lines for duplicates linking, total %s' % len(dup_lines))
 
         # Gathering data for lines
         data_lines = [
@@ -3128,7 +3131,7 @@ class GeoBase(object):
         # Building categories
         with_icons   = icon_type is not None
         with_circles = icon_weight is not None
-        categories   = build_categories(data, with_icons, with_circles, catalog, verbose)
+        categories   = build_categories(data, with_icons, with_circles, catalog, verbose=verbose)
 
         # Finally, we write the colors as an element attribute
         for elem in data:
@@ -3154,7 +3157,7 @@ class GeoBase(object):
                     'link_duplicates' : link_duplicates,
                     'toggle_lines'    : True if (add_lines or \
                                                  add_anonymous_lines or \
-                                                 draw_join_fields) else False,
+                                                 not self.hasGeoSupport()) else False,
                 },
                 'points'     : data,
                 'lines'      : data_lines,
@@ -3191,6 +3194,7 @@ class GeoBase(object):
             '__lab__' : get_label(key),
             '__wei__' : get_weight(key),
             '__cat__' : get_category(key),
+            '__hid__' : False,
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
         }
@@ -3218,6 +3222,7 @@ class GeoBase(object):
             '__lab__' : 'Anonymous',
             '__wei__' : 0,
             '__cat__' : '@',
+            '__hid__' : False,
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
         }
@@ -3370,15 +3375,28 @@ class GeoBase(object):
 
                         values = [str(self.get(key, f)) for f in fields]
 
-                        join_icons[jkey] = {
-                            '__key__' : jkey,
-                            '__lab__' : '%-6s [line %s, join on field(s) %s for value(s) %s]' % \
-                                    (jkey, key, '/'.join(fields), '/'.join(values)),
-                            '__wei__' : get_weight(key),   # *key*, not *jkey*
-                            '__cat__' : get_category(key), # *key*, not *jkey*
-                            'lat'     : lat_lng[0],
-                            'lng'     : lat_lng[1]
-                        }
+                        if jkey not in join_icons and jkey != key:
+                            # We do not override key icon and
+                            # joined icons do not inherit color and size
+                            join_icons[jkey] = {
+                                '__key__' : jkey,
+                                '__lab__' : '%-6s [line %s, join on field(s) %s for value(s) %s]' % \
+                                        (jkey, key, '/'.join(fields), '/'.join(values)),
+                                '__wei__' : 0,
+                                '__cat__' : None,
+                                '__hid__' : True,
+                                'lat'     : lat_lng[0],
+                                'lng'     : lat_lng[1]
+                            }
+
+                            for ext_f in self.getJoinBase(fields).fields:
+                                # Keeping only important fields
+                                if not str(ext_f).startswith('__') and \
+                                   not str(ext_f).endswith('@raw') and \
+                                   ext_f not in join_icons[jkey]:
+
+                                   join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
+
 
                         data_line.append({
                             '__key__' : jkey,
@@ -3417,7 +3435,7 @@ def compute_base_icon(icon_type, has_many):
                      (icon_type, ('auto', 'S', 'B', None)))
 
 
-def build_categories(data, with_icons, with_circles, catalog, verbose):
+def build_categories(data, with_icons, with_circles, catalog, verbose=True):
     """Build categories from data and catalog
     """
     # Count the categories for coloring
