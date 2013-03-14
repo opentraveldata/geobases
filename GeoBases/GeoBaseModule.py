@@ -3023,6 +3023,14 @@ class GeoBase(object):
         ]
 
 
+        # Duplicates data
+        dup_lines = []
+        if link_duplicates:
+            dup_lines = self._buildLinksForDuplicates(data)
+            if verbose:
+                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
+
+
         # Join data
         join_icons, join_lines = [], []
 
@@ -3067,13 +3075,6 @@ class GeoBase(object):
 
         # Adding join icons on already computed data
         data = data + join_icons
-
-        # Duplicates data
-        dup_lines = []
-        if link_duplicates:
-            dup_lines = self._buildLinksForDuplicates(data)
-            if verbose:
-                print '* Added lines for duplicates linking, total %s' % len(dup_lines)
 
         # Gathering data for lines
         data_lines = [
