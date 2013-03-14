@@ -126,9 +126,9 @@ function initialize(jsonData) {
     var mapTypeIds = [];
 
     // Creating list of available map types, adding OSM
-    for(var type in google.maps.MapTypeId) {
-        if (google.maps.MapTypeId.hasOwnProperty(type)) {
-            mapTypeIds.push(google.maps.MapTypeId[type]);
+    for(var mtype in google.maps.MapTypeId) {
+        if (google.maps.MapTypeId.hasOwnProperty(mtype)) {
+            mapTypeIds.push(google.maps.MapTypeId[mtype]);
         }
     }
     mapTypeIds.push("MQ");
