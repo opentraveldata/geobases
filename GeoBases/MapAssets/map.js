@@ -239,12 +239,15 @@ function initialize(jsonData) {
             position    : latlng,
             animation   : null,
             title       : e.__lab__,
+            hidden      : e.__hid__, // if fetched from join clause
             clickable   : true,
             draggable   : false
         });
 
         if (with_icons) {
-            marker.setMap(map);
+            if (! marker.hidden) {
+                marker.setMap(map);
+            }
             marker.setIcon(getMarkerIcon(e.__col__));
         }
 
@@ -289,7 +292,9 @@ function initialize(jsonData) {
         // Saving marker
         markersArray.push(marker);
         bounds.extend(latlng);
-        centersArray.push(latlng);
+        if (! marker.hidden) {
+            centersArray.push(latlng);
+        }
 
         if (has_circle) {
             // We compute the biggest __wei__ value
@@ -457,13 +462,14 @@ function initialize(jsonData) {
 
     var toggled = false;
     var lines_state = 0;
-    var drawn_type;
+    var drawn_type, prev_drawn_type = null;
 
     function drawLines() {
 
         if (lineTypesArray.length === 0){
             return;
         }
+        prev_drawn_type = drawn_type;
         drawn_type = lineTypesArray[lines_state][0];
         $('#lines').text('Lines ({0})'.fmt(drawn_type === null ? 'none' : drawn_type.toLowerCase()));
 
@@ -475,6 +481,22 @@ function initialize(jsonData) {
                 linesArray[i].setMap(null);
             }
         }
+
+        // Special appearance of hidden markers when displaying join lines
+        if (drawn_type === 'Joined') {
+            for (i=0, c=markersArray.length; i<c; i++) {
+                if (markersArray[i].hidden) {
+                    markersArray[i].setMap(map);
+                }
+            }
+        } else if (prev_drawn_type === 'Joined') {
+            for (i=0, c=markersArray.length; i<c; i++) {
+                if (markersArray[i].hidden) {
+                    markersArray[i].setMap(null);
+                }
+            }
+        }
+
         lines_state += 1;
         lines_state = lines_state === lineTypesArray.length ? 0 : lines_state;
     }
