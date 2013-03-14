@@ -426,6 +426,7 @@ function initialize(jsonData) {
             geodesic        : true,
             clickable       : true,
             path            : coords,
+            type            : type,
             strokeColor     : lcol,
             strokeOpacity   : 0.4,
             strokeWeight    : 5
