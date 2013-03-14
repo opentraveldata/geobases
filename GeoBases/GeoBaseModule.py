@@ -2901,7 +2901,7 @@ class GeoBase(object):
                   add_anonymous_icons=None,
                   add_anonymous_lines=None,
                   link_duplicates=True,
-                  draw_join_fields=False,
+                  draw_join_fields=True,
                   catalog=None,
                   line_colors=None,
                   verbose=True):
@@ -2928,7 +2928,7 @@ class GeoBase(object):
         :param link_duplicates: boolean toggling lines between duplicated \
                 keys, default ``True``
         :param draw_join_fields: boolean toggling drawing of join fields \
-                containing geocode information, default ``False``
+                containing geocode information, default ``True``
         :param catalog:     dictionary of ``{'value': 'color'}`` to have \
                 specific colors for some categories, which is computed with \
                 the ``icon_color`` field
