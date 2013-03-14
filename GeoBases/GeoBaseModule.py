@@ -2904,7 +2904,8 @@ class GeoBase(object):
                   draw_join_fields=True,
                   catalog=None,
                   line_colors=None,
-                  verbose=True):
+                  verbose=True,
+                  warnings=False):
         """Creates map and other visualizations.
 
         :param output:      set the name of the rendered files
@@ -2938,6 +2939,7 @@ class GeoBase(object):
                 ``add_lines``, those given with ``add_anonymous_lines``, \
                 those computed with ``draw_join_fields``
         :param verbose:     toggle verbosity
+        :param warnings:    toggle warnings, even more verbose
         :returns:           this is the tuple of (names of templates \
                 rendered, (list of html templates, list of static files))
         """
@@ -3068,7 +3070,7 @@ class GeoBase(object):
                                                                   get_label,
                                                                   get_weight,
                                                                   get_category,
-                                                                  verbose)
+                                                                  verbose=warnings)
                 if verbose:
                     print '* Added icons for join fields, total %s' % len(join_icons)
                     print '* Added lines for join fields, total %s' % len(join_lines)
