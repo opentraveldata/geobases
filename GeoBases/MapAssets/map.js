@@ -126,9 +126,9 @@ function initialize(jsonData) {
     var mapTypeIds = [];
 
     // Creating list of available map types, adding OSM
-    for(var type in google.maps.MapTypeId) {
-        if (google.maps.MapTypeId.hasOwnProperty(type)) {
-            mapTypeIds.push(google.maps.MapTypeId[type]);
+    for(var mtype in google.maps.MapTypeId) {
+        if (google.maps.MapTypeId.hasOwnProperty(mtype)) {
+            mapTypeIds.push(google.maps.MapTypeId[mtype]);
         }
     }
     mapTypeIds.push("MQ");
@@ -169,22 +169,10 @@ function initialize(jsonData) {
         return;
     }
 
-    // Computing fields order
+    // For fields order
     var fields = [];
     var field;
-    for (field in jsonData.points[0]) {
-        if (jsonData.points[0].hasOwnProperty(field)) {
-            if (field !== '__lab__' && field !== '__col__') {
-                fields.push(field);
-            }
-        }
-    }
 
-    fields.sort(function(a, b) {
-        return b.toLowerCase() < a.toLowerCase();
-    });
-
-    var f = fields.length;
     var n = jsonData.points.length;
 
     var icon_color      = jsonData.meta.icon_color;
@@ -251,12 +239,15 @@ function initialize(jsonData) {
             position    : latlng,
             animation   : null,
             title       : e.__lab__,
+            hidden      : e.__hid__, // if fetched from join clause
             clickable   : true,
             draggable   : false
         });
 
         if (with_icons) {
-            marker.setMap(map);
+            if (! marker.hidden) {
+                marker.setMap(map);
+            }
             marker.setIcon(getMarkerIcon(e.__col__));
         }
 
@@ -266,9 +257,19 @@ function initialize(jsonData) {
             '<h3>{0}</h3>'.fmt(e.__lab__) +
             '<table cellpadding="1">';
 
-        for (j=0 ; j<f ; j++) {
-            field = fields[j];
-            marker.help += '<tr><td><i>{0}</i></td><td>{1}</td></tr>'.fmt(field, overflow(e[field]));
+        // Computing fields order
+        fields.length = 0;
+        for (field in e) {
+            if (e.hasOwnProperty(field)) {
+                if (field !== '__lab__' && field !== '__col__') {
+                    fields.push(field);
+                }
+            }
+        }
+        fields.sort();
+
+        for (j=0 ; j<fields.length ; j++) {
+            marker.help += '<tr><td><i>{0}</i></td><td>{1}</td></tr>'.fmt(fields[j], overflow(e[fields[j]]));
         }
 
         marker.help += ' ' +
@@ -291,7 +292,9 @@ function initialize(jsonData) {
         // Saving marker
         markersArray.push(marker);
         bounds.extend(latlng);
-        centersArray.push(latlng);
+        if (! marker.hidden) {
+            centersArray.push(latlng);
+        }
 
         if (has_circle) {
             // We compute the biggest __wei__ value
@@ -389,18 +392,24 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var ods, name, lcol, coords, line, d, help;
+    var ods, type, lcol, coords, line, d, help;
     var linesArray = [];
+    var lineTypes = {};
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         ods  = jsonData.lines[i].path;
-        name = jsonData.lines[i].__lab__;
+        type = jsonData.lines[i].__lab__;
         lcol = jsonData.lines[i].__col__;
+
+        if (! lineTypes.hasOwnProperty(type)){
+            lineTypes[type] = 0;
+        }
+        lineTypes[type] += 1;
 
         coords = [];
         help   = '<div class="infowindow medium">' +
-                     '<h3>{0}</h3><table>'.fmt(name) +
+                     '<h3>{0}</h3><table>'.fmt(type) +
                      '<tr><td><i>{0}</i></td><td><i>{1}</i></td></tr>'.fmt('Key', 'Label');
 
         for (j=0, d=ods.length; j<d; j++) {
@@ -420,6 +429,7 @@ function initialize(jsonData) {
             geodesic        : true,
             clickable       : true,
             path            : coords,
+            type            : type,
             strokeColor     : lcol,
             strokeOpacity   : 0.4,
             strokeWeight    : 5
@@ -435,27 +445,68 @@ function initialize(jsonData) {
         linesArray.push(line);
     }
 
-    var toggled = false;
+    // Lines handling
+    var lineTypesArray = [];
+    for (type in lineTypes){
+        if (lineTypes.hasOwnProperty(type)) {
+            lineTypesArray.push([type, lineTypes[type]]);
+        }
+    }
+    // Pushing null type to have a mode where lines are not displayed
+    lineTypesArray.push([null, 0]);
 
-    function toggleLines() {
+    // Sorting with decreasing volumes
+    lineTypesArray.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    var toggled = false;
+    var lines_state = 0;
+    var drawn_type, prev_drawn_type = null;
+
+    function drawLines() {
+
+        if (lineTypesArray.length === 0){
+            return;
+        }
+        prev_drawn_type = drawn_type;
+        drawn_type = lineTypesArray[lines_state][0];
+        $('#lines').text('Lines ({0})'.fmt(drawn_type === null ? 'none' : drawn_type.toLowerCase()));
+
         var i, c;
         for (i=0, c=linesArray.length; i<c; i++) {
-            if (linesArray[i].getMap() === null) {
+            if (linesArray[i].type === drawn_type) {
                 linesArray[i].setMap(map);
             } else {
                 linesArray[i].setMap(null);
             }
         }
-        toggled = ! toggled;
-        $('#lines').text('Lines ({0})'.fmt(toggled ? '1' : '0'));
+
+        // Special appearance of hidden markers when displaying join lines
+        if (drawn_type === 'Joined') {
+            for (i=0, c=markersArray.length; i<c; i++) {
+                if (markersArray[i].hidden) {
+                    markersArray[i].setMap(map);
+                }
+            }
+        } else if (prev_drawn_type === 'Joined') {
+            for (i=0, c=markersArray.length; i<c; i++) {
+                if (markersArray[i].hidden) {
+                    markersArray[i].setMap(null);
+                }
+            }
+        }
+
+        lines_state += 1;
+        lines_state = lines_state === lineTypesArray.length ? 0 : lines_state;
     }
 
-    $('#lines').click(toggleLines);
+    $('#lines').click(drawLines);
 
     if (toggle_lines) {
         // If the user defined some lines in input
         // We do not wait for him to click on the button
-        toggleLines();
+        drawLines();
     }
 
     if (jsonData.lines.length === 0) {
@@ -486,26 +537,29 @@ function initialize(jsonData) {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
+            $('#link').text('Link all (sort: 0)');
 
         } else if (state === 1) {
             sortedCenters = centersArray.slice();
             sortedCenters.sort(sortPointY);
             sortedCenters.sort(sortPointX);
             hull.setPath(sortedCenters);
+            $('#link').text('Link all (sort: X)');
 
         } else if (state === 2) {
             sortedCenters = centersArray.slice();
             sortedCenters.sort(sortPointX);
             sortedCenters.sort(sortPointY);
             hull.setPath(sortedCenters);
+            $('#link').text('Link all (sort: Y)');
 
         } else if (state === 3) {
             hull.setMap(null);
+            $('#link').text('Link all (none)');
         }
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $('#link').text('Link all ({0})'.fmt(state));
     }
 
     $('#link').click(linkMarkers);
@@ -596,7 +650,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend.');
     $('#link').attr('title', 'Draw lines between points. Click again to change sorting.');
-    $('#lines').attr('title', 'Toggle lines.');
+    $('#lines').attr('title', 'Display lines. Click again to change line type.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
 

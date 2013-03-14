@@ -1063,7 +1063,7 @@ DEF_WEIGHT_FIELDS    = ('page_rank',  'population',   None)
 DEF_COLOR_FIELDS     = ('raw_offset', 'fclass',       None)
 DEF_ICON_TYPE        = 'auto' # icon type: small, big, auto, ...
 DEF_LINK_DUPLICATES  = True
-DEF_DRAW_JOIN_FIELDS = False
+DEF_DRAW_JOIN_FIELDS = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
@@ -2494,7 +2494,7 @@ def main():
 
     if args['exact_field'] is None:
         # Can happen if no match with best_field (happens with data="feed")
-        exact_fields = None
+        exact_fields = [None]
     else:
         exact_fields = args['exact_field'].split(SPLIT)
 
@@ -2847,7 +2847,8 @@ def main():
                                 draw_join_fields=draw_join_fields,
                                 catalog=None,
                                 line_colors=None,
-                                verbose=True)
+                                verbose=True,
+                                warnings=logorrhea)
 
         rendered, (templates, _) = visu_info
 
