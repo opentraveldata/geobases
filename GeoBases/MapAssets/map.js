@@ -389,18 +389,24 @@ function initialize(jsonData) {
     }
 
     // Add specified lines
-    var ods, name, lcol, coords, line, d, help;
+    var ods, type, lcol, coords, line, d, help;
     var linesArray = [];
+    var lineTypes = {};
 
     for (i=0, c=jsonData.lines.length; i<c; i++) {
 
         ods  = jsonData.lines[i].path;
-        name = jsonData.lines[i].__lab__;
+        type = jsonData.lines[i].__lab__;
         lcol = jsonData.lines[i].__col__;
+
+        if (! lineTypes.hasOwnProperty(type)){
+            lineTypes[type] = 0;
+        }
+        lineTypes[type] += 1;
 
         coords = [];
         help   = '<div class="infowindow medium">' +
-                     '<h3>{0}</h3><table>'.fmt(name) +
+                     '<h3>{0}</h3><table>'.fmt(type) +
                      '<tr><td><i>{0}</i></td><td><i>{1}</i></td></tr>'.fmt('Key', 'Label');
 
         for (j=0, d=ods.length; j<d; j++) {
