@@ -517,26 +517,29 @@ function initialize(jsonData) {
         if (state === 0) {
             hull.setPath(centersArray);
             hull.setMap(map);
+            $('#link').text('Link all (sort: 0)');
 
         } else if (state === 1) {
             sortedCenters = centersArray.slice();
             sortedCenters.sort(sortPointY);
             sortedCenters.sort(sortPointX);
             hull.setPath(sortedCenters);
+            $('#link').text('Link all (sort: X)');
 
         } else if (state === 2) {
             sortedCenters = centersArray.slice();
             sortedCenters.sort(sortPointX);
             sortedCenters.sort(sortPointY);
             hull.setPath(sortedCenters);
+            $('#link').text('Link all (sort: Y)');
 
         } else if (state === 3) {
             hull.setMap(null);
+            $('#link').text('Link all (none)');
         }
 
         state += 1;
         state = state === 4 ? 0 : state;
-        $('#link').text('Link all ({0})'.fmt(state));
     }
 
     $('#link').click(linkMarkers);
@@ -627,7 +630,7 @@ $(document).ready(function() {
 
     $('#legend').attr('title', 'Display legend.');
     $('#link').attr('title', 'Draw lines between points. Click again to change sorting.');
-    $('#lines').attr('title', 'Toggle lines.');
+    $('#lines').attr('title', 'Display lines. Click again to change line type.');
     $('#ratio').attr('title', 'Circle size (%)');
     $('#slider').attr('title', 'Circle size (%)');
 
