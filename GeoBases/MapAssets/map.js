@@ -169,22 +169,10 @@ function initialize(jsonData) {
         return;
     }
 
-    // Computing fields order
+    // For fields order
     var fields = [];
     var field;
-    for (field in jsonData.points[0]) {
-        if (jsonData.points[0].hasOwnProperty(field)) {
-            if (field !== '__lab__' && field !== '__col__') {
-                fields.push(field);
-            }
-        }
-    }
 
-    fields.sort(function(a, b) {
-        return b.toLowerCase() < a.toLowerCase();
-    });
-
-    var f = fields.length;
     var n = jsonData.points.length;
 
     var icon_color      = jsonData.meta.icon_color;
@@ -266,9 +254,19 @@ function initialize(jsonData) {
             '<h3>{0}</h3>'.fmt(e.__lab__) +
             '<table cellpadding="1">';
 
-        for (j=0 ; j<f ; j++) {
-            field = fields[j];
-            marker.help += '<tr><td><i>{0}</i></td><td>{1}</td></tr>'.fmt(field, overflow(e[field]));
+        // Computing fields order
+        fields.length = 0;
+        for (field in e) {
+            if (e.hasOwnProperty(field)) {
+                if (field !== '__lab__' && field !== '__col__') {
+                    fields.push(field);
+                }
+            }
+        }
+        fields.sort();
+
+        for (j=0 ; j<fields.length ; j++) {
+            marker.help += '<tr><td><i>{0}</i></td><td>{1}</td></tr>'.fmt(fields[j], overflow(e[fields[j]]));
         }
 
         marker.help += ' ' +
