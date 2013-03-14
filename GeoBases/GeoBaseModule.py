@@ -3159,6 +3159,7 @@ class GeoBase(object):
             '__lab__' : get_label(key),
             '__wei__' : get_weight(key),
             '__cat__' : get_category(key),
+            '__hid__' : False,
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
         }
@@ -3186,6 +3187,7 @@ class GeoBase(object):
             '__lab__' : 'Anonymous',
             '__wei__' : 0,
             '__cat__' : '@',
+            '__hid__' : False,
             'lat'     : lat_lng[0],
             'lng'     : lat_lng[1]
         }
@@ -3347,6 +3349,7 @@ class GeoBase(object):
                                         (jkey, key, '/'.join(fields), '/'.join(values)),
                                 '__wei__' : 0,
                                 '__cat__' : None,
+                                '__hid__' : True,
                                 'lat'     : lat_lng[0],
                                 'lng'     : lat_lng[1]
                             }
