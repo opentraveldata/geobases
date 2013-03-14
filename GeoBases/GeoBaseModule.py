@@ -3055,7 +3055,7 @@ class GeoBase(object):
             else:
                 join_icons, join_lines = self._buildJoinLinesData(geo_join_fields_list,
                                                                   data,
-                                                                  'Join line',
+                                                                  'Joined',
                                                                   line_colors[3],
                                                                   get_label,
                                                                   get_weight,
