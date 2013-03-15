@@ -3193,8 +3193,7 @@ class GeoBase(object):
 
                         values = [str(self.get(key, f)) for f in fields]
 
-                        if jkey not in join_icons and jkey != key:
-                            # We do not override key icon and
+                        if jkey not in join_icons:
                             # joined icons do not inherit color and size
                             join_icons[jkey] = {
                                 '__key__' : jkey,
