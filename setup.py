@@ -141,7 +141,7 @@ setup(
     ],
     classifiers=[
         'License :: Free for non-commercial use',
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Information Technology',
