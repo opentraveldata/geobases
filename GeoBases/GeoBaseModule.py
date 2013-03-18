@@ -1472,11 +1472,11 @@ class GeoBase(object):
         >>> len(list(geo_o.findWith(c_1)))
         18
         >>> len(list(geo_o.findWith(c_2)))
-        93
+        95
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
         2
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
-        109
+        111
         """
         if from_keys is None:
             from_keys = iter(self)
