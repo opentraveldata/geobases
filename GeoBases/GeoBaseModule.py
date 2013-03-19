@@ -3035,7 +3035,7 @@ class GeoBase(object):
         if weight is None:
             get_weight = lambda k: 1
         else:
-            get_weight = lambda k: float(self.get(k, weight))
+            get_weight = lambda k: self.get(k, weight)
 
         if from_keys is None:
             from_keys = iter(self)
@@ -3055,9 +3055,10 @@ class GeoBase(object):
 
             for key in from_keys:
                 try:
-                    counters[field][self.get(key, field)] += get_weight(key)
+                    w = float(get_weight(key))
                 except ValueError:
-                    pass
+                    w = 0
+                counters[field][self.get(key, field)] += w
 
         # Now we sort and keep the most important
         for field in counters:
