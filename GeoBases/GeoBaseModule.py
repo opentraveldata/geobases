@@ -846,6 +846,8 @@ class GeoBase(object):
             # Skip comments and empty lines
             # Comments must *start* with #, otherwise they will not be stripped
             if not row or row[0].startswith('#'):
+                # Storing that
+                self._skipped.append(row)
                 continue
 
             if in_skipped_zone(lno):
