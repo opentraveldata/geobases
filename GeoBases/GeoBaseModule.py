@@ -324,7 +324,7 @@ class GeoBase(object):
             else:
                 # Here the loop did not break, meaning nothing was loaded
                 # We will go here even if self._paths was []
-                raise IOError('Nothing was loaded from:%s' % \
+                raise IOError('Nothing was loaded from: %s' % \
                               ''.join('\n(*) %s' % p['file'] for p in self._paths))
 
 
@@ -916,17 +916,26 @@ class GeoBase(object):
 
     def save(self, force=True, verbose=True):
         """Save the data structure in the initial loaded file.
+
+        :param force: default is ``True``, the data is dumped in the \
+                initial loaded file, except if ``force`` is set to \
+                ``False``. In this case, a ``filename.new`` will be created
+        :param verbose: toggle verbosity
+        :returns: ``None``
+        :raises IOError: if saving could not be done
         """
         # Here we read the source from the configuration file
         for path in self._paths:
             if is_remote(path):
                 if verbose:
-                    print 'Remote paths are not supported for saving (was %s).' % path['file']
+                    print '/!\ Remote paths are not supported for saving (was %s).' % \
+                            path['file']
                 continue
 
             if is_archive(path):
                 if verbose:
-                    print 'Archives are not supported for saving (was %s).' % path['file']
+                    print '/!\ Archives are not supported for saving (was %s).' % \
+                            path['file']
                 continue
 
             file_ = S_MANAGER.handle_path(path, self.data, verbose)
@@ -947,7 +956,7 @@ class GeoBase(object):
         else:
             # Here the loop did not break, meaning nothing was loaded
             # We will go here even if self._paths was []
-            raise IOError('Nothing was save in:%s' % \
+            raise IOError('Nothing was save in: %s' % \
                           ''.join('\n(*) %s' % p['file'] for p in self._paths))
 
 
