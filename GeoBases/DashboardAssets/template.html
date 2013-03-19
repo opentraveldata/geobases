@@ -5,10 +5,16 @@
         <meta name="{{file_name}}" content="{{file_name}}" />
 
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" />
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
         <style type="text/css">
-            html, body {
+            html, h2 {
                 background-color:#F2F2F2;
+            }
+
+            #container {
+                height: 100%;
+                width : 100%;
             }
         </style>
 
@@ -16,9 +22,15 @@
     </head>
 
     <body>
-        <div id="canvas"></div>
+        <h2>Dashboard</h2>
+
+        <div id="container"></div>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+
+        <script src="nv.d3.min.js"></script>
 
         <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
         <script type="text/javascript" src='dashboard.js'></script>
