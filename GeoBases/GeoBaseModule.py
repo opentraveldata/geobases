@@ -922,18 +922,40 @@ class GeoBase(object):
         self.fields.append('__gar__')
 
 
-    def save(self, force=True, verbose=True):
+    def save(self, path=None, force=True, headers=None, verbose=True):
         """Save the data structure in the initial loaded file.
 
+        :param path: ``None`` as default. If no argument is given for this \
+                parameter, we will try to save to the default path defined \
+                in the configuration file. Otherwise we will try to save in \
+                the path given.
         :param force: default is ``True``, the data is dumped in the \
                 initial loaded file, except if ``force`` is set to \
                 ``False``. In this case, a ``filename.new`` will be created
+        :param headers: the headers of data which will be dumped. Leave default \
+                to use headers defined in configuration. Otherwise, this must be \
+                a list of fields.
         :param verbose: toggle verbosity
         :returns: ``None``
-        :raises IOError: if saving could not be done
         """
+        if path is None:
+            paths = self._paths
+        else:
+            paths = [{ 'file' : path, 'local' : False }]
+
+        if not paths:
+            print '/!\ No path to save to!'
+            return
+
+        if headers is None:
+            if self._headers:
+                headers = self._headers
+            else:
+                print '/!\ Headers were not specified, and no headers in configuration.'
+                return
+
         # Here we read the source from the configuration file
-        for path in self._paths:
+        for path in paths:
             if is_remote(path):
                 if verbose:
                     print '/!\ Remote paths are not supported for saving (was %s).' % \
@@ -952,10 +974,13 @@ class GeoBase(object):
                 continue
 
             try:
-                if not force:
-                    file_ = '%s.new' % file_
+                if op.isfile(file_):
+                    # File already exist!
+                    if not force:
+                        file_ = '%s.new' % file_
+
                 with open(file_ , 'w') as out_fl:
-                    self._dump(out_fl)
+                    self._dump(out_fl, headers)
             except IOError:
                 if verbose:
                     print '/!\ Failed to open "%s", failing over...' % file_
@@ -963,21 +988,21 @@ class GeoBase(object):
                 break
         else:
             # Here the loop did not break, meaning nothing was loaded
-            # We will go here even if self._paths was []
-            raise IOError('Nothing was save in: %s' % \
-                          ''.join('\n(*) %s' % p['file'] for p in self._paths))
+            # We will go here even if paths was []
+            print '/!\ Nothing was save in: %s' % \
+                    ''.join('\n(*) %s' % p['file'] for p in paths)
+            return
 
         if verbose:
-            print 'Saved to %s' % file_
+            print 'Saved to "%s".' % file_
 
 
-    def _dump(self, out_fl):
+    def _dump(self, out_fl, headers):
         """Dump the data structure in the file-like.
         """
         # Caching
         subdelimiters = self._subdelimiters
         delimiter = self._delimiter
-        headers = self._headers
 
         # We first try to sort the keys by line numbers first
         sorted_keys = sorted([(self.get(k, '__lno__'), k) for k in self] + \
@@ -2929,6 +2954,7 @@ class GeoBase(object):
             node['types'] = sorted(node['types'])
 
         return nodes
+
 
 
     def graphVisualize(self,
