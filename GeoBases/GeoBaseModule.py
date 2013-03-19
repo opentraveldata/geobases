@@ -233,7 +233,7 @@ class GeoBase(object):
         self.loaded = None # loaded stuff information, depends on sources and paths
 
         # To store skipped lines, in case we dump
-        self._skipped = []
+        self._skipped = {}
 
         # Defaults
         props = {}
@@ -828,7 +828,7 @@ class GeoBase(object):
         in_skipped_zone, is_over_limit, show_load_info = self._buildLnoEvents(skip, limit, verbose)
 
         # Resetting skipped lines
-        self._skipped = []
+        self._skipped = {}
 
         # csv reader options
         csv_opt = {
@@ -847,7 +847,7 @@ class GeoBase(object):
             # Comments must *start* with #, otherwise they will not be stripped
             if not row or row[0].startswith('#'):
                 # Storing that
-                self._skipped.append(row)
+                self._skipped[lno] = row
                 continue
 
             if in_skipped_zone(lno):
@@ -855,7 +855,7 @@ class GeoBase(object):
                     print 'In skipped zone, dropping line %s: "%s...".' % \
                             (lno, row[0])
                 # Storing that
-                self._skipped.append(row)
+                self._skipped[lno] = row
                 continue
 
             if is_over_limit(lno):
@@ -869,6 +869,8 @@ class GeoBase(object):
                 if verbose:
                     print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
                             (headers, key_fields, lno, row)
+                # Storing that
+                self._skipped[lno] = row
                 continue
 
             data = self._buildRowData(row, headers, subdelimiters, key, lno)
@@ -965,27 +967,37 @@ class GeoBase(object):
     def _dump(self, out_fl):
         """Dump the data structure in the file-like.
         """
+        # Caching
+        subdelimiters = self._subdelimiters
+        delimiter = self._delimiter
+        headers = self._headers
+
         # We first try to sort the keys by line numbers first
-        sorted_keys = sorted((self.get(k, '__lno__'), k) for k in self)
+        sorted_keys = sorted([(self.get(k, '__lno__'), k) for k in self] + \
+                             [(lno, None) for lno in self._skipped])
 
-        for line in self._skipped:
-            out_fl.write(self._delimiter.join(line) + '\n')
+        for lno, key in sorted_keys:
+            if lno in self._skipped:
+                out_fl.write(delimiter.join(self._skipped[lno]) + '\n')
 
-        for _, key in sorted_keys:
+            # Can happen for keys from _skipped
+            if key not in self:
+                continue
+
             line = []
-            for h in self._headers:
+            for h in headers:
                 try:
                     if h is None:
                         line.append('')
-                    elif h in self._subdelimiters:
+                    elif h in subdelimiters:
                         line.append(self.get(key, '%s@raw' % h))
                     else:
                         line.append(self.get(key, h))
                 except KeyError:
-                    # If key has no field "h"
+                    # If key has no field "h", happens for incomplete data
                     line.append('')
 
-            out_fl.write(self._delimiter.join(line) + '\n')
+            out_fl.write(delimiter.join(line) + '\n')
 
 
 
