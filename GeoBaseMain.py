@@ -1503,7 +1503,7 @@ def handle_args():
 
     parser.add_argument('-g', '--graph',
         help = dedent('''\
-        This is the graph display.
+        This is the graph display (like force directed graph).
         Configure with --graph-fields.
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
@@ -2155,10 +2155,10 @@ def ask_mode():
 
     # 5. Display
     print dedent("""
-    (*) terminal : fancy display in the terminal
-    (*) quiet    : csv-like display
-    (*) map      : map display
-    (*) graph    : graph display
+    (*) terminal  : display in the terminal, with nice colors and everything
+    (*) quiet     : display on stdout, with csv-like formatting
+    (*) map       : display on a map
+    (*) graph     : display on a graph (like force directed graph)
     (*) dashboard : display on a dashboard (aggregated view)
     """)
     display = ask_till_ok(questions['display'],
