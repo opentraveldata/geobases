@@ -1545,10 +1545,20 @@ def handle_args():
         '''),
         action = 'store_true')
 
+    parser.add_argument('-d', '--dashboard',
+        help = dedent('''\
+        This is the dashboard display (aggregated view).
+        HTML/Javascript/JSON files are generated.
+        Unless --quiet is also set, a browser will be launched
+        and a simple HTTP server will serve the HTML results
+        on %s:%s.
+        ''' % (ADDRESS, PORT)),
+        action = 'store_true')
+
     parser.add_argument('-D', '--output-dir',
         help = dedent('''\
         This option defines the output directory for
-        temporary files generated with --map and --graph.
+        temporary files generated with --map, --graph, --dashboard.
         Default is the current directory.
         '''),
         metavar = 'DIR',
@@ -2149,8 +2159,12 @@ def ask_mode():
     (*) quiet    : csv-like display
     (*) map      : map display
     (*) graph    : graph display
+    (*) dashboard : display on a dashboard (aggregated view)
     """)
-    display = ask_till_ok(questions['display'], ['terminal', 'quiet', 'map', 'graph'], prefill='terminal', show=False)
+    display = ask_till_ok(questions['display'],
+                          ['terminal', 'quiet', 'map', 'graph', 'dashboard'],
+                          prefill='terminal',
+                          show=False)
 
     # 6. Conclusion
     parameters = {
@@ -2266,6 +2280,8 @@ def main():
         frontend = 'map'
     elif args['graph']:
         frontend = 'graph'
+    elif args['dashboard']:
+        frontend = 'dashboard'
     elif args['quiet']:
         frontend = 'quiet'
     else:
