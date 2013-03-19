@@ -118,6 +118,7 @@ setup(
             "MapAssets/*",
             "TableAssets/*",
             "GraphAssets/*",
+            "DashboardAssets/*",
             "DataSources/*/*.csv",
             "DataSources/*/*.zip",
             "DataSources/*/*.txt",
