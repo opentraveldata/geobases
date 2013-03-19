@@ -963,6 +963,9 @@ class GeoBase(object):
             raise IOError('Nothing was save in: %s' % \
                           ''.join('\n(*) %s' % p['file'] for p in self._paths))
 
+        if verbose:
+            print 'Saved to %s' % file_
+
 
     def _dump(self, out_fl):
         """Dump the data structure in the file-like.
