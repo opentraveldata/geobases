@@ -607,11 +607,11 @@ _hello() {
      "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet display]:*: :->quiet_options" \
      "(-m --map)"{-m,--map}"[Map display]" \
      "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
-     "(-g --graph)"{-g,--graph}"[Graph display]" \
+     "(-g --graph)"{-g,--graph}"[Graph display (like force directed graph)]" \
      "(-G --graph-fields)"{-G,--graph-fields}"[Select fields to build the graph display]:*: :->graph_fields" \
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
-     "(-d --dashboard)"{-d,--dashboard}"[Dashboard display]" \
+     "(-d --dashboard)"{-d,--dashboard}"[Dashboard display (aggregated view)]" \
      "(-D --output-dir)"{-D,--output-dir}"[Change output directory for temporary files]: :->output_dir" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
