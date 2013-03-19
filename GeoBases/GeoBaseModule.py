@@ -248,12 +248,12 @@ class GeoBase(object):
         allowed_conf = set(props.keys()) - set(['source'])
         allowed_args = set(props.keys())
 
-        if data not in S_MANAGER:
+        if self.data not in S_MANAGER:
             raise ValueError('Wrong data type "%s". Not in %s' % \
-                             (data, sorted(S_MANAGER)))
+                             (self.data, sorted(S_MANAGER)))
 
         # The configuration may be empty
-        conf = S_MANAGER.get(data)
+        conf = S_MANAGER.get(self.data)
         if conf is None:
             conf = {}
 
@@ -263,7 +263,7 @@ class GeoBase(object):
                 props[option] = conf[option]
             else:
                 raise ValueError('Option "%s" for data "%s" not understood in file.' % \
-                                 (option, data))
+                                 (option, self.data))
 
         # User input overrides default configuration or file configuration
         for option in kwargs:
@@ -304,7 +304,7 @@ class GeoBase(object):
         elif self._paths:
             # Here we read the source from the configuration file
             for path in self._paths:
-                file_ = S_MANAGER.handle_path(path, data, self._verbose)
+                file_ = S_MANAGER.handle_path(path, self.data, self._verbose)
 
                 if file_ is None:
                     continue
