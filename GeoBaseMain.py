@@ -2904,7 +2904,8 @@ def main():
     if frontend == 'dashboard':
         visu_info = g.dashboardVisualize(output=g.data,
                                          output_dir=output_dir,
-                                         keep=10,
+                                         keep=5,
+                                         weight=None,
                                          from_keys=ex_keys(res),
                                          verbose=verbose)
 
@@ -2915,7 +2916,8 @@ def main():
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
-            print json.dumps(g.buildDashboardData(keep=10,
+            print json.dumps(g.buildDashboardData(keep=5,
+                                                  weight=None,
                                                   from_keys=ex_keys(res)),
                              indent=4)
 

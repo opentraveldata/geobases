@@ -3017,13 +3017,26 @@ class GeoBase(object):
 
 
 
-    def buildDashboardData(self, keep=10, from_keys=None):
+    def buildDashboardData(self, keep=10, weight=None, from_keys=None):
         """Build dashboard data.
 
-        :param keep: the number of counted values we keep for each field
+        :param keep:   the number of values kept after counting for \
+                each field
+        :param weight: the field used as weight for the graph. Leave \
+                ``None`` if you just want to count the number of keys
         :param from_keys: only use this iterable of keys if not ``None``
         :returns: a dictionary of fields counters information
         """
+        # Arguments testing
+        if weight is not None and weight not in self.fields:
+            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
+
+        # Defining get_weight lambda function
+        if weight is None:
+            get_weight = lambda k: 1
+        else:
+            get_weight = lambda k: float(self.get(k, weight))
+
         if from_keys is None:
             from_keys = iter(self)
 
@@ -3041,7 +3054,10 @@ class GeoBase(object):
             counters[field] = defaultdict(int)
 
             for key in from_keys:
-                counters[field][self.get(key, field)] += 1
+                try:
+                    counters[field][self.get(key, field)] += get_weight(key)
+                except ValueError:
+                    pass
 
         # Now we sort and keep the most important
         for field in counters:
@@ -3057,6 +3073,7 @@ class GeoBase(object):
                            output=DEFAULT_TMP_NAME,
                            output_dir=DEFAULT_TMP_DIR,
                            keep=10,
+                           weight=None,
                            from_keys=None,
                            verbose=True):
         """Dashboard display (aggregated view).
@@ -3064,6 +3081,10 @@ class GeoBase(object):
         :param output:      set the name of the rendered files
         :param output_dir:  set the directory of the rendered files, will \
                 be created if it does not exist
+        :param keep:        the number of values kept after counting for \
+                each field
+        :param weight:      the field used as weight for the graph. Leave \
+                ``None`` if you just want to count the number of keys
         :param from_keys:   only display this iterable of keys if not ``None``
         :param verbose:     toggle verbosity
         :returns:           this is the tuple of (names of templates \
@@ -3077,13 +3098,19 @@ class GeoBase(object):
 
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
-        counters = self.buildDashboardData(keep=keep, from_keys=from_keys)
+        counters = self.buildDashboardData(keep=keep,
+                                           weight=weight,
+                                           from_keys=from_keys)
 
         # Dump the json geocodes
         json_name = '%s_dashboard.json' % op.join(output_dir, output)
 
         with open(json_name, 'w') as out:
-            out.write(json.dumps(counters))
+            out.write(json.dumps({
+                'counters' : counters,
+                'weight'   : weight,
+                'keep'     : keep,
+            }))
 
         return ['dashboard'], render_templates(['dashboard'],
                                                output,
