@@ -2,6 +2,14 @@
 Release notes
 =============
 
+V6
+==
+
++ 6.0 :
+
+    + *CLI*: ``-d/--disable-grid`` is now ``--no-grid`` (no short option)
+    + *API*: new ``save`` method to store in the source file the current structure (using ``_skipped`` property)
+
 V5
 ==
 
