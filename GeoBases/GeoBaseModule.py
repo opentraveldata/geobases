@@ -3068,8 +3068,6 @@ class GeoBase(object):
                                                                   'Joined',
                                                                   line_colors[3],
                                                                   get_label,
-                                                                  get_weight,
-                                                                  get_category,
                                                                   verbose=warnings)
                 if verbose:
                     print '* Added icons for join fields, total %s' % len(join_icons)
@@ -3277,7 +3275,7 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_label, get_weight, get_category, verbose=True):
+    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_label, verbose=True):
         """Build lines data for join fields
         """
         # Precaution on fields type
