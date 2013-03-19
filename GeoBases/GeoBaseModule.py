@@ -3359,7 +3359,7 @@ class GeoBase(object):
                                    not str(ext_f).endswith('@raw') and \
                                    ext_f not in join_icons[jkey]:
 
-                                   join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
+                                    join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
 
 
                         data_line.append({
