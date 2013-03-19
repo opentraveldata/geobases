@@ -2901,6 +2901,17 @@ def main():
                                               from_keys=ex_keys(res)),
                              indent=4)
 
+    if frontend == 'dashboard':
+        visu_info = g.dashboardVisualize(output=g.data,
+                                         output_dir=output_dir,
+                                         from_keys=ex_keys(res),
+                                         verbose=verbose)
+
+        rendered, (templates, _) = visu_info
+
+        if templates and verbose:
+            display_browser(templates, output_dir, nb_res)
+
 
     if frontend == 'terminal':
         shown_fields = fields_to_show([REF] + g.fields[:],
@@ -2910,6 +2921,7 @@ def main():
 
         print
         display_terminal(g, res, shown_fields, ref_type, important)
+
 
     if frontend == 'quiet':
         # As default, we do not put special fields
@@ -2927,6 +2939,7 @@ def main():
                                       args['show_additional'])
 
         display_quiet(g, res, shown_fields, ref_type, quiet_delimiter, header_display)
+
 
     if verbose and not IS_WINDOWS:
         for warn_msg in ENV_WARNINGS:
