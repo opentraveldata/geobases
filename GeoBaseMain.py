@@ -14,6 +14,7 @@ from itertools import izip_longest, chain
 from textwrap import dedent
 import platform
 import re
+import json
 
 # Not in standard library
 from termcolor import colored
@@ -2893,7 +2894,6 @@ def main():
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
-            import json
             print json.dumps(g.buildGraphData(graph_fields=graph_fields,
                                               graph_weight=graph_weight,
                                               with_types=args['with_types'],
@@ -2904,6 +2904,7 @@ def main():
     if frontend == 'dashboard':
         visu_info = g.dashboardVisualize(output=g.data,
                                          output_dir=output_dir,
+                                         keep=10,
                                          from_keys=ex_keys(res),
                                          verbose=verbose)
 
@@ -2911,6 +2912,12 @@ def main():
 
         if templates and verbose:
             display_browser(templates, output_dir, nb_res)
+        else:
+            # In quiet mode we do not launch the server
+            # but we display the graph structure
+            print json.dumps(g.buildDashboardData(keep=10,
+                                                  from_keys=ex_keys(res)),
+                             indent=4)
 
 
     if frontend == 'terminal':
