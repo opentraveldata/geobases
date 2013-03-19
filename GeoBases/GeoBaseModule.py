@@ -914,7 +914,7 @@ class GeoBase(object):
         self.fields.append('__gar__')
 
 
-    def save(self, verbose=True):
+    def save(self, force=True, verbose=True):
         """Save the data structure in the initial loaded file.
         """
         # Here we read the source from the configuration file
@@ -935,6 +935,8 @@ class GeoBase(object):
                 continue
 
             try:
+                if not force:
+                    file_ = '%s.new' % file_
                 with open(file_ , 'w') as out_fl:
                     self._dump(out_fl)
             except IOError:
