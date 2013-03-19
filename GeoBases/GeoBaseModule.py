@@ -63,7 +63,7 @@ import csv
 import json
 from shutil import copy
 
-from .SourcesManagerModule import SourcesManager
+from .SourcesManagerModule import SourcesManager, is_remote, is_archive
 from .GeoUtils             import haversine
 from .LevenshteinUtils     import mod_leven, clean
 from .GeoGridModule        import GeoGrid
@@ -231,6 +231,9 @@ class GeoBase(object):
         self.fields = []
         self.data   = data
         self.loaded = None # loaded stuff information, depends on sources and paths
+
+        # To store skipped lines, in case we dump
+        self._skipped = []
 
         # Defaults
         props = {}
@@ -824,6 +827,9 @@ class GeoBase(object):
         # Line number events
         in_skipped_zone, is_over_limit, show_load_info = self._buildLnoEvents(skip, limit, verbose)
 
+        # Resetting skipped lines
+        self._skipped = []
+
         # csv reader options
         csv_opt = {
             'delimiter' : delimiter,
@@ -846,6 +852,8 @@ class GeoBase(object):
                 if verbose:
                     print 'In skipped zone, dropping line %s: "%s...".' % \
                             (lno, row[0])
+                # Storing that
+                self._skipped.append(row)
                 continue
 
             if is_over_limit(lno):
@@ -904,6 +912,67 @@ class GeoBase(object):
                 self.fields.append(h)
 
         self.fields.append('__gar__')
+
+
+    def save(self, verbose=True):
+        """Save the data structure in the initial loaded file.
+        """
+        # Here we read the source from the configuration file
+        for path in self._paths:
+            if is_remote(path):
+                if verbose:
+                    print 'Remote paths are not supported for saving (was %s).' % path['file']
+                continue
+
+            if is_archive(path):
+                if verbose:
+                    print 'Archives are not supported for saving (was %s).' % path['file']
+                continue
+
+            file_ = S_MANAGER.handle_path(path, self.data, verbose)
+
+            if file_ is None:
+                continue
+
+            try:
+                with open(file_ , 'w') as out_fl:
+                    self._dump(out_fl)
+            except IOError:
+                if verbose:
+                    print '/!\ Failed to open "%s", failing over...' % file_
+            else:
+                break
+        else:
+            # Here the loop did not break, meaning nothing was loaded
+            # We will go here even if self._paths was []
+            raise IOError('Nothing was save in:%s' % \
+                          ''.join('\n(*) %s' % p['file'] for p in self._paths))
+
+
+    def _dump(self, out_fl):
+        """Dump the data structure in the file-like.
+        """
+        # We first try to sort the keys by line numbers first
+        sorted_keys = sorted((self.get(k, '__lno__'), k) for k in self)
+
+        for line in self._skipped:
+            out_fl.write(self._delimiter.join(line) + '\n')
+
+        for _, key in sorted_keys:
+            line = []
+            for h in self._headers:
+                try:
+                    if h is None:
+                        line.append('')
+                    elif h in self._subdelimiters:
+                        line.append(self.get(key, '%s@raw' % h))
+                    else:
+                        line.append(self.get(key, h))
+                except KeyError:
+                    # If key has no field "h"
+                    line.append('')
+
+            out_fl.write(self._delimiter.join(line) + '\n')
 
 
 
