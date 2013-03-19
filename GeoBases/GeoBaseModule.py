@@ -3786,6 +3786,7 @@ ASSETS = {
         'static' : {
             # source : target
             relative('DashboardAssets/dashboard.js') : 'dashboard.js',
+            relative('DashboardAssets/nv.d3.min.js') : 'nv.d3.min.js',
         }
     }
 }
