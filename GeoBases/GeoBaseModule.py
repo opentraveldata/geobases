@@ -3747,7 +3747,6 @@ ASSETS = {
         'static' : {
             # source : target
             relative('GraphAssets/graph.js')  : 'graph.js',
-            relative('GraphAssets/jit.js')    : 'jit.js',
             relative('GraphAssets/jit-yc.js') : 'jit-yc.js',
         }
     },
