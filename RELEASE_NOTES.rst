@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *CLI*: new ``-d/--dashboard`` option for *dashboard* display (aggregated view)
     + *CLI*: ``-d/--disable-grid`` is now ``--no-grid`` (no short option)
     + *API*: new ``save`` method to store in the source file the current structure (using ``_skipped`` property)
 
@@ -48,7 +49,7 @@ V5
     + *CLI*: configure graph weight with ``-W/--graph-weight`` for CLI
     + *API/CLI*: typing system when graph building, ``-w/--with-types`` to toggle from CLI
     + *CLI*: if available, launch *google-chrome* instead of firefox for HTML display
-    + *CLI*: ``--graph`` and ``--graph-fields`` to draw graphs
+    + *CLI*: new ``--graph`` and ``--graph-fields`` options to draw graphs (like force directed graphs)
     + *API*: add graph visualization with ``graphVisualize``
     + *API*: handle local and remote archives as sources
     + *API*: make ``addGrid`` and ``dropGrid`` public methods to allow geographical re-indexation
