@@ -1471,12 +1471,12 @@ class GeoBase(object):
         >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
         18
-        >>> len(list(geo_o.findWith(c_2)))
-        95
+        >>> len(list(geo_o.findWith(c_2))) # 97
+        9...
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
         2
-        >>> len(list(geo_o.findWith(c_1 + c_2, mode='or')))
-        111
+        >>> len(list(geo_o.findWith(c_1 + c_2, mode='or'))) # 111
+        11...
         """
         if from_keys is None:
             from_keys = iter(self)
@@ -2919,8 +2919,6 @@ class GeoBase(object):
                                                                   'Joined',
                                                                   line_colors[3],
                                                                   get_label,
-                                                                  get_weight,
-                                                                  get_category,
                                                                   verbose=warnings)
                 if verbose:
                     print '* Added icons for join fields, total %s' % len(join_icons)
@@ -3128,7 +3126,7 @@ class GeoBase(object):
         return dup_lines
 
 
-    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_label, get_weight, get_category, verbose=True):
+    def _buildJoinLinesData(self, geo_join_fields_list, data, title, line_color, get_label, verbose=True):
         """Build lines data for join fields
         """
         # Precaution on fields type
@@ -3212,7 +3210,7 @@ class GeoBase(object):
                                    not str(ext_f).endswith('@raw') and \
                                    ext_f not in join_icons[jkey]:
 
-                                   join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
+                                    join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
 
 
                         data_line.append({
