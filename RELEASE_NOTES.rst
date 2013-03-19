@@ -8,6 +8,7 @@ V6
 + 6.0 :
 
     + *CLI*: new ``-d/--dashboard`` option for *dashboard* display (aggregated view)
+    + *API*: new ``dashboardVisualize`` method for *dashboard* display (aggregated view)
     + *CLI*: ``-d/--disable-grid`` is now ``--no-grid`` (no short option)
     + *API*: new ``save`` method to store in the source file the current structure (using ``_skipped`` property)
 
