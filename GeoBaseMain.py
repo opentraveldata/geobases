@@ -1313,7 +1313,7 @@ def handle_args():
         default = DEF_CLOSEST_LIMIT,
         type = int)
 
-    parser.add_argument('-d', '--disable-grid',
+    parser.add_argument('--no-grid',
         help = dedent('''\
         When performing a geographical search, a geographical index is used.
         This may lead to inaccurate results in some (rare) case when using
@@ -2257,7 +2257,7 @@ def main():
     #
     # ARGUMENTS
     #
-    with_grid = not args['disable_grid']
+    with_grid = not args['no_grid']
     verbose   = not args['quiet']
     logorrhea = args['verbose']
 
