@@ -62,6 +62,7 @@ from itertools import izip_longest, count, product
 import csv
 import json
 from shutil import copy
+from collections import defaultdict
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
 from .GeoUtils             import haversine
@@ -2818,7 +2819,7 @@ class GeoBase(object):
                 Default is ``False``, meaning untyped graphs.
         :param directed:    boolean, if the graph is directed or not, \
                 default is ``False``.
-        :param from_keys:   only display this iterable of keys if not ``None``
+        :param from_keys:   only use this iterable of keys if not ``None``
         :returns:           the nodes data
 
         >>> nodes = geo_o.buildGraphData(
@@ -2965,7 +2966,7 @@ class GeoBase(object):
                        output=DEFAULT_TMP_NAME,
                        output_dir=DEFAULT_TMP_DIR,
                        verbose=True):
-        """Graph display.
+        """Graph display (like force directed graph).
 
         :param graph_fields: iterable of fields used to define the nodes. \
                 Nodes are the values of these fields. Edges represent the \
@@ -3016,6 +3017,81 @@ class GeoBase(object):
 
 
 
+    def buildDashboardData(self, keep=10, from_keys=None):
+        """Build dashboard data.
+
+        :param keep: the number of counted values we keep for each field
+        :param from_keys: only use this iterable of keys if not ``None``
+        :returns: a dictionary of fields counters information
+        """
+        if from_keys is None:
+            from_keys = iter(self)
+
+        # Since we are going to loop several times over it, we list()
+        from_keys = list(from_keys)
+
+        # Main structure, dict: field -> data
+        counters = {}
+
+        for field in self.fields:
+            if str(field).startswith('__') or \
+               str(field).endswith('@raw'):
+                continue
+
+            counters[field] = defaultdict(int)
+
+            for key in from_keys:
+                counters[field][self.get(key, field)] += 1
+
+        # Now we sort and keep the most important
+        for field in counters:
+            counters[field] = sorted(counters[field].iteritems(),
+                                     key=lambda k_v: k_v[1],
+                                     reverse=True)[0:keep]
+
+        return counters
+
+
+
+    def dashboardVisualize(self,
+                           output=DEFAULT_TMP_NAME,
+                           output_dir=DEFAULT_TMP_DIR,
+                           keep=10,
+                           from_keys=None,
+                           verbose=True):
+        """Dashboard display (aggregated view).
+
+        :param output:      set the name of the rendered files
+        :param output_dir:  set the directory of the rendered files, will \
+                be created if it does not exist
+        :param from_keys:   only display this iterable of keys if not ``None``
+        :param verbose:     toggle verbosity
+        :returns:           this is the tuple of (names of templates \
+                rendered, (list of html templates, list of static files))
+        """
+        # Handle output directory
+        if not output_dir:
+            output_dir = '.'
+        elif not op.isdir(output_dir):
+            os.makedirs(output_dir)
+
+        # We are going to count everything for normal fields
+        # So we exclude splitted and special fields
+        counters = self.buildDashboardData(keep=keep, from_keys=from_keys)
+
+        # Dump the json geocodes
+        json_name = '%s_dashboard.json' % op.join(output_dir, output)
+
+        with open(json_name, 'w') as out:
+            out.write(json.dumps(counters))
+
+        return ['dashboard'], render_templates(['dashboard'],
+                                               output,
+                                               output_dir,
+                                               json_name,
+                                               verbose=verbose)
+
+
     def visualize(self,
                   output=DEFAULT_TMP_NAME,
                   output_dir=DEFAULT_TMP_DIR,
@@ -3033,7 +3109,7 @@ class GeoBase(object):
                   line_colors=None,
                   verbose=True,
                   warnings=False):
-        """Creates map and other visualizations.
+        """Map and table display.
 
         :param output:      set the name of the rendered files
         :param output_dir:  set the directory of the rendered files, will \
@@ -3674,8 +3750,19 @@ ASSETS = {
             relative('GraphAssets/jit.js')    : 'jit.js',
             relative('GraphAssets/jit-yc.js') : 'jit-yc.js',
         }
+    },
+    'dashboard' : {
+        'template' : {
+            # source : v_target
+            relative('DashboardAssets/template.html') : '%s_dashboard.html',
+        },
+        'static' : {
+            # source : target
+            relative('DashboardAssets/dashboard.js') : 'dashboard.js',
+        }
     }
 }
+
 
 
 def render_templates(names, output, output_dir, json_name, verbose):
@@ -3686,7 +3773,7 @@ def render_templates(names, output, output_dir, json_name, verbose):
 
     for name in names:
         if name not in ASSETS:
-            raise ValueError('Unknown asset name %s' % name)
+            raise ValueError('Unknown asset name "%s".' % name)
 
         assets = ASSETS[name]
 
