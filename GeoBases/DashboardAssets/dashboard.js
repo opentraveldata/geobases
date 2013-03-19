@@ -64,7 +64,7 @@ function buildCanvas(id) {
 
     return '' +
         '<div id="{0}" class="span4">'.fmt(id) +
-            '<svg style="height:300px; padding:10px;"></svg>' +
+            '<svg style="height:250px; padding:10px;"></svg>' +
         '</div>';
 }
 
