@@ -2789,7 +2789,7 @@ class GeoBase(object):
                 Default is ``False``, meaning untyped graphs.
         :param directed:    boolean, if the graph is directed or not, \
                 default is ``False``.
-        :param from_keys:   only display this iterable of keys if not None
+        :param from_keys:   only display this iterable of keys if not ``None``
         :returns:           the nodes data
 
         >>> nodes = geo_o.buildGraphData(
@@ -2947,7 +2947,7 @@ class GeoBase(object):
                 node if the same value is found accross different fields, if \
                 there are no types. Otherwise we create different nodes. \
                 Default is ``False``, meaning untyped graphs.
-        :param from_keys:   only display this iterable of keys if not None
+        :param from_keys:   only display this iterable of keys if not ``None``
         :param output:      set the name of the rendered files
         :param output_dir:  set the directory of the rendered files, will \
                 be created if it does not exist
@@ -3014,7 +3014,7 @@ class GeoBase(object):
         :param icon_color:  set the field defining the map icons colors
         :param icon_type:   set the icon size, either ``'B'``, ``'S'``, \
                 ``'auto'`` or ``None`` for no-icons mode
-        :param from_keys:   only display this iterable of keys if not None
+        :param from_keys:   only display this iterable of keys if not ``None``
         :param add_lines:   list of ``(key1, key2, ..., keyN)`` to draw \
                 additional lines
         :param add_anonymous_icons: list of geocodes, like \
