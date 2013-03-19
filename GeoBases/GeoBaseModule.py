@@ -1024,7 +1024,7 @@ class GeoBase(object):
                     elif h in subdelimiters:
                         line.append(self.get(key, '%s@raw' % h))
                     else:
-                        line.append(self.get(key, h))
+                        line.append(str(self.get(key, h)))
                 except KeyError:
                     # If key has no field "h", happens for incomplete data
                     line.append('')
