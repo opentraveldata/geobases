@@ -113,6 +113,10 @@ NB_CLOSEST = 1
 # Loading indicator
 NB_LINES_STEP = 100000
 
+# Default temporary files directory and base names
+DEFAULT_TMP_NAME = 'example'
+DEFAULT_TMP_DIR  = None # translated to working dir
+
 # Defaults
 DEFAULTS = {
     'source'        : None,  # not for configuration file, use path
@@ -2932,8 +2936,8 @@ class GeoBase(object):
                        graph_weight=None,
                        with_types=False,
                        from_keys=None,
-                       output='example',
-                       output_dir=None,
+                       output=DEFAULT_TMP_NAME,
+                       output_dir=DEFAULT_TMP_DIR,
                        verbose=True):
         """Graph display.
 
@@ -2987,8 +2991,8 @@ class GeoBase(object):
 
 
     def visualize(self,
-                  output='example',
-                  output_dir=None,
+                  output=DEFAULT_TMP_NAME,
+                  output_dir=DEFAULT_TMP_DIR,
                   icon_label=None,
                   icon_weight=None,
                   icon_color=None,
