@@ -5,11 +5,19 @@
         <meta name="{{file_name}}" content="{{file_name}}" />
 
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" />
+
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="nv.d3.css" rel="stylesheet">
 
         <style type="text/css">
-            html, h2 {
+            html {
                 background-color:#F2F2F2;
+            }
+
+            h2 {
+                background-color:#F2F2F2;
+                margin: 10px;
             }
 
             #container {
@@ -22,7 +30,7 @@
     </head>
 
     <body>
-        <h2>Dashboard</h2>
+        <h2>Dashboard <span id="title"></span></h2>
 
         <div id="container"></div>
 

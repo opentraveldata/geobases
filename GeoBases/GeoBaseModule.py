@@ -3060,13 +3060,19 @@ class GeoBase(object):
                     w = 0
                 counters[field][self.get(key, field)] += w
 
+        # Computing general information
+        sum_info = {}
+
+        for field in counters:
+            sum_info[field] = sum(counters[field].itervalues())
+
         # Now we sort and keep the most important
         for field in counters:
             counters[field] = sorted(counters[field].iteritems(),
                                      key=lambda k_v: k_v[1],
                                      reverse=True)[0:keep]
 
-        return counters
+        return counters, sum_info
 
 
 
@@ -3099,9 +3105,9 @@ class GeoBase(object):
 
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
-        counters = self.buildDashboardData(keep=keep,
-                                           weight=weight,
-                                           from_keys=from_keys)
+        counters, sum_info = self.buildDashboardData(keep=keep,
+                                                     weight=weight,
+                                                     from_keys=from_keys)
 
         # Dump the json geocodes
         json_name = '%s_dashboard.json' % op.join(output_dir, output)
@@ -3109,6 +3115,7 @@ class GeoBase(object):
         with open(json_name, 'w') as out:
             out.write(json.dumps({
                 'counters' : counters,
+                'sum_info' : sum_info,
                 'weight'   : weight,
                 'keep'     : keep,
             }))
@@ -3785,6 +3792,7 @@ ASSETS = {
             # source : target
             relative('DashboardAssets/dashboard.js') : 'dashboard.js',
             relative('DashboardAssets/nv.d3.min.js') : 'nv.d3.min.js',
+            relative('DashboardAssets/nv.d3.css') : 'nv.d3.css',
         }
     }
 }
