@@ -21,6 +21,7 @@
 /*.png
 /*.html
 /*.js
+/*.css
 /*.json
 # Ignoring coverage reports
 /.coverage
