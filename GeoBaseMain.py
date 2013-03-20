@@ -2750,7 +2750,7 @@ def main():
     if args['fuzzy'] is not None:
         args['fuzzy'] = ' '.join(args['fuzzy'])
         if verbose:
-            print '(*) Applying: field %s ~= "%s" (%.1f%%)' % (args['fuzzy_field'], args['fuzzy'], 100 * args['fuzzy_limit'])
+            print '(*) Applying: field %s ~= "%s" (min. %.1f%%)' % (args['fuzzy_field'], args['fuzzy'], 100 * args['fuzzy_limit'])
 
         res = list(g.fuzzyFind(args['fuzzy'], args['fuzzy_field'], min_match=args['fuzzy_limit'], from_keys=ex_keys(res)))
         last = 'fuzzy'
