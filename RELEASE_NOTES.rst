@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *CLI*: for temporary files, new default is to put them in a separate ``tmp/`` local directory
     + *CLI*: new ``-d/--dashboard`` option for *dashboard* display (aggregated view)
     + *API*: new ``dashboardVisualize`` method for *dashboard* display (aggregated view)
     + *CLI*: ``-d/--disable-grid`` is now ``--no-grid`` (no short option)
