@@ -12,20 +12,38 @@ if (!String.fmt) {
 }
 
 
+function overflow(text) {
+
+    if (typeof text === "number") {
+        return text;
+    }
+
+    text = '' + text;
+
+    if (text.length < 25) {
+        return text;
+    }
+
+    return ('' + text).slice(0, 20) + '...';
+
+}
+
+
+
 function draw(field, weight, fieldData, sumInfo, svgId) {
 
     var weight_label, weight_format;
 
     var nvData = {
-        "key"    : "{0} chart".fmt(field),
+        "key"    : "{0}".fmt(field),
         "values" : fieldData
     };
 
     nv.addGraph(function() {
 
         var chart = nv.models.discreteBarChart()
-            .x(function(d) { return d[0] })
-            .y(function(d) { return d[1] })
+            .x(function(d) { return '"{0}"'.fmt(overflow(d[0])); })
+            .y(function(d) { return d[1]; })
             .staggerLabels(true)
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
@@ -34,17 +52,16 @@ function draw(field, weight, fieldData, sumInfo, svgId) {
 
                 var p = 100 * e.value / sumInfo;
                 //console.log(field, x, y, p, e.value, sumInfo);
-                return '<h4>{0}</h4><p><i><b>"{1}"</b>: {2}% ({3}/{4})</i></p>'.fmt(key,
-                                                                                    x,
-                                                                                    p.toFixed(1),
-                                                                                    e.value.toFixed(1),
-                                                                                    sumInfo.toFixed(1));
+                return '<h4>{0}</h4><p><i><b>{1}</b>: '.fmt(key, x) +
+                    '{0}% ({1}/{2})</i></p>'.fmt(p.toFixed(1),
+                                                 e.value.toFixed(1),
+                                                 sumInfo.toFixed(1));
             })
             .showValues(true);
 
-        // If weight is null, will not display axisLabel
         chart.xAxis.axisLabel(field);
 
+        // If weight is null, format yAxis as integers
         if (weight === null) {
             chart.yAxis
                 .tickFormat(d3.format('.0f'));
