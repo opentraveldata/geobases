@@ -1056,7 +1056,7 @@ if is_in_path('google-chrome'):
     BROWSER = 'google-chrome'
 
 # For temporary files
-DEF_OUTPUT_DIR = None
+DEF_OUTPUT_DIR = 'tmp'
 
 # Defaults for map
 DEF_LABEL_FIELDS     = ('name',       'country_name', '__key__')
