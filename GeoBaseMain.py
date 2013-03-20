@@ -951,7 +951,7 @@ def panic_mode():
 
     else:
         if restore:
-            S_MANAGER.restore()
+            S_MANAGER.restore(clean_cache=False)
             print '\nRestored.'
         else:
             print '\nDid not restore.'

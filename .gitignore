@@ -31,3 +31,5 @@
 /*.lprof
 # Ignoring backuop files
 *.orig.*
+# Ignoring local tmp dir
+/tmp
