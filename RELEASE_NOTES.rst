@@ -18,6 +18,7 @@ V5
 
 + 5.0 :
 
+    + *API*: fix failures on *Google App Engine* due to non persistent filesystem
     + *API*: new ``syncFields`` method to synchronize global fields from underlying data
     + *API*: ``set`` and ``setFromDict`` have been combined into one ``set`` method, using the keyword argument syntax
     + *CLI*: add ``-D/--output-dir`` option to configure directory output

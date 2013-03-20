@@ -28,8 +28,7 @@ import os.path as op
 from textwrap import dedent
 from urllib import urlretrieve
 from zipfile import ZipFile
-import shutil
-from shutil import copy, rmtree
+from shutil import copy, rmtree, Error as SameFileError
 
 # Not in standard library
 import yaml
@@ -64,11 +63,23 @@ if op.isdir('/tmp'):
 else:
     COMPLETION_BUILT_FILE = op.join(os.getcwd(), '_GeoBase')
 
-if not op.isdir(CACHE_DIR):
-    os.makedirs(CACHE_DIR)
+try:
+    if not op.isdir(CACHE_DIR):
+        os.makedirs(CACHE_DIR)
 
-if not op.isdir(COMPLETION_TARGET_DIR):
-    os.makedirs(COMPLETION_TARGET_DIR)
+except OSError:
+    # Happens if you're using Google App Engine :)
+    # os.makedirs raises OSError to prevent you from writing
+    # on the non-persistent filesystem
+    CACHE_DIR = '.'
+
+try:
+    if not op.isdir(COMPLETION_TARGET_DIR):
+        os.makedirs(COMPLETION_TARGET_DIR)
+
+except OSError:
+    COMPLETION_TARGET_DIR = '.'
+
 
 # Poorly documented paths are relative from the sources dir
 DEFAULT_IS_RELATIVE = True
@@ -85,7 +96,8 @@ class SourcesManager(object):
                  sources_dir=SOURCES_DIR,
                  cache_dir=CACHE_DIR,
                  update_script_path=UPDATE_SCRIPT_PATH,
-                 override=False):
+                 override=False,
+                 verbose=True):
 
         # Path to the configuration file origin file
         self.sources_conf_path_origin = sources_conf_path_origin
@@ -100,10 +112,12 @@ class SourcesManager(object):
                 copy(self.sources_conf_path_origin,
                      self.sources_conf_path)
 
-            except shutil.Error:
-                # Copy did not happen because the two files are the same
-                print 'Did not copy %s to %s' % (self.sources_conf_path_origin, 
-                                                 self.sources_conf_path)
+            except (SameFileError, IOError):
+                # Copy did not happen because files are the same, or access problem
+                if verbose:
+                    print 'Did not copy %s to %s' % (self.sources_conf_path_origin, 
+                                                     self.sources_conf_path)
+
                 # We will use the origin file
                 self.sources_conf_path = self.sources_conf_path_origin
 
@@ -171,7 +185,8 @@ class SourcesManager(object):
         try:
             copy(COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
 
-        except shutil.Error:
+        except (SameFileError, IOError):
+            # Copy did not happen because files are the same, or access problem
             if verbose:
                 print '/!\ Could not copy from/to:\n* %s\n* %s' % \
                         (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
@@ -218,13 +233,16 @@ class SourcesManager(object):
 
         full_cache_dir = op.join(self.cache_dir, source)
 
-        if not op.isdir(full_cache_dir):
-            os.makedirs(full_cache_dir)
+        try:
+            if not op.isdir(full_cache_dir):
+                os.makedirs(full_cache_dir)
+        except OSError:
+            full_cache_dir = '.'
 
         try:
             copy(path, full_cache_dir)
-        except shutil.Error:
-            # Copy did not happen because the two files are the same
+        except (SameFileError, IOError):
+            # Copy did not happen because files are the same, or access problem
             return False, path
         else:
             return True, op.join(full_cache_dir, op.basename(path))
@@ -292,21 +310,26 @@ class SourcesManager(object):
             f.write(self.convert(self.sources))
 
 
-    def restore(self, clean_cache=False, load=False):
+    def restore(self, clean_cache=False, load=False, verbose=True):
         """Restore original file.
         """
         if clean_cache:
-            rmtree(CACHE_DIR)
-            os.makedirs(CACHE_DIR)
+            try:
+                rmtree(CACHE_DIR)
+                os.makedirs(CACHE_DIR)
+            except OSError:
+                if verbose:
+                    print 'Failed to clean %s' % CACHE_DIR
 
         try:
             copy(self.sources_conf_path_origin,
                  self.sources_conf_path)
 
-        except shutil.Error:
-            # Copy did not happen because the two files are the same
-            print 'Did not copy %s to %s' % (self.sources_conf_path_origin,
-                                             self.sources_conf_path)
+        except (SameFileError, IOError):
+            # Copy did not happen because files are the same, or access problem
+            if verbose:
+                print 'Did not copy %s to %s' % (self.sources_conf_path_origin,
+                                                 self.sources_conf_path)
 
         if load:
             self.load()
@@ -415,8 +438,11 @@ class SourcesManager(object):
         """
         full_cache_dir = op.join(self.cache_dir, source)
 
-        if not op.isdir(full_cache_dir):
-            os.makedirs(full_cache_dir)
+        try:
+            if not op.isdir(full_cache_dir):
+                os.makedirs(full_cache_dir)
+        except OSError:
+            full_cache_dir = '.'
 
         if not is_remote(path):
             if path['local'] is True:
