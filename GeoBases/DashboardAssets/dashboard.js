@@ -30,13 +30,13 @@ function overflow(text) {
 
 
 
-function draw(field, weight, fieldData, sumInfo, svgId) {
+function draw(o) {
 
     var weight_label, weight_format;
 
     var nvData = {
-        "key"    : "{0}".fmt(field),
-        "values" : fieldData
+        "key"    : "{0}".fmt(o.field),
+        "values" : o.counters
     };
 
     nv.addGraph(function() {
@@ -47,32 +47,32 @@ function draw(field, weight, fieldData, sumInfo, svgId) {
             .staggerLabels(true)
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
-                sumInfo = parseFloat(sumInfo);
+                sumInfo = parseFloat(o.sumInfo);
                 e.value = parseFloat(e.value);
 
                 var p = 100 * e.value / sumInfo;
-                //console.log(field, x, y, p, e.value, sumInfo);
+                //console.log(o.field, x, y, p, e.value, o.sumInfo);
                 return '<h4>{0}</h4><p><i><b>{1}</b>: '.fmt(key, x) +
                     '{0}% ({1}/{2})</i></p>'.fmt(p.toFixed(1),
                                                  e.value.toFixed(1),
-                                                 sumInfo.toFixed(1));
+                                                 o.sumInfo.toFixed(1));
             })
             .showValues(true);
 
-        chart.xAxis.axisLabel(field);
+        chart.xAxis.axisLabel(o.field);
 
-        // If weight is null, format yAxis as integers
-        if (weight === null) {
+        // If o.weight is null, format yAxis as integers
+        if (o.weight === null) {
             chart.yAxis
                 .tickFormat(d3.format('.0f'));
                 //.axisLabel(null)
         } else {
             chart.yAxis
                 .tickFormat(d3.format('.2f'));
-                //.axisLabel(weight)
+                //.axisLabel(o.weight)
         }
 
-        d3.select(svgId)
+        d3.select(o.svgId)
             .datum([nvData])
             .transition()
             .duration(500)
@@ -120,12 +120,13 @@ function initialize(jsonData) {
         $("#container").append(buildCanvas(id));
 
         // Drawing
-        draw(field,
-             jsonData.weight,
-             jsonData.counters[field],
-             jsonData.sum_info[field],
-             '#{0} svg'.fmt(id));
-
+        draw({
+            'field'    : field,
+            'weight'   : jsonData.weight,
+            'counters' : jsonData.counters[field],
+            'sumInfo'  : jsonData.sum_info[field],
+            'svgId'    : '#{0} svg'.fmt(id)
+        });
     }
 }
 
