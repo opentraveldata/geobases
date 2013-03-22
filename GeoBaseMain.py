@@ -1049,7 +1049,7 @@ DEF_JOIN     = []
 
 # Globals for http server
 ADDRESS = '0.0.0.0'
-PORT    = 8000
+PORT    = 4135
 BROWSER = 'firefox'
 
 if is_in_path('google-chrome'):
