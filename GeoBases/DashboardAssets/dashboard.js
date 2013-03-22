@@ -101,22 +101,31 @@ function initialize(jsonData) {
     $('#title').html('(by {0})'.fmt(jsonData.weight === null ? 'volume' : jsonData.weight));
 
     var id, field;
+    var fields = [];
 
     for (field in jsonData.counters){
         if (jsonData.counters.hasOwnProperty(field)) {
-
-            id = "canvas_{0}".fmt(field);
-
-            // Adding div and svg
-            $("#container").append(buildCanvas(id));
-
-            // Drawing
-            draw(field,
-                 jsonData.weight,
-                 jsonData.counters[field],
-                 jsonData.sum_info[field],
-                 '#{0} svg'.fmt(id));
+            fields.push(field);
         }
+    }
+    fields.sort();
+
+    var i, c;
+    for (i=0, c=fields.length; i<c; i++) {
+
+        field = fields[i];
+        id = "canvas_{0}".fmt(field);
+
+        // Adding div and svg
+        $("#container").append(buildCanvas(id));
+
+        // Drawing
+        draw(field,
+             jsonData.weight,
+             jsonData.counters[field],
+             jsonData.sum_info[field],
+             '#{0} svg'.fmt(id));
+
     }
 }
 
