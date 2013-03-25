@@ -33,3 +33,5 @@
 *.orig.*
 # Ignoring local tmp dir
 /tmpviz
+# Ignore coveralls.io file
+/.coveralls.yml

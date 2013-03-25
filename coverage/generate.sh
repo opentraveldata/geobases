@@ -11,8 +11,11 @@ export PYTHONPATH=.:..:$PYTHONPATH
 coverage erase
 coverage run ./test/test_GeoBases.py -v
 rm -f $DIRNAME/htmlcov/*
-coverage html --directory=$DIRNAME/htmlcov --omit="$HOME/.local*"
+coverage html
 
 # Results
 echo -e "\n* HTML results in $DIRNAME/htmlcov"
 firefox $DIRNAME/htmlcov/index.html
+
+# Deployment
+echo -e "\nTo deploy on coveralls.io, execute (need .coveralls.yml repo_token set):\n$ coveralls"
