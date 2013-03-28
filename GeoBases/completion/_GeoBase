@@ -613,6 +613,7 @@ _hello() {
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-d --dashboard)"{-d,--dashboard}"[Dashboard display (aggregated view)]" \
      "(-D --output-dir)"{-D,--output-dir}"[Change output directory for temporary files]: :->output_dir" \
+     "(   --port)"--port"[Change port when serving HTML content]: :->port" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
      "(* -)"{-V,--version}"[Show package and version information, then exit]" \
@@ -780,6 +781,10 @@ _hello() {
     output_dir)
         _arguments \
             "*:directory:_files"
+        ;;
+    port)
+        _arguments \
+            "*:port:(1337 8001 9002)"
         ;;
     #*)
     #    _files
