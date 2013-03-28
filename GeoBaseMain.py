@@ -486,7 +486,7 @@ def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
         print delim.join(l)
 
 
-def display_browser(templates, output_dir, nb_res):
+def display_browser(templates, output_dir, nb_res, address, port):
     """Display templates in the browser.
     """
     # Save current working directory
@@ -510,23 +510,23 @@ def display_browser(templates, output_dir, nb_res):
                 to_be_launched.append(template)
             else:
                 print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
-                        (BROWSER, ADDRESS, PORT, template, nb_res)
+                        (BROWSER, address, port, template, nb_res)
 
         elif template.endswith('_map.html'):
             if nb_res <= MAP_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
                 print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
-                        (BROWSER, ADDRESS, PORT, template, nb_res)
+                        (BROWSER, address, port, template, nb_res)
         else:
             to_be_launched.append(template)
 
     if to_be_launched:
-        urls = ['%s:%s/%s' % (ADDRESS, PORT, tpl) for tpl in to_be_launched]
+        urls = ['%s:%s/%s' % (address, port, tpl) for tpl in to_be_launched]
         os.system('%s %s 2>/dev/null &' % (BROWSER, ' '.join(urls)))
 
     # Serving the output_dir, where we are
-    launch_http_server(ADDRESS, PORT)
+    launch_http_server(address, port)
 
     # Moving back
     os.chdir(previous_wd)
@@ -1464,7 +1464,7 @@ def handle_args():
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
         and a simple HTTP server will serve the HTML results
-        on %s:%s.
+        on %s:%s by default.
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
@@ -1509,7 +1509,7 @@ def handle_args():
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
         and a simple HTTP server will serve the HTML results
-        on %s:%s.
+        on %s:%s by default.
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
@@ -1552,7 +1552,7 @@ def handle_args():
         HTML/Javascript/JSON files are generated.
         Unless --quiet is also set, a browser will be launched
         and a simple HTTP server will serve the HTML results
-        on %s:%s.
+        on %s:%s by default.
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
@@ -1564,6 +1564,15 @@ def handle_args():
         '''),
         metavar = 'DIR',
         default = DEF_OUTPUT_DIR)
+
+    parser.add_argument('--port',
+        help = dedent('''\
+        This option defines the port when serving HTML content.
+        Default is %s.
+        ''' % PORT),
+        metavar = 'PORT',
+        type=int,
+        default = PORT)
 
     parser.add_argument('-v', '--verbose',
         help = dedent('''\
@@ -2518,6 +2527,10 @@ def main():
     if args['phonetic_field'] is None or args['phonetic_field'] == SKIP:
         args['phonetic_field'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
+    # Server config
+    address = ADDRESS
+    port = args['port']
+
     # Temporary file folder
     output_dir = DEF_OUTPUT_DIR
 
@@ -2867,7 +2880,7 @@ def main():
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
-            display_browser(templates, output_dir, nb_res)
+            display_browser(templates, output_dir, nb_res, address, port)
 
         if 'map' not in rendered:
             # Happens if you try to use --map
@@ -2890,7 +2903,7 @@ def main():
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
-            display_browser(templates, output_dir, nb_res)
+            display_browser(templates, output_dir, nb_res, address, port)
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
@@ -2912,7 +2925,7 @@ def main():
         rendered, (templates, _) = visu_info
 
         if templates and verbose:
-            display_browser(templates, output_dir, nb_res)
+            display_browser(templates, output_dir, nb_res, address, port)
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
