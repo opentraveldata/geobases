@@ -110,7 +110,7 @@ function drawNumerical(o) {
         chart.tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
                 //console.log(o.field, x, y, e);
-                return '<h4>{0}</h4><p><i><b><= {1} category</b>: '.fmt(key, x) +
+                return '<h4>{0}</h4><p><i><b>"<= {1}" category</b>: '.fmt(key, x) +
                     '{0} points</i></p>'.fmt(y);
             });
 
