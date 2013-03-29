@@ -2288,7 +2288,7 @@ def ask_mode():
 #@profile
 def main():
     """
-    Arguments handling.
+    Main function.
     """
     # Filter colored signals on terminals.
     # Necessary for Windows CMD

@@ -3017,7 +3017,7 @@ class GeoBase(object):
 
 
 
-    def _buildDashboardCounters(self, keep, get_weight, from_keys):
+    def _buildDashboardCounters(self, keep, get_weight, keys):
         """Dashboard counters.
         """
         # Main structure, dict: field -> data
@@ -3030,7 +3030,7 @@ class GeoBase(object):
 
             counters[field] = defaultdict(int)
 
-            for key in from_keys:
+            for key in keys:
                 try:
                     w = float(get_weight(key))
                 except ValueError:
