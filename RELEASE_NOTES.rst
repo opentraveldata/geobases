@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *CLI*: ``-D/--output-dir`` option is now ``-o/--output-dir``
     + *CLI*: ``-o/--omit`` option is now ``-x/--exclude``
     + *CLI*: new ``--port`` option to change the port for ``SimpleHTTPServer``, useful when running multiple instances
     + *CLI*: for ``SimpleHTTPServer``, no longer use *8000* port (too mainstream :D), now runs on port *4135*
