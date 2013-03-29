@@ -3070,7 +3070,14 @@ class GeoBase(object):
         for field in counters:
             counters[field] = sorted(counters[field].iteritems(),
                                      key=lambda k_v: k_v[1],
-                                     reverse=True)[0:keep]
+                                     reverse=True)
+
+            # Tail information
+            if len(counters[field]) > keep:
+                head = counters[field][:keep]
+                tail = counters[field][keep:]
+
+                counters[field] = head + [('others', sum(v for k, v in tail))]
 
         return counters, sum_info
 
