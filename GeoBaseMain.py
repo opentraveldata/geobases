@@ -1079,7 +1079,7 @@ DEF_GRAPH_FIELDS = ('continent_name', 'raw_offset',
 
 # Dashboard defaults
 DEF_DASHBOARD_WEIGHT = None
-DEF_DASHBOARD_KEEP   = 5
+DEF_DASHBOARD_KEEP   = 4
 
 # Terminal width defaults
 DEF_CHAR_COL = 25
