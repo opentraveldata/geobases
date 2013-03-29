@@ -3017,32 +3017,9 @@ class GeoBase(object):
 
 
 
-    def buildDashboardData(self, keep=10, weight=None, from_keys=None):
-        """Build dashboard data.
-
-        :param keep:   the number of values kept after counting for \
-                each field
-        :param weight: the field used as weight for the graph. Leave \
-                ``None`` if you just want to count the number of keys
-        :param from_keys: only use this iterable of keys if not ``None``
-        :returns: a dictionary of fields counters information
+    def _buildDashboardCounters(self, keep, get_weight, from_keys):
+        """Dashboard counters.
         """
-        # Arguments testing
-        if weight is not None and weight not in self.fields:
-            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
-
-        # Defining get_weight lambda function
-        if weight is None:
-            get_weight = lambda k: 1
-        else:
-            get_weight = lambda k: self.get(k, weight)
-
-        if from_keys is None:
-            from_keys = iter(self)
-
-        # Since we are going to loop several times over it, we list()
-        from_keys = list(from_keys)
-
         # Main structure, dict: field -> data
         counters = {}
 
@@ -3078,6 +3055,39 @@ class GeoBase(object):
                 tail = counters[field][keep:]
 
                 counters[field] = head + [('others', sum(v for k, v in tail))]
+
+        return counters, sum_info
+
+
+
+
+    def buildDashboardData(self, keep=10, weight=None, from_keys=None):
+        """Build dashboard data.
+
+        :param keep:   the number of values kept after counting for \
+                each field
+        :param weight: the field used as weight for the graph. Leave \
+                ``None`` if you just want to count the number of keys
+        :param from_keys: only use this iterable of keys if not ``None``
+        :returns: a dictionary of fields counters information
+        """
+        # Arguments testing
+        if weight is not None and weight not in self.fields:
+            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
+
+        # Defining get_weight lambda function
+        if weight is None:
+            get_weight = lambda k: 1
+        else:
+            get_weight = lambda k: self.get(k, weight)
+
+        if from_keys is None:
+            from_keys = iter(self)
+
+        # Since we are going to loop several times over it, we list()
+        from_keys = list(from_keys)
+
+        counters, sum_info = self._buildDashboardCounters(keep, get_weight, from_keys)
 
         return counters, sum_info
 
