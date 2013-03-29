@@ -1374,7 +1374,7 @@ def handle_args():
         help = dedent('''\
         Specify a limit for the number of results.
         This must be an integer.
-        Default is %s, except in quiet mode where it is disabled.
+        Default is %s, except in quiet display where it is disabled.
         ''' % DEF_NUM_COL),
         metavar = 'NUM',
         default = None)
@@ -1442,7 +1442,7 @@ def handle_args():
 
     parser.add_argument('-Q', '--quiet-options',
         help = dedent('''\
-        Custom the quiet mode.
+        Customize the quiet display.
         2 optional arguments: delimiter, header.
             1) default delimiter is "%s".
             2) the second parameter is used to control
@@ -1471,6 +1471,7 @@ def handle_args():
 
     parser.add_argument('-M', '--map-options',
         help = dedent('''\
+        Customize the map display.
         6 optional arguments: label, weight, color, icon, duplicates, draw_join_fields.
             1) label is the field to display on map points.
                Default is %s depending on fields.
