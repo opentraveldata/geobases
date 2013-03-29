@@ -2550,7 +2550,10 @@ def main():
 
     # Server config
     address = ADDRESS
-    port = args['port']
+    port = PORT
+
+    if args['port'] != SKIP:
+        port = args['port']
 
     # Temporary file folder
     output_dir = DEF_OUTPUT_DIR
