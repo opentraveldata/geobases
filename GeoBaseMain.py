@@ -1556,7 +1556,7 @@ def handle_args():
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
 
-    parser.add_argument('-D', '--output-dir',
+    parser.add_argument('-o', '--output-dir',
         help = dedent('''\
         This option defines the output directory for
         temporary files generated with --map, --graph, --dashboard.
