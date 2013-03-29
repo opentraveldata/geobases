@@ -408,14 +408,14 @@ def display_terminal(geob, list_of_things, shown_fields, ref_type, important):
         print ''.join(l)
 
 
-def fields_to_show(defaults, omit, show, show_additional):
+def fields_to_show(defaults, exclude, show, show_additional):
     """Process fields to show.
     """
     if not show:
         show = defaults
 
     # Building final shown headers
-    shown_fields = [f for f in show if f not in omit]
+    shown_fields = [f for f in show if f not in exclude]
 
     # Trying to cleverly position addtional field
     positions = []
@@ -1012,7 +1012,7 @@ DEF_FUZZY_FIELDS    = ('name', 'country_name', 'currency_name', '__key__')
 DEF_EXACT_FIELDS    = ('__key__',)
 DEF_PHONETIC_FIELDS = ('name', 'country_name', 'currency_name', '__key__')
 DEF_PHONETIC_METHOD = 'dmetaphone'
-DEF_OMIT_FIELDS     = []
+DEF_EXCLUDE_FIELDS  = []
 DEF_SHOW_FIELDS     = []
 DEF_SHOW_ADD_FIELDS = []
 
@@ -1339,7 +1339,7 @@ def handle_args():
         metavar = 'FORMAT',
         default = DEF_TREP_FORMAT)
 
-    parser.add_argument('-o', '--omit',
+    parser.add_argument('-x', '--exclude',
         help = dedent('''\
         Does not print some fields on stdout.
         May help to get cleaner output.
@@ -1347,7 +1347,7 @@ def handle_args():
         ''' % REF),
         metavar = 'FIELD',
         nargs = '+',
-        default = DEF_OMIT_FIELDS)
+        default = DEF_EXCLUDE_FIELDS)
 
     parser.add_argument('-s', '--show',
         help = dedent('''\
@@ -1435,7 +1435,7 @@ def handle_args():
         help = dedent('''\
         Turn off verbosity and provide a programmer friendly output.
         This is a csv-like output, and may still be combined with
-        --omit and --show. Configure with --quiet-options.
+        --show and --exclude. Configure with --quiet-options.
         '''),
         action = 'store_true')
 
@@ -2599,9 +2599,9 @@ def main():
     # Reading phonetic options
     phonetic_method = args['phonetic_method']
 
-    # show / omit
-    if args['omit'] == SKIP:
-        args['omit'] = DEF_OMIT_FIELDS
+    # show / exclude
+    if args['exclude'] == SKIP:
+        args['exclude'] = DEF_EXCLUDE_FIELDS
 
     if args['show'] == SKIP:
         args['show'] = DEF_SHOW_FIELDS
@@ -2644,7 +2644,7 @@ def main():
         if f is not None
     ] + graph_fields
 
-    for field in args['show'] + args['show_additional'] + args['omit'] + fields_to_test:
+    for field in args['show'] + args['show_additional'] + args['exclude'] + fields_to_test:
         field, ext_field = check_ext_field(g, field)
 
         if field not in [REF] + g.fields:
@@ -2937,7 +2937,7 @@ def main():
 
     if frontend == 'terminal':
         shown_fields = fields_to_show([REF] + g.fields[:],
-                                      set(args['omit']),
+                                      set(args['exclude']),
                                       args['show'],
                                       args['show_additional'])
 
@@ -2956,7 +2956,7 @@ def main():
         ]
 
         shown_fields = fields_to_show(defaults,
-                                      set(args['omit']),
+                                      set(args['exclude']),
                                       args['show'],
                                       args['show_additional'])
 
