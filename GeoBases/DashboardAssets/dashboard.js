@@ -87,10 +87,10 @@ function draw(o) {
 }
 
 
-function buildCanvas(id) {
+function buildCanvas(id, grid_size) {
 
     return '' +
-        '<div id="{0}" class="span4">'.fmt(id) +
+        '<div id="{0}" class="span{1}">'.fmt(id, grid_size) +
             '<svg style="height:250px; padding:10px;"></svg>' +
         '</div>';
 }
@@ -100,7 +100,7 @@ function initialize(jsonData) {
 
     $('#title').html('(by {0})'.fmt(jsonData.weight === null ? 'volume' : jsonData.weight));
 
-    var id, field;
+    var id, field, grid_size;
     var fields = [];
 
     for (field in jsonData.counters){
@@ -110,6 +110,14 @@ function initialize(jsonData) {
     }
     fields.sort();
 
+    if (fields.length > 12) {
+        grid_size = 4;
+    } else if (fields.length > 4) {
+        grid_size = 6;
+    } else {
+        grid_size = 12;
+    }
+
     var i, c;
     for (i=0, c=fields.length; i<c; i++) {
 
@@ -117,7 +125,7 @@ function initialize(jsonData) {
         id = "canvas_{0}".fmt(field);
 
         // Adding div and svg
-        $("#container").append(buildCanvas(id));
+        $("#container").append(buildCanvas(id, grid_size));
 
         // Drawing
         draw({
