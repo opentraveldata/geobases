@@ -152,6 +152,7 @@ _hello() {
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-d --dashboard)"{-d,--dashboard}"[Dashboard display (aggregated view)]" \
+     "(-D --dashboard-options)"{-D,--dashboard-options}"[Custom dashboard display]:*: :->dashboard_options" \
      "(-o --output-dir)"{-o,--output-dir}"[Change output directory for temporary files]: :->output_dir" \
      "(   --port)"--port"[Change port when serving HTML content]: :->port" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
@@ -166,6 +167,7 @@ _hello() {
     interactive=`get_opt_value "${opt_args[-I]}" "${opt_args[--interactive-query]}"`
     quiet_options=`get_opt_value "${opt_args[-Q]}" "${opt_args[--quiet-options]}"`
     map_options=`get_opt_value "${opt_args[-M]}" "${opt_args[--map-options]}"`
+    dashboard_options=`get_opt_value "${opt_args[-D]}" "${opt_args[--dashboard-options]}"`
     graph_fields=`get_opt_value "${opt_args[-G]}" "${opt_args[--graph-fields]}"`
 
 
@@ -308,7 +310,22 @@ _hello() {
             ;;
         *)
             _arguments \
-                "*:No more arguments for -M"
+                "*:No more arguments for -M/--map-options"
+            ;;
+        esac
+        ;;
+    dashboard_options)
+        case `count_opt $dashboard_options` in
+        0)
+            _fields_extended "$base" "dashboard weight"
+            ;;
+        1)
+            _arguments \
+                "*:dashboard keep:(3 5 8)"
+            ;;
+        *)
+            _arguments \
+                "*:No more arguments for -D/--dashboard-options"
             ;;
         esac
         ;;
