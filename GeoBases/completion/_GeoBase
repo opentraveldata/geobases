@@ -597,7 +597,7 @@ _hello() {
      "(   --no-grid)"--no-grid"[Disable grid for geographical searches]" \
      "(-t --trep)"{-t,--trep}"[OpenTrep query]: :->trep_value" \
      "(-T --trep-format)"{-T,--trep-format}"[Specify a format for trep searches, default is \"S\"]: :->trep_format" \
-     "(-o --omit)"{-o,--omit}"[Omit some fields in output]:*: :->omit" \
+     "(-x --exclude)"{-x,--exclude}"[Exclude some fields in output]:*: :->exclude" \
      "(-s --show)"{-s,--show}"[Only show some fields in output]:*: :->show" \
      "(-S --show-additional)"{-S,--show-additional}"[Show additional fields in output]:*: :->show_additional" \
      "(-l --limit)"{-l,--limit}"[Specify a limit in the number of results]: :->limit" \
@@ -612,7 +612,7 @@ _hello() {
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \
      "(-w --with-types)"{-w,--with-types}"[For graph display, consider values typed for each field]" \
      "(-d --dashboard)"{-d,--dashboard}"[Dashboard display (aggregated view)]" \
-     "(-D --output-dir)"{-D,--output-dir}"[Change output directory for temporary files]: :->output_dir" \
+     "(-o --output-dir)"{-o,--output-dir}"[Change output directory for temporary files]: :->output_dir" \
      "(   --port)"--port"[Change port when serving HTML content]: :->port" \
      "(-v --verbose)"{-v,--verbose}"[Provide additional informations during data loading and queries]" \
      "(* -)"{-h,--help}"[Show this help message and exit]" \
@@ -641,7 +641,7 @@ _hello() {
     exact_field|fuzzy_field|phonetic_field)
         _fields "$base" "field"
         ;;
-    show|show_additional|omit)
+    show|show_additional|exclude)
         _fields_and_join "$base" "field"
         ;;
     phonetic_method)
