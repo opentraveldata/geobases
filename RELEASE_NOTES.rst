@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *CLI*: new ``-D/--dashboard-options`` option to control the dashboard display
     + *CLI*: ``-D/--output-dir`` option is now ``-o/--output-dir``
     + *CLI*: ``-o/--omit`` option is now ``-x/--exclude``
     + *CLI*: new ``--port`` option to change the port for ``SimpleHTTPServer``, useful when running multiple instances
