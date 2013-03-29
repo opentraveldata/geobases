@@ -923,7 +923,8 @@ def error(name, *args):
             print >> stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'type':
-        print >> stderr, '\n/!\ Wrong type for "%s", should be "%s".' % (args[0], args[1])
+        print >> stderr, '\n/!\ Wrong type for "%s", should be %s, but was "%s".' % \
+                (args[0], args[1], args[2])
 
     elif name == 'aborting':
         print >> stderr, '\n\n/!\ %s' % args[0]
@@ -2308,7 +2309,7 @@ def main():
         try:
             limit = int(args['limit'])
         except ValueError:
-            error('type', args['limit'], 'int')
+            error('type', 'limit', 'int', args['limit'])
 
     # Interactive query?
     interactive_query_mode = args['interactive_query'] is not None
