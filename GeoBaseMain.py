@@ -1077,6 +1077,10 @@ DEF_GRAPH_FIELDS = ('continent_name', 'raw_offset',
                    tuple(generate_headers(5)) + \
                    ('__key__',)
 
+# Dashboard defaults
+DEF_DASHBOARD_WEIGHT = None
+DEF_DASHBOARD_KEEP   = 5
+
 # Terminal width defaults
 DEF_CHAR_COL = 25
 MIN_CHAR_COL = 3
@@ -1557,6 +1561,21 @@ def handle_args():
         on %s:%s by default.
         ''' % (ADDRESS, PORT)),
         action = 'store_true')
+
+    parser.add_argument('-D', '--dashboard-options',
+        help = dedent('''\
+        Customize the dashboard display.
+        2 optional arguments: weight, keep.
+            1) default weight is "%s".
+            2) the second parameter is used to control
+               the number of elements kept in each graph.
+               Default is %s.
+        For any field, you may put "%s" to leave the default value.
+        Example: -D _ 10
+        ''' % (DEF_DASHBOARD_WEIGHT, DEF_DASHBOARD_KEEP, SKIP)),
+        nargs = '+',
+        metavar = 'OPTION',
+        default = [])
 
     parser.add_argument('-o', '--output-dir',
         help = dedent('''\
@@ -2587,6 +2606,16 @@ def main():
     if len(args['quiet_options']) >= 2 and args['quiet_options'][1] != SKIP:
         header_display = args['quiet_options'][1]
 
+    # Reading dashboard options
+    dashboard_weight = DEF_DASHBOARD_WEIGHT
+    dashboard_keep   = DEF_DASHBOARD_KEEP
+
+    if len(args['dashboard_options']) >= 1 and args['dashboard_options'][0] != SKIP:
+        dashboard_weight = None if args['dashboard_options'][0] == DISABLE else args['dashboard_options'][0]
+
+    if len(args['dashboard_options']) >= 2 and args['dashboard_options'][1] != SKIP:
+        dashboard_keep = args['dashboard_options'][1]
+
     # Reading interactive query options
     interactive_field = best_field(DEF_INTER_FIELDS, g.fields)
     interactive_type  = DEF_INTER_TYPE
@@ -2642,7 +2671,9 @@ def main():
 
     # Failing on unknown fields
     fields_to_test = [
-        f for f in (icon_label, icon_weight, icon_color, interactive_field, graph_weight)
+        f for f in (icon_label, icon_weight, icon_color,
+                    interactive_field,
+                    graph_weight, dashboard_weight)
         if f is not None
     ] + graph_fields
 
@@ -2673,6 +2704,11 @@ def main():
     if phonetic_method not in ALLOWED_PHONETIC_METHODS:
         error('wrong_value', phonetic_method, ALLOWED_PHONETIC_METHODS)
 
+    # Testing if keep is an int
+    try:
+        dashboard_keep = int(dashboard_keep)
+    except ValueError:
+        error('type', 'keep', 'int', dashboard_keep)
 
     #
     # MAIN
@@ -2919,8 +2955,8 @@ def main():
     if frontend == 'dashboard':
         visu_info = g.dashboardVisualize(output=g.data,
                                          output_dir=output_dir,
-                                         keep=5,
-                                         weight=None,
+                                         keep=dashboard_keep,
+                                         weight=dashboard_weight,
                                          from_keys=ex_keys(res),
                                          verbose=verbose)
 
@@ -2931,8 +2967,8 @@ def main():
         else:
             # In quiet mode we do not launch the server
             # but we display the graph structure
-            print json.dumps(g.buildDashboardData(keep=5,
-                                                  weight=None,
+            print json.dumps(g.buildDashboardData(keep=dashboard_keep,
+                                                  weight=dashboard_weight,
                                                   from_keys=ex_keys(res)),
                              indent=4)
 
