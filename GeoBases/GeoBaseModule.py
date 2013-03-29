@@ -3060,6 +3060,66 @@ class GeoBase(object):
 
 
 
+    def _detectNumericFields(self, threshold=0.99):
+        """Detect numeric fields.
+        """
+        numeric_fields = []
+
+        for field in self.fields:
+            if str(field).startswith('__') or \
+               str(field).endswith('@raw'):
+                continue
+
+            counter = {
+                'numeric' : 0,
+                'total'   : 0,
+            }
+
+            for key in self:
+                if not self.get(key, field):
+                    # Empty values are not counted
+                    continue
+
+                try:
+                    float(self.get(key, field))
+                except (ValueError, TypeError):
+                    # TypeError when input type was not string or float/int
+                    # ValueError for failing to convert
+                    pass
+                else:
+                    counter['numeric'] += 1
+                counter['total'] += 1
+
+            if counter['numeric'] >= threshold * counter['total']:
+                # As we removed empty values,
+                # we make sure we have something left
+                if counter['total'] > 0:
+                    numeric_fields.append(field)
+
+        return numeric_fields
+
+
+    def _buildDashboardDensity(self, field, get_weight, keys):
+        """Build dashboard density for a numeric field.
+        """
+        values = []
+
+        for key in keys:
+            if not self.get(key, field):
+                # Empty values are not counted
+                continue
+
+            try:
+                w = float(self.get(key, field)) * get_weight(key)
+            except (ValueError, TypeError):
+                # TypeError when input type was not even string of float/int
+                # ValueError for failing to convert
+                continue
+            else:
+                values.append(w)
+
+        return _build_density(values, points=10)
+
 
     def buildDashboardData(self, keep=10, weight=None, from_keys=None):
         """Build dashboard data.
@@ -3087,9 +3147,15 @@ class GeoBase(object):
         # Since we are going to loop several times over it, we list()
         from_keys = list(from_keys)
 
+        # Computing counters and sum_info for bar charts
         counters, sum_info = self._buildDashboardCounters(keep, get_weight, from_keys)
 
-        return counters, sum_info
+        # Computing densities
+        densities = {}
+        for field in self._detectNumericFields():
+            densities[field] = self._buildDashboardDensity(field, get_weight, from_keys)
+
+        return counters, sum_info, densities
 
 
 
@@ -3122,9 +3188,9 @@ class GeoBase(object):
 
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
-        counters, sum_info = self.buildDashboardData(keep=keep,
-                                                     weight=weight,
-                                                     from_keys=from_keys)
+        counters, sum_info, densities = self.buildDashboardData(keep=keep,
+                                                                weight=weight,
+                                                                from_keys=from_keys)
 
         # Dump the json geocodes
         json_name = '%s_dashboard.json' % op.join(output_dir, output)
@@ -3133,6 +3199,7 @@ class GeoBase(object):
             out.write(json.dumps({
                 'counters' : counters,
                 'sum_info' : sum_info,
+                'densities': densities,
                 'weight'   : weight,
                 'keep'     : keep,
             }))
@@ -4027,6 +4094,33 @@ def build_cache_key(*args, **kwargs):
     # We handle the fact that dictionary are not sorted, but this
     # will build the smae key for parameters
     return tuple(args) + tuple(kwargs[k] for k in sorted(kwargs))
+
+
+
+def _build_density(values, points=10):
+    """Build density from a list of values.
+    """
+    if not values:
+        return []
+
+    values = sorted(values)
+
+    min_val = min(values)
+    max_val = max(values)
+    step = float(max_val - min_val) / points
+
+    # k represents the k-th interval
+    counter = defaultdict(int)
+    k = 0
+
+    for v in values:
+        upper = min_val + k * step
+        if v <= upper:
+            counter[upper] += 1
+        else:
+            k += 1
+
+    return sorted(counter.iteritems(), key = lambda k_v : k_v[0])
 
 
 
