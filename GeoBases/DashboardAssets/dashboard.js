@@ -87,6 +87,59 @@ function draw(o) {
 }
 
 
+function drawNumerical(o) {
+
+    var nvData = {
+        "key"    : "{0}".fmt(o.field),
+        "values" : []
+    };
+
+    var i, c;
+    for (i=0, c=o.density.length; i<c; i++) {
+        nvData.values.push({
+            'x' : o.density[i][0],
+            'y' : o.density[i][1]
+        });
+    }
+
+    nv.addGraph(function() {
+
+        var chart = nv.models.lineChart();
+
+        chart.xAxis.axisLabel("{0} density".fmt(o.field));
+        chart.tooltips(true)
+            .tooltipContent(function(key, x, y, e, graph) {
+                //console.log(o.field, x, y, e);
+                return '<h4>{0}</h4><p><i><b><= {1} category</b>: '.fmt(key, x) +
+                    '{0} points</i></p>'.fmt(y);
+            });
+
+        // If o.weight is null, format yAxis as integers
+        if (o.weight === null) {
+            chart.yAxis
+                .tickFormat(d3.format('.0f'));
+                //.axisLabel(null)
+        } else {
+            chart.yAxis
+                .tickFormat(d3.format('.2f'));
+                //.axisLabel(o.weight)
+        }
+
+        d3.select(o.svgId)
+            .datum([nvData])
+            .transition()
+            .duration(500)
+            .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+
+    });
+
+}
+
+
 function buildCanvas(id, grid_size) {
 
     return '' +
@@ -102,6 +155,7 @@ function initialize(jsonData) {
 
     var id, field, grid_size;
     var fields = [];
+    var num_fields = [];
 
     for (field in jsonData.counters){
         if (jsonData.counters.hasOwnProperty(field)) {
@@ -110,9 +164,17 @@ function initialize(jsonData) {
     }
     fields.sort();
 
-    if (fields.length > 12) {
+    for (field in jsonData.densities){
+        if (jsonData.densities.hasOwnProperty(field)) {
+            num_fields.push(field);
+        }
+    }
+
+    var total_graphs = fields.length + num_fields.length;
+
+    if (total_graphs > 12) {
         grid_size = 4;
-    } else if (fields.length > 4) {
+    } else if (total_graphs > 4) {
         grid_size = 6;
     } else {
         grid_size = 12;
@@ -135,7 +197,27 @@ function initialize(jsonData) {
             'sumInfo'  : jsonData.sum_info[field],
             'svgId'    : '#{0} svg'.fmt(id)
         });
+
+        // Drawing numeric fields
+        if (jsonData.densities.hasOwnProperty(field)) {
+
+            // Special id
+            id = id + '_num';
+
+            // Adding div and svg
+            $("#container").append(buildCanvas(id, grid_size));
+
+            // Drawing
+            drawNumerical({
+                'field'    : field,
+                'weight'   : jsonData.weight,
+                'density'  : jsonData.densities[field],
+                'svgId'    : '#{0} svg'.fmt(id)
+            });
+
+        }
     }
+
 }
 
 
