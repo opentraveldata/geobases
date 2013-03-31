@@ -47,11 +47,12 @@ function draw(o) {
             .staggerLabels(true)
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
-                sumInfo = parseFloat(o.sumInfo);
+                //console.log(o.field, x, y, p, e.value, o.sumInfo);
+                o.sumInfo = parseFloat(o.sumInfo);
                 e.value = parseFloat(e.value);
 
-                var p = 100 * e.value / sumInfo;
-                //console.log(o.field, x, y, p, e.value, o.sumInfo);
+                var p = 100 * e.value / o.sumInfo;
+
                 return '<h4>{0}</h4><p><i><b>{1}</b>: '.fmt(key, x) +
                     '{0}% ({1}/{2})</i></p>'.fmt(p.toFixed(1),
                                                  e.value.toFixed(1),
