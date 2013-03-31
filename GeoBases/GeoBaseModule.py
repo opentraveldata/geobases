@@ -4115,7 +4115,6 @@ def _build_density(values, points=10):
 
     # k represents the k-th interval
     counter = defaultdict(int)
-    lower = None
     upper = min_val
     i = 0
 
@@ -4126,12 +4125,11 @@ def _build_density(values, points=10):
             break
 
         if v <= upper:
-            counter[(lower, upper)] += 1
+            counter[upper] += 1
             i += 1
         else:
-            lower = upper
             upper += step
-            counter[(lower, upper)] = 0
+            counter[upper] = 0
 
     return {
         'density'   : sorted(counter.iteritems(), key = lambda k_v : k_v[0]),

@@ -98,7 +98,7 @@ function drawNumerical(o) {
     var i, c;
     for (i=0, c=o.density.length; i<c; i++) {
         nvData.values.push({
-            'x' : o.density[i][0][1],
+            'x' : o.density[i][0],
             'y' : o.density[i][1]
         });
     }
