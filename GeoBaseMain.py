@@ -2537,7 +2537,7 @@ def main():
         graph_fields = [f for f in args['graph_fields'] if f != SKIP]
 
     if args['graph_weight'] != SKIP:
-        graph_weight = args['graph_weight']
+        graph_weight = None if args['graph_weight'] == DISABLE else args['graph_weight']
 
     # Reading quiet options
     quiet_delimiter = DEF_QUIET_DELIM

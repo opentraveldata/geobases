@@ -1545,13 +1545,13 @@ class GeoBase(object):
         []
         >>> list(geo_o.findWith([('__dup__', '[]')]))
         []
-        >>> len(list(geo_o.findWith([('__dup__', [])]))) # 7013 exactly
-        69...
-        >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True)))
-        69...
+        >>> len(list(geo_o.findWith([('__dup__', [])]))) # doctest: +SKIP
+        7013
+        >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True))) # doctest: +SKIP
+        7013
         >>> # Counting duplicated keys
-        >>> len(list(geo_o.findWith([('__par__', [])], reverse=True)))
-        44...
+        >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # doctest: +SKIP
+        4519
 
         Testing indexes.
 
@@ -1603,12 +1603,12 @@ class GeoBase(object):
         >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
         18
-        >>> len(list(geo_o.findWith(c_2))) # 97
-        9...
-        >>> len(list(geo_o.findWith(c_1 + c_2, mode='and')))
+        >>> len(list(geo_o.findWith(c_2))) # doctest: +SKIP
+        100
+        >>> len(list(geo_o.findWith(c_1 + c_2, mode='and'))) # doctest: +SKIP
         2
-        >>> len(list(geo_o.findWith(c_1 + c_2, mode='or'))) # 111
-        11...
+        >>> len(list(geo_o.findWith(c_1 + c_2, mode='or'))) # doctest: +SKIP
+        111
         """
         if from_keys is None:
             from_keys = iter(self)
