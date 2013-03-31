@@ -98,7 +98,7 @@ function drawNumerical(o) {
     var i, c;
     for (i=0, c=o.density.length; i<c; i++) {
         nvData.values.push({
-            'x' : o.density[i][0],
+            'x' : o.density[i][0][1],
             'y' : o.density[i][1]
         });
     }
@@ -110,10 +110,24 @@ function drawNumerical(o) {
         chart.xAxis.axisLabel("{0} density".fmt(o.field));
         chart.tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
-                //console.log(o.field, x, y, e);
-                return '<h4>{0}</h4><p><i><b>"<= {1}" category</b>: '.fmt(key, x) +
-                    '{0} points</i></p>'.fmt(y);
+                //console.log(o.field, key, x, y, e);
+                x = parseFloat(x);
+                y = parseFloat(y);
+                o.nb_values = parseFloat(o.nb_values);
+
+                var p = 100 * y / o.nb_values;
+                var x_min = x - o.step;
+
+                return '<h4>{0}</h4><p><i><b>"{1} to {2}"</b>: '.fmt(key,
+                                                                     x_min.toFixed(1),
+                                                                     x.toFixed(1)) +
+                    '{0}% ({1}/{2})</i></p>'.fmt(p.toFixed(1),
+                                                 y.toFixed(1),
+                                                 o.nb_values.toFixed(1));
             });
+
+        chart.xAxis
+            .tickFormat(d3.format('.1f'));
 
         // If o.weight is null, format yAxis as integers
         if (o.weight === null) {
@@ -187,10 +201,31 @@ function initialize(jsonData) {
         field = fields[i];
         id = "canvas_{0}".fmt(field);
 
+        // Drawing numeric fields
+        if (jsonData.densities.hasOwnProperty(field)) {
+
+            // Special id
+            var num_id = id + '_num';
+
+            // Adding div and svg
+            $("#container").append(buildCanvas(num_id, grid_size));
+
+            // Drawing
+            drawNumerical({
+                'field'    : field,
+                'weight'   : jsonData.weight,
+                'density'  : jsonData.densities[field].density,
+                'nb_values': jsonData.densities[field].nb_values,
+                'step'     : jsonData.densities[field].step,
+                'svgId'    : '#{0} svg'.fmt(num_id)
+            });
+
+        }
+
         // Adding div and svg
         $("#container").append(buildCanvas(id, grid_size));
 
-        // Drawing
+        // Drawing bar chart anyway
         draw({
             'field'    : field,
             'weight'   : jsonData.weight,
@@ -199,24 +234,6 @@ function initialize(jsonData) {
             'svgId'    : '#{0} svg'.fmt(id)
         });
 
-        // Drawing numeric fields
-        if (jsonData.densities.hasOwnProperty(field)) {
-
-            // Special id
-            id = id + '_num';
-
-            // Adding div and svg
-            $("#container").append(buildCanvas(id, grid_size));
-
-            // Drawing
-            drawNumerical({
-                'field'    : field,
-                'weight'   : jsonData.weight,
-                'density'  : jsonData.densities[field],
-                'svgId'    : '#{0} svg'.fmt(id)
-            });
-
-        }
     }
 
 }

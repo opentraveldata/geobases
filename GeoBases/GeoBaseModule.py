@@ -4101,7 +4101,11 @@ def _build_density(values, points=10):
     """Build density from a list of values.
     """
     if not values:
-        return []
+        return {
+            'density'   : [],
+            'nb_values' : 0,
+            'step'      : None
+        }
 
     values = sorted(values)
 
@@ -4111,16 +4115,29 @@ def _build_density(values, points=10):
 
     # k represents the k-th interval
     counter = defaultdict(int)
-    k = 0
+    lower = None
+    upper = min_val
+    i = 0
 
-    for v in values:
-        upper = min_val + k * step
-        if v <= upper:
-            counter[upper] += 1
+    while True:
+        if i < len(values):
+            v = values[i]
         else:
-            k += 1
+            break
 
-    return sorted(counter.iteritems(), key = lambda k_v : k_v[0])
+        if v <= upper:
+            counter[(lower, upper)] += 1
+            i += 1
+        else:
+            lower = upper
+            upper += step
+            counter[(lower, upper)] = 0
+
+    return {
+        'density'   : sorted(counter.iteritems(), key = lambda k_v : k_v[0]),
+        'nb_values' : len(values),
+        'step'      : step
+    }
 
 
 
