@@ -892,7 +892,6 @@ def to_CLI(option, value):
     raise ValueError('Did not understand option "%s".' % option)
 
 
-
 def best_field(candidates, possibilities, default=None):
     """Select best candidate in possibilities.
     """
