@@ -902,6 +902,15 @@ def best_field(candidates, possibilities, default=None):
     return default
 
 
+def two_col_print(L):
+    """Display enumerable on two columns.
+    """
+    print
+    for p in build_pairs(L):
+        print '\t%-20s\t%-20s' % p
+    print
+
+
 def warn(name, *args):
     """
     Display a warning on stderr.
@@ -2129,14 +2138,6 @@ def admin_mode(admin, with_hints=True, verbose=True):
             if status:
                 print '\n===== Restart shell now.'
 
-
-def two_col_print(L):
-    """Display enumerable on two columns.
-    """
-    print
-    for p in build_pairs(L):
-        print '\t%-20s\t%-20s' % p
-    print
 
 
 def ask_mode():
