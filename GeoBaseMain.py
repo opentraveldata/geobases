@@ -5,7 +5,7 @@
 This module is a launcher for the GeoBases package.
 """
 
-from sys import stdin, stderr, argv
+import sys
 import os
 import os.path as op
 
@@ -878,11 +878,11 @@ def warn(name, *args):
     Display a warning on stderr.
     """
     if name == 'key':
-        print >> stderr, '/!\ Key %s was not in base, for data "%s" and source %s' % \
+        print >> sys.stderr, '/!\ Key %s was not in base, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
     if name == 'installation':
-        print >> stderr, '/!\ %s is not installed, no package information available.' % \
+        print >> sys.stderr, '/!\ %s is not installed, no package information available.' % \
                 args[0]
 
 
@@ -892,45 +892,45 @@ def error(name, *args):
     First argument is the error type.
     """
     if name == 'trep_support':
-        print >> stderr, '\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.'
+        print >> sys.stderr, '\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.'
 
     elif name == 'geocode_support':
-        print >> stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
+        print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'data':
-        print >> stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
+        print >> sys.stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
         for p in build_pairs(args[1]):
-            print >> stderr, '\t%-20s\t%-20s' % p
+            print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'field':
-        print >> stderr, '\n/!\ Wrong field "%s".' % args[0]
-        print >> stderr, 'For data type "%s", you may select:' % args[1]
+        print >> sys.stderr, '\n/!\ Wrong field "%s".' % args[0]
+        print >> sys.stderr, 'For data type "%s", you may select:' % args[1]
         for p in build_pairs(args[2]):
-            print >> stderr, '\t%-20s\t%-20s' % p
+            print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'geocode_format':
-        print >> stderr, '\n/!\ Bad geocode format: %s' % args[0]
+        print >> sys.stderr, '\n/!\ Bad geocode format: %s' % args[0]
 
     elif name == 'geocode_unknown':
-        print >> stderr, '\n/!\ Geocode was unknown for %s' % args[0]
+        print >> sys.stderr, '\n/!\ Geocode was unknown for %s' % args[0]
 
     elif name == 'empty_stdin':
-        print >> stderr, '\n/!\ Stdin was empty'
+        print >> sys.stderr, '\n/!\ Stdin was empty'
 
     elif name == 'wrong_value':
-        print >> stderr, '\n/!\ Wrong value "%s", should be in:' % args[0]
+        print >> sys.stderr, '\n/!\ Wrong value "%s", should be in:' % args[0]
         for p in build_pairs(args[1]):
-            print >> stderr, '\t%-20s\t%-20s' % p
+            print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'type':
-        print >> stderr, '\n/!\ Wrong type for "%s", should be %s, but was "%s".' % \
+        print >> sys.stderr, '\n/!\ Wrong type for "%s", should be %s, but was "%s".' % \
                 (args[0], args[1], args[2])
 
     elif name == 'aborting':
-        print >> stderr, '\n\n/!\ %s' % args[0]
+        print >> sys.stderr, '\n\n/!\ %s' % args[0]
 
     elif name == 'not_allowed':
-        print >> stderr, '\n/!\ Value "%s" not allowed.' % args[0]
+        print >> sys.stderr, '\n/!\ Value "%s" not allowed.' % args[0]
 
     exit(1)
 
@@ -1000,7 +1000,7 @@ CLI_EXAMPLES = '''
  $ %s --admin                    # administrate the data sources
  $ %s --help                     # your best friend
  $ cat data.csv | %s             # with your data
-''' % ((op.basename(argv[0]),) * 7)
+''' % ((op.basename(sys.argv[0]),) * 7)
 
 DEF_BASE            = 'ori_por'
 DEF_FUZZY_LIMIT     = 0.85
@@ -2386,13 +2386,13 @@ def main():
         error('data', args['base'], sorted(S_MANAGER))
 
 
-    if not stdin.isatty() and not interactive_query_mode:
+    if not sys.stdin.isatty() and not interactive_query_mode:
         try:
-            first_l = stdin.next()
+            first_l = sys.stdin.next()
         except StopIteration:
             error('empty_stdin')
 
-        source  = chain([first_l], stdin)
+        source  = chain([first_l], sys.stdin)
         first_l = first_l.rstrip() # For sniffers, we rstrip
 
         delimiter  = guess_delimiter(first_l)
@@ -2717,7 +2717,7 @@ def main():
     # MAIN
     #
     if verbose:
-        if not stdin.isatty() and interactive_query_mode:
+        if not sys.stdin.isatty() and interactive_query_mode:
             print 'Looking for matches from stdin query: %s search %s' % \
                     (interactive_type,
                      '' if interactive_type == '__key__' else 'on %s...' % interactive_field)
@@ -2734,8 +2734,8 @@ def main():
 
     # We start from either all keys available or keys listed by user
     # or from stdin if there is input
-    if not stdin.isatty() and interactive_query_mode:
-        values = [row.strip() for row in stdin]
+    if not sys.stdin.isatty() and interactive_query_mode:
+        values = [row.strip() for row in sys.stdin]
         # Query type
         if interactive_type == '__key__':
             res = enumerate(values)
