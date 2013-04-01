@@ -1,8 +1,8 @@
-2992741	Monte-Carlo	Monte-Carlo	Monte Carlo,Monte Karlo,Monte Karló,Monte-Karlo,Montecarlo,XMM,Монте-Карло	43.74965	7.43701	P	PPLX	MC		00				16012		60	Europe/Monaco	2011-02-24
+2992741	Monte-Carlo	Monte-Carlo	Monte Carlo,Monte Karlo,Monte Karló,Monte-Karlo,Montecarlo,XMM,Монте-Карло	43.73976	7.42732	P	PPLX	MC		00				16012		-9999	Europe/Monaco	2013-03-22
 2993456	Rocher de Monaco	Rocher de Monaco		43.73102	7.42516	T	HDLD	MC		00				0		50	Europe/Monaco	2011-09-11
 2993457	Principality of Monaco	Principality of Monaco	Manaka,Manako,Mo-na-co,Monaakoo,Monaco,Monaco - Monaco,Monacó,Monacô,Monakaen,Monakas,Monakho,Monako,Monako nutome,Monakoeo,Monaku,Monakän,Monaköo,Monegue,Monoecus,Moonako,Munaku,Mònaco,Mónaco,Mónaco - Monaco,Mónakó,Mónegue,Mô-na-cô,Mônaco,Mônakô,Mɔnako,Orileede Monako,Orílẹ́ède Monako,Principa de Monego,Principado de Monaco,Principado de Mónaco,Principado de Mônaco,Principat de Monaco,Principat de Mònaco,Principato di Monaco,Principaute de Monaco,Principauté de Monaco,Principâ de Monego,Prinzsipato de Monaco,Prinzsipato de Mònaco,i-Monaco,meaneakkea,mnakw,mo na ge,monaiko,monakko,monako,moneko,mwnakw,mwnkw,mwnqw,prathes monako,Μονακό,Манака,Монако,Մոնակո,מונקו,مناکو,موناكو,موناکو,مۆناکۆ,ܡܘܢܟܘ,मोनाको,मोनॅको,मोनैको,মোনাকো,મોનાકો,ମୋନାକୋ,மொனாகோ,மொனாக்கோ,మొనాకో,ಮೊನಾಕೊ,മൊണോക്കൊ,මොනාකෝව,ประเทศโมนาโก,โมนาโก,ໂມນາໂກ,མོ་ན་ཀོ།,မိုနကို,მონაკო,ሞናኮ,ម៉ូណាកូ,モナコ,摩纳哥,모나코	43.73141	7.41903	A	PCLI	MC		00				32965		43	Europe/Monaco	2012-01-06
 2993458	Monaco	Monaco	MCM,Monaco,Monaco-Ville,Monako,Mònaco,Mónaco,Mónakó,Μονακό,Монако	43.73333	7.41667	P	PPLC	MC		00				32965		62	Europe/Monaco	2013-02-07
-3009937	La Condamine	La Condamine	Condamine,La Condamine,La-Kondamin,Ла-Кондамин	43.7344	7.42024	P	PPLX	MC		00				12167		16	Europe/Monaco	2012-01-18
+3009937	La Condamine	La Condamine	Condamine,La Condamine,La-Kondamin,Ла-Кондамин	43.7344	7.42024	P	PPLX	MC		00				12167		16	Europe/Monaco	2013-03-22
 3017814	Fontvieille	Fontvieille	Fontvieille,Fonv'ej,Фонвьей	43.72687	7.41766	P	PPLX	MC		00				3880		9	Europe/Monaco	2012-01-18
 3018192	Pointe Focinane	Pointe Focinane	Cap de Fucinane,Pointe Focinana,Pointe Focinane	43.73806	7.42996	T	PT	MC		00				0		11	Europe/Monaco	2012-01-18
 3028762	Anse de Canton	Anse de Canton		43.73333	7.41667	H	COVE	MC		00				0		62	Europe/Monaco	1999-06-07
@@ -27,7 +27,7 @@
 6500736	Le Meridien Beach Plaza	Le Meridien Beach Plaza		43.7483	7.4355	S	HTL	MC						0		17	Europe/Monaco	2008-07-04
 6954047	Grimaldi Forum Monaco	Grimaldi Forum Monaco		43.744	7.432	S	CTRF	MC						0		16	Europe/Monaco	2009-10-07
 8029384	Beausoleil	Beausoleil	Beausoleil	43.7439	7.41843	P	PPLX	MC		00				0		240	Europe/Monaco	2012-01-21
-8029385	Les Révoires	Les Revoires	Les Revoires,Les Révoires	43.73422	7.41306	P	PPLX	MC		00				0		159	Europe/Monaco	2012-01-21
+8029385	Les Révoires	Les Revoires	Les Revoires,Les Révoires	43.73422	7.41306	P	PPLX	MC		00				0		159	Europe/Monaco	2013-03-22
 8029386	Port de Cap d’Ail	Port de Cap d'Ail		43.72497	7.4158	H	HBR	MC		00				0		254	Europe/Monaco	2011-09-13
 8029387	Cap d’ Ail	Cap d' Ail	Cap d' Ail,Cap d’ Ail,Pointe des Douaniers	43.71879	7.40608	T	PT	MC		00				0		2	Europe/Monaco	2012-01-21
 8029388	Cap Rognoso	Cap Rognoso		43.71892	7.39891	T	PT	MC		00				0		7	Europe/Monaco	2011-09-13
@@ -39,3 +39,13 @@
 8298438	Bureau de Poste de Monte Carlo Moulins	Bureau de Poste de Monte Carlo Moulins		43.74532	7.42906	S	PO	MC						0		67	Europe/Monaco	2012-05-16
 8298439	Bureau de Poste de Monaco Herculis	Bureau de Poste de Monaco Herculis		43.7373	7.4174	S	PO	MC						0		105	Europe/Monaco	2012-05-16
 8298440	Bureau de Poste de Monte Carlo Larvotto	Bureau de Poste de Monte Carlo Larvotto		43.74702	7.4333	S	PO	MC						0		12	Europe/Monaco	2012-05-16
+8504785	Monaco-Ville	Monaco-Ville		43.73076	7.42358	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504787	Monte Carlo/Spélugues	Monte Carlo/Spelugues		43.74081	7.42719	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504788	La Rousse/Saint Roman	La Rousse/Saint Roman		43.74797	7.43315	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504789	Larvotto/Bas Moulins	Larvotto/Bas Moulins		43.74769	7.43817	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504790	Saint Michel	Saint Michel		43.74041	7.42311	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504791	La Colle	La Colle		43.73179	7.41401	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504792	Moneghetti/ Bd de Belgique	Moneghetti/ Bd de Belgique		43.73655	7.41699	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504793	La Condamine	La Condamine		43.73414	7.4197	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
+8504794	Les Révoires	Les Revoires		43.73448	7.41367	A	ADMD	MC						0		55	Europe/Monaco	2013-03-22
+8504795	Fontvieille	Fontvieille		43.72707	7.41869	A	ADMD	MC						0		-9999	Europe/Monaco	2013-03-22
