@@ -279,7 +279,7 @@ Find things with properties
  >>>
  >>> conditions = [('city_code', 'PAR'), ('city_code', 'LON')]
  >>> len(list(geo_o.findWith(conditions, mode='or')))
- 36
+ 35
 
 Distance computation
 ~~~~~~~~~~~~~~~~~~~~
