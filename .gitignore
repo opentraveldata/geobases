@@ -28,3 +28,5 @@
 # Ignoring profiling reports
 /*.prof
 /*.lprof
+# Ignore tmp dir
+/tmpviz
