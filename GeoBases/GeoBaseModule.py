@@ -3061,7 +3061,7 @@ class GeoBase(object):
 
 
 
-    def _detectFieldsTypes(self, threshold=0.99, dt_format='%Y-%M-%d'):
+    def _detectFieldsTypes(self, threshold=0.99, dt_format='%Y-%m-%d'):
         """Detect numeric fields.
         """
         numeric_fields = []
@@ -3137,7 +3137,7 @@ class GeoBase(object):
         return _build_density(values, points=10)
 
 
-    def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%M-%d'):
+    def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%m-%d'):
         """Build dashboard density for a numeric field.
         """
         values = []
