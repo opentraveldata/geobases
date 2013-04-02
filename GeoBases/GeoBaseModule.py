@@ -3147,14 +3147,14 @@ class GeoBase(object):
                 # Empty values are not counted
                 continue
 
-                try:
-                    d = datetime.strptime(self.get(key, field), dt_format)
-                except (ValueError, TypeError):
-                    # TypeError when input type was not string or float/int
-                    # ValueError: field did not match datetime format
-                    continue
-                else:
-                    values.append((d, get_weight(key)))
+            try:
+                d = datetime.strptime(self.get(key, field), dt_format)
+            except (ValueError, TypeError):
+                # TypeError when input type was not string or float/int
+                # ValueError: field did not match datetime format
+                continue
+            else:
+                values.append((d.strftime(dt_format), get_weight(key)))
 
         return values
 
