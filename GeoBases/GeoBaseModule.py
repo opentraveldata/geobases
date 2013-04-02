@@ -2844,10 +2844,15 @@ class GeoBase(object):
                              (graph_weight, self.fields))
 
         if graph_weight is None:
-            get_weight = lambda k: 1
+            get_weight = lambda key: 1
         else:
-            get_weight = lambda k: self.get(k, graph_weight)
-
+            def get_weight(key):
+                """Custom weight computation."""
+                try:
+                    w = float(self.get(key, graph_weight))
+                except (ValueError, TypeError):
+                    w = 0
+                return w
 
         def _empty_node(type_, name):
             """Make an empty node.
@@ -2873,10 +2878,7 @@ class GeoBase(object):
 
         for key in from_keys:
             values = tuple(self.get(key, f) for f in graph_fields)
-            try:
-                weight = float(get_weight(key))
-            except ValueError:
-                weight = 0
+            weight = get_weight(key)
 
             for i in xrange(nb_edges):
                 ori_type = graph_fields[i]
@@ -3034,11 +3036,7 @@ class GeoBase(object):
             counters[field] = defaultdict(int)
 
             for key in keys:
-                try:
-                    w = float(get_weight(key))
-                except ValueError:
-                    w = 0
-                counters[field][self.get(key, field)] += w
+                counters[field][self.get(key, field)] += get_weight(key)
 
         # Computing general information
         sum_info = {}
@@ -3177,9 +3175,15 @@ class GeoBase(object):
 
         # Defining get_weight lambda function
         if weight is None:
-            get_weight = lambda k: 1
+            get_weight = lambda key: 1
         else:
-            get_weight = lambda k: self.get(k, weight)
+            def get_weight(key):
+                """Custom weight computation."""
+                try:
+                    w = float(self.get(key, weight))
+                except (ValueError, ValueError):
+                    w = 0
+                return w
 
         if from_keys is None:
             from_keys = iter(self)
@@ -3341,7 +3345,14 @@ class GeoBase(object):
         if icon_weight is None:
             get_weight = lambda key: 0
         else:
-            get_weight = lambda key: self.get(key, icon_weight)
+            def get_weight(key):
+                """Custom weight computation."""
+                try:
+                    w = float(self.get(key, icon_weight))
+                except (ValueError, TypeError):
+                    w = 0
+                return w
+
 
         # Optional function which gives points category
         if icon_color is None:
