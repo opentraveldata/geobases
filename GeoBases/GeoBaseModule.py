@@ -3134,7 +3134,7 @@ class GeoBase(object):
             else:
                 values.append((v, get_weight(key)))
 
-        return _build_density(values, points=10)
+        return _build_density(values, slices=min(10, len(values) - 1))
 
 
     def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%m-%d'):
@@ -4156,7 +4156,7 @@ def build_cache_key(*args, **kwargs):
 
 
 
-def _build_density(values, points=10):
+def _build_density(values, slices=10):
     """Build density from a list of (values, weight).
     """
     if not values:
@@ -4170,9 +4170,12 @@ def _build_density(values, points=10):
 
     min_val = min(values)[0]
     max_val = max(values)[0]
-    step = float(max_val - min_val) / points
+    if slices > 0:
+        step = float(max_val - min_val) / slices
+    else:
+        # In this case step will never be used
+        step = 1
 
-    # k represents the k-th interval
     counter = defaultdict(int)
     upper = min_val
     i = 0
