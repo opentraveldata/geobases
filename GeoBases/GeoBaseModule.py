@@ -4157,7 +4157,7 @@ def build_cache_key(*args, **kwargs):
 
 
 def _build_density(values, points=10):
-    """Build density from a list of values.
+    """Build density from a list of (values, weight).
     """
     if not values:
         return {
