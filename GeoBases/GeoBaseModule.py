@@ -3024,6 +3024,8 @@ class GeoBase(object):
         # Main structure, dict: field -> data
         counters = {}
 
+        # We are going to count everything for normal fields
+        # So we exclude splitted and special fields
         for field in self.fields:
             if str(field).startswith('__') or \
                str(field).endswith('@raw'):
@@ -3231,8 +3233,6 @@ class GeoBase(object):
         elif not op.isdir(output_dir):
             os.makedirs(output_dir)
 
-        # We are going to count everything for normal fields
-        # So we exclude splitted and special fields
         dashboard_data = self.buildDashboardData(keep=keep,
                                                  weight=weight,
                                                  from_keys=from_keys)
