@@ -34,39 +34,14 @@ if not IS_WINDOWS:
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
-class WritableDevNull(object):
-    """Writable class emulating /dev/null.
-    """
-    def write(self, string):
-        """What happens when you write? *Nothing*.
-        """
-        pass
-
-
-class suppress_output(object):
-    """A context manager temporarily removing stdout and stderr.
-    """
-    def __init__(self):
-        self.stdout_back = sys.stdout
-        self.stderr_back = sys.stderr
-
-    def __enter__(self):
-        sys.stdout = WritableDevNull()
-        sys.stderr = WritableDevNull()
-
-    def __exit__(self, *_):
-        # Re-assign the real stdout
-        sys.stdout = self.stdout_back
-        sys.stderr = self.stderr_back
-
-
 try:
-    import glob
+    # Hack to remove escape char when importing readline
+    os.environ['TERM'] = 'linux'
 
     # readline is not available on every platform
     # this may cause ImportError
-    with suppress_output():
-        import readline
+    import readline
+    import glob
 
     def complete(text, state):
         """Activate autocomplete on raw_input.
