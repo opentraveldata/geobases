@@ -63,6 +63,7 @@ import csv
 import json
 from shutil import copy
 from collections import defaultdict
+from datetime import datetime
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
 from .GeoUtils             import haversine
@@ -3060,10 +3061,11 @@ class GeoBase(object):
 
 
 
-    def _detectNumericFields(self, threshold=0.99):
+    def _detectFieldsTypes(self, threshold=0.99, dt_format='%Y-%M-%d'):
         """Detect numeric fields.
         """
         numeric_fields = []
+        datetime_fields = []
 
         for field in self.fields:
             if str(field).startswith('__') or \
@@ -3072,6 +3074,7 @@ class GeoBase(object):
 
             counter = {
                 'numeric' : 0,
+                'datetime': 0,
                 'total'   : 0,
             }
 
@@ -3079,6 +3082,8 @@ class GeoBase(object):
                 if not self.get(key, field):
                     # Empty values are not counted
                     continue
+
+                counter['total'] += 1
 
                 try:
                     float(self.get(key, field))
@@ -3088,15 +3093,26 @@ class GeoBase(object):
                     pass
                 else:
                     counter['numeric'] += 1
-                counter['total'] += 1
 
-            if counter['numeric'] >= threshold * counter['total']:
-                # As we removed empty values,
-                # we make sure we have something left
-                if counter['total'] > 0:
+                try:
+                    datetime.strptime(self.get(key, field), dt_format)
+                except (ValueError, TypeError):
+                    # TypeError when input type was not string or float/int
+                    # ValueError: field did not match datetime format
+                    pass
+                else:
+                    # ISO-8601 biiiitch
+                    counter['datetime'] += 1
+
+            # We make sure we have actual data
+            if counter['total'] > 0:
+                if counter['numeric'] >= threshold * counter['total']:
                     numeric_fields.append(field)
 
-        return numeric_fields
+                if counter['datetime'] >= threshold * counter['total']:
+                    datetime_fields.append(field)
+
+        return numeric_fields, datetime_fields
 
 
     def _buildDashboardDensity(self, field, get_weight, keys):
@@ -3150,9 +3166,12 @@ class GeoBase(object):
         # Computing counters and sum_info for bar charts
         counters, sum_info = self._buildDashboardCounters(keep, get_weight, from_keys)
 
+        # Sniffing fields
+        numeric_fields, datetime_fields = self._detectFieldsTypes()
+
         # Computing densities
         densities = {}
-        for field in self._detectNumericFields():
+        for field in numeric_fields:
             densities[field] = self._buildDashboardDensity(field, get_weight, from_keys)
 
         return counters, sum_info, densities
