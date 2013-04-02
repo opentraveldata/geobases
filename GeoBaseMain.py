@@ -2963,7 +2963,7 @@ def main():
         visu_info = g.dashboardVisualize(output=g.data,
                                          output_dir=output_dir,
                                          keep=dashboard_keep,
-                                         weight=dashboard_weight,
+                                         dashboard_weight=dashboard_weight,
                                          from_keys=ex_keys(res),
                                          verbose=verbose)
 

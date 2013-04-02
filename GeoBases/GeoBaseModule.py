@@ -3159,28 +3159,28 @@ class GeoBase(object):
         return values
 
 
-    def buildDashboardData(self, keep=10, weight=None, from_keys=None):
+    def buildDashboardData(self, keep=10, dashboard_weight=None, from_keys=None):
         """Build dashboard data.
 
         :param keep:   the number of values kept after counting for \
                 each field
-        :param weight: the field used as weight for the graph. Leave \
+        :param dashboard_weight: the field used as weight for the graph. Leave \
                 ``None`` if you just want to count the number of keys
         :param from_keys: only use this iterable of keys if not ``None``
         :returns: a dictionary of fields counters information
         """
         # Arguments testing
-        if weight is not None and weight not in self.fields:
-            raise ValueError('weight "%s" not in fields %s.' % (weight, self.fields))
+        if dashboard_weight is not None and dashboard_weight not in self.fields:
+            raise ValueError('weight "%s" not in fields %s.' % (dashboard_weight, self.fields))
 
         # Defining get_weight lambda function
-        if weight is None:
+        if dashboard_weight is None:
             get_weight = lambda key: 1
         else:
             def get_weight(key):
                 """Custom weight computation."""
                 try:
-                    w = float(self.get(key, weight))
+                    w = float(self.get(key, dashboard_weight))
                 except (ValueError, ValueError):
                     w = 0
                 return w
@@ -3214,7 +3214,7 @@ class GeoBase(object):
                            output=DEFAULT_TMP_NAME,
                            output_dir=DEFAULT_TMP_DIR,
                            keep=10,
-                           weight=None,
+                           dashboard_weight=None,
                            from_keys=None,
                            verbose=True):
         """Dashboard display (aggregated view).
@@ -3224,7 +3224,7 @@ class GeoBase(object):
                 be created if it does not exist
         :param keep:        the number of values kept after counting for \
                 each field
-        :param weight:      the field used as weight for the graph. Leave \
+        :param dashboard_weight: the field used as weight for the graph. Leave \
                 ``None`` if you just want to count the number of keys
         :param from_keys:   only display this iterable of keys if not ``None``
         :param verbose:     toggle verbosity
@@ -3238,7 +3238,7 @@ class GeoBase(object):
             os.makedirs(output_dir)
 
         dashboard_data = self.buildDashboardData(keep=keep,
-                                                 weight=weight,
+                                                 dashboard_weight=dashboard_weight,
                                                  from_keys=from_keys)
 
         counters, sum_info, densities, time_series = dashboard_data
@@ -3252,7 +3252,7 @@ class GeoBase(object):
                 'sum_info'   : sum_info,
                 'densities'  : densities,
                 'time_series': time_series,
-                'weight'     : weight,
+                'weight'     : dashboard_weight,
                 'keep'       : keep,
             }))
 
