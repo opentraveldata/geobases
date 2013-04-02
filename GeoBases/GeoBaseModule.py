@@ -3137,6 +3137,28 @@ class GeoBase(object):
         return _build_density(values, points=10)
 
 
+    def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%M-%d'):
+        """Build dashboard density for a numeric field.
+        """
+        values = []
+
+        for key in keys:
+            if not self.get(key, field):
+                # Empty values are not counted
+                continue
+
+                try:
+                    d = datetime.strptime(self.get(key, field), dt_format)
+                except (ValueError, TypeError):
+                    # TypeError when input type was not string or float/int
+                    # ValueError: field did not match datetime format
+                    continue
+                else:
+                    values.append((d, get_weight(key)))
+
+        return values
+
+
     def buildDashboardData(self, keep=10, weight=None, from_keys=None):
         """Build dashboard data.
 
@@ -3174,7 +3196,11 @@ class GeoBase(object):
         for field in numeric_fields:
             densities[field] = self._buildDashboardDensity(field, get_weight, from_keys)
 
-        return counters, sum_info, densities
+        time_series = {}
+        for field in datetime_fields:
+            time_series[field] = self._buildDashboardTimeSeries(field, get_weight, from_keys)
+
+        return counters, sum_info, densities, time_series
 
 
 
@@ -3207,20 +3233,23 @@ class GeoBase(object):
 
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
-        counters, sum_info, densities = self.buildDashboardData(keep=keep,
-                                                                weight=weight,
-                                                                from_keys=from_keys)
+        dashboard_data = self.buildDashboardData(keep=keep,
+                                                 weight=weight,
+                                                 from_keys=from_keys)
+
+        counters, sum_info, densities, time_series = dashboard_data
 
         # Dump the json geocodes
         json_name = '%s_dashboard.json' % op.join(output_dir, output)
 
         with open(json_name, 'w') as out:
             out.write(json.dumps({
-                'counters' : counters,
-                'sum_info' : sum_info,
-                'densities': densities,
-                'weight'   : weight,
-                'keep'     : keep,
+                'counters'   : counters,
+                'sum_info'   : sum_info,
+                'densities'  : densities,
+                'time_series': time_series,
+                'weight'     : weight,
+                'keep'       : keep,
             }))
 
         return ['dashboard'], render_templates(['dashboard'],
