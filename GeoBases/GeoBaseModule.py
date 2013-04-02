@@ -64,6 +64,7 @@ import json
 from shutil import copy
 from collections import defaultdict
 from datetime import datetime
+import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
 from .GeoUtils             import haversine
@@ -3134,7 +3135,7 @@ class GeoBase(object):
             else:
                 values.append((v, get_weight(key)))
 
-        return _build_density(values, slices=min(10, len(values) - 1))
+        return _build_density(values, slices=int(math.sqrt(len(values))))
 
 
     def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%m-%d'):
