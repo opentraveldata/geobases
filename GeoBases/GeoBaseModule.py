@@ -3126,13 +3126,13 @@ class GeoBase(object):
                 continue
 
             try:
-                w = float(self.get(key, field)) * get_weight(key)
+                v = float(self.get(key, field))
             except (ValueError, TypeError):
                 # TypeError when input type was not even string of float/int
                 # ValueError for failing to convert
                 continue
             else:
-                values.append(w)
+                values.append((v, get_weight(key)))
 
         return _build_density(values, points=10)
 
@@ -4168,8 +4168,8 @@ def _build_density(values, points=10):
 
     values = sorted(values)
 
-    min_val = min(values)
-    max_val = max(values)
+    min_val = min(values)[0]
+    max_val = max(values)[0]
     step = float(max_val - min_val) / points
 
     # k represents the k-th interval
@@ -4179,12 +4179,12 @@ def _build_density(values, points=10):
 
     while True:
         if i < len(values):
-            v = values[i]
+            v, w = values[i]
         else:
             break
 
         if v <= upper:
-            counter[upper] += 1
+            counter[upper] += w
             i += 1
         else:
             upper += step
