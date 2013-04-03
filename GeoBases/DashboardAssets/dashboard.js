@@ -155,6 +155,54 @@ function drawNumerical(o) {
 }
 
 
+function drawTimeSeries(o) {
+
+    var nvData = {
+        "key"    : "{0}".fmt(o.field),
+        "values" : o.time_series
+    };
+
+    nv.addGraph(function() {
+
+        var chart = nv.models.lineChart()
+            .x(function(d) { return (new Date(d[0])).getTime(); })
+            .y(function(d) { return d[1]; })
+            .tooltips(true)
+            .tooltipContent(function(key, x, y, e, graph) {
+                return '<h4>{0}</h4><p><i><b>{1}</b>: {2}</i></p>'.fmt(key, x, y);
+            });
+
+        chart.xAxis.axisLabel("{0} time series".fmt(o.field));
+        chart.xAxis
+            .tickFormat(function(d) {
+                return d3.time.format('%Y-%m-%d')(new Date(d));
+            });
+
+        // If o.weight is null, format yAxis as integers
+        if (o.weight === null) {
+            chart.yAxis
+                .tickFormat(d3.format('.0f'));
+                //.axisLabel(null)
+        } else {
+            chart.yAxis
+                .tickFormat(d3.format('.2f'));
+                //.axisLabel(o.weight)
+        }
+
+        d3.select(o.svgId)
+            .datum([nvData])
+            .transition()
+            .duration(500)
+            .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+
+    });
+
+}
+
 function buildCanvas(id, grid_size) {
 
     return '' +
@@ -218,6 +266,25 @@ function initialize(jsonData) {
                 'nb_values': jsonData.densities[field].nb_values,
                 'step'     : jsonData.densities[field].step,
                 'svgId'    : '#{0} svg'.fmt(num_id)
+            });
+
+        }
+
+        // Drawing time series
+        if (jsonData.time_series.hasOwnProperty(field)) {
+
+            // Special id
+            var ts_id = id + '_time';
+
+            // Adding div and svg
+            $("#container").append(buildCanvas(ts_id, grid_size));
+
+            // Drawing
+            drawTimeSeries({
+                'field'      : field,
+                'weight'     : jsonData.weight,
+                'time_series': jsonData.time_series[field],
+                'svgId'      : '#{0} svg'.fmt(ts_id)
             });
 
         }
