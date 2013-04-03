@@ -4195,7 +4195,7 @@ def _parse_date(value):
     >>> _parse_date('not_a_date') # None
     >>> _parse_date([]) # None
     """
-    s = str(value).replace('/', '').replace('-', '').strip()
+    s = str(value).replace('/', '').replace('-', '').replace(' ', '').strip()
     try:
         # Hours and minutes are optional
         if s[8:10]:
