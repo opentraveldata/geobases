@@ -102,6 +102,7 @@ function drawNumerical(o) {
         chart.tooltips(true)
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1]; })
+            .forceY([0, null])
             .tooltipContent(function(key, x, y, e, graph) {
                 //console.log(o.field, key, x, y, e);
                 x = parseFloat(x);
@@ -161,6 +162,7 @@ function drawTimeSeries(o) {
         var chart = nv.models.lineChart()
             .x(function(d) { return (new Date(d[0])).getTime(); })
             .y(function(d) { return d[1]; })
+            .forceY([0, null])
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
                 o.nb_values = parseFloat(o.nb_values);
