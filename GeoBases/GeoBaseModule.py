@@ -4191,6 +4191,7 @@ def _parse_date(value):
     """Fast date parsing.
 
     >>> _parse_date('2012/01/01')
+    datetime.date(2012, 1, 1)
     >>> _parse_date('not_a_date') # None
     >>> _parse_date([]) # None
     """
