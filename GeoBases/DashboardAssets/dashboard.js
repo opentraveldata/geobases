@@ -99,7 +99,6 @@ function drawNumerical(o) {
 
         var chart = nv.models.lineChart();
 
-        chart.xAxis.axisLabel("{0} density".fmt(o.field));
         chart.tooltips(true)
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1]; })
@@ -120,6 +119,7 @@ function drawNumerical(o) {
                                                  o.nb_values.toFixed(1));
             });
 
+        chart.xAxis.axisLabel("{0} density".fmt(o.field));
         chart.xAxis
             .tickFormat(d3.format('.1f'));
 
