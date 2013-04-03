@@ -4146,6 +4146,42 @@ def build_cache_key(*args, **kwargs):
 
 
 
+def _parse_date(value):
+    """Fast date parsing.
+
+    >>> _parse_date('2012/01/01')
+    datetime.datetime(2012, 1, 1, 0, 0)
+    >>> _parse_date('2012/01/01 08:40')
+    datetime.datetime(2012, 1, 1, 8, 40)
+    >>> _parse_date('not_a_date') # None
+    >>> _parse_date([]) # None
+    """
+    def _clean(s, excluded):
+        """Remove characters from a string.
+        """
+        return ''.join(l for l in list(s) if l not in excluded)
+
+    s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
+    try:
+        # Hours and minutes are optional
+        if s[8:10]:
+            hours = int(s[8:10])
+        else:
+            hours = 0
+
+        if s[10:12]:
+            minutes = int(s[10:12])
+        else:
+            minutes = 0
+
+        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes)
+    except (ValueError, TypeError):
+        # This may be raised by int() or date()
+        d = None
+    return d
+
+
+
 def _build_density(values, slices=10):
     """Build density from a list of (values, weight).
     """
@@ -4189,40 +4225,6 @@ def _build_density(values, slices=10):
         'step'      : step
     }
 
-
-def _parse_date(value):
-    """Fast date parsing.
-
-    >>> _parse_date('2012/01/01')
-    datetime.datetime(2012, 1, 1, 0, 0)
-    >>> _parse_date('2012/01/01 08:40')
-    datetime.datetime(2012, 1, 1, 8, 40)
-    >>> _parse_date('not_a_date') # None
-    >>> _parse_date([]) # None
-    """
-    def _clean(s, excluded):
-        """Remove characters from a string.
-        """
-        return ''.join(l for l in list(s) if l not in excluded)
-
-    s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
-    try:
-        # Hours and minutes are optional
-        if s[8:10]:
-            hours = int(s[8:10])
-        else:
-            hours = 0
-
-        if s[10:12]:
-            minutes = int(s[10:12])
-        else:
-            minutes = 0
-
-        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes)
-    except (ValueError, TypeError):
-        # This may be raised by int() or date()
-        d = None
-    return d
 
 
 def _aggregate_dt(values):
