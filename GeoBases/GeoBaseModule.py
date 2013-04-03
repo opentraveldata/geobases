@@ -4231,7 +4231,10 @@ def _aggregate_dt(values):
     for i, (d, w) in enumerate(values):
         values[i] = d.strftime('%Y-%m-%d %H:%M'), w
 
-    return values
+    return {
+        'time_series': values,
+        'nb_values'  : sum(w for _, w in values),
+    }
 
 
 def _test():

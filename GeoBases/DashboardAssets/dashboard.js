@@ -163,7 +163,14 @@ function drawTimeSeries(o) {
             .y(function(d) { return d[1]; })
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
-                return '<h4>{0}</h4><p><i><b>{1}</b>: {2}</i></p>'.fmt(key, x, y);
+                o.nb_values = parseFloat(o.nb_values);
+                y = parseFloat(y);
+
+                var p = 100 * y / o.nb_values;
+                return '<h4>{0}</h4><p><i><b>{1}</b>: '.fmt(key, x) +
+                    '{0}% ({1}/{2})</i></p>'.fmt(p.toFixed(1),
+                                                 y.toFixed(1),
+                                                 o.nb_values.toFixed(1));
             });
 
         chart.xAxis.axisLabel("{0} time series".fmt(o.field));
@@ -277,7 +284,8 @@ function initialize(jsonData) {
             drawTimeSeries({
                 'field'      : field,
                 'weight'     : jsonData.weight,
-                'time_series': jsonData.time_series[field],
+                'time_series': jsonData.time_series[field].time_series,
+                'nb_values'  : jsonData.time_series[field].nb_values,
                 'svgId'      : '#{0} svg'.fmt(ts_id)
             });
 
