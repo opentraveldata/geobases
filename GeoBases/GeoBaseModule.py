@@ -3135,7 +3135,7 @@ class GeoBase(object):
             else:
                 values.append((v, get_weight(key)))
 
-        return _build_density(values, slices=int(math.sqrt(len(values))))
+        return _build_density(values)
 
 
     def _buildDashboardTimeSeries(self, field, get_weight, keys):
@@ -4182,9 +4182,12 @@ def _parse_date(value):
 
 
 
-def _build_density(values, slices=10):
+def _build_density(values, slices=None):
     """Build density from a list of (values, weight).
     """
+    if slices is None:
+        slices = int(math.sqrt(len(values)))
+
     if not values:
         return {
             'density'   : [],
@@ -4193,9 +4196,9 @@ def _build_density(values, slices=10):
         }
 
     values = sorted(values)
-
     min_val = min(values)[0]
     max_val = max(values)[0]
+
     if slices > 0:
         step = float(max_val - min_val) / slices
     else:
