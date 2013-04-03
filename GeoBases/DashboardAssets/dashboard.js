@@ -60,7 +60,7 @@ function draw(o) {
             })
             .showValues(true);
 
-        chart.xAxis.axisLabel(o.field);
+        chart.xAxis.axisLabel("{0} bar chart".fmt(o.field));
 
         // If o.weight is null, format yAxis as integers
         if (o.weight === null) {
