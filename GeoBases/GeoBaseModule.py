@@ -362,6 +362,15 @@ class GeoBase(object):
             self._loadExtBase(fields, join_data)
 
 
+    @staticmethod
+    def _isSpecialField(field):
+        """Check if a given field is special or raw version of a split one.
+        """
+        if str(field).endswith('@raw') or str(field).startswith('__'):
+            return True
+        return False
+
+
     def _checkProperties(self, default_is_relative):
         """Some check on parameters.
         """
@@ -388,7 +397,7 @@ class GeoBase(object):
 
         # Some headers are not accepted
         for h in self._headers:
-            if str(h).endswith('@raw') or str(h).startswith('__'):
+            if self._isSpecialField(h):
                 raise ValueError('Header "%s" cannot contain "@raw" or "__".' % h)
 
 
@@ -3030,8 +3039,7 @@ class GeoBase(object):
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
         for field in self.fields:
-            if str(field).startswith('__') or \
-               str(field).endswith('@raw'):
+            if self._isSpecialField(field):
                 continue
 
             counters[field] = defaultdict(int)
@@ -3069,8 +3077,7 @@ class GeoBase(object):
         datetime_fields = []
 
         for field in self.fields:
-            if str(field).startswith('__') or \
-               str(field).endswith('@raw'):
+            if self._isSpecialField(field):
                 continue
 
             counter = {
@@ -3548,8 +3555,7 @@ class GeoBase(object):
 
         for field in self.fields:
             # Keeping only important fields
-            if not str(field).startswith('__') and \
-               not str(field).endswith('@raw') and \
+            if not self._isSpecialField(field) and \
                field not in elem:
 
                 elem[field] = str(self.get(key, field))
@@ -3737,8 +3743,7 @@ class GeoBase(object):
 
                             for ext_f in self.getJoinBase(fields).fields:
                                 # Keeping only important fields
-                                if not str(ext_f).startswith('__') and \
-                                   not str(ext_f).endswith('@raw') and \
+                                if not self._isSpecialField(ext_f) and \
                                    ext_f not in join_icons[jkey]:
 
                                     join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
