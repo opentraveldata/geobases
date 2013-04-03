@@ -2398,10 +2398,10 @@ class GeoBase(object):
         ...                         method='dmetaphone',
         ...                         verbose=True))
         Looking for phonemes like ['C220', None] (for "chicago")
-        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Caucasia']
         >>> list(geo_o.get(k, 'name') for _, k in
         ...      geo_o.phoneticFind('chicago', 'name', 'nysiis'))
-        ['Chickasha', 'Cayo Coco', 'Chicago', 'Casigua', 'Caucasia']
+        ['Chickasha', 'Cayo Coco', 'Chicago', 'Caucasia']
 
         Alternate methods.
 
