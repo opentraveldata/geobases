@@ -92,16 +92,8 @@ function drawNumerical(o) {
 
     var nvData = {
         "key"    : "{0}".fmt(o.field),
-        "values" : []
+        "values" : o.density
     };
-
-    var i, c;
-    for (i=0, c=o.density.length; i<c; i++) {
-        nvData.values.push({
-            'x' : o.density[i][0],
-            'y' : o.density[i][1]
-        });
-    }
 
     nv.addGraph(function() {
 
@@ -109,6 +101,8 @@ function drawNumerical(o) {
 
         chart.xAxis.axisLabel("{0} density".fmt(o.field));
         chart.tooltips(true)
+            .x(function(d) { return d[0]; })
+            .y(function(d) { return d[1]; })
             .tooltipContent(function(key, x, y, e, graph) {
                 //console.log(o.field, key, x, y, e);
                 x = parseFloat(x);
