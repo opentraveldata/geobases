@@ -169,7 +169,7 @@ function drawTimeSeries(o) {
         chart.xAxis.axisLabel("{0} time series".fmt(o.field));
         chart.xAxis
             .tickFormat(function(d) {
-                return d3.time.format('%Y-%m-%d')(new Date(d));
+                return d3.time.format('%Y-%m-%d %H:%M')(new Date(d));
             });
 
         // If o.weight is null, format yAxis as integers

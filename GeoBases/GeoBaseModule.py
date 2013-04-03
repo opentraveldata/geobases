@@ -63,7 +63,7 @@ import csv
 import json
 from shutil import copy
 from collections import defaultdict
-from datetime import date
+from datetime import datetime
 import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
@@ -4197,7 +4197,18 @@ def _parse_date(value):
     """
     s = str(value).replace('/', '').replace('-', '').strip()
     try:
-        d = date(int(s[0:4]), int(s[4:6]), int(s[6:8]))
+        # Hours and minutes are optional
+        if s[8:10]:
+            hours = int(s[8:10])
+        else:
+            hours = 0
+
+        if s[10:12]:
+            minutes = int(s[10:12])
+        else:
+            minutes = 0
+
+        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes)
     except (ValueError, TypeError):
         # This may be raised by int() or date()
         d = None
@@ -4211,7 +4222,7 @@ def _aggregate_dt(values):
         return []
 
     for i, (d, w) in enumerate(values):
-        values[i] = d.strftime('%Y-%m-%d'), w
+        values[i] = d.strftime('%Y-%m-%d %H:%M'), w
 
     return values
 
