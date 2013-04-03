@@ -4182,7 +4182,7 @@ def _build_density(values, slices=10):
 
     return {
         'density'   : sorted(counter.iteritems(), key = lambda k_v : k_v[0]),
-        'nb_values' : len(values),
+        'nb_values' : sum(w for _, w in values),
         'step'      : step
     }
 
