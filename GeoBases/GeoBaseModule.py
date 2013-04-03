@@ -4174,7 +4174,12 @@ def _parse_date(value):
         else:
             minutes = 0
 
-        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes)
+        if s[12:14]:
+            seconds = int(s[12:14])
+        else:
+            seconds = 0
+
+        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes, seconds)
     except (ValueError, TypeError):
         # This may be raised by int() or date()
         d = None
