@@ -4197,7 +4197,12 @@ def _parse_date(value):
     >>> _parse_date('not_a_date') # None
     >>> _parse_date([]) # None
     """
-    s = str(value).replace('/', '').replace('-', '').replace(' ', '').strip()
+    def _clean(s, excluded):
+        """Remove characters from a string.
+        """
+        return ''.join(l for l in list(s) if l not in excluded)
+
+    s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
     try:
         # Hours and minutes are optional
         if s[8:10]:
