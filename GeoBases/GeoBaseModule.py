@@ -4151,8 +4151,8 @@ def _parse_date(value):
 
     >>> _parse_date('2012/01/01')
     datetime.datetime(2012, 1, 1, 0, 0)
-    >>> _parse_date('2012/01/01 08:40')
-    datetime.datetime(2012, 1, 1, 8, 40)
+    >>> _parse_date('2012/01/01 08:40:10')
+    datetime.datetime(2012, 1, 1, 8, 40, 10)
     >>> _parse_date('not_a_date') # None
     >>> _parse_date([]) # None
     """
