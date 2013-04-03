@@ -44,7 +44,7 @@ function draw(o) {
         var chart = nv.models.discreteBarChart()
             .x(function(d) { return '"{0}"'.fmt(overflow(d[0])); })
             .y(function(d) { return d[1]; })
-            .staggerLabels(true)
+            //.staggerLabels(true)
             .tooltips(true)
             .tooltipContent(function(key, x, y, e, graph) {
                 //console.log(o.field, x, y, p, e.value, o.sumInfo);
