@@ -4187,14 +4187,14 @@ def _build_density(values, slices=10):
     }
 
 
-def _parse_date(string):
+def _parse_date(value):
     """Fast date parsing.
 
     >>> _parse_date('2012/01/01')
     >>> _parse_date('not_a_date') # None
     >>> _parse_date([]) # None
     """
-    s = string.replace('/', '').replace('-', '')
+    s = str(value).replace('/', '').replace('-', '').strip()
     try:
         d = date(int(s[0:4]), int(s[4:6]), int(s[6:8]))
     except (ValueError, TypeError):
