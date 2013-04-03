@@ -63,7 +63,7 @@ import csv
 import json
 from shutil import copy
 from collections import defaultdict
-from datetime import datetime
+from datetime import date
 import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
@@ -3070,7 +3070,7 @@ class GeoBase(object):
 
 
 
-    def _detectFieldsTypes(self, threshold=0.99, dt_format='%Y-%m-%d'):
+    def _detectFieldsTypes(self, threshold=0.99):
         """Detect numeric fields.
         """
         numeric_fields = []
@@ -3102,14 +3102,8 @@ class GeoBase(object):
                 else:
                     counter['numeric'] += 1
 
-                try:
-                    datetime.strptime(self.get(key, field), dt_format)
-                except (ValueError, TypeError):
-                    # TypeError when input type was not string or float/int
-                    # ValueError: field did not match datetime format
-                    pass
-                else:
-                    # ISO-8601 biiiitch
+                d = _parse_date(self.get(key, field))
+                if d is not None:
                     counter['datetime'] += 1
 
             # We make sure we have actual data
@@ -3145,7 +3139,7 @@ class GeoBase(object):
         return _build_density(values, slices=int(math.sqrt(len(values))))
 
 
-    def _buildDashboardTimeSeries(self, field, get_weight, keys, dt_format='%Y-%m-%d'):
+    def _buildDashboardTimeSeries(self, field, get_weight, keys):
         """Build dashboard density for a numeric field.
         """
         values = []
@@ -3154,17 +3148,11 @@ class GeoBase(object):
             if not self.get(key, field):
                 # Empty values are not counted
                 continue
+            d = _parse_date(self.get(key, field))
+            if d is not None:
+                values.append((d, get_weight(key)))
 
-            try:
-                d = datetime.strptime(self.get(key, field), dt_format)
-            except (ValueError, TypeError):
-                # TypeError when input type was not string or float/int
-                # ValueError: field did not match datetime format
-                continue
-            else:
-                values.append((d.strftime(dt_format), get_weight(key)))
-
-        return values
+        return _aggregate_dt(values)
 
 
     def buildDashboardData(self, keep=10, dashboard_weight=None, from_keys=None):
@@ -4205,6 +4193,33 @@ def _build_density(values, slices=10):
         'step'      : step
     }
 
+
+def _parse_date(string):
+    """Fast date parsing.
+
+    >>> _parse_date('2012/01/01')
+    >>> _parse_date('not_a_date') # None
+    >>> _parse_date([]) # None
+    """
+    s = string.replace('/', '').replace('-', '')
+    try:
+        d = date(int(s[0:4]), int(s[4:6]), int(s[6:8]))
+    except (ValueError, TypeError):
+        # This may be raised by int() or date()
+        d = None
+    return d
+
+
+def _aggregate_dt(values):
+    """Aggregate datetime objects.
+    """
+    if not values:
+        return []
+
+    for i, (d, w) in enumerate(values):
+        values[i] = d.strftime('%Y-%m-%d'), w
+
+    return values
 
 
 def _test():
