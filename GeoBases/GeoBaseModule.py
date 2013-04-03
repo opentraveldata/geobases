@@ -3123,10 +3123,6 @@ class GeoBase(object):
         values = []
 
         for key in keys:
-            if not self.get(key, field):
-                # Empty values are not counted
-                continue
-
             try:
                 v = float(self.get(key, field))
             except (ValueError, TypeError):
@@ -3145,9 +3141,6 @@ class GeoBase(object):
         values = []
 
         for key in keys:
-            if not self.get(key, field):
-                # Empty values are not counted
-                continue
             d = _parse_date(self.get(key, field))
             if d is not None:
                 values.append((d, get_weight(key)))
