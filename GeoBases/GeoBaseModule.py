@@ -3189,7 +3189,7 @@ class GeoBase(object):
                 """Custom weight computation."""
                 try:
                     w = float(self.get(key, dashboard_weight))
-                except (ValueError, ValueError):
+                except (ValueError, TypeError):
                     w = 0
                 return w
 
