@@ -63,7 +63,7 @@ import csv
 import json
 from shutil import copy
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
@@ -3148,7 +3148,7 @@ class GeoBase(object):
             if d is not None:
                 values.append((d, get_weight(key)))
 
-        return _aggregate_dt(values)
+        return _aggregate_datetimes(values)
 
 
     def buildDashboardData(self, keep=10, dashboard_weight=None, from_keys=None):
@@ -4234,22 +4234,109 @@ def _build_density(values, slices=None):
     }
 
 
+def _normalize_time_gap(seconds, vmin):
+    """
+    Compute appropriate time gap given a number
+    of seconds and a start point (datetime object).
+    """
+    # Magic number
+    r = 2.0
 
-def _aggregate_dt(values):
+    # The aggregation is made by minute, hour, day, etc...
+    if seconds <= r * 60:
+        step_seconds = 1
+        start_dt = datetime(vmin.year, vmin.month, vmin.day,
+                            vmin.hour, vmin.minute, vmin.second)
+        step_name = 'second'
+
+    elif seconds <= r * 3600:
+        step_seconds = 60
+        start_dt = datetime(vmin.year, vmin.month, vmin.day,
+                            vmin.hour, vmin.minute, 0)
+        step_name = 'minute'
+
+    elif seconds <= r * 3600 * 24:
+        step_seconds = 3600
+        start_dt = datetime(vmin.year, vmin.month, vmin.day,
+                            vmin.hour, 0, 0)
+        step_name = 'hour'
+
+    elif seconds <= r * 3600 * 24 * 31:
+        step_seconds = 3600 * 24
+        start_dt = datetime(vmin.year, vmin.month, vmin.day,
+                            0, 0, 0)
+        step_name = 'day'
+
+    elif seconds <= r * 31556926: # seconds in a year
+        step_seconds = 3600 * 24 * 31
+        start_dt = datetime(vmin.year, vmin.month, 1, 0, 0, 0)
+        step_name = 'month'
+    else:
+        step_seconds = 31556926
+        start_dt = datetime(vmin.year, 1, 1, 0, 0, 0)
+        step_name = 'year'
+
+    return start_dt, step_seconds, step_name
+
+
+def _aggregate_datetimes(values, start_aggregation=5):
     """Aggregate datetime objects.
     """
-    if not values:
+    # Output datetime format
+    dt_format = '%Y-%m-%d %H:%M:%S'
+
+    if len(values) < start_aggregation:
+        # We do not aggregate small data sets
         return {
-            'time_series': [],
-            'nb_values'  : 0
+            'time_series' : [(d.strftime(dt_format), w)
+                             for (d, w) in sorted(values)],
+            'nb_values'   : sum(w for _, w in values),
+            'step'        : None
         }
 
-    for i, (d, w) in enumerate(values):
-        values[i] = d.strftime('%Y-%m-%d %H:%M'), w
+    def _total_seconds(td):
+        """Timedelta total_seconds() implementation.
+        """
+        return (td.microseconds + \
+               (td.seconds + td.days * 24 * 3600) * 10 ** 6) / float(10 ** 6)
+
+    values = sorted(values)
+    min_val = min(values)[0]
+    max_val = max(values)[0]
+
+    # (max_val - min_val) is a timedelta object
+    # >=2.7, use .total_seconds()
+    gap_seconds = _total_seconds(max_val - min_val)
+    start_dt, step_seconds, step_name = _normalize_time_gap(gap_seconds, min_val)
+
+    counter = defaultdict(int)
+    upper = start_dt
+    step = timedelta(seconds=step_seconds)
+    i = 0
+
+    while True:
+        if i < len(values):
+            d, w = values[i]
+        else:
+            break
+
+        if d <= upper:
+            counter[upper] += w
+            i += 1
+        else:
+            upper += step
+            counter[upper] = 0
+
+    # Convert dict to list, then stringify datetimes
+    counter = sorted(counter.iteritems(), key = lambda k_v : k_v[0])
+
+    for i, (d, w) in enumerate(counter):
+        counter[i] = d.strftime(dt_format), w
 
     return {
-        'time_series': values,
-        'nb_values'  : sum(w for _, w in values),
+        'time_series' : counter,
+        'nb_values'   : sum(w for _, w in values),
+        'step'        : step_name
     }
 
 
