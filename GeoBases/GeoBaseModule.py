@@ -4231,7 +4231,10 @@ def _aggregate_dt(values):
     """Aggregate datetime objects.
     """
     if not values:
-        return []
+        return {
+            'time_series': [],
+            'nb_values'  : 0
+        }
 
     for i, (d, w) in enumerate(values):
         values[i] = d.strftime('%Y-%m-%d %H:%M'), w
