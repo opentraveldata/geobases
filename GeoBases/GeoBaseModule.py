@@ -3114,6 +3114,9 @@ class GeoBase(object):
                 if counter['datetime'] >= threshold * counter['total']:
                     datetime_fields.append(field)
 
+        # We do not want to plot densities for datetime fields
+        numeric_fields = [f for f in numeric_fields if f not in datetime_fields]
+
         return numeric_fields, datetime_fields
 
 
