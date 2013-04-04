@@ -19,7 +19,7 @@ INSTALL_REQUIRES = [
     'python_geohash',
     'python_Levenshtein',
     'fuzzy',
-    'dateutil',
+    'python-dateutil',
     # Public - CLI
     'argparse',
     'termcolor',
