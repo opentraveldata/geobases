@@ -175,21 +175,21 @@ function drawTimeSeries(o) {
                                                  o.nb_values.toFixed(1));
             });
 
-        var agg_info = o.step === null ? 'no aggregation' : 'by {0}'.fmt(o.step);
+        var agg_info = o.agg_level === null ? 'no aggregation' : 'by {0}'.fmt(o.agg_level);
         chart.xAxis.axisLabel("{0} time series ({1})".fmt(o.field, agg_info));
 
         var dt_format;
-        if (o.step === 'second') {
+        if (o.agg_level === 'seconds') {
             dt_format = '%H:%M:%S';
-        } else if (o.step === 'minute') {
+        } else if (o.agg_level === 'minutes') {
             dt_format = '%H:%M';
-        } else if (o.step === 'hour') {
+        } else if (o.agg_level === 'hours') {
             dt_format = '%H:%M';
-        } else if (o.step === 'day') {
+        } else if (o.agg_level === 'days') {
             dt_format = '%Y-%m-%d';
-        } else if (o.step === 'month') {
+        } else if (o.agg_level === 'months') {
             dt_format = '%Y-%m';
-        } else if (o.step === 'year') {
+        } else if (o.agg_level === 'years') {
             dt_format = '%Y';
         } else {
             dt_format = '%Y-%m-%d %H:%M:%S';
@@ -307,7 +307,7 @@ function initialize(jsonData) {
                 'weight'     : jsonData.weight,
                 'time_series': jsonData.time_series[field].time_series,
                 'nb_values'  : jsonData.time_series[field].nb_values,
-                'step'       : jsonData.time_series[field].step,
+                'agg_level'  : jsonData.time_series[field].agg_level,
                 'svgId'      : '#{0} svg'.fmt(ts_id)
             });
 
