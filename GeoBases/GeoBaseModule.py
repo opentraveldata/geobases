@@ -4146,11 +4146,12 @@ def build_cache_key(*args, **kwargs):
 
 
 
-def _build_density(values, slices=None):
+def _build_density(values, bins=None):
     """Build density from a list of (values, weight).
     """
-    if slices is None:
-        slices = int(math.sqrt(len(values)))
+    if bins is None:
+        # Excel heuristic :)
+        bins = int(math.sqrt(len(values)))
 
     if not values:
         return {
@@ -4163,8 +4164,8 @@ def _build_density(values, slices=None):
     min_val = min(values)[0]
     max_val = max(values)[0]
 
-    if slices > 0:
-        step = float(max_val - min_val) / slices
+    if bins > 0:
+        step = float(max_val - min_val) / bins
     else:
         # In this case step will never be used
         step = 1
@@ -4187,10 +4188,12 @@ def _build_density(values, slices=None):
             counter[upper] = 0
 
     return {
-        'density'   : sorted(counter.iteritems(), key = lambda k_v : k_v[0]),
+        'density'   : sorted(counter.iteritems(),
+                             key=lambda k_v : k_v[0]),
         'nb_values' : sum(w for _, w in values),
         'step'      : step
     }
+
 
 
 def _parse_date(value):
@@ -4280,6 +4283,7 @@ def _normalize_time_gap(seconds, vmin):
     return start_dt, step_seconds, step_name
 
 
+
 def _aggregate_datetimes(values, start_aggregation=5):
     """Aggregate datetime objects.
     """
@@ -4339,6 +4343,7 @@ def _aggregate_datetimes(values, start_aggregation=5):
         'nb_values'   : sum(w for _, w in values),
         'step'        : step_name
     }
+
 
 
 def _test():
