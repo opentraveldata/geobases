@@ -4176,12 +4176,8 @@ def _build_density(values, bins=None):
     upper = min_val
     i = 0
 
-    while True:
-        if i < len(values):
-            v, w = values[i]
-        else:
-            break
-
+    while i < len(values):
+        v, w = values[i]
         if v <= upper:
             counter[upper] += w
             i += 1
