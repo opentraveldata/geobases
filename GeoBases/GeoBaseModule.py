@@ -4240,7 +4240,7 @@ def _parse_date(value):
 
 
 
-def _compute_time_aggregator(gap_seconds):
+def _guess_time_aggregation(gap_seconds):
     """Compute time aggregation function.
     """
     # Typical durations in seconds
@@ -4267,23 +4267,23 @@ def _compute_time_aggregator(gap_seconds):
 
     # The aggregation is made by year, month, day, ...
     for name, duration in durations:
-        if gap_seconds > r * duration:
+        if gap_seconds >= r * duration:
             return name, aggregators[name]
     return None, lambda d: d
 
 
 
-def _gen_datetimes(d_min, d_max, agg_level):
+def _gen_inter_datetimes(d_min, d_max, agg_level):
     """Generate all datetimes between two datetimes and an aggregation level.
 
     >>> d_min = datetime(2012, 12, 31)
     >>> d_max = datetime(2013,  1,  1)
-    >>> list(_gen_datetimes(d_min, d_max, 'days'))
+    >>> list(_gen_inter_datetimes(d_min, d_max, 'days'))
     [datetime.datetime(2012, 12, 31, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
 
     >>> d_min = datetime(2012, 6, 1)
     >>> d_max = datetime(2013, 1, 1)
-    >>> list(_gen_datetimes(d_min, d_max, 'years'))
+    >>> list(_gen_inter_datetimes(d_min, d_max, 'years'))
     [datetime.datetime(2012, 6, 1, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
     """
     # This is blowing your mind
@@ -4320,11 +4320,11 @@ def _aggregate_datetimes(values):
     # (d_max - d_min) is a timedelta object
     # with Python >= 2.7, use .total_seconds()
     gap_seconds = _total_seconds(d_max - d_min)
-    agg_level, aggregate = _compute_time_aggregator(gap_seconds)
+    agg_level, aggregate = _guess_time_aggregation(gap_seconds)
 
     # Computing counter with 0 value for each period
     counter = defaultdict(int)
-    for d in _gen_datetimes(aggregate(d_min), aggregate(d_max), agg_level):
+    for d in _gen_inter_datetimes(aggregate(d_min), aggregate(d_max), agg_level):
         counter[aggregate(d)] = 0
 
     for d, w in values:
