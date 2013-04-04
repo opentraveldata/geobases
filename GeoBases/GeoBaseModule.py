@@ -4270,6 +4270,16 @@ def _compute_time_aggregator(gap_seconds):
 
 def _gen_datetimes(d_min, d_max, agg_level):
     """Generate all datetimes between two datetimes and an aggregation level.
+
+    >>> d_min = datetime(2012, 12, 31)
+    >>> d_max = datetime(2013,  1,  1)
+    >>> list(_gen_datetimes(d_min, d_max, 'days'))
+    [datetime.datetime(2012, 12, 31, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
+
+    >>> d_min = datetime(2012, 6, 1)
+    >>> d_max = datetime(2013, 1, 1)
+    >>> list(_gen_datetimes(d_min, d_max, 'years'))
+    [datetime.datetime(2012, 6, 1, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
     """
     # This is blowing your mind
     delta = relativedelta(**{ agg_level : 1 })
