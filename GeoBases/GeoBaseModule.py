@@ -4278,12 +4278,12 @@ def _gen_inter_datetimes(d_min, d_max, agg_level):
 
     >>> d_min = datetime(2012, 12, 31)
     >>> d_max = datetime(2013,  1,  1)
-    >>> list(_gen_inter_datetimes(d_min, d_max, 'days'))
+    >>> list(_gen_inter_datetimes(d_min, d_max, 'day'))
     [datetime.datetime(2012, 12, 31, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
 
     >>> d_min = datetime(2012, 6, 1)
     >>> d_max = datetime(2013, 1, 1)
-    >>> list(_gen_inter_datetimes(d_min, d_max, 'years'))
+    >>> list(_gen_inter_datetimes(d_min, d_max, 'year'))
     [datetime.datetime(2012, 6, 1, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
     """
     agg_level = '%ss' % agg_level # adding "s" for relativedelta
