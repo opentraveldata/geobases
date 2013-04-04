@@ -4146,46 +4146,6 @@ def build_cache_key(*args, **kwargs):
 
 
 
-def _parse_date(value):
-    """Fast date parsing.
-
-    >>> _parse_date('2012/01/01')
-    datetime.datetime(2012, 1, 1, 0, 0)
-    >>> _parse_date('2012/01/01 08:40:10')
-    datetime.datetime(2012, 1, 1, 8, 40, 10)
-    >>> _parse_date('not_a_date') # None
-    >>> _parse_date([]) # None
-    """
-    def _clean(s, excluded):
-        """Remove characters from a string.
-        """
-        return ''.join(l for l in list(s) if l not in excluded)
-
-    def _scan_int(s, **kwargs):
-        """Scan integer, with default value if empty string.
-        """
-        if not s and 'default' in kwargs:
-            return kwargs['default']
-        return int(s)
-
-    s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
-    try:
-        hours   = _scan_int(s[8:10], default=0)
-        minutes = _scan_int(s[10:12], default=0)
-        seconds = _scan_int(s[12:14], default=0)
-
-        days   = _scan_int(s[6:8], default=1)
-        months = _scan_int(s[4:6], default=1)
-        years  = _scan_int(s[0:4])
-
-        d = datetime(years, months, days, hours, minutes, seconds)
-    except (ValueError, TypeError):
-        # This may be raised by int() or datetime()
-        d = None
-    return d
-
-
-
 def _build_density(values, slices=None):
     """Build density from a list of (values, weight).
     """
@@ -4231,6 +4191,46 @@ def _build_density(values, slices=None):
         'nb_values' : sum(w for _, w in values),
         'step'      : step
     }
+
+
+def _parse_date(value):
+    """Fast date parsing.
+
+    >>> _parse_date('2012/01/01')
+    datetime.datetime(2012, 1, 1, 0, 0)
+    >>> _parse_date('2012/01/01 08:40:10')
+    datetime.datetime(2012, 1, 1, 8, 40, 10)
+    >>> _parse_date('not_a_date') # None
+    >>> _parse_date([]) # None
+    """
+    def _clean(s, excluded):
+        """Remove characters from a string.
+        """
+        return ''.join(l for l in list(s) if l not in excluded)
+
+    def _scan_int(s, **kwargs):
+        """Scan integer, with default value if empty string.
+        """
+        if not s and 'default' in kwargs:
+            return kwargs['default']
+        return int(s)
+
+    s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
+    try:
+        hours   = _scan_int(s[8:10], default=0)
+        minutes = _scan_int(s[10:12], default=0)
+        seconds = _scan_int(s[12:14], default=0)
+
+        days   = _scan_int(s[6:8], default=1)
+        months = _scan_int(s[4:6], default=1)
+        years  = _scan_int(s[0:4])
+
+        d = datetime(years, months, days, hours, minutes, seconds)
+    except (ValueError, TypeError):
+        # This may be raised by int() or datetime()
+        d = None
+    return d
+
 
 
 def _normalize_time_gap(seconds, vmin):
