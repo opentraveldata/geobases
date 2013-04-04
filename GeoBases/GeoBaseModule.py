@@ -4275,9 +4275,10 @@ def _gen_datetimes(d_min, d_max, agg_level):
     delta = relativedelta(**{ agg_level : 1 })
     start = d_min
 
-    while start <= d_max:
+    while start < d_max:
         yield start
         start += delta
+    yield d_max
 
 
 
