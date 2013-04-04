@@ -63,7 +63,8 @@ import csv
 import json
 from shutil import copy
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
@@ -4160,7 +4161,7 @@ def _build_density(values, bins=None):
             'step'      : None
         }
 
-    values = sorted(values)
+    values  = sorted(values)
     min_val = min(values)[0]
     max_val = max(values)[0]
 
@@ -4222,7 +4223,7 @@ def _parse_date(value):
 
     s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
     try:
-        hours   = _scan_int(s[8:10], default=0)
+        hours   = _scan_int(s[8:10],  default=0)
         minutes = _scan_int(s[10:12], default=0)
         seconds = _scan_int(s[12:14], default=0)
 
@@ -4238,65 +4239,60 @@ def _parse_date(value):
 
 
 
-def _normalize_time_gap(seconds, vmin):
+def _compute_time_aggregator(gap_seconds):
+    """Compute time aggregation function.
     """
-    Compute appropriate time gap given a number
-    of seconds and a start point (datetime object).
-    """
+    # Typical durations in seconds
+    durations = [
+        ('years',   31556926),
+        ('months',  60 * 60 * 24 * 31),
+        ('days',    60 * 60 * 24),
+        ('hours',   60 * 60),
+        ('minutes', 60),
+        ('seconds', 1),
+    ]
+
+    aggregators = {
+        'years'   : lambda d: datetime(d.year, 1, 1, 0, 0, 0),
+        'months'  : lambda d: datetime(d.year, d.month, 1, 0, 0, 0),
+        'days'    : lambda d: datetime(d.year, d.month, d.day, 0, 0, 0),
+        'hours'   : lambda d: datetime(d.year, d.month, d.day, d.hour, 0, 0),
+        'minutes' : lambda d: datetime(d.year, d.month, d.day, d.hour, d.minute, 0),
+        'seconds' : lambda d: d,
+    }
+
     # Magic number
-    r = 2.0
+    r = 2.5
 
-    # The aggregation is made by minute, hour, day, etc...
-    if seconds <= r * 60:
-        step_seconds = 1
-        start_dt = datetime(vmin.year, vmin.month, vmin.day,
-                            vmin.hour, vmin.minute, vmin.second)
-        step_name = 'second'
-
-    elif seconds <= r * 3600:
-        step_seconds = 60
-        start_dt = datetime(vmin.year, vmin.month, vmin.day,
-                            vmin.hour, vmin.minute, 0)
-        step_name = 'minute'
-
-    elif seconds <= r * 3600 * 24:
-        step_seconds = 3600
-        start_dt = datetime(vmin.year, vmin.month, vmin.day,
-                            vmin.hour, 0, 0)
-        step_name = 'hour'
-
-    elif seconds <= r * 3600 * 24 * 31:
-        step_seconds = 3600 * 24
-        start_dt = datetime(vmin.year, vmin.month, vmin.day,
-                            0, 0, 0)
-        step_name = 'day'
-
-    elif seconds <= r * 31556926: # seconds in a year
-        step_seconds = 3600 * 24 * 31
-        start_dt = datetime(vmin.year, vmin.month, 1, 0, 0, 0)
-        step_name = 'month'
-    else:
-        step_seconds = 31556926
-        start_dt = datetime(vmin.year, 1, 1, 0, 0, 0)
-        step_name = 'year'
-
-    return start_dt, step_seconds, step_name
+    # The aggregation is made by year, month, day, ...
+    for name, duration in durations:
+        if gap_seconds > r * duration:
+            return name, aggregators[name]
+    return None, lambda d: d
 
 
 
-def _aggregate_datetimes(values, start_aggregation=5):
+def _gen_datetimes(d_min, d_max, agg_level):
+    """Generate all datetimes between two datetimes and an aggregation level.
+    """
+    # This is blowing your mind
+    delta = relativedelta(**{ agg_level : 1 })
+    start = d_min
+
+    while start <= d_max:
+        yield start
+        start += delta
+
+
+
+def _aggregate_datetimes(values):
     """Aggregate datetime objects.
     """
-    # Output datetime format
-    dt_format = '%Y-%m-%d %H:%M:%S'
-
-    if len(values) < start_aggregation:
-        # We do not aggregate small data sets
+    if not values:
         return {
-            'time_series' : [(d.strftime(dt_format), w)
-                             for (d, w) in sorted(values)],
-            'nb_values'   : sum(w for _, w in values),
-            'step'        : None
+            'time_series' : [],
+            'nb_values'   : 0,
+            'agg_level'   : None
         }
 
     def _total_seconds(td):
@@ -4306,42 +4302,35 @@ def _aggregate_datetimes(values, start_aggregation=5):
                (td.seconds + td.days * 24 * 3600) * 10 ** 6) / float(10 ** 6)
 
     values = sorted(values)
-    min_val = min(values)[0]
-    max_val = max(values)[0]
+    d_min  = min(values)[0]
+    d_max  = max(values)[0]
 
-    # (max_val - min_val) is a timedelta object
-    # >=2.7, use .total_seconds()
-    gap_seconds = _total_seconds(max_val - min_val)
-    start_dt, step_seconds, step_name = _normalize_time_gap(gap_seconds, min_val)
+    # (d_max - d_min) is a timedelta object
+    # with Python >= 2.7, use .total_seconds()
+    gap_seconds = _total_seconds(d_max - d_min)
+    agg_level, aggregate = _compute_time_aggregator(gap_seconds)
 
+    # Computing counter with 0 value for each period
     counter = defaultdict(int)
-    upper = start_dt
-    step = timedelta(seconds=step_seconds)
-    i = 0
+    for d in _gen_datetimes(aggregate(d_min), aggregate(d_max), agg_level):
+        counter[aggregate(d)] = 0
 
-    while True:
-        if i < len(values):
-            d, w = values[i]
-        else:
-            break
-
-        if d <= upper:
-            counter[upper] += w
-            i += 1
-        else:
-            upper += step
-            counter[upper] = 0
+    for d, w in values:
+        counter[aggregate(d)] += w
 
     # Convert dict to list, then stringify datetimes
-    counter = sorted(counter.iteritems(), key = lambda k_v : k_v[0])
+    counter = sorted(counter.iteritems(),
+                     key=lambda k_v : k_v[0])
 
+    # Output datetime format
+    dt_format = '%Y-%m-%d %H:%M:%S'
     for i, (d, w) in enumerate(counter):
         counter[i] = d.strftime(dt_format), w
 
     return {
         'time_series' : counter,
         'nb_values'   : sum(w for _, w in values),
-        'step'        : step_name
+        'agg_level'   : agg_level
     }
 
 
