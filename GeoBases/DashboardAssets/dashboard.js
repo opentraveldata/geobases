@@ -179,17 +179,17 @@ function drawTimeSeries(o) {
         chart.xAxis.axisLabel("{0} time series ({1})".fmt(o.field, agg_info));
 
         var dt_format;
-        if (o.agg_level === 'seconds') {
+        if (o.agg_level === 'second') {
             dt_format = '%H:%M:%S';
-        } else if (o.agg_level === 'minutes') {
+        } else if (o.agg_level === 'minute') {
             dt_format = '%H:%M';
-        } else if (o.agg_level === 'hours') {
+        } else if (o.agg_level === 'hour') {
             dt_format = '%H:%M';
-        } else if (o.agg_level === 'days') {
+        } else if (o.agg_level === 'day') {
             dt_format = '%Y-%m-%d';
-        } else if (o.agg_level === 'months') {
+        } else if (o.agg_level === 'month') {
             dt_format = '%Y-%m';
-        } else if (o.agg_level === 'years') {
+        } else if (o.agg_level === 'year') {
             dt_format = '%Y';
         } else {
             dt_format = '%Y-%m-%d %H:%M:%S';

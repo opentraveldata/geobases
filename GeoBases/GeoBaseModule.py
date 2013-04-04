@@ -4245,21 +4245,21 @@ def _guess_time_aggregation(gap_seconds):
     """
     # Typical durations in seconds
     durations = [
-        ('years',   31556926),
-        ('months',  60 * 60 * 24 * 31),
-        ('days',    60 * 60 * 24),
-        ('hours',   60 * 60),
-        ('minutes', 60),
-        ('seconds', 1),
+        ('year',   31556926),
+        ('month',  60 * 60 * 24 * 31),
+        ('day',    60 * 60 * 24),
+        ('hour',   60 * 60),
+        ('minute', 60),
+        ('second', 1),
     ]
 
     aggregators = {
-        'years'   : lambda d: datetime(d.year, 1, 1, 0, 0, 0),
-        'months'  : lambda d: datetime(d.year, d.month, 1, 0, 0, 0),
-        'days'    : lambda d: datetime(d.year, d.month, d.day, 0, 0, 0),
-        'hours'   : lambda d: datetime(d.year, d.month, d.day, d.hour, 0, 0),
-        'minutes' : lambda d: datetime(d.year, d.month, d.day, d.hour, d.minute, 0),
-        'seconds' : lambda d: d,
+        'year'   : lambda d: datetime(d.year, 1, 1, 0, 0, 0),
+        'month'  : lambda d: datetime(d.year, d.month, 1, 0, 0, 0),
+        'day'    : lambda d: datetime(d.year, d.month, d.day, 0, 0, 0),
+        'hour'   : lambda d: datetime(d.year, d.month, d.day, d.hour, 0, 0),
+        'minute' : lambda d: datetime(d.year, d.month, d.day, d.hour, d.minute, 0),
+        'second' : lambda d: d,
     }
 
     # Magic number
@@ -4286,6 +4286,8 @@ def _gen_inter_datetimes(d_min, d_max, agg_level):
     >>> list(_gen_inter_datetimes(d_min, d_max, 'years'))
     [datetime.datetime(2012, 6, 1, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
     """
+    agg_level = '%ss' % agg_level # adding "s" for relativedelta
+
     # This is blowing your mind
     delta = relativedelta(**{ agg_level : 1 })
     start = d_min
