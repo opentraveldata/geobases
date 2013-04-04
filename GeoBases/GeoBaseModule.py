@@ -64,7 +64,6 @@ import json
 from shutil import copy
 from collections import defaultdict
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 import math
 
 from .SourcesManagerModule import SourcesManager, is_remote, is_archive
@@ -73,6 +72,7 @@ from .LevenshteinUtils     import mod_leven, clean
 from .GeoGridModule        import GeoGrid
 
 # Not in standard library
+from dateutil.relativedelta import relativedelta
 from fuzzy import DMetaphone, nysiis
 dmeta = DMetaphone()
 
