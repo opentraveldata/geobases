@@ -57,6 +57,7 @@ from __future__ import with_statement
 
 import os
 import os.path as op
+from operator import itemgetter
 import heapq
 from itertools import izip_longest, count, product
 import csv
@@ -3057,7 +3058,7 @@ class GeoBase(object):
         # Now we sort and keep the most important
         for field in counters:
             counters[field] = sorted(counters[field].iteritems(),
-                                     key=lambda k_v: k_v[1],
+                                     key=itemgetter(1),
                                      reverse=True)
 
             # Tail information
@@ -3811,7 +3812,7 @@ def build_categories(data, with_icons, with_circles, catalog, verbose=True):
             # All categories may be empty if not icons + not circles
             step = 1
 
-    for cat, vol in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+    for cat, vol in sorted(categories.items(), key=itemgetter(1), reverse=True):
         categories[cat] = {
             'volume' : vol
         }
@@ -4189,8 +4190,7 @@ def _build_density(values, bins=None):
             counter[upper] = 0
 
     return {
-        'density'   : sorted(counter.iteritems(),
-                             key=lambda k_v : k_v[0]),
+        'density'   : sorted(counter.iteritems(), key=itemgetter(0)),
         'nb_values' : sum(w for _, w in values),
         'step'      : step
     }
@@ -4319,8 +4319,7 @@ def _aggregate_datetimes(values):
         counter[aggregate(d)] += w
 
     # Convert dict to list, then stringify datetimes
-    counter = sorted(counter.iteritems(),
-                     key=lambda k_v : k_v[0])
+    counter = sorted(counter.iteritems(), key=itemgetter(0))
 
     # Output datetime format
     dt_format = '%Y-%m-%d %H:%M:%S'
