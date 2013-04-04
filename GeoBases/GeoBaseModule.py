@@ -4227,6 +4227,11 @@ def _parse_date(value):
         months = _scan_int(s[4:6], default=1)
         years  = _scan_int(s[0:4])
 
+        # This test prevents failure when using strftime later
+        # This also avoid detecting numeric columns as time series
+        if years < 1900:
+            raise ValueError()
+
         d = datetime(years, months, days, hours, minutes, seconds)
     except (ValueError, TypeError):
         # This may be raised by int() or datetime()
