@@ -4161,27 +4161,26 @@ def _parse_date(value):
         """
         return ''.join(l for l in list(s) if l not in excluded)
 
+    def _scan_int(s, **kwargs):
+        """Scan integer, with default value if empty string.
+        """
+        if not s and 'default' in kwargs:
+            return kwargs['default']
+        return int(s)
+
     s = _clean(str(value).strip(), set([' ', '/', '-', ':']))
     try:
-        # Hours and minutes are optional
-        if s[8:10]:
-            hours = int(s[8:10])
-        else:
-            hours = 0
+        hours   = _scan_int(s[8:10], default=0)
+        minutes = _scan_int(s[10:12], default=0)
+        seconds = _scan_int(s[12:14], default=0)
 
-        if s[10:12]:
-            minutes = int(s[10:12])
-        else:
-            minutes = 0
+        days   = _scan_int(s[6:8], default=1)
+        months = _scan_int(s[4:6], default=1)
+        years  = _scan_int(s[0:4])
 
-        if s[12:14]:
-            seconds = int(s[12:14])
-        else:
-            seconds = 0
-
-        d = datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), hours, minutes, seconds)
+        d = datetime(years, months, days, hours, minutes, seconds)
     except (ValueError, TypeError):
-        # This may be raised by int() or date()
+        # This may be raised by int() or datetime()
         d = None
     return d
 
