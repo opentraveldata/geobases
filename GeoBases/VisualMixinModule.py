@@ -293,9 +293,15 @@ class VisualMixin(object):
 
 
 
-    def _detectFieldsTypes(self, threshold=0.99):
+    def _detectFieldsTypes(self, threshold=0.99, from_keys=None):
         """Detect numeric fields.
         """
+        if from_keys is None:
+            from_keys = iter(self)
+
+        # This might be iterated over several times
+        from_keys = list(from_keys)
+
         numeric_fields = []
         datetime_fields = []
 
@@ -309,7 +315,7 @@ class VisualMixin(object):
                 'total'   : 0,
             }
 
-            for key in self:
+            for key in from_keys:
                 if not self.get(key, field):
                     # Empty values are not counted
                     continue
@@ -410,7 +416,7 @@ class VisualMixin(object):
         counters, sum_info = self._buildDashboardCounters(keep, get_weight, from_keys)
 
         # Sniffing fields
-        numeric_fields, datetime_fields = self._detectFieldsTypes()
+        numeric_fields, datetime_fields = self._detectFieldsTypes(from_keys=from_keys)
 
         # Computing densities
         densities = {}
