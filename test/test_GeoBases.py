@@ -23,11 +23,12 @@ if UPDIR not in sys.path:
     sys.path.append(UPDIR)
 
 
-import GeoBases.GeoBaseModule    as GeoM
-import GeoBases.GeoGridModule    as GeoG
-import GeoBases.GeoUtils         as GeoU
-import GeoBases.LevenshteinUtils as GeoL
+import GeoBases.GeoBaseModule        as GeoM
+import GeoBases.GeoGridModule        as GeoG
+import GeoBases.GeoUtils             as GeoU
+import GeoBases.LevenshteinUtils     as GeoL
 import GeoBases.SourcesManagerModule as GeoS
+import GeoBases.VisualMixinModule    as GeoV
 
 
 
@@ -101,6 +102,7 @@ def test_suite():
             #doctest.IGNORE_EXCEPTION_DETAIL)
 
     globsGeo = {
+        'g'         : GeoM.GeoBase(data='ori_por',  verbose=False),
         'geo_o'     : GeoM.GeoBase(data='ori_por',  verbose=False),
         'geo_a'     : GeoM.GeoBase(data='airports', verbose=False),
         'geo_t'     : GeoM.GeoBase(data='stations', verbose=False),
@@ -113,6 +115,7 @@ def test_suite():
     tests.addTests(doctest.DocTestSuite(GeoU, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoL, optionflags=opt))
     tests.addTests(doctest.DocTestSuite(GeoS, optionflags=opt))
+    tests.addTests(doctest.DocTestSuite(GeoV, optionflags=opt, extraglobs=globsGeo))
 
     tests.addTests(doctest.DocFileSuite('../README.rst', optionflags=opt))
 
