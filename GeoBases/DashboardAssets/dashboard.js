@@ -331,13 +331,23 @@ function initialize(jsonData) {
 
 }
 
+function center() {
+
+    // Some title are not centered, hack
+    $('.nv-axislabel').each(function(i) {
+        if (isNaN($(this).attr("x"))){
+            $(this).attr("x", 150);
+            console.log('here');
+        }
+    });
+}
 
 $(document).ready(function() {
 
     // JSON_FILE is defined in the template
     $.getJSON(JSON_FILE, function(data){
         initialize(data);
+        setTimeout(center, 2000);
     });
-
 });
 
