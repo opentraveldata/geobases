@@ -226,10 +226,12 @@ function drawTimeSeries(o) {
 }
 
 function buildCanvas(id, grid_size) {
+    var border_style = 'border:0px solid white;';
+    var layout_style = 'height:250px; padding:10px;';
 
     return '' +
         '<div id="{0}" class="span{1}">'.fmt(id, grid_size) +
-            '<svg style="height:250px; padding:10px;"></svg>' +
+            '<svg style="{0} {1}"></svg>'.fmt(border_style, layout_style) +
         '</div>';
 }
 
