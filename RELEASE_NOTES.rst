@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *API*: refactor core Python part using mixins (new ``VisualMixinModule``)
     + *CLI*: new ``-D/--dashboard-options`` option to control the dashboard display
     + *CLI*: ``-D/--output-dir`` option is now ``-o/--output-dir``
     + *CLI*: ``-o/--omit`` option is now ``-x/--exclude``
