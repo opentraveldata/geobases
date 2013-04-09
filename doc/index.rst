@@ -14,3 +14,8 @@ Indices and tables
     :undoc-members:
     :show-inheritance:
 
+.. automodule:: GeoBases.VisualMixinModule
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
