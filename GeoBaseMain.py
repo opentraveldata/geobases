@@ -392,8 +392,8 @@ def display_terminal(geob, list_of_things, shown_fields, ref_type, important):
         else:
             col = c.get()
 
-        if str(cf).endswith('@raw'):
-            col = c.convertRaw(col)  # For @raw fields
+        if geob._isFieldRaw(cf):
+            col = c.convertRaw(col)  # For raw fields
 
         if geob.hasJoin(cf):
             col = c.convertJoin(col) # For joined fields
@@ -480,7 +480,7 @@ def display_quiet(geob, list_of_things, shown_fields, ref_type, delim, header):
 
                 v = get(k, cf, ext_f)
                 # Small workaround to display nicely lists in quiet mode
-                # Fields @raw are already handled with raw version, but
+                # Delimited fields are already handled with raw version, but
                 # __dup__ field has no raw version for dumping
                 if isinstance(v, (list, tuple, set)):
                     l.append(flatten(v))
@@ -2994,7 +2994,7 @@ def main():
 
     if frontend == 'quiet':
         # As default, we do not put special fields
-        # and for subdelimited fields, we put the @raw version
+        # and for subdelimited fields, we put the raw version
         defaults = [REF] + [
             f for f in g.fields
             if '%s@raw' % f not in g.fields
