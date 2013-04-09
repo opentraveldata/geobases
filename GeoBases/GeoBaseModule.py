@@ -367,7 +367,7 @@ class GeoBase(VisualMixin):
             self._indices[i] = tuplify(v)
         self._indices = tuplify(self._indices)
 
-        # We remove the None values to avoid creating useless @raw fields
+        # We remove the None values
         for h in self._subdelimiters.keys():
             if self._subdelimiters[h] is None:
                 del self._subdelimiters[h]
@@ -381,7 +381,7 @@ class GeoBase(VisualMixin):
         # Some headers are not accepted
         for h in self._headers:
             if self._isSpecialField(h):
-                raise ValueError('Header "%s" cannot contain "@raw" or "__".' % h)
+                raise ValueError('Illegal header name "%s", __/@raw detected.' % h)
 
 
         # We remove None, convert to dict, tuplify keys *and* values
