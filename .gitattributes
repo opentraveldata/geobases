@@ -1,1 +1,6 @@
 *.zip diff=zip
+*.doc diff=word
+*.tgz diff=tgz
+*.tar.gz diff=tgz
+*.tbz diff=tbz
+*.tar.bz2 diff=tbz
