@@ -379,16 +379,16 @@ class GeoBase(VisualMixin):
 
 
     @classmethod
-    def _isSpecialField(cls, field):
+    def _isFieldNormal(cls, field):
         """Check if a given field is "normal", meaning neither special or raw.
         """
         if cls._isFieldRaw(field):
-            return True
+            return False
 
         if cls._isFieldSpecial(field):
-            return True
+            return False
 
-        return False
+        return True
 
 
     def _checkProperties(self, default_is_relative):
@@ -417,7 +417,7 @@ class GeoBase(VisualMixin):
 
         # Some headers are not accepted
         for h in self._headers:
-            if self._isSpecialField(h):
+            if not self._isFieldNormal(h):
                 raise ValueError('Illegal header name "%s", __/@raw detected.' % h)
 
 

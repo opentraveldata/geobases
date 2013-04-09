@@ -2996,7 +2996,7 @@ def main():
         # As default, we do not put special fields (except __key__)
         # For subdelimited fields, we handle split fields later
         defaults = [REF] + [
-            f for f in g.fields if not g._isSpecialField(f) or f == '__key__'
+            f for f in g.fields if g._isFieldNormal(f) or f == '__key__'
         ]
 
         shown_fields = fields_to_show(defaults,

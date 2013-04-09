@@ -266,7 +266,7 @@ class VisualMixin(object):
         # We are going to count everything for normal fields
         # So we exclude splitted and special fields
         for field in self.fields:
-            if self._isSpecialField(field):
+            if not self._isFieldNormal(field):
                 continue
 
             counters[field] = defaultdict(int)
@@ -310,7 +310,7 @@ class VisualMixin(object):
         datetime_fields = []
 
         for field in self.fields:
-            if self._isSpecialField(field):
+            if not self._isFieldNormal(field):
                 continue
 
             counter = {
@@ -771,9 +771,7 @@ class VisualMixin(object):
 
         for field in self.fields:
             # Keeping only important fields
-            if not self._isSpecialField(field) and \
-               field not in elem:
-
+            if self._isFieldNormal(field) and field not in elem:
                 elem[field] = str(self.get(key, field))
 
         return elem
@@ -959,9 +957,7 @@ class VisualMixin(object):
 
                             for ext_f in self.getJoinBase(fields).fields:
                                 # Keeping only important fields
-                                if not self._isSpecialField(ext_f) and \
-                                   ext_f not in join_icons[jkey]:
-
+                                if self._isFieldNormal(ext_f) and ext_f not in join_icons[jkey]:
                                     join_icons[jkey][ext_f] = str(self.getJoinBase(fields).get(jkey, ext_f))
 
 
