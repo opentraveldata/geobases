@@ -3004,6 +3004,7 @@ def main():
                                       args['show'],
                                       args['show_additional'])
 
+        # We convert all delimited fields to the raw version
         for i, f in enumerate(shown_fields):
             if g._isFieldDelimited(f):
                 shown_fields[i] = '%s@raw' % f
