@@ -387,7 +387,7 @@ def display_terminal(geob, list_of_things, shown_fields, ref_type, important):
             col = c.getEmph()
         elif cf == REF:
             col = c.getHeader()
-        elif str(cf).startswith('__'):
+        elif geob._isFieldSpecial(cf):
             col = c.getSpecial() # For special fields like __dup__
         else:
             col = c.get()
@@ -2998,7 +2998,7 @@ def main():
         defaults = [REF] + [
             f for f in g.fields
             if '%s@raw' % f not in g.fields
-            and not f.startswith('__')
+            and not g._isFieldSpecial(f)
             or f == '__key__'
         ]
 
