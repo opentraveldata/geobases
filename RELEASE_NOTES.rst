@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *CLI*: in ``--quiet`` mode, subdelimited fields are always dumped using their raw version
     + *API*: added private methods to handle fields (``isFieldDelimited``, ``isFieldSpecial``, ...)
     + *API*: refactor core Python part using mixins (new ``VisualMixinModule``)
     + *CLI*: new ``-D/--dashboard-options`` option to control the dashboard display
