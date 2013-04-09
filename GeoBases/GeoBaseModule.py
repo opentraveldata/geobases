@@ -1015,9 +1015,10 @@ class GeoBase(VisualMixin):
             for h in headers:
                 try:
                     if h is None:
+                        # May happen for not-loaded-columns
                         line.append('')
                     elif h in subdelimiters:
-                        line.append(self.get(key, '%s@raw' % h))
+                        line.append(recursive_join(self.get(key, h), subdelimiters[h]))
                     else:
                         line.append(str(self.get(key, h)))
                 except KeyError:
@@ -2875,6 +2876,35 @@ def recursive_split(value, splits):
 
     raise ValueError('Sub delimiter "%s" not supported.' % str(splits))
 
+
+def recursive_join(value, splits, level=0):
+    """recursive_join nested structures into str.
+
+    >>> recursive_join((), ['/'])
+    ''
+    >>> recursive_join('T0', ['/'])
+    'T0'
+    >>> recursive_join(['T1', 'T1'], ['/'])
+    'T1/T1'
+    >>> recursive_join([('T2', 'T2'), 'T1'], ['/', ':'])
+    'T2:T2/T1'
+    >>> recursive_join([('T2', ['T3', 'T3']), 'T1'], ['/', ':', ','])
+    'T2:T3,T3/T1'
+    """
+    # Case where no splits
+    if not splits:
+        return value
+
+    if isinstance(value, (list, tuple, set)):
+        if level >= len(splits):
+            raise ValueError('Not enough splitters in %s' % str(splits))
+
+        splitter = splits[level]
+        level += 1
+
+        return splitter.join(recursive_join(e, splits, level) for e in value)
+    else:
+        return str(value)
 
 
 def iter_over_subdel(value, deep=False):
