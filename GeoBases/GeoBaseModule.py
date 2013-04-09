@@ -345,6 +345,12 @@ class GeoBase(VisualMixin):
             self._loadExtBase(fields, join_data)
 
 
+    @staticmethod
+    def _convertFieldToRaw(field):
+        """Convert field name to raw version.
+        """
+        return '%s@raw' % field
+
 
     def _isFieldDelimited(self, field):
         """Check if a given field is split.
@@ -751,11 +757,11 @@ class GeoBase(VisualMixin):
             if h is None:
                 data['__gar__'].append(v)
             else:
-                if h not in subdelimiters:
-                    data[h] = v
-                else:
-                    data['%s@raw' % h] = v
+                if self._isFieldDelimited(h):
+                    data[self._convertFieldToRaw(h)] = v
                     data[h] = recursive_split(v, subdelimiters[h])
+                else:
+                    data[h] = v
 
         return data
 
@@ -940,8 +946,8 @@ class GeoBase(VisualMixin):
         self.fields = ['__key__', '__dup__', '__par__', '__lno__']
 
         for h in headers:
-            if h in subdelimiters:
-                self.fields.append('%s@raw' % h)
+            if self._isFieldDelimited(h):
+                self.fields.append(self._convertFieldToRaw(h))
             if h is not None:
                 self.fields.append(h)
 

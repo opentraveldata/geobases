@@ -3007,7 +3007,7 @@ def main():
         # We convert all delimited fields to the raw version
         for i, f in enumerate(shown_fields):
             if g._isFieldDelimited(f):
-                shown_fields[i] = '%s@raw' % f
+                shown_fields[i] = g._convertFieldToRaw(f)
 
         display_quiet(g, res, shown_fields, ref_type, quiet_delimiter, header_display)
 
