@@ -346,11 +346,33 @@ class GeoBase(VisualMixin):
 
 
     @staticmethod
-    def _isSpecialField(field):
-        """Check if a given field is special or raw version of a split one.
+    def _isFieldRaw(field):
+        """Check if a given field is a raw version of a split one.
         """
-        if str(field).endswith('@raw') or str(field).startswith('__'):
+        if str(field).endswith('@raw'):
             return True
+        return False
+
+
+    @staticmethod
+    def _isFieldSpecial(field):
+        """Check if a given field is special.
+        """
+        if str(field).startswith('__'):
+            return True
+        return False
+
+
+    @classmethod
+    def _isSpecialField(cls, field):
+        """Check if a given field is "normal", meaning neither special or raw.
+        """
+        if cls._isFieldRaw(field):
+            return True
+
+        if cls._isFieldSpecial(field):
+            return True
+
         return False
 
 
