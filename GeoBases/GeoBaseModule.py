@@ -917,16 +917,16 @@ class GeoBase(VisualMixin):
         self.fields.append('__gar__')
 
 
-    def save(self, path=None, force=True, headers=None, verbose=True):
+    def save(self, path=None, safe=False, headers=None, verbose=True):
         """Save the data structure in the initial loaded file.
 
         :param path: ``None`` as default. If no argument is given for this \
                 parameter, we will try to save to the default path defined \
                 in the configuration file. Otherwise we will try to save in \
                 the path given.
-        :param force: default is ``True``, the data is dumped in the \
-                initial loaded file, except if ``force`` is set to \
-                ``False``. In this case, a ``filename.new`` will be created
+        :param safe: default is ``False``. If ``safe`` is ``False``, the data \
+                is dumped in the initial loaded file. If ``True``, a \
+                ``filename.new`` will be created to dump the data.
         :param headers: the headers of data which will be dumped. Leave default \
                 to use headers defined in configuration. Otherwise, this must be \
                 a list of fields.
@@ -971,7 +971,7 @@ class GeoBase(VisualMixin):
             try:
                 if op.isfile(file_):
                     # File already exist!
-                    if not force:
+                    if safe:
                         file_ = '%s.new' % file_
 
                 with open(file_ , 'w') as out_fl:
