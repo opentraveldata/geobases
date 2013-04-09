@@ -1054,7 +1054,7 @@ class GeoBase(VisualMixin):
                     if h is None:
                         # May happen for not-loaded-columns
                         line.append('')
-                    elif h in subdelimiters:
+                    elif self._isFieldDelimited(h):
                         line.append(recursive_join(self.get(key, h), subdelimiters[h]))
                     else:
                         line.append(str(self.get(key, h)))
