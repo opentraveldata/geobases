@@ -2993,19 +2993,20 @@ def main():
 
 
     if frontend == 'quiet':
-        # As default, we do not put special fields
-        # and for subdelimited fields, we put the raw version
+        # As default, we do not put special fields (except __key__)
+        # For subdelimited fields, we handle split fields later
         defaults = [REF] + [
-            f for f in g.fields
-            if '%s@raw' % f not in g.fields
-            and not g._isFieldSpecial(f)
-            or f == '__key__'
+            f for f in g.fields if not g._isSpecialField(f) or f == '__key__'
         ]
 
         shown_fields = fields_to_show(defaults,
                                       set(args['exclude']),
                                       args['show'],
                                       args['show_additional'])
+
+        for i, f in enumerate(shown_fields):
+            if g._isFieldDelimited(f):
+                shown_fields[i] = '%s@raw' % f
 
         display_quiet(g, res, shown_fields, ref_type, quiet_delimiter, header_display)
 
