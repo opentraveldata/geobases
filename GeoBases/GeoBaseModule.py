@@ -345,6 +345,15 @@ class GeoBase(VisualMixin):
             self._loadExtBase(fields, join_data)
 
 
+
+    def _isFieldDelimited(self, field):
+        """Check if a given field is split.
+        """
+        if field in self._subdelimiters:
+            return True
+        return False
+
+
     @staticmethod
     def _isFieldRaw(field):
         """Check if a given field is a raw version of a split one.
@@ -1393,7 +1402,7 @@ class GeoBase(VisualMixin):
         else:
             ext_get = lambda k : ext_b.get(k, ext_field)
 
-        if any(f in self._subdelimiters for f in fields):
+        if any(self._isFieldDelimited(f) for f in fields):
             # This is the cartesian product of all possible combinations
             # of sub-delimited values
             # *iter_over_subdel* is here to create the lists from values which are
