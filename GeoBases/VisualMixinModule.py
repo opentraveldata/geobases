@@ -34,6 +34,10 @@ DEFAULT_TMP_NAME = 'example'
 DEFAULT_TMP_DIR  = None # translated to working dir
 
 
+# We only export the main class
+__all__ = ['VisualMixin']
+
+
 class VisualMixin(object):
     """
     Main class used as mixin for the *GeoBase* class.
