@@ -114,6 +114,7 @@ class VisualMixin(object):
         nb_edges = len(graph_fields) - 1
 
         for key in from_keys:
+            # We stringify values here because json requires string as keys
             values = tuple(str(self.get(key, f)) for f in graph_fields)
             weight = get_weight(key)
 
@@ -125,8 +126,9 @@ class VisualMixin(object):
 
                 if with_types:
                     # We include the type in the key
-                    # We do not create tuples because json requires string as keys
-                    # A bit "moisi" here...
+                    ## We do not use tuples because json requires string as keys
+                    ## This workaround may produce bugs if values look like types
+                    #TODO: find a way to use tuples
                     ori_id = '%s/%s' % (ori_type, ori_val)
                     des_id = '%s/%s' % (des_type, des_val)
                 else:
