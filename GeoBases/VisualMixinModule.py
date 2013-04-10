@@ -1303,6 +1303,8 @@ def _parse_date(value):
         # This also avoid detecting numeric columns as time series
         if years < 1900:
             raise ValueError()
+        if years > 2099:
+            raise ValueError()
 
         d = datetime(years, months, days, hours, minutes, seconds)
     except (ValueError, TypeError):
