@@ -1173,9 +1173,11 @@ def handle_args():
         This option can be used to administrate sources.
         It accepts a two optional arguments: command, base.
         As command argument, you may use either
+        %s,
         %s.
         Leave empty and answer questions otherwise.
-        ''' % ', '.join(ALLOWED_COMMANDS)),
+        ''' % (', '.join(ALLOWED_COMMANDS[:5]),
+               ', '.join(ALLOWED_COMMANDS[5:]))),
         nargs = '*',
         metavar = 'COMMAND',
         default = None)
@@ -1189,9 +1191,9 @@ def handle_args():
 
     parser.add_argument('-b', '--base',
         help = dedent('''\
-        Choose a different data type, default is "%s". Also available are
-        stations, airports, countries... Give unadmissible value
-        and all possibilities will be displayed.
+        Choose a different data type, default is "%s".
+        Also available are stations, airports, countries...
+        Give unadmissible value and all possibilities will be displayed.
         ''' % DEF_BASE),
         metavar = 'BASE',
         default = DEF_BASE)
@@ -1248,8 +1250,9 @@ def handle_args():
 
     parser.add_argument('-y', '--phonetic-method',
         help = dedent('''\
-        By default, --phonetic uses "%s" method. With this option, you
-        can change this to %s.
+        By default, --phonetic uses "%s" method.
+        With this option, you can change the phonetic method to
+        %s.
         ''' % (DEF_PHONETIC_METHOD, fmt_or(ALLOWED_PHONETIC_METHODS))),
         metavar = 'METHOD',
         default = DEF_PHONETIC_METHOD)
