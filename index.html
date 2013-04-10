@@ -170,7 +170,7 @@ compinit
 <h3>Python 3 support</h3>
 
 <p>There is <em>Python 3</em> support, you can
-try it by <em>changing branch</em> before installation. Install setuptools and python3-dev as
+try it by <em>changing branch</em> before installation. Install <em>setuptools</em> and <em>python3-dev</em> as
 prerequisites, then:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>git checkout 3000
@@ -255,7 +255,7 @@ and using the <code>set</code> method.</p>
 
 <h3>Find things with properties</h3>
 
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'location_type'</span><span class="p">,</span> <span class="s">'H'</span><span class="p">)]</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">conditions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'city_code'</span><span class="p">,</span> <span class="s">'PAR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'location_type'</span><span class="p">,</span> <span class="p">(</span><span class="s">'H'</span><span class="p">,))]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">geo_o</span><span class="o">.</span><span class="n">findWith</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'and'</span><span class="p">))</span>
 <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JDP'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'JPU'</span><span class="p">)]</span>
 <span class="o">&gt;&gt;&gt;</span>
