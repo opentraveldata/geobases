@@ -1440,7 +1440,7 @@ def handle_args():
             2) type is the type of matching, either
                %s.
                Default is "%s".
-               __key__ type means we will perform a direct key access.
+               __key__ type means we will perform a direct key retrieval.
                For fuzzy searches, default ratio is set to %s,
                but can be changed with --fuzzy-limit.
                For phonetic searches, default method is %s,
