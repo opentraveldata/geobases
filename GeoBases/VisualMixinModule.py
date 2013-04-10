@@ -152,7 +152,7 @@ class VisualMixin(object):
                 des_node['weight'] += weight
 
                 # Updating edges
-                edge_id = '%s/%s' % (ori_id, des_id)
+                edge_id = '%s-%s' % (ori_id, des_id)
 
                 if edge_id not in ori_node['edges']:
                     ori_node['edges'][edge_id] = _empty_edge(ori_id, des_id)
@@ -162,7 +162,7 @@ class VisualMixin(object):
 
                 if not directed:
                     # If not directed we create the "mirror" edge
-                    edge_id = '%s/%s' % (des_id, ori_id)
+                    edge_id = '%s-%s' % (des_id, ori_id)
 
                     if edge_id not in des_node['edges']:
                         des_node['edges'][edge_id] = _empty_edge(des_id, ori_id)
