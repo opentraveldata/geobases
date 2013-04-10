@@ -565,7 +565,7 @@ class VisualMixin(object):
         if icon_label is None:
             get_label = lambda key: key
         else:
-            get_label = lambda key: self.get(key, icon_label)
+            get_label = lambda key: str(self.get(key, icon_label))
 
         # Optional function which gives points weight
         if icon_weight is None:
