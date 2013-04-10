@@ -2650,6 +2650,9 @@ def main():
         if len(args['interactive_query']) >= 2 and args['interactive_query'][1] != SKIP:
             interactive_type = args['interactive_query'][1]
 
+    if g._isFieldDelimited(interactive_field):
+        interactive_field = g._convertFieldToRaw(interactive_field)
+
     # Reading phonetic options
     phonetic_method = args['phonetic_method']
 
