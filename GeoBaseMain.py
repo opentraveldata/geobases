@@ -2557,6 +2557,17 @@ def main():
     if args['phonetic_field'] is None or args['phonetic_field'] == SKIP:
         args['phonetic_field'] = best_field(DEF_PHONETIC_FIELDS, g.fields)
 
+    # We automatically convert subdelimited fields into raw version
+    for i, f in enumerate(exact_fields):
+        if g._isFieldDelimited(f):
+            exact_fields[i] = g._convertFieldToRaw(f)
+
+    if g._isFieldDelimited(args['fuzzy_field']):
+        args['fuzzy_field'] = g._convertFieldToRaw(args['fuzzy_field'])
+
+    if g._isFieldDelimited(args['phonetic_field']):
+        args['phonetic_field'] = g._convertFieldToRaw(args['phonetic_field'])
+
     # Server config
     address = ADDRESS
     port = PORT
