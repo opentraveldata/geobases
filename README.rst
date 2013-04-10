@@ -419,13 +419,13 @@ All heliports under 200 km from Paris:
 
 .. code-block:: bash
 
- $ GeoBase --near PAR -N 200 -E location_type@raw -e 'H'
+ $ GeoBase --near PAR -N 200 -E location_type -e 'H'
 
 50 train stations closest to a specific geocode:
 
 .. code-block:: bash
 
- $ GeoBase -E location_type@raw -e R --closest '48.853, 2.348' -C 50
+ $ GeoBase -E location_type -e R --closest '48.853, 2.348' -C 50
 
 Countries with non-empty postal code regex:
 
