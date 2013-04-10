@@ -1358,6 +1358,10 @@ def _gen_inter_datetimes(d_min, d_max, agg_level):
     >>> list(_gen_inter_datetimes(d_min, d_max, 'year'))
     [datetime.datetime(2012, 6, 1, 0, 0), datetime.datetime(2013, 1, 1, 0, 0)]
     """
+    if agg_level is None:
+        # not aggregated
+        raise StopIteration
+
     agg_level = '%ss' % agg_level # adding "s" for relativedelta
 
     # This is blowing your mind
