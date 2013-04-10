@@ -114,7 +114,7 @@ class VisualMixin(object):
         nb_edges = len(graph_fields) - 1
 
         for key in from_keys:
-            values = tuple(self.get(key, f) for f in graph_fields)
+            values = tuple(str(self.get(key, f)) for f in graph_fields)
             weight = get_weight(key)
 
             for i in xrange(nb_edges):
