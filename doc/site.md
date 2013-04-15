@@ -239,7 +239,7 @@ and using the `set` method.
 ### Find things with properties
 
 ```python
->>> conditions = [('city_code', 'PAR'), ('location_type', 'H')]
+>>> conditions = [('city_code', 'PAR'), ('location_type', ('H',))]
 >>> list(geo_o.findWith(conditions, mode='and'))
 [(2, 'JDP'), (2, 'JPU')]
 >>>
