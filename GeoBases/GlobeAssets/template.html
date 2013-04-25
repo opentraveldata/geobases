@@ -125,10 +125,11 @@
 
   <script type="text/javascript" src="ThreeWebGL.js"></script>
   <script type="text/javascript" src="ThreeExtras.js"></script>
-  <script type="text/javascript" src="RequestAnimationFrame.js"></script>
+  <script type="text/javascript" src="RequestAF.js"></script>
   <script type="text/javascript" src="Detector.js"></script>
   <script type="text/javascript" src="Tween.js"></script>
   <script type="text/javascript" src="globe.js"></script>
+  <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
   <script type="text/javascript">
 
     if(!Detector.webgl){
@@ -166,7 +167,7 @@
 
 
       xhr = new XMLHttpRequest();
-      xhr.open('GET', 'ori_por_map.json', true);
+      xhr.open('GET', JSON_FILE, true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {

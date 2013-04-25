@@ -177,7 +177,7 @@ DAT.Globe = function(container, colorFn) {
   }
 
   addData = function(data, opts) {
-    var lat, lng, size, color, i, step, colorFnWrapper;
+    var lat, lng, size, color, i;
 
     opts.animated = opts.animated || false;
     this.is_animated = opts.animated;
@@ -187,7 +187,7 @@ DAT.Globe = function(container, colorFn) {
     if (opts.animated) {
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
-        for (i = 0; i < data.length; i += step) {
+        for (i = 0; i < data.length; i += 1) {
           lat = data[i]['lat'];
           lng = data[i]['lng'];
           size = 100;//data[i]['__wei__'];
@@ -203,7 +203,7 @@ DAT.Globe = function(container, colorFn) {
       opts.name = opts.name || 'morphTarget'+this._morphTargetId;
     }
     var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += step) {
+    for (i = 0; i < data.length; i += 1) {
           lat = data[i]['lat'];
           lng = data[i]['lng'];
           size = 100;//data[i]['__wei__'];

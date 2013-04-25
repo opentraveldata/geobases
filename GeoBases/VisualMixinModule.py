@@ -745,7 +745,7 @@ class VisualMixin(object):
                 nb_geocoded_points += 1
 
         if nb_geocoded_points > 0 or data_lines:
-            rendered = ['map', 'table']
+            rendered = ['map', 'globe', 'table']
         else:
             rendered = ['table']
 
@@ -1124,6 +1124,24 @@ ASSETS = {
             relative('MapAssets/purple_marker.png') : 'purple_marker.png',
             relative('MapAssets/black_point.png')   : 'black_point.png',
             relative('MapAssets/black_marker.png')  : 'black_marker.png',
+        }
+    },
+    'globe' : {
+        'template' : {
+            # source : v_target
+            relative('GlobeAssets/template.html') : '%s_globe.html',
+        },
+        'static' : {
+            # source : target
+            relative('GlobeAssets/globe.js')       : 'globe.js',
+            relative('GlobeAssets/Detector.js')    : 'Detector.js',
+            relative('GlobeAssets/RequestAF.js')   : 'RequestAF.js',
+            relative('GlobeAssets/ThreeExtras.js') : 'ThreeExtras.js',
+            relative('GlobeAssets/ThreeWebGL.js')  : 'ThreeWebGL.js',
+            relative('GlobeAssets/Tween.js')       : 'Tween.js',
+            relative('GlobeAssets/loading.gif')    : 'loading.gif',
+            relative('GlobeAssets/ce.png')         : 'ce.png',
+            relative('GlobeAssets/world.jpg')      : 'world.jpg',
         }
     },
     'table' : {
