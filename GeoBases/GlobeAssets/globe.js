@@ -205,31 +205,20 @@ DAT.Globe = function(container, colorFn) {
   }
 
   addData = function(data, opts) {
-    var lat, lng, size, color, i, point;
+    var lat, lng, size, color, i, c, point;
 
     opts.animated = opts.animated || false;
     this.is_animated = opts.animated;
     opts.format = opts.format || 'magnitude'; // other option is 'legend'
 
-    var max_size = 0;
-    for (i = 0; i < data.length; i += 1) {
-      size = parseFloat(data[i].__wei__);
-      if (size > max_size) {
-        max_size = size;
-      }
-    }
-
-
-    var MAX_HEIGHT = 200;
-
     if (opts.animated) {
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
-        for (i = 0; i < data.length; i += 1) {
+        for (i=0, c=data.length; i<c; i++) {
           point = data[i];
           lat = point.lat;
           lng = point.lng;
-          size = MAX_HEIGHT * point.__wei__ / max_size;
+          size = this.computeHeight(point.__wei__);
           color = colorFn(color_to_hsv(point.__col__));
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
@@ -243,11 +232,11 @@ DAT.Globe = function(container, colorFn) {
     }
 
     var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += 1) {
+    for (i=0, c=data.length; i<c; i++) {
           point = data[i];
           lat = point.lat;
           lng = point.lng;
-          size = MAX_HEIGHT * point.__wei__ / max_size;
+          size = this.computeHeight(point.__wei__);
           color = colorFn(color_to_hsv(point.__col__));
           addPoint(lat, lng, size, color, subgeo);
     }

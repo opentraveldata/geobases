@@ -66,22 +66,14 @@
         padding: 10px;
       }
 
-      .year {
-        font: 16px Georgia;
-        line-height: 26px;
-        height: 30px;
-        text-align: center;
-        float: left;
-        width: 90px;
-        color: rgba(255, 255, 255, 0.4);
-
-        cursor: pointer;
-        -webkit-transition: all 0.1s ease-out;
-      }
-
-      .year:hover, .year.active {
-        font-size: 23px;
-        color: #fff;
+      #subtitle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 3px;
+        font: 20px Georgia;
+        padding: 10px;
       }
 
     </style>
@@ -94,6 +86,9 @@
     Globe of "{{file_name}}"
   </div>
 
+  <div id="subtitle"></div>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script type="text/javascript" src="ThreeWebGL.js"></script>
   <script type="text/javascript" src="ThreeExtras.js"></script>
   <script type="text/javascript" src="RequestAF.js"></script>
@@ -103,13 +98,24 @@
   <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
   <script type="text/javascript">
 
+    if (!String.fmt) {
+        String.prototype.fmt = function() {
+            var formatted = this;
+            var i;
+            for (i=0; i<arguments.length; i++) {
+                var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
+    }
+
     if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
 
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      console.log(globe);
       var i, tweens = [];
 
       var settime = function(globe, t) {
@@ -127,6 +133,23 @@
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText);
+
+            var max_height = 200;
+            var max_size = 0;
+            var i, c, size;
+            for (i = 0; i < data.points.length; i++) {
+              size = parseFloat(data.points[i].__wei__);
+              if (size > max_size) {
+                max_size = size;
+              }
+            }
+
+            globe.computeHeight = function (size) {
+                return max_height * size / max_size;
+            };
+
+            $('#subtitle').html('{0} <i>point(s)</i>, color is <i>{1}</i>, size is <i>{2}</i> (max {3})'.fmt(data.points.length, data.meta.icon_color, data.meta.icon_weight, max_size));
+
             window.data = data;
             globe.addData(data.points, {format: 'magnitude', name: 'NAME', animated: true});
             globe.createPoints();
