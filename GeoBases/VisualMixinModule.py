@@ -1140,7 +1140,6 @@ ASSETS = {
             relative('GlobeAssets/ThreeWebGL.js')  : 'ThreeWebGL.js',
             relative('GlobeAssets/Tween.js')       : 'Tween.js',
             relative('GlobeAssets/loading.gif')    : 'loading.gif',
-            relative('GlobeAssets/ce.png')         : 'ce.png',
             relative('GlobeAssets/world.jpg')      : 'world.jpg',
         }
     },
