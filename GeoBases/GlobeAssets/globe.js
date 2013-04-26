@@ -11,13 +11,41 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
+function color_to_hsv(color) {
+    if (color === 'blue') {
+        return [4/6, 1, 1];
+    }
+    if (color === 'red') {
+        return [0/6, 1, 1];
+    }
+    if (color === 'orange') {
+        return [1/12, 1, 1];
+    }
+    if (color === 'yellow') {
+        return [1/6, 1, 1];
+    }
+    if (color === 'green') {
+        return [2/6, 1, 1];
+    }
+    if (color === 'cyan') {
+        return [3/6, 1, 1];
+    }
+    if (color === 'purple') {
+        return [5/6, 1, 1];
+    }
+    if (color === 'black') {
+        return [0, 0, 0.20];
+    }
+    return [0, 0, 0];
+}
+
 var DAT = DAT || {};
 
 DAT.Globe = function(container, colorFn) {
 
-  colorFn = colorFn || function(x) {
+  colorFn = colorFn || function(hsv) {
     var c = new THREE.Color();
-    c.setHSV( ( 0.6 - ( x * 0.5 ) ), 1.0, 1.0 );
+    c.setHSV(hsv[0], hsv[1], hsv[2]);
     return c;
   };
 
@@ -177,21 +205,32 @@ DAT.Globe = function(container, colorFn) {
   }
 
   addData = function(data, opts) {
-    var lat, lng, size, color, i;
+    var lat, lng, size, color, i, point;
 
     opts.animated = opts.animated || false;
     this.is_animated = opts.animated;
     opts.format = opts.format || 'magnitude'; // other option is 'legend'
-    console.log(opts.format);
+
+    var max_size = 0;
+    for (i = 0; i < data.length; i += 1) {
+      size = parseFloat(data[i].__wei__);
+      if (size > max_size) {
+        max_size = size;
+      }
+    }
+
+
+    var MAX_HEIGHT = 200;
 
     if (opts.animated) {
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
         for (i = 0; i < data.length; i += 1) {
-          lat = data[i]['lat'];
-          lng = data[i]['lng'];
-          size = 100;//data[i]['__wei__'];
-          color = colorFn(0.008);//data[i]['__col__'];
+          point = data[i];
+          lat = point.lat;
+          lng = point.lng;
+          size = MAX_HEIGHT * point.__wei__ / max_size;
+          color = colorFn(color_to_hsv(point.__col__));
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
       }
@@ -200,18 +239,23 @@ DAT.Globe = function(container, colorFn) {
       } else {
         this._morphTargetId += 1;
       }
-      opts.name = opts.name || 'morphTarget'+this._morphTargetId;
+      opts.name = opts.name || 'morphTarget' + this._morphTargetId;
     }
+
     var subgeo = new THREE.Geometry();
     for (i = 0; i < data.length; i += 1) {
-          lat = data[i]['lat'];
-          lng = data[i]['lng'];
-          size = 100;//data[i]['__wei__'];
-          color = colorFn(0.008);//data[i]['__col__'];
+          point = data[i];
+          lat = point.lat;
+          lng = point.lng;
+          size = MAX_HEIGHT * point.__wei__ / max_size;
+          color = colorFn(color_to_hsv(point.__col__));
           addPoint(lat, lng, size, color, subgeo);
     }
     if (opts.animated) {
-      this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
+      this._baseGeometry.morphTargets.push({
+          'name': opts.name,
+          vertices: subgeo.vertices
+      });
     } else {
       this._baseGeometry = subgeo;
     }
@@ -228,12 +272,12 @@ DAT.Globe = function(container, colorFn) {
             }));
       } else {
         if (this._baseGeometry.morphTargets.length < 8) {
-          console.log('t l',this._baseGeometry.morphTargets.length);
-          var padding = 8-this._baseGeometry.morphTargets.length;
-          console.log('padding', padding);
+          var padding = 8 - this._baseGeometry.morphTargets.length;
           for(var i=0; i<=padding; i++) {
-            console.log('padding',i);
-            this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
+            this._baseGeometry.morphTargets.push({
+                'name': 'morphPadding'+i,
+                vertices: this._baseGeometry.vertices
+            });
           }
         }
         this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
@@ -261,9 +305,7 @@ DAT.Globe = function(container, colorFn) {
 
     var i;
     for (i = 0; i < point.geometry.faces.length; i++) {
-
       point.geometry.faces[i].color = color;
-
     }
 
     GeometryUtils.merge(subgeo, point);
@@ -329,11 +371,12 @@ DAT.Globe = function(container, colorFn) {
         zoom(-100);
         event.preventDefault();
         break;
+      default:
+        break;
     }
   }
 
   function onWindowResize( event ) {
-    console.log('resize');
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
