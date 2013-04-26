@@ -522,6 +522,13 @@ def display_browser(templates, output_dir, nb_res, address, port):
             else:
                 print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (BROWSER, address, port, template, nb_res)
+
+        elif template.endswith('_globe.html'):
+            if nb_res <= GLOBE_BROWSER_LIM:
+                to_be_launched.append(template)
+            else:
+                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (BROWSER, address, port, template, nb_res)
         else:
             to_be_launched.append(template)
 
@@ -1082,6 +1089,7 @@ DEF_LINK_DUPLICATES  = True
 DEF_DRAW_JOIN_FIELDS = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
+GLOBE_BROWSER_LIM = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Graph defaults, generate_headers is used for stdin input
