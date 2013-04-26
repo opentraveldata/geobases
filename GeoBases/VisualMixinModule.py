@@ -505,6 +505,7 @@ class VisualMixin(object):
                   draw_join_fields=True,
                   catalog=None,
                   line_colors=None,
+                  use_3D=False,
                   verbose=True,
                   warnings=False):
         """Map and table display.
@@ -539,6 +540,7 @@ class VisualMixin(object):
                 computed with ``link_duplicates``, those given with \
                 ``add_lines``, those given with ``add_anonymous_lines``, \
                 those computed with ``draw_join_fields``
+        :param use_3D:      toggle 3D visualizations
         :param verbose:     toggle verbosity
         :param warnings:    toggle warnings, even more verbose
         :returns:           this is the tuple of (names of templates \
@@ -745,7 +747,10 @@ class VisualMixin(object):
                 nb_geocoded_points += 1
 
         if nb_geocoded_points > 0 or data_lines:
-            rendered = ['map', 'globe', 'table']
+            if use_3D:
+                rendered = ['map', 'globe', 'table']
+            else:
+                rendered = ['map', 'table']
         else:
             rendered = ['table']
 

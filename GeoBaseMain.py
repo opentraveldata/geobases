@@ -1525,6 +1525,13 @@ def handle_args():
         metavar = 'OPTION',
         default = [])
 
+    parser.add_argument('-3', '--3d',
+        help = dedent('''\
+        Enable 3D visualizations.
+        This enables the 3D WebGL-based globe when using the map display.
+        '''),
+        action = 'store_true')
+
     parser.add_argument('-g', '--graph',
         help = dedent('''\
         This is the graph display (like force directed graph).
@@ -2581,6 +2588,9 @@ def main():
     if args['output_dir'] != SKIP:
         output_dir = args['output_dir']
 
+    # With 3D
+    use_3D = args['3d']
+
     # Reading map options
     icon_label       = best_field(DEF_LABEL_FIELDS,  g.fields)
     icon_weight      = best_field(DEF_WEIGHT_FIELDS, g.fields)
@@ -2938,6 +2948,7 @@ def main():
                                 draw_join_fields=draw_join_fields,
                                 catalog=None,
                                 line_colors=None,
+                                use_3D=use_3D,
                                 verbose=True,
                                 warnings=logorrhea)
 
