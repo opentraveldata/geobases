@@ -129,12 +129,13 @@
 
       xhr = new XMLHttpRequest();
       xhr.open('GET', JSON_FILE, true);
+
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText);
 
-            var max_height = 150;
+            var max_height = 80;
             var max_size = 0;
             var i, c, size;
             for (i = 0; i < data.points.length; i++) {
@@ -153,7 +154,7 @@
             window.data = data;
             globe.addData(data.points, {format: 'magnitude', name: 'NAME', animated: true});
             globe.createPoints();
-            settime(globe,0)();
+            settime(globe, 0)();
             globe.animate();
           }
         }
