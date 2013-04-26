@@ -1527,7 +1527,7 @@ def handle_args():
 
     parser.add_argument('-3', '--3d',
         help = dedent('''\
-        Enable 3D visualizations.
+        When available, enable 3D visualizations.
         This enables the 3D WebGL-based globe when using the map display.
         '''),
         action = 'store_true')
