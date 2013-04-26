@@ -216,6 +216,9 @@ DAT.Globe = function(container, colorFn) {
         this._baseGeometry = new THREE.Geometry();
         for (i=0, c=data.length; i<c; i++) {
           point = data[i];
+          if (point.__hid__){
+              continue;
+          }
           lat = point.lat;
           lng = point.lng;
           size = this.computeHeight(point.__wei__);
@@ -234,6 +237,9 @@ DAT.Globe = function(container, colorFn) {
     var subgeo = new THREE.Geometry();
     for (i=0, c=data.length; i<c; i++) {
           point = data[i];
+          if (point.__hid__){
+              continue;
+          }
           lat = point.lat;
           lng = point.lng;
           size = this.computeHeight(point.__wei__);
