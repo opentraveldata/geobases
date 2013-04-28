@@ -607,6 +607,7 @@ _hello() {
      "(-Q --quiet-options)"{-Q,--quiet-options}"[Custom quiet display]:*: :->quiet_options" \
      "(-m --map)"{-m,--map}"[Map display]" \
      "(-M --map-options)"{-M,--map-options}"[Custom map display]:*: :->map_options" \
+     "(-3 --3d)"{-3,--3d}"[When available, enable 3D visualizations]" \
      "(-g --graph)"{-g,--graph}"[Graph display (like force directed graph)]" \
      "(-G --graph-fields)"{-G,--graph-fields}"[Select fields to build the graph display]:*: :->graph_fields" \
      "(-W --graph-weight)"{-W,--graph-weight}"[Select field to compute weight for graph display]: :->graph_weight" \

@@ -7,6 +7,8 @@ V6
 
 + 6.0 :
 
+    + *CLI*: new ``-3/--3d`` option to enable *3D* visualizations
+    + *API*: add WebGL-based 3D globe visualization
     + *CLI*: when doing searches from CLI, automatically convert delimited fields into their raw version
     + *CLI*: in ``--quiet`` mode, subdelimited fields are always dumped using their raw version
     + *API*: added private methods to handle fields (``isFieldDelimited``, ``isFieldSpecial``, ...)

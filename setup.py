@@ -117,6 +117,7 @@ setup(
             "DataSources/CheckDataUpdates.sh",
             "completion/*",
             "MapAssets/*",
+            "GlobeAssets/*",
             "TableAssets/*",
             "GraphAssets/*",
             "DashboardAssets/*",

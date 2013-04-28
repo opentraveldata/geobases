@@ -522,6 +522,13 @@ def display_browser(templates, output_dir, nb_res, address, port):
             else:
                 print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (BROWSER, address, port, template, nb_res)
+
+        elif template.endswith('_globe.html'):
+            if nb_res <= GLOBE_BROWSER_LIM:
+                to_be_launched.append(template)
+            else:
+                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                        (BROWSER, address, port, template, nb_res)
         else:
             to_be_launched.append(template)
 
@@ -1082,6 +1089,7 @@ DEF_LINK_DUPLICATES  = True
 DEF_DRAW_JOIN_FIELDS = True
 
 MAP_BROWSER_LIM   = 8000   # limit for launching browser automatically
+GLOBE_BROWSER_LIM = 8000   # limit for launching browser automatically
 TABLE_BROWSER_LIM = 2000   # limit for launching browser automatically
 
 # Graph defaults, generate_headers is used for stdin input
@@ -1524,6 +1532,13 @@ def handle_args():
         nargs = '+',
         metavar = 'OPTION',
         default = [])
+
+    parser.add_argument('-3', '--3d',
+        help = dedent('''\
+        When available, enable 3D visualizations.
+        This enables the 3D WebGL-based globe when using the map display.
+        '''),
+        action = 'store_true')
 
     parser.add_argument('-g', '--graph',
         help = dedent('''\
@@ -2581,6 +2596,9 @@ def main():
     if args['output_dir'] != SKIP:
         output_dir = args['output_dir']
 
+    # With 3D
+    use_3D = args['3d']
+
     # Reading map options
     icon_label       = best_field(DEF_LABEL_FIELDS,  g.fields)
     icon_weight      = best_field(DEF_WEIGHT_FIELDS, g.fields)
@@ -2938,6 +2956,7 @@ def main():
                                 draw_join_fields=draw_join_fields,
                                 catalog=None,
                                 line_colors=None,
+                                use_3D=use_3D,
                                 verbose=True,
                                 warnings=logorrhea)
 

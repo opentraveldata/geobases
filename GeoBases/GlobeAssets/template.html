@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>WebGL Globe</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000000 url(loading.gif) center center no-repeat;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 13px;
+        line-height: 20px;
+        height: 100%;
+      }
+
+      #info {
+
+        font-size: 11px;
+        position: absolute;
+        bottom: 5px;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 3px;
+        right: 10px;
+        padding: 10px;
+
+      }
+
+      #currentInfo {
+        width: 270px;
+        position: absolute;
+        left: 20px;
+        top: 63px;
+
+        background-color: rgba(0,0,0,0.2);
+
+        border-top: 1px solid rgba(255,255,255,0.4);
+        padding: 10px;
+      }
+
+      a {
+        color: #aaa;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .bull {
+        padding: 0 5px;
+        color: #555;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        width: 270px;
+        left: 20px;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 3px;
+        font: 20px Georgia;
+        padding: 10px;
+      }
+
+      #subtitle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 3px;
+        font: 20px Georgia;
+        padding: 10px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <div id="title">
+    Globe of "{{file_name}}"
+  </div>
+
+  <div id="subtitle"></div>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+  <script type="text/javascript" src="ThreeWebGL.js"></script>
+  <script type="text/javascript" src="ThreeExtras.js"></script>
+  <script type="text/javascript" src="RequestAF.js"></script>
+  <script type="text/javascript" src="Detector.js"></script>
+  <script type="text/javascript" src="Tween.js"></script>
+  <script type="text/javascript" src="globe.js"></script>
+  <script type="text/javascript"> JSON_FILE = '{{json_file}}'; </script>
+  <script type="text/javascript">
+
+    if (!String.fmt) {
+        String.prototype.fmt = function() {
+            var formatted = this;
+            var i;
+            for (i=0; i<arguments.length; i++) {
+                var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
+    }
+
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+
+      var container = document.getElementById('container');
+      var globe = new DAT.Globe(container);
+      var i, tweens = [];
+
+      var settime = function(globe, t) {
+        return function() {
+          new TWEEN.Tween(globe).to({time: t}, 500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+        };
+      };
+
+      var xhr;
+      TWEEN.start();
+
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', JSON_FILE, true);
+
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+
+            var max_height = 80;
+            var max_size = 0;
+            var i, c, size;
+            for (i = 0; i < data.points.length; i++) {
+              size = parseFloat(data.points[i].__wei__);
+              if (size > max_size) {
+                max_size = size;
+              }
+            }
+
+            globe.computeHeight = function (size) {
+                return max_height * size / max_size;
+            };
+
+            $('#subtitle').html('{0} <i>point(s)</i>, color is <i>{1}</i>, size is <i>{2}</i> (max {3})'.fmt(data.points.length, data.meta.icon_color, data.meta.icon_weight, max_size));
+
+            window.data = data;
+            globe.addData(data.points, {format: 'magnitude', name: 'NAME', animated: true});
+            globe.createPoints();
+            settime(globe, 0)();
+            globe.animate();
+          }
+        }
+      };
+      xhr.send(null);
+    }
+
+  </script>
+
+  </body>
+
+</html>
