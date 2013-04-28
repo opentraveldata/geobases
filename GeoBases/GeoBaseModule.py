@@ -1727,7 +1727,7 @@ class GeoBase(VisualMixin):
         >>> c_1 = [('city_code', 'PAR')]
         >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
-        18
+        16
         >>> len(list(geo_o.findWith(c_2))) # doctest: +SKIP
         100
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and'))) # doctest: +SKIP
