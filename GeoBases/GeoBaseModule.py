@@ -1268,7 +1268,7 @@ class GeoBase(VisualMixin):
         You can give an additional keyword argument
         ``default``, to avoid ``KeyError`` on the ``key`` parameter.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :param field:   the field (like ``'name'`` or ``'iata_code'``)
         :param kwargs:  other named arguments, use 'default' to avoid \
                 ``KeyError`` on ``key`` (not ``KeyError`` on ``field``). \
@@ -1374,7 +1374,7 @@ class GeoBase(VisualMixin):
     def _joinGet(self, key, fields=None, ext_field=None):
         """Get that performs join with external bases.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :param fields:  the iterable of fields (like ``'name'`` or \
                 ``'iata_code'``)
         :param ext_field:  the external field we want in the external \
@@ -1427,7 +1427,7 @@ class GeoBase(VisualMixin):
     def getLocation(self, key, **kwargs):
         """Returns geocode as (float, float) or None.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :param kwargs:  other named arguments, use 'default' to avoid \
                 ``KeyError`` on ``key`` (not ``None`` on wrong value).
         :returns:       the location, a tuple of floats like ``(lat, lng)``, or \
@@ -1469,7 +1469,7 @@ class GeoBase(VisualMixin):
     def hasParents(self, key):
         """Tell if a key has parents.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :returns:       the number of parents
 
         >>> geo_o.hasParents('MRS')
@@ -1485,7 +1485,7 @@ class GeoBase(VisualMixin):
     def hasDuplicates(self, key):
         """Tell if a key has duplicates.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :returns:       the number of duplicates
 
         >>> geo_o.hasDuplicates('MRS')
@@ -1502,7 +1502,7 @@ class GeoBase(VisualMixin):
     def getFromAllDuplicates(self, key, field=None, **kwargs):
         """Get all duplicates data, parent key included.
 
-        :param key:     the key of the thing (like ``'SFO'``)
+        :param key:     the key of the element (like ``'SFO'``)
         :param field:   the field (like ``'name'`` or ``'iata_code'``)
         :param kwargs:  other named arguments, use 'default' to avoid \
                 key failure
@@ -1807,7 +1807,7 @@ class GeoBase(VisualMixin):
     def __contains__(self, key):
         """Test if a thing is in the base.
 
-        :param key: the key of the thing to be tested
+        :param key: the key of the element to be tested
         :returns:   a boolean
 
         >>> 'AN' in geo_a
@@ -1956,16 +1956,16 @@ class GeoBase(VisualMixin):
 
         if grid:
             # Using grid, from_keys is just used as post-filter
-            for dist, thing in self._ggrid.findNearPoint(lat_lng=lat_lng,
-                                                         radius=radius,
-                                                         double_check=double_check):
-                if is_in_keys(thing):
-                    yield dist, thing
+            for dist, key in self._ggrid.findNearPoint(lat_lng=lat_lng,
+                                                       radius=radius,
+                                                       double_check=double_check):
+                if is_in_keys(key):
+                    yield dist, key
 
         else:
-            for dist, thing in self._buildDistances(lat_lng, iter_keys):
+            for dist, key in self._buildDistances(lat_lng, iter_keys):
                 if dist <= radius:
-                    yield dist, thing
+                    yield dist, key
 
 
 
@@ -1976,7 +1976,7 @@ class GeoBase(VisualMixin):
         We just look up in the base to retrieve latitude and longitude, then
         call ``findNearPoint``.
 
-        :param key:       the key of the thing (like ``'SFO'``)
+        :param key:       the key of the element (like ``'SFO'``)
         :param radius:    the radius of the search (kilometers)
         :param from_keys: if ``None``, it takes all keys in consideration, \
             else takes ``from_keys`` iterable of keys to perform search.
@@ -2025,19 +2025,19 @@ class GeoBase(VisualMixin):
 
         if grid:
             # Using grid, from_keys is just used as post-filter
-            for dist, thing in self._ggrid.findNearKey(key=key,
-                                                       radius=radius,
-                                                       double_check=double_check):
-                if is_in_keys(thing):
-                    yield dist, thing
+            for dist, key in self._ggrid.findNearKey(key=key,
+                                                     radius=radius,
+                                                     double_check=double_check):
+                if is_in_keys(key):
+                    yield dist, key
 
         else:
-            for dist, thing in self.findNearPoint(lat_lng=self.getLocation(key),
-                                                  radius=radius,
-                                                  from_keys=iter_keys,
-                                                  grid=grid,
-                                                  double_check=double_check):
-                yield dist, thing
+            for dist, key in self.findNearPoint(lat_lng=self.getLocation(key),
+                                                radius=radius,
+                                                from_keys=iter_keys,
+                                                grid=grid,
+                                                double_check=double_check):
+                yield dist, key
 
 
 
@@ -2102,17 +2102,17 @@ class GeoBase(VisualMixin):
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
-            for dist, thing in self._ggrid.findClosestFromPoint(lat_lng=lat_lng,
-                                                                N=N,
-                                                                double_check=double_check,
-                                                                from_keys=from_keys):
-                yield dist, thing
+            for dist, key in self._ggrid.findClosestFromPoint(lat_lng=lat_lng,
+                                                              N=N,
+                                                              double_check=double_check,
+                                                              from_keys=from_keys):
+                yield dist, key
 
         else:
             iterable = self._buildDistances(lat_lng, from_keys)
 
-            for dist, thing in heapq.nsmallest(N, iterable):
-                yield dist, thing
+            for dist, key in heapq.nsmallest(N, iterable):
+                yield dist, key
 
 
 
@@ -2123,7 +2123,7 @@ class GeoBase(VisualMixin):
         We just look up in the base to retrieve latitude and longitude, then
         call ``findClosestFromPoint``.
 
-        :param key:       the key of the thing (like ``'SFO'``)
+        :param key:       the key of the element (like ``'SFO'``)
         :param N:         the N closest results wanted
         :param from_keys: if ``None``, it takes all keys in consideration, \
             else takes ``from_keys`` iterable of keys to perform \
@@ -2176,19 +2176,19 @@ class GeoBase(VisualMixin):
             raise StopIteration
 
         if grid:
-            for dist, thing in self._ggrid.findClosestFromKey(key=key,
-                                                              N=N,
-                                                              double_check=double_check,
-                                                              from_keys=from_keys):
-                yield dist, thing
+            for dist, key in self._ggrid.findClosestFromKey(key=key,
+                                                            N=N,
+                                                            double_check=double_check,
+                                                            from_keys=from_keys):
+                yield dist, key
 
         else:
-            for dist, thing in self.findClosestFromPoint(lat_lng=self.getLocation(key),
-                                                         N=N,
-                                                         from_keys=from_keys,
-                                                         grid=grid,
-                                                         double_check=double_check):
-                yield dist, thing
+            for dist, key in self.findClosestFromPoint(lat_lng=self.getLocation(key),
+                                                       N=N,
+                                                       from_keys=from_keys,
+                                                       grid=grid,
+                                                       double_check=double_check):
+                yield dist, key
 
 
 
