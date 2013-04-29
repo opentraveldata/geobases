@@ -1564,7 +1564,7 @@ class GeoBase(VisualMixin):
 
 
 
-    def _findWithUsingSingleIndex(self, fields, values):
+    def _findWithUsingOneIndex(self, fields, values):
         """Perform findWith using one index.
         """
         if values not in self._indexed[fields]:
@@ -1593,7 +1593,7 @@ class GeoBase(VisualMixin):
 
 
 
-    def _findWithUsingMultipleIndex(self, conditions, mode, verbose=False):
+    def _findWithUsingSeveralIndex(self, conditions, mode, verbose=False):
         """Perform findWith using several indexes.
         """
         # In case conditions is an iterator
@@ -1608,7 +1608,7 @@ class GeoBase(VisualMixin):
                         (mode, str(fields), str(values))
 
             # Here we use directly the multiple index to have the matching keys
-            for m, key in self._findWithUsingSingleIndex(fields, values):
+            for m, key in self._findWithUsingOneIndex(fields, values):
                 yield m, key
 
 
@@ -1623,7 +1623,7 @@ class GeoBase(VisualMixin):
                 # Here we use each index to check the condition on one field
                 # and we return the keys matching *any* condition
                 candidates = set.union(*[
-                    set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                    set(k for _, k in self._findWithUsingOneIndex((f,), (v,)))
                     for f, v in conditions
                 ])
 
@@ -1635,7 +1635,7 @@ class GeoBase(VisualMixin):
                 # Here we use each index to check the condition on one field
                 # and we keep only the keys matching *all* conditions
                 candidates = set.intersection(*[
-                    set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                    set(k for _, k in self._findWithUsingOneIndex((f,), (v,)))
                     for f, v in conditions
                 ])
 
@@ -1761,9 +1761,9 @@ class GeoBase(VisualMixin):
             # If this condition is not met, we do not raise StopIteration,
             # we will proceed with non-indexed code after
             if self._checkIndexUsability(conditions, mode):
-                for m, key in self._findWithUsingMultipleIndex(conditions,
-                                                               mode=mode,
-                                                               verbose=verbose):
+                for m, key in self._findWithUsingSeveralIndex(conditions,
+                                                              mode=mode,
+                                                              verbose=verbose):
                     if is_in_keys(key):
                         yield m, key
                 raise StopIteration
