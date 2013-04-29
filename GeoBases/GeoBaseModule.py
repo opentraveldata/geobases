@@ -1752,6 +1752,10 @@ class GeoBase(VisualMixin):
                 raise ValueError('Conditions %s include unknown field "%s"' % \
                                  (conditions, field))
 
+        # If we have only one condition, mode does not matter
+        if len(conditions) == 1 and mode == 'or':
+            mode = 'and'
+
         # If indexed
         if index and not reverse:
             # If this condition is not met, we do not raise StopIteration,
