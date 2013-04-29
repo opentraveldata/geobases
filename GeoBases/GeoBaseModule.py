@@ -1643,7 +1643,7 @@ class GeoBase(VisualMixin):
 
 
 
-    def findWith(self, conditions, from_keys=None, reverse=False, force_str=False, mode='and', index=True, verbose=False):
+    def findWith(self, conditions, from_keys=None, reverse=False, mode='and', index=True, verbose=False):
         """Get iterator of all keys with particular field.
 
         For example, if you want to know all airports in Paris.
@@ -1654,7 +1654,6 @@ class GeoBase(VisualMixin):
                 the lower level, before combining conditions. So if you \
                 have two conditions with ``mode='and'``, expect \
                 results matching not condition 1 *and* not condition 2.
-        :param force_str:  for the ``str()`` method before every test
         :param mode:       either ``'or'`` or ``'and'``, how to handle \
                 several conditions
         :param from_keys:  if given, we will look for results from this \
@@ -1671,8 +1670,6 @@ class GeoBase(VisualMixin):
         >>> list(geo_o.findWith([('__dup__', '[]')]))
         []
         >>> len(list(geo_o.findWith([('__dup__', [])]))) # doctest: +SKIP
-        7013
-        >>> len(list(geo_o.findWith([('__dup__', '[]')], force_str=True))) # doctest: +SKIP
         7013
         >>> # Counting duplicated keys
         >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # doctest: +SKIP
@@ -1754,7 +1751,7 @@ class GeoBase(VisualMixin):
                                  (conditions, field))
 
         # If indexed
-        if index and not force_str and not reverse:
+        if index and not reverse:
             # If this condition is not met, we do not raise StopIteration,
             # we will proceed with non-indexed code after
             if self._checkIndexUsability(conditions, mode):
@@ -1767,15 +1764,11 @@ class GeoBase(VisualMixin):
 
 
         # We set the lambda function now to avoid testing
-        # force_str and reverse at each key later
-        if not force_str and not reverse:
-            pass_one = lambda a, b: a == b
-        elif not force_str and reverse:
+        # reverse at each key later
+        if reverse:
             pass_one = lambda a, b: a != b
-        elif force_str and not reverse:
-            pass_one = lambda a, b: str(a) == str(b)
         else:
-            pass_one = lambda a, b: str(a) != str(b)
+            pass_one = lambda a, b: a == b
 
         # Handle and/or cases when multiple conditions
         if mode == 'and':

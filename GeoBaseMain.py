@@ -1044,9 +1044,6 @@ SPLIT   = '/'
 DISABLE = '__none__'
 REF     = '__ref__'
 
-# For requests with findWith, force stringification before testing
-FORCE_STR = False
-
 ALLOWED_ICON_TYPES       = (None, 'auto', 'S', 'B')
 ALLOWED_INTER_TYPES      = ('__key__', '__exact__', '__fuzzy__', '__phonetic__')
 ALLOWED_PHONETIC_METHODS = ('dmetaphone', 'dmetaphone-strict', 'metaphone', 'nysiis')
@@ -2789,12 +2786,12 @@ def main():
             res = []
             for val in values:
                 conditions = [(interactive_field, val)]
-                res.extend(list(g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)))
+                res.extend(list(g.findWith(conditions, mode='or', verbose=logorrhea)))
 
             # Other way to do it by putting all lines in one *or* condition
             # But for over 1000 lines, this becomes slower than querying each line
             #conditions = [(interactive_field, val) for val in values]
-            #res = g.findWith(conditions, force_str=FORCE_STR, mode='or', verbose=logorrhea)
+            #res = g.findWith(conditions, mode='or', verbose=logorrhea)
             last = 'exact'
 
         elif interactive_type == '__fuzzy__':
@@ -2838,7 +2835,7 @@ def main():
             else:
                 print '(*) Applying: field %s' % (' %s ' % mode).join('%s == "%s"' % c for c in conditions)
 
-        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, force_str=FORCE_STR, verbose=logorrhea))
+        res = list(g.findWith(conditions, from_keys=ex_keys(res), reverse=args['reverse'], mode=mode, verbose=logorrhea))
         last = 'exact'
 
 
