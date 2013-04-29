@@ -1593,7 +1593,7 @@ class GeoBase(VisualMixin):
 
 
 
-    def _findWithUsingMultipleIndex(self, conditions, from_keys, mode, verbose=False):
+    def _findWithUsingMultipleIndex(self, conditions, mode, verbose=False):
         """Perform findWith using several indexes.
         """
         # In case conditions is an iterator
@@ -1607,10 +1607,8 @@ class GeoBase(VisualMixin):
                 print 'Using index for %s: value(s) %s' % (str(fields), str(values))
 
             # Here we use directly the multiple index to have the matching keys
-            from_keys = set(from_keys)
             for m, key in self._findWithUsingSingleIndex(fields, values):
-                if key in from_keys:
-                    yield m, key
+                yield m, key
 
 
         elif all(self.hasIndex(f) for f in fields):
@@ -1622,20 +1620,22 @@ class GeoBase(VisualMixin):
             if mode == 'or':
                 # Here we use each index to check the condition on one field
                 # and we return the keys matching *any* condition
-                candidates = set()
-                for f, v in conditions:
-                    candidates = candidates | set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                candidates = set.union(*[
+                    set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                    for f, v in conditions
+                ])
 
-                for key in candidates & set(from_keys):
+                for key in candidates:
                     m = sum(self.get(key, f) == v for f, v in conditions)
                     yield m, key
 
             elif mode == 'and':
                 # Here we use each index to check the condition on one field
                 # and we keep only the keys matching *all* conditions
-                candidates = set(from_keys)
-                for f, v in conditions:
-                    candidates = candidates & set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                candidates = set.intersection(*[
+                    set(k for _, k in self._findWithUsingSingleIndex((f,), (v,)))
+                    for f, v in conditions
+                ])
 
                 m = len(fields)
                 for key in candidates:
@@ -1736,7 +1736,12 @@ class GeoBase(VisualMixin):
         111
         """
         if from_keys is None:
-            from_keys = iter(self)
+            iter_keys = iter(self)
+            is_in_keys = lambda k: k in self
+        else:
+            from_keys = set(from_keys)
+            iter_keys = iter(from_keys)
+            is_in_keys = lambda k: k in from_keys
 
         # In case conditions is an iterator
         conditions = list(conditions)
@@ -1753,12 +1758,11 @@ class GeoBase(VisualMixin):
             # If this condition is not met, we do not raise StopIteration,
             # we will proceed with non-indexed code after
             if self._checkIndexUsability(conditions, mode):
-
-                for t in self._findWithUsingMultipleIndex(conditions,
-                                                          from_keys=from_keys,
-                                                          mode=mode,
-                                                          verbose=verbose):
-                    yield t
+                for m, key in self._findWithUsingMultipleIndex(conditions,
+                                                               mode=mode,
+                                                               verbose=verbose):
+                    if is_in_keys(key):
+                        yield m, key
                 raise StopIteration
 
 
@@ -1782,7 +1786,7 @@ class GeoBase(VisualMixin):
             raise ValueError('"mode" argument must be in %s, was %s' % \
                              (str(['and', 'or']), mode))
 
-        for key in from_keys:
+        for key in iter_keys:
             if key not in self:
                 # This means from_keys parameters contained unknown keys
                 if verbose:
