@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *API*: speed and memory optimizations on ``findWith`` and ``findNear*`` queries
     + *API*: remove ``force_str`` option on ``findWith`` query
     + *CLI*: new ``-3/--3d`` option to enable *3D* visualizations
     + *API*: add WebGL-based 3D globe visualization
