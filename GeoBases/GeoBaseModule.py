@@ -1944,22 +1944,26 @@ class GeoBase(VisualMixin):
         [(12.76..., 'ORY'), (23.40..., 'CDG')]
         """
         if from_keys is None:
-            from_keys = iter(self)
+            iter_keys = iter(self)
+            is_in_keys = lambda k: k in self
+        else:
+            from_keys = set(from_keys)
+            iter_keys = iter(from_keys)
+            is_in_keys = lambda k: k in from_keys
 
         if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
 
         if grid:
-            # Using grid, from_keys if just a post-filter
-            from_keys = set(from_keys)
+            # Using grid, from_keys is just used as post-filter
             for dist, thing in self._ggrid.findNearPoint(lat_lng=lat_lng,
                                                          radius=radius,
                                                          double_check=double_check):
-                if thing in from_keys:
+                if is_in_keys(thing):
                     yield dist, thing
 
         else:
-            for dist, thing in self._buildDistances(lat_lng, from_keys):
+            for dist, thing in self._buildDistances(lat_lng, iter_keys):
                 if dist <= radius:
                     yield dist, thing
 
@@ -2006,7 +2010,12 @@ class GeoBase(VisualMixin):
         [(0.0, 'ORY'), (34.8..., 'CDG')]
         """
         if from_keys is None:
-            from_keys = iter(self)
+            iter_keys = iter(self)
+            is_in_keys = lambda k: k in self
+        else:
+            from_keys = set(from_keys)
+            iter_keys = iter(from_keys)
+            is_in_keys = lambda k: k in from_keys
 
         if grid and not self.hasGrid():
             raise ValueError('Attempting to use grid, but grid is None')
@@ -2015,19 +2024,17 @@ class GeoBase(VisualMixin):
             raise StopIteration
 
         if grid:
-            # Using grid, from_keys if just a post-filter
-            from_keys = set(from_keys)
-
+            # Using grid, from_keys is just used as post-filter
             for dist, thing in self._ggrid.findNearKey(key=key,
                                                        radius=radius,
                                                        double_check=double_check):
-                if thing in from_keys:
+                if is_in_keys(thing):
                     yield dist, thing
 
         else:
             for dist, thing in self.findNearPoint(lat_lng=self.getLocation(key),
                                                   radius=radius,
-                                                  from_keys=from_keys,
+                                                  from_keys=iter_keys,
                                                   grid=grid,
                                                   double_check=double_check):
                 yield dist, thing
