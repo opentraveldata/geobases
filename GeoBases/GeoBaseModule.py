@@ -1604,7 +1604,8 @@ class GeoBase(VisualMixin):
 
         if self.hasIndex(fields) and mode == 'and':
             if verbose:
-                print 'Using index for %s: value(s) %s' % (str(fields), str(values))
+                print '["%s" mode] Using index for %s: value(s) %s' % \
+                        (mode, str(fields), str(values))
 
             # Here we use directly the multiple index to have the matching keys
             for m, key in self._findWithUsingSingleIndex(fields, values):
@@ -1613,8 +1614,9 @@ class GeoBase(VisualMixin):
 
         elif all(self.hasIndex(f) for f in fields):
             if verbose:
-                print 'Using index for %s: value(s) %s' % \
-                        (' and '.join(str((f,)) for f in set(fields)),
+                print '["%s" mode] Using index for %s: value(s) %s' % \
+                        (mode,
+                         ' and '.join(str((f,)) for f in set(fields)),
                          '; '.join(str((v,)) for v in values))
 
             if mode == 'or':
@@ -1678,7 +1680,7 @@ class GeoBase(VisualMixin):
         Testing indexes.
 
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
-        Using index for ('iata_code',): value(s) ('MRS',)
+        ["and" mode] Using index for ('iata_code',): value(s) ('MRS',)
         [(1, 'MRS'), (1, 'MRS@1')]
         >>> geo_o.addIndex('iata_code', force=True)
         /!\ Index on ('iata_code',) already built, overriding...
@@ -1692,7 +1694,7 @@ class GeoBase(VisualMixin):
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', ('A',))],
         ...                     mode='and',
         ...                     verbose=True))
-        Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); (('A',),)
+        ["and" mode] Using index for ('iata_code',) and ('location_type',): value(s) ('NCE',); (('A',),)
         [(2, 'NCE')]
 
         Multiple index.
@@ -1701,7 +1703,7 @@ class GeoBase(VisualMixin):
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', ('A',))],
         ...                     mode='and',
         ...                     verbose=True))
-        Using index for ('iata_code', 'location_type'): value(s) ('NCE', ('A',))
+        ["and" mode] Using index for ('iata_code', 'location_type'): value(s) ('NCE', ('A',))
         [(2, 'NCE')]
 
         Mode "or" with index.
@@ -1711,7 +1713,7 @@ class GeoBase(VisualMixin):
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')],
         ...                     mode='or',
         ...                     verbose=True))
-        Using index for ('iata_code',) and ('city_code',): value(s) ('NCE',); ('NCE',)
+        ["or" mode] Using index for ('iata_code',) and ('city_code',): value(s) ('NCE',); ('NCE',)
         [(2, 'NCE@1'), (2, 'NCE')]
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code', 'NCE')],
         ...                     mode='or',
