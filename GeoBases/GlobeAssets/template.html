@@ -119,9 +119,12 @@
       var i, tweens = [];
 
       var settime = function(globe, t) {
-        return function() {
-          new TWEEN.Tween(globe).to({time: t}, 500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-        };
+          return function() {
+              new TWEEN.Tween(globe)
+                  .to({time: t}, 500)
+                  .easing(TWEEN.Easing.Cubic.EaseOut)
+                  .start();
+          };
       };
 
       var xhr;
@@ -152,7 +155,11 @@
             $('#subtitle').html('{0} <i>point(s)</i>, color is <i>{1}</i>, size is <i>{2}</i> (max {3})'.fmt(data.points.length, data.meta.icon_color, data.meta.icon_weight, max_size));
 
             window.data = data;
-            globe.addData(data.points, {format: 'magnitude', name: 'NAME', animated: true});
+            globe.addData(data.points, {
+                format: 'magnitude',
+                name: 'NAME',
+                animated: true
+            });
             globe.createPoints();
             settime(globe, 0)();
             globe.animate();

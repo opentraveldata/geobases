@@ -120,15 +120,12 @@ DAT.Globe = function(container, colorFn) {
     w = container.offsetWidth || window.innerWidth;
     h = container.offsetHeight || window.innerHeight;
 
-    camera = new THREE.Camera(
-        30, w / h, 1, 10000);
+    camera = new THREE.Camera(30, w / h, 1, 10000);
     camera.position.z = distance;
 
     vector = new THREE.Vector3();
-
     scene = new THREE.Scene();
     sceneAtmosphere = new THREE.Scene();
-
     var geometry = new THREE.Sphere(200, 40, 30);
 
     shader = Shaders['earth'];
@@ -152,12 +149,10 @@ DAT.Globe = function(container, colorFn) {
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 
     material = new THREE.MeshShaderMaterial({
-
-          uniforms: uniforms,
-          vertexShader: shader.vertexShader,
-          fragmentShader: shader.fragmentShader
-
-        });
+        uniforms: uniforms,
+        vertexShader: shader.vertexShader,
+        fragmentShader: shader.fragmentShader
+    });
 
     mesh = new THREE.Mesh(geometry, material);
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.1;
@@ -166,14 +161,18 @@ DAT.Globe = function(container, colorFn) {
     mesh.updateMatrix();
     sceneAtmosphere.addObject(mesh);
 
-    geometry = new THREE.Cube(0.75, 0.75, 1, 1, 1, 1, null, false, { px: true,
-          nx: true, py: true, ny: true, pz: false, nz: true});
+    geometry = new THREE.Cube(0.75, 0.75, 1, 1, 1, 1, null, false, {
+        px: true,
+        nx: true,
+        py: true,
+        ny: true,
+        pz: false,
+        nz: true
+    });
 
-    for (var i = 0; i < geometry.vertices.length; i++) {
-
-      var vertex = geometry.vertices[i];
-      vertex.position.z += 0.5;
-
+    for (var i=0; i < geometry.vertices.length; i++) {
+        var vertex = geometry.vertices[i];
+        vertex.position.z += 0.5;
     }
 
     point = new THREE.Mesh(geometry);
@@ -186,13 +185,9 @@ DAT.Globe = function(container, colorFn) {
     renderer.domElement.style.position = 'absolute';
 
     container.appendChild(renderer.domElement);
-
     container.addEventListener('mousedown', onMouseDown, false);
-
     container.addEventListener('mousewheel', onMouseWheel, false);
-
     document.addEventListener('keydown', onDocumentKeyDown, false);
-
     window.addEventListener('resize', onWindowResize, false);
 
     container.addEventListener('mouseover', function() {
@@ -236,15 +231,15 @@ DAT.Globe = function(container, colorFn) {
 
     var subgeo = new THREE.Geometry();
     for (i=0, c=data.length; i<c; i++) {
-          point = data[i];
-          if (point.__hid__){
-              continue;
-          }
-          lat = point.lat;
-          lng = point.lng;
-          size = this.computeHeight(point.__wei__);
-          color = colorFn(color_to_hsv(point.__col__));
-          addPoint(lat, lng, size, color, subgeo);
+        point = data[i];
+        if (point.__hid__){
+            continue;
+        }
+        lat = point.lat;
+        lng = point.lng;
+        size = this.computeHeight(point.__wei__);
+        color = colorFn(color_to_hsv(point.__col__));
+        addPoint(lat, lng, size, color, subgeo);
     }
     if (opts.animated) {
       this._baseGeometry.morphTargets.push({
@@ -276,10 +271,10 @@ DAT.Globe = function(container, colorFn) {
           }
         }
         this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-              color: 0xffffff,
-              vertexColors: THREE.FaceColors,
-              morphTargets: true
-            }));
+            color: 0xffffff,
+            vertexColors: THREE.FaceColors,
+            morphTargets: true
+        }));
       }
       scene.addObject(this.points);
     }
