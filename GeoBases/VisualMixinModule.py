@@ -571,7 +571,7 @@ class VisualMixin(object):
 
         # Optional function which gives points weight
         if icon_weight is None:
-            get_weight = lambda key: 0
+            get_weight = lambda key: 1
         else:
             def get_weight(key):
                 """Custom weight computation."""

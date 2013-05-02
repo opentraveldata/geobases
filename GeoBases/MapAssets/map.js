@@ -225,7 +225,7 @@ function initialize(jsonData) {
             continue;
         }
 
-        has_circle = (! isNaN(w)) && w > 0;
+        has_circle = with_circles && (! isNaN(w)) && w > 0;
         circle_col = getCircleColor(e.__col__);
 
         if (! with_icons && ! has_circle) {
