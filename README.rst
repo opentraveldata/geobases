@@ -1,9 +1,14 @@
-GeoBases |travis|_
-==================
+GeoBases |travis|_ |cratev|_ |crated|_
+======================================
 
 .. _travis : https://travis-ci.org/opentraveldata/geobases
 .. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=pypy
 
+.. _crated : https://crate.io/packages/GeoBases
+.. |crated| image:: https://pypip.in/d/GeoBases/badge.png
+
+.. _cratev : https://crate.io/packages/GeoBases
+.. |cratev| image:: https://pypip.in/v/GeoBases/badge.png
 
 Introduction
 ------------
