@@ -1139,7 +1139,7 @@ class GeoBase(VisualMixin):
 
         >>> geo_o.addGrid(radius=50, force=True, verbose=True)
         /!\ Grid already built, overriding...
-        No usable geocode for ZZL: ("",""), skipping point...
+        No usable geocode for XPC: ("",""), skipping point...
         """
         if self.hasGrid():
             if not force:
@@ -1435,7 +1435,7 @@ class GeoBase(VisualMixin):
 
         >>> geo_o.getLocation('AGN')
         (57.5..., -134...)
-        >>> geo_o.getLocation('WPS') # no usable geocode => None
+        >>> geo_o.getLocation('XPC') # no usable geocode => None
 
         Behavior on unkwown key.
 
