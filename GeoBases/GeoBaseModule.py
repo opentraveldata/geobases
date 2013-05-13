@@ -1178,7 +1178,6 @@ class GeoBase(object):
 
         >>> geo_o.getLocation('AGN')
         (57.5..., -134...)
-        >>> geo_o.getLocation('XPC') # no usable geocode => None
 
         Behavior on unkwown key.
 
