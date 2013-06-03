@@ -218,6 +218,9 @@ ori_por:
         location_type    : ''
         alt_name_section : ['=', '|']
         tvl_por_list     : ','
+        city_code_list   : ','
+        city_name_list   : '='
+        city_detail_list : ['=', '|']
     join          : &ori_por_join
         - fields: country_code
           with  : [countries, code]
