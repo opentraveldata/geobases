@@ -261,7 +261,7 @@ Information access
 .. code-block:: python
 
  >>> geo_o.get('CDG', 'city_code_list')
- 'PAR'
+ ('PAR',)
  >>> geo_o.get('BRU', 'name')
  'Bruxelles National'
  >>> geo_t.get('frnic', 'name')
@@ -278,11 +278,11 @@ Find things with properties
 
 .. code-block:: python
 
- >>> conditions = [('city_code_list', 'PAR'), ('location_type', ('H',))]
+ >>> conditions = [('city_code_list', ('PAR',)), ('location_type', ('H',))]
  >>> list(geo_o.findWith(conditions, mode='and'))
  [(2, 'JDP'), (2, 'JPU')]
  >>>
- >>> conditions = [('city_code_list', 'PAR'), ('city_code_list', 'LON')]
+ >>> conditions = [('city_code_list', ('PAR',)), ('city_code_list', ('LON',))]
  >>> len(list(geo_o.findWith(conditions, mode='or')))
  33
 

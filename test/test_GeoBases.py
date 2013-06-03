@@ -42,7 +42,7 @@ class GeoBaseTest(unittest.TestCase):
         pass
 
     def test_get(self):
-        self.assertEqual(self.g.get('CDG', 'city_code_list'), 'PAR')
+        self.assertEqual(self.g.get('CDG', 'city_code_list'), ('PAR',))
         self.assertEqual(self.g.get('BVE', 'alt_name_section'),
                          (('', 'Brive-Souillac', ''),))
 

@@ -1708,12 +1708,12 @@ class GeoBase(VisualMixin):
 
         >>> geo_o.addIndex('city_code_list')
         Built index for fields ('city_code_list',)
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code_list', 'NCE')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code_list', ('NCE',))],
         ...                     mode='or',
         ...                     verbose=True))
-        ["or" mode] Using index for ('iata_code',) and ('city_code_list',): value(s) ('NCE',); ('NCE',)
+        ["or" mode] Using index for ('iata_code',) and ('city_code_list',): value(s) ('NCE',); (('NCE',),)
         [(2, 'NCE@1'), (2, 'NCE')]
-        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code_list', 'NCE')],
+        >>> list(geo_o.findWith([('iata_code', 'NCE'), ('city_code_list', ('NCE',))],
         ...                     mode='or',
         ...                     index=False,
         ...                     verbose=True))
@@ -1721,7 +1721,7 @@ class GeoBase(VisualMixin):
 
         Testing several conditions.
 
-        >>> c_1 = [('city_code_list', 'PAR')]
+        >>> c_1 = [('city_code_list', ('PAR',))]
         >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
         16
