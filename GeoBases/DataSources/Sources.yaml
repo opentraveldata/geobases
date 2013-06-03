@@ -226,8 +226,8 @@ ori_por:
         # Freaking auto join possibility
         - fields: tvl_por_list
           with  : [ori_por, iata_code]
-        - fields: city_code
-          with  : [ori_por, iata_code]
+        #- fields: city_code
+        #  with  : [ori_por, iata_code]
         - fields: continent_name
           with  : [continents, name]
         - fields: location_type
@@ -245,7 +245,7 @@ ori_por:
         - faa_code
         - is_geonames
         - geoname_id
-        - valid_id
+        - envelope_id
         - name
         - asciiname
         - lat           # is latitude  in ori_por headers
@@ -276,9 +276,9 @@ ori_por:
         - dst_offset
         - raw_offset
         - moddate
-        - city_code
-        - city_name_utf
-        - city_name_ascii
+        - city_code_list
+        - city_name_list
+        - city_detail_list
         - tvl_por_list
         - state_code
         - location_type
