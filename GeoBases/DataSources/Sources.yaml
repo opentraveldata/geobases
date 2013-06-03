@@ -229,8 +229,8 @@ ori_por:
         # Freaking auto join possibility
         - fields: tvl_por_list
           with  : [ori_por, iata_code]
-        #- fields: city_code
-        #  with  : [ori_por, iata_code]
+        - fields: city_code_list
+          with  : [ori_por, iata_code]
         - fields: continent_name
           with  : [continents, name]
         - fields: location_type
