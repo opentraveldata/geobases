@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *API*: ``city_code`` is now a splitted field for *ori_por* data source
     + *API*: speed and memory optimizations on ``findWith`` and ``findNear*`` queries
     + *API*: remove ``force_str`` option on ``findWith`` query
     + *CLI*: new ``-3/--3d`` option to enable *3D* visualizations
