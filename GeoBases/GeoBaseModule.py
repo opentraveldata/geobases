@@ -1665,15 +1665,13 @@ class GeoBase(VisualMixin):
 
         >>> list(geo_a.findWith([('city_code', 'PAR')]))
         [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
-        >>> list(geo_o.findWith([('comment', '')], reverse=True))
-        []
-        >>> list(geo_o.findWith([('__dup__', '[]')]))
-        []
+        >>> len(list(geo_o.findWith([('comment', '')], reverse=True)))
+        156
         >>> len(list(geo_o.findWith([('__dup__', [])]))) # doctest: +SKIP
-        7013
+        6264
         >>> # Counting duplicated keys
         >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # doctest: +SKIP
-        4519
+        5377
 
         Testing indexes.
 
@@ -1724,7 +1722,7 @@ class GeoBase(VisualMixin):
         >>> c_1 = [('city_code_list', ('PAR',))]
         >>> c_2 = [('location_type', ('H',))]
         >>> len(list(geo_o.findWith(c_1)))
-        16
+        17
         >>> len(list(geo_o.findWith(c_2))) # doctest: +SKIP
         100
         >>> len(list(geo_o.findWith(c_1 + c_2, mode='and'))) # doctest: +SKIP
