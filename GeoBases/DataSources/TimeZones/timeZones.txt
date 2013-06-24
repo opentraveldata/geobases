@@ -163,7 +163,7 @@ PA	America/Panama	-5.0	-5.0	-5.0
 CA	America/Pangnirtung	-5.0	-4.0	-5.0
 SR	America/Paramaribo	-3.0	-3.0	-3.0
 US	America/Phoenix	-7.0	-7.0	-7.0
-HT	America/Port-au-Prince	-5.0	-5.0	-5.0
+HT	America/Port-au-Prince	-5.0	-4.0	-5.0
 TT	America/Port_of_Spain	-4.0	-4.0	-4.0
 BR	America/Porto_Velho	-4.0	-4.0	-4.0
 PR	America/Puerto_Rico	-4.0	-4.0	-4.0
@@ -202,7 +202,7 @@ CA	America/Yellowknife	-7.0	-6.0	-7.0
 AQ	Antarctica/Casey	8.0	8.0	8.0
 AQ	Antarctica/Davis	7.0	7.0	7.0
 AQ	Antarctica/DumontDUrville	10.0	10.0	10.0
-AQ	Antarctica/Macquarie	11.0	11.0	11.0
+AU	Antarctica/Macquarie	11.0	11.0	11.0
 AQ	Antarctica/Mawson	5.0	5.0	5.0
 AQ	Antarctica/McMurdo	13.0	12.0	12.0
 AQ	Antarctica/Palmer	-3.0	-4.0	-4.0
@@ -233,9 +233,9 @@ BD	Asia/Dhaka	6.0	6.0	6.0
 TL	Asia/Dili	9.0	9.0	9.0
 AE	Asia/Dubai	4.0	4.0	4.0
 TJ	Asia/Dushanbe	5.0	5.0	5.0
-PS	Asia/Gaza	2.0	2.0	2.0
+PS	Asia/Gaza	2.0	3.0	2.0
 CN	Asia/Harbin	8.0	8.0	8.0
-PS	Asia/Hebron	2.0	2.0	2.0
+PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
 HK	Asia/Hong_Kong	8.0	8.0	8.0
 MN	Asia/Hovd	7.0	7.0	7.0
@@ -248,6 +248,7 @@ RU	Asia/Kamchatka	12.0	12.0	12.0
 PK	Asia/Karachi	5.0	5.0	5.0
 CN	Asia/Kashgar	8.0	8.0	8.0
 NP	Asia/Kathmandu	5.75	5.75	5.75
+RU	Asia/Khandyga	10.0	10.0	10.0
 IN	Asia/Kolkata	5.5	5.5	5.5
 RU	Asia/Krasnoyarsk	8.0	8.0	8.0
 MY	Asia/Kuala_Lumpur	8.0	8.0	8.0
@@ -283,6 +284,7 @@ BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
 MN	Asia/Ulaanbaatar	8.0	8.0	8.0
 CN	Asia/Urumqi	8.0	8.0	8.0
+RU	Asia/Ust-Nera	11.0	11.0	11.0
 LA	Asia/Vientiane	7.0	7.0	7.0
 RU	Asia/Vladivostok	11.0	11.0	11.0
 RU	Asia/Yakutsk	10.0	10.0	10.0
@@ -319,6 +321,7 @@ SK	Europe/Bratislava	1.0	2.0	1.0
 BE	Europe/Brussels	1.0	2.0	1.0
 RO	Europe/Bucharest	2.0	3.0	2.0
 HU	Europe/Budapest	1.0	2.0	1.0
+DE	Europe/Busingen	1.0	2.0	1.0
 MD	Europe/Chisinau	2.0	3.0	2.0
 DK	Europe/Copenhagen	1.0	2.0	1.0
 IE	Europe/Dublin	0.0	1.0	0.0
