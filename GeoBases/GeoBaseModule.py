@@ -1665,8 +1665,8 @@ class GeoBase(VisualMixin):
 
         >>> list(geo_a.findWith([('city_code', 'PAR')]))
         [(1, 'ORY'), (1, 'TNF'), (1, 'CDG'), (1, 'BVA')]
-        >>> len(list(geo_o.findWith([('comment', '')], reverse=True)))
-        156
+        >>> len(list(geo_o.findWith([('comment', '')], reverse=True))) # doctest: +SKIP
+        212
         >>> len(list(geo_o.findWith([('__dup__', [])]))) # doctest: +SKIP
         6264
         >>> # Counting duplicated keys
