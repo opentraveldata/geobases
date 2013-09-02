@@ -23,7 +23,7 @@ Examples for airports::
     >>> geo_a.get('CDG', 'city_code')
     'PAR'
     >>> geo_a.distance('CDG', 'NCE')
-    694.5162...
+    694.516...
 
 
 Examples for stations::
@@ -1991,7 +1991,7 @@ class GeoBase(VisualMixin):
             ``[(3.2, 'SFO'), (4.5, 'LAX')]``
 
         >>> sorted(geo_o.findNearKey('ORY', 10)) # Orly, por <= 10km
-        [(0.0, 'ORY'), (1.82..., 'JDP'), (8.06..., 'XJY'), (9.95..., 'QFC')]
+        [(0.0, 'ORY'), (6.94..., 'XJY'), (9.96..., 'QFC')]
         >>> sorted(geo_a.findNearKey('ORY', 50)) # Orly, airports <= 50km
         [(0.0, 'ORY'), (18.8..., 'TNF'), (27.8..., 'LBG'), (34.8..., 'CDG')]
         >>> sorted(geo_t.findNearKey('frnic', 3)) # Nice station, stations <= 3km

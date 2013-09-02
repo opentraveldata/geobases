@@ -292,7 +292,7 @@ Distance computation
 .. code-block:: python
 
  >>> geo_o.distance('CDG', 'NCE')
- 694.5162...
+ 694.516...
 
 Find things near a geocode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
