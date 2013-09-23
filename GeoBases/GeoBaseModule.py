@@ -1507,8 +1507,9 @@ class GeoBase(VisualMixin):
         :returns:       the list of values for the given field iterated \
                 on all duplicates for the key, including the key itself
 
-        >>> geo_o.getFromAllDuplicates('ORY', 'name')
-        ['Paris-Orly']
+        >>> for n in geo_o.getFromAllDuplicates('ORY', 'name'):
+        ...     print(n)
+        Paris\xe2\x80\x93Orly Airport
         >>> geo_o.getFromAllDuplicates('THA', 'name')
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
 
