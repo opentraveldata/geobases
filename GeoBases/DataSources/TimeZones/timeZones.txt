@@ -65,7 +65,7 @@ AR	America/Argentina/Mendoza	-3.0	-3.0	-3.0
 AR	America/Argentina/Rio_Gallegos	-3.0	-3.0	-3.0
 AR	America/Argentina/Salta	-3.0	-3.0	-3.0
 AR	America/Argentina/San_Juan	-3.0	-3.0	-3.0
-AR	America/Argentina/San_Luis	-3.0	-3.0	-4.0
+AR	America/Argentina/San_Luis	-3.0	-3.0	-3.0
 AR	America/Argentina/Tucuman	-3.0	-3.0	-3.0
 AR	America/Argentina/Ushuaia	-3.0	-3.0	-3.0
 AW	America/Aruba	-4.0	-4.0	-4.0
@@ -213,7 +213,7 @@ AQ	Antarctica/Vostok	6.0	6.0	6.0
 SJ	Arctic/Longyearbyen	1.0	2.0	1.0
 YE	Asia/Aden	3.0	3.0	3.0
 KZ	Asia/Almaty	6.0	6.0	6.0
-JO	Asia/Amman	3.0	3.0	2.0
+JO	Asia/Amman	3.0	3.0	3.0
 RU	Asia/Anadyr	12.0	12.0	12.0
 KZ	Asia/Aqtau	5.0	5.0	5.0
 KZ	Asia/Aqtobe	5.0	5.0	5.0
