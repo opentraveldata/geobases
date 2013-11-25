@@ -90,6 +90,22 @@ continents:
         - geoname_id
 
 
+regions:
+    paths:
+        - Regions/ori_region_details.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
+    key_fields: code
+    delimiter : ^
+    skip      : 1
+    headers:
+        - user
+        - region
+        - sub-region
+        - country
+        - old_code
+        - code
+
+
 stations:
     paths     : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     key_fields: code
