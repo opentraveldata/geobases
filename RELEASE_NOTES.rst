@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *API*: replace *ori_por_non_iata* source with *ori_por_no_longer_valid* source
     + *API*: new data source for *regions* (based on OpenTravelData)
     + *API*: ``city_code`` is now a splitted field for *ori_por* data source
     + *API*: speed and memory optimizations on ``findWith`` and ``findNear*`` queries
