@@ -30,6 +30,10 @@ _headers() {
         _arguments \
             "*:$help for continents:(_ __head__ code name geoname_id)"
         ;;
+    regions)
+        _arguments \
+            "*:$help for regions:(_ __head__ user region sub-region country old_code code)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __head__ code lines lines@raw name info lat lng)"
@@ -139,6 +143,10 @@ _key_fields() {
     continents)
         _arguments \
             "*:$help for continents:(_ __none__ code name geoname_id)"
+        ;;
+    regions)
+        _arguments \
+            "*:$help for regions:(_ __none__ user region sub-region country old_code code)"
         ;;
     stations)
         _arguments \
@@ -250,6 +258,10 @@ _fields() {
         _arguments \
             "*:$help for continents:(_ __key__ __lno__ code name geoname_id)"
         ;;
+    regions)
+        _arguments \
+            "*:$help for regions:(_ __key__ __lno__ user region sub-region country old_code code)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __key__ __lno__ code lines lines@raw name info lat lng)"
@@ -360,6 +372,10 @@ _fields_extended() {
         _arguments \
             "*:$help for continents:(_ __none__ __key__ __lno__ code name geoname_id)"
         ;;
+    regions)
+        _arguments \
+            "*:$help for regions:(_ __none__ __key__ __lno__ user region sub-region country old_code code)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __none__ __key__ __lno__ code lines lines@raw name info lat lng)"
@@ -469,6 +485,10 @@ _fields_and_join() {
     continents)
         _arguments \
             "*:$help for continents:(_ __key__ __lno__ code name geoname_id)"
+        ;;
+    regions)
+        _arguments \
+            "*:$help for regions:(_ __key__ __lno__ user region sub-region country old_code code)"
         ;;
     stations)
         _arguments \
@@ -635,7 +655,7 @@ _hello() {
     case $state in
     base)
         _arguments \
-            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
+            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_non_iata postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
         ;;
     fuzzy_value|exact_value|phonetic_value|trep_value|near_point|from_point)
         _arguments \
@@ -679,7 +699,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_non_iata postal_codes_FR postal_codes_MC stations stations_nls stations_uic timezones)"
+                "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_non_iata postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
             ;;
         *)
             _arguments \
