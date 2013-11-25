@@ -305,10 +305,10 @@ ori_por:
         - alt_name_section
 
 
-ori_por_non_iata:
+ori_por_no_longer_valid:
     paths         :
-        - Por/Ori/ori_por_non_iata.csv
-        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
+        - Por/Ori/ori_por_no_longer_valid.csv
+        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
     key_fields    : iata_code
     delimiter     : ^
     skip          : 1

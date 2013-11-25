@@ -120,7 +120,7 @@ do_a_file() {
 
 # Files
 REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
-REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_non_iata.csv'
+REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
 REF_URL_04='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
 REF_URL_14='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
 REF_URL_05='http://download.geonames.org/export/dump/countryInfo.txt'
@@ -134,7 +134,7 @@ REF_URL_12='http://download.geonames.org/export/zip/FR.zip'
 REF_URL_13='http://download.geonames.org/export/zip/MC.zip'
 
 LOC_CSV_01='Por/Ori/ori_por_public.csv'
-LOC_CSV_02='Por/Ori/ori_por_non_iata.csv'
+LOC_CSV_02='Por/Ori/ori_por_no_longer_valid.csv'
 LOC_CSV_04='Airlines/ori_airlines.csv'
 LOC_CSV_14='Regions/ori_region_details.csv'
 LOC_CSV_05='Countries/countryInfo.txt'
