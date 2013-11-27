@@ -96,7 +96,7 @@ regions:
         - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
     key_fields: code
     delimiter : ^
-    skip      : 1
+    skip      : 2
     headers:
         - user
         - region
