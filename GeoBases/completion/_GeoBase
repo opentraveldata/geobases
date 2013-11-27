@@ -32,7 +32,7 @@ _headers() {
         ;;
     regions)
         _arguments \
-            "*:$help for regions:(_ __head__ user region sub_region country old_code code country_code)"
+            "*:$help for regions:(_ __head__ user region sub_region country_name old_code code country_code)"
         ;;
     stations)
         _arguments \
@@ -146,7 +146,7 @@ _key_fields() {
         ;;
     regions)
         _arguments \
-            "*:$help for regions:(_ __none__ user region sub_region country old_code code country_code)"
+            "*:$help for regions:(_ __none__ user region sub_region country_name old_code code country_code)"
         ;;
     stations)
         _arguments \
@@ -260,7 +260,7 @@ _fields() {
         ;;
     regions)
         _arguments \
-            "*:$help for regions:(_ __key__ __lno__ user region sub_region country old_code code country_code)"
+            "*:$help for regions:(_ __key__ __lno__ user region sub_region country_name old_code code country_code)"
         ;;
     stations)
         _arguments \
@@ -374,7 +374,7 @@ _fields_extended() {
         ;;
     regions)
         _arguments \
-            "*:$help for regions:(_ __none__ __key__ __lno__ user region sub_region country old_code code country_code)"
+            "*:$help for regions:(_ __none__ __key__ __lno__ user region sub_region country_name old_code code country_code)"
         ;;
     stations)
         _arguments \
@@ -488,7 +488,7 @@ _fields_and_join() {
         ;;
     regions)
         _arguments \
-            "*:$help for regions:(_ __key__ __lno__ user region sub_region country old_code code country_code)"
+            "*:$help for regions:(_ __key__ __lno__ country_code:code country_code:iso_alpha3 country_code:iso_numeric country_code:fips_code country_code:name country_code:capital country_code:area_in_sq_km country_code:population country_code:continent country_code:tld country_code:currency_code country_code:currency_name country_code:phone country_code:postal_code_format country_code:postal_code_regex country_code:languages country_code:languages@raw country_code:geoname_id country_code:neighbors country_code:neighbors@raw user region sub_region country_name old_code code country_code)"
         ;;
     stations)
         _arguments \
