@@ -1,254 +1,257 @@
-User^Region^Sub-region^Country^Old code^Code
-UNWTO^Region^Sub-region^Destination^Old Code^Code
-UNWTO^Africa^Central Africa^Angola^8220^11AO
-UNWTO^Africa^Central Africa^Cameroon^8270^11CM
-UNWTO^Africa^Central Africa^Central African Republic^8290^11CF
-UNWTO^Africa^Central Africa^Chad^8300^11TD
-UNWTO^Africa^Central Africa^"Congo, Republic of"^8320^11CG
-UNWTO^Africa^Central Africa^"Congo, the Democratic Republic of the"^8325^11CD
-UNWTO^Africa^Central Africa^Equatorial Guinea^8350^11GQ
-UNWTO^Africa^Central Africa^Gabon^8380^11GA
-UNWTO^Africa^Central Africa^Sao Tome and Principe^8570^11ST
-UNWTO^Africa^East Africa^Burundi^8260^12BI
-UNWTO^Africa^East Africa^Comoros^8310^12KM
-UNWTO^Africa^East Africa^Djibouti^8340^12DJ
-UNWTO^Africa^East Africa^Eritrea^8360^12ER
-UNWTO^Africa^East Africa^Ethiopia^8370^12ET
-UNWTO^Africa^East Africa^Kenya^8430^12KE
-UNWTO^Africa^East Africa^Madagascar^8460^12MG
-UNWTO^Africa^East Africa^Malawi^8470^12MW
-UNWTO^Africa^East Africa^Mauritius^8030^12MU
-UNWTO^Africa^East Africa^Mayotte^8495^12YT
-UNWTO^Africa^East Africa^Mozambique^8510^12MZ
-UNWTO^Africa^East Africa^Reunion^8550^12RE
-UNWTO^Africa^East Africa^Rwanda^8560^12RW
-UNWTO^Africa^East Africa^Seychelles^8590^12SC
-UNWTO^Africa^East Africa^Somalia^8610^12SO
-UNWTO^Africa^East Africa^Tanzania^8640^12TZ
-UNWTO^Africa^East Africa^Uganda^8670^12UG
-UNWTO^Africa^East Africa^Zambia^8700^12ZM
-UNWTO^Africa^East Africa^Zimbabwe^8710^12ZW
-UNWTO^Africa^North Africa^Algeria^8210^13DZ
-UNWTO^Africa^North Africa^Egypt^8010^13EG
-UNWTO^Africa^North Africa^Libya^8020^13LY
-UNWTO^Africa^North Africa^Morocco^8500^13MA
-UNWTO^Africa^North Africa^South Sudan^8615^13SS
-UNWTO^Africa^North Africa^Sudan^8620^13SD
-UNWTO^Africa^North Africa^Tunisia^8660^13TN
-UNWTO^Africa^North Africa^Western Sahara^8680^13EH
-UNWTO^Africa^South Africa^Botswana^8240^14BW
-UNWTO^Africa^South Africa^Lesotho^8440^14LS
-UNWTO^Africa^South Africa^Namibia^8520^14NA
-UNWTO^Africa^South Africa^Saint Helena^8565^14SH
-UNWTO^Africa^South Africa^South Africa^8040^14ZA
-UNWTO^Africa^South Africa^Swaziland^8630^14SZ
-UNWTO^Africa^West Africa^Benin^8230^15BJ
-UNWTO^Africa^West Africa^Burkina Faso^8250^15BF
-UNWTO^Africa^West Africa^Cape Verde^8280^15CV
-UNWTO^Africa^West Africa^Ivory Coast^8330^15CI
-UNWTO^Africa^West Africa^Gambia^8390^15GM
-UNWTO^Africa^West Africa^Ghana^8400^15GH
-UNWTO^Africa^West Africa^Guinea^8410^15GN
-UNWTO^Africa^West Africa^Guinea-Bissau^8420^15GW
-UNWTO^Africa^West Africa^Liberia^8450^15LR
-UNWTO^Africa^West Africa^Mali^8480^15ML
-UNWTO^Africa^West Africa^Mauritania^8490^15MR
-UNWTO^Africa^West Africa^Niger^8530^15NE
-UNWTO^Africa^West Africa^Nigeria^8540^15NG
-UNWTO^Africa^West Africa^Senegal^8580^15SN
-UNWTO^Africa^West Africa^Sierra Leone^8600^15LSL
-UNWTO^Africa^West Africa^Togo^8650^15TG
-UNWTO^Africa^Other Africa^Other Africa^8980^16OT
-UNWTO^Americas^Caribbean^Anguilla^1310^21AI
-UNWTO^Americas^Caribbean^Antigua and Barbuda^1320^21AG
-UNWTO^Americas^Caribbean^Aruba^1330^21AW
-UNWTO^Americas^Caribbean^Bahamas^1350^21BS
-UNWTO^Americas^Caribbean^Barbados^1360^21BB
-UNWTO^Americas^Caribbean^Bermuda^1370^21BM
-UNWTO^Americas^Caribbean^"Bonaire, Saint Eustatius & Saba"^1375^21BQ
-UNWTO^Americas^Caribbean^Cayman Islands^1380^21KY
-UNWTO^Americas^Caribbean^Cuba^1390^21CU
-UNWTO^Americas^Caribbean^Curacao^1395^21CW
-UNWTO^Americas^Caribbean^Dominica^1400^21DM
-UNWTO^Americas^Caribbean^Dominican Republic^1410^21DO
-UNWTO^Americas^Caribbean^Grenada^1420^21GD
-UNWTO^Americas^Caribbean^Guadeloupe^1430^21GP
-UNWTO^Americas^Caribbean^Haiti^1440^21HT
-UNWTO^Americas^Caribbean^Jamaica^1450^21JM
-UNWTO^Americas^Caribbean^Martinique^1460^21MQ
-UNWTO^Americas^Caribbean^Montserrat^1470^21MS
-UNWTO^Americas^Caribbean^Puerto Rico^1500^21PR
-UNWTO^Americas^Caribbean^Sint Maarten^1505^21SX
-UNWTO^Americas^Caribbean^St. Kitts-Nevis^1510^21KN
-UNWTO^Americas^Caribbean^St. Lucia^1520^21LC
-UNWTO^Americas^Caribbean^St. Vincent & the Grenadines^1530^21VC
-UNWTO^Americas^Caribbean^Trinidad & Tobago^1540^21TT
-UNWTO^Americas^Caribbean^Turks & Caicos Islands^1550^21TC
-UNWTO^Americas^Caribbean^"Virgin Islands, British"^1560^21VG
-UNWTO^Americas^Caribbean^"Virgin Islands, United States"^1570^21VI
-UNWTO^Americas^Caribbean^Other Caribbean^1590^21OT
-UNWTO^Americas^Central America^Belize^1210^22BZ
-UNWTO^Americas^Central America^Costa Rica^1220^22CR
-UNWTO^Americas^Central America^El Salvador^1230^22SV
-UNWTO^Americas^Central America^Guatemala^1240^22GT
-UNWTO^Americas^Central America^Honduras^1250^22HN
-UNWTO^Americas^Central America^Mexico^1020^22MX
-UNWTO^Americas^Central America^Nicaragua^1260^22NI
-UNWTO^Americas^Central America^Panama^1270^22PA
-UNWTO^Americas^Central America^Other Central America^1290^22OT
-UNWTO^Americas^North America^Canada^1010^23CA
-UNWTO^Americas^North America^Greenland^1110^23GL
-UNWTO^Americas^North America^St. Pierre & Miquelon^1120^23PM
-UNWTO^Americas^North America^USA^1030^23US
-UNWTO^Americas^North America^Other North America^1180^23OT
-UNWTO^Americas^South America^Argentina^1610^24AR
-UNWTO^Americas^South America^Bolivia^1710^24BO
-UNWTO^Americas^South America^Brazil^1620^24BR
-UNWTO^Americas^South America^Chile^1630^24CL
-UNWTO^Americas^South America^Colombia^1640^24CO
-UNWTO^Americas^South America^Ecuador^1720^24EC
-UNWTO^Americas^South America^Falkland Islands^1730^24FK
-UNWTO^Americas^South America^French Guyana^1740^24GF
-UNWTO^Americas^South America^Guyana^1750^24GY
-UNWTO^Americas^South America^Paraguay^1760^24PY
-UNWTO^Americas^South America^Peru^1650^24PE
-UNWTO^Americas^South America^South Georgia & the South Sandwich Islands^1770^24GS
-UNWTO^Americas^South America^Suriname^1790^24SR
-UNWTO^Americas^South America^Uruguay^1660^24UY
-UNWTO^Americas^South America^Venezuela^1670^24VE
-UNWTO^Americas^South America^Other South America^1880^24OT
-UNWTO^Americas^Other Americas^Other Americas^1980^25OT
-UNWTO^Asia^Central Asia^Kazakhstan^5710^31KZ
-UNWTO^Asia^Central Asia^Kyrgyzstan^5720^31KG
-UNWTO^Asia^Central Asia^Tajikistan^5730^31TJ
-UNWTO^Asia^Central Asia^Turkmenistan^5740^31TM
-UNWTO^Asia^Central Asia^Uzbekistan^5750^31UZ
-UNWTO^Asia^Central Asia^Other Central Asia^5780^31OT
-UNWTO^Asia^Northeast Asia^China^4010^32CN
-UNWTO^Asia^Northeast Asia^Chinese Taipei^4030^32TW
-UNWTO^Asia^Northeast Asia^DPR Korea^4520^32KP
-UNWTO^Asia^Northeast Asia^Hong Kong SAR^4020^32HK
-UNWTO^Asia^Northeast Asia^Hong Kong SAR & Macau SAR^4027^32HO
-UNWTO^Asia^Northeast Asia^Japan^4040^32JP
-UNWTO^Asia^Northeast Asia^Macau SAR^4060^32MO
-UNWTO^Asia^Northeast Asia^Mongolia^4530^32MN
-UNWTO^Asia^Northeast Asia^Other Northeast Asia^4580^32OT
-UNWTO^Asia^South Asia^Afghanistan^3510^33AF
-UNWTO^Asia^South Asia^Bangladesh^3010^33BD
-UNWTO^Asia^South Asia^Bhutan^3520^33BT
-UNWTO^Asia^South Asia^India^3020^33IN
-UNWTO^Asia^South Asia^Maldives^3030^33MV
-UNWTO^Asia^South Asia^Nepal^3040^33NP
-UNWTO^Asia^South Asia^Pakistan^3050^33PK
-UNWTO^Asia^South Asia^Sri Lanka^3060^33LK
-UNWTO^Asia^South Asia^Other South Asia^3580^33OT
-UNWTO^Asia^Southeast Asia^Brunei^5010^34BN
-UNWTO^Asia^Southeast Asia^Cambodia^5020^34KH
-UNWTO^Asia^Southeast Asia^Indonesia^5030^34ID
-UNWTO^Asia^Southeast Asia^Lao PDR^5040^34LA
-UNWTO^Asia^Southeast Asia^Malaysia^5050^34MY
-UNWTO^Asia^Southeast Asia^Myanmar^5060^34MM
-UNWTO^Asia^Southeast Asia^Philippines^5070^34PH
-UNWTO^Asia^Southeast Asia^Singapore^5080^34SG
-UNWTO^Asia^Southeast Asia^Thailand^5090^34TH
-UNWTO^Asia^Southeast Asia^Timor Leste^5510^34TL
-UNWTO^Asia^Southeast Asia^Vietnam^5100^34VN
-UNWTO^Asia^Southeast Asia^Other Southeast Asia^5580^34OT
-UNWTO^Asia^West Asia^Bahrain^7520^35BH
-UNWTO^Asia^West Asia^Cyprus^7530^35CY
-UNWTO^Asia^West Asia^Iran^7010^35IR
-UNWTO^Asia^West Asia^Iraq^7540^35IQ
-UNWTO^Asia^West Asia^Israel^7020^35IL
-UNWTO^Asia^West Asia^Jordan^7550^35JO
-UNWTO^Asia^West Asia^Kuwait^7030^35KW
-UNWTO^Asia^West Asia^Lebanon^7560^35LB
-UNWTO^Asia^West Asia^Oman^7570^35OM
-UNWTO^Asia^West Asia^Palestine^7580^35PS
-UNWTO^Asia^West Asia^Qatar^7590^35QA
-UNWTO^Asia^West Asia^Saudi Arabia^7040^35SA
-UNWTO^Asia^West Asia^Syria^7600^35SY
-UNWTO^Asia^West Asia^Turkey^7050^35TR
-UNWTO^Asia^West Asia^UAE^7060^35AE
-UNWTO^Asia^West Asia^Yemen^7610^35YE
-UNWTO^Asia^West Asia^Other West Asia^7980^35OT
-UNWTO^Asia^Other Asia^Other Asia^5910^36OT
-UNWTO^Europe^East Europe^Armenia^2720^41AM
-UNWTO^Europe^East Europe^Azerbaijan^2730^41AZ
-UNWTO^Europe^East Europe^Belarus^2740^41BY
-UNWTO^Europe^East Europe^Bulgaria^2760^41BG
-UNWTO^Europe^East Europe^Czech Republic^2530^41CZ
-UNWTO^Europe^East Europe^Georgia^2790^41GE
-UNWTO^Europe^East Europe^Hungary^2540^41HU
-UNWTO^Europe^East Europe^Moldova^2830^41MD
-UNWTO^Europe^East Europe^Poland^2550^41PL
-UNWTO^Europe^East Europe^Romania^2560^41RO
-UNWTO^Europe^East Europe^Russian Federation^2570^41RU
-UNWTO^Europe^East Europe^Slovakia^2840^41SK
-UNWTO^Europe^East Europe^Ukraine^2860^41UA
-UNWTO^Europe^East Europe^Other East Europe^2880^41OT
-UNWTO^Europe^North Europe^Denmark^2030^42DK
-UNWTO^Europe^North Europe^Estonia^2780^42EE
-UNWTO^Europe^North Europe^Faeroe Islands^2330^42FO
-UNWTO^Europe^North Europe^Finland^2040^42FI
-UNWTO^Europe^North Europe^Iceland^2350^42IS
-UNWTO^Europe^North Europe^Ireland^2080^42IE
-UNWTO^Europe^North Europe^Latvia^2800^42LV
-UNWTO^Europe^North Europe^Lithuania^2810^42LT
-UNWTO^Europe^North Europe^Norway^2140^42NO
-UNWTO^Europe^North Europe^Sweden^2170^42SE
-UNWTO^Europe^North Europe^UK^2190^42UK
-UNWTO^Europe^North Europe^Other North Europe^^42OT
-UNWTO^Europe^South Europe^Albania^2710^43AL
-UNWTO^Europe^South Europe^Andorra^2310^43AD
-UNWTO^Europe^South Europe^Bosnia-Herzegovina^2750^43BA
-UNWTO^Europe^South Europe^Croatia^2770^43HR
-UNWTO^Europe^South Europe^Gibraltar^2340^43GI
-UNWTO^Europe^South Europe^Greece^2070^43GR
-UNWTO^Europe^South Europe^Italy^2090^43IT
-UNWTO^Europe^South Europe^Macedonia^2820^43MK
-UNWTO^Europe^South Europe^Malta^2370^43MT
-UNWTO^Europe^South Europe^Montenegro^2833^43ME
-UNWTO^Europe^South Europe^Portugal^2150^43PT
-UNWTO^Europe^South Europe^San Marino^2380^43SM
-UNWTO^Europe^South Europe^Serbia^2836^43RS
-UNWTO^Europe^South Europe^Slovenia^2850^43SI
-UNWTO^Europe^South Europe^Spain^2160^43ES
-UNWTO^Europe^South Europe^Other South Europe^^43OT
-UNWTO^Europe^West Europe^Austria^2010^44AT
-UNWTO^Europe^West Europe^Belgium^2020^44BE
-UNWTO^Europe^West Europe^France^2050^44FR
-UNWTO^Europe^West Europe^Germany^2060^44DE
-UNWTO^Europe^West Europe^Liechtenstein^2360^44LI
-UNWTO^Europe^West Europe^Luxembourg^2110^44LU
-UNWTO^Europe^West Europe^Monaco^2120^44MC
-UNWTO^Europe^West Europe^Netherlands^2130^44NL
-UNWTO^Europe^West Europe^Switzerland^2180^44CH
-UNWTO^Europe^West Europe^Other West Europe^2480^44OT
-UNWTO^Europe^Other Europe^Other Europe^2980^45OT
-UNWTO^Pacific^Oceania^Australia^6010^51AU
-UNWTO^Pacific^Oceania^New Zealand^6020^51NZ
-UNWTO^Pacific^Oceania^Norfolk Island^6240^51NF
-UNWTO^Pacific^Oceania^Other Oceania^6290^51OT
-UNWTO^Pacific^Melanesia^Fiji^6530^52FJ
-UNWTO^Pacific^Melanesia^New Caledonia^6600^52NC
-UNWTO^Pacific^Melanesia^Papua New Guinea^6640^52PG
-UNWTO^Pacific^Melanesia^Solomon Islands^6660^52SB
-UNWTO^Pacific^Melanesia^Vanuatu^6700^52VU
-UNWTO^Pacific^Micronesia^Guam^6550^53GU
-UNWTO^Pacific^Micronesia^Kiribati^6560^53KI
-UNWTO^Pacific^Micronesia^Marshall Islands^6570^53MH
-UNWTO^Pacific^Micronesia^FSM^6580^53FM
-UNWTO^Pacific^Micronesia^Nauru^6590^53NR
-UNWTO^Pacific^Micronesia^Northern Marianas^6620^53MP
-UNWTO^Pacific^Micronesia^Palau^6630^53PW
-UNWTO^Pacific^Polynesia^American Samoa^6510^54AS
-UNWTO^Pacific^Polynesia^Cook Islands^6520^54CK
-UNWTO^Pacific^Polynesia^Hawaii^6555^54HI
-UNWTO^Pacific^Polynesia^Niue^6610^54NU
-UNWTO^Pacific^Polynesia^Samoa^6650^54WS
-UNWTO^Pacific^Polynesia^Tonga^6680^54TO
-UNWTO^Pacific^Polynesia^Tuvalu^6690^54TV
-UNWTO^Pacific^Polynesia^Wallis & Futuna Islands^6710^54WF
-UNWTO^Pacific^Polynesia^Tokelau^6960^54TK
-UNWTO^Pacific^Other Pacific^Antarctica^9100^55AQ
-UNWTO^Pacific^Other Pacific^Other Pacific^6980^55OT
+User^Region^Sub-region^Country^Old code^Code^Country_code
+UNWTO^Region^Sub-region^Destination^Old Code^Code^de
+UNWTO^Africa^Central Africa^Angola^8220^11AO^AO
+UNWTO^Africa^Central Africa^Cameroon^8270^11CM^CM
+UNWTO^Africa^Central Africa^Central African Republic^8290^11CF^CF
+UNWTO^Africa^Central Africa^Chad^8300^11TD^TD
+UNWTO^Africa^Central Africa^"Congo, Republic of"^8320^11CG^CG
+UNWTO^Africa^Central Africa^"Congo, the Democratic Republic of the"^8325^11CD^CD
+UNWTO^Africa^Central Africa^Equatorial Guinea^8350^11GQ^GQ
+UNWTO^Africa^Central Africa^Gabon^8380^11GA^GA
+UNWTO^Africa^Central Africa^Sao Tome and Principe^8570^11ST^ST
+UNWTO^Africa^East Africa^Burundi^8260^12BI^BI
+UNWTO^Africa^East Africa^Comoros^8310^12KM^KM
+UNWTO^Africa^East Africa^Djibouti^8340^12DJ^DJ
+UNWTO^Africa^East Africa^Eritrea^8360^12ER^ER
+UNWTO^Africa^East Africa^Ethiopia^8370^12ET^ET
+UNWTO^Africa^East Africa^Kenya^8430^12KE^KE
+UNWTO^Africa^East Africa^Madagascar^8460^12MG^MG
+UNWTO^Africa^East Africa^Malawi^8470^12MW^MW
+UNWTO^Africa^East Africa^Mauritius^8030^12MU^MU
+UNWTO^Africa^East Africa^Mayotte^8495^12YT^YT
+UNWTO^Africa^East Africa^Mozambique^8510^12MZ^MZ
+UNWTO^Africa^East Africa^Reunion^8550^12RE^RE
+UNWTO^Africa^East Africa^Rwanda^8560^12RW^RW
+UNWTO^Africa^East Africa^Seychelles^8590^12SC^SC
+UNWTO^Africa^East Africa^Somalia^8610^12SO^SO
+UNWTO^Africa^East Africa^Tanzania^8640^12TZ^TZ
+UNWTO^Africa^East Africa^Uganda^8670^12UG^UG
+UNWTO^Africa^East Africa^Zambia^8700^12ZM^ZM
+UNWTO^Africa^East Africa^Zimbabwe^8710^12ZW^ZW
+UNWTO^Africa^North Africa^Algeria^8210^13DZ^DZ
+UNWTO^Africa^North Africa^Egypt^8010^13EG^EG
+UNWTO^Africa^North Africa^Libya^8020^13LY^LY
+UNWTO^Africa^North Africa^Morocco^8500^13MA^MA
+UNWTO^Africa^North Africa^South Sudan^8615^13SS^SS
+UNWTO^Africa^North Africa^Sudan^8620^13SD^SD
+UNWTO^Africa^North Africa^Tunisia^8660^13TN^TN
+UNWTO^Africa^North Africa^Western Sahara^8680^13EH^EH
+UNWTO^Africa^South Africa^Botswana^8240^14BW^BW
+UNWTO^Africa^South Africa^Lesotho^8440^14LS^LS
+UNWTO^Africa^South Africa^Namibia^8520^14NA^NA
+UNWTO^Africa^South Africa^Saint Helena^8565^14SH^SH
+UNWTO^Africa^South Africa^South Africa^8040^14ZA^ZA
+UNWTO^Africa^South Africa^Swaziland^8630^14SZ^SZ
+UNWTO^Africa^West Africa^Benin^8230^15BJ^BJ
+UNWTO^Africa^West Africa^Burkina Faso^8250^15BF^BF
+UNWTO^Africa^West Africa^Cape Verde^8280^15CV^CV
+UNWTO^Africa^West Africa^Ivory Coast^8330^15CI^CI
+UNWTO^Africa^West Africa^Gambia^8390^15GM^GM
+UNWTO^Africa^West Africa^Ghana^8400^15GH^GH
+UNWTO^Africa^West Africa^Guinea^8410^15GN^GN
+UNWTO^Africa^West Africa^Guinea-Bissau^8420^15GW^GW
+UNWTO^Africa^West Africa^Liberia^8450^15LR^LR
+UNWTO^Africa^West Africa^Mali^8480^15ML^ML
+UNWTO^Africa^West Africa^Mauritania^8490^15MR^MR
+UNWTO^Africa^West Africa^Niger^8530^15NE^NE
+UNWTO^Africa^West Africa^Nigeria^8540^15NG^NG
+UNWTO^Africa^West Africa^Senegal^8580^15SN^SN
+UNWTO^Africa^West Africa^Sierra Leone^8600^15LSL^LSL
+UNWTO^Africa^West Africa^Togo^8650^15TG^TG
+UNWTO^Africa^Other Africa^Other Africa^8980^16OT^OT
+UNWTO^Americas^Caribbean^Anguilla^1310^21AI^AI
+UNWTO^Americas^Caribbean^Antigua and Barbuda^1320^21AG^AG
+UNWTO^Americas^Caribbean^Aruba^1330^21AW^AW
+UNWTO^Americas^Caribbean^Bahamas^1350^21BS^BS
+UNWTO^Americas^Caribbean^Barbados^1360^21BB^BB
+UNWTO^Americas^Caribbean^Bermuda^1370^21BM^BM
+UNWTO^Americas^Caribbean^"Bonaire, Saint Eustatius & Saba"^1375^21BQ^BQ
+UNWTO^Americas^Caribbean^Cayman Islands^1380^21KY^KY
+UNWTO^Americas^Caribbean^Cuba^1390^21CU^CU
+UNWTO^Americas^Caribbean^Curacao^1395^21CW^CW
+UNWTO^Americas^Caribbean^Dominica^1400^21DM^DM
+UNWTO^Americas^Caribbean^Dominican Republic^1410^21DO^DO
+UNWTO^Americas^Caribbean^Grenada^1420^21GD^GD
+UNWTO^Americas^Caribbean^Guadeloupe^1430^21GP^GP
+UNWTO^Americas^Caribbean^Haiti^1440^21HT^HT
+UNWTO^Americas^Caribbean^Jamaica^1450^21JM^JM
+UNWTO^Americas^Caribbean^Martinique^1460^21MQ^MQ
+UNWTO^Americas^Caribbean^Montserrat^1470^21MS^MS
+UNWTO^Americas^Caribbean^Puerto Rico^1500^21PR^PR
+UNWTO^Americas^Caribbean^Sint Maarten^1505^21SX^SX
+UNWTO^Americas^Caribbean^St. Kitts-Nevis^1510^21KN^KN
+UNWTO^Americas^Caribbean^St. Lucia^1520^21LC^LC
+UNWTO^Americas^Caribbean^St. Vincent & the Grenadines^1530^21VC^VC
+UNWTO^Americas^Caribbean^Trinidad & Tobago^1540^21TT^TT
+UNWTO^Americas^Caribbean^Turks & Caicos Islands^1550^21TC^TC
+UNWTO^Americas^Caribbean^"Virgin Islands, British"^1560^21VG^VG
+UNWTO^Americas^Caribbean^"Virgin Islands, United States"^1570^21VI^VI
+UNWTO^Americas^Caribbean^Other Caribbean^1590^21OT^OT
+UNWTO^Americas^Central America^Belize^1210^22BZ^BZ
+UNWTO^Americas^Central America^Costa Rica^1220^22CR^CR
+UNWTO^Americas^Central America^El Salvador^1230^22SV^SV
+UNWTO^Americas^Central America^Guatemala^1240^22GT^GT
+UNWTO^Americas^Central America^Honduras^1250^22HN^HN
+UNWTO^Americas^Central America^Mexico^1020^22MX^MX
+UNWTO^Americas^Central America^Nicaragua^1260^22NI^NI
+UNWTO^Americas^Central America^Panama^1270^22PA^PA
+UNWTO^Americas^Central America^Other Central America^1290^22OT^OT
+UNWTO^Americas^North America^Canada^1010^23CA^CA
+UNWTO^Americas^North America^Greenland^1110^23GL^GL
+UNWTO^Americas^North America^St. Pierre & Miquelon^1120^23PM^PM
+UNWTO^Americas^North America^USA^1030^23US^US
+UNWTO^Americas^North America^Other North America^1180^23OT^OT
+UNWTO^Americas^South America^Argentina^1610^24AR^AR
+UNWTO^Americas^South America^Bolivia^1710^24BO^BO
+UNWTO^Americas^South America^Brazil^1620^24BR^BR
+UNWTO^Americas^South America^Chile^1630^24CL^CL
+UNWTO^Americas^South America^Colombia^1640^24CO^CO
+UNWTO^Americas^South America^Ecuador^1720^24EC^EC
+UNWTO^Americas^South America^Falkland Islands^1730^24FK^FK
+UNWTO^Americas^South America^French Guyana^1740^24GF^GF
+UNWTO^Americas^South America^Guyana^1750^24GY^GY
+UNWTO^Americas^South America^Paraguay^1760^24PY^PY
+UNWTO^Americas^South America^Peru^1650^24PE^PE
+UNWTO^Americas^South America^South Georgia & the South Sandwich Islands^1770^24GS^GS
+UNWTO^Americas^South America^Suriname^1790^24SR^SR
+UNWTO^Americas^South America^Uruguay^1660^24UY^UY
+UNWTO^Americas^South America^Venezuela^1670^24VE^VE
+UNWTO^Americas^South America^Other South America^1880^24OT^OT
+UNWTO^Americas^Other Americas^Other Americas^1980^25OT^OT
+UNWTO^Asia^Central Asia^Kazakhstan^5710^31KZ^KZ
+UNWTO^Asia^Central Asia^Kyrgyzstan^5720^31KG^KG
+UNWTO^Asia^Central Asia^Tajikistan^5730^31TJ^TJ
+UNWTO^Asia^Central Asia^Turkmenistan^5740^31TM^TM
+UNWTO^Asia^Central Asia^Uzbekistan^5750^31UZ^UZ
+UNWTO^Asia^Central Asia^Other Central Asia^5780^31OT^OT
+UNWTO^Asia^Northeast Asia^China^4010^32CN^CN
+UNWTO^Asia^Northeast Asia^Chinese Taipei^4030^32TW^TW
+UNWTO^Asia^Northeast Asia^DPR Korea^4520^32KP^KP
+UNWTO^Asia^Northeast Asia^Hong Kong SAR^4020^32HK^HK
+UNWTO^Asia^Northeast Asia^Hong Kong SAR & Macau SAR^4027^32HO^HO
+UNWTO^Asia^Northeast Asia^Japan^4040^32JP^JP
+UNWTO^Asia^Northeast Asia^Korea (ROK)^4050^32KR^KR
+UNWTO^Asia^Northeast Asia^Macau SAR^4060^32MO^MO
+UNWTO^Asia^Northeast Asia^Mongolia^4530^32MN^MN
+UNWTO^Asia^Northeast Asia^Other Northeast Asia^4580^32OT^OT
+UNWTO^Asia^South Asia^Afghanistan^3510^33AF^AF
+UNWTO^Asia^South Asia^Bangladesh^3010^33BD^BD
+UNWTO^Asia^South Asia^Bhutan^3520^33BT^BT
+UNWTO^Asia^South Asia^India^3020^33IN^IN
+UNWTO^Asia^South Asia^Maldives^3030^33MV^MV
+UNWTO^Asia^South Asia^Nepal^3040^33NP^NP
+UNWTO^Asia^South Asia^Pakistan^3050^33PK^PK
+UNWTO^Asia^South Asia^Sri Lanka^3060^33LK^LK
+UNWTO^Asia^South Asia^Other South Asia^3580^33OT^OT
+UNWTO^Asia^Southeast Asia^Brunei^5010^34BN^BN
+UNWTO^Asia^Southeast Asia^Cambodia^5020^34KH^KH
+UNWTO^Asia^Southeast Asia^Indonesia^5030^34ID^ID
+UNWTO^Asia^Southeast Asia^Lao PDR^5040^34LA^LA
+UNWTO^Asia^Southeast Asia^Malaysia^5050^34MY^MY
+UNWTO^Asia^Southeast Asia^Myanmar^5060^34MM^MM
+UNWTO^Asia^Southeast Asia^Philippines^5070^34PH^PH
+UNWTO^Asia^Southeast Asia^Singapore^5080^34SG^SG
+UNWTO^Asia^Southeast Asia^Thailand^5090^34TH^TH
+UNWTO^Asia^Southeast Asia^Timor Leste^5510^34TL^TL
+UNWTO^Asia^Southeast Asia^Vietnam^5100^34VN^VN
+UNWTO^Asia^Southeast Asia^Other Southeast Asia^5580^34OT^OT
+UNWTO^Asia^West Asia^Bahrain^7520^35BH^BH
+UNWTO^Asia^West Asia^Cyprus^7530^35CY^CY
+UNWTO^Asia^West Asia^Iran^7010^35IR^IR
+UNWTO^Asia^West Asia^Iraq^7540^35IQ^IQ
+UNWTO^Asia^West Asia^Israel^7020^35IL^IL
+UNWTO^Asia^West Asia^Jordan^7550^35JO^JO
+UNWTO^Asia^West Asia^Kuwait^7030^35KW^KW
+UNWTO^Asia^West Asia^Lebanon^7560^35LB^LB
+UNWTO^Asia^West Asia^Oman^7570^35OM^OM
+UNWTO^Asia^West Asia^Palestine^7580^35PS^PS
+UNWTO^Asia^West Asia^Qatar^7590^35QA^QA
+UNWTO^Asia^West Asia^Saudi Arabia^7040^35SA^SA
+UNWTO^Asia^West Asia^Syria^7600^35SY^SY
+UNWTO^Asia^West Asia^Turkey^7050^35TR^TR
+UNWTO^Asia^West Asia^UAE^7060^35AE^AE
+UNWTO^Asia^West Asia^Yemen^7610^35YE^YE
+UNWTO^Asia^West Asia^Other West Asia^7980^35OT^OT
+UNWTO^Asia^Other Asia^Other Asia^5910^36OT^OT
+UNWTO^Europe^East Europe^Armenia^2720^41AM^AM
+UNWTO^Europe^East Europe^Azerbaijan^2730^41AZ^AZ
+UNWTO^Europe^East Europe^Belarus^2740^41BY^BY
+UNWTO^Europe^East Europe^Bulgaria^2760^41BG^BG
+UNWTO^Europe^East Europe^Czech Republic^2530^41CZ^CZ
+UNWTO^Europe^East Europe^Georgia^2790^41GE^GE
+UNWTO^Europe^East Europe^Hungary^2540^41HU^HU
+UNWTO^Europe^East Europe^Moldova^2830^41MD^MD
+UNWTO^Europe^East Europe^Poland^2550^41PL^PL
+UNWTO^Europe^East Europe^Romania^2560^41RO^RO
+UNWTO^Europe^East Europe^Russian Federation^2570^41RU^RU
+UNWTO^Europe^East Europe^Slovakia^2840^41SK^SK
+UNWTO^Europe^East Europe^Ukraine^2860^41UA^UA
+UNWTO^Europe^East Europe^Other East Europe^2880^41OT^OT
+UNWTO^Europe^North Europe^Denmark^2030^42DK^DK
+UNWTO^Europe^North Europe^Estonia^2780^42EE^EE
+UNWTO^Europe^North Europe^Faeroe Islands^2330^42FO^FO
+UNWTO^Europe^North Europe^Finland^2040^42FI^FI
+UNWTO^Europe^North Europe^Iceland^2350^42IS^IS
+UNWTO^Europe^North Europe^Ireland^2080^42IE^IE
+UNWTO^Europe^North Europe^Latvia^2800^42LV^LV
+UNWTO^Europe^North Europe^Lithuania^2810^42LT^LT
+UNWTO^Europe^North Europe^Norway^2140^42NO^NO
+UNWTO^Europe^North Europe^Sweden^2170^42SE^SE
+UNWTO^Europe^North Europe^UK^2190^42UK^GB
+UNWTO^Europe^North Europe^Other North Europe^^42OT^OT
+UNWTO^Europe^South Europe^Albania^2710^43AL^AL
+UNWTO^Europe^South Europe^Andorra^2310^43AD^AD
+UNWTO^Europe^South Europe^Bosnia-Herzegovina^2750^43BA^BA
+UNWTO^Europe^South Europe^Croatia^2770^43HR^HR
+UNWTO^Europe^South Europe^Gibraltar^2340^43GI^GI
+UNWTO^Europe^South Europe^Greece^2070^43GR^GR
+UNWTO^Europe^South Europe^Holy See (Vatican)^2100^43VA^VA
+UNWTO^Europe^South Europe^Italy^2090^43IT^IT
+UNWTO^Europe^South Europe^Macedonia^2820^43MK^MK
+UNWTO^Europe^South Europe^Malta^2370^43MT^MT
+UNWTO^Europe^South Europe^Montenegro^2833^43ME^ME
+UNWTO^Europe^South Europe^Portugal^2150^43PT^PT
+UNWTO^Europe^South Europe^San Marino^2380^43SM^SM
+UNWTO^Europe^South Europe^Serbia^2836^43RS^RS
+UNWTO^Europe^South Europe^Slovenia^2850^43SI^SI
+UNWTO^Europe^South Europe^Spain^2160^43ES^ES
+UNWTO^Europe^South Europe^Other South Europe^^43OT^OT
+UNWTO^Europe^West Europe^Austria^2010^44AT^AT
+UNWTO^Europe^West Europe^Belgium^2020^44BE^BE
+UNWTO^Europe^West Europe^France^2050^44FR^FR
+UNWTO^Europe^West Europe^Germany^2060^44DE^DE
+UNWTO^Europe^West Europe^Liechtenstein^2360^44LI^LI
+UNWTO^Europe^West Europe^Luxembourg^2110^44LU^LU
+UNWTO^Europe^West Europe^Monaco^2120^44MC^MC
+UNWTO^Europe^West Europe^Netherlands^2130^44NL^NL
+UNWTO^Europe^West Europe^Switzerland^2180^44CH^CH
+UNWTO^Europe^West Europe^Other West Europe^2480^44OT^OT
+UNWTO^Europe^Other Europe^Other Europe^2980^45OT^OT
+UNWTO^Pacific^Oceania^Australia^6010^51AU^AU
+UNWTO^Pacific^Oceania^New Zealand^6020^51NZ^NZ
+UNWTO^Pacific^Oceania^Norfolk Island^6240^51NF^NF
+UNWTO^Pacific^Oceania^Other Oceania^6290^51OT^OT
+UNWTO^Pacific^Melanesia^Fiji^6530^52FJ^FJ
+UNWTO^Pacific^Melanesia^New Caledonia^6600^52NC^NC
+UNWTO^Pacific^Melanesia^Papua New Guinea^6640^52PG^PG
+UNWTO^Pacific^Melanesia^Solomon Islands^6660^52SB^SB
+UNWTO^Pacific^Melanesia^Vanuatu^6700^52VU^VU
+UNWTO^Pacific^Micronesia^Guam^6550^53GU^GU
+UNWTO^Pacific^Micronesia^Kiribati^6560^53KI^KI
+UNWTO^Pacific^Micronesia^Marshall Islands^6570^53MH^MH
+UNWTO^Pacific^Micronesia^FSM^6580^53FM^FM
+UNWTO^Pacific^Micronesia^Nauru^6590^53NR^NR
+UNWTO^Pacific^Micronesia^Northern Marianas^6620^53MP^MP
+UNWTO^Pacific^Micronesia^Palau^6630^53PW^PW
+UNWTO^Pacific^Polynesia^American Samoa^6510^54AS^AS
+UNWTO^Pacific^Polynesia^Cook Islands^6520^54CK^CK
+UNWTO^Pacific^Polynesia^French Polynesia (Tahiti)^6540 & 6670^54PF^PF
+UNWTO^Pacific^Polynesia^Hawaii^6555^54HI^HI
+UNWTO^Pacific^Polynesia^Niue^6610^54NU^NU
+UNWTO^Pacific^Polynesia^Samoa^6650^54WS^WS
+UNWTO^Pacific^Polynesia^Tonga^6680^54TO^TO
+UNWTO^Pacific^Polynesia^Tuvalu^6690^54TV^TV
+UNWTO^Pacific^Polynesia^Wallis & Futuna Islands^6710^54WF^WF
+UNWTO^Pacific^Polynesia^Tokelau^6960^54TK^TK
+UNWTO^Pacific^Other Pacific^Antarctica^9100^55AQ^AQ
+UNWTO^Pacific^Other Pacific^Other Pacific^6980^55OT^OT
