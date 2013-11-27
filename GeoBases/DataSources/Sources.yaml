@@ -97,6 +97,9 @@ regions:
     key_fields: code
     delimiter : ^
     skip      : 2
+    join      :
+        - fields: country_code
+          with  : [countries, code]
     headers:
         - user
         - region
