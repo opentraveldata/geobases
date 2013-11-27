@@ -101,7 +101,7 @@ regions:
         - user
         - region
         - sub_region
-        - country
+        - country_name
         - old_code
         - code
         - country_code
