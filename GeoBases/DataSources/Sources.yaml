@@ -100,10 +100,11 @@ regions:
     headers:
         - user
         - region
-        - sub-region
+        - sub_region
         - country
         - old_code
         - code
+        - country_code
 
 
 stations:
