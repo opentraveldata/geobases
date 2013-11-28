@@ -94,20 +94,23 @@ regions:
     paths:
         - Regions/ori_region_details.csv
         - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
-    key_fields: code
+    key_fields: region_code
     delimiter : ^
-    skip      : 2
+    skip      : 1
     join      :
-        - fields: country_code
+        - fields: country_code_iso_2char
           with  : [countries, code]
     headers:
         - user
-        - region
-        - sub_region
+        - region_code
+        - region_name
+        - region_id
+        - sub_region_code
+        - sub_region_name
         - country_name
-        - old_code
-        - code
-        - country_code
+        - user_country_code_1
+        - user_country_code_2
+        - country_code_iso_2char
 
 
 stations:
