@@ -997,10 +997,10 @@ S_MANAGER = SourcesManager()
 
 # Contact info
 CONTACT_INFO = '''
-Report bugs to    : geobases.dev@gmail.com
-Home page         : <http://opentraveldata.github.com/geobases/>
-API documentation : <https://geobases.readthedocs.org/>
-Wiki pages        : <https://github.com/opentraveldata/geobases/wiki/_pages>
+Report bugs : geobases.dev@gmail.com
+Home page   : http://opentraveldata.github.com/geobases
+API doc     : https://geobases.readthedocs.org
+Wiki pages  : https://github.com/opentraveldata/geobases/wiki/_pages
 '''
 
 try:
