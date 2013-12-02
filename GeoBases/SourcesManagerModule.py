@@ -369,7 +369,7 @@ class SourcesManager(object):
         ''' % (self.sources_dir, self.sources_conf_path))]
 
         tip.append('-' * 80)
-        tip.append('%-20s | %-25s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT + FAILOVERS)'))
+        tip.append('%-25s | %-15s | %s' % ('NAME', 'KEY', 'PATHS (DEFAULT & FAILOVERS)'))
         tip.append('-' * 80)
 
         for source in displayed:
@@ -385,12 +385,12 @@ class SourcesManager(object):
 
             if isinstance(paths, (str, dict)):
                 paths = [paths]
-            tip.append('%-20s | %-25s | %s' % \
-                       (source, fmt_keys(keys), '.) %s' % fmt_path(paths[0])))
+            tip.append('%-25s | %-15s | %s' % \
+                       (source, fmt_keys(keys), '. %s' % fmt_path(paths[0])))
 
             for n, path in enumerate(paths[1:], start=1):
-                tip.append('%-20s | %-25s | %s' % \
-                           ('-', '-', '%s) %s' % (n, fmt_path(path))))
+                tip.append('%-25s | %-15s | %s' % \
+                           ('-', '-', '%s %s' % (n, fmt_path(path))))
 
         tip.append('-' * 80)
 
