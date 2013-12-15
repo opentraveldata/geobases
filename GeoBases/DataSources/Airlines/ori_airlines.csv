@@ -354,6 +354,7 @@ ATC^ATC^TC^197^Air Tanzania^^^
 AU^AUT^AU^143^Austral Lineas Aereas^Austral L A^Skyteam^Affiliate
 AUA^AUA^OS^257^Austrian Airlines^Austrianair^Star Alliance^Member
 AUB^AUB^IQ^614^Augsburg Airways^^^
+AUI^AUI^PS^566^Ukraine Intl Airlines^Ukraine Intl^^
 AUL^AUL^5N^316^Jsc Nordavia^Jsc Nordavia^^
 AUR^AUR^GR^924^Aurigny Air Services^Aurigny Air^^
 AUT^AUT^AU^143^Austral Lineas Aereas^Austral L A^Skyteam^Affiliate
@@ -421,7 +422,6 @@ BLS^BLS^JV^632^Bearskin Airlines^Bearskin Air^^
 BLX^BLX^6B^951^Tuifly Nordic^Britannia^^
 BM^^BM^480^Bmi Regional^Bmi Regional^^
 BMA^BMA^BD^236^British Midland International^^^
-BMI^BMI^WW^0^Bmibaby^^^
 BMJ^BMJ^CH^872^Bemidji Airlines^Bemidji^^
 BN^^BN^937^Bahrain Air^Horizon Airli^^
 BO^^BO^505^Bb Airways^^^
@@ -503,7 +503,7 @@ CO^COA^CO^5^Continental Airlines^Continental^^
 COA^COA^CO^5^Continental Airlines^Continental^^
 CP^^CP^3^Compass Airlines^Canadian^^
 CPA^CPA^CX^160^Cathay Pacific^Cathaypacific^OneWorld^Member
-CPN^CPN^RV^0^Air Canada Rouge^^^
+CPN^CPN^IV^864^Caspian Airlines^^^
 CQ^^CQ^909^Czech Connect Airlines^^^
 CR^^CR^0^Oag Worldwide^^^
 CRD^CRD^QC^40^Camair Co^Camair Co^^
@@ -567,7 +567,7 @@ DI^DET^DI^228^D E T A Air Jsc^Dba^^
 DJ^VOZ^DJ^856^Virgin Australia Airline^Virgin Austra^^
 DJB^DJB^D8^0^Djibouti Airlines^^^
 DK^VKG^DK^630^Thomas Cook Airlines A S^Eastland Air^^
-DKH^DKH^HO^18^Juneyao Airlines^^^
+DKH^DKH^HO^18^Juneyao Airlines^Juneyao^^
 DL^DAL^DL^6^Delta Air Lines^Delta Air^Skyteam^Member
 DLA^DLA^EN^101^Air Dolomiti^Air Dolomiti^^
 DLH^DLH^LH^220^Lufthansa^Lufthansa^Star Alliance^Member
@@ -579,7 +579,7 @@ DNV^DNV^D9^733^Jsc Donavia^^Skyteam^Affiliate
 DO^^DO^0^Air Vallee^Air Vallee^^
 DP^PLV^DP^0^Perla Airlines^Air Ltd^^
 DQ^DCP^DQ^521^Delta Connection^Coastal Air^^
-DR^^DR^0^Air Link^Air Link^^
+DR^^DR^0^Ruili Airlines^Air Link^^
 DRK^DRK^KB^787^Druk Air^Druk Air^^
 DRU^DRU^6R^0^Mirny Air^^^
 DS^^DS^0^Easyjet Switzerland^^^
@@ -814,7 +814,7 @@ HKE^HKE^UO^128^Hong Kong Express Airways^Hk Express^^
 HL^^HL^0^^^^
 HM^SEY^HM^61^Air Seychelles^Air Seychel^^
 HN^^HN^714^Afghan Jet International^^^
-HO^DKH^HO^18^Juneyao Airlines^^^
+HO^DKH^HO^18^Juneyao Airlines^Juneyao^^
 HOP^HOP^A5^163^Hop^Airlinair^^
 HP^HSN^HP^0^H S Aviation^^^
 HQ^^HQ^583^Thomas Cook Airlines Belgium^Harmony Air^^
@@ -885,7 +885,7 @@ ISS^ISS^IG^191^Meridiana Fly^Meridiana Fly^^
 ISV^ISV^WC^506^Islena Airlines^Islena Air^^
 IT^KFR^IT^90^Kingfisher Airlines^Kingfisher^OneWorld^Future
 IU^ASN^IU^0^Hevi Lift Png Pty Ltd^Air Straubing^^
-IV^JET^IV^0^Wind Jet^^^
+IV^CPN^IV^864^Caspian Airlines^^^
 IW^^IW^513^Pt Wings Abadi Airlines^Air Lib^^
 IWD^IWD^IP^560^Iberworld Airlines^Atyrauauejoly^^
 IX^^IX^0^Air India Charters^^^
@@ -910,7 +910,7 @@ JAC^JAC^3X^0^Japan Air Commuter^J Air Commu^^
 JAF^JAF^TB^0^Jetairfly^Jetairfly^^
 JAI^JAI^9W^589^Jet Airways^Jet Airways^^
 JAL^JAL^JL^131^Japan Airlines^J A L^OneWorld^Member
-JAT^JAT^JU^115^Jat Airways^J A T^^
+JAT^JAT^JU^115^Air Serbia^J A T^^
 JAV^JAV^R5^151^Jordan Aviation^Malta Air^^
 JB^JBA^JB^613^Helijet International^Helijet^^
 JBA^JBA^JB^613^Helijet International^Helijet^^
@@ -920,7 +920,6 @@ JBW^JBW^3J^535^Jubba Airways Kenya^Zip Air^^
 JC^^JC^0^Jal Express^^OneWorld^Affiliate
 JD^DER^JD^898^Beijing Capital Airlines^Beijing Capit^^
 JE^^JE^0^Mango^^^
-JET^JET^IV^0^Wind Jet^^^
 JF^^JF^0^Jet Asia Airways^^^
 JG^^JG^0^Jetgo Australia^^^
 JH^FDA^JH^0^Fuji Dream Airlines^Nordeste^^
@@ -942,12 +941,12 @@ JSA^JSA^3K^375^Jetstar Asia^Jetstar Asia^^
 JST^JST^JQ^41^Jetstar^Jetstar^^
 JT^^JT^990^Lion Airlines^Jaro Intl Arl^^
 JTA^JTA^NU^353^Japan Transocean Air^Japan Transoc^OneWorld^Member
-JU^JAT^JU^115^Jat Airways^J A T^^
+JU^JAT^JU^115^Air Serbia^J A T^^
 JV^BLS^JV^632^Bearskin Airlines^Bearskin Air^^
 JW^^JW^842^Air Asia Japan^^^
 JX^^JX^179^Nice Helicopteres^Nice Helicopt^^
 JXX^JXX^GX^591^Primera Air^^^
-JY^^JY^653^Air Turks And Caicos^^^
+JY^^JY^653^Air Turks And Caicos^Air Turcks^^
 JZ^SKX^JZ^752^Skyways Ab^Skyways Ab^^
 JZA^JZA^QK^983^Jazz Aviation^Jazz Air^^
 K0^^K0^0^^^^
@@ -1307,7 +1306,7 @@ PP^PJS^PP^0^Jet Aviation Business^Jet Aviation^^
 PQ^^PQ^0^Airasia Philippines^Panafrican^^
 PR^PAL^PR^79^Philippine Airlines^Philippine^^
 PRI^PRI^PF^834^Primera Air Scandinavia^Palestin Air^^
-PS^^PS^566^Ukraine Intl Airlines^Ukraine Intl^^
+PS^AUI^PS^566^Ukraine Intl Airlines^Ukraine Intl^^
 PSC^PSC^P6^0^Pascan Aviation Inc^^^
 PST^PST^7P^23^Air Panama^Apa Intl^^
 PSV^PSV^5S^0^Servicios Aereos Profesionales^^^
@@ -1358,7 +1357,7 @@ QT^TPA^QT^0^Tampa Cargo^Regional^^
 QTR^QTR^QR^157^Qatar Airways^Qatar Airways^OneWorld^Future
 QU^^QU^761^Airline Utair Ukraine^Utair Ukraine^^
 QV^LAO^QV^627^Lao Airlines^Lao Airlines^^
-QW^^QW^0^Qingdao Airlines^Qw BLUE Wings^^
+QW^^QW^912^Qingdao Airlines^Qw BLUE Wings^^
 QX^QXE^QX^481^Horizon Air^Horizon Air^^
 QXE^QXE^QX^481^Horizon Air^Horizon Air^^
 QY^^QY^0^European Air Transport^Euroairtran^^
@@ -1421,7 +1420,7 @@ RSI^RSI^YI^0^Air Sunshine^Airsunshine^^
 RT^^RT^785^Rak Airways^Rak Airways^^
 RU^SKI^RU^0^Air Bridge Cargo^Tci Skyking^^
 RUS^RUS^C9^251^Cirrus Airlines^^^
-RV^CPN^RV^0^Air Canada Rouge^^^
+RV^^RV^0^Air Canada Rouge^^^
 RW^^RW^0^^^^
 RWD^RWD^WB^459^Rwandair Express^Rwandair^^
 RWZ^RWZ^WZ^309^Red Wings Airlines^^^
@@ -1484,7 +1483,7 @@ SKU^SKU^H2^605^Sky Airline^Sky Airline^^
 SKW^SKW^OO^302^Skywest Airlines^Sky West^^
 SKX^SKX^JZ^752^Skyways Ab^Skyways Ab^^
 SKY^SKY^BC^0^Skymark Airlines^^^
-SL^^SL^0^Solenta Aviation^Rio Sul^^
+SL^^SL^0^Lion Air^Rio Sul^^
 SLC^SLC^SO^340^Salsa D Haiti^^^
 SLI^SLI^5D^642^Aerolitoral^^Skyteam^Affiliate
 SLK^SLK^MI^629^Silkair^Silkair^^
@@ -1756,7 +1755,7 @@ WSP^WSP^1P^523^Worldspan^Worldspan^^
 WT^NGA^WT^0^Wasaya Airways^Nigeria Air^^
 WU^WAU^WU^0^Wizz Air Ukraine Llc^^^
 WV^MWA^WV^857^Midwest Airlines^Swe Fly^^
-WW^BMI^WW^0^Bmibaby^^^
+WW^^WW^0^Wow Air^^^
 WX^BCY^WX^689^Cityjet^Cityjet^Skyteam^Affiliate
 WY^OAS^WY^910^Oman Air^Oman Air^^
 WZ^RWZ^WZ^309^Red Wings Airlines^^^
