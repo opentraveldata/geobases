@@ -1,4 +1,8 @@
 unified_code^3char_code^2char_code^num_code^name^name2^alliance_code^alliance_status
+*A^^*A^0^Star Alliance^^^
+*O^^*O^0^Oneworld^^^
+*Q^^*Q^0^The Qualiflyer Group^^^
+*S^^*S^0^Skyteam^^^
 0A^^0A^0^^^^
 0B^^0B^0^Blue Air Airline^^^
 0C^^0C^0^Catovair^Catovair^^
@@ -258,7 +262,6 @@ unified_code^3char_code^2char_code^num_code^name^name2^alliance_code^alliance_st
 9X^CXR^9X^0^Congo Express^New Axis Air^^
 9Y^^9Y^671^Fly Georgia^Fly Georgia^^
 9Z^^9Z^0^Amadeus Pdf Z^^^
-*A^^*A^0^Star Alliance^^^
 A0^^A0^0^L Avion^Elysair^^
 A1^^A1^0^G Switch Works^^^
 A2^AZI^A2^273^Astra Airlines^Astra Airline^^
@@ -1210,7 +1213,6 @@ NX^AMU^NX^675^Air Macau^Air Macau^^
 NXA^NXA^7A^0^Air Next^Haines Air^^
 NY^FXI^NY^882^Air Iceland^Air Iceland^^
 NZ^ANZ^NZ^86^Air New Zealand^New Zealand^Star Alliance^Member
-*O^^*O^0^Oneworld^^^
 O0^^O0^0^^^^
 O1^^O1^0^^^^
 O2^^O2^0^^Jet Air^^
@@ -1321,7 +1323,6 @@ PWD^PWD^7Y^0^Pan Am World Airways Dominicana^^^
 PX^ANG^PX^656^Air Niugini^Air Niugini^^
 PY^SLM^PY^192^Surinam Airways^Surinam Air^^
 PZ^LAP^PZ^692^Tam Mercosur^Lapsa^^
-*Q^^*Q^0^The Qualiflyer Group^^^
 Q0^^Q0^0^Quebecair Express^^^
 Q1^^Q1^0^Sqiva Sistem^^^
 Q2^^Q2^986^Island Aviation Services^^^
@@ -1429,7 +1430,6 @@ RY^^RY^561^Royal Wings^European Exec^^
 RYR^RYR^FR^0^Ryanair^Ryanair Ltd^^
 RZ^LRS^RZ^684^Sansa^Pan Am Exp^^
 RZO^RZO^S4^331^Sata International^Sata Intl^^
-*S^^*S^0^Skyteam^^^
 S0^OKS^S0^503^Slok Air International^Slok Air^^
 S1^^S1^0^Lufthansa Systems^^^
 S2^RSH^S2^705^Jet Lite^Jet Lite^^
