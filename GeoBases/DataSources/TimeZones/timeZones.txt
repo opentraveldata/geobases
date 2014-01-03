@@ -1,4 +1,4 @@
-CountryCode	TimeZoneId	GMT offset 1. Jan 2013	DST offset 1. Jul 2013	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2014	DST offset 1. Jul 2014	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -12,7 +12,7 @@ MW	Africa/Blantyre	2.0	2.0	2.0
 CG	Africa/Brazzaville	1.0	1.0	1.0
 BI	Africa/Bujumbura	2.0	2.0	2.0
 EG	Africa/Cairo	2.0	2.0	2.0
-MA	Africa/Casablanca	0.0	1.0	0.0
+MA	Africa/Casablanca	0.0	0.0	0.0
 ES	Africa/Ceuta	1.0	2.0	1.0
 GN	Africa/Conakry	0.0	0.0	0.0
 SN	Africa/Dakar	0.0	0.0	0.0
@@ -48,14 +48,14 @@ MR	Africa/Nouakchott	0.0	0.0	0.0
 BF	Africa/Ouagadougou	0.0	0.0	0.0
 BJ	Africa/Porto-Novo	1.0	1.0	1.0
 ST	Africa/Sao_Tome	0.0	0.0	0.0
-LY	Africa/Tripoli	1.0	2.0	1.0
+LY	Africa/Tripoli	2.0	2.0	2.0
 TN	Africa/Tunis	1.0	1.0	1.0
 NA	Africa/Windhoek	2.0	1.0	1.0
 US	America/Adak	-10.0	-9.0	-10.0
 US	America/Anchorage	-9.0	-8.0	-9.0
 AI	America/Anguilla	-4.0	-4.0	-4.0
 AG	America/Antigua	-4.0	-4.0	-4.0
-BR	America/Araguaina	-2.0	-3.0	-3.0
+BR	America/Araguaina	-3.0	-3.0	-3.0
 AR	America/Argentina/Buenos_Aires	-3.0	-3.0	-3.0
 AR	America/Argentina/Catamarca	-3.0	-3.0	-3.0
 AR	America/Argentina/Cordoba	-3.0	-3.0	-3.0
@@ -99,7 +99,7 @@ US	America/Denver	-7.0	-6.0	-7.0
 US	America/Detroit	-5.0	-4.0	-5.0
 DM	America/Dominica	-4.0	-4.0	-4.0
 CA	America/Edmonton	-7.0	-6.0	-7.0
-BR	America/Eirunepe	-4.0	-4.0	-4.0
+BR	America/Eirunepe	-5.0	-5.0	-5.0
 SV	America/El_Salvador	-6.0	-6.0	-6.0
 BR	America/Fortaleza	-3.0	-3.0	-3.0
 CA	America/Glace_Bay	-4.0	-3.0	-4.0
@@ -172,7 +172,7 @@ CA	America/Rankin_Inlet	-6.0	-5.0	-6.0
 BR	America/Recife	-3.0	-3.0	-3.0
 CA	America/Regina	-6.0	-6.0	-6.0
 CA	America/Resolute	-6.0	-5.0	-6.0
-BR	America/Rio_Branco	-4.0	-4.0	-4.0
+BR	America/Rio_Branco	-5.0	-5.0	-5.0
 MX	America/Santa_Isabel	-8.0	-7.0	-8.0
 BR	America/Santarem	-3.0	-3.0	-3.0
 CL	America/Santiago	-3.0	-4.0	-4.0
