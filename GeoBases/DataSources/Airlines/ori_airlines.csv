@@ -179,7 +179,7 @@ unified_code^3char_code^2char_code^num_code^name^name2^alliance_code^alliance_st
 6S^ESC^6S^612^El Sol De America^Kato Airlines^^
 6T^^6T^373^Air Mandalay^Air Mandalay^^
 6U^ACX^6U^0^Acg Air Cargo Germany^Air Ukraine^^
-6V^MRW^6V^0^Mars Rk^Mars Rk^^
+6V^^6V^0^Avanza^Mars Rk^^
 6W^^6W^26^Saratov Airlines^^^
 6X^XYB^6X^172^Amadeus Six^Amadeus Six^^
 6Y^LTC^6Y^0^Smartlynx Airlines^^^
@@ -1137,7 +1137,6 @@ MPK^MPK^I6^315^Air Indus^^^
 MQ^EGF^MQ^93^American Eagle^^OneWorld^Affiliate
 MR^MML^MR^861^Hunnu Air^Mongolian Air^^
 MRS^MRS^CW^0^Air Marshall Islands^^^
-MRW^MRW^6V^0^Mars Rk^Mars Rk^^
 MS^MSR^MS^77^Egyptair^Egyptair^Star Alliance^Member
 MSL^MSL^M7^293^Marsland Aviation^Marsland^^
 MSR^MSR^MS^77^Egyptair^Egyptair^Star Alliance^Member
