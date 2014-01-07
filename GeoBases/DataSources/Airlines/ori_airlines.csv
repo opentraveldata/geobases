@@ -255,7 +255,7 @@ unified_code^3char_code^2char_code^num_code^name^name2^alliance_code^alliance_st
 9Q^CXE^9Q^0^Caicos Express Airways^Pb Air^^
 9R^NSE^9R^0^Satena^^^
 9S^XYX^9S^793^Amadeus Pdf S^Amadeus S^^
-9T^ABS^9T^556^Act Havayollari^Athabaska^^
+9T^ABS^9T^^Transwest Air^Transwest Air^^
 9U^MLD^9U^572^Air Moldova^Air Moldova^^
 9V^ROI^9V^742^Avior^Avior^^
 9W^JAI^9W^589^Jet Airways^Jet Airways^^
@@ -1035,7 +1035,7 @@ LBY^LBY^LZ^379^Belle Air Company^^^
 LC^^LC^753^Equatorial Congo Airline^Congo Airline^^
 LCO^LCO^UC^0^Lan Chile Cargo^Ladeco^^
 LD^^LD^0^^^^
-LE^^LE^0^^^^
+LE^^LE^959^Laparkan Airways, Inc.^^^
 LER^LER^QL^782^Linea Aerea De Servicio^^^
 LF^^LF^971^Lao Central Airlines^Lao Central^^
 LFM^LFM^3I^0^Pison Airways Ltd^Virgin Austra^^
@@ -1592,7 +1592,7 @@ TTF^TTF^1F^788^Infini Travel Information^Infini Travel^^
 TU^TAR^TU^199^Tunisair^Tunis Air^^
 TUA^TUA^T5^542^Turkmenistan Airlines^Turkmenistan^^
 TUI^TUI^X3^617^Tuifly^Tuifly^^
-TV^^TV^88^Tibet Airlines^^^
+TV^TBA^TV^88^Tibet Airlines^^^
 TVP^TVP^3Z^0^Travel Service Polska^^^
 TVQ^TVQ^6D^0^Travel Service^Alaska Isl^^
 TVS^TVS^QS^797^Smartwings^Travelservice^^
