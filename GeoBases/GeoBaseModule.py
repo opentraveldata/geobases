@@ -658,12 +658,12 @@ class GeoBase(VisualMixin):
         :returns:       the dictionary of { values : list of matching keys }
 
         >>> geo_o._buildIndex('iata_code', verbose=False)['MRS']
-        ['MRS@1', 'MRS']
+        ['MRS', 'MRS@1']
         >>> geo_o._buildIndex(('iata_code',), verbose=False)[('MRS',)]
-        ['MRS@1', 'MRS']
+        ['MRS', 'MRS@1']
         >>> geo_o._buildIndex(['iata_code', 'country_code'])[('MRS', 'FR')]
         Built index for fields ['iata_code', 'country_code']
-        ['MRS@1', 'MRS']
+        ['MRS', 'MRS@1']
         """
         if isinstance(fields, str):
             compute_val = lambda k: self.get(k, fields)
@@ -1678,7 +1678,7 @@ class GeoBase(VisualMixin):
 
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
         ["and" mode] Using index for ('iata_code',): value(s) ('MRS',)
-        [(1, 'MRS@1'), (1, 'MRS')]
+        [(1, 'MRS'), (1, 'MRS@1')]
         >>> geo_o.addIndex('iata_code', force=True)
         /!\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
