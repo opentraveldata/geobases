@@ -93,7 +93,7 @@ continents:
 regions:
     paths:
         - Regions/ori_region_details.csv
-        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
+        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_region_details.csv'
     key_fields: region_code
     delimiter : ^
     skip      : 1
@@ -239,7 +239,7 @@ cities:
 ori_por:
     paths         : &ori_por_paths
         - Por/Ori/ori_por_public.csv
-        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
+        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_public.csv'
     key_fields    : iata_code
     indices       :
         - iata_code
@@ -328,7 +328,7 @@ ori_por:
 ori_por_no_longer_valid:
     paths         :
         - Por/Ori/ori_por_no_longer_valid.csv
-        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
+        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
     key_fields    : iata_code
     delimiter     : ^
     skip          : 1
@@ -357,7 +357,7 @@ currencies:
 airlines:
     paths     :
         - Airlines/ori_airlines.csv
-        - 'https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
+        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv'
     key_fields: unified_code
     delimiter : ^
     skip      : 1

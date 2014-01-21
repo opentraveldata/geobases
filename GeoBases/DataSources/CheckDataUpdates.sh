@@ -119,11 +119,11 @@ do_a_file() {
 }
 
 # Files
-REF_URL_01='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv'
-REF_URL_02='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
-REF_URL_04='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_airlines.csv'
-REF_URL_14='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_region_details.csv'
-REF_URL_15='https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_aircraft.csv'
+REF_URL_01='https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_public.csv'
+REF_URL_02='https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
+REF_URL_04='https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv'
+REF_URL_14='https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_region_details.csv'
+REF_URL_15='https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_aircraft.csv'
 REF_URL_05='http://download.geonames.org/export/dump/countryInfo.txt'
 REF_URL_06='http://download.geonames.org/export/dump/timeZones.txt'
 REF_URL_07='http://download.geonames.org/export/dump/iso-languagecodes.txt'
