@@ -113,6 +113,19 @@ regions:
         - country_code_iso_2char
 
 
+aircraft:
+    paths:
+        - Aircraft/ori_aircraft.csv
+        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_aircraft.csv'
+    key_fields: iata_code
+    delimiter : ^
+    skip      : 1
+    headers:
+        - iata_code
+        - manufacturer
+        - model
+
+
 stations:
     paths     : TrainStations/DataGouvFr/RFF_gares.ids.gm.man.red.csv
     key_fields: code
