@@ -34,6 +34,10 @@ _headers() {
         _arguments \
             "*:$help for regions:(_ __head__ user region_code region_name region_id sub_region_code sub_region_name country_name user_country_code_1 user_country_code_2 country_code_iso_2char)"
         ;;
+    aircraft)
+        _arguments \
+            "*:$help for aircraft:(_ __head__ iata_code manufacturer model)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __head__ code lines lines@raw name info lat lng)"
@@ -147,6 +151,10 @@ _key_fields() {
     regions)
         _arguments \
             "*:$help for regions:(_ __none__ user region_code region_name region_id sub_region_code sub_region_name country_name user_country_code_1 user_country_code_2 country_code_iso_2char)"
+        ;;
+    aircraft)
+        _arguments \
+            "*:$help for aircraft:(_ __none__ iata_code manufacturer model)"
         ;;
     stations)
         _arguments \
@@ -262,6 +270,10 @@ _fields() {
         _arguments \
             "*:$help for regions:(_ __key__ __lno__ user region_code region_name region_id sub_region_code sub_region_name country_name user_country_code_1 user_country_code_2 country_code_iso_2char)"
         ;;
+    aircraft)
+        _arguments \
+            "*:$help for aircraft:(_ __key__ __lno__ iata_code manufacturer model)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __key__ __lno__ code lines lines@raw name info lat lng)"
@@ -376,6 +388,10 @@ _fields_extended() {
         _arguments \
             "*:$help for regions:(_ __none__ __key__ __lno__ user region_code region_name region_id sub_region_code sub_region_name country_name user_country_code_1 user_country_code_2 country_code_iso_2char)"
         ;;
+    aircraft)
+        _arguments \
+            "*:$help for aircraft:(_ __none__ __key__ __lno__ iata_code manufacturer model)"
+        ;;
     stations)
         _arguments \
             "*:$help for stations:(_ __none__ __key__ __lno__ code lines lines@raw name info lat lng)"
@@ -489,6 +505,10 @@ _fields_and_join() {
     regions)
         _arguments \
             "*:$help for regions:(_ __key__ __lno__ country_code_iso_2char:code country_code_iso_2char:iso_alpha3 country_code_iso_2char:iso_numeric country_code_iso_2char:fips_code country_code_iso_2char:name country_code_iso_2char:capital country_code_iso_2char:area_in_sq_km country_code_iso_2char:population country_code_iso_2char:continent country_code_iso_2char:tld country_code_iso_2char:currency_code country_code_iso_2char:currency_name country_code_iso_2char:phone country_code_iso_2char:postal_code_format country_code_iso_2char:postal_code_regex country_code_iso_2char:languages country_code_iso_2char:languages@raw country_code_iso_2char:geoname_id country_code_iso_2char:neighbors country_code_iso_2char:neighbors@raw user region_code region_name region_id sub_region_code sub_region_name country_name user_country_code_1 user_country_code_2 country_code_iso_2char)"
+        ;;
+    aircraft)
+        _arguments \
+            "*:$help for aircraft:(_ __key__ __lno__ iata_code manufacturer model)"
         ;;
     stations)
         _arguments \
@@ -655,7 +675,7 @@ _hello() {
     case $state in
     base)
         _arguments \
-            "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_no_longer_valid postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
+            "*:base:(aircraft airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_no_longer_valid postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
         ;;
     fuzzy_value|exact_value|phonetic_value|trep_value|near_point|from_point)
         _arguments \
@@ -699,7 +719,7 @@ _hello() {
             ;;
         1)
             _arguments \
-                "*:base:(airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_no_longer_valid postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
+                "*:base:(aircraft airlines airports cabins capitals cities continents countries currencies feature_classes feature_codes feed geonames_FR geonames_MC languages locales location_types ori_por ori_por_no_longer_valid postal_codes_FR postal_codes_MC regions stations stations_nls stations_uic timezones)"
             ;;
         *)
             _arguments \
