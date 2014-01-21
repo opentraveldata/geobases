@@ -181,7 +181,7 @@ class GeoBase(VisualMixin):
         No geocode support, skipping grid...
         >>> geo_c = GeoBase(data='odd')
         Traceback (most recent call last):
-        ValueError: Wrong data type "odd". Not in ['airlines', ...]
+        ValueError: Wrong data type "odd". Not in ['aircraft', ...]
 
         Import some custom data.
 
