@@ -216,6 +216,7 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="ori\_por"* will load a local version of
    `this file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`_,
    this is the most complete source for airports, use it!
+-  *data="aircraft"* will use OpenTravelData as data source for aircraft
 -  *data="airports"* will use geonames as data source for airports
 -  *data="stations"* will use RFF data, from `the open data
    website <http://www.data.gouv.fr>`_, as data source for french train
@@ -227,6 +228,7 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="countries"* will load data on countries
 -  *data="capitals"* will load data on countries capitals
 -  *data="continents"* will load data on continents
+-  *data="regions"* will load data on regions
 -  *data="timezones"* will load data on timezones
 -  *data="languages"* will load data on languages
 -  *data="cities"* will load data on cities, extracted from geonames
