@@ -213,7 +213,7 @@ AQ	Antarctica/Vostok	6.0	6.0	6.0
 SJ	Arctic/Longyearbyen	1.0	2.0	1.0
 YE	Asia/Aden	3.0	3.0	3.0
 KZ	Asia/Almaty	6.0	6.0	6.0
-JO	Asia/Amman	3.0	3.0	3.0
+JO	Asia/Amman	2.0	3.0	2.0
 RU	Asia/Anadyr	12.0	12.0	12.0
 KZ	Asia/Aqtau	5.0	5.0	5.0
 KZ	Asia/Aqtobe	5.0	5.0	5.0
