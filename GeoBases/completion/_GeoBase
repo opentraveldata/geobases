@@ -76,7 +76,7 @@ _headers() {
         ;;
     airlines)
         _arguments \
-            "*:$help for airlines:(_ __head__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+            "*:$help for airlines:(_ __head__ pk env_id validity_from validity_to 3char_code 2char_code num_code name name2 alliance_code alliance_status type wiki_link flt_freq)"
         ;;
     cabins)
         _arguments \
@@ -194,7 +194,7 @@ _key_fields() {
         ;;
     airlines)
         _arguments \
-            "*:$help for airlines:(_ __none__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+            "*:$help for airlines:(_ __none__ pk env_id validity_from validity_to 3char_code 2char_code num_code name name2 alliance_code alliance_status type wiki_link flt_freq)"
         ;;
     cabins)
         _arguments \
@@ -312,7 +312,7 @@ _fields() {
         ;;
     airlines)
         _arguments \
-            "*:$help for airlines:(_ __key__ __lno__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+            "*:$help for airlines:(_ __key__ __lno__ pk env_id validity_from validity_to 3char_code 2char_code num_code name name2 alliance_code alliance_status type wiki_link flt_freq)"
         ;;
     cabins)
         _arguments \
@@ -430,7 +430,7 @@ _fields_extended() {
         ;;
     airlines)
         _arguments \
-            "*:$help for airlines:(_ __none__ __key__ __lno__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+            "*:$help for airlines:(_ __none__ __key__ __lno__ pk env_id validity_from validity_to 3char_code 2char_code num_code name name2 alliance_code alliance_status type wiki_link flt_freq)"
         ;;
     cabins)
         _arguments \
@@ -548,7 +548,7 @@ _fields_and_join() {
         ;;
     airlines)
         _arguments \
-            "*:$help for airlines:(_ __key__ __lno__ unified_code 3char_code 2char_code num_code name name2 alliance_code alliance_status)"
+            "*:$help for airlines:(_ __key__ __lno__ pk env_id validity_from validity_to 3char_code 2char_code num_code name name2 alliance_code alliance_status type wiki_link flt_freq)"
         ;;
     cabins)
         _arguments \
