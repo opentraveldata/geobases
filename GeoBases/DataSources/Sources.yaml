@@ -358,11 +358,14 @@ airlines:
     paths     :
         - Airlines/ori_airlines.csv
         - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv'
-    key_fields: unified_code
+    key_fields: 2char_code
     delimiter : ^
     skip      : 1
     headers   :
-        - unified_code
+        - pk
+        - env_id
+        - validity_from
+        - validity_to
         - 3char_code
         - 2char_code
         - num_code
@@ -370,6 +373,9 @@ airlines:
         - name2
         - alliance_code
         - alliance_status
+        - type
+        - wiki_link
+        - flt_freq
 
 
 cabins:
