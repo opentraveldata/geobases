@@ -44,7 +44,11 @@ class GeoBaseTest(unittest.TestCase):
     def test_get(self):
         self.assertEqual(self.g.get('CDG', 'city_code_list'), ('PAR',))
         self.assertEqual(self.g.get('BVE', 'alt_name_section'),
-                         (('', 'Brive-Souillac', ''),))
+                         (('en', 'Brive\xe2\x80\x93Souillac Airport', 'p'),
+                          ('en', 'Brive\xe2\x80\x93Dordogne Valley Airport', ''),
+                          ('fr', 'A\xc3\xa9roport de Brive \xe2\x80\x93 Vall\xc3\xa9e de la Dordogne', '')))
+
+
 
 
     def test_distance(self):
