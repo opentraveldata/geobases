@@ -43,8 +43,12 @@ class GeoBaseTest(unittest.TestCase):
 
     def test_get(self):
         self.assertEqual(self.g.get('CDG', 'city_code_list'), ('PAR',))
-        self.assertEqual(self.g.get('BVE', 'alt_name_section'),
-                         (('', 'Brive-Souillac', ''),))
+
+        # Looking up BVE as an airport
+        keys = list(self.g.findWith([('iata_code', 'BVE'), ('location_type', ('A',))]))
+
+        self.assertEqual(self.g.get(keys[0][1], 'city_name_list'),
+                         ('Brive-la-Gaillarde',))
 
 
 
