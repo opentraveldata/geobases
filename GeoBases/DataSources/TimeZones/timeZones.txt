@@ -352,7 +352,7 @@ IT	Europe/Rome	1.0	2.0	1.0
 RU	Europe/Samara	4.0	4.0	4.0
 SM	Europe/San_Marino	1.0	2.0	1.0
 BA	Europe/Sarajevo	1.0	2.0	1.0
-UA	Europe/Simferopol	2.0	3.0	2.0
+UA	Europe/Simferopol	2.0	4.0	4.0
 MK	Europe/Skopje	1.0	2.0	1.0
 BG	Europe/Sofia	2.0	3.0	2.0
 SE	Europe/Stockholm	1.0	2.0	1.0
