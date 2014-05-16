@@ -146,7 +146,7 @@ GY	GUY	328	GY	Guyana	Georgetown	214970	748486	SA	.gy	GYD	Dollar	592			en-GY	3378
 HK	HKG	344	HK	Hong Kong	Hong Kong	1092	6898686	AS	.hk	HKD	Dollar	852			zh-HK,yue,zh,en	1819730		
 HM	HMD	334	HM	Heard Island and McDonald Islands		412	0	AN	.hm	AUD	Dollar	 				1547314		
 HN	HND	340	HO	Honduras	Tegucigalpa	112090	7989415	NA	.hn	HNL	Lempira	504	@@####	^([A-Z]{2}\d{4})$	es-HN	3608932	GT,NI,SV	
-HR	HRV	191	HR	Croatia	Zagreb	56542	4491000	EU	.hr	HRK	Kuna	385	HR-#####	^(?:HR)*(\d{5})$	hr-HR,sr	3202326	HU,SI,CS,BA,ME,RS	
+HR	HRV	191	HR	Croatia	Zagreb	56542	4491000	EU	.hr	HRK	Kuna	385	#####	^(?:HR)*(\d{5})$	hr-HR,sr	3202326	HU,SI,CS,BA,ME,RS	
 HT	HTI	332	HA	Haiti	Port-au-Prince	27750	9648924	NA	.ht	HTG	Gourde	509	HT####	^(?:HT)*(\d{4})$	ht,fr-HT	3723988	DO	
 HU	HUN	348	HU	Hungary	Budapest	93030	9982000	EU	.hu	HUF	Forint	36	####	^(\d{4})$	hu-HU	719819	SK,SI,RO,UA,CS,HR,AT,RS	
 ID	IDN	360	ID	Indonesia	Jakarta	1919440	242968342	AS	.id	IDR	Rupiah	62	#####	^(\d{5})$	id,en,nl,jv	1643084	PG,TL,MY	
@@ -168,7 +168,7 @@ KG	KGZ	417	KG	Kyrgyzstan	Bishkek	198500	5508626	AS	.kg	KGS	Som	996	######	^(\d{6
 KH	KHM	116	CB	Cambodia	Phnom Penh	181040	14453680	AS	.kh	KHR	Riels	855	#####	^(\d{5})$	km,fr,en	1831722	LA,TH,VN	
 KI	KIR	296	KR	Kiribati	Tarawa	811	92533	OC	.ki	AUD	Dollar	686			en-KI,gil	4030945		
 KM	COM	174	CN	Comoros	Moroni	2170	773407	AF	.km	KMF	Franc	269			ar,fr-KM	921929		
-KN	KNA	659	SC	Saint Kitts and Nevis	Basseterre	261	49898	NA	.kn	XCD	Dollar	+1-869			en-KN	3575174		
+KN	KNA	659	SC	Saint Kitts and Nevis	Basseterre	261	51134	NA	.kn	XCD	Dollar	+1-869			en-KN	3575174		
 KP	PRK	408	KN	North Korea	Pyongyang	120540	22912177	AS	.kp	KPW	Won	850	###-###	^(\d{6})$	ko-KP	1873107	CN,KR,RU	
 KR	KOR	410	KS	South Korea	Seoul	98480	48422644	AS	.kr	KRW	Won	82	SEOUL ###-###	^(?:SEOUL)*(\d{6})$	ko-KR,en	1835841	KP	
 XK	XKX	0	KV	Kosovo	Pristina		1800000	EU		EUR	Euro				sq,sr	831053	RS,AL,MK,ME	
@@ -184,7 +184,7 @@ LR	LBR	430	LI	Liberia	Monrovia	111370	3685076	AF	.lr	LRD	Dollar	231	####	^(\d{4}
 LS	LSO	426	LT	Lesotho	Maseru	30355	1919552	AF	.ls	LSL	Loti	266	###	^(\d{3})$	en-LS,st,zu,xh	932692	ZA	
 LT	LTU	440	LH	Lithuania	Vilnius	65200	3565000	EU	.lt	LTL	Litas	370	LT-#####	^(?:LT)*(\d{5})$	lt,ru,pl	597427	PL,BY,RU,LV	
 LU	LUX	442	LU	Luxembourg	Luxembourg	2586	497538	EU	.lu	EUR	Euro	352	####	^(\d{4})$	lb,de-LU,fr-LU	2960313	DE,BE,FR	
-LV	LVA	428	LG	Latvia	Riga	64589	2217969	EU	.lv	LVL	Lat	371	LV-####	^(?:LV)*(\d{4})$	lv,ru,lt	458258	LT,EE,BY,RU	
+LV	LVA	428	LG	Latvia	Riga	64589	2217969	EU	.lv	EUR	Euro	371	LV-####	^(?:LV)*(\d{4})$	lv,ru,lt	458258	LT,EE,BY,RU	
 LY	LBY	434	LY	Libya	Tripolis	1759540	6461454	AF	.ly	LYD	Dinar	218			ar-LY,it,en	2215636	TD,NE,DZ,SD,TN,EG	
 MA	MAR	504	MO	Morocco	Rabat	446550	31627428	AF	.ma	MAD	Dirham	212	#####	^(\d{5})$	ar-MA,fr	2542007	DZ,EH,ES	
 MC	MCO	492	MN	Monaco	Monaco	1.95	32965	EU	.mc	EUR	Euro	377	#####	^(\d{5})$	fr-MC,en,it	2993457	FR	
@@ -193,7 +193,7 @@ ME	MNE	499	MJ	Montenegro	Podgorica	14026	666730	EU	.me	EUR	Euro	382	#####	^(\d{5
 MF	MAF	663	RN	Saint Martin	Marigot	53	35925	NA	.gp	EUR	Euro	590	### ###		fr	3578421	SX	
 MG	MDG	450	MA	Madagascar	Antananarivo	587040	21281844	AF	.mg	MGA	Ariary	261	###	^(\d{3})$	fr-MG,mg	1062947		
 MH	MHL	584	RM	Marshall Islands	Majuro	181.3	65859	OC	.mh	USD	Dollar	692			mh,en-MH	2080185		
-MK	MKD	807	MK	Macedonia	Skopje	25333	2061000	EU	.mk	MKD	Denar	389	####	^(\d{4})$	mk,sq,tr,rmm,sr	718075	AL,GR,CS,BG,RS,XK	
+MK	MKD	807	MK	Macedonia	Skopje	25333	 2062294	EU	.mk	MKD	Denar	389	####	^(\d{4})$	mk,sq,tr,rmm,sr	718075	AL,GR,CS,BG,RS,XK	
 ML	MLI	466	ML	Mali	Bamako	1240000	13796354	AF	.ml	XOF	Franc	223			fr-ML,bm	2453866	SN,NE,DZ,CI,GN,MR,BF	
 MM	MMR	104	BM	Myanmar	Nay Pyi Taw	678500	53414374	AS	.mm	MMK	Kyat	95	#####	^(\d{5})$	my	1327865	CN,LA,TH,BD,IN	
 MN	MNG	496	MG	Mongolia	Ulan Bator	1565000	3086918	AS	.mn	MNT	Tugrik	976	######	^(\d{6})$	mn,ru	2029969	CN,RU	
@@ -212,7 +212,7 @@ MZ	MOZ	508	MZ	Mozambique	Maputo	801590	22061451	AF	.mz	MZN	Metical	258	####	^(\d
 NA	NAM	516	WA	Namibia	Windhoek	825418	2128471	AF	.na	NAD	Dollar	264			en-NA,af,de,hz,naq	3355338	ZA,BW,ZM,AO	
 NC	NCL	540	NC	New Caledonia	Noumea	19060	216494	OC	.nc	XPF	Franc	687	#####	^(\d{5})$	fr-NC	2139685		
 NE	NER	562	NG	Niger	Niamey	1267000	15878271	AF	.ne	XOF	Franc	227	####	^(\d{4})$	fr-NE,ha,kr,dje	2440476	TD,BJ,DZ,LY,BF,NG,ML	
-NF	NFK	574	NF	Norfolk Island	Kingston	34.6	1828	OC	.nf	AUD	Dollar	672			en-NF	2155115		
+NF	NFK	574	NF	Norfolk Island	Kingston	34.6	1828	OC	.nf	AUD	Dollar	672	####	^(\d{4})$	en-NF	2155115		
 NG	NGA	566	NI	Nigeria	Abuja	923768	154000000	AF	.ng	NGN	Naira	234	######	^(\d{6})$	en-NG,ha,yo,ig,ff	2328926	TD,NE,BJ,CM	
 NI	NIC	558	NU	Nicaragua	Managua	129494	5995928	NA	.ni	NIO	Cordoba	505	###-###-#	^(\d{7})$	es-NI,en	3617476	CR,HN	
 NL	NLD	528	NL	Netherlands	Amsterdam	41526	16645000	EU	.nl	EUR	Euro	31	#### @@	^(\d{4}[A-Z]{2})$	nl-NL,fy-NL	2750405	DE,BE	
@@ -247,12 +247,12 @@ SB	SLB	090	BP	Solomon Islands	Honiara	28450	559198	OC	.sb	SBD	Dollar	677			en-SB
 SC	SYC	690	SE	Seychelles	Victoria	455	88340	AF	.sc	SCR	Rupee	248			en-SC,fr-SC	241170		
 SD	SDN	729	SU	Sudan	Khartoum	1861484	35000000	AF	.sd	SDG	Pound	249	#####	^(\d{5})$	ar-SD,en,fia	366755	SS,TD,EG,ET,ER,LY,CF	
 SS	SSD	728	OD	South Sudan	Juba	644329	8260490	AF		SSP	Pound	211			en	7909807	CD,CF,ET,KE,SD,UG,	
-SE	SWE	752	SW	Sweden	Stockholm	449964	9555893	EU	.se	SEK	Krona	46	SE-### ##	^(?:SE)*(\d{5})$	sv-SE,se,sma,fi-SE	2661886	NO,FI	
+SE	SWE	752	SW	Sweden	Stockholm	449964	9555893	EU	.se	SEK	Krona	46	### ##	^(?:SE)*(\d{5})$	sv-SE,se,sma,fi-SE	2661886	NO,FI	
 SG	SGP	702	SN	Singapore	Singapur	692.7	4701069	AS	.sg	SGD	Dollar	65	######	^(\d{6})$	cmn,en-SG,ms-SG,ta-SG,zh-SG	1880251		
 SH	SHN	654	SH	Saint Helena	Jamestown	410	7460	AF	.sh	SHP	Pound	290	STHL 1ZZ	^(STHL1ZZ)$	en-SH	3370751		
-SI	SVN	705	SI	Slovenia	Ljubljana	20273	2007000	EU	.si	EUR	Euro	386	SI- ####	^(?:SI)*(\d{4})$	sl,sh	3190538	HU,IT,HR,AT	
+SI	SVN	705	SI	Slovenia	Ljubljana	20273	2007000	EU	.si	EUR	Euro	386	####	^(?:SI)*(\d{4})$	sl,sh	3190538	HU,IT,HR,AT	
 SJ	SJM	744	SV	Svalbard and Jan Mayen	Longyearbyen	62049	2550	EU	.sj	NOK	Krone	47			no,ru	607072		
-SK	SVK	703	LO	Slovakia	Bratislava	48845	5455000	EU	.sk	EUR	Euro	421	###  ##	^(\d{5})$	sk,hu	3057568	PL,HU,CZ,UA,AT	
+SK	SVK	703	LO	Slovakia	Bratislava	48845	5455000	EU	.sk	EUR	Euro	421	### ##	^(\d{5})$	sk,hu	3057568	PL,HU,CZ,UA,AT	
 SL	SLE	694	SL	Sierra Leone	Freetown	71740	5245695	AF	.sl	SLL	Leone	232			en-SL,men,tem	2403846	LR,GN	
 SM	SMR	674	SM	San Marino	San Marino	61.2	31477	EU	.sm	EUR	Euro	378	4789#	^(4789\d)$	it-SM	3168068	IT	
 SN	SEN	686	SG	Senegal	Dakar	196190	12323252	AF	.sn	XOF	Franc	221	#####	^(\d{5})$	fr-SN,wo,fuc,mnk	2245662	GN,MR,GW,GM,ML	
@@ -285,11 +285,11 @@ UM	UMI	581		United States Minor Outlying Islands		0	0	OC	.um	USD	Dollar 	1			en-
 US	USA	840	US	United States	Washington	9629091	310232863	NA	.us	USD	Dollar	1	#####-####	^\d{5}(-\d{4})?$	en-US,es-US,haw,fr	6252001	CA,MX,CU	
 UY	URY	858	UY	Uruguay	Montevideo	176220	3477000	SA	.uy	UYU	Peso	598	#####	^(\d{5})$	es-UY	3439705	BR,AR	
 UZ	UZB	860	UZ	Uzbekistan	Tashkent	447400	27865738	AS	.uz	UZS	Som	998	######	^(\d{6})$	uz,ru,tg	1512440	TM,AF,KG,TJ,KZ	
-VA	VAT	336	VT	Vatican	Vatican City	0.44	921	EU	.va	EUR	Euro	379			la,it,fr	3164670	IT	
+VA	VAT	336	VT	Vatican	Vatican City	0.44	921	EU	.va	EUR	Euro	379	#####	^(\d{5})$	la,it,fr	3164670	IT	
 VC	VCT	670	VC	Saint Vincent and the Grenadines	Kingstown	389	104217	NA	.vc	XCD	Dollar	+1-784			en-VC,fr	3577815		
 VE	VEN	862	VE	Venezuela	Caracas	912050	27223228	SA	.ve	VEF	Bolivar	58	####	^(\d{4})$	es-VE	3625428	GY,BR,CO	
 VG	VGB	092	VI	British Virgin Islands	Road Town	153	21730	NA	.vg	USD	Dollar	+1-284			en-VG	3577718		
-VI	VIR	850	VQ	U.S. Virgin Islands	Charlotte Amalie	352	108708	NA	.vi	USD	Dollar	+1-340			en-VI	4796775		
+VI	VIR	850	VQ	U.S. Virgin Islands	Charlotte Amalie	352	108708	NA	.vi	USD	Dollar	+1-340	#####-####	^\d{5}(-\d{4})?$	en-VI	4796775		
 VN	VNM	704	VM	Vietnam	Hanoi	329560	89571130	AS	.vn	VND	Dong	84	######	^(\d{6})$	vi,en,fr,zh,km	1562822	CN,LA,KH	
 VU	VUT	548	NH	Vanuatu	Port Vila	12200	221552	OC	.vu	VUV	Vatu	678			bi,en-VU,fr-VU	2134431		
 WF	WLF	876	WF	Wallis and Futuna	Mata Utu	274	16025	OC	.wf	XPF	Franc	681	#####	^(986\d{2})$	wls,fud,fr-WF	4034749		
