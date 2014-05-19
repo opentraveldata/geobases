@@ -193,7 +193,7 @@ ME	MNE	499	MJ	Montenegro	Podgorica	14026	666730	EU	.me	EUR	Euro	382	#####	^(\d{5
 MF	MAF	663	RN	Saint Martin	Marigot	53	35925	NA	.gp	EUR	Euro	590	### ###		fr	3578421	SX	
 MG	MDG	450	MA	Madagascar	Antananarivo	587040	21281844	AF	.mg	MGA	Ariary	261	###	^(\d{3})$	fr-MG,mg	1062947		
 MH	MHL	584	RM	Marshall Islands	Majuro	181.3	65859	OC	.mh	USD	Dollar	692			mh,en-MH	2080185		
-MK	MKD	807	MK	Macedonia	Skopje	25333	 2062294	EU	.mk	MKD	Denar	389	####	^(\d{4})$	mk,sq,tr,rmm,sr	718075	AL,GR,CS,BG,RS,XK	
+MK	MKD	807	MK	Macedonia	Skopje	25333	2062294	EU	.mk	MKD	Denar	389	####	^(\d{4})$	mk,sq,tr,rmm,sr	718075	AL,GR,CS,BG,RS,XK	
 ML	MLI	466	ML	Mali	Bamako	1240000	13796354	AF	.ml	XOF	Franc	223			fr-ML,bm	2453866	SN,NE,DZ,CI,GN,MR,BF	
 MM	MMR	104	BM	Myanmar	Nay Pyi Taw	678500	53414374	AS	.mm	MMK	Kyat	95	#####	^(\d{5})$	my	1327865	CN,LA,TH,BD,IN	
 MN	MNG	496	MG	Mongolia	Ulan Bator	1565000	3086918	AS	.mn	MNT	Tugrik	976	######	^(\d{6})$	mn,ru	2029969	CN,RU	
