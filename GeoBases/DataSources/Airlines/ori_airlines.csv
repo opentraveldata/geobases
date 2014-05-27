@@ -46,10 +46,10 @@ air-air-antilles-express^^^^^3S^875^Air Antilles Express^Air Antilles^^^^^6103
 air-air-arabia-egypt^^^^RBG^E5^844^Air Arabia Egypt^Samara Airl^^^^^2139
 air-air-arabia^^^^^G9^514^Air Arabia^^^^^^52124
 air-air-arabia-maroc^^^^^3O^452^Air Arabia Maroc^^^^^^6904
-air-air-armenia^^^^^QN^907^Air Armenia^^^^^^2345
+air-air-armenia^^^^^QN^907^Air Armenia^Air Armenia^^^^^2345
 air-air-asia^^^^AXM^AK^807^Air Asia^Air Asia^^^^^156698
 air-air-asia-indonesia^^^^AWQ^QZ^975^Indonesia Air Asia^Indair Asia^^^^^61450
-air-air-asia-japan^^^^^JW^842^Air Asia Japan^^^^^^3481
+air-air-asia-japan^^^^^JW^842^Vanilla Air^^^^^^3481
 air-air-asia-philippines^^^^^PQ^0^Airasia Philippines^Panafrican^^^^^1925
 air-air-asia-x^^^^XAX^D7^843^Air Asia X^Air Asia X^^^^^15356
 air-air-astana^^^^KZR^KC^465^Air Astana^Air Astana^^^^^35057
@@ -388,7 +388,7 @@ air-dauair^^^^DAE^D5^0^Dauair^Dauair^^^^^
 air-delta-air-lines^^^^DAL^DL^6^Delta Air Lines^Delta Air^Skyteam^Member^^^980957
 air-delta-connection^^^^DCP^DQ^521^Delta Connection^Coastal Air^^^^^
 air-denim-air^^^^DNM^J7^0^Denim Air^Centre Avia^^^^^231
-air-deta-air^^^^DET^DI^228^DETA Air^Dba^^^^^
+air-deta-air^^^^DET^DI^0^Cambodia Airlines^Dba^^^^^
 air-djibouti-air^^^^^DZ^893^Donghai Airlines^^^^^^1098
 air-djibouti-airlines^1^^2013-12-31^DJB^D8^0^Djibouti Airlines^^^^^^
 air-dniproavia^^^^UDN^Z6^181^Dniproavia^Dnieproavia^^^^^3082
@@ -415,7 +415,7 @@ air-easyjet-switzerland^^^^^DS^0^Easyjet Switzerland^^^^^^
 air-edelweiss-air^^^^EDW^WK^0^Edelweiss Air^Edelweiss Air^^^^^9297
 air-egyptair^^^^MSR^MS^77^Egyptair^Egyptair^Star Alliance^Member^^^90608
 air-el-al^^^^ELY^LY^114^El Al Israel Airlines^El Al^^^^^28134
-air-el-sol-de-america^^^^ESC^6S^612^El Sol De America^Kato Airlines^^^^^
+air-el-sol-de-america^^^^^6S^0^Kato Airlines^Kato Airlines^^^^^
 air-emirates^^^^UAE^EK^176^Emirates^Emirates^^^^^179470
 air-endeavor-air^^^^FLG^9E^430^Endeavor Air^Endeavor Air^^^^^285750
 air-equaflight-service^^^^^E7^965^Equaflight Service^Fly European^^^P^^419
