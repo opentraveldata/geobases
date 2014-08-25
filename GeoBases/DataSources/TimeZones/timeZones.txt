@@ -246,7 +246,7 @@ IL	Asia/Jerusalem	2.0	3.0	2.0
 AF	Asia/Kabul	4.5	4.5	4.5
 RU	Asia/Kamchatka	12.0	12.0	12.0
 PK	Asia/Karachi	5.0	5.0	5.0
-CN	Asia/Kashgar	8.0	8.0	8.0
+CN	Asia/Kashgar	6.0	6.0	6.0
 NP	Asia/Kathmandu	5.75	5.75	5.75
 RU	Asia/Khandyga	10.0	10.0	10.0
 IN	Asia/Kolkata	5.5	5.5	5.5
@@ -283,7 +283,7 @@ IR	Asia/Tehran	3.5	4.5	3.5
 BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
 MN	Asia/Ulaanbaatar	8.0	8.0	8.0
-CN	Asia/Urumqi	8.0	8.0	8.0
+CN	Asia/Urumqi	6.0	6.0	6.0
 RU	Asia/Ust-Nera	11.0	11.0	11.0
 LA	Asia/Vientiane	7.0	7.0	7.0
 RU	Asia/Vladivostok	11.0	11.0	11.0
