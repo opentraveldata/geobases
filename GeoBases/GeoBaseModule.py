@@ -1509,7 +1509,7 @@ class GeoBase(VisualMixin):
 
         >>> for n in geo_o.getFromAllDuplicates('ORY', 'name'):
         ...     print(n)
-        Paris\xe2\x80\x93Orly Airport
+        Paris Orly Airport
         >>> geo_o.getFromAllDuplicates('THA', 'name')
         ['Tullahoma Regional Airport/William Northern Field', 'Tullahoma']
 
