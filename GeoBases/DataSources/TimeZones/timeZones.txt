@@ -148,7 +148,6 @@ PM	America/Miquelon	-3.0	-2.0	-3.0
 CA	America/Moncton	-4.0	-3.0	-4.0
 MX	America/Monterrey	-6.0	-5.0	-6.0
 UY	America/Montevideo	-2.0	-3.0	-3.0
-CA	America/Montreal	-5.0	-4.0	-5.0
 MS	America/Montserrat	-4.0	-4.0	-4.0
 BS	America/Nassau	-5.0	-4.0	-5.0
 US	America/New_York	-5.0	-4.0	-5.0
@@ -179,7 +178,6 @@ CL	America/Santiago	-3.0	-4.0	-4.0
 DO	America/Santo_Domingo	-4.0	-4.0	-4.0
 BR	America/Sao_Paulo	-2.0	-3.0	-3.0
 GL	America/Scoresbysund	-1.0	0.0	-1.0
-US	America/Shiprock	-7.0	-6.0	-7.0
 US	America/Sitka	-9.0	-8.0	-9.0
 BL	America/St_Barthelemy	-4.0	-4.0	-4.0
 CA	America/St_Johns	-3.5	-2.5	-3.5
@@ -207,8 +205,8 @@ AQ	Antarctica/Mawson	5.0	5.0	5.0
 AQ	Antarctica/McMurdo	13.0	12.0	12.0
 AQ	Antarctica/Palmer	-3.0	-4.0	-4.0
 AQ	Antarctica/Rothera	-3.0	-3.0	-3.0
-AQ	Antarctica/South_Pole	13.0	12.0	12.0
 AQ	Antarctica/Syowa	3.0	3.0	3.0
+AQ	Antarctica/Troll	0.0	2.0	0.0
 AQ	Antarctica/Vostok	6.0	6.0	6.0
 SJ	Arctic/Longyearbyen	1.0	2.0	1.0
 YE	Asia/Aden	3.0	3.0	3.0
@@ -225,8 +223,8 @@ TH	Asia/Bangkok	7.0	7.0	7.0
 LB	Asia/Beirut	2.0	3.0	2.0
 KG	Asia/Bishkek	6.0	6.0	6.0
 BN	Asia/Brunei	8.0	8.0	8.0
+RU	Asia/Chita	10.0	10.0	8.0
 MN	Asia/Choibalsan	8.0	8.0	8.0
-CN	Asia/Chongqing	8.0	8.0	8.0
 LK	Asia/Colombo	5.5	5.5	5.5
 SY	Asia/Damascus	2.0	3.0	2.0
 BD	Asia/Dhaka	6.0	6.0	6.0
@@ -234,7 +232,6 @@ TL	Asia/Dili	9.0	9.0	9.0
 AE	Asia/Dubai	4.0	4.0	4.0
 TJ	Asia/Dushanbe	5.0	5.0	5.0
 PS	Asia/Gaza	2.0	3.0	2.0
-CN	Asia/Harbin	8.0	8.0	8.0
 PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
 HK	Asia/Hong_Kong	8.0	8.0	8.0
@@ -246,7 +243,6 @@ IL	Asia/Jerusalem	2.0	3.0	2.0
 AF	Asia/Kabul	4.5	4.5	4.5
 RU	Asia/Kamchatka	12.0	12.0	12.0
 PK	Asia/Karachi	5.0	5.0	5.0
-CN	Asia/Kashgar	6.0	6.0	6.0
 NP	Asia/Kathmandu	5.75	5.75	5.75
 RU	Asia/Khandyga	10.0	10.0	9.0
 IN	Asia/Kolkata	5.5	5.5	5.5
@@ -276,6 +272,7 @@ UZ	Asia/Samarkand	5.0	5.0	5.0
 KR	Asia/Seoul	9.0	9.0	9.0
 CN	Asia/Shanghai	8.0	8.0	8.0
 SG	Asia/Singapore	8.0	8.0	8.0
+RU	Asia/Srednekolymsk	12.0	12.0	11.0
 TW	Asia/Taipei	8.0	8.0	8.0
 UZ	Asia/Tashkent	5.0	5.0	5.0
 GE	Asia/Tbilisi	4.0	4.0	4.0
@@ -352,7 +349,7 @@ IT	Europe/Rome	1.0	2.0	1.0
 RU	Europe/Samara	4.0	4.0	4.0
 SM	Europe/San_Marino	1.0	2.0	1.0
 BA	Europe/Sarajevo	1.0	2.0	1.0
-UA	Europe/Simferopol	2.0	4.0	3.0
+RU	Europe/Simferopol	2.0	4.0	3.0
 MK	Europe/Skopje	1.0	2.0	1.0
 BG	Europe/Sofia	2.0	3.0	2.0
 SE	Europe/Stockholm	1.0	2.0	1.0
@@ -381,6 +378,7 @@ YT	Indian/Mayotte	3.0	3.0	3.0
 RE	Indian/Reunion	4.0	4.0	4.0
 WS	Pacific/Apia	14.0	13.0	13.0
 NZ	Pacific/Auckland	13.0	12.0	12.0
+PG	Pacific/Bougainville	10.0	10.0	10.0
 NZ	Pacific/Chatham	13.75	12.75	12.75
 FM	Pacific/Chuuk	10.0	10.0	10.0
 CL	Pacific/Easter	-5.0	-6.0	-6.0
