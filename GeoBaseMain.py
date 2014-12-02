@@ -513,21 +513,21 @@ def display_browser(templates, output_dir, nb_res, address, port):
             if nb_res <= TABLE_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
-                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                print '/!\\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (BROWSER, address, port, template, nb_res)
 
         elif template.endswith('_map.html'):
             if nb_res <= MAP_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
-                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                print '/!\\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (BROWSER, address, port, template, nb_res)
 
         elif template.endswith('_globe.html'):
             if nb_res <= GLOBE_BROWSER_LIM:
                 to_be_launched.append(template)
             else:
-                print '/!\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
+                print '/!\\ "%s %s:%s/%s" not launched automatically. %s results, may be slow.' % \
                         (BROWSER, address, port, template, nb_res)
         else:
             to_be_launched.append(template)
@@ -899,11 +899,11 @@ def warn(name, *args):
     Display a warning on stderr.
     """
     if name == 'key':
-        print >> sys.stderr, '/!\ Key %s was not in base, for data "%s" and source %s' % \
+        print >> sys.stderr, '/!\\ Key %s was not in base, for data "%s" and source %s' % \
                 (args[0], args[1], args[2])
 
     if name == 'installation':
-        print >> sys.stderr, '/!\ %s is not installed, no package information available.' % \
+        print >> sys.stderr, '/!\\ %s is not installed, no package information available.' % \
                 args[0]
 
 
@@ -913,45 +913,45 @@ def error(name, *args):
     First argument is the error type.
     """
     if name == 'trep_support':
-        print >> sys.stderr, '\n/!\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.'
+        print >> sys.stderr, '\n/!\\ No opentrep support. Check if OpenTrepWrapper can import libpyopentrep.'
 
     elif name == 'geocode_support':
-        print >> sys.stderr, '\n/!\ No geocoding support for data type %s.' % args[0]
+        print >> sys.stderr, '\n/!\\ No geocoding support for data type %s.' % args[0]
 
     elif name == 'data':
-        print >> sys.stderr, '\n/!\ Wrong data type "%s". You may select:' % args[0]
+        print >> sys.stderr, '\n/!\\ Wrong data type "%s". You may select:' % args[0]
         for p in build_pairs(args[1]):
             print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'field':
-        print >> sys.stderr, '\n/!\ Wrong field "%s".' % args[0]
+        print >> sys.stderr, '\n/!\\ Wrong field "%s".' % args[0]
         print >> sys.stderr, 'For data type "%s", you may select:' % args[1]
         for p in build_pairs(args[2]):
             print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'geocode_format':
-        print >> sys.stderr, '\n/!\ Bad geocode format: %s' % args[0]
+        print >> sys.stderr, '\n/!\\ Bad geocode format: %s' % args[0]
 
     elif name == 'geocode_unknown':
-        print >> sys.stderr, '\n/!\ Geocode was unknown for %s' % args[0]
+        print >> sys.stderr, '\n/!\\ Geocode was unknown for %s' % args[0]
 
     elif name == 'empty_stdin':
-        print >> sys.stderr, '\n/!\ Stdin was empty'
+        print >> sys.stderr, '\n/!\\ Stdin was empty'
 
     elif name == 'wrong_value':
-        print >> sys.stderr, '\n/!\ Wrong value "%s", should be in:' % args[0]
+        print >> sys.stderr, '\n/!\\ Wrong value "%s", should be in:' % args[0]
         for p in build_pairs(args[1]):
             print >> sys.stderr, '\t%-20s\t%-20s' % p
 
     elif name == 'type':
-        print >> sys.stderr, '\n/!\ Wrong type for "%s", should be %s, but was "%s".' % \
+        print >> sys.stderr, '\n/!\\ Wrong type for "%s", should be %s, but was "%s".' % \
                 (args[0], args[1], args[2])
 
     elif name == 'aborting':
-        print >> sys.stderr, '\n\n/!\ %s' % args[0]
+        print >> sys.stderr, '\n\n/!\\ %s' % args[0]
 
     elif name == 'not_allowed':
-        print >> sys.stderr, '\n/!\ Value "%s" not allowed.' % args[0]
+        print >> sys.stderr, '\n/!\\ Value "%s" not allowed.' % args[0]
 
     exit(1)
 
@@ -960,7 +960,7 @@ def panic_mode():
     """Panic mode.
     """
     # Here we have a broken source file
-    print '\n/!\ Source file seems broken.\n'
+    print '\n/!\\ Source file seems broken.\n'
 
     try:
         restore = ask_till_ok('Restore file %s\nFrom origin  %s [yN]? ' % \
@@ -1669,7 +1669,7 @@ def admin_path(ref_path, source, questions, verbose):
     if path['file'].endswith('.zip'):
         extract = ask_till_ok(questions['extract'],
                               is_ok = lambda r: r,
-                              fail_message='-/!\- Cannot be empty',
+                              fail_message='-/!\\- Cannot be empty',
                               prefill=ref_path.get('extract', ''))
 
         path['extract'] = extract
@@ -1693,7 +1693,7 @@ def admin_path(ref_path, source, questions, verbose):
     filename = S_MANAGER.handle_path(path, source, verbose=verbose)
 
     if filename is None:
-        print '/!\ An error occurred when handling "%s".' % str(path)
+        print '/!\\ An error occurred when handling "%s".' % str(path)
         return None, None
 
     use_cached = ask_till_ok(questions['copy_2'] % (op.basename(filename), S_MANAGER.cache_dir),
@@ -1856,14 +1856,14 @@ def admin_mode(admin, with_hints=True, verbose=True):
             two_col_print(sorted(S_MANAGER))
             source_name = ask_till_ok(questions['source'],
                                       is_ok = lambda r: r,
-                                      fail_message='-/!\- Cannot be empty')
+                                      fail_message='-/!\\- Cannot be empty')
         else:
             # add
             if with_hints:
                 print hints['source']
             source_name = ask_till_ok(questions['source'],
                                       is_ok = lambda r: r,
-                                      fail_message='-/!\- Cannot be empty')
+                                      fail_message='-/!\\- Cannot be empty')
     else:
         source_name = admin[1]
 
@@ -2191,18 +2191,18 @@ def ask_mode():
         field = ask_till_ok(questions['field'], sorted(S_MANAGER.get(base)['headers']), prefill='name')
         value = ask_till_ok(questions['value'],
                             is_ok = lambda r: r,
-                            fail_message='-/!\- Cannot be empty')
+                            fail_message='-/!\\- Cannot be empty')
 
     elif search in ['near']:
         value = ask_till_ok(questions['point'],
                             is_ok = lambda r: r,
-                            fail_message='-/!\- Cannot be empty')
+                            fail_message='-/!\\- Cannot be empty')
         radius = ask_input(questions['radius'], prefill='50').strip()
 
     elif search in ['closest']:
         value = ask_till_ok(questions['point'],
                             is_ok = lambda r: r,
-                            fail_message='-/!\- Cannot be empty')
+                            fail_message='-/!\\- Cannot be empty')
         limit = ask_input(questions['limit'], prefill='5').strip()
 
     # 5. Display
@@ -2968,7 +2968,7 @@ def main():
             frontend = 'terminal'
             res = res[:DEF_NUM_COL]
 
-            print '/!\ Map template not rendered. Switching to terminal frontend...'
+            print '/!\\ Map template not rendered. Switching to terminal frontend...'
 
 
     if frontend == 'graph':
