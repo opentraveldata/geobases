@@ -1,4 +1,4 @@
-CountryCode	TimeZoneId	GMT offset 1. Jan 2014	DST offset 1. Jul 2014	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2015	DST offset 1. Jul 2015	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -105,7 +105,7 @@ BR	America/Fortaleza	-3.0	-3.0	-3.0
 CA	America/Glace_Bay	-4.0	-3.0	-4.0
 GL	America/Godthab	-3.0	-2.0	-3.0
 CA	America/Goose_Bay	-4.0	-3.0	-4.0
-TC	America/Grand_Turk	-5.0	-4.0	-4.0
+TC	America/Grand_Turk	-4.0	-4.0	-4.0
 GD	America/Grenada	-4.0	-4.0	-4.0
 GP	America/Guadeloupe	-4.0	-4.0	-4.0
 GT	America/Guatemala	-6.0	-6.0	-6.0
@@ -223,7 +223,7 @@ TH	Asia/Bangkok	7.0	7.0	7.0
 LB	Asia/Beirut	2.0	3.0	2.0
 KG	Asia/Bishkek	6.0	6.0	6.0
 BN	Asia/Brunei	8.0	8.0	8.0
-RU	Asia/Chita	10.0	10.0	8.0
+RU	Asia/Chita	8.0	8.0	8.0
 MN	Asia/Choibalsan	8.0	8.0	8.0
 LK	Asia/Colombo	5.5	5.5	5.5
 SY	Asia/Damascus	2.0	3.0	2.0
@@ -236,7 +236,7 @@ PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
 HK	Asia/Hong_Kong	8.0	8.0	8.0
 MN	Asia/Hovd	7.0	7.0	7.0
-RU	Asia/Irkutsk	9.0	9.0	8.0
+RU	Asia/Irkutsk	8.0	8.0	8.0
 ID	Asia/Jakarta	7.0	7.0	7.0
 ID	Asia/Jayapura	9.0	9.0	9.0
 IL	Asia/Jerusalem	2.0	3.0	2.0
@@ -244,21 +244,21 @@ AF	Asia/Kabul	4.5	4.5	4.5
 RU	Asia/Kamchatka	12.0	12.0	12.0
 PK	Asia/Karachi	5.0	5.0	5.0
 NP	Asia/Kathmandu	5.75	5.75	5.75
-RU	Asia/Khandyga	10.0	10.0	9.0
+RU	Asia/Khandyga	9.0	9.0	9.0
 IN	Asia/Kolkata	5.5	5.5	5.5
-RU	Asia/Krasnoyarsk	8.0	8.0	7.0
+RU	Asia/Krasnoyarsk	7.0	7.0	7.0
 MY	Asia/Kuala_Lumpur	8.0	8.0	8.0
 MY	Asia/Kuching	8.0	8.0	8.0
 KW	Asia/Kuwait	3.0	3.0	3.0
 MO	Asia/Macau	8.0	8.0	8.0
-RU	Asia/Magadan	12.0	12.0	10.0
+RU	Asia/Magadan	10.0	10.0	10.0
 ID	Asia/Makassar	8.0	8.0	8.0
 PH	Asia/Manila	8.0	8.0	8.0
 OM	Asia/Muscat	4.0	4.0	4.0
 CY	Asia/Nicosia	2.0	3.0	2.0
 RU	Asia/Novokuznetsk	7.0	7.0	7.0
-RU	Asia/Novosibirsk	7.0	7.0	6.0
-RU	Asia/Omsk	7.0	7.0	6.0
+RU	Asia/Novosibirsk	6.0	6.0	6.0
+RU	Asia/Omsk	6.0	6.0	6.0
 KZ	Asia/Oral	5.0	5.0	5.0
 KH	Asia/Phnom_Penh	7.0	7.0	7.0
 ID	Asia/Pontianak	7.0	7.0	7.0
@@ -267,12 +267,12 @@ QA	Asia/Qatar	3.0	3.0	3.0
 KZ	Asia/Qyzylorda	6.0	6.0	6.0
 MM	Asia/Rangoon	6.5	6.5	6.5
 SA	Asia/Riyadh	3.0	3.0	3.0
-RU	Asia/Sakhalin	11.0	11.0	10.0
+RU	Asia/Sakhalin	10.0	10.0	10.0
 UZ	Asia/Samarkand	5.0	5.0	5.0
 KR	Asia/Seoul	9.0	9.0	9.0
 CN	Asia/Shanghai	8.0	8.0	8.0
 SG	Asia/Singapore	8.0	8.0	8.0
-RU	Asia/Srednekolymsk	12.0	12.0	11.0
+RU	Asia/Srednekolymsk	11.0	11.0	11.0
 TW	Asia/Taipei	8.0	8.0	8.0
 UZ	Asia/Tashkent	5.0	5.0	5.0
 GE	Asia/Tbilisi	4.0	4.0	4.0
@@ -281,11 +281,11 @@ BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
 MN	Asia/Ulaanbaatar	8.0	8.0	8.0
 CN	Asia/Urumqi	6.0	6.0	6.0
-RU	Asia/Ust-Nera	11.0	11.0	10.0
+RU	Asia/Ust-Nera	10.0	10.0	10.0
 LA	Asia/Vientiane	7.0	7.0	7.0
-RU	Asia/Vladivostok	11.0	11.0	10.0
-RU	Asia/Yakutsk	10.0	10.0	9.0
-RU	Asia/Yekaterinburg	6.0	6.0	5.0
+RU	Asia/Vladivostok	10.0	10.0	10.0
+RU	Asia/Yakutsk	9.0	9.0	9.0
+RU	Asia/Yekaterinburg	5.0	5.0	5.0
 AM	Asia/Yerevan	4.0	4.0	4.0
 PT	Atlantic/Azores	-1.0	0.0	-1.0
 BM	Atlantic/Bermuda	-4.0	-3.0	-4.0
@@ -328,7 +328,7 @@ FI	Europe/Helsinki	2.0	3.0	2.0
 IM	Europe/Isle_of_Man	0.0	1.0	0.0
 TR	Europe/Istanbul	2.0	3.0	2.0
 JE	Europe/Jersey	0.0	1.0	0.0
-RU	Europe/Kaliningrad	3.0	3.0	2.0
+RU	Europe/Kaliningrad	2.0	2.0	2.0
 UA	Europe/Kiev	2.0	3.0	2.0
 PT	Europe/Lisbon	0.0	1.0	0.0
 SI	Europe/Ljubljana	1.0	2.0	1.0
@@ -339,7 +339,7 @@ MT	Europe/Malta	1.0	2.0	1.0
 AX	Europe/Mariehamn	2.0	3.0	2.0
 BY	Europe/Minsk	3.0	3.0	3.0
 MC	Europe/Monaco	1.0	2.0	1.0
-RU	Europe/Moscow	4.0	4.0	3.0
+RU	Europe/Moscow	3.0	3.0	3.0
 NO	Europe/Oslo	1.0	2.0	1.0
 FR	Europe/Paris	1.0	2.0	1.0
 ME	Europe/Podgorica	1.0	2.0	1.0
@@ -349,7 +349,7 @@ IT	Europe/Rome	1.0	2.0	1.0
 RU	Europe/Samara	4.0	4.0	4.0
 SM	Europe/San_Marino	1.0	2.0	1.0
 BA	Europe/Sarajevo	1.0	2.0	1.0
-RU	Europe/Simferopol	2.0	4.0	3.0
+RU	Europe/Simferopol	3.0	3.0	3.0
 MK	Europe/Skopje	1.0	2.0	1.0
 BG	Europe/Sofia	2.0	3.0	2.0
 SE	Europe/Stockholm	1.0	2.0	1.0
@@ -360,7 +360,7 @@ LI	Europe/Vaduz	1.0	2.0	1.0
 VA	Europe/Vatican	1.0	2.0	1.0
 AT	Europe/Vienna	1.0	2.0	1.0
 LT	Europe/Vilnius	2.0	3.0	2.0
-RU	Europe/Volgograd	4.0	4.0	3.0
+RU	Europe/Volgograd	3.0	3.0	3.0
 PL	Europe/Warsaw	1.0	2.0	1.0
 HR	Europe/Zagreb	1.0	2.0	1.0
 UA	Europe/Zaporozhye	2.0	3.0	2.0
@@ -378,7 +378,7 @@ YT	Indian/Mayotte	3.0	3.0	3.0
 RE	Indian/Reunion	4.0	4.0	4.0
 WS	Pacific/Apia	14.0	13.0	13.0
 NZ	Pacific/Auckland	13.0	12.0	12.0
-PG	Pacific/Bougainville	10.0	10.0	10.0
+PG	Pacific/Bougainville	11.0	11.0	11.0
 NZ	Pacific/Chatham	13.75	12.75	12.75
 FM	Pacific/Chuuk	10.0	10.0	10.0
 CL	Pacific/Easter	-5.0	-6.0	-6.0
