@@ -7,6 +7,7 @@ A	ADM3H	historical third-order administrative division	a former third-order admi
 A	ADM4	fourth-order administrative division	a subdivision of a third-order administrative division
 A	ADM4H	historical fourth-order administrative division	a former fourth-order administrative division
 A	ADM5	fifth-order administrative division	a subdivision of a fourth-order administrative division
+A	ADM5H	historical fifth-order administrative division	a former fifth-order administrative division
 A	ADMD	administrative division	an administrative division of a country, undifferentiated as to administrative level
 A	ADMDH	historical administrative division 	a former administrative division of a political entity, undifferentiated as to administrative level
 A	LTER	leased area	a tract of land leased to another country, usually for military installations
@@ -253,7 +254,7 @@ S	AIRH	heliport	a place where helicopters land and take off
 S	AIRP	airport	a place where aircraft regularly land and take off, with runways, navigational aids, and major facilities for the commercial handling of passengers and cargo
 S	AIRQ	abandoned airfield	
 S	AMTH	amphitheater	an oval or circular structure with rising tiers of seats about a stage or open space
-S	ANS	ancient site	a place where archeological remains, old structures, or cultural artifacts are located
+S	ANS	archaeological/prehistoric site	a place where archeological remains, old structures, or cultural artifacts are located
 S	AQC	aquaculture facility	facility or area for the cultivation of aquatic animals and plants, especially fish, shellfish, and seaweed, in natural or controlled marine or freshwater environments; underwater agriculture
 S	ARCH	arch	a natural or man-made structure in the form of an arch
 S	ASTR	astronomical station	a point on the earth whose position has been determined by observations of celestial bodies

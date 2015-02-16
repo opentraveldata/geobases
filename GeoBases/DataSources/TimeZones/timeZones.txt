@@ -82,7 +82,7 @@ CO	America/Bogota	-5.0	-5.0	-5.0
 US	America/Boise	-7.0	-6.0	-7.0
 CA	America/Cambridge_Bay	-7.0	-6.0	-7.0
 BR	America/Campo_Grande	-3.0	-4.0	-4.0
-MX	America/Cancun	-6.0	-5.0	-6.0
+MX	America/Cancun	-6.0	-5.0	-5.0
 VE	America/Caracas	-4.5	-4.5	-4.5
 GF	America/Cayenne	-3.0	-3.0	-3.0
 KY	America/Cayman	-5.0	-5.0	-5.0
@@ -105,7 +105,7 @@ BR	America/Fortaleza	-3.0	-3.0	-3.0
 CA	America/Glace_Bay	-4.0	-3.0	-4.0
 GL	America/Godthab	-3.0	-2.0	-3.0
 CA	America/Goose_Bay	-4.0	-3.0	-4.0
-TC	America/Grand_Turk	-4.0	-4.0	-4.0
+TC	America/Grand_Turk	-5.0	-4.0	-5.0
 GD	America/Grenada	-4.0	-4.0	-4.0
 GP	America/Guadeloupe	-4.0	-4.0	-4.0
 GT	America/Guatemala	-6.0	-6.0	-6.0
@@ -174,7 +174,7 @@ CA	America/Resolute	-6.0	-5.0	-6.0
 BR	America/Rio_Branco	-5.0	-5.0	-5.0
 MX	America/Santa_Isabel	-8.0	-7.0	-8.0
 BR	America/Santarem	-3.0	-3.0	-3.0
-CL	America/Santiago	-3.0	-4.0	-4.0
+CL	America/Santiago	-3.0	-3.0	-4.0
 DO	America/Santo_Domingo	-4.0	-4.0	-4.0
 BR	America/Sao_Paulo	-2.0	-3.0	-3.0
 GL	America/Scoresbysund	-1.0	0.0	-1.0
@@ -203,7 +203,7 @@ AQ	Antarctica/DumontDUrville	10.0	10.0	10.0
 AU	Antarctica/Macquarie	11.0	11.0	11.0
 AQ	Antarctica/Mawson	5.0	5.0	5.0
 AQ	Antarctica/McMurdo	13.0	12.0	12.0
-AQ	Antarctica/Palmer	-3.0	-4.0	-4.0
+AQ	Antarctica/Palmer	-3.0	-3.0	-4.0
 AQ	Antarctica/Rothera	-3.0	-3.0	-3.0
 AQ	Antarctica/Syowa	3.0	3.0	3.0
 AQ	Antarctica/Troll	0.0	2.0	0.0
@@ -381,7 +381,7 @@ NZ	Pacific/Auckland	13.0	12.0	12.0
 PG	Pacific/Bougainville	11.0	11.0	11.0
 NZ	Pacific/Chatham	13.75	12.75	12.75
 FM	Pacific/Chuuk	10.0	10.0	10.0
-CL	Pacific/Easter	-5.0	-6.0	-6.0
+CL	Pacific/Easter	-5.0	-5.0	-6.0
 VU	Pacific/Efate	11.0	11.0	11.0
 KI	Pacific/Enderbury	13.0	13.0	13.0
 TK	Pacific/Fakaofo	13.0	13.0	13.0
