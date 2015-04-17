@@ -75,7 +75,7 @@ do_a_file() {
 
     # Downloading
     TMP_CSV="$TMP_DIR"/`basename $REF_URL`
-    wget $REF_URL -O $TMP_CSV -o /dev/null
+    wget --no-check-certificate $REF_URL -O $TMP_CSV -o /dev/null
 
     # Special process
     if [ "$SPECIAL" = "1" ]; then
