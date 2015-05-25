@@ -63,14 +63,14 @@ AS	ASM	016	AQ	American Samoa	Pago Pago	199	57881	OC	.as	USD	Dollar	+1-684			en-A
 AT	AUT	040	AU	Austria	Vienna	83858	8205000	EU	.at	EUR	Euro	43	####	^(\d{4})$	de-AT,hr,hu,sl	2782113	CH,DE,HU,SK,CZ,IT,SI,LI	
 AU	AUS	036	AS	Australia	Canberra	7686850	21515754	OC	.au	AUD	Dollar	61	####	^(\d{4})$	en-AU	2077456		
 AW	ABW	533	AA	Aruba	Oranjestad	193	71566	NA	.aw	AWG	Guilder	297			nl-AW,es,en	3577279		
-AX	ALA	248		Aland Islands	Mariehamn		26711	EU	.ax	EUR	Euro	+358-18	#####	^(?:FI)*(\d{5})$	sv-AX	661882		FI
+AX	ALA	248		Aland Islands	Mariehamn	1580	26711	EU	.ax	EUR	Euro	+358-18	#####	^(?:FI)*(\d{5})$	sv-AX	661882		FI
 AZ	AZE	031	AJ	Azerbaijan	Baku	86600	8303512	AS	.az	AZN	Manat	994	AZ ####	^(?:AZ)*(\d{4})$	az,ru,hy	587116	GE,IR,AM,TR,RU	
 BA	BIH	070	BK	Bosnia and Herzegovina	Sarajevo	51129	4590000	EU	.ba	BAM	Marka	387	#####	^(\d{5})$	bs,hr-BA,sr-BA	3277605	HR,ME,RS	
 BB	BRB	052	BB	Barbados	Bridgetown	431	285653	NA	.bb	BBD	Dollar	+1-246	BB#####	^(?:BB)*(\d{5})$	en-BB	3374084		
 BD	BGD	050	BG	Bangladesh	Dhaka	144000	156118464	AS	.bd	BDT	Taka	880	####	^(\d{4})$	bn-BD,en	1210997	MM,IN	
 BE	BEL	056	BE	Belgium	Brussels	30510	10403000	EU	.be	EUR	Euro	32	####	^(\d{4})$	nl-BE,fr-BE,de-BE	2802361	DE,NL,LU,FR	
 BF	BFA	854	UV	Burkina Faso	Ouagadougou	274200	16241811	AF	.bf	XOF	Franc	226			fr-BF	2361809	NE,BJ,GH,CI,TG,ML	
-BG	BGR	100	BU	Bulgaria	Sofia	110910	7148785	EU	.bg	BGN	Lev	359	####	^(\d{4})$	bg,tr-BG	732800	MK,GR,RO,TR,RS	
+BG	BGR	100	BU	Bulgaria	Sofia	110910	7148785	EU	.bg	BGN	Lev	359	####	^(\d{4})$	bg,tr-BG,rom	732800	MK,GR,RO,TR,RS	
 BH	BHR	048	BA	Bahrain	Manama	665	738004	AS	.bh	BHD	Dinar	973	####|###	^(\d{3}\d?)$	ar-BH,en,fa,ur	290291		
 BI	BDI	108	BY	Burundi	Bujumbura	27830	9863117	AF	.bi	BIF	Franc	257			fr-BI,rn	433561	TZ,CD,RW	
 BJ	BEN	204	BN	Benin	Porto-Novo	112620	9056010	AF	.bj	XOF	Franc	229			fr-BJ	2395170	NE,TG,BF,NG	
@@ -78,11 +78,11 @@ BL	BLM	652	TB	Saint Barthelemy	Gustavia	21	8450	NA	.gp	EUR	Euro	590	### ###		fr	
 BM	BMU	060	BD	Bermuda	Hamilton	53	65365	NA	.bm	BMD	Dollar	+1-441	@@ ##	^([A-Z]{2}\d{2})$	en-BM,pt	3573345		
 BN	BRN	096	BX	Brunei	Bandar Seri Begawan	5770	395027	AS	.bn	BND	Dollar	673	@@####	^([A-Z]{2}\d{4})$	ms-BN,en-BN	1820814	MY	
 BO	BOL	068	BL	Bolivia	Sucre	1098580	9947418	SA	.bo	BOB	Boliviano	591			es-BO,qu,ay	3923057	PE,CL,PY,BR,AR	
-BQ	BES	535		Bonaire, Saint Eustatius and Saba 			18012	NA	.bq	USD	Dollar	599			nl,pap,en	7626844		
+BQ	BES	535		Bonaire, Saint Eustatius and Saba 		328	18012	NA	.bq	USD	Dollar	599			nl,pap,en	7626844		
 BR	BRA	076	BR	Brazil	Brasilia	8511965	201103330	SA	.br	BRL	Real	55	#####-###	^(\d{8})$	pt-BR,es,en,fr	3469034	SR,PE,BO,UY,GY,PY,GF,VE,CO,AR	
 BS	BHS	044	BF	Bahamas	Nassau	13940	301790	NA	.bs	BSD	Dollar	+1-242			en-BS	3572887		
 BT	BTN	064	BT	Bhutan	Thimphu	47000	699847	AS	.bt	BTN	Ngultrum	975			dz	1252634	CN,IN	
-BV	BVT	074	BV	Bouvet Island			0	AN	.bv	NOK	Krone					3371123		
+BV	BVT	074	BV	Bouvet Island		49	0	AN	.bv	NOK	Krone					3371123		
 BW	BWA	072	BC	Botswana	Gaborone	600370	2029307	AF	.bw	BWP	Pula	267			en-BW,tn-BW	933860	ZW,ZA,NA	
 BY	BLR	112	BO	Belarus	Minsk	207600	9685000	EU	.by	BYR	Ruble	375	######	^(\d{6})$	be,ru	630336	PL,LT,UA,RU,LV	
 BZ	BLZ	084	BH	Belize	Belmopan	22966	314522	NA	.bz	BZD	Dollar	501			en-BZ,es	3582678	GT,MX	
@@ -101,7 +101,7 @@ CO	COL	170	CO	Colombia	Bogota	1138910	47790000	SA	.co	COP	Peso	57			es-CO	368611
 CR	CRI	188	CS	Costa Rica	San Jose	51100	4516220	NA	.cr	CRC	Colon	506	####	^(\d{4})$	es-CR,en	3624060	PA,NI	
 CU	CUB	192	CU	Cuba	Havana	110860	11423000	NA	.cu	CUP	Peso	53	CP #####	^(?:CP)*(\d{5})$	es-CU	3562981	US	
 CV	CPV	132	CV	Cape Verde	Praia	4033	508659	AF	.cv	CVE	Escudo	238	####	^(\d{4})$	pt-CV	3374766		
-CW	CUW	531	UC	Curacao	 Willemstad		141766	NA	.cw	ANG	Guilder	599			nl,pap	7626836		
+CW	CUW	531	UC	Curacao	 Willemstad	444	141766	NA	.cw	ANG	Guilder	599			nl,pap	7626836		
 CX	CXR	162	KT	Christmas Island	Flying Fish Cove	135	1500	AS	.cx	AUD	Dollar	61	####	^(\d{4})$	en,zh,ms-CC	2078138		
 CY	CYP	196	CY	Cyprus	Nicosia	9250	1102677	EU	.cy	EUR	Euro	357	####	^(\d{4})$	el-CY,tr-CY,en	146669		
 CZ	CZE	203	EZ	Czech Republic	Prague	78866	10476000	EU	.cz	CZK	Koruna	420	### ##	^(\d{5})$	cs,sk	3077311	PL,DE,SK,AT	
@@ -171,7 +171,7 @@ KM	COM	174	CN	Comoros	Moroni	2170	773407	AF	.km	KMF	Franc	269			ar,fr-KM	921929
 KN	KNA	659	SC	Saint Kitts and Nevis	Basseterre	261	51134	NA	.kn	XCD	Dollar	+1-869			en-KN	3575174		
 KP	PRK	408	KN	North Korea	Pyongyang	120540	22912177	AS	.kp	KPW	Won	850	###-###	^(\d{6})$	ko-KP	1873107	CN,KR,RU	
 KR	KOR	410	KS	South Korea	Seoul	98480	48422644	AS	.kr	KRW	Won	82	SEOUL ###-###	^(?:SEOUL)*(\d{6})$	ko-KR,en	1835841	KP	
-XK	XKX	0	KV	Kosovo	Pristina		1800000	EU		EUR	Euro				sq,sr	831053	RS,AL,MK,ME	
+XK	XKX	0	KV	Kosovo	Pristina	10908	1800000	EU		EUR	Euro				sq,sr	831053	RS,AL,MK,ME	
 KW	KWT	414	KU	Kuwait	Kuwait City	17820	2789132	AS	.kw	KWD	Dinar	965	#####	^(\d{5})$	ar-KW,en	285570	SA,IQ	
 KY	CYM	136	CJ	Cayman Islands	George Town	262	44270	NA	.ky	KYD	Dollar	+1-345			en-KY	3580718		
 KZ	KAZ	398	KZ	Kazakhstan	Astana	2717300	15340000	AS	.kz	KZT	Tenge	7	######	^(\d{6})$	kk,ru	1522867	TM,CN,KG,UZ,RU	
@@ -182,7 +182,7 @@ LI	LIE	438	LS	Liechtenstein	Vaduz	160	35000	EU	.li	CHF	Franc	423	####	^(\d{4})$	
 LK	LKA	144	CE	Sri Lanka	Colombo	65610	21513990	AS	.lk	LKR	Rupee	94	#####	^(\d{5})$	si,ta,en	1227603		
 LR	LBR	430	LI	Liberia	Monrovia	111370	3685076	AF	.lr	LRD	Dollar	231	####	^(\d{4})$	en-LR	2275384	SL,CI,GN	
 LS	LSO	426	LT	Lesotho	Maseru	30355	1919552	AF	.ls	LSL	Loti	266	###	^(\d{3})$	en-LS,st,zu,xh	932692	ZA	
-LT	LTU	440	LH	Lithuania	Vilnius	65200	2944459	EU	.lt	LTL	Litas	370	LT-#####	^(?:LT)*(\d{5})$	lt,ru,pl	597427	PL,BY,RU,LV	
+LT	LTU	440	LH	Lithuania	Vilnius	65200	2944459	EU	.lt	EUR	Euro	370	LT-#####	^(?:LT)*(\d{5})$	lt,ru,pl	597427	PL,BY,RU,LV	
 LU	LUX	442	LU	Luxembourg	Luxembourg	2586	497538	EU	.lu	EUR	Euro	352	L-####	^(\d{4})$	lb,de-LU,fr-LU	2960313	DE,BE,FR	
 LV	LVA	428	LG	Latvia	Riga	64589	2217969	EU	.lv	EUR	Euro	371	LV-####	^(?:LV)*(\d{4})$	lv,ru,lt	458258	LT,EE,BY,RU	
 LY	LBY	434	LY	Libya	Tripolis	1759540	6461454	AF	.ly	LYD	Dinar	218			ar-LY,it,en	2215636	TD,NE,DZ,SD,TN,EG	
@@ -260,7 +260,7 @@ SO	SOM	706	SO	Somalia	Mogadishu	637657	10112453	AF	.so	SOS	Shilling	252	@@  ####
 SR	SUR	740	NS	Suriname	Paramaribo	163270	492829	SA	.sr	SRD	Dollar	597			nl-SR,en,srn,hns,jv	3382998	GY,BR,GF	
 ST	STP	678	TP	Sao Tome and Principe	Sao Tome	1001	175808	AF	.st	STD	Dobra	239			pt-ST	2410758		
 SV	SLV	222	ES	El Salvador	San Salvador	21040	6052064	NA	.sv	USD	Dollar	503	CP ####	^(?:CP)*(\d{4})$	es-SV	3585968	GT,HN	
-SX	SXM	534	NN	Sint Maarten	Philipsburg		37429	NA	.sx	ANG	Guilder	599			nl,en	7609695	MF	
+SX	SXM	534	NN	Sint Maarten	Philipsburg	21	37429	NA	.sx	ANG	Guilder	599			nl,en	7609695	MF	
 SY	SYR	760	SY	Syria	Damascus	185180	22198110	AS	.sy	SYP	Pound	963			ar-SY,ku,hy,arc,fr,en	163843	IQ,JO,IL,TR,LB	
 SZ	SWZ	748	WZ	Swaziland	Mbabane	17363	1354051	AF	.sz	SZL	Lilangeni	268	@###	^([A-Z]\d{3})$	en-SZ,ss-SZ	934841	ZA,MZ	
 TC	TCA	796	TK	Turks and Caicos Islands	Cockburn Town	430	20556	NA	.tc	USD	Dollar	+1-649	TKCA 1ZZ	^(TKCA 1ZZ)$	en-TC	3576916		
