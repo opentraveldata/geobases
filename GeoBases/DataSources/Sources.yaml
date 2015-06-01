@@ -124,6 +124,9 @@ aircraft:
         - iata_code
         - manufacturer
         - model
+        - iata_group
+        - iata_category
+        - icao_code
 
 
 stations:
