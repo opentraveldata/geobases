@@ -45,10 +45,10 @@ even with ``('iata_code', 'location_type')`` key:
 
     >>> geo = GeoBase(data='ori_por', key_fields=['iata_code', 'location_type'])
     In skipped zone, dropping line 1: "iata_code...".
-    /!\ [lno ...] CRK+C is duplicated #1, first found lno ...: creation of ...
-    /!\ [lno ...] EAP+C is duplicated #1, first found lno ...: creation of ...
-    /!\ [lno ...] OSF+C is duplicated #1, first found lno ...: creation of ...
-    /!\ [lno ...] RDU+C is duplicated #1, first found lno ...: creation of ...
+    /!\\ [lno ...] CRK+C is duplicated #1, first found lno ...: creation of ...
+    /!\\ [lno ...] EAP+C is duplicated #1, first found lno ...: creation of ...
+    /!\\ [lno ...] OSF+C is duplicated #1, first found lno ...: creation of ...
+    /!\\ [lno ...] RDU+C is duplicated #1, first found lno ...: creation of ...
     Import successful from ...
     Available fields for things: ...
 """
@@ -307,7 +307,7 @@ class GeoBase(VisualMixin):
                         self._load(source_fl, self._verbose)
                 except IOError:
                     if self._verbose:
-                        print '/!\ Failed to open "%s", failing over...' % file_
+                        print '/!\\ Failed to open "%s", failing over...' % file_
                 else:
                     self.loaded = file_
                     break
@@ -528,7 +528,7 @@ class GeoBase(VisualMixin):
         :param verbose: toggle verbosity
 
         >>> geo_o.addIndex('iata_code', force=True, verbose=True)
-        /!\ Index on ('iata_code',) already built, overriding...
+        /!\\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
 
         Index on multiple fields.
@@ -539,11 +539,11 @@ class GeoBase(VisualMixin):
         Do not force.
 
         >>> geo_o.addIndex('iata_code', force=False, verbose=True)
-        /!\ Index on ('iata_code',) already built, exiting...
+        /!\\ Index on ('iata_code',) already built, exiting...
         """
         if not fields:
             if verbose:
-                print '/!\ Fields %s were empty, index not added' % str(fields)
+                print '/!\\ Fields %s were empty, index not added' % str(fields)
             return
 
         fields = tuplify(fields)
@@ -551,11 +551,11 @@ class GeoBase(VisualMixin):
         if self.hasIndex(fields):
             if not force:
                 if verbose:
-                    print '/!\ Index on %s already built, exiting...' % str(fields)
+                    print '/!\\ Index on %s already built, exiting...' % str(fields)
                 return
 
             elif verbose:
-                print '/!\ Index on %s already built, overriding...' % str(fields)
+                print '/!\\ Index on %s already built, overriding...' % str(fields)
 
         self._indexed[fields] = self._buildIndex(fields, verbose)
 
@@ -686,7 +686,7 @@ class GeoBase(VisualMixin):
                 # This can happen if incomplete key information
                 # has been supplied after loading
                 if verbose:
-                    print '/!\ Could not compute values for key "%s" and fields %s' % \
+                    print '/!\\ Could not compute values for key "%s" and fields %s' % \
                             (key, str(fields))
                 continue
 
@@ -708,7 +708,7 @@ class GeoBase(VisualMixin):
         # If key_fields is None we index with the line number
         if key_fields is None:
             if verbose:
-                print '/!\ key_fields was None, keys will be created from line numbers.'
+                print '/!\\ key_fields was None, keys will be created from line numbers.'
 
             return lambda row, lno: str(lno)
 
@@ -779,8 +779,8 @@ class GeoBase(VisualMixin):
 
         if len(delimiter) == 0:
             if verbose:
-                print '/!\ Delimiter was empty.'
-                print '/!\ Fallback on splitting-every-char, but quoting is disabled.'
+                print '/!\\ Delimiter was empty.'
+                print '/!\\ Fallback on splitting-every-char, but quoting is disabled.'
 
             def _reader(source_fl):
                 """Custom reader splitting every char.
@@ -791,8 +791,8 @@ class GeoBase(VisualMixin):
             return _reader
 
         if verbose:
-            print '/!\ Delimiter "%s" was not 1-character.' % delimiter
-            print '/!\ Fallback on custom reader, but quoting is disabled.'
+            print '/!\\ Delimiter "%s" was not 1-character.' % delimiter
+            print '/!\\ Fallback on custom reader, but quoting is disabled.'
 
         def _m_reader(source_fl):
             """Custom reader supporting multiple characters split.
@@ -903,7 +903,7 @@ class GeoBase(VisualMixin):
                 key = keyer(row, lno)
             except IndexError:
                 if verbose:
-                    print '/!\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
+                    print '/!\\ Could not compute key with headers %s, key_fields %s for line %s: %s' % \
                             (headers, key_fields, lno, row)
                 # Storing that
                 self._skipped[lno] = row
@@ -932,11 +932,11 @@ class GeoBase(VisualMixin):
                     self._resetData(dup_key, data)
 
                     if verbose:
-                        print "/!\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
+                        print "/!\\ [lno %s] %s is duplicated #%s, first found lno %s: creation of %s..." % \
                                 (lno, key, nb_dups, self.get(key, '__lno__'), dup_key)
                 else:
                     if verbose:
-                        print "/!\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
+                        print "/!\\ [lno %s] %s is duplicated, first found lno %s: dropping line..." % \
                                 (lno, key, self.get(key, '__lno__'))
 
 
@@ -976,27 +976,27 @@ class GeoBase(VisualMixin):
             paths = [{ 'file' : path, 'local' : False }]
 
         if not paths:
-            print '/!\ No path to save to!'
+            print '/!\\ No path to save to!'
             return
 
         if headers is None:
             if self._headers:
                 headers = self._headers
             else:
-                print '/!\ Headers were not specified, and no headers in configuration.'
+                print '/!\\ Headers were not specified, and no headers in configuration.'
                 return
 
         # Here we read the source from the configuration file
         for path in paths:
             if is_remote(path):
                 if verbose:
-                    print '/!\ Remote paths are not supported for saving (was %s).' % \
+                    print '/!\\ Remote paths are not supported for saving (was %s).' % \
                             path['file']
                 continue
 
             if is_archive(path):
                 if verbose:
-                    print '/!\ Archives are not supported for saving (was %s).' % \
+                    print '/!\\ Archives are not supported for saving (was %s).' % \
                             path['file']
                 continue
 
@@ -1015,13 +1015,13 @@ class GeoBase(VisualMixin):
                     self._dump(out_fl, headers)
             except IOError:
                 if verbose:
-                    print '/!\ Failed to open "%s", failing over...' % file_
+                    print '/!\\ Failed to open "%s", failing over...' % file_
             else:
                 break
         else:
             # Here the loop did not break, meaning nothing was loaded
             # We will go here even if paths was []
-            print '/!\ Nothing was save in: %s' % \
+            print '/!\\ Nothing was save in: %s' % \
                     ''.join('\n(*) %s' % p['file'] for p in paths)
             return
 
@@ -1138,16 +1138,16 @@ class GeoBase(VisualMixin):
         :returns:         ``None``
 
         >>> geo_o.addGrid(radius=50, force=True, verbose=True)
-        /!\ Grid already built, overriding...
+        /!\\ Grid already built, overriding...
         """
         if self.hasGrid():
             if not force:
                 if verbose:
-                    print '/!\ Grid already built, exiting...'
+                    print '/!\\ Grid already built, exiting...'
                 return
 
             elif verbose:
-                print '/!\ Grid already built, overriding...'
+                print '/!\\ Grid already built, overriding...'
 
         self._ggrid = GeoGrid(precision=precision, radius=radius, verbose=False)
 
@@ -1680,7 +1680,7 @@ class GeoBase(VisualMixin):
         ["and" mode] Using index for ('iata_code',): value(s) ('MRS',)
         [(1, 'MRS'), (1, 'MRS@1')]
         >>> geo_o.addIndex('iata_code', force=True)
-        /!\ Index on ('iata_code',) already built, overriding...
+        /!\\ Index on ('iata_code',) already built, overriding...
         Built index for fields ('iata_code',)
         >>> geo_o.addIndex('location_type')
         Built index for fields ('location_type',)

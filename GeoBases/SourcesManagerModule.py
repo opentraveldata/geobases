@@ -188,7 +188,7 @@ class SourcesManager(object):
         except (SameFileError, IOError):
             # Copy did not happen because files are the same, or access problem
             if verbose:
-                print '/!\ Could not copy from/to:\n* %s\n* %s' % \
+                print '/!\\ Could not copy from/to:\n* %s\n* %s' % \
                         (COMPLETION_BUILT_FILE, COMPLETION_TARGET_DIR)
             return False
         else:
@@ -454,7 +454,7 @@ class SourcesManager(object):
 
             if not success:
                 if verbose:
-                    print '/!\ Failed to download "%s".' % path['file']
+                    print '/!\\ Failed to download "%s".' % path['file']
                 return
 
         if is_archive(path):
@@ -463,7 +463,7 @@ class SourcesManager(object):
 
             if not success:
                 if verbose:
-                    print '/!\ Failed to extract "%s" from "%s".' % \
+                    print '/!\\ Failed to extract "%s" from "%s".' % \
                             (path['extract'], archive)
                 return
 
@@ -545,12 +545,12 @@ def download_lazy(resource, cache_dir, verbose=True):
 
     if op.isfile(filename_test):
         if verbose:
-            print '/!\ Using "%s" already in cache directory for "%s"' % \
+            print '/!\\ Using "%s" already in cache directory for "%s"' % \
                     (filename_test, resource)
         return filename_test, True
 
     if verbose:
-        print '/!\ Downloading "%s" in cache directory from "%s"' % \
+        print '/!\\ Downloading "%s" in cache directory from "%s"' % \
                 (filename_test, resource)
     try:
         dl_filename, _ = urlretrieve(resource, filename_test)
@@ -573,16 +573,16 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
     if op.isfile(filename_test):
         if is_older(archive, filename_test):
             if verbose:
-                print '/!\ Skipping extraction for "%s", already at "%s"' % \
+                print '/!\\ Skipping extraction for "%s", already at "%s"' % \
                         (filename, filename_test)
             return filename_test, True
 
         if verbose:
-            print '/!\ File "%s" already at "%s", but "%s" is newer, removing' % \
+            print '/!\\ File "%s" already at "%s", but "%s" is newer, removing' % \
                     (filename, filename_test, archive)
 
     if verbose:
-        print '/!\ Extracting "%s" from "%s" in "%s"' % \
+        print '/!\\ Extracting "%s" from "%s" in "%s"' % \
                 (filename, archive, filename_test)
 
     # We extract one file from the archive
@@ -592,7 +592,7 @@ def extract_lazy(archive, filename, cache_dir, verbose=True):
         return None, False
     except KeyError:
         if verbose:
-            print '/!\ "%s" not in "%s"' % (filename, archive)
+            print '/!\\ "%s" not in "%s"' % (filename, archive)
         return None, False
     else:
         return extracted, True

@@ -124,6 +124,7 @@ class GeoGrid(object):
         try:
             case_id = self._computeCaseId(lat_lng)
 
+        #pylint: disable=W0703
         except (TypeError, Exception):
             # TypeError for wrong type (NoneType, str)
             # Exception for invalid coordinates (raised by geohash module)
@@ -160,7 +161,7 @@ class GeoGrid(object):
         for i in gen:
 
             if i > MAX_RECURSIVE_FRONTIER:
-                print '/!\ Recursion exceeded in recursiveFrontier'
+                print '/!\\ Recursion exceeded in recursiveFrontier'
                 raise StopIteration
 
             yield frontier

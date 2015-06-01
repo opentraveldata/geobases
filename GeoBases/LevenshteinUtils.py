@@ -37,7 +37,7 @@ from Levenshtein import ratio as LevenRatio
 #from Levenshtein import distance as LevenDist
 
 
-PARENTHESIS_RE = re.compile('^(?P<before>[^()]*?)\((?P<in>[^()]*?)\)(?P<after>[^()]*?)$')
+PARENTHESIS_RE = re.compile(r'^(?P<before>[^()]*?)\((?P<in>[^()]*?)\)(?P<after>[^()]*?)$')
 
 PARTS = ('before',
          'in',

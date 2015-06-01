@@ -549,8 +549,8 @@ class VisualMixin(object):
         if not self.hasGeoSupport():
             if verbose:
                 print
-                print '/!\ Could not find geographical fields in headers %s.' % self.fields
-                print '/!\ Setting draw_join_fields to True.'
+                print '/!\\ Could not find geographical fields in headers %s.' % self.fields
+                print '/!\\ Setting draw_join_fields to True.'
 
             draw_join_fields = True
 
