@@ -11,7 +11,7 @@ Example::
 Get source information::
 
     >>> manager.get('airlines')['paths'][0]
-    'Airlines/ori_airlines.csv'
+    'Airlines/optd_airlines.csv'
 
 Get source full status::
 

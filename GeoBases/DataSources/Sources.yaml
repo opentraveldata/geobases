@@ -14,7 +14,7 @@ airports:
         - fields: country_code
           with  : [countries, code]
         - fields: city_code
-          with  : [ori_por, iata_code]
+          with  : [optd_por, iata_code]
     headers   :
         - iata_code
         - name
@@ -92,8 +92,8 @@ continents:
 
 regions:
     paths:
-        - Regions/ori_region_details.csv
-        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_region_details.csv'
+        - Regions/optd_region_details.csv
+        - 'https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_region_details.csv'
     key_fields: region_code
     delimiter : ^
     skip      : 1
@@ -115,8 +115,8 @@ regions:
 
 aircraft:
     paths:
-        - Aircraft/ori_aircraft.csv
-        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_aircraft.csv'
+        - Aircraft/optd_aircraft.csv
+        - 'https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_aircraft.csv'
     key_fields: iata_code
     delimiter : ^
     skip      : 1
@@ -239,10 +239,10 @@ cities:
         - modification
 
 
-ori_por:
-    paths         : &ori_por_paths
-        - Por/Ori/ori_por_public.csv
-        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_public.csv'
+optd_por: &optd_por_conf
+    paths         : &optd_por_paths
+        - Por/Optd/optd_por_public.csv
+        - 'https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_por_public.csv'
     key_fields    : iata_code
     indices       :
         - iata_code
@@ -251,7 +251,7 @@ ori_por:
     skip          : 1 # put a number to skip the first lines
     discard_dups  : false # This is the default behavior anyway
     delimiter     : ^
-    subdelimiters : &ori_por_subdel
+    subdelimiters : &optd_por_subdel
         # Here you may put '' to
         # split every char 'AB' -> ['A', 'B']
         location_type    : ''
@@ -260,16 +260,16 @@ ori_por:
         city_code_list   : ','
         city_name_list   : '='
         city_detail_list : ['=', '|']
-    join          : &ori_por_join
+    join          : &optd_por_join
         - fields: country_code
           with  : [countries, code]
         - fields: timezone
           with  : [timezones, code]
         # Freaking auto join possibility
         - fields: tvl_por_list
-          with  : [ori_por, iata_code]
+          with  : [optd_por, iata_code]
         - fields: city_code_list
-          with  : [ori_por, iata_code]
+          with  : [optd_por, iata_code]
         - fields: continent_name
           with  : [continents, name]
         - fields: location_type
@@ -281,7 +281,7 @@ ori_por:
         # Join on multiple fields examples
         #- fields: [country_code, country_name]
         #  with  : [countries, [code, name]]
-    headers : &ori_por_headers
+    headers : &optd_por_headers
         - iata_code
         - icao_code
         - faa_code
@@ -290,8 +290,8 @@ ori_por:
         - envelope_id
         - name
         - asciiname
-        - lat           # is latitude  in ori_por headers
-        - lng           # is longitude in ori_por headers
+        - lat           # is latitude  in optd_por headers
+        - lng           # is longitude in optd_por headers
         - fclass
         - fcode
         - page_rank
@@ -330,16 +330,22 @@ ori_por:
         - wac_name
 
 
-ori_por_no_longer_valid:
+ori_por: *optd_por_conf
+
+
+optd_por_no_longer_valid: &optd_por_no_longer_valid_conf
     paths         :
-        - Por/Ori/ori_por_no_longer_valid.csv
-        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_por_no_longer_valid.csv'
+        - Por/Optd/optd_por_no_longer_valid.csv
+        - 'https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_por_no_longer_valid.csv'
     key_fields    : iata_code
     delimiter     : ^
     skip          : 1
-    subdelimiters : *ori_por_subdel
-    headers       : *ori_por_headers
-    join          : *ori_por_join
+    subdelimiters : *optd_por_subdel
+    headers       : *optd_por_headers
+    join          : *optd_por_join
+
+
+ori_por_no_longer_valid: *optd_por_no_longer_valid_conf
 
 
 currencies:
@@ -361,8 +367,8 @@ currencies:
 
 airlines:
     paths     :
-        - Airlines/ori_airlines.csv
-        - 'https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv'
+        - Airlines/optd_airlines.csv
+        - 'https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_airlines.csv'
     key_fields: 2char_code
     delimiter : ^
     skip      : 1

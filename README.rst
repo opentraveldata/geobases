@@ -214,7 +214,7 @@ You can provide other values for the *data* parameter.
 All data sources are documented in a `single YAML file <https://github.com/opentraveldata/geobases/blob/public/GeoBases/DataSources/Sources.yaml>`_:
 
 -  *data="ori\_por"* will load a local version of
-   `this file <https://github.com/opentraveldata/optd/raw/trunk/refdata/ORI/ori_por_public.csv>`_,
+   `this file <https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_por_public.csv>`_,
    this is the most complete source for airports, use it!
 -  *data="aircraft"* will use OpenTravelData as data source for aircraft
 -  *data="airports"* will use geonames as data source for airports
@@ -235,7 +235,7 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="currencies"* will load data on currencies, extracted from
    wikipedia
 -  *data="airlines"* will load data on airlines, extracted from
-   `that file <https://raw.github.com/opentraveldata/optd/trunk/refdata/ORI/ori_airlines.csv>`_
+   `that file <https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_airlines.csv>`_
 -  *data="cabins"* will load data on cabins
 -  *data="locales"* will load data on locales
 -  *data="location\_types"* will load data on location types
