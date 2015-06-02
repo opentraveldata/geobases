@@ -44,10 +44,10 @@ if WITH_OPENTREP == '1':
     INSTALL_REQUIRES.extend(EXTRAS_REQUIRE['OpenTrep'])
     DEPENDENCY_LINKS.extend(DEPENDENCY_LINKS_EXTRAS['OpenTrep'])
 
-    print >> stderr, '/!\ Adding "%s" to mandatory dependencies' % \
+    print >> stderr, '/!\\ Adding "%s" to mandatory dependencies' % \
             str(EXTRAS_REQUIRE['OpenTrep'])
 else:
-    print >> stderr, '/!\ Installing without "%s"' % \
+    print >> stderr, '/!\\ Installing without "%s"' % \
             str(EXTRAS_REQUIRE['OpenTrep'])
 
 
