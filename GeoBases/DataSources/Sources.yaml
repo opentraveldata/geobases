@@ -326,6 +326,8 @@ ori_por:
         - location_type
         - wiki_link
         - alt_name_section
+        - wac
+        - wac_name
 
 
 ori_por_no_longer_valid:
