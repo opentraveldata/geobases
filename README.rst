@@ -216,6 +216,7 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="optd\_por"* will load a local version of
    `this file <https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_por_public.csv>`_,
    this is the most complete source for airports, use it!
+-  *data="ori\_por"* is an alias to the previous source for backward compatibility
 -  *data="aircraft"* will use OpenTravelData as data source for aircraft
 -  *data="airports"* will use geonames as data source for airports
 -  *data="stations"* will use RFF data, from `the open data
@@ -243,6 +244,7 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="feature\_codes"* will load data on feature codes
 -  *data="optd\_por\_non\_iata"* will load some non-iata data excluded
    from *optd\_por*
+-  *data="ori\_por\_non\_iata"* is an alias to the previous source for backward compatibility
 -  *data="geonames\_MC"* will load MC data of geonames
 -  *data="geonames\_FR"* will load FR data of geonames
 -  *data="postal\_codes\_MC"* will load MC postal codes data
