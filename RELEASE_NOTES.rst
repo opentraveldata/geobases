@@ -7,6 +7,9 @@ V6
 
 + 6.0 :
 
+    + *API*: use new urls for *optd* based sources, keep *ori_\** sources as alises for compatibility
+    + *API*: add *wac* and *wac_name* for the *ori_por* source
+    + *API*: fix timezones for the *ori_por* source
     + *API*: new data source for *aircraft* (based on OpenTravelData)
     + *API*: replace *ori_por_non_iata* source with *ori_por_no_longer_valid* source
     + *API*: new data source for *regions* (based on OpenTravelData)
