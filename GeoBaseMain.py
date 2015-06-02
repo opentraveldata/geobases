@@ -1023,7 +1023,7 @@ CLI_EXAMPLES = '''
  $ cat data.csv | %s             # with your data
 ''' % ((op.basename(sys.argv[0]),) * 7)
 
-DEF_BASE            = 'ori_por'
+DEF_BASE            = 'optd_por'
 DEF_FUZZY_LIMIT     = 0.85
 DEF_NEAR_LIMIT      = 50.
 DEF_CLOSEST_LIMIT   = 10
@@ -2160,7 +2160,7 @@ def ask_mode():
     }
 
     # 1. Choose base
-    base = ask_till_ok(questions['source'], sorted(S_MANAGER), prefill='ori_por')
+    base = ask_till_ok(questions['source'], sorted(S_MANAGER), prefill='optd_por')
 
     # 2. Choose from keys
     all_keys = ask_till_ok(questions['all_keys'], boolean=True, default=True)

@@ -1457,7 +1457,7 @@ def _test():
     from .GeoBaseModule import GeoBase
 
     extraglobs = {
-        'g' : GeoBase(data='ori_por',  verbose=False),
+        'g' : GeoBase(data='optd_por', verbose=False),
     }
 
     opt =  (doctest.ELLIPSIS |

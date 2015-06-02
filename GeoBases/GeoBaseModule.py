@@ -43,7 +43,7 @@ Examples for stations::
 From any point of reference, we have a few duplicates
 even with ``('iata_code', 'location_type')`` key:
 
-    >>> geo = GeoBase(data='ori_por', key_fields=['iata_code', 'location_type'])
+    >>> geo = GeoBase(data='optd_por', key_fields=['iata_code', 'location_type'])
     In skipped zone, dropping line 1: "iata_code...".
     /!\\ [lno ...] CRK+C is duplicated #1, first found lno ...: creation of ...
     /!\\ [lno ...] EAP+C is duplicated #1, first found lno ...: creation of ...
@@ -3051,7 +3051,7 @@ def _test():
     import doctest
 
     extraglobs = {
-        'geo_o': GeoBase(data='ori_por',  verbose=False),
+        'geo_o': GeoBase(data='optd_por', verbose=False),
         'geo_a': GeoBase(data='airports', verbose=False),
         'geo_t': GeoBase(data='stations', verbose=False),
         'geo_f': GeoBase(data='feed',     verbose=False)

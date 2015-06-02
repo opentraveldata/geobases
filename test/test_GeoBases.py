@@ -36,7 +36,7 @@ class GeoBaseTest(unittest.TestCase):
     """This class tests the GeoBase class.
     """
     def setUp(self):
-        self.g = GeoM.GeoBase(data='ori_por', verbose=False)
+        self.g = GeoM.GeoBase(data='optd_por', verbose=False)
 
     def tearDown(self):
         pass
@@ -107,8 +107,8 @@ def test_suite():
             #doctest.IGNORE_EXCEPTION_DETAIL)
 
     globsGeo = {
-        'g'         : GeoM.GeoBase(data='ori_por',  verbose=False),
-        'geo_o'     : GeoM.GeoBase(data='ori_por',  verbose=False),
+        'g'         : GeoM.GeoBase(data='optd_por',  verbose=False),
+        'geo_o'     : GeoM.GeoBase(data='optd_por',  verbose=False),
         'geo_a'     : GeoM.GeoBase(data='airports', verbose=False),
         'geo_t'     : GeoM.GeoBase(data='stations', verbose=False),
         'geo_f'     : GeoM.GeoBase(data='feed',     verbose=False)

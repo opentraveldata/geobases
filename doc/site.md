@@ -168,7 +168,7 @@ Quickstart
 
 ```python
 >>> from GeoBases import GeoBase
->>> geo_o = GeoBase(data='ori_por', verbose=False)
+>>> geo_o = GeoBase(data='optd_por', verbose=False)
 >>> geo_a = GeoBase(data='airports', verbose=False)
 >>> geo_t = GeoBase(data='stations', verbose=False)
 ```

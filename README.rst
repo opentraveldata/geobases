@@ -206,14 +206,14 @@ Quickstart
 .. code-block:: python
 
  >>> from GeoBases import GeoBase
- >>> geo_o = GeoBase(data='ori_por', verbose=False)
+ >>> geo_o = GeoBase(data='optd_por', verbose=False)
  >>> geo_a = GeoBase(data='airports', verbose=False)
  >>> geo_t = GeoBase(data='stations', verbose=False)
 
 You can provide other values for the *data* parameter.
 All data sources are documented in a `single YAML file <https://github.com/opentraveldata/geobases/blob/public/GeoBases/DataSources/Sources.yaml>`_:
 
--  *data="ori\_por"* will load a local version of
+-  *data="optd\_por"* will load a local version of
    `this file <https://raw.githubusercontent.com/opentraveldata/opentraveldata/master/opentraveldata/optd_por_public.csv>`_,
    this is the most complete source for airports, use it!
 -  *data="aircraft"* will use OpenTravelData as data source for aircraft
@@ -241,8 +241,8 @@ All data sources are documented in a `single YAML file <https://github.com/opent
 -  *data="location\_types"* will load data on location types
 -  *data="feature\_classes"* will load data on feature classes
 -  *data="feature\_codes"* will load data on feature codes
--  *data="ori\_por\_non\_iata"* will load some non-iata data excluded
-   from *ori\_por*
+-  *data="optd\_por\_non\_iata"* will load some non-iata data excluded
+   from *optd\_por*
 -  *data="geonames\_MC"* will load MC data of geonames
 -  *data="geonames\_FR"* will load FR data of geonames
 -  *data="postal\_codes\_MC"* will load MC postal codes data
