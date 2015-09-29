@@ -564,10 +564,10 @@ class GeoBase(VisualMixin):
     def dropIndex(self, fields=None, verbose=True):
         """Drop an index on an iterable of fields.
 
-        If fields is not given all indexes are dropped.
+        If fields is not given all indices are dropped.
 
         :param fields:  the iterable of fields, if ``None``,
-            all indexes will be dropped
+            all indices will be dropped
 
         >>> geo_o.hasIndex(('icao_code', 'location_type'))
         True
@@ -590,10 +590,10 @@ class GeoBase(VisualMixin):
     def updateIndex(self, fields=None, verbose=True):
         """Update index on fields.
 
-        If fields is not given all indexes are updated.
+        If fields is not given all indices are updated.
 
         :param fields:  the iterable of fields, if ``None``,
-            all indexes will be updated
+            all indices will be updated
         :param verbose: toggle verbosity
 
         Here is an example, we drop the index then make a query.
@@ -631,7 +631,7 @@ class GeoBase(VisualMixin):
         [(1, 'NCE'), (1, 'NEW_KEY_2'), (1, 'NCE@1')]
         >>> geo_o.delete('NEW_KEY_2') # avoid messing other tests
 
-        Note that ``updateIndex`` will not create indexes if it does not exist.
+        Note that ``updateIndex`` will not create indices if it does not exist.
 
         >>> geo_f.updateIndex('iata_code')
         No index to update on "iata_code".
@@ -1578,7 +1578,7 @@ class GeoBase(VisualMixin):
 
 
     def _checkIndexUsability(self, conditions, mode):
-        """Check if indexes are usable for a given iterable of fields.
+        """Check if indices are usable for a given iterable of fields.
         """
         fields = tuple(f for f, _ in conditions)
 
@@ -1593,7 +1593,7 @@ class GeoBase(VisualMixin):
 
 
     def _findWithUsingSeveralIndex(self, conditions, mode, verbose=False):
-        """Perform findWith using several indexes.
+        """Perform findWith using several indices.
         """
         # In case conditions is an iterator
         conditions = list(conditions)
@@ -1674,7 +1674,7 @@ class GeoBase(VisualMixin):
         >>> len(list(geo_o.findWith([('__par__', [])], reverse=True))) # doctest: +SKIP
         5377
 
-        Testing indexes.
+        Testing indices.
 
         >>> list(geo_o.findWith([('iata_code', 'MRS')], mode='and', verbose=True))
         ["and" mode] Using index for ('iata_code',): value(s) ('MRS',)
@@ -1685,7 +1685,7 @@ class GeoBase(VisualMixin):
         >>> geo_o.addIndex('location_type')
         Built index for fields ('location_type',)
 
-        Now querying with simple indexes (dropping multiple index if it exists).
+        Now querying with simple indices (dropping multiple index if it exists).
 
         >>> geo_o.dropIndex(('iata_code', 'location_type'), verbose=False)
         >>> list(geo_o.findWith([('iata_code', 'NCE'), ('location_type', ('A',))],
