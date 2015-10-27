@@ -12,20 +12,19 @@ env:
   global:
   matrix:
     - WITH_OPENTREP=0
-
+    - WITH_OPENTREP=1
 
 matrix:
   allow_failures:
     - python: "2.5"
 
-
 notifications:
   email:
       - alexprengere@gmail.com
 
-# command to install dependencies
+# install dependencies
 install:
     - "python setup.py install"
 
-# command to run tests
+# run tests
 script: "python test/test_GeoBases.py -vv"
