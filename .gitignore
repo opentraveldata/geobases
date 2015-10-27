@@ -35,3 +35,5 @@
 /tmpviz
 # Ignore coveralls.io file
 /.coveralls.yml
+# Virtualenv
+.env
