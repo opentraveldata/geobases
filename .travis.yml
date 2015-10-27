@@ -28,7 +28,7 @@ notifications:
 # install dependencies
 install:
     - "pip install -U pip wheel"
-    - "python setup.py install"
+    - "pip install ."
 
 # run tests
 script: "python test/test_GeoBases.py -vv"
