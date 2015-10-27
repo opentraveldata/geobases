@@ -3,6 +3,9 @@ python:
   - "2.6"
   - "2.7"
 
+cache: pip
+
+# new travis infrastructure
 sudo: false
 
 git:
