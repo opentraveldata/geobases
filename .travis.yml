@@ -27,6 +27,7 @@ notifications:
 
 # install dependencies
 install:
+    - "pip install -U pip wheel"
     - "python setup.py install"
 
 # run tests
