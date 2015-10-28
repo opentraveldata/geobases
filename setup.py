@@ -32,7 +32,7 @@ EXTRAS_REQUIRE = {
 
 DEPENDENCY_LINKS        = []
 DEPENDENCY_LINKS_EXTRAS = {
-    'OpenTrep' : ['https://github.com/trep/wrapper/tarball/master#egg=OpenTrepWrapper-0.7.tar.gz']
+    'OpenTrep' : ['https://github.com/trep/wrapper/tarball/master#egg=OpenTrepWrapper-0.7']
 }
 
 # Managing OpenTrep dependency
