@@ -5,6 +5,10 @@ python:
   - "3.2"
   #- "3.3"
 
+sudo: false
+
+git:
+    depth: 1
 
 env:
   global:
