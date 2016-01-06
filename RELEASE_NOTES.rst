@@ -7,6 +7,7 @@ V6
 
 + 6.0 :
 
+    + *API*: ``airlines`` data source has a new ``alt_name_section`` field
     + *API*: use new urls for *optd* based sources, keep *ori* sources as aliases for compatibility
     + *API*: add *wac* and *wac_name* for the *ori_por* source
     + *API*: fix timezones for the *ori_por* source
