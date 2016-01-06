@@ -1,4 +1,4 @@
-CountryCode	TimeZoneId	GMT offset 1. Jan 2015	DST offset 1. Jul 2015	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2016	DST offset 1. Jul 2016	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -82,10 +82,10 @@ CO	America/Bogota	-5.0	-5.0	-5.0
 US	America/Boise	-7.0	-6.0	-7.0
 CA	America/Cambridge_Bay	-7.0	-6.0	-7.0
 BR	America/Campo_Grande	-3.0	-4.0	-4.0
-MX	America/Cancun	-6.0	-5.0	-5.0
+MX	America/Cancun	-5.0	-5.0	-5.0
 VE	America/Caracas	-4.5	-4.5	-4.5
 GF	America/Cayenne	-3.0	-3.0	-3.0
-KY	America/Cayman	-5.0	-5.0	-5.0
+KY	America/Cayman	-5.0	-4.0	-5.0
 US	America/Chicago	-6.0	-5.0	-6.0
 MX	America/Chihuahua	-7.0	-6.0	-7.0
 CR	America/Costa_Rica	-6.0	-6.0	-6.0
@@ -105,7 +105,7 @@ BR	America/Fortaleza	-3.0	-3.0	-3.0
 CA	America/Glace_Bay	-4.0	-3.0	-4.0
 GL	America/Godthab	-3.0	-2.0	-3.0
 CA	America/Goose_Bay	-4.0	-3.0	-4.0
-TC	America/Grand_Turk	-5.0	-4.0	-4.0
+TC	America/Grand_Turk	-4.0	-4.0	-4.0
 GD	America/Grenada	-4.0	-4.0	-4.0
 GP	America/Guadeloupe	-4.0	-4.0	-4.0
 GT	America/Guatemala	-6.0	-6.0	-6.0
@@ -147,7 +147,7 @@ MX	America/Mexico_City	-6.0	-5.0	-6.0
 PM	America/Miquelon	-3.0	-2.0	-3.0
 CA	America/Moncton	-4.0	-3.0	-4.0
 MX	America/Monterrey	-6.0	-5.0	-6.0
-UY	America/Montevideo	-2.0	-3.0	-3.0
+UY	America/Montevideo	-3.0	-3.0	-3.0
 MS	America/Montserrat	-4.0	-4.0	-4.0
 BS	America/Nassau	-5.0	-4.0	-5.0
 US	America/New_York	-5.0	-4.0	-5.0
@@ -262,7 +262,7 @@ RU	Asia/Omsk	6.0	6.0	6.0
 KZ	Asia/Oral	5.0	5.0	5.0
 KH	Asia/Phnom_Penh	7.0	7.0	7.0
 ID	Asia/Pontianak	7.0	7.0	7.0
-KP	Asia/Pyongyang	9.0	9.0	8.5
+KP	Asia/Pyongyang	8.5	8.5	8.5
 QA	Asia/Qatar	3.0	3.0	3.0
 KZ	Asia/Qyzylorda	6.0	6.0	6.0
 MM	Asia/Rangoon	6.5	6.5	6.5
@@ -401,7 +401,7 @@ PF	Pacific/Marquesas	-9.5	-9.5	-9.5
 UM	Pacific/Midway	-11.0	-11.0	-11.0
 NR	Pacific/Nauru	12.0	12.0	12.0
 NU	Pacific/Niue	-11.0	-11.0	-11.0
-NF	Pacific/Norfolk	11.5	11.5	11.0
+NF	Pacific/Norfolk	11.0	11.0	11.0
 NC	Pacific/Noumea	11.0	11.0	11.0
 AS	Pacific/Pago_Pago	-11.0	-11.0	-11.0
 PW	Pacific/Palau	9.0	9.0	9.0
