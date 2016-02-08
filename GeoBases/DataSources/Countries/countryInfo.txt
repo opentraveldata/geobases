@@ -91,7 +91,7 @@ CC	CCK	166	CK	Cocos Islands	West Island	14	628	AS	.cc	AUD	Dollar	61			ms-CC,en	1
 CD	COD	180	CG	Democratic Republic of the Congo	Kinshasa	2345410	70916439	AF	.cd	CDF	Franc	243			fr-CD,ln,kg	203312	TZ,CF,SS,RW,ZM,BI,UG,CG,AO	
 CF	CAF	140	CT	Central African Republic	Bangui	622984	4844927	AF	.cf	XAF	Franc	236			fr-CF,sg,ln,kg	239880	TD,SD,CD,SS,CM,CG	
 CG	COG	178	CF	Republic of the Congo	Brazzaville	342000	3039126	AF	.cg	XAF	Franc	242			fr-CG,kg,ln-CG	2260494	CF,GA,CD,CM,AO	
-CH	CHE	756	SZ	Switzerland	Berne	41290	7581000	EU	.ch	CHF	Franc	41	####	^(\d{4})$	de-CH,fr-CH,it-CH,rm	2658434	DE,IT,LI,FR,AT	
+CH	CHE	756	SZ	Switzerland	Bern	41290	7581000	EU	.ch	CHF	Franc	41	####	^(\d{4})$	de-CH,fr-CH,it-CH,rm	2658434	DE,IT,LI,FR,AT	
 CI	CIV	384	IV	Ivory Coast	Yamoussoukro	322460	21058798	AF	.ci	XOF	Franc	225			fr-CI	2287781	LR,GH,GN,BF,ML	
 CK	COK	184	CW	Cook Islands	Avarua	240	21388	OC	.ck	NZD	Dollar	682			en-CK,mi	1899402		
 CL	CHL	152	CI	Chile	Santiago	756950	16746491	SA	.cl	CLP	Peso	56	#######	^(\d{7})$	es-CL	3895114	PE,BO,AR	
@@ -150,9 +150,9 @@ HR	HRV	191	HR	Croatia	Zagreb	56542	4491000	EU	.hr	HRK	Kuna	385	#####	^(?:HR)*(\d
 HT	HTI	332	HA	Haiti	Port-au-Prince	27750	9648924	NA	.ht	HTG	Gourde	509	HT####	^(?:HT)*(\d{4})$	ht,fr-HT	3723988	DO	
 HU	HUN	348	HU	Hungary	Budapest	93030	9982000	EU	.hu	HUF	Forint	36	####	^(\d{4})$	hu-HU	719819	SK,SI,RO,UA,HR,AT,RS	
 ID	IDN	360	ID	Indonesia	Jakarta	1919440	242968342	AS	.id	IDR	Rupiah	62	#####	^(\d{5})$	id,en,nl,jv	1643084	PG,TL,MY	
-IE	IRL	372	EI	Ireland	Dublin	70280	4622917	EU	.ie	EUR	Euro	353			en-IE,ga-IE	2963597	GB	
+IE	IRL	372	EI	Ireland	Dublin	70280	4622917	EU	.ie	EUR	Euro	353	@@@ @@@@	^([A-Z]{3}[A-Z]{4})$	en-IE,ga-IE	2963597	GB	
 IL	ISR	376	IS	Israel	Jerusalem	20770	7353985	AS	.il	ILS	Shekel	972	#####	^(\d{5})$	he,ar-IL,en-IL,	294640	SY,JO,LB,EG,PS	
-IM	IMN	833	IM	Isle of Man	Douglas, Isle of Man	572	75049	EU	.im	GBP	Pound	+44-1624	@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA	^(([A-Z]\d{2}[A-Z]{2})|([A-Z]\d{3}[A-Z]{2})|([A-Z]{2}\d{2}[A-Z]{2})|([A-Z]{2}\d{3}[A-Z]{2})|([A-Z]\d[A-Z]\d[A-Z]{2})|([A-Z]{2}\d[A-Z]\d[A-Z]{2})|(GIR0AA))$	en,gv	3042225		
+IM	IMN	833	IM	Isle of Man	Douglas	572	75049	EU	.im	GBP	Pound	+44-1624	@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA	^(([A-Z]\d{2}[A-Z]{2})|([A-Z]\d{3}[A-Z]{2})|([A-Z]{2}\d{2}[A-Z]{2})|([A-Z]{2}\d{3}[A-Z]{2})|([A-Z]\d[A-Z]\d[A-Z]{2})|([A-Z]{2}\d[A-Z]\d[A-Z]{2})|(GIR0AA))$	en,gv	3042225		
 IN	IND	356	IN	India	New Delhi	3287590	1173108018	AS	.in	INR	Rupee	91	######	^(\d{6})$	en-IN,hi,bn,te,mr,ta,ur,gu,kn,ml,or,pa,as,bh,sat,ks,ne,sd,kok,doi,mni,sit,sa,fr,lus,inc	1269750	CN,NP,MM,BT,PK,BD	
 IO	IOT	086	IO	British Indian Ocean Territory	Diego Garcia	60	4000	AS	.io	USD	Dollar	246			en-IO	1282588		
 IQ	IRQ	368	IZ	Iraq	Baghdad	437072	29671605	AS	.iq	IQD	Dinar	964	#####	^(\d{5})$	ar-IQ,ku,hy	99237	SY,SA,IR,JO,TR,KW	
@@ -164,7 +164,7 @@ JM	JAM	388	JM	Jamaica	Kingston	10991	2847232	NA	.jm	JMD	Dollar	+1-876			en-JM	34
 JO	JOR	400	JO	Jordan	Amman	92300	6407085	AS	.jo	JOD	Dinar	962	#####	^(\d{5})$	ar-JO,en	248816	SY,SA,IQ,IL,PS	
 JP	JPN	392	JA	Japan	Tokyo	377835	127288000	AS	.jp	JPY	Yen	81	###-####	^(\d{7})$	ja	1861060		
 KE	KEN	404	KE	Kenya	Nairobi	582650	40046566	AF	.ke	KES	Shilling	254	#####	^(\d{5})$	en-KE,sw-KE	192950	ET,TZ,SS,SO,UG	
-KG	KGZ	417	KG	Kyrgyzstan	Bishkek	198500	5508626	AS	.kg	KGS	Som	996	######	^(\d{6})$	ky,uz,ru	1527747	CN,TJ,UZ,KZ	
+KG	KGZ	417	KG	Kyrgyzstan	Bishkek	198500	5776500	AS	.kg	KGS	Som	996	######	^(\d{6})$	ky,uz,ru	1527747	CN,TJ,UZ,KZ	
 KH	KHM	116	CB	Cambodia	Phnom Penh	181040	14453680	AS	.kh	KHR	Riels	855	#####	^(\d{5})$	km,fr,en	1831722	LA,TH,VN	
 KI	KIR	296	KR	Kiribati	Tarawa	811	92533	OC	.ki	AUD	Dollar	686			en-KI,gil	4030945		
 KM	COM	174	CN	Comoros	Moroni	2170	773407	AF	.km	KMF	Franc	269			ar,fr-KM	921929		
@@ -185,7 +185,7 @@ LS	LSO	426	LT	Lesotho	Maseru	30355	1919552	AF	.ls	LSL	Loti	266	###	^(\d{3})$	en-
 LT	LTU	440	LH	Lithuania	Vilnius	65200	2944459	EU	.lt	EUR	Euro	370	LT-#####	^(?:LT)*(\d{5})$	lt,ru,pl	597427	PL,BY,RU,LV	
 LU	LUX	442	LU	Luxembourg	Luxembourg	2586	497538	EU	.lu	EUR	Euro	352	L-####	^(\d{4})$	lb,de-LU,fr-LU	2960313	DE,BE,FR	
 LV	LVA	428	LG	Latvia	Riga	64589	2217969	EU	.lv	EUR	Euro	371	LV-####	^(?:LV)*(\d{4})$	lv,ru,lt	458258	LT,EE,BY,RU	
-LY	LBY	434	LY	Libya	Tripolis	1759540	6461454	AF	.ly	LYD	Dinar	218			ar-LY,it,en	2215636	TD,NE,DZ,SD,TN,EG	
+LY	LBY	434	LY	Libya	Tripoli	1759540	6461454	AF	.ly	LYD	Dinar	218			ar-LY,it,en	2215636	TD,NE,DZ,SD,TN,EG	
 MA	MAR	504	MO	Morocco	Rabat	446550	31627428	AF	.ma	MAD	Dirham	212	#####	^(\d{5})$	ar-MA,fr	2542007	DZ,EH,ES	
 MC	MCO	492	MN	Monaco	Monaco	1.95	32965	EU	.mc	EUR	Euro	377	#####	^(\d{5})$	fr-MC,en,it	2993457	FR	
 MD	MDA	498	MD	Moldova	Chisinau	33843	4324000	EU	.md	MDL	Leu	373	MD-####	^(?:MD)*(\d{4})$	ro,ru,gag,tr	617790	RO,UA	
@@ -202,7 +202,7 @@ MP	MNP	580	CQ	Northern Mariana Islands	Saipan	477	53883	OC	.mp	USD	Dollar	+1-670
 MQ	MTQ	474	MB	Martinique	Fort-de-France	1100	432900	NA	.mq	EUR	Euro	596	#####	^(\d{5})$	fr-MQ	3570311		
 MR	MRT	478	MR	Mauritania	Nouakchott	1030700	3205060	AF	.mr	MRO	Ouguiya	222			ar-MR,fuc,snk,fr,mey,wo	2378080	SN,DZ,EH,ML	
 MS	MSR	500	MH	Montserrat	Plymouth	102	9341	NA	.ms	XCD	Dollar	+1-664			en-MS	3578097		
-MT	MLT	470	MT	Malta	Valletta	316	403000	EU	.mt	EUR	Euro	356	@@@ ###|@@@ ##	^([A-Z]{3}\d{2}\d?)$	mt,en-MT	2562770		
+MT	MLT	470	MT	Malta	Valletta	316	403000	EU	.mt	EUR	Euro	356	@@@ ####	^([A-Z]{3}\d{4})$	mt,en-MT	2562770		
 MU	MUS	480	MP	Mauritius	Port Louis	2040	1294104	AF	.mu	MUR	Rupee	230			en-MU,bho,fr	934292		
 MV	MDV	462	MV	Maldives	Male	300	395650	AS	.mv	MVR	Rufiyaa	960	#####	^(\d{5})$	dv,en	1282028		
 MW	MWI	454	MI	Malawi	Lilongwe	118480	15447500	AF	.mw	MWK	Kwacha	265			ny,yao,tum,swk	927384	TZ,MZ,ZM	
@@ -247,8 +247,8 @@ SB	SLB	090	BP	Solomon Islands	Honiara	28450	559198	OC	.sb	SBD	Dollar	677			en-SB
 SC	SYC	690	SE	Seychelles	Victoria	455	88340	AF	.sc	SCR	Rupee	248			en-SC,fr-SC	241170		
 SD	SDN	729	SU	Sudan	Khartoum	1861484	35000000	AF	.sd	SDG	Pound	249	#####	^(\d{5})$	ar-SD,en,fia	366755	SS,TD,EG,ET,ER,LY,CF	
 SS	SSD	728	OD	South Sudan	Juba	644329	8260490	AF		SSP	Pound	211			en	7909807	CD,CF,ET,KE,SD,UG,	
-SE	SWE	752	SW	Sweden	Stockholm	449964	9555893	EU	.se	SEK	Krona	46	### ##	^(?:SE)*(\d{5})$	sv-SE,se,sma,fi-SE	2661886	NO,FI	
-SG	SGP	702	SN	Singapore	Singapur	692.7	4701069	AS	.sg	SGD	Dollar	65	######	^(\d{6})$	cmn,en-SG,ms-SG,ta-SG,zh-SG	1880251		
+SE	SWE	752	SW	Sweden	Stockholm	449964	9828655	EU	.se	SEK	Krona	46	### ##	^(?:SE)*(\d{5})$	sv-SE,se,sma,fi-SE	2661886	NO,FI	
+SG	SGP	702	SN	Singapore	Singapore	692.7	4701069	AS	.sg	SGD	Dollar	65	######	^(\d{6})$	cmn,en-SG,ms-SG,ta-SG,zh-SG	1880251		
 SH	SHN	654	SH	Saint Helena	Jamestown	410	7460	AF	.sh	SHP	Pound	290	STHL 1ZZ	^(STHL1ZZ)$	en-SH	3370751		
 SI	SVN	705	SI	Slovenia	Ljubljana	20273	2007000	EU	.si	EUR	Euro	386	####	^(?:SI)*(\d{4})$	sl,sh	3190538	HU,IT,HR,AT	
 SJ	SJM	744	SV	Svalbard and Jan Mayen	Longyearbyen	62049	2550	EU	.sj	NOK	Krone	47			no,ru	607072		

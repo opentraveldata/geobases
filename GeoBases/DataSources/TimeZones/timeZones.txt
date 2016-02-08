@@ -85,7 +85,7 @@ BR	America/Campo_Grande	-3.0	-4.0	-4.0
 MX	America/Cancun	-5.0	-5.0	-5.0
 VE	America/Caracas	-4.5	-4.5	-4.5
 GF	America/Cayenne	-3.0	-3.0	-3.0
-KY	America/Cayman	-5.0	-4.0	-5.0
+KY	America/Cayman	-5.0	-5.0	-5.0
 US	America/Chicago	-6.0	-5.0	-6.0
 MX	America/Chihuahua	-7.0	-6.0	-7.0
 CR	America/Costa_Rica	-6.0	-6.0	-6.0
@@ -142,7 +142,7 @@ MX	America/Matamoros	-6.0	-5.0	-6.0
 MX	America/Mazatlan	-7.0	-6.0	-7.0
 US	America/Menominee	-6.0	-5.0	-6.0
 MX	America/Merida	-6.0	-5.0	-6.0
-US	America/Metlakatla	-8.0	-8.0	-8.0
+US	America/Metlakatla	-9.0	-8.0	-9.0
 MX	America/Mexico_City	-6.0	-5.0	-6.0
 PM	America/Miquelon	-3.0	-2.0	-3.0
 CA	America/Moncton	-4.0	-3.0	-4.0
@@ -223,7 +223,7 @@ TH	Asia/Bangkok	7.0	7.0	7.0
 LB	Asia/Beirut	2.0	3.0	2.0
 KG	Asia/Bishkek	6.0	6.0	6.0
 BN	Asia/Brunei	8.0	8.0	8.0
-RU	Asia/Chita	8.0	8.0	8.0
+RU	Asia/Chita	8.0	9.0	8.0
 MN	Asia/Choibalsan	8.0	9.0	8.0
 LK	Asia/Colombo	5.5	5.5	5.5
 SY	Asia/Damascus	2.0	3.0	2.0
