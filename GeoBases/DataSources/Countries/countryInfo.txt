@@ -15,8 +15,8 @@
 # http://geonames.wordpress.com/2010/03/08/xk-country-code-for-kosovo/																		
 #																		
 #																		
-# CS (Serbia and Montenegro) with geonameId = 863038 no longer exists.																		
-# AN (the Netherlands Antilles) with geonameId = 3513447  was dissolved on 10 October 2010.																		
+# CS (Serbia and Montenegro) with geonameId = 8505033 no longer exists.																		
+# AN (the Netherlands Antilles) with geonameId = 8505032 was dissolved on 10 October 2010.																		
 #																		
 #																		
 # Currencies :																		
@@ -299,5 +299,5 @@ YT	MYT	175	MF	Mayotte	Mamoudzou	374	159042	AF	.yt	EUR	Euro	262	#####	^(\d{5})$	f
 ZA	ZAF	710	SF	South Africa	Pretoria	1219912	49000000	AF	.za	ZAR	Rand	27	####	^(\d{4})$	zu,xh,af,nso,en-ZA,tn,st,ts,ss,ve,nr	953987	ZW,SZ,MZ,BW,NA,LS	
 ZM	ZMB	894	ZA	Zambia	Lusaka	752614	13460305	AF	.zm	ZMW	Kwacha	260	#####	^(\d{5})$	en-ZM,bem,loz,lun,lue,ny,toi	895949	ZW,TZ,MZ,CD,NA,MW,AO	
 ZW	ZWE	716	ZI	Zimbabwe	Harare	390580	11651858	AF	.zw	ZWL	Dollar	263			en-ZW,sn,nr,nd	878675	ZA,MZ,BW,ZM	
-CS	SCG	891	YI	Serbia and Montenegro	Belgrade	102350	10829175	EU	.cs	RSD	Dinar	381	#####	^(\d{5})$	cu,hu,sq,sr		AL,HU,MK,RO,HR,BA,BG	
-AN	ANT	530	NT	Netherlands Antilles	Willemstad	960	136197	NA	.an	ANG	Guilder	599			nl-AN,en,es		GP	
+CS	SCG	891	YI	Serbia and Montenegro	Belgrade	102350	10829175	EU	.cs	RSD	Dinar	381	#####	^(\d{5})$	cu,hu,sq,sr	8505033	AL,HU,MK,RO,HR,BA,BG	
+AN	ANT	530	NT	Netherlands Antilles	Willemstad	960	300000	NA	.an	ANG	Guilder	599			nl-AN,en,es	8505032	GP	
