@@ -267,7 +267,7 @@ Information access
  >>> geo_o.get('CDG', 'city_code_list')
  ('PAR',)
  >>> geo_o.get('BRU', 'name')
- 'Brussels Airport'
+ 'Bruxelles National'
  >>> geo_t.get('frnic', 'name')
  'Nice-Ville'
  >>> geo_t.get('fr_not_exist', 'name', default='NAME')
