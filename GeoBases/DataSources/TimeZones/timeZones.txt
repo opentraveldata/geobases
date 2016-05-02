@@ -83,7 +83,7 @@ US	America/Boise	-7.0	-6.0	-7.0
 CA	America/Cambridge_Bay	-7.0	-6.0	-7.0
 BR	America/Campo_Grande	-3.0	-4.0	-4.0
 MX	America/Cancun	-5.0	-5.0	-5.0
-VE	America/Caracas	-4.5	-4.5	-4.5
+VE	America/Caracas	-4.5	-4.0	-4.0
 GF	America/Cayenne	-3.0	-3.0	-3.0
 KY	America/Cayman	-5.0	-5.0	-5.0
 US	America/Chicago	-6.0	-5.0	-6.0
@@ -252,7 +252,7 @@ MY	Asia/Kuala_Lumpur	8.0	8.0	8.0
 MY	Asia/Kuching	8.0	8.0	8.0
 KW	Asia/Kuwait	3.0	3.0	3.0
 MO	Asia/Macau	8.0	8.0	8.0
-RU	Asia/Magadan	10.0	10.0	10.0
+RU	Asia/Magadan	10.0	11.0	11.0
 ID	Asia/Makassar	8.0	8.0	8.0
 PH	Asia/Manila	8.0	8.0	8.0
 OM	Asia/Muscat	4.0	4.0	4.0
