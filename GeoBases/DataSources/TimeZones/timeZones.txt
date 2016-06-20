@@ -280,6 +280,7 @@ GE	Asia/Tbilisi	4.0	4.0	4.0
 IR	Asia/Tehran	3.5	4.5	3.5
 BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
+RU	Asia/Tomsk	6.0	7.0	7.0
 MN	Asia/Ulaanbaatar	8.0	9.0	8.0
 CN	Asia/Urumqi	6.0	6.0	6.0
 RU	Asia/Ust-Nera	10.0	10.0	10.0
@@ -332,6 +333,7 @@ TR	Europe/Istanbul	2.0	3.0	2.0
 JE	Europe/Jersey	0.0	1.0	0.0
 RU	Europe/Kaliningrad	2.0	2.0	2.0
 UA	Europe/Kiev	2.0	3.0	2.0
+RU	Europe/Kirov	3.0	3.0	3.0
 PT	Europe/Lisbon	0.0	1.0	0.0
 SI	Europe/Ljubljana	1.0	2.0	1.0
 GB	Europe/London	0.0	1.0	0.0
