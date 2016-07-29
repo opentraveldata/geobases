@@ -258,7 +258,7 @@ PH	Asia/Manila	8.0	8.0	8.0
 OM	Asia/Muscat	4.0	4.0	4.0
 CY	Asia/Nicosia	2.0	3.0	2.0
 RU	Asia/Novokuznetsk	7.0	7.0	7.0
-RU	Asia/Novosibirsk	6.0	6.0	6.0
+RU	Asia/Novosibirsk	6.0	6.0	7.0
 RU	Asia/Omsk	6.0	6.0	6.0
 KZ	Asia/Oral	5.0	5.0	5.0
 KH	Asia/Phnom_Penh	7.0	7.0	7.0
