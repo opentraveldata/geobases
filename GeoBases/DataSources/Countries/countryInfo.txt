@@ -104,7 +104,7 @@ CV	CPV	132	CV	Cape Verde	Praia	4033	508659	AF	.cv	CVE	Escudo	238	####	^(\d{4})$	
 CW	CUW	531	UC	Curacao	 Willemstad	444	141766	NA	.cw	ANG	Guilder	599			nl,pap	7626836		
 CX	CXR	162	KT	Christmas Island	Flying Fish Cove	135	1500	AS	.cx	AUD	Dollar	61	####	^(\d{4})$	en,zh,ms-CC	2078138		
 CY	CYP	196	CY	Cyprus	Nicosia	9250	1102677	EU	.cy	EUR	Euro	357	####	^(\d{4})$	el-CY,tr-CY,en	146669		
-CZ	CZE	203	EZ	Czech Republic	Prague	78866	10476000	EU	.cz	CZK	Koruna	420	### ##	^\d{3}\s?\d{2}$	cs,sk	3077311	PL,DE,SK,AT	
+CZ	CZE	203	EZ	Czechia	Prague	78866	10476000	EU	.cz	CZK	Koruna	420	### ##	^\d{3}\s?\d{2}$	cs,sk	3077311	PL,DE,SK,AT	
 DE	DEU	276	GM	Germany	Berlin	357021	81802257	EU	.de	EUR	Euro	49	#####	^(\d{5})$	de	2921044	CH,PL,NL,DK,BE,CZ,LU,FR,AT	
 DJ	DJI	262	DJ	Djibouti	Djibouti	23000	740528	AF	.dj	DJF	Franc	253			fr-DJ,ar,so-DJ,aa	223816	ER,ET,SO	
 DK	DNK	208	DA	Denmark	Copenhagen	43094	5484000	EU	.dk	DKK	Krone	45	####	^(\d{4})$	da-DK,en,fo,de-DK	2623032	DE	
