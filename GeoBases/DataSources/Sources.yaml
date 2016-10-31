@@ -331,7 +331,7 @@ optd_por: &optd_por_conf
         - alt_name_section
         - wac
         - wac_name
-        - currency
+        - ccy_code
 
 
 ori_por: *optd_por_conf

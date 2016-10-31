@@ -329,7 +329,7 @@ GI	Europe/Gibraltar	1.0	2.0	1.0
 GG	Europe/Guernsey	0.0	1.0	0.0
 FI	Europe/Helsinki	2.0	3.0	2.0
 IM	Europe/Isle_of_Man	0.0	1.0	0.0
-TR	Europe/Istanbul	2.0	3.0	2.0
+TR	Europe/Istanbul	2.0	3.0	3.0
 JE	Europe/Jersey	0.0	1.0	0.0
 RU	Europe/Kaliningrad	2.0	2.0	2.0
 UA	Europe/Kiev	2.0	3.0	2.0
