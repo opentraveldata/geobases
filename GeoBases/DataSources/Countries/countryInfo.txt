@@ -59,7 +59,7 @@ AM	ARM	051	AM	Armenia	Yerevan	29800	2968000	AS	.am	AMD	Dram	374	######	^(\d{6})$
 AO	AGO	024	AO	Angola	Luanda	1246700	13068161	AF	.ao	AOA	Kwanza	244			pt-AO	3351879	CD,NA,ZM,CG	
 AQ	ATA	010	AY	Antarctica		14000000	0	AN	.aq							6697173		
 AR	ARG	032	AR	Argentina	Buenos Aires	2766890	41343201	SA	.ar	ARS	Peso	54	@####@@@	^[A-Z]?\d{4}[A-Z]{0,3}$	es-AR,en,it,de,fr,gn	3865483	CL,BO,UY,PY,BR	
-AS	ASM	016	AQ	American Samoa	Pago Pago	199	57881	OC	.as	USD	Dollar	+1-684			en-AS,sm,to	5880801		
+AS	ASM	016	AQ	American Samoa	Pago Pago	199	57881	OC	.as	USD	Dollar	+1-684	#####-####	96799	en-AS,sm,to	5880801		
 AT	AUT	040	AU	Austria	Vienna	83858	8205000	EU	.at	EUR	Euro	43	####	^(\d{4})$	de-AT,hr,hu,sl	2782113	CH,DE,HU,SK,CZ,IT,SI,LI	
 AU	AUS	036	AS	Australia	Canberra	7686850	21515754	OC	.au	AUD	Dollar	61	####	^(\d{4})$	en-AU	2077456		
 AW	ABW	533	AA	Aruba	Oranjestad	193	71566	NA	.aw	AWG	Guilder	297			nl-AW,es,en	3577279		
@@ -98,7 +98,7 @@ CL	CHL	152	CI	Chile	Santiago	756950	16746491	SA	.cl	CLP	Peso	56	#######	^(\d{7})
 CM	CMR	120	CM	Cameroon	Yaounde	475440	19294149	AF	.cm	XAF	Franc	237			en-CM,fr-CM	2233387	TD,CF,GA,GQ,CG,NG	
 CN	CHN	156	CH	China	Beijing	9596960	1330044000	AS	.cn	CNY	Yuan Renminbi	86	######	^(\d{6})$	zh-CN,yue,wuu,dta,ug,za	1814991	LA,BT,TJ,KZ,MN,AF,NP,MM,KG,PK,KP,RU,VN,IN	
 CO	COL	170	CO	Colombia	Bogota	1138910	47790000	SA	.co	COP	Peso	57			es-CO	3686110	EC,PE,PA,BR,VE	
-CR	CRI	188	CS	Costa Rica	San Jose	51100	4516220	NA	.cr	CRC	Colon	506	####	^(\d{4})$	es-CR,en	3624060	PA,NI	
+CR	CRI	188	CS	Costa Rica	San Jose	51100	4516220	NA	.cr	CRC	Colon	506	#####	^(\d{5})$	es-CR,en	3624060	PA,NI	
 CU	CUB	192	CU	Cuba	Havana	110860	11423000	NA	.cu	CUP	Peso	53	CP #####	^(?:CP)*(\d{5})$	es-CU	3562981	US	
 CV	CPV	132	CV	Cape Verde	Praia	4033	508659	AF	.cv	CVE	Escudo	238	####	^(\d{4})$	pt-CV	3374766		
 CW	CUW	531	UC	Curacao	 Willemstad	444	141766	NA	.cw	ANG	Guilder	599			nl,pap	7626836		
@@ -122,7 +122,7 @@ FI	FIN	246	FI	Finland	Helsinki	337030	5244000	EU	.fi	EUR	Euro	358	#####	^(?:FI)*
 FJ	FJI	242	FJ	Fiji	Suva	18270	875983	OC	.fj	FJD	Dollar	679			en-FJ,fj	2205218		
 FK	FLK	238	FK	Falkland Islands	Stanley	12173	2638	SA	.fk	FKP	Pound	500			en-FK	3474414		
 FM	FSM	583	FM	Micronesia	Palikir	702	107708	OC	.fm	USD	Dollar	691	#####	^(\d{5})$	en-FM,chk,pon,yap,kos,uli,woe,nkr,kpg	2081918		
-FO	FRO	234	FO	Faroe Islands	Torshavn	1399	48228	EU	.fo	DKK	Krone	298	FO-###	^(?:FO)*(\d{3})$	fo,da-FO	2622320		
+FO	FRO	234	FO	Faroe Islands	Torshavn	1399	48228	EU	.fo	DKK	Krone	298	###	^(?:FO)*(\d{3})$	fo,da-FO	2622320		
 FR	FRA	250	FR	France	Paris	547030	64768389	EU	.fr	EUR	Euro	33	#####	^(\d{5})$	fr-FR,frp,br,co,ca,eu,oc	3017382	CH,DE,BE,LU,IT,AD,MC,ES	
 GA	GAB	266	GB	Gabon	Libreville	267667	1545255	AF	.ga	XAF	Franc	241			fr-GA	2400553	CM,GQ,CG	
 GB	GBR	826	UK	United Kingdom	London	244820	62348447	EU	.uk	GBP	Pound	44	@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA	^((?:(?:[A-PR-UWYZ][A-HK-Y]\d[ABEHMNPRV-Y0-9]|[A-PR-UWYZ]\d[A-HJKPS-UW0-9])\s\d[ABD-HJLNP-UW-Z]{2})|GIR\s?0AA)$	en-GB,cy-GB,gd	2635167	IE	
@@ -186,19 +186,19 @@ LT	LTU	440	LH	Lithuania	Vilnius	65200	2944459	EU	.lt	EUR	Euro	370	LT-#####	^(?:L
 LU	LUX	442	LU	Luxembourg	Luxembourg	2586	497538	EU	.lu	EUR	Euro	352	L-####	^(?:L-)?\d{4}$	lb,de-LU,fr-LU	2960313	DE,BE,FR	
 LV	LVA	428	LG	Latvia	Riga	64589	2217969	EU	.lv	EUR	Euro	371	LV-####	^(?:LV)*(\d{4})$	lv,ru,lt	458258	LT,EE,BY,RU	
 LY	LBY	434	LY	Libya	Tripoli	1759540	6461454	AF	.ly	LYD	Dinar	218			ar-LY,it,en	2215636	TD,NE,DZ,SD,TN,EG	
-MA	MAR	504	MO	Morocco	Rabat	446550	31627428	AF	.ma	MAD	Dirham	212	#####	^(\d{5})$	ar-MA,fr	2542007	DZ,EH,ES	
+MA	MAR	504	MO	Morocco	Rabat	446550	33848242	AF	.ma	MAD	Dirham	212	#####	^(\d{5})$	ar-MA,ber,fr	2542007	DZ,EH,ES	
 MC	MCO	492	MN	Monaco	Monaco	1.95	32965	EU	.mc	EUR	Euro	377	#####	^(\d{5})$	fr-MC,en,it	2993457	FR	
 MD	MDA	498	MD	Moldova	Chisinau	33843	4324000	EU	.md	MDL	Leu	373	MD-####	^MD-\d{4}$	ro,ru,gag,tr	617790	RO,UA	
 ME	MNE	499	MJ	Montenegro	Podgorica	14026	666730	EU	.me	EUR	Euro	382	#####	^(\d{5})$	sr,hu,bs,sq,hr,rom	3194884	AL,HR,BA,RS,XK	
 MF	MAF	663	RN	Saint Martin	Marigot	53	35925	NA	.gp	EUR	Euro	590	### ###		fr	3578421	SX	
 MG	MDG	450	MA	Madagascar	Antananarivo	587040	21281844	AF	.mg	MGA	Ariary	261	###	^(\d{3})$	fr-MG,mg	1062947		
-MH	MHL	584	RM	Marshall Islands	Majuro	181.3	65859	OC	.mh	USD	Dollar	692			mh,en-MH	2080185		
+MH	MHL	584	RM	Marshall Islands	Majuro	181.3	65859	OC	.mh	USD	Dollar	692	#####-####	^969\d{2}(-\d{4})$	mh,en-MH	2080185		
 MK	MKD	807	MK	Macedonia	Skopje	25333	2062294	EU	.mk	MKD	Denar	389	####	^(\d{4})$	mk,sq,tr,rmm,sr	718075	AL,GR,BG,RS,XK	
 ML	MLI	466	ML	Mali	Bamako	1240000	13796354	AF	.ml	XOF	Franc	223			fr-ML,bm	2453866	SN,NE,DZ,CI,GN,MR,BF	
 MM	MMR	104	BM	Myanmar	Nay Pyi Taw	678500	53414374	AS	.mm	MMK	Kyat	95	#####	^(\d{5})$	my	1327865	CN,LA,TH,BD,IN	
 MN	MNG	496	MG	Mongolia	Ulan Bator	1565000	3086918	AS	.mn	MNT	Tugrik	976	######	^(\d{6})$	mn,ru	2029969	CN,RU	
 MO	MAC	446	MC	Macao	Macao	254	449198	AS	.mo	MOP	Pataca	853			zh,zh-MO,pt	1821275		
-MP	MNP	580	CQ	Northern Mariana Islands	Saipan	477	53883	OC	.mp	USD	Dollar	+1-670			fil,tl,zh,ch-MP,en-MP	4041468		
+MP	MNP	580	CQ	Northern Mariana Islands	Saipan	477	53883	OC	.mp	USD	Dollar	+1-670	#####-####	^9695\d{1}(-\d{4})$	fil,tl,zh,ch-MP,en-MP	4041468		
 MQ	MTQ	474	MB	Martinique	Fort-de-France	1100	432900	NA	.mq	EUR	Euro	596	#####	^(\d{5})$	fr-MQ	3570311		
 MR	MRT	478	MR	Mauritania	Nouakchott	1030700	3205060	AF	.mr	MRO	Ouguiya	222			ar-MR,fuc,snk,fr,mey,wo	2378080	SN,DZ,EH,ML	
 MS	MSR	500	MH	Montserrat	Plymouth	102	9341	NA	.ms	XCD	Dollar	+1-664			en-MS	3578097		
@@ -251,7 +251,7 @@ SE	SWE	752	SW	Sweden	Stockholm	449964	9828655	EU	.se	SEK	Krona	46	### ##	^(?:SE)
 SG	SGP	702	SN	Singapore	Singapore	692.7	4701069	AS	.sg	SGD	Dollar	65	######	^(\d{6})$	cmn,en-SG,ms-SG,ta-SG,zh-SG	1880251		
 SH	SHN	654	SH	Saint Helena	Jamestown	410	7460	AF	.sh	SHP	Pound	290	STHL 1ZZ	^(STHL1ZZ)$	en-SH	3370751		
 SI	SVN	705	SI	Slovenia	Ljubljana	20273	2007000	EU	.si	EUR	Euro	386	####	^(?:SI)*(\d{4})$	sl,sh	3190538	HU,IT,HR,AT	
-SJ	SJM	744	SV	Svalbard and Jan Mayen	Longyearbyen	62049	2550	EU	.sj	NOK	Krone	47			no,ru	607072		
+SJ	SJM	744	SV	Svalbard and Jan Mayen	Longyearbyen	62049	2550	EU	.sj	NOK	Krone	47	####	^(\d{4})$	no,ru	607072		
 SK	SVK	703	LO	Slovakia	Bratislava	48845	5455000	EU	.sk	EUR	Euro	421	### ##	^\d{3}\s?\d{2}$	sk,hu	3057568	PL,HU,CZ,UA,AT	
 SL	SLE	694	SL	Sierra Leone	Freetown	71740	5245695	AF	.sl	SLL	Leone	232			en-SL,men,tem	2403846	LR,GN	
 SM	SMR	674	SM	San Marino	San Marino	61.2	31477	EU	.sm	EUR	Euro	378	4789#	^(4789\d)$	it-SM	3168068	IT	
