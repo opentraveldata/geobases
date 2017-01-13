@@ -397,6 +397,8 @@ airlines:
         - bases
         - key
         - version
+        - parent_pk_list
+        - successor_pk_list
 
 
 cabins:

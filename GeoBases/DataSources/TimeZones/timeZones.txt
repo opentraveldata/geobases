@@ -1,4 +1,4 @@
-CountryCode	TimeZoneId	GMT offset 1. Jan 2016	DST offset 1. Jul 2016	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2017	DST offset 1. Jul 2017	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -83,7 +83,7 @@ US	America/Boise	-7.0	-6.0	-7.0
 CA	America/Cambridge_Bay	-7.0	-6.0	-7.0
 BR	America/Campo_Grande	-3.0	-4.0	-4.0
 MX	America/Cancun	-5.0	-5.0	-5.0
-VE	America/Caracas	-4.5	-4.0	-4.0
+VE	America/Caracas	-4.0	-4.0	-4.0
 GF	America/Cayenne	-3.0	-3.0	-3.0
 KY	America/Cayman	-5.0	-5.0	-5.0
 US	America/Chicago	-6.0	-5.0	-6.0
@@ -220,11 +220,11 @@ IQ	Asia/Baghdad	3.0	3.0	3.0
 BH	Asia/Bahrain	3.0	3.0	3.0
 AZ	Asia/Baku	4.0	4.0	4.0
 TH	Asia/Bangkok	7.0	7.0	7.0
-RU	Asia/Barnaul	6.0	7.0	7.0
+RU	Asia/Barnaul	7.0	7.0	7.0
 LB	Asia/Beirut	2.0	3.0	2.0
 KG	Asia/Bishkek	6.0	6.0	6.0
 BN	Asia/Brunei	8.0	8.0	8.0
-RU	Asia/Chita	8.0	9.0	9.0
+RU	Asia/Chita	9.0	9.0	9.0
 MN	Asia/Choibalsan	8.0	9.0	8.0
 LK	Asia/Colombo	5.5	5.5	5.5
 SY	Asia/Damascus	2.0	3.0	2.0
@@ -252,13 +252,13 @@ MY	Asia/Kuala_Lumpur	8.0	8.0	8.0
 MY	Asia/Kuching	8.0	8.0	8.0
 KW	Asia/Kuwait	3.0	3.0	3.0
 MO	Asia/Macau	8.0	8.0	8.0
-RU	Asia/Magadan	10.0	11.0	11.0
+RU	Asia/Magadan	11.0	11.0	11.0
 ID	Asia/Makassar	8.0	8.0	8.0
 PH	Asia/Manila	8.0	8.0	8.0
 OM	Asia/Muscat	4.0	4.0	4.0
 CY	Asia/Nicosia	2.0	3.0	2.0
 RU	Asia/Novokuznetsk	7.0	7.0	7.0
-RU	Asia/Novosibirsk	6.0	6.0	7.0
+RU	Asia/Novosibirsk	7.0	7.0	7.0
 RU	Asia/Omsk	6.0	6.0	6.0
 KZ	Asia/Oral	5.0	5.0	5.0
 KH	Asia/Phnom_Penh	7.0	7.0	7.0
@@ -268,7 +268,7 @@ QA	Asia/Qatar	3.0	3.0	3.0
 KZ	Asia/Qyzylorda	6.0	6.0	6.0
 MM	Asia/Rangoon	6.5	6.5	6.5
 SA	Asia/Riyadh	3.0	3.0	3.0
-RU	Asia/Sakhalin	10.0	11.0	11.0
+RU	Asia/Sakhalin	11.0	11.0	11.0
 UZ	Asia/Samarkand	5.0	5.0	5.0
 KR	Asia/Seoul	9.0	9.0	9.0
 CN	Asia/Shanghai	8.0	8.0	8.0
@@ -280,7 +280,7 @@ GE	Asia/Tbilisi	4.0	4.0	4.0
 IR	Asia/Tehran	3.5	4.5	3.5
 BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
-RU	Asia/Tomsk	6.0	7.0	7.0
+RU	Asia/Tomsk	7.0	7.0	7.0
 MN	Asia/Ulaanbaatar	8.0	9.0	8.0
 CN	Asia/Urumqi	6.0	6.0	6.0
 RU	Asia/Ust-Nera	10.0	10.0	10.0
@@ -313,7 +313,7 @@ AU	Australia/Perth	8.0	8.0	8.0
 AU	Australia/Sydney	11.0	10.0	10.0
 NL	Europe/Amsterdam	1.0	2.0	1.0
 AD	Europe/Andorra	1.0	2.0	1.0
-RU	Europe/Astrakhan	3.0	4.0	4.0
+RU	Europe/Astrakhan	4.0	4.0	4.0
 GR	Europe/Athens	2.0	3.0	2.0
 RS	Europe/Belgrade	1.0	2.0	1.0
 DE	Europe/Berlin	1.0	2.0	1.0
@@ -329,7 +329,7 @@ GI	Europe/Gibraltar	1.0	2.0	1.0
 GG	Europe/Guernsey	0.0	1.0	0.0
 FI	Europe/Helsinki	2.0	3.0	2.0
 IM	Europe/Isle_of_Man	0.0	1.0	0.0
-TR	Europe/Istanbul	2.0	3.0	3.0
+TR	Europe/Istanbul	3.0	3.0	3.0
 JE	Europe/Jersey	0.0	1.0	0.0
 RU	Europe/Kaliningrad	2.0	2.0	2.0
 UA	Europe/Kiev	2.0	3.0	2.0
@@ -359,7 +359,7 @@ BG	Europe/Sofia	2.0	3.0	2.0
 SE	Europe/Stockholm	1.0	2.0	1.0
 EE	Europe/Tallinn	2.0	3.0	2.0
 AL	Europe/Tirane	1.0	2.0	1.0
-RU	Europe/Ulyanovsk	3.0	4.0	4.0
+RU	Europe/Ulyanovsk	4.0	4.0	4.0
 UA	Europe/Uzhgorod	2.0	3.0	2.0
 LI	Europe/Vaduz	1.0	2.0	1.0
 VA	Europe/Vatican	1.0	2.0	1.0
