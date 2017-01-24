@@ -257,6 +257,7 @@ S	AMTH	amphitheater	an oval or circular structure with rising tiers of seats abo
 S	ANS	archaeological/prehistoric site	a place where archeological remains, old structures, or cultural artifacts are located
 S	AQC	aquaculture facility	facility or area for the cultivation of aquatic animals and plants, especially fish, shellfish, and seaweed, in natural or controlled marine or freshwater environments; underwater agriculture
 S	ARCH	arch	a natural or man-made structure in the form of an arch
+S	ARCHV	archive	a place or institution where documents are preserved
 S	ASTR	astronomical station	a point on the earth whose position has been determined by observations of celestial bodies
 S	ASYL	asylum	a facility where the insane are cared for and protected
 S	ATHF	athletic field	a tract of land used for playing team sports, and athletic track and field events
@@ -473,6 +474,7 @@ S	TMB	tomb(s)	a structure for interring bodies
 S	TMPL	temple(s)	an edifice dedicated to religious worship
 S	TNKD	cattle dipping tank	a small artificial pond used for immersing cattle in chemically treated water for disease control
 S	TOWR	tower	a high conspicuous structure, typically much higher than its diameter
+S	TRAM	tram	rail vehicle along urban streets (also known as streetcar or trolley)
 S	TRANT	transit terminal	facilities for the handling of vehicular freight and passengers
 S	TRIG	triangulation station	a point on the earth whose position has been determined by triangulation
 S	TRMO	oil pipeline terminal	a tank farm or loading facility at the end of an oil pipeline
