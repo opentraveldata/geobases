@@ -344,7 +344,7 @@ class GeoBase(object):
                     continue
 
                 try:
-                    with open(file_) as source_fl:
+                    with open(file_, encoding="utf-8") as source_fl:
                         self._load(source_fl, self._verbose)
                 except IOError:
                     if self._verbose:
