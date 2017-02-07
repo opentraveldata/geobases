@@ -5,7 +5,7 @@
 Main installation file for GeoBases.
 """
 
-from __future__ import with_statement
+from __future__ import print_function, with_statement
 
 from sys import stderr
 from os import getenv
