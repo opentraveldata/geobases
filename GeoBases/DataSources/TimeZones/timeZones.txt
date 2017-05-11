@@ -197,13 +197,13 @@ CA	America/Whitehorse	-8.0	-7.0	-8.0
 CA	America/Winnipeg	-6.0	-5.0	-6.0
 US	America/Yakutat	-9.0	-8.0	-9.0
 CA	America/Yellowknife	-7.0	-6.0	-7.0
-AQ	Antarctica/Casey	8.0	8.0	8.0
+AQ	Antarctica/Casey	11.0	11.0	11.0
 AQ	Antarctica/Davis	7.0	7.0	7.0
 AQ	Antarctica/DumontDUrville	10.0	10.0	10.0
 AU	Antarctica/Macquarie	11.0	11.0	11.0
 AQ	Antarctica/Mawson	5.0	5.0	5.0
 AQ	Antarctica/McMurdo	13.0	12.0	12.0
-AQ	Antarctica/Palmer	-3.0	-4.0	-4.0
+AQ	Antarctica/Palmer	-3.0	-3.0	-3.0
 AQ	Antarctica/Rothera	-3.0	-3.0	-3.0
 AQ	Antarctica/Syowa	3.0	3.0	3.0
 AQ	Antarctica/Troll	0.0	2.0	0.0
@@ -225,7 +225,7 @@ LB	Asia/Beirut	2.0	3.0	2.0
 KG	Asia/Bishkek	6.0	6.0	6.0
 BN	Asia/Brunei	8.0	8.0	8.0
 RU	Asia/Chita	9.0	9.0	9.0
-MN	Asia/Choibalsan	8.0	9.0	8.0
+MN	Asia/Choibalsan	8.0	8.0	8.0
 LK	Asia/Colombo	5.5	5.5	5.5
 SY	Asia/Damascus	2.0	3.0	2.0
 BD	Asia/Dhaka	6.0	6.0	6.0
@@ -236,7 +236,7 @@ PS	Asia/Gaza	2.0	3.0	2.0
 PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
 HK	Asia/Hong_Kong	8.0	8.0	8.0
-MN	Asia/Hovd	7.0	8.0	7.0
+MN	Asia/Hovd	7.0	7.0	7.0
 RU	Asia/Irkutsk	8.0	8.0	8.0
 ID	Asia/Jakarta	7.0	7.0	7.0
 ID	Asia/Jayapura	9.0	9.0	9.0
@@ -281,7 +281,7 @@ IR	Asia/Tehran	3.5	4.5	3.5
 BT	Asia/Thimphu	6.0	6.0	6.0
 JP	Asia/Tokyo	9.0	9.0	9.0
 RU	Asia/Tomsk	7.0	7.0	7.0
-MN	Asia/Ulaanbaatar	8.0	9.0	8.0
+MN	Asia/Ulaanbaatar	8.0	8.0	8.0
 CN	Asia/Urumqi	6.0	6.0	6.0
 RU	Asia/Ust-Nera	10.0	10.0	10.0
 LA	Asia/Vientiane	7.0	7.0	7.0
@@ -417,6 +417,6 @@ CK	Pacific/Rarotonga	-10.0	-10.0	-10.0
 MP	Pacific/Saipan	10.0	10.0	10.0
 PF	Pacific/Tahiti	-10.0	-10.0	-10.0
 KI	Pacific/Tarawa	12.0	12.0	12.0
-TO	Pacific/Tongatapu	13.0	13.0	13.0
+TO	Pacific/Tongatapu	14.0	13.0	13.0
 UM	Pacific/Wake	12.0	12.0	12.0
 WF	Pacific/Wallis	12.0	12.0	12.0
