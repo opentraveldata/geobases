@@ -258,6 +258,7 @@ S	ANS	archaeological/prehistoric site	a place where archeological remains, old s
 S	AQC	aquaculture facility	facility or area for the cultivation of aquatic animals and plants, especially fish, shellfish, and seaweed, in natural or controlled marine or freshwater environments; underwater agriculture
 S	ARCH	arch	a natural or man-made structure in the form of an arch
 S	ARCHV	archive	a place or institution where documents are preserved
+S	ART	piece of art	a piece of art, like a sculpture, painting. In contrast to monument (MNMT) it is not commemorative.
 S	ASTR	astronomical station	a point on the earth whose position has been determined by observations of celestial bodies
 S	ASYL	asylum	a facility where the insane are cared for and protected
 S	ATHF	athletic field	a tract of land used for playing team sports, and athletic track and field events

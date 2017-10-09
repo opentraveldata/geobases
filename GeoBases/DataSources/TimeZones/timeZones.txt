@@ -163,10 +163,11 @@ PA	America/Panama	-5.0	-5.0	-5.0
 CA	America/Pangnirtung	-5.0	-4.0	-5.0
 SR	America/Paramaribo	-3.0	-3.0	-3.0
 US	America/Phoenix	-7.0	-7.0	-7.0
-HT	America/Port-au-Prince	-5.0	-5.0	-5.0
+HT	America/Port-au-Prince	-5.0	-4.0	-5.0
 TT	America/Port_of_Spain	-4.0	-4.0	-4.0
 BR	America/Porto_Velho	-4.0	-4.0	-4.0
 PR	America/Puerto_Rico	-4.0	-4.0	-4.0
+CL	America/Punta_Arenas	-3.0	-3.0	-3.0
 CA	America/Rainy_River	-6.0	-5.0	-6.0
 CA	America/Rankin_Inlet	-6.0	-5.0	-6.0
 BR	America/Recife	-3.0	-3.0	-3.0
@@ -216,6 +217,7 @@ RU	Asia/Anadyr	12.0	12.0	12.0
 KZ	Asia/Aqtau	5.0	5.0	5.0
 KZ	Asia/Aqtobe	5.0	5.0	5.0
 TM	Asia/Ashgabat	5.0	5.0	5.0
+KZ	Asia/Atyrau	5.0	5.0	5.0
 IQ	Asia/Baghdad	3.0	3.0	3.0
 BH	Asia/Bahrain	3.0	3.0	3.0
 AZ	Asia/Baku	4.0	4.0	4.0
@@ -232,6 +234,7 @@ BD	Asia/Dhaka	6.0	6.0	6.0
 TL	Asia/Dili	9.0	9.0	9.0
 AE	Asia/Dubai	4.0	4.0	4.0
 TJ	Asia/Dushanbe	5.0	5.0	5.0
+CY	Asia/Famagusta	3.0	3.0	3.0
 PS	Asia/Gaza	2.0	3.0	2.0
 PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
@@ -266,7 +269,6 @@ ID	Asia/Pontianak	7.0	7.0	7.0
 KP	Asia/Pyongyang	8.5	8.5	8.5
 QA	Asia/Qatar	3.0	3.0	3.0
 KZ	Asia/Qyzylorda	6.0	6.0	6.0
-MM	Asia/Rangoon	6.5	6.5	6.5
 SA	Asia/Riyadh	3.0	3.0	3.0
 RU	Asia/Sakhalin	11.0	11.0	11.0
 UZ	Asia/Samarkand	5.0	5.0	5.0
@@ -287,6 +289,7 @@ RU	Asia/Ust-Nera	10.0	10.0	10.0
 LA	Asia/Vientiane	7.0	7.0	7.0
 RU	Asia/Vladivostok	10.0	10.0	10.0
 RU	Asia/Yakutsk	9.0	9.0	9.0
+MM	Asia/Yangon	6.5	6.5	6.5
 RU	Asia/Yekaterinburg	5.0	5.0	5.0
 AM	Asia/Yerevan	4.0	4.0	4.0
 PT	Atlantic/Azores	-1.0	0.0	-1.0
@@ -353,6 +356,7 @@ IT	Europe/Rome	1.0	2.0	1.0
 RU	Europe/Samara	4.0	4.0	4.0
 SM	Europe/San_Marino	1.0	2.0	1.0
 BA	Europe/Sarajevo	1.0	2.0	1.0
+RU	Europe/Saratov	4.0	4.0	4.0
 RU	Europe/Simferopol	3.0	3.0	3.0
 MK	Europe/Skopje	1.0	2.0	1.0
 BG	Europe/Sofia	2.0	3.0	2.0
@@ -397,7 +401,6 @@ PF	Pacific/Gambier	-9.0	-9.0	-9.0
 SB	Pacific/Guadalcanal	11.0	11.0	11.0
 GU	Pacific/Guam	10.0	10.0	10.0
 US	Pacific/Honolulu	-10.0	-10.0	-10.0
-UM	Pacific/Johnston	-10.0	-10.0	-10.0
 KI	Pacific/Kiritimati	14.0	14.0	14.0
 FM	Pacific/Kosrae	11.0	11.0	11.0
 MH	Pacific/Kwajalein	12.0	12.0	12.0
