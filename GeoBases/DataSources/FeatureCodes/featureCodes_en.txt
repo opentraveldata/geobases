@@ -253,6 +253,7 @@ S	AIRF	airfield	a place on land where aircraft land and take off; no facilities 
 S	AIRH	heliport	a place where helicopters land and take off
 S	AIRP	airport	a place where aircraft regularly land and take off, with runways, navigational aids, and major facilities for the commercial handling of passengers and cargo
 S	AIRQ	abandoned airfield	
+S	AIRT	terminal	airport facilities for the handling of freight and passengers
 S	AMTH	amphitheater	an oval or circular structure with rising tiers of seats about a stage or open space
 S	ANS	archaeological/prehistoric site	a place where archeological remains, old structures, or cultural artifacts are located
 S	AQC	aquaculture facility	facility or area for the cultivation of aquatic animals and plants, especially fish, shellfish, and seaweed, in natural or controlled marine or freshwater environments; underwater agriculture
@@ -267,6 +268,7 @@ S	BANK	bank	A business establishment in which money is kept for saving or commer
 S	BCN	beacon	a fixed artificial navigation mark
 S	BDG	bridge	a structure erected across an obstacle such as a stream, road, etc., in order to carry roads, railroads, and pedestrians across
 S	BDGQ	ruined bridge	a destroyed or decayed bridge which is no longer functional
+S	BLDA	apartment building	a building containing several individual apartments
 S	BLDG	building(s)	a structure built for permanent use, as a house, factory, etc.
 S	BLDO	office building	commercial building where business and/or services are conducted
 S	BP	boundary marker	a fixture marking a point along a boundary
@@ -324,6 +326,7 @@ S	FRMS	farms	tracts of land with associated buildings devoted to agriculture
 S	FRMT	farmstead	the buildings and adjacent service areas of a farm
 S	FT	fort	a defensive structure or earthworks
 S	FY	ferry	a boat or other floating conveyance and terminal facilities regularly used to transport people and vehicles across a waterbody
+S	FYT	ferry terminal	a place where ferries pick-up and discharge passengers, vehicles and or cargo
 S	GATE	gate	a controlled access entrance or exit
 S	GDN	garden(s)	an enclosure for displaying selected plant or animal life
 S	GHAT	ghat	a set of steps leading to a river, which are of religious significance, and at their base is usually a platform for bathing
@@ -417,6 +420,7 @@ S	PRNJ	reformatory	a facility for confining, training, and reforming young law o
 S	PRNQ	abandoned prison	
 S	PS	power station	a facility for generating electric power
 S	PSH	hydroelectric power station	a building where electricity is generated from water power
+S	PSN	nuclear power station	nuclear power station
 S	PSTB	border post	a post or station at an international boundary for the regulation of movement of people and goods
 S	PSTC	customs post	a building at an international boundary where customs and duties are paid on goods
 S	PSTP	patrol post	a post from which patrols are sent out
@@ -424,6 +428,7 @@ S	PYR	pyramid	an ancient massive structure of square ground plan with four trian
 S	PYRS	pyramids	ancient massive structures of square ground plan with four triangular faces meeting at a point and used for enclosing tombs
 S	QUAY	quay	a structure of solid construction along a shore or bank which provides berthing for ships and which generally provides cargo handling facilities
 S	RDCR	traffic circle	a road junction formed around a central circle about which traffic moves in one direction only
+S	RDIN	intersection	a junction of two or more highways by a system of separate levels that permit traffic to pass from one to another without the crossing of traffic streams
 S	RECG	golf course	a recreation field where golf is played
 S	RECR	racetrack	a track where races are held
 S	REST	restaurant	A place where meals are served to the public
@@ -470,10 +475,12 @@ S	STNS	satellite station	a facility for tracking and communicating with orbiting
 S	STNW	whaling station	a facility for butchering whales and processing train oil
 S	STPS	steps	stones or slabs placed for ease in ascending or descending a steep slope
 S	SWT	sewage treatment plant	facility for the processing of sewage and/or wastewater
+S	SYG	synagogue	a place for Jewish worship and religious instruction
 S	THTR	theater	A building, room, or outdoor structure for the presentation of plays, films, or other dramatic performances
 S	TMB	tomb(s)	a structure for interring bodies
 S	TMPL	temple(s)	an edifice dedicated to religious worship
 S	TNKD	cattle dipping tank	a small artificial pond used for immersing cattle in chemically treated water for disease control
+S	TOLL	toll gate/barrier	highway toll collection station
 S	TOWR	tower	a high conspicuous structure, typically much higher than its diameter
 S	TRAM	tram	rail vehicle along urban streets (also known as streetcar or trolley)
 S	TRANT	transit terminal	facilities for the handling of vehicular freight and passengers
@@ -656,6 +663,7 @@ V	BUSH	bush(es)	a small clump of conspicuous bushes in an otherwise bare area
 V	CULT	cultivated area	an area under cultivation
 V	FRST	forest(s)	an area dominated by tree vegetation
 V	FRSTF	fossilized forest	a forest fossilized by geologic processes and now exposed at the earth's surface
+V	GROVE	grove	a small wooded area or collection of trees growing closely together, occurring naturally or deliberately planted
 V	GRSLD	grassland	an area dominated by grass vegetation
 V	GRVC	coconut grove	a planting of coconut trees
 V	GRVO	olive grove	a planting of olive trees
