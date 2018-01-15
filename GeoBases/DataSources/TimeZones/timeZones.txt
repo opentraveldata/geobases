@@ -1,4 +1,4 @@
-CountryCode	TimeZoneId	GMT offset 1. Jan 2017	DST offset 1. Jul 2017	rawOffset (independant of DST)
+CountryCode	TimeZoneId	GMT offset 1. Jan 2018	DST offset 1. Jul 2018	rawOffset (independant of DST)
 CI	Africa/Abidjan	0.0	0.0	0.0
 GH	Africa/Accra	0.0	0.0	0.0
 ET	Africa/Addis_Ababa	3.0	3.0	3.0
@@ -12,14 +12,14 @@ MW	Africa/Blantyre	2.0	2.0	2.0
 CG	Africa/Brazzaville	1.0	1.0	1.0
 BI	Africa/Bujumbura	2.0	2.0	2.0
 EG	Africa/Cairo	2.0	2.0	2.0
-MA	Africa/Casablanca	0.0	0.0	0.0
+MA	Africa/Casablanca	0.0	1.0	0.0
 ES	Africa/Ceuta	1.0	2.0	1.0
 GN	Africa/Conakry	0.0	0.0	0.0
 SN	Africa/Dakar	0.0	0.0	0.0
 TZ	Africa/Dar_es_Salaam	3.0	3.0	3.0
 DJ	Africa/Djibouti	3.0	3.0	3.0
 CM	Africa/Douala	1.0	1.0	1.0
-EH	Africa/El_Aaiun	0.0	0.0	0.0
+EH	Africa/El_Aaiun	0.0	1.0	0.0
 SL	Africa/Freetown	0.0	0.0	0.0
 BW	Africa/Gaborone	2.0	2.0	2.0
 ZW	Africa/Harare	2.0	2.0	2.0
