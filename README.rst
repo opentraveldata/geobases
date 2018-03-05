@@ -5,10 +5,10 @@ GeoBases |travis|_ |cratev|_ |crated|_
 .. |travis| image:: https://api.travis-ci.org/opentraveldata/geobases.png?branch=public
 
 .. _crated : https://crate.io/packages/GeoBases
-.. |crated| image:: https://pypip.in/d/GeoBases/badge.png
+.. |crated| image:: https://img.shields.io/pypi/dm/GeoBases.svg
 
 .. _cratev : https://crate.io/packages/GeoBases
-.. |cratev| image:: https://pypip.in/v/GeoBases/badge.png
+.. |cratev| image:: https://img.shields.io/pypi/v/GeoBases.svg
 
 Introduction
 ------------
