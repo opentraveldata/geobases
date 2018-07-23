@@ -26,7 +26,7 @@ ZW	Africa/Harare	2.0	2.0	2.0
 ZA	Africa/Johannesburg	2.0	2.0	2.0
 SS	Africa/Juba	3.0	3.0	3.0
 UG	Africa/Kampala	3.0	3.0	3.0
-SD	Africa/Khartoum	3.0	3.0	3.0
+SD	Africa/Khartoum	2.0	2.0	2.0
 RW	Africa/Kigali	2.0	2.0	2.0
 CD	Africa/Kinshasa	1.0	1.0	1.0
 NG	Africa/Lagos	1.0	1.0	1.0
@@ -47,10 +47,10 @@ NE	Africa/Niamey	1.0	1.0	1.0
 MR	Africa/Nouakchott	0.0	0.0	0.0
 BF	Africa/Ouagadougou	0.0	0.0	0.0
 BJ	Africa/Porto-Novo	1.0	1.0	1.0
-ST	Africa/Sao_Tome	0.0	0.0	0.0
+ST	Africa/Sao_Tome	0.0	1.0	1.0
 LY	Africa/Tripoli	2.0	2.0	2.0
 TN	Africa/Tunis	1.0	1.0	1.0
-NA	Africa/Windhoek	2.0	1.0	1.0
+NA	Africa/Windhoek	2.0	2.0	2.0
 US	America/Adak	-10.0	-9.0	-10.0
 US	America/Anchorage	-9.0	-8.0	-9.0
 AI	America/Anguilla	-4.0	-4.0	-4.0
@@ -106,7 +106,7 @@ BR	America/Fortaleza	-3.0	-3.0	-3.0
 CA	America/Glace_Bay	-4.0	-3.0	-4.0
 GL	America/Godthab	-3.0	-2.0	-3.0
 CA	America/Goose_Bay	-4.0	-3.0	-4.0
-TC	America/Grand_Turk	-4.0	-4.0	-4.0
+TC	America/Grand_Turk	-4.0	-4.0	-5.0
 GD	America/Grenada	-4.0	-4.0	-4.0
 GP	America/Guadeloupe	-4.0	-4.0	-4.0
 GT	America/Guatemala	-6.0	-6.0	-6.0
@@ -198,7 +198,7 @@ CA	America/Whitehorse	-8.0	-7.0	-8.0
 CA	America/Winnipeg	-6.0	-5.0	-6.0
 US	America/Yakutat	-9.0	-8.0	-9.0
 CA	America/Yellowknife	-7.0	-6.0	-7.0
-AQ	Antarctica/Casey	11.0	11.0	11.0
+AQ	Antarctica/Casey	11.0	8.0	8.0
 AQ	Antarctica/Davis	7.0	7.0	7.0
 AQ	Antarctica/DumontDUrville	10.0	10.0	10.0
 AU	Antarctica/Macquarie	11.0	11.0	11.0
@@ -234,7 +234,7 @@ BD	Asia/Dhaka	6.0	6.0	6.0
 TL	Asia/Dili	9.0	9.0	9.0
 AE	Asia/Dubai	4.0	4.0	4.0
 TJ	Asia/Dushanbe	5.0	5.0	5.0
-CY	Asia/Famagusta	3.0	3.0	3.0
+CY	Asia/Famagusta	2.0	3.0	2.0
 PS	Asia/Gaza	2.0	3.0	2.0
 PS	Asia/Hebron	2.0	3.0	2.0
 VN	Asia/Ho_Chi_Minh	7.0	7.0	7.0
@@ -266,7 +266,7 @@ RU	Asia/Omsk	6.0	6.0	6.0
 KZ	Asia/Oral	5.0	5.0	5.0
 KH	Asia/Phnom_Penh	7.0	7.0	7.0
 ID	Asia/Pontianak	7.0	7.0	7.0
-KP	Asia/Pyongyang	8.5	8.5	8.5
+KP	Asia/Pyongyang	8.5	9.0	9.0
 QA	Asia/Qatar	3.0	3.0	3.0
 KZ	Asia/Qyzylorda	6.0	6.0	6.0
 SA	Asia/Riyadh	3.0	3.0	3.0
@@ -327,7 +327,7 @@ HU	Europe/Budapest	1.0	2.0	1.0
 DE	Europe/Busingen	1.0	2.0	1.0
 MD	Europe/Chisinau	2.0	3.0	2.0
 DK	Europe/Copenhagen	1.0	2.0	1.0
-IE	Europe/Dublin	0.0	1.0	0.0
+IE	Europe/Dublin	0.0	1.0	1.0
 GI	Europe/Gibraltar	1.0	2.0	1.0
 GG	Europe/Guernsey	0.0	1.0	0.0
 FI	Europe/Helsinki	2.0	3.0	2.0
@@ -420,6 +420,6 @@ CK	Pacific/Rarotonga	-10.0	-10.0	-10.0
 MP	Pacific/Saipan	10.0	10.0	10.0
 PF	Pacific/Tahiti	-10.0	-10.0	-10.0
 KI	Pacific/Tarawa	12.0	12.0	12.0
-TO	Pacific/Tongatapu	14.0	13.0	13.0
+TO	Pacific/Tongatapu	13.0	13.0	13.0
 UM	Pacific/Wake	12.0	12.0	12.0
 WF	Pacific/Wallis	12.0	12.0	12.0
