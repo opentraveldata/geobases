@@ -1,3 +1,12 @@
+Note about archiving
+====================
+
+This repository has been archived.
+
+If you are looking for a Python API on top of OPTD data, you can check out NeoBase_.
+
+.. _NeoBase : https://github.com/alexprengere/neobase
+
 GeoBases |travis|_ |cratev|_ |crated|_
 ======================================
 
